@@ -804,7 +804,7 @@ b, sup, sub, u, del {
   color: #01579b;
 }
 
-h1 {
+h1, .h1 {
   font-size: 36px;
 }
 
@@ -828,7 +828,7 @@ h6 {
   font-size: 14px;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6, .h1 {
   line-height: 1.5em;
 }
 
@@ -1079,7 +1079,7 @@ h1, h2, h3, h4, h5, h6 {
     cursor: pointer;
   }
   
-  .single-price:hover .price-bottom h1 {
+  .single-price:hover .price-bottom .h1 {
     color: #fff;
   }
   
@@ -2592,12 +2592,12 @@ body.mobile-nav-active #mobile-nav-toggle {
   transition: all 0.3s ease 0s;
 }
 
-.single-price .price-bottom h1 {
+.single-price .price-bottom .h1 {
   font-size: 60px;
   font-weight: 300;
 }
 
-.single-price .price-bottom h1 span {
+.single-price .price-bottom .h1 span {
   font-size: 25px;
   margin-top: -14px;
   position: absolute;
