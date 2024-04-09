@@ -918,6 +918,12 @@ h1, h2, h3, h4, h5, h6, .h1 {
   border: 1px solid transparent;
 }
 
+@media not (hover: hover) {
+    #eBPrice .h1 {
+        color: white;
+    } 
+}
+
 @media (hover: hover) {
   a, a:focus, a:hover {
     text-decoration: none;
