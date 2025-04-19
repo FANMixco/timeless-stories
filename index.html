@@ -551,15 +551,27 @@ https://goo.gl/forms/JArck4uzbGGmTuG72
 					</div>
 				</div>
 			</div>
-			<div class="row">
+			<!-- DESKTOP VERSION (Visible on lg and up) -->
+			<div class="row d-none d-lg-flex" id="mMediaGallery">
+				<div class="col mMedia-container">
+					<a target="_blank"
+						href="https://diarioelsalvador.com/el-narrador-de-historias-magicas-de-cuscatlan/15042">
+						<picture>
+							<source type="image/webp" srcset="img/fair/diario_el_salvador_2.webp">
+							<source type="image/jpeg" srcset="img/fair/diario_el_salvador_2.jpg">
+							<img class="mMedia mt-2" alt="diario el salvador" src="img/fair/diario_el_salvador_2.jpg"
+								loading="lazy" />
+						</picture>
+						<p data-translation="mMedia3"></p>
+					</a>
+				</div>
 				<div class="col-sm mMedia-container">
 					<a target="_blank"
 						href="https://rree.gob.sv/embajada-de-el-salvador-en-austria-apoya-obra-de-escritor-salvadoreno-en-feria-del-libro-en-viena/">
 						<picture>
 							<source type="image/webp" srcset="img/fair/buch_viena.webp">
 							<source type="image/jpeg" srcset="img/fair/buch_viena.jpg">
-							<img class="mMedia mt-2" alt="diario el salvador" src="img/fair/buch_viena.jpg"
-								loading="lazy" />
+							<img class="mMedia mt-2" alt="buch viena" src="img/fair/buch_viena.jpg" loading="lazy" />
 						</picture>
 						<p data-translation="mMedia1"></p>
 					</a>
@@ -576,6 +588,69 @@ https://goo.gl/forms/JArck4uzbGGmTuG72
 						<p data-translation="mMedia2"></p>
 					</a>
 				</div>
+			</div>
+
+			<!-- MOBILE VERSION (Carousel, visible on sm and below) -->
+			<div id="mMediaCarousel" class="carousel slide d-block d-lg-none" data-ride="carousel">
+				<div class="carousel-inner">
+
+					<!-- Slide 1 -->
+					<div class="carousel-item active">
+						<div class="mMedia-container text-center px-3">
+							<a target="_blank"
+								href="https://diarioelsalvador.com/el-narrador-de-historias-magicas-de-cuscatlan/15042">
+								<picture>
+									<source type="image/webp" srcset="img/fair/diario_el_salvador_2.webp">
+									<source type="image/jpeg" srcset="img/fair/diario_el_salvador_2.jpg">
+									<img class="mMedia mt-2 img-fluid" alt="diario el salvador"
+										src="img/fair/diario_el_salvador_2.jpg" loading="lazy" />
+								</picture>
+								<p data-translation="mMedia3"></p>
+							</a>
+						</div>
+					</div>
+
+					<!-- Slide 2 -->
+					<div class="carousel-item">
+						<div class="mMedia-container text-center px-3">
+							<a target="_blank"
+								href="https://rree.gob.sv/embajada-de-el-salvador-en-austria-apoya-obra-de-escritor-salvadoreno-en-feria-del-libro-en-viena/">
+								<picture>
+									<source type="image/webp" srcset="img/fair/buch_viena.webp">
+									<source type="image/jpeg" srcset="img/fair/buch_viena.jpg">
+									<img class="mMedia mt-2 img-fluid" alt="buch viena" src="img/fair/buch_viena.jpg"
+										loading="lazy" />
+								</picture>
+								<p data-translation="mMedia1"></p>
+							</a>
+						</div>
+					</div>
+
+					<!-- Slide 3 -->
+					<div class="carousel-item">
+						<div class="mMedia-container text-center px-3">
+							<a target="_blank"
+								href="https://diarioelsalvador.com/el-narrador-de-historias-magicas-de-cuscatlan/15042">
+								<picture>
+									<source type="image/webp" srcset="img/fair/diario_el_salvador.webp">
+									<source type="image/jpeg" srcset="img/fair/diario_el_salvador.jpg">
+									<img class="mMedia mt-2 img-fluid" alt="diario el salvador"
+										src="img/fair/diario_el_salvador.jpg" loading="lazy" />
+								</picture>
+								<p data-translation="mMedia2"></p>
+							</a>
+						</div>
+					</div>
+
+				</div>
+
+				<!-- Controls -->
+				<a class="carousel-control-prev" href="#mMediaCarousel" role="button" data-slide="prev">
+					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+				</a>
+				<a class="carousel-control-next" href="#mMediaCarousel" role="button" data-slide="next">
+					<span class="carousel-control-next-icon" aria-hidden="true"></span>
+				</a>
 			</div>
 		</div>
 	</section>

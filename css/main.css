@@ -3105,6 +3105,11 @@ h6 {
   }
 }
 
+#mMediaCarousel .carousel-control-prev-icon,
+#mMediaCarousel .carousel-control-next-icon {
+  filter: invert(20%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(90%);
+}
+
 #multiItemCarousel .carousel-control-prev-icon,
 #multiItemCarousel .carousel-control-next-icon {
   filter: invert(20%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(90%);
