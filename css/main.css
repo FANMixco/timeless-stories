@@ -3193,3 +3193,10 @@ h6 {
 #multiItemCarousel .carousel-control-next-icon {
     filter: invert(20%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(90%);
 }
+
+@media (max-width: 768px) {
+    .info-content {
+        font-size: 16px!important;
+        line-height: 1.6em;
+    }
+}
