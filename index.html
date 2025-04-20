@@ -26,7 +26,7 @@ https://goo.gl/forms/JArck4uzbGGmTuG72
 		content="A series of books written by Federico Navarrete. They represent the largest collection of Salvadoran oral stories in English.">
 	<!-- Meta Keyword -->
 	<meta name="keywords"
-		content="timeless stories, el salvador, folklore, legends, fairytales, ciptio, black night, siguanaba, francis drake, children, lodz, poland, madrid, spain, españa, cadejo,Federico Navarrete,audible,kdp,amazon,audiobook,book,cuyancua">
+		content="timeless stories, el salvador, folklore, legends, fairytales, ciptio, black night, siguanaba, francis drake, children, lodz, poland, madrid, spain, españa, cadejo,Federico Navarrete,audible,kdp,amazon,audiobook,book,cuyancua,fiction,guirola,angel,family,history">
 	<!-- meta character set -->
 	<meta charset="UTF-8">
 
@@ -167,8 +167,18 @@ https://goo.gl/forms/JArck4uzbGGmTuG72
 						<h2 class="pb-30" data-translation="name"></h2>
 						<p data-translation="author1"></p>
 						<p data-translation="author2"></p>
-						<p data-translation="author3"></p>
-						<p data-translation="author4"></p>
+
+						<!-- "Read More" button only visible on phones -->
+						<button id="readMoreBtn" class="btn btn-secondary d-block d-md-none mx-auto m-4" onclick="showMoreAuthors()">
+							Read More
+						</button>
+						<!-- Conditionally hidden on phones -->
+						<div id="moreAuthors" class="d-none d-md-block">
+							<p data-translation="author3"></p>
+							<p data-translation="author31"></p>
+							<p data-translation="author32"></p>
+							<p data-translation="author4"></p>
+						</div>
 						<br>
 						<picture>
 							<source type="image/webp" srcset="img/signature.webp">
@@ -618,8 +628,8 @@ https://goo.gl/forms/JArck4uzbGGmTuG72
 								<picture>
 									<source type="image/webp" srcset="img/fair/pulgarcito.webp">
 									<source type="image/jpeg" srcset="img/fair/pulgarcito.jpg">
-									<img class="mMedia mt-2 img-fluid" alt="pulgarcito"
-										src="img/fair/pulgarcito.jpg" loading="lazy" />
+									<img class="mMedia mt-2 img-fluid" alt="pulgarcito" src="img/fair/pulgarcito.jpg"
+										loading="lazy" />
 								</picture>
 								<p data-translation="mMedia4"></p>
 							</a>

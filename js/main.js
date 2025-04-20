@@ -184,3 +184,8 @@ function getHeight() {
 
     return Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight, body.getBoundingClientRect().height);
 }
+
+function showMoreAuthors() {
+    document.getElementById("moreAuthors").classList.remove("d-none");
+    document.getElementById("readMoreBtn").style.setProperty("display", "none", "important");
+}
