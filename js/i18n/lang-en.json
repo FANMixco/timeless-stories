@@ -89,6 +89,7 @@
         "name": "Federico Navarrete",
         "stories": "Stories",
         "contactMe": "Contact me",
-        "readMore": "Read more"
+        "readMore": "Read more",
+        "readLess": "Read less"
     }
 }

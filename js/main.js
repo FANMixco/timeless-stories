@@ -143,26 +143,13 @@ $(function () {
         }
     });
 
-    /*function updateAuthorVisibility() {
-        if (!authorUnhidden) {
-            const isMobile = window.innerWidth < 768;
-            const btn = document.getElementById("readMoreBtn");
-            const extra = document.querySelectorAll(".moreAuthors");
+    $('#moreAuthorsCollapse').on('show.bs.collapse', () => {
+        $('#btnReadMore').text(translations.readLess); // Or use translations here if needed
+    });
 
-            if (isMobile && btn.style.display !== "none") {
-                extra.forEach(p => p.classList.remove("visible"));
-                btn.classList.remove("d-none");
-            } else {
-                extra.forEach(p => p.classList.add("visible"));
-                btn.classList.add("d-none");
-            }
-        }
-    }
-
-    setTimeout(updateAuthorVisibility, 500);
-
-    // Handle screen resize
-    window.addEventListener("resize", updateAuthorVisibility);*/
+    $('#moreAuthorsCollapse').on('hide.bs.collapse', () => {
+        $('#btnReadMore').text(translations.readMore);
+    });
 });
 
 //let authorUnhidden = false;
@@ -207,11 +194,3 @@ function getHeight() {
 
     return Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight, body.getBoundingClientRect().height);
 }
-
-/*function showMoreAuthors() {
-    document.querySelectorAll(".moreAuthors").forEach(p => {
-        p.classList.add("visible");
-    });
-    document.getElementById("readMoreBtn").style.setProperty("display", "none", "important");
-    authorUnhidden = true;
-}*/
