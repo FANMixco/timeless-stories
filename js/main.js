@@ -163,7 +163,7 @@ $(function () {
         }
     }
 
-    updateAuthorVisibility();
+    setTimeout(updateAuthorVisibility, 500);
 
     // Handle screen resize
     window.addEventListener("resize", updateAuthorVisibility);
