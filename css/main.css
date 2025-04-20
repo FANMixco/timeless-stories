@@ -3193,25 +3193,3 @@ h6 {
 #multiItemCarousel .carousel-control-next-icon {
     filter: invert(20%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(90%);
 }
-
-@media (max-width: 767.98px) {
-    .info-content .moreAuthors {
-        font-size: inherit !important;
-        line-height: inherit !important;
-        font-family: inherit !important;
-    }
-}
-
-.moreAuthors {
-    visibility: hidden;
-    opacity: 0;
-    height: 0;
-    overflow: hidden;
-    transition: opacity 0.3s ease;
-}
-
-.moreAuthors.visible {
-    visibility: visible;
-    opacity: 1;
-    height: auto;
-}

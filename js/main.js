@@ -143,7 +143,7 @@ $(function () {
         }
     });
 
-    function updateAuthorVisibility() {
+    /*function updateAuthorVisibility() {
         if (!authorUnhidden) {
             const isMobile = window.innerWidth < 768;
             const btn = document.getElementById("readMoreBtn");
@@ -162,10 +162,10 @@ $(function () {
     setTimeout(updateAuthorVisibility, 500);
 
     // Handle screen resize
-    window.addEventListener("resize", updateAuthorVisibility);
+    window.addEventListener("resize", updateAuthorVisibility);*/
 });
 
-let authorUnhidden = false;
+//let authorUnhidden = false;
 
 window.onscroll = () => {
     let scroll = window.scrollY;
@@ -208,10 +208,10 @@ function getHeight() {
     return Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight, body.getBoundingClientRect().height);
 }
 
-function showMoreAuthors() {
+/*function showMoreAuthors() {
     document.querySelectorAll(".moreAuthors").forEach(p => {
         p.classList.add("visible");
     });
     document.getElementById("readMoreBtn").style.setProperty("display", "none", "important");
     authorUnhidden = true;
-}
+}*/
