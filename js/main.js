@@ -146,19 +146,15 @@ $(function () {
     function updateAuthorVisibility() {
         if (!authorUnhidden) {
             const isMobile = window.innerWidth < 768;
-            const readMoreBtn = document.getElementById("readMoreBtn");
-            const moreAuthorParagraphs = document.querySelectorAll(".moreAuthors");
+            const btn = document.getElementById("readMoreBtn");
+            const extra = document.querySelectorAll(".moreAuthors");
 
-            if (isMobile) {
-                // Only hide paragraphs and show button if button is still visible (i.e., not clicked yet)
-                if (readMoreBtn.style.display !== "none") {
-                    moreAuthorParagraphs.forEach(p => p.classList.add("d-none"));
-                    readMoreBtn.classList.remove("d-none");
-                }
+            if (isMobile && btn.style.display !== "none") {
+                extra.forEach(p => p.classList.remove("visible"));
+                btn.classList.remove("d-none");
             } else {
-                // Desktop view: show everything
-                moreAuthorParagraphs.forEach(p => p.classList.remove("d-none"));
-                readMoreBtn.classList.add("d-none");
+                extra.forEach(p => p.classList.add("visible"));
+                btn.classList.add("d-none");
             }
         }
     }
@@ -214,7 +210,7 @@ function getHeight() {
 
 function showMoreAuthors() {
     document.querySelectorAll(".moreAuthors").forEach(p => {
-        p.classList.remove("d-none");
+        p.classList.add("visible");
     });
     document.getElementById("readMoreBtn").style.setProperty("display", "none", "important");
     authorUnhidden = true;

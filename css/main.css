@@ -3201,3 +3201,17 @@ h6 {
         font-family: inherit !important;
     }
 }
+
+.moreAuthors {
+    visibility: hidden;
+    opacity: 0;
+    height: 0;
+    overflow: hidden;
+    transition: opacity 0.3s ease;
+}
+
+.moreAuthors.visible {
+    visibility: visible;
+    opacity: 1;
+    height: auto;
+}
