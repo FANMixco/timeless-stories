@@ -186,6 +186,7 @@ function getHeight() {
 }
 
 function showMoreAuthors() {
-    document.getElementById("moreAuthors").classList.remove("d-none");
+    const moreAuthors = document.querySelectorAll('.moreAuthors');
+    moreAuthors.forEach(el => el.classList.remove('d-none'));
     document.getElementById("readMoreBtn").style.setProperty("display", "none", "important");
-}
+}  
