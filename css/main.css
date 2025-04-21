@@ -1090,7 +1090,6 @@ h6,
     }
 
     .single-price:hover .price-bottom-r {
-        color: #222222!important;
         background: -moz-linear-gradient(90deg, #ffc107 0%, #6E5415 100%)!important;
         background: -webkit-linear-gradient(90deg, #ffc107 0%, #6E5415 100%)!important;
         background: -ms-linear-gradient(90deg, #ffc107 0%, #6E5415 100%)!important;
@@ -3188,6 +3187,7 @@ h6 {
     }
 
     .eBPriceR {
+        color: #fff;
         background: -moz-linear-gradient(90deg, #ffc107 0%, #6E5415 100%);
         background: -webkit-linear-gradient(90deg, #ffc107 0%, #6E5415 100%);
         background: -ms-linear-gradient(90deg, #ffc107 0%, #6E5415 100%);
@@ -3195,7 +3195,11 @@ h6 {
         border: 1px solid transparent;
     }
 
-    .eBPrice h1 {
+    .eBPriceR > .h1 {
+        color: #fff;
+    }
+
+    .eBPrice > .h1 {
         color: #fff;
     }
 }
