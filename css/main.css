@@ -957,10 +957,6 @@ h6,
 }
 
 @media not (hover: hover) {
-    .eBPrice .h1 {
-        color: #222222;
-    }
-
     .eBPrice {
         /*color: #fff;*/
         background: -moz-linear-gradient(90deg, #29b6f6 0%, #01579b 100%);
@@ -3187,6 +3183,16 @@ h6 {
 
 #price0 {
     z-index: 500;
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .eBPriceR > .h1 {
+        color: #fff;
+    }
+
+    .eBPrice > .h1 {
+        color: #fff;
+    }   
 }
 
 @media (max-width: 767px) {
