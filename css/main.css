@@ -958,7 +958,24 @@ h6,
 
 @media not (hover: hover) {
     .eBPrice .h1 {
-        color: white;
+        color: #222222;
+    }
+
+    .eBPrice {
+        /*color: #fff;*/
+        background: -moz-linear-gradient(90deg, #29b6f6 0%, #01579b 100%);
+        background: -webkit-linear-gradient(90deg, #29b6f6 0%, #01579b 100%);
+        background: -ms-linear-gradient(90deg, #29b6f6 0%, #01579b 100%);
+        background: linear-gradient(90deg, #29b6f6 0%, #01579b 100%);
+        border: 1px solid transparent;
+    }
+
+    .eBPriceR {
+        background: -moz-linear-gradient(90deg, #ffc107 0%, #6E5415 100%);
+        background: -webkit-linear-gradient(90deg, #ffc107 0%, #6E5415 100%);
+        background: -ms-linear-gradient(90deg, #ffc107 0%, #6E5415 100%);
+        background: linear-gradient(90deg, #ffc107 0%, #6E5415 100%);
+        border: 1px solid transparent;
     }
 }
 
@@ -3175,24 +3192,6 @@ h6 {
 @media (max-width: 767px) {
     #div-book {
         padding-top: 2.5rem;
-    }
-
-    .eBPrice {
-        color: #fff;
-        background: -moz-linear-gradient(90deg, #29b6f6 0%, #01579b 100%);
-        background: -webkit-linear-gradient(90deg, #29b6f6 0%, #01579b 100%);
-        background: -ms-linear-gradient(90deg, #29b6f6 0%, #01579b 100%);
-        background: linear-gradient(90deg, #29b6f6 0%, #01579b 100%);
-        border: 1px solid transparent;
-    }
-
-    .eBPriceR {
-        color: #fff;
-        background: -moz-linear-gradient(90deg, #ffc107 0%, #6E5415 100%);
-        background: -webkit-linear-gradient(90deg, #ffc107 0%, #6E5415 100%);
-        background: -ms-linear-gradient(90deg, #ffc107 0%, #6E5415 100%);
-        background: linear-gradient(90deg, #ffc107 0%, #6E5415 100%);
-        border: 1px solid transparent;
     }
 
     .eBPriceR > .h1 {
