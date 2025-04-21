@@ -2648,7 +2648,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 
 .single-price .price-bottom {
     background-color: #f9f9ff;
-    margin: 0 45px 45px 45px;
+    /*margin: 0 45px 45px 45px;*/
     padding: 35px;
     -webkit-transition: all 0.3s ease 0s;
     -moz-transition: all 0.3s ease 0s;
