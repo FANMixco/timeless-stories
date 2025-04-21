@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function(event) {
+document.addEventListener("DOMContentLoaded", () => {
     let gaScript = document.createElement("script");
     gaScript.src = "https://www.googletagmanager.com/gtag/js?id=G-L3K2NVBX01";
     gaScript.async = true;
