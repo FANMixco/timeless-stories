@@ -1089,6 +1089,14 @@ h6,
         background-image: linear-gradient(90deg, #29b6f6 0%, #01579b 100%);
     }
 
+    .single-price:hover .price-bottom-r {
+        color: #222222!important;
+        background: -moz-linear-gradient(90deg, #ffc107 0%, #6E5415 100%)!important;
+        background: -webkit-linear-gradient(90deg, #ffc107 0%, #6E5415 100%)!important;
+        background: -ms-linear-gradient(90deg, #ffc107 0%, #6E5415 100%)!important;
+        background: linear-gradient(90deg, #ffc107 0%, #6E5415 100%)!important;
+    }
+
     .footer-social a:hover i {
         background: -moz-linear-gradient(90deg, #29b6f6 0%, #01579b 100%);
         background: -webkit-linear-gradient(90deg, #29b6f6 0%, #01579b 100%);
@@ -3176,6 +3184,14 @@ h6 {
         background: -webkit-linear-gradient(90deg, #29b6f6 0%, #01579b 100%);
         background: -ms-linear-gradient(90deg, #29b6f6 0%, #01579b 100%);
         background: linear-gradient(90deg, #29b6f6 0%, #01579b 100%);
+        border: 1px solid transparent;
+    }
+
+    .eBPriceR {
+        background: -moz-linear-gradient(90deg, #ffc107 0%, #6E5415 100%);
+        background: -webkit-linear-gradient(90deg, #ffc107 0%, #6E5415 100%);
+        background: -ms-linear-gradient(90deg, #ffc107 0%, #6E5415 100%);
+        background: linear-gradient(90deg, #ffc107 0%, #6E5415 100%);
         border: 1px solid transparent;
     }
 
