@@ -194,29 +194,3 @@ function getHeight() {
 
     return Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight, body.getBoundingClientRect().height);
 }
-
-document.addEventListener("DOMContentLoaded", function () {
-    const target = document.querySelector('#tiktok-container');
-
-    if ("IntersectionObserver" in window) {
-        const observer = new IntersectionObserver((entries, obs) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const script = document.createElement('script');
-                    script.src = "https://www.tiktok.com/embed.js";
-                    script.async = true;
-                    document.body.appendChild(script);
-                    obs.unobserve(target); // Stop observing once loaded
-                }
-            });
-        });
-
-        observer.observe(target);
-    } else {
-        // Fallback: load immediately
-        const script = document.createElement('script');
-        script.src = "https://www.tiktok.com/embed.js";
-        script.async = true;
-        document.body.appendChild(script);
-    }
-});
