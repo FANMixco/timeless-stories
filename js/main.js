@@ -194,3 +194,35 @@ function getHeight() {
 
     return Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight, body.getBoundingClientRect().height);
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+    const tiktokContainer = document.getElementById("tiktok-container");
+
+    const embedHTML = `
+    <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@federicostories/video/7152795728778185990" data-video-id="7152795728778185990" style="max-width: 605px;min-width: 325px;">
+      <section>
+        <a target="_blank" title="@federicostories" href="https://www.tiktok.com/@federicostories?refer=embed">@federicostories</a>
+        Many years ago, the <a title="blackknight" target="_blank" href="https://www.tiktok.com/tag/blackknight?refer=embed">#blackknight</a> 🗡️ returned to <a title="elsalvador" target="_blank" href="https://www.tiktok.com/tag/elsalvador?refer=embed">#ElSalvador</a>. He wanted to test the Salvadorans' greed. He gave them all their wishes, but the cost was their <a title="souls" target="_blank" href="https://www.tiktok.com/tag/souls?refer=embed">#souls</a>! 👻 ...
+      </section>
+    </blockquote>`;
+
+    let scriptLoaded = false;
+
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !scriptLoaded) {
+                tiktokContainer.innerHTML = embedHTML;
+
+                const script = document.createElement('script');
+                script.src = 'https://www.tiktok.com/embed.js';
+                script.async = true;
+                document.body.appendChild(script);
+
+                scriptLoaded = true;
+                observer.disconnect();
+            }
+        });
+    });
+
+    observer.observe(tiktokContainer);
+});
