@@ -2077,7 +2077,7 @@ h6,
 
 #header.header-scrolled {
     box-shadow: -21.213px 21.213px 30px 0px rgba(158, 158, 158, 0.3);
-    background: rgba(34, 34, 34, 0.9);
+    background: rgba(1,87,155, 0.9);
     transition: all 0.5s;
 }
 
@@ -2873,7 +2873,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 
 .footer-area {
     padding-top: 100px;
-    background-color: #222222;
+    background-color: #01579B;
 }
 
 h6 {
