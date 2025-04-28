@@ -1,3 +1,9 @@
+# Get your copy!
+
+[![The Return of the Black Knight](https://raw.githubusercontent.com/FANMixco/federiconavarrete/refs/heads/master/img/mybook/second_medium.png)](https://a.co/d/brLFF1C)
+
+## Info from the theme provider
+
 Thanks for downloading this theme!
 
 ## Other Useful Links
