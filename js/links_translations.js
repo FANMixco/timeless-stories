@@ -1,7 +1,7 @@
 const links_translations = {
     "en": {
         "prezi": "3OA2BbhRZgysnB22bzdX",
-        "book": "https://leer.amazon.es/kp/card?asin=B09Z33ZPTV&amp;preview=inline&amp;linkCode=kpe&amp;ref_=cm_sw_r_kb_dp_MGWEVRFZ3TAK6GK5T8A3",
+        "book": "https://leer.amazon.es/kp/card?asin=B09Z33ZPTV&preview=inline&linkCode=kpe&ref_=cm_sw_r_kb_dp_HJ6YDMXY6BRE1FA9AWE3",
         "contactUs": {
             "key": "hkz0rsUoNkGpGQYpoPHBzg",
             "form": "4"
@@ -9,7 +9,7 @@ const links_translations = {
     },
     "es": {
         "prezi": "3OA2BbhRZgysnB22bzdX",
-        "book": "https://leer.amazon.es/kp/card?asin=B09Z33ZPTV&amp;preview=inline&amp;linkCode=kpe&amp;ref_=cm_sw_r_kb_dp_MGWEVRFZ3TAK6GK5T8A3",
+        "book": "https://leer.amazon.es/kp/card?asin=B09Z33ZPTV&preview=inline&linkCode=kpe&ref_=cm_sw_r_kb_dp_HJ6YDMXY6BRE1FA9AWE3",
         "contactUs": {
             "key": "hkz0rsUoNkGpGQYpoPHBzg",
             "form": "3"
@@ -17,7 +17,7 @@ const links_translations = {
     },
     "zh": {
         "prezi": "8IwA2B6lYhPwonEWAyi9",
-        "book": "https://leer.amazon.es/kp/card?asin=B09Z33ZPTV&amp;preview=inline&amp;linkCode=kpe&amp;ref_=cm_sw_r_kb_dp_MGWEVRFZ3TAK6GK5T8A3",
+        "book": "https://leer.amazon.es/kp/card?asin=B09Z33ZPTV&preview=inline&linkCode=kpe&ref_=cm_sw_r_kb_dp_HJ6YDMXY6BRE1FA9AWE3",
         "contactUs": {
             "key": "hkz0rsUoNkGpGQYpoPHBzg",
             "form": "4"
