@@ -88,7 +88,7 @@ fetchData(`js/i18n/lang-${lang}.min.json`)
                         <p data-translation="edition7"></p>
                         <div class="price-bottom">
                           <span class="h1" data-translation="price3"></span>
-                          <a href="https://amzn.to/4jVgzcE" target="_blank" class="primary-btn" data-translation="editionP"></a>
+                          <a href="https://bit.ly/4d86GGG" target="_blank" class="primary-btn" data-translation="editionP"></a>
                         </div>
                       </div>
                     </div>
@@ -130,7 +130,7 @@ fetchData(`js/i18n/lang-${lang}.min.json`)
                     <p data-translation="edition7"></p>
                     <div class="price-bottom">
                       <span class="h1" data-translation="price3"></span><br>
-                      <a href="https://amzn.to/4jVgzcE" target="_blank" class="primary-btn" data-translation="editionP"></a>
+                      <a href="https://bit.ly/4d86GGG" target="_blank" class="primary-btn" data-translation="editionP"></a>
                     </div>
                   </div>
                 </div>`;
