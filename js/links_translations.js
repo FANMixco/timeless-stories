@@ -9,7 +9,7 @@ const links_translations = {
     },
     "es": {
         "prezi": "3OA2BbhRZgysnB22bzdX",
-        "book": "https://leer.amazon.es/kp/card?asin=B09Z33ZPTV&preview=inline&linkCode=kpe&ref_=cm_sw_r_kb_dp_HJ6YDMXY6BRE1FA9AWE3",
+        "book": "https://leer.amazon.es/kp/card?asin=B0F7FRX1B5&preview=inline&linkCode=kpe&ref_=cm_sw_r_kb_dp_HJ6YDMXY6BRE1FA9AWE3",
         "contactUs": {
             "key": "hkz0rsUoNkGpGQYpoPHBzg",
             "form": "3"
