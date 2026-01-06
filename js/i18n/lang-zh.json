@@ -8,7 +8,7 @@
         "menu5": "媒体报道",
         "intro1": "作者:费德里科·纳瓦雷特",
         "intro2": "萨尔瓦多永恒的故事V2:显灵",
-        "intro3": "萨尔瓦多永恒故事的第二卷。一本充满史诗冒险的新书，将你传送到 <a data-toggle='modal' data-target='#mPastSV' style='color: #ffdd4b; font-weight: bold' href='#mPastSV'>萨尔瓦多的过去</a>。享受 <a data-toggle='modal' data-target='#mStories' style='color: #ffdd4b; font-weight: bold' href='#mStories'>31 </a> 全新的插图丰富的民俗传说和童话故事。",
+        "intro3": "是同类作品中的首部著作：它收录了十则镜像传说，将萨尔瓦多传说与西班牙传说并置呈现，揭示了遥远文化如何映射相同的符号与恐惧。",
         "price0": "以4.99美元获得副本",
         "price1": "<span>美元</span>4.99",
         "price2": "<span>美元</span>9.99",
@@ -17,9 +17,10 @@
         "price5": "<span>美元</span> 5.99",
         "price6": "<span>美元</span> 14.49",
         "author1": "是一位西班牙裔萨尔瓦多人的技术战略家、旅行家和文化讲述者，致力于通过民间传说的永恒力量改变世界对萨尔瓦多的看法。",
-        "author2": "费德里科的职业生涯始于IT行业，但作为一名生活在波兰、西班牙和卢森堡并游历20多个国家的移民和故事讲述者，他经常遇到人们对祖国存在偏见或肤浅的看法。许多人对他分享的萨尔瓦多故事感到惊讶，甚至感动。一些人问他们在哪里可以买到书来了解更多信息，但他们都不会说西班牙语，他也没有什么可以推荐的。这种反复的经历揭示了一个强有力的信息：<i>萨尔瓦多的故事需要用英语来分享。</i> 这一认识促使他创作了第一套面向国际读者的萨尔瓦多民间传说丛书。",
-        "author3": "每卷书都收录了31个口口相传的传奇故事——从<a href='https://en.wikipedia.org/wiki/Francis_Drake' target='_blank'>弗朗西斯·德雷克爵士</a>在 Meanguera 岛藏宝的故事，以及被一位睿智的萨满巫师变成神话中的<a href='https://federicostories.blogspot.com/2017/10/the-good-and-bad-cadejo.html' target='_blank'>Cadejos</a>的淘气双胞胎的故事，还有萨尔瓦多最著名的家族<a href='https://federicostories.blogspot.com/2018/04/the-guirolas-family.html' target='_blank'>Guirolas</a>的怪诞传说——他们与<a href='https://federicostories.blogspot.com/2017/10/the-dark-knight.html' target='_blank'>黑骑士</a>达成的宿命交易。 Knight</a> 的名言在几代人中回响。",
-        "author31": "尽管这些书已成为萨尔瓦多侨民及其后代之间的文化桥梁，但费德里科最初的使命更为广泛：帮助世界各地的人们发现萨尔瓦多更深刻、更真实的故事——一个植根于精神、文化和想象力的故事。",
+        "author2": "尽管费德里科的职业生涯始于信息技术领域，但他的写作之路是在作为移民生活于波兰、西班牙和卢森堡期间开启的，期间他游历了二十多个国家。在海外交流中，他屡屡遭遇对祖国的片面认知或扭曲印象。然而当他分享萨尔瓦多民间传说——那些由记忆、恐惧、道德与想象力交织的故事时，人们常为其深刻内涵与普世价值所震撼。许多人询问获取更多信息的途径。“当时没人会说西班牙语，我实在无从推荐。",
+        "author3": "这种反复出现的认知鸿沟促使他创作了首套直接用英语撰写的萨尔瓦多民间传说丛书，既面向国际读者，又忠实于口述传统。这项始于文化传承的创作，很快演变为更宏大的使命。",
+        "author31": "在《西班牙镜像》中，费德里科开创了全新视角。本书不再将民间传说视为孤立的民族奇观，而是让萨尔瓦多与西班牙的传说展开直接对话。每章都将两个形象——恶魔、守护者、狡黠者、死亡先驱、游魂——进行配对，随后通过比较性反思探讨它们共享的原型、道德功能与象征边界。隔着海洋的文化间，相同的命题浮现：社会如何解释邪恶、维系边界、警示生者、并为未知赋形。",
+        "author311": "该系列虽成为萨尔瓦多侨民及其后代的文化桥梁，但费德里科的宏大目标始终具有普世性：揭示民间传说不仅关乎过去，更关乎人类如何面对恐惧、责任、诱惑与命运。",
         "author32": "自出版以来，这些故事已在国际书展上展出，并在世界各地的大使馆、塞万提斯学院和文化活动中展出——从美国和<a href='https://pekin.cervantes.es/es/cultura_espanol/dia_e/diae_2023_espanol.htm' target='_blank'>中国</a>到<a href='https://www.facebook.com/ConMelbourneSV/posts/pfbid0aaTMkdb3ifyRvYd9Eqbuzo1THM8MqebzFe13thJGPoudgNjr4sN5QWqW8xyYycpAl' target='_blank'>澳大利亚</a>。",
         "author4": "他常说：“唯一能重塑你命运的人，就是你在镜子里看到的那个人。” 通过这些故事，他邀请读者不仅以全新的眼光看待萨尔瓦多，也以全新的眼光看待自己。",
         "edition0": "为您选择最佳版本",
@@ -90,6 +91,7 @@
         "stories": "故事",
         "contactMe": "联系我",
         "readMore": "阅读更多",
-        "readLess": "少读一点"
+        "readLess": "少读一点",
+        "comingSoon": "即将到来"
     }
 }
