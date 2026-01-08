@@ -2,7 +2,7 @@ let nLang = (navigator.languages
 	? navigator.languages[0]
 	: (navigator.language || navigator.userLanguage)).split('-')[0];
 
-let supportedLang = ['en', 'es', 'zh'];
+let supportedLang = ['en', 'es', 'zh', 'fr'];
 let translations;
 const lang = supportedLang.includes(nLang) ? nLang : 'en';
 
