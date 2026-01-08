@@ -22,6 +22,14 @@ const links_translations = {
             "key": "hkz0rsUoNkGpGQYpoPHBzg",
             "form": "4"
         }
+    },
+    "fr": {
+        "prezi": "k1IXa0mNdi7IbZjRgyOA",
+        "book": "https://leer.amazon.es/kp/card?asin=B09Z33ZPTV&preview=inline&linkCode=kpe&ref_=cm_sw_r_kb_dp_HJ6YDMXY6BRE1FA9AWE3",
+        "contactUs": {
+            "key": "hkz0rsUoNkGpGQYpoPHBzg",
+            "form": "4"
+        }
     }
 };
 
