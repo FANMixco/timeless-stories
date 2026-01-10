@@ -180,7 +180,7 @@ window.onscroll = () => {
 function googleTranslateElementInit() {
     new google.translate.TranslateElement({
         pageLanguage: 'en',
-        includedLanguages: 'nl,de,fr,it,en,pt',
+        includedLanguages: 'nl,de,it,en,pt',
         autoDisplay: false,
         layout: google.translate.TranslateElement.InlineLayout.SIMPLE
     }, 'google_translate_element');
