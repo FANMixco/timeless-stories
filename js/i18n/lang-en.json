@@ -94,6 +94,15 @@
         "contactMe": "Contact me",
         "readMore": "Read more",
         "readLess": "Read less",
-        "comingSoon": "Coming soon"
+        "comingSoon": "Coming soon",
+        "title": "Timeless Stories of El Salvador | Folklore, Legends & Fairy tales",
+        "links": {
+            "prezi": "3OA2BbhRZgysnB22bzdX",
+            "book": "B09Z33ZPTV",
+            "contactUs": {
+                "key": "hkz0rsUoNkGpGQYpoPHBzg",
+                "form": "4"
+            }
+        }
     }
 }

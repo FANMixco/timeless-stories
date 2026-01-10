@@ -94,6 +94,15 @@
         "contactMe": "联系我",
         "readMore": "阅读更多",
         "readLess": "少读一点",
-        "comingSoon": "即将到来"
+        "comingSoon": "即将到来",
+        "title": "萨尔瓦多的永恒传说 | 民间传说、传奇故事和童话故事",
+        "links": {
+            "prezi": "8IwA2B6lYhPwonEWAyi9",
+            "book": "B09Z33ZPTV",
+            "contactUs": {
+                "key": "hkz0rsUoNkGpGQYpoPHBzg",
+                "form": "4"
+            }
+        }
     }
 }

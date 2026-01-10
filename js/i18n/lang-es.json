@@ -94,6 +94,15 @@
         "contactMe": "Contáctame",
         "readMore": "Leer más",
         "readLess": "Leer menos",
-        "comingSoon": "Próximamente"
+        "comingSoon": "Próximamente",
+        "title": "Historias Eternas de El Salvador | Folclore, Leyendas y Cuentos",
+        "links": {
+            "prezi": "3OA2BbhRZgysnB22bzdX",
+            "book": "B0F7FRX1B5",
+            "contactUs": {
+                "key": "hkz0rsUoNkGpGQYpoPHBzg",
+                "form": "3"
+            }
+        }
     }
 }
