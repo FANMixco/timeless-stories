@@ -79,9 +79,8 @@ fetchData(`js/i18n/lang-${lang}.min.json`)
                           <h4 data-translation="edition4"></h4>
                         </div>
                         <p data-translation="edition5"></p>
-                        <div class="price-bottom">
-                          <span class="h1" data-translation="price1"></span>
-                          <a href="https://a.co/d/hIKdELB" target="_blank" class="primary-btn" data-translation="editionP"></a>
+                        <div class="price-bottom row gx-3 gy-2 align-items-center justify-content-center">
+                          <div class="row-auto"><span class="h1" data-translation="price1"></span></div><div class="row-auto"><a href="https://a.co/d/hIKdELB" target="_blank" class="primary-btn" data-translation="editionP"></a></div>
                         </div>
                       </div>
                     </div>
@@ -91,9 +90,8 @@ fetchData(`js/i18n/lang-${lang}.min.json`)
                           <h4 data-translation="edition2"></h4>
                         </div>
                         <p data-translation="edition3"></p>
-                        <div class="price-bottom price-bottom-r">
-                          <span class="h1" data-translation="price2"></span>
-                          <a href="https://amzn.to/4jVgzcE" target="_blank" class="primary-btn" data-translation="editionP"></a>
+                        <div class="price-bottom price-bottom-r row gx-3 gy-2 align-items-center justify-content-center">
+                          <div class="col-auto"><span class="h1" data-translation="price2"></span></div><div class="row-auto"><a href="https://amzn.to/4jVgzcE" target="_blank" class="primary-btn" data-translation="editionP"></a></div>
                         </div>
                       </div>
                     </div>
@@ -103,9 +101,8 @@ fetchData(`js/i18n/lang-${lang}.min.json`)
                           <h4 data-translation="edition6"></h4>
                         </div>
                         <p data-translation="edition7"></p>
-                        <div class="price-bottom">
-                          <span class="h1" data-translation="price3"></span>
-                          <a href="https://bit.ly/4d86GGG" target="_blank" class="primary-btn" data-translation="editionP"></a>
+                        <div class="price-bottom row gx-3 gy-2 align-items-center justify-content-center">
+                          <div class="row-auto"><span class="h1" data-translation="price3"></span></div><div class="row-auto"><a href="https://bit.ly/4d86GGG" target="_blank" class="primary-btn" data-translation="editionP"></a></div>
                         </div>
                       </div>
                     </div>
@@ -121,9 +118,8 @@ fetchData(`js/i18n/lang-${lang}.min.json`)
                       <h4 data-translation="edition4"></h4>
                     </div>
                     <p data-translation="edition5"></p>
-                    <div class="price-bottom">
-                      <span class="h1" data-translation="price1"></span><br>
-                      <a href="https://a.co/d/hIKdELB" target="_blank" class="primary-btn" data-translation="editionP"></a>
+                    <div class="price-bottom row gx-3 gy-2 align-items-center justify-content-center">
+                      <div class="row-auto"><span class="h1" data-translation="price1"></span></div><div class="col-auto"><a href="https://a.co/d/hIKdELB" target="_blank" class="primary-btn" data-translation="editionP"></a></div>
                     </div>
                   </div>
                 </div>
@@ -133,9 +129,8 @@ fetchData(`js/i18n/lang-${lang}.min.json`)
                       <h4 data-translation="edition2"></h4>
                     </div>
                     <p data-translation="edition3"></p>
-                    <div class="price-bottom eBPriceR">
-                      <span class="h1" data-translation="price2"></span><br>
-                      <a href="https://amzn.to/4jVgzcE" target="_blank" class="primary-btn" data-translation="editionP"></a>
+                    <div class="price-bottom eBPriceR row gx-3 gy-2 align-items-center justify-content-center">
+                      <div class="row-auto"><span class="h1" data-translation="price2"></span></div><div class="row-auto"><a href="https://amzn.to/4jVgzcE" target="_blank" class="primary-btn" data-translation="editionP"></a></div>
                     </div>
                   </div>
                 </div>
@@ -145,9 +140,8 @@ fetchData(`js/i18n/lang-${lang}.min.json`)
                       <h4 data-translation="edition6"></h4>
                     </div>
                     <p data-translation="edition7"></p>
-                    <div class="price-bottom">
-                      <span class="h1" data-translation="price3"></span><br>
-                      <a href="https://bit.ly/4d86GGG" target="_blank" class="primary-btn" data-translation="editionP"></a>
+                    <div class="price-bottom row gx-3 gy-2 align-items-center justify-content-center">
+                      <div class="row-auto"><span class="h1" data-translation="price3"></span></div><div class="row-auto"><a href="https://bit.ly/4d86GGG" target="_blank" class="primary-btn" data-translation="editionP"></a></div>
                     </div>
                   </div>
                 </div>`;
@@ -186,3 +180,4 @@ fetchData(`js/i18n/lang-${lang}.min.json`)
     .catch((e) => {
         console.error(e);
     });
+

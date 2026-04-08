@@ -50,13 +50,13 @@ https://goo.gl/forms/JArck4uzbGGmTuG72
 	</noscript>
 
 	<!-- CSS ============================================= -->
-	<link rel="stylesheet" href="css/vendor/bootstrap/bootstrap.min.css">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 	<link rel="preload" href="css/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript>
 		<link rel="stylesheet" href="css/animate.min.css">
 	</noscript>
 
-	<link rel="stylesheet" href="css/main.min.css">
+	<link rel="stylesheet" href="css/main.css">
 	<link rel="stylesheet" href="css/book.min.css">
 
 	<script src="js/fetchData.min.js"></script>
@@ -74,36 +74,35 @@ https://goo.gl/forms/JArck4uzbGGmTuG72
 	<meta property="twitter:description" content="Official website of Timeless Stories of El Salvador.">
 	<meta property="twitter:image" content="https://tstories.federiconavarrete.com/img/preview.jpg">
 
-	<script src="js/translations.min.js"></script>
 </head>
 
 <body style="overflow-x: hidden">
-	<header id="header" id="home">
-		<div class="container">
-			<div class="row align-items-center justify-content-between d-flex">
-				<div id="logo">
-					<a href="index.html">
-						<picture>
-							<source type="image/webp" srcset="img/rsz_logo-full.webp">
-							<source type="image/png" srcset="img/rsz_logo-full.png">
-							<img src="img/rsz_logo-full.png" id="img-logo" width="130" height="29.28" alt="logo"
-								title="logo" />
-						</picture>
-					</a>
-				</div>
-				<nav id="nav-menu-container">
-					<ul class="nav-menu">
-						<li class="menu-active"><a href="#home" data-translation="menu0"></a></li>
-						<li><a href="#about" data-translation="menu1"></a></li>
-						<li><a href="#getcopy" data-translation="menu2"></a></li>
-						<li><a href="#preview" data-translation="menu3"></a></li>
-						<li><a href="#reviews" data-translation="menu4"></a></li>
-						<li><a href="#mass-media" data-translation="menu5"></a></li>
-						<li><a href="https://federicostories.blogspot.com" target="_blank">Blog</a></li>
+	<header id="header">
+		<nav class="navbar navbar-expand-lg navbar-light bg-transparent">
+			<div class="container px-0">
+				<a class="navbar-brand" href="index.html" id="logo">
+					<picture>
+						<source type="image/webp" srcset="img/rsz_logo-full.webp">
+						<source type="image/png" srcset="img/rsz_logo-full.png">
+						<img src="img/rsz_logo-full.png" id="img-logo" width="130" height="29.28" alt="logo" title="logo" />
+					</picture>
+				</a>
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu" aria-controls="navbarMenu" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarMenu">
+					<ul class="navbar-nav ms-auto">
+						<li class="nav-item"><a class="nav-link" href="#home" data-translation="menu0"></a></li>
+						<li class="nav-item"><a class="nav-link" href="#about" data-translation="menu1"></a></li>
+						<li class="nav-item"><a class="nav-link" href="#getcopy" data-translation="menu2"></a></li>
+						<li class="nav-item"><a class="nav-link" href="#preview" data-translation="menu3"></a></li>
+						<li class="nav-item"><a class="nav-link" href="#reviews" data-translation="menu4"></a></li>
+						<li class="nav-item"><a class="nav-link" href="#mass-media" data-translation="menu5"></a></li>
+						<li class="nav-item"><a class="nav-link" href="https://federicostories.blogspot.com" target="_blank">Blog</a></li>
 					</ul>
-				</nav><!-- #nav-menu-container -->
+				</div>
 			</div>
-		</div>
+		</nav>
 	</header><!-- #header -->
 
 	<!-- start banner Area -->
@@ -181,7 +180,7 @@ https://goo.gl/forms/JArck4uzbGGmTuG72
 
 						<!-- Button toggles collapse on mobile -->
 						<button class="btn btn-secondary d-block d-md-none mx-auto m-4" type="button"
-							data-toggle="collapse" data-target="#moreAuthorsCollapse" aria-expanded="false"
+							data-bs-toggle="collapse" data-bs-target="#moreAuthorsCollapse" aria-expanded="false"
 							aria-controls="moreAuthorsCollapse" id="btnReadMore" data-translation="readMore"></button>
 						<br>
 						<picture>
@@ -210,7 +209,7 @@ https://goo.gl/forms/JArck4uzbGGmTuG72
 				</div>
 			</div>
 			<div class="row d-none d-lg-flex">
-				<div id="multiItemCarousel" class="carousel slide" data-ride="carousel">
+				<div id="multiItemCarousel" class="carousel slide" data-bs-ride="carousel">
 					<div class="carousel-inner">
 
 						<!-- First group of 3 -->
@@ -223,10 +222,9 @@ https://goo.gl/forms/JArck4uzbGGmTuG72
 											<h4 data-translation="edition10"></h4>
 										</div>
 										<p data-translation="edition11"></p>
-										<div class="price-bottom">
-											<span class="h1" data-translation="price5"></span>
-											<a href="https://adbl.co/4cN14Bw" target="_blank" class="primary-btn"
-												data-translation="editionP" id="tEdition10"></a>
+										<div class="price-bottom row gx-3 gy-2 align-items-center justify-content-center">
+											<div class="col-auto"><span class="h1" data-translation="price5"></span></div><div class="col-auto"><a href="https://adbl.co/4cN14Bw" target="_blank" class="primary-btn"
+												data-translation="editionP" id="tEdition10"></a></div>
 										</div>
 									</div>
 								</div>
@@ -237,10 +235,9 @@ https://goo.gl/forms/JArck4uzbGGmTuG72
 											<h4 data-translation="edition4"></h4>
 										</div>
 										<p data-translation="edition5"></p>
-										<div class="price-bottom price-bottom-r">
-											<span class="h1" data-translation="price1"></span>
-											<a href="https://a.co/d/0lxSZqi" target="_blank" class="primary-btn"
-												data-translation="editionP" id="tEdition4"></a>
+										<div class="price-bottom price-bottom-r row gx-3 gy-2 align-items-center justify-content-center">
+											<div class="col-auto"><span class="h1" data-translation="price1"></span></div><div class="col-auto"><a href="https://a.co/d/0lxSZqi" target="_blank" class="primary-btn"
+												data-translation="editionP" id="tEdition4"></a></div>
 										</div>
 									</div>
 								</div>
@@ -251,10 +248,9 @@ https://goo.gl/forms/JArck4uzbGGmTuG72
 											<h4 data-translation="edition8"></h4>
 										</div>
 										<p data-translation="edition9"></p>
-										<div class="price-bottom">
-											<span class="h1" data-translation="price4"></span>
-											<a href="https://amzn.to/42ntuys" target="_blank" class="primary-btn"
-												data-translation="editionP" id="tEdition8"></a>
+										<div class="price-bottom row gx-3 gy-2 align-items-center justify-content-center">
+											<div class="col-auto"><span class="h1" data-translation="price4"></span></div><div class="col-auto"><a href="https://amzn.to/42ntuys" target="_blank" class="primary-btn"
+												data-translation="editionP" id="tEdition8"></a></div>
 										</div>
 									</div>
 								</div>
@@ -271,10 +267,9 @@ https://goo.gl/forms/JArck4uzbGGmTuG72
 											<h4 data-translation="edition12"></h4>
 										</div>
 										<p data-translation="edition13"></p>
-										<div class="price-bottom">
-											<span class="h1" data-translation="price6"></span>
-											<a href="https://bit.ly/3Ewg6yH" target="_blank" class="primary-btn"
-												data-translation="editionP" id="tEdition12"></a>
+										<div class="price-bottom row gx-3 gy-2 align-items-center justify-content-center">
+											<div class="col-auto"><span class="h1" data-translation="price6"></span></div><div class="col-auto"><a href="https://bit.ly/3Ewg6yH" target="_blank" class="primary-btn"
+												data-translation="editionP" id="tEdition12"></a></div>
 										</div>
 									</div>
 								</div>
@@ -285,10 +280,9 @@ https://goo.gl/forms/JArck4uzbGGmTuG72
 											<h4 data-translation="edition2"></h4>
 										</div>
 										<p data-translation="edition3"></p>
-										<div class="price-bottom price-bottom-r">
-											<span class="h1" data-translation="price2"></span>
-											<a href="https://amzn.to/3Y6oED1" target="_blank" class="primary-btn"
-												data-translation="editionP" id="tEdition2"></a>
+										<div class="price-bottom price-bottom-r row gx-3 gy-2 align-items-center justify-content-center">
+											<div class="col-auto"><span class="h1" data-translation="price2"></span></div><div class="col-auto"><a href="https://amzn.to/3Y6oED1" target="_blank" class="primary-btn"
+												data-translation="editionP" id="tEdition2"></a></div>
 										</div>
 									</div>
 								</div>
@@ -299,10 +293,9 @@ https://goo.gl/forms/JArck4uzbGGmTuG72
 											<h4 data-translation="edition6"></h4>
 										</div>
 										<p data-translation="edition7"></p>
-										<div class="price-bottom">
-											<span class="h1" data-translation="price3"></span>
-											<a href="https://amzn.to/4cDrhSF" target="_blank" class="primary-btn"
-												data-translation="editionP" id="tEdition6"></a>
+										<div class="price-bottom row gx-3 gy-2 align-items-center justify-content-center">
+											<div class="col-auto"><span class="h1" data-translation="price3"></span></div><div class="col-auto"><a href="https://amzn.to/4cDrhSF" target="_blank" class="primary-btn"
+												data-translation="editionP" id="tEdition6"></a></div>
 										</div>
 									</div>
 								</div>
@@ -313,16 +306,16 @@ https://goo.gl/forms/JArck4uzbGGmTuG72
 
 					<!-- Controls -->
 					<a class="carousel-control-prev" aria-label="back" href="#multiItemCarousel" role="button"
-						data-slide="prev">
+						data-bs-slide="prev">
 						<span class="carousel-control-prev-icon"></span>
 					</a>
 					<a class="carousel-control-next" aria-label="next" href="#multiItemCarousel" role="button"
-						data-slide="next">
+						data-bs-slide="next">
 						<span class="carousel-control-next-icon"></span>
 					</a>
 				</div>
 			</div>
-			<div id="galleryCarousel" class="carousel slide d-block d-lg-none" data-ride="carousel">
+			<div id="galleryCarousel" class="carousel slide d-block d-lg-none" data-bs-ride="carousel">
 				<div class="carousel-inner">
 					<div class="carousel-item active">
 						<div class="single-price no-padding">
@@ -330,86 +323,79 @@ https://goo.gl/forms/JArck4uzbGGmTuG72
 								<h4 data-translation="edition10"></h4>
 							</div>
 							<p data-translation="edition11"></p>
-							<div class="price-bottom eBPrice">
-								<span class="h1" data-translation="price5"></span><br>
-								<a href="https://adbl.co/4cN14Bw" target="_blank" class="primary-btn"
-									data-translation="editionP"></a>
+							<div class="price-bottom eBPrice row gx-3 gy-2 align-items-center justify-content-center">
+								<div class="col-auto"><span class="h1" data-translation="price5"></span></div><div class="col-auto"><a href="https://adbl.co/4cN14Bw" target="_blank" class="primary-btn"
+									data-translation="editionP"></a></div>
 							</div>
 						</div>
 					</div>
-					<div class="carousel-item">
-						<div class="single-price no-padding">
-							<div class="price-top">
-								<h4 data-translation="edition4"></h4>
-							</div>
-							<p data-translation="edition5"></p>
-							<div class="price-bottom eBPriceR">
-								<span class="h1" data-translation="price1"></span><br>
-								<a href="https://a.co/d/0lxSZqi" target="_blank" class="primary-btn header-btn"
-									data-translation="editionP"></a>
-							</div>
-						</div>
-					</div>
-					<div class="carousel-item">
-						<div class="single-price no-padding">
-							<div class="price-top">
-								<h4 data-translation="edition8"></h4>
-							</div>
-							<p data-translation="edition9"></p>
-							<div class="price-bottom eBPrice">
-								<span class="h1" data-translation="price4"></span><br>
-								<a href="https://amzn.to/42ntuys" target="_blank" class="primary-btn"
-									data-translation="editionP"></a>
-							</div>
-						</div>
-					</div>
-					<div class="carousel-item">
-						<div class="single-price no-padding">
-							<div class="price-top">
-								<h4 data-translation="edition12"></h4>
-							</div>
-							<p data-translation="edition13"></p>
-							<div class="price-bottom eBPrice">
-								<span class="h1" data-translation="price6"></span><br>
-								<a href="https://bit.ly/3Ewg6yH" target="_blank" class="primary-btn"
-									data-translation="editionP"></a>
-							</div>
-						</div>
-					</div>
-					<div class="carousel-item">
-						<div class="single-price no-padding">
-							<div class="price-top">
-								<h4 data-translation="edition2"></h4>
-							</div>
-							<p data-translation="edition3"></p>
-							<div class="price-bottom eBPriceR">
-								<span class="h1" data-translation="price2"></span><br>
-								<a href="https://amzn.to/3Y6oED1" target="_blank" class="primary-btn header-btn"
-									data-translation="editionP"></a>
-							</div>
-						</div>
-					</div>
-					<div class="carousel-item">
-						<div class="single-price no-padding">
-							<div class="price-top">
-								<h4 data-translation="edition6"></h4>
-							</div>
-							<p data-translation="edition7"></p>
-							<div class="price-bottom eBPrice">
-								<span class="h1" data-translation="price3"></span><br>
-								<a href="https://amzn.to/4cDrhSF" target="_blank" class="primary-btn"
-									data-translation="editionP"></a>
-							</div>
-						</div>
-					</div>
-				</div>
+                    <div class="carousel-item">
+                        <div class="single-price no-padding">
+                            <div class="price-top">
+                                <h4 data-translation="edition4"></h4>
+                            </div>
+                            <p data-translation="edition5"></p>
+                            <div class="price-bottom eBPriceR row gx-3 gy-2 align-items-center justify-content-center">
+                                <div class="col-auto"><span class="h1" data-translation="price1"></span></div>
+                                <div class="col-auto"><a href="https://a.co/d/0lxSZqi" target="_blank" class="primary-btn header-btn" data-translation="editionP"></a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="single-price no-padding">
+                            <div class="price-top">
+                                <h4 data-translation="edition8"></h4>
+                            </div>
+                            <p data-translation="edition9"></p>
+                            <div class="price-bottom eBPrice row gx-3 gy-2 align-items-center justify-content-center">
+                                <div class="col-auto"><span class="h1" data-translation="price4"></span></div>
+                                <div class="col-auto"><a href="https://amzn.to/42ntuys" target="_blank" class="primary-btn" data-translation="editionP"></a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="single-price no-padding">
+                            <div class="price-top">
+                                <h4 data-translation="edition12"></h4>
+                            </div>
+                            <p data-translation="edition13"></p>
+                            <div class="price-bottom eBPrice row gx-3 gy-2 align-items-center justify-content-center">
+                                <div class="col-auto"><span class="h1" data-translation="price6"></span></div>
+                                <div class="col-auto"><a href="https://bit.ly/3Ewg6yH" target="_blank" class="primary-btn" data-translation="editionP"></a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="single-price no-padding">
+                            <div class="price-top">
+                                <h4 data-translation="edition2"></h4>
+                            </div>
+                            <p data-translation="edition3"></p>
+                            <div class="price-bottom eBPriceR row gx-3 gy-2 align-items-center justify-content-center">
+                                <div class="col-auto"><span class="h1" data-translation="price2"></span></div>
+                                <div class="col-auto"><a href="https://amzn.to/3Y6oED1" target="_blank" class="primary-btn header-btn" data-translation="editionP"></a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="single-price no-padding">
+                            <div class="price-top">
+                                <h4 data-translation="edition6"></h4>
+                            </div>
+                            <p data-translation="edition7"></p>
+                            <div class="price-bottom eBPrice row gx-3 gy-2 align-items-center justify-content-center">
+                                <div class="col-auto"><span class="h1" data-translation="price3"></span></div>
+                                <div class="col-auto"><a href="https://amzn.to/4cDrhSF" target="_blank" class="primary-btn" data-translation="editionP"></a></div>
+                            </div>
+                        </div>
+                    </div>
 				<!-- Controls -->
 				<a class="carousel-control-prev" aria-label="back" href="#galleryCarousel" role="button"
-					data-slide="prev">
+					data-bs-slide="prev">
 					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
 				</a>
 				<a class="carousel-control-next" aria-label="next" href="#galleryCarousel" role="button"
-					data-slide="next">
+					data-bs-slide="next">
 					<span class="carousel-control-next-icon" aria-hidden="true"></span>
 				</a>
 			</div>
@@ -636,7 +622,7 @@ https://goo.gl/forms/JArck4uzbGGmTuG72
 			</div>
 
 			<!-- MOBILE VERSION (Carousel, visible on sm and below) -->
-			<div id="mMediaCarousel" class="carousel slide d-block d-lg-none" data-ride="carousel">
+			<div id="mMediaCarousel" class="carousel slide d-block d-lg-none" data-bs-ride="carousel">
 				<div class="carousel-inner">
 
 					<!-- Slide 1 -->
@@ -719,11 +705,11 @@ https://goo.gl/forms/JArck4uzbGGmTuG72
 
 				<!-- Controls -->
 				<a class="carousel-control-prev" aria-label="back" href="#mMediaCarousel" role="button"
-					data-slide="prev">
+					data-bs-slide="prev">
 					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
 				</a>
 				<a class="carousel-control-next" aria-label="next" href="#mMediaCarousel" role="button"
-					data-slide="next">
+					data-bs-slide="next">
 					<span class="carousel-control-next-icon" aria-hidden="true"></span>
 				</a>
 			</div>
@@ -767,7 +753,7 @@ https://goo.gl/forms/JArck4uzbGGmTuG72
 					</div>
 				</div>
 				<div class="col-lg-5 col-md-6 col-sm-6 text-center">
-					<a data-toggle='modal' class="btn btn-primary mb-4" data-target='#mContactUs' href='#mContactUs'
+					<a data-bs-toggle="modal" class="btn btn-primary mb-4" data-bs-target="#mContactUs" href="#mContactUs"
 						data-translation="contactMe"></a>
 					<div id="google_translate_element"></div>
 				</div>
@@ -811,7 +797,7 @@ https://goo.gl/forms/JArck4uzbGGmTuG72
 			<div class="modal-content">
 				<div class="modal-header">
 					<h4 class="modal-title" data-translation="legend21"></h4>
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<!-- Modal body -->
 				<div class="modal-body yVideo">
@@ -828,7 +814,7 @@ https://goo.gl/forms/JArck4uzbGGmTuG72
 		<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<!-- Modal body -->
 				<div class="modal-body" id="divContactUs"></div>
@@ -843,9 +829,8 @@ https://goo.gl/forms/JArck4uzbGGmTuG72
 				<!-- Modal Header -->
 				<div class="modal-header">
 					<h4 class="modal-title" data-translation="stories"></h4>
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
-
 				<!-- Modal body -->
 				<div class="modal-body">
 					<div class="col-sm">
@@ -894,11 +879,9 @@ https://goo.gl/forms/JArck4uzbGGmTuG72
 
 	<script src="js/vendor/jquery.js"></script>
 	<!--script src="js/links_translations.min.js"></script-->
-	<script src="js/vendor/boostrap/bootstrap.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+	<script src="js/translations.js"></script>
 	<script src="js/easing.min.js"></script>
-	<script src="js/hoverIntent.min.js"></script>
-	<script src="js/superfish.min.js"></script>
-	<script src="js/jquery.sticky.js"></script>
 	<script src="js/main.min.js"></script>
 	<script src="js/map.min.js"></script>
 
@@ -921,3 +904,6 @@ https://goo.gl/forms/JArck4uzbGGmTuG72
 </body>
 
 </html>
+
+
+
