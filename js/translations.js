@@ -66,6 +66,55 @@ fetchData(`js/i18n/lang-${lang}.min.json`)
             document.getElementById('btnEditor').style.setProperty("display", "none", "important");
         }
 
+        const carouselCards = [
+            {
+                edition: 'edition4',
+                text: 'edition5',
+                price: 'price1',
+                href: 'https://a.co/d/hIKdELB',
+                itemClass: 'col-12 col-md-6 col-lg-4',
+                desktopBottomClass: '',
+                mobileBottomClass: 'eBPrice',
+                desktop: { leftClass: 'row-auto', rightClass: 'row-auto' },
+                mobile: { leftClass: 'row-auto', rightClass: 'row-auto' }
+            },
+            {
+                edition: 'edition2',
+                text: 'edition3',
+                price: 'price2',
+                href: 'https://amzn.to/4jVgzcE',
+                itemClass: 'col-12 col-md-6 col-lg-4',
+                desktopBottomClass: 'price-bottom-r',
+                mobileBottomClass: 'eBPriceR',
+                desktop: { leftClass: 'row-auto', rightClass: 'row-auto' },
+                mobile: { leftClass: 'row-auto', rightClass: 'row-auto' }
+            },
+            {
+                edition: 'edition6',
+                text: 'edition7',
+                price: 'price3',
+                href: 'https://bit.ly/4d86GGG',
+                itemClass: 'col-12 col-md-6 col-lg-4 d-none d-lg-block',
+                desktopBottomClass: '',
+                mobileBottomClass: 'eBPrice',
+                desktop: { leftClass: 'row-auto', rightClass: 'row-auto' },
+                mobile: { leftClass: 'row-auto', rightClass: 'row-auto' }
+            }
+        ];
+
+        const buildPriceCard = ({ edition, text, price, href, leftClass, rightClass, bottomClass = '', itemClass = '' }) => `
+            <div${itemClass ? ` class="${itemClass}"` : ''}>
+              <div class="single-price no-padding">
+                <div class="price-top">
+                  <h4 data-translation="${edition}"></h4>
+                </div>
+                <p data-translation="${text}"></p>
+                <div class="price-bottom ${bottomClass} row-auto gx-3 gy-2 align-items-center justify-content-center">
+                  <div class="${leftClass}"><span class="h1" data-translation="${price}"></span><span style='height: 0.25rem'><div class="${rightClass}"><a href="${href}" target="_blank" class="primary-btn" data-translation="editionP"></a></div></div>
+                </div>
+              </div>
+            </div>`;
+
         const desktopCarouselInner = document.querySelector('#multiItemCarousel .carousel-inner');
         const mobileCarouselInner = document.querySelector('#galleryCarousel .carousel-inner');
 
@@ -73,78 +122,36 @@ fetchData(`js/i18n/lang-${lang}.min.json`)
             desktopCarouselInner.innerHTML = `
                 <div class="carousel-item active">
                   <div class="row">
-                    <div class="col-12 col-md-6 col-lg-4">
-                      <div class="single-price no-padding">
-                        <div class="price-top">
-                          <h4 data-translation="edition4"></h4>
-                        </div>
-                        <p data-translation="edition5"></p>
-                        <div class="price-bottom row gx-3 gy-2 align-items-center justify-content-center">
-                          <div class="row-auto"><span class="h1" data-translation="price1"></span></div><div class="row-auto"><a href="https://a.co/d/hIKdELB" target="_blank" class="primary-btn" data-translation="editionP"></a></div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-12 col-md-6 col-lg-4">
-                      <div class="single-price no-padding">
-                        <div class="price-top">
-                          <h4 data-translation="edition2"></h4>
-                        </div>
-                        <p data-translation="edition3"></p>
-                        <div class="price-bottom price-bottom-r row gx-3 gy-2 align-items-center justify-content-center">
-                          <div class="col-auto"><span class="h1" data-translation="price2"></span></div><div class="row-auto"><a href="https://amzn.to/4jVgzcE" target="_blank" class="primary-btn" data-translation="editionP"></a></div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-12 col-md-6 col-lg-4 d-none d-lg-block">
-                      <div class="single-price no-padding">
-                        <div class="price-top">
-                          <h4 data-translation="edition6"></h4>
-                        </div>
-                        <p data-translation="edition7"></p>
-                        <div class="price-bottom row gx-3 gy-2 align-items-center justify-content-center">
-                          <div class="row-auto"><span class="h1" data-translation="price3"></span></div><div class="row-auto"><a href="https://bit.ly/4d86GGG" target="_blank" class="primary-btn" data-translation="editionP"></a></div>
-                        </div>
-                      </div>
-                    </div>
+                    ${carouselCards.map(card => buildPriceCard({
+                        edition: card.edition,
+                        text: card.text,
+                        price: card.price,
+                        href: card.href,
+                        leftClass: card.desktop.leftClass,
+                        rightClass: card.desktop.rightClass,
+                        bottomClass: card.desktopBottomClass,
+                        itemClass: card.itemClass
+                    })).join('')}
                   </div>
                 </div>`;
         }
 
         if (mobileCarouselInner) {
             mobileCarouselInner.innerHTML = `
-                <div class="carousel-item active">
-                  <div class="single-price no-padding">
-                    <div class="price-top">
-                      <h4 data-translation="edition4"></h4>
+                ${carouselCards.map((card, index) => `
+                    <div class="carousel-item${index === 0 ? ' active' : ''}">
+                      ${buildPriceCard({
+                        edition: card.edition,
+                        text: card.text,
+                        price: card.price,
+                        href: card.href,
+                        leftClass: card.mobile.leftClass,
+                        rightClass: card.mobile.rightClass,
+                        bottomClass: card.mobileBottomClass,
+                        itemClass: ''
+                    })}
                     </div>
-                    <p data-translation="edition5"></p>
-                    <div class="price-bottom row gx-3 gy-2 align-items-center justify-content-center">
-                      <div class="row-auto"><span class="h1" data-translation="price1"></span></div><div class="col-auto"><a href="https://a.co/d/hIKdELB" target="_blank" class="primary-btn" data-translation="editionP"></a></div>
-                    </div>
-                  </div>
-                </div>
-                <div class="carousel-item">
-                  <div class="single-price no-padding">
-                    <div class="price-top">
-                      <h4 data-translation="edition2"></h4>
-                    </div>
-                    <p data-translation="edition3"></p>
-                    <div class="price-bottom eBPriceR row gx-3 gy-2 align-items-center justify-content-center">
-                      <div class="row-auto"><span class="h1" data-translation="price2"></span></div><div class="row-auto"><a href="https://amzn.to/4jVgzcE" target="_blank" class="primary-btn" data-translation="editionP"></a></div>
-                    </div>
-                  </div>
-                </div>
-                <div class="carousel-item">
-                  <div class="single-price no-padding">
-                    <div class="price-top">
-                      <h4 data-translation="edition6"></h4>
-                    </div>
-                    <p data-translation="edition7"></p>
-                    <div class="price-bottom row gx-3 gy-2 align-items-center justify-content-center">
-                      <div class="row-auto"><span class="h1" data-translation="price3"></span></div><div class="row-auto"><a href="https://bit.ly/4d86GGG" target="_blank" class="primary-btn" data-translation="editionP"></a></div>
-                    </div>
-                  </div>
-                </div>`;
+                `).join('')}`;
         }
 
         // Re-run translation injection on the newly inserted elements

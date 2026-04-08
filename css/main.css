@@ -2618,8 +2618,12 @@ body.mobile-nav-active #mobile-nav-toggle {
     -o-transition: all 0.3s ease 0s;
     transition: all 0.3s ease 0s;
 }
-.single-price .price-bottom .col-auto {
+.single-price .price-bottom .col-auto,
+.single-price .price-bottom .row-auto {
     padding: 0;
+    flex: 0 0 auto;
+    width: auto;
+    max-width: 100%;
 }
 .single-price .price-bottom .h1 {
     font-size: 60px;
