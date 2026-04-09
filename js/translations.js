@@ -235,10 +235,10 @@ fetchData(`js/i18n/lang-${lang}.min.json`)
     document.title = translations.title;
 
     if (lang === "es") {
-      const tEdition10 = document.getElementById("tEdition10");
-      const tEdition4 = document.getElementById("tEdition4");
-      const tEdition2 = document.getElementById("tEdition2");
-      const tEdition6 = document.getElementById("tEdition6");
+      //const tEdition10 = document.getElementById("tEdition10");
+      //const tEdition4 = document.getElementById("tEdition4");
+      //const tEdition2 = document.getElementById("tEdition2");
+      //const tEdition6 = document.getElementById("tEdition6");
 
       document.querySelector("#div-book picture").innerHTML = `
                 <source srcset="img/cover-colorized-v2-sm-es.webp" type="image/webp">
@@ -247,12 +247,12 @@ fetchData(`js/i18n/lang-${lang}.min.json`)
                     src="img/cover-colorized-v2-sm-es.jpg" />
             `;
 
-      tEdition10.href = "https://adbl.co/4qExKCP";
-      tEdition4.href = "https://a.co/d/cVQ0B39";
-      document.getElementById("dEdition8").style.display = "none";
-      document.getElementById("dEdition12").style.display = "none";
-      tEdition2.href = "https://a.co/d/e4W03f0";
-      tEdition6.href = "https://a.co/d/6ycRDq4";
+      //tEdition10.href = "https://adbl.co/4qExKCP";
+      //tEdition4.href = "https://a.co/d/cVQ0B39";
+      //document.getElementById("dEdition8").style.display = "none";
+      //document.getElementById("dEdition12").style.display = "none";
+      //tEdition2.href = "https://a.co/d/e4W03f0";
+      //tEdition6.href = "https://a.co/d/6ycRDq4";
 
       document
         .getElementById("btnEditor")
