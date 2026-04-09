@@ -43,37 +43,6 @@
         "sGreetings1": "<span>Marcos Soriano</span> <br>Illustrator",
         "sGreetings2": "<span>Samantha Bahn-Williams</span> <br>Editor",
         "preview1": "Look inside",
-        "legend1": "Sir Francis Drake, The First Pirate of The Pacific",
-        "legend2": "The Death of The Sorcerer of La Nahuaterique",
-        "legend3": "The Mulus",
-        "legend4": "The Almighty Tlaloc",
-        "legend5": "The Mysterious Woman of The Toad River",
-        "legend6": "Lake Ilopango",
-        "legend7": "The Bewitched Wagon",
-        "legend8": "The Dwarf",
-        "legend9": "The Bandari Witch",
-        "legend10": "The Weeping Woman",
-        "legend11": "The Virgin of Izalco",
-        "legend12": "The Headless Horseman",
-        "legend13": "Tenancin, Cipitio's girlfriend",
-        "legend14": "Prince Atonal",
-        "legend15": "The Pirate Treasures of Meanguera Island",
-        "legend16": "The Black Horse",
-        "legend17": "Tangaloa “The Guardian of The Sea”",
-        "legend18": "The Cocoa",
-        "legend19": "Lake Coatepeque Snake",
-        "legend20": "The Woman of The Chinchontepec",
-        "legend21": "The Amate Flower",
-        "legend22": "Titilcíhuat “The Fire Woman”",
-        "legend23": "The Arbolarios",
-        "legend24": "Devil's Pool and its twin",
-        "legend25": "The Frogfish",
-        "legend26": "The Eruption of The San Salvador Volcano",
-        "legend27": "The Giantess of Jocoro",
-        "legend28": "The Bewitched Rock",
-        "legend29": "The Old Church of San Dionisio",
-        "legend30": "The Cukinca Cave",
-        "legend31": "Cuicuizcatl and The Chinchontepec Underworlds",
         "old0": "Did you miss the previous volumes?",
         "old1": "<span>Timeless Stories of El Salvador V1: The Beginning</span>",
         "old2": "<span>Historias Eternas de El Salvador V1: El Comienzo</span>",
@@ -94,14 +63,96 @@
         "contactMe": "Contact me",
         "readMore": "Read more",
         "readLess": "Read less",
-        "comingSoon": "Coming soon",
+        "comingSoon": "May 1<sup>st</sup>",
         "title": "Timeless Stories of El Salvador | Folklore, Legends & Fairy tales",
         "links": {
             "prezi": "3OA2BbhRZgysnB22bzdX",
-            "book": "B09Z33ZPTV",
+            "book": "B0GV3V9YDK",
             "contactUs": {
                 "key": "hkz0rsUoNkGpGQYpoPHBzg",
                 "form": "4"
+            }
+        },
+        "mapLegends": {
+            "blackKnight": {
+                "name": "The Black Knight",
+                "desc": "The devil incarnate."
+            },
+            "siguanaba": {
+                "name": "The Siguanaba",
+                "desc": "A female spirit that scares men."
+            },
+            "goodAndBadCadejo": {
+                "name": "The good and the bad Cadejo",
+                "desc": "A pair of beasts that protect or scare people at night."
+            },
+            "mulus": {
+                "name": "The Mulus",
+                "desc": "A beast that lives in the cemeteries."
+            },
+            "funeralCortegeOfChalchuapa": {
+                "name": "The Funeral Cortege of Chalchuapa",
+                "desc": "A nighttime procession of the dead."
+            },
+            "fairJudgeOfTheNight": {
+                "name": "The Fair Judge of the Night",
+                "desc": "A judge that appears at night to punish the guilty."
+            },
+            "weepingWoman": {
+                "name": "The Weeping Woman",
+                "desc": "A woman that cries in the cemeteries."
+            },
+            "headlessPriest": {
+                "name": "The Headless Priest",
+                "desc": "A priest that was decapitated and now roams the streets."
+            },
+            "fleshlessWoman": {
+                "name": "The Fleshless Woman",
+                "desc": "A female spirit that scares men in the streets at night."
+            },
+            "dwarf": {
+                "name": "The Dwarf",
+                "desc": "A mischievous being that bothers pretty girls."
+            },
+            "caveOfSalamanca": {
+                "name": "The Cave of Salamanca",
+                "desc": "A professor that teaches dark arts."
+            },
+            "midnightWasherwomen": {
+                "name": "The Midnight Washerwomen",
+                "desc": "Female spirits that scares men."
+            },
+            "dip": {
+                "name": "The Dip",
+                "desc": "A vampire dog that scares people at night."
+            },
+            "urco": {
+                "name": "The Urco",
+                "desc": "A beast that represents death."
+            },
+            "holyCompany": {
+                "name": "The Holy Company",
+                "desc": "A nighttime procession of the dead."
+            },
+            "gaueko": {
+                "name": "Gaueko",
+                "desc": "A being that rules the night."
+            },
+            "ploranera": {
+                "name": "The Ploranera",
+                "desc": "A woman that cries in the Barceloneta."
+            },
+            "ghostOfSanGines": {
+                "name": "The Ghost of San Ginés",
+                "desc": "A ghost that appears in the Church of San Ginés."
+            },
+            "girlOnTheCurve": {
+                "name": "The Girl on the Curve",
+                "desc": "A female spirit that warns men in the streets at night."
+            },
+            "trasgu": {
+                "name": "The Trasgu",
+                "desc": "A mischievous being that bothers girls."
             }
         }
     }

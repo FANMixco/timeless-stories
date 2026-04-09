@@ -43,37 +43,6 @@
         "sGreetings1": "<span>马科斯·索里亚诺</span><br>插画师",
         "sGreetings2": "<span>萨曼莎·本·威廉姆斯</span><br>编辑",
         "preview1": "看看里面",
-        "legend1": "弗朗西斯·德雷克爵士,太平洋第一海盗",
-        "legend2": "拉纳瓦特里克的巫师之死",
-        "legend3": "骡子",
-        "legend4": "全能的特拉洛克",
-        "legend5": "蛤蟆河的神秘女人",
-        "legend6": "伊洛潘戈湖",
-        "legend7": "被蛊惑的货车",
-        "legend8": "矮人",
-        "legend9": "女猴女巫",
-        "legend10": "哭泣的女人",
-        "legend11": "伊萨尔科圣母",
-        "legend12": "无头骑士",
-        "legend13": "特南辛，西皮蒂奥的女友",
-        "legend14": "阿托纳尔王子",
-        "legend15": "棉格拉岛的海盗宝藏",
-        "legend16": "黑马",
-        "legend17": "海的守护者 “唐加洛亚”",
-        "legend18": "可可",
-        "legend19": "科泰佩克湖蛇",
-        "legend20": "秦琼特佩克的女人",
-        "legend21": "阿玛特之花",
-        "legend22": "标题标题 “火女人”",
-        "legend23": "阿贝拉里奥斯",
-        "legend24": "魔鬼池及其孪生兄弟",
-        "legend25": "青蛙鱼",
-        "legend26": "圣萨尔瓦多火山爆发",
-        "legend27": "乔科罗的女巨人",
-        "legend28": "被蛊惑的岩石",
-        "legend29": "圣迪奥尼西奥旧教堂",
-        "legend30": "库金卡山洞",
-        "legend31": "翠翠 和 钦春德佩克的地下世界",
         "old0": "您错过前几卷了吗？",
         "old1": "<span>Timeless Stories of El Salvador V1: The Beginning</span>",
         "old2": "<span>Historias Eternas de El Salvador V1: El Comienzo</span>",
@@ -94,14 +63,96 @@
         "contactMe": "联系我",
         "readMore": "阅读更多",
         "readLess": "少读一点",
-        "comingSoon": "即将到来",
+        "comingSoon": "5月1日",
         "title": "萨尔瓦多的永恒传说 | 民间传说、传奇故事和童话故事",
         "links": {
             "prezi": "8IwA2B6lYhPwonEWAyi9",
-            "book": "B09Z33ZPTV",
+            "book": "B0GV3V9YDK",
             "contactUs": {
                 "key": "hkz0rsUoNkGpGQYpoPHBzg",
                 "form": "4"
+            }
+        },
+        "mapLegends": {
+            "blackKnight": {
+                "name": "黑骑士",
+                "desc": "魔鬼化身。"
+            },
+            "siguanaba": {
+                "name": "西瓜娜巴",
+                "desc": "一个吓唬男人的女性灵魂。"
+            },
+            "goodAndBadCadejo": {
+                "name": "好坏卡德霍",
+                "desc": "一对保护或吓唬人们的野兽。"
+            },
+            "mulus": {
+                "name": "骡子",
+                "desc": "生活在墓地里的野兽。"
+            },
+            "funeralCortegeOfChalchuapa": {
+                "name": "查尔楚阿帕的葬礼队伍",
+                "desc": "一个夜间的死亡游行。"
+            },
+            "fairJudgeOfTheNight": {
+                "name": "夜晚的公正法官",
+                "desc": "一个在夜晚出现来惩罚有罪之人。"
+            },
+            "weepingWoman": {
+                "name": "哭泣的女人",
+                "desc": "一个在墓地里哭泣的女人。"
+            },
+            "headlessPriest": {
+                "name": "无头牧师",
+                "desc": "一个被斩首后在街上游荡的牧师。"
+            },
+            "fleshlessWoman": {
+                "name": "无肉女人",
+                "desc": "一个在夜晚吓唬男人的女性灵魂。"
+            },
+            "dwarf": {
+                "name": "矮人",
+                "desc": "一个困扰漂亮女孩的恶作剧。"
+            },
+            "caveOfSalamanca": {
+                "name": "萨拉曼卡洞穴",
+                "desc": "一个教授黑暗艺术的教授。"
+            },
+            "midnightWasherwomen": {
+                "name": "午夜洗衣妇",
+                "desc": "吓唬男人的女性灵魂。"
+            },
+            "dip": {
+                "name": "浸泡",
+                "desc": "一个在夜晚吓唬人的吸血鬼狗。"
+            },
+            "urco": {
+                "name": "乌尔科",
+                "desc": "一个代表死亡的野兽。"
+            },
+            "holyCompany": {
+                "name": "圣公司",
+                "desc": "一个夜间的死亡游行。"
+            },
+            "gaueko": {
+                "name": "夜晚",
+                "desc": "一个统治夜晚的生物。"
+            },
+            "ploranera": {
+                "name": "哭泣的女人",
+                "desc": "一个在巴塞罗内塔哭泣的女人。"
+            },
+            "ghostOfSanGines": {
+                "name": "圣吉内斯的幽灵",
+                "desc": "一个出现在圣吉内斯教堂的幽灵。"
+            },
+            "girlOnTheCurve": {
+                "name": "弯道上的女孩",
+                "desc": "一个在夜晚警告男人的女性灵魂。"
+            },
+            "trasgu": {
+                "name": "特拉斯古",
+                "desc": "一个调皮的生物，打扰女孩。"
             }
         }
     }
