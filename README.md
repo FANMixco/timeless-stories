@@ -1,6 +1,6 @@
 # Get your copy!
 
-[![The Return of the Black Knight](https://raw.githubusercontent.com/FANMixco/federiconavarrete/refs/heads/master/img/mybook/second_medium.png)](https://a.co/d/brLFF1C)
+[![Spanish Mirrors](https://raw.githubusercontent.com/FANMixco/federiconavarrete/refs/heads/master/img/mybook/mirrors.png)](https://a.co/d/0euSZ7mF)
 
 ## Info from the theme provider
 
