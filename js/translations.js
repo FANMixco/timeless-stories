@@ -55,7 +55,6 @@ const carouselCards = [
     leftClass: "row",
     rightClass: "row-auto",
   },
-  ,
   {
     edition: "edition10",
     text: "edition11",
@@ -231,7 +230,6 @@ window.addEventListener("resize", () => {
 
 fetchData(`js/i18n/lang-${lang}.min.json`)
   .then((data) => {
-    console.log("begin");
     translations = data.translations;
 
     document.title = translations.title;
