@@ -3146,6 +3146,27 @@ h6 {
     height: auto;
 }
 
+.book-card .card {
+    min-height: 220px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border-radius: 12px;
+}
+
+.book-card:hover .card {
+    transform: translateY(-4px);
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+}
+
+.book-card i {
+    color: #2f5da8;
+}
+
+.book-card p {
+    color: #111;
+    font-size: 1.1rem;
+    line-height: 1.35;
+}
+
 @media screen and (max-width: 320px) and (orientation: portrait) {
 
     body,
