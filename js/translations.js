@@ -21,12 +21,218 @@ function applyTranslations() {
   });
 }
 
+const carouselCards = [
+  {
+    edition: "edition4",
+    text: "edition5",
+    price: "price1",
+    href: "https://a.co/d/hIKdELB",
+    itemClass: "col-12 col-md-6 col-lg-4",
+    desktopBottomClass: "",
+    mobileBottomClass: "eBPrice",
+    leftClass: "row",
+    rightClass: "row-auto",
+  },
+  {
+    edition: "edition2",
+    text: "edition3",
+    price: "price2",
+    href: "https://a.co/d/0euSZ7mF",
+    itemClass: "col-12 col-md-6 col-lg-4",
+    desktopBottomClass: "price-bottom-r",
+    mobileBottomClass: "eBPriceR",
+    leftClass: "row",
+    rightClass: "row-auto",
+  },
+  {
+    edition: "edition6",
+    text: "edition7",
+    price: "price3",
+    href: "https://a.co/d/0euSZ7mF",
+    itemClass: "col-12 col-md-6 col-lg-4 d-none d-lg-block",
+    desktopBottomClass: "",
+    mobileBottomClass: "eBPrice",
+    leftClass: "row",
+    rightClass: "row-auto",
+  },
+  ,
+  {
+    edition: "edition10",
+    text: "edition11",
+    price: "price5",
+    href: "https://a.co/d/0euSZ7mF",
+    itemClass: "col-12 col-md-6 col-lg-4 d-none d-lg-block",
+    desktopBottomClass: "",
+    mobileBottomClass: "eBPrice",
+    leftClass: "row",
+    rightClass: "row-auto",
+  },
+];
+
+const carouselCards2 = [
+  {
+    edition: "old4",
+    href: "https://a.co/d/00fMsc8u",
+  },
+  {
+    edition: "old5",
+    href: "https://a.co/d/0c8GXXKx",
+  },
+  {
+    edition: "old1",
+    href: "https://a.co/d/bdxy6Bz",
+  },
+  {
+    edition: "old2",
+    href: "https://a.co/d/5VsAmsE",
+  },
+  {
+    edition: "old3",
+    href: "https://a.co/d/7pP9HgH",
+  },
+];
+
+function getItemsPerSlide() {
+  return window.innerWidth < 768 ? 1 : 3;
+}
+
+function renderPriceCarousel() {
+  const carouselElement = document.getElementById("priceCarousel");
+  const carouselInner = document.getElementById("priceCarouselInner");
+
+  if (!carouselElement || !carouselInner) return;
+
+  const itemsPerSlide = getItemsPerSlide();
+
+  const existingInstance = bootstrap.Carousel.getInstance(carouselElement);
+  if (existingInstance) {
+    existingInstance.dispose();
+  }
+
+  const slides = [];
+
+  for (let i = 0; i < carouselCards.length; i += itemsPerSlide) {
+    const group = carouselCards.slice(i, i + itemsPerSlide);
+
+    slides.push(`
+      <div class="carousel-item ${i === 0 ? "active" : ""}">
+        <div class="row justify-content-center">
+          ${group.map((card) => buildPriceCard(card, itemsPerSlide)).join("")}
+        </div>
+      </div>
+    `);
+  }
+
+  function buildPriceCard(card, itemsPerSlide) {
+    const colClass = itemsPerSlide === 1 ? "col-12" : "col-12 col-md-4";
+    const bottomClass =
+      itemsPerSlide === 1 ? card.mobileBottomClass : card.desktopBottomClass;
+
+    return `
+    <div class="${colClass}">
+      <div class="single-price no-padding">
+        <div class="price-top">
+          <h4 data-translation="${card.edition}"></h4>
+        </div>
+        <p data-translation="${card.text}"></p>
+        <div class="price-bottom ${bottomClass} row gx-3 gy-2 align-items-center justify-content-center">
+          <div class="${card.leftClass}">
+            <span class="h1" data-translation="${card.price}"></span>
+          </div>
+          <div class="${card.rightClass}">
+            <a href="${card.href}" target="_blank" rel="noopener noreferrer" class="primary-btn" data-translation="editionP"></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+  }
+
+  carouselInner.innerHTML = slides.join("");
+
+  if (typeof applyTranslations === "function") {
+    applyTranslations();
+  }
+
+  new bootstrap.Carousel(carouselElement, {
+    interval: false,
+    ride: false,
+    wrap: true,
+  });
+}
+
+function renderBooksCarousel() {
+  const carouselElement = document.getElementById("booksCarousel");
+  const carouselInner = document.getElementById("booksCarouselInner");
+
+  if (!carouselElement || !carouselInner) return;
+
+  const itemsPerSlide = getItemsPerSlide();
+
+  const existingInstance = bootstrap.Carousel.getInstance(carouselElement);
+  if (existingInstance) {
+    existingInstance.dispose();
+  }
+
+  const slides = [];
+
+  for (let i = 0; i < carouselCards2.length; i += itemsPerSlide) {
+    const group = carouselCards2.slice(i, i + itemsPerSlide);
+
+    slides.push(`
+      <div class="carousel-item ${i === 0 ? "active" : ""}">
+        <div class="row justify-content-center g-4">
+          ${group.map((card) => buildBookCard(card, itemsPerSlide)).join("")}
+        </div>
+      </div>
+    `);
+  }
+
+  function buildBookCard(card, itemsPerSlide) {
+    const colClass = itemsPerSlide === 1 ? "col-12" : "col-12 col-md-4";
+
+    return `
+    <div class="${colClass}">
+      <a class="book-card text-decoration-none d-block h-100" href="${card.href}" target="_blank" rel="noopener noreferrer">
+        <div class="card h-100 text-center shadow-sm border-0">
+          <div class="card-body d-flex flex-column justify-content-center">
+            <i class="icon-download mb-3 fs-1" aria-hidden="true"></i>
+            <p class="mb-0 fw-semibold" data-translation="${card.edition}"></p>
+          </div>
+        </div>
+      </a>
+    </div>`;
+  }
+
+  carouselInner.innerHTML = slides.join("");
+
+  if (typeof applyTranslations === "function") {
+    applyTranslations();
+  }
+
+  new bootstrap.Carousel(carouselElement, {
+    interval: false,
+    ride: false,
+    wrap: true,
+  });
+}
+
+let currentCarouselMode = getItemsPerSlide();
+
+window.addEventListener("resize", () => {
+  const newMode = getItemsPerSlide();
+
+  if (newMode !== currentCarouselMode) {
+    currentCarouselMode = newMode;
+    renderPriceCarousel();
+    renderBooksCarousel();
+  }
+});
+
 fetchData(`js/i18n/lang-${lang}.min.json`)
   .then((data) => {
     console.log("begin");
     translations = data.translations;
-
-    applyTranslations();
 
     document.title = translations.title;
 
@@ -55,116 +261,7 @@ fetchData(`js/i18n/lang-${lang}.min.json`)
         .style.setProperty("display", "none", "important");
     }
 
-    const carouselCards = [
-      {
-        edition: "edition4",
-        text: "edition5",
-        price: "price1",
-        href: "https://a.co/d/hIKdELB",
-        itemClass: "col-12 col-md-6 col-lg-4",
-        desktopBottomClass: "",
-        mobileBottomClass: "eBPrice",
-        desktop: { leftClass: "row-auto", rightClass: "row-auto" },
-        mobile: { leftClass: "row-auto", rightClass: "row-auto" },
-      },
-      {
-        edition: "edition2",
-        text: "edition3",
-        price: "price2",
-        href: "https://a.co/d/0euSZ7mF",
-        itemClass: "col-12 col-md-6 col-lg-4",
-        desktopBottomClass: "price-bottom-r",
-        mobileBottomClass: "eBPriceR",
-        leftClass: "row-auto",
-        rightClass: "row-auto" 
-      },
-      {
-        edition: "edition6",
-        text: "edition7",
-        price: "price3",
-        href: "https://a.co/d/0euSZ7mF",
-        itemClass: "col-12 col-md-6 col-lg-4 d-none d-lg-block",
-        desktopBottomClass: "",
-        mobileBottomClass: "eBPrice",
-        leftClass: "row-auto",
-        rightClass: "row-auto" 
-      },
-    ];
-
-    const buildPriceCard = ({
-      edition,
-      text,
-      price,
-      href,
-      leftClass,
-      rightClass,
-      bottomClass = "",
-      itemClass = "",
-    }) => `
-            <div${itemClass ? ` class="${itemClass}"` : ""}>
-              <div class="single-price no-padding">
-                <div class="price-top">
-                  <h4 data-translation="${edition}"></h4>
-                </div>
-                <p data-translation="${text}"></p>
-                <div class="price-bottom ${bottomClass} row-auto gx-3 gy-2 align-items-center justify-content-center">
-                  <div class="${leftClass}"><span class="h1" data-translation="${price}"></span><span style='height: 0.25rem'><div class="${rightClass}"><a href="${href}" target="_blank" class="primary-btn" data-translation="editionP"></a></div></div>
-                </div>
-              </div>
-            </div>`;
-
-    const desktopCarouselInner = document.querySelector(
-      "#multiItemCarousel .carousel-inner",
-    );
-    const mobileCarouselInner = document.querySelector(
-      "#galleryCarousel .carousel-inner",
-    );
-
-    if (desktopCarouselInner) {
-      desktopCarouselInner.innerHTML = `
-                <div class="carousel-item active">
-                  <div class="row">
-                    ${carouselCards
-                      .map((card) =>
-                        buildPriceCard({
-                          edition: card.edition,
-                          text: card.text,
-                          price: card.price,
-                          href: card.href,
-                          leftClass: card.leftClass,
-                          rightClass: card.rightClass,
-                          bottomClass: card.desktopBottomClass,
-                          itemClass: card.itemClass,
-                        }),
-                      )
-                      .join("")}
-                  </div>
-                </div>`;
-    }
-
-    if (mobileCarouselInner) {
-      mobileCarouselInner.innerHTML = `
-                ${carouselCards
-                  .map(
-                    (card, index) => `
-                    <div class="carousel-item${index === 0 ? " active" : ""}">
-                      ${buildPriceCard({
-                        edition: card.edition,
-                        text: card.text,
-                        price: card.price,
-                        href: card.href,
-                        leftClass: card.leftClass,
-                        rightClass: card.rightClass,
-                        bottomClass: card.mobileBottomClass,
-                        itemClass: "",
-                      })}
-                    </div>
-                `,
-                  )
-                  .join("")}`;
-    }
-
-    applyTranslations();
+    //applyTranslations();
 
     const validLinks = translations.links;
 
@@ -179,10 +276,11 @@ fetchData(`js/i18n/lang-${lang}.min.json`)
       .setAttribute("src", `https://prezi.com/p/embed/${validLinks.prezi}`);
 
     const contactModal = document.getElementById("mContactUs");
+    renderPriceCarousel();
+    renderBooksCarousel();
+    applyTranslations();
 
-    contactModal.addEventListener("show.bs.modal", function (e) {
-      console.log("opened");
-
+    contactModal.addEventListener("show.bs.modal", function () {
       const cuScriptExist = document.getElementById("cu_script");
 
       if (!cuScriptExist) {
@@ -198,8 +296,8 @@ fetchData(`js/i18n/lang-${lang}.min.json`)
 
     window.dispatchEvent(
       new CustomEvent("translationsLoaded", {
-        detail: { lang, translations }
-      })
+        detail: { lang, translations },
+      }),
     );
   })
   .catch((e) => {

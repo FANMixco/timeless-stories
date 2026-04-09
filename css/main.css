@@ -3146,6 +3146,10 @@ h6 {
     height: auto;
 }
 
+.navbar-toggler {
+    border: none;
+}
+
 .book-card .card {
     min-height: 220px;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -3186,11 +3190,11 @@ h6 {
 }
 
 @media (min-width: 768px) and (max-width: 991.98px) {
-    .eBPriceR > .h1 {
+    .eBPriceR .h1 {
         color: #fff;
     }
 
-    .eBPrice > .h1 {
+    .eBPrice .h1 {
         color: #fff;
     }   
 }
@@ -3200,11 +3204,11 @@ h6 {
         padding-top: 2.5rem;
     }
 
-    .eBPriceR > .h1 {
+    .eBPriceR .h1 {
         color: #fff;
     }
 
-    .eBPrice > .h1 {
+    .eBPrice .h1 {
         color: #fff;
     }
 }
