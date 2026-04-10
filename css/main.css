@@ -3146,8 +3146,17 @@ h6 {
     height: auto;
 }
 
+.navbar-toggler,
+.navbar-toggler:focus,
+.navbar-toggler:active,
+.navbar-toggler-icon:focus {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
 .navbar-toggler {
-    border: none;
+    background: transparent;
 }
 
 .book-card .card {
@@ -3187,6 +3196,40 @@ h6 {
 
 #price0 {
     z-index: 500;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    width: 50px;
+    height: 50px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(128, 128, 128, 0.7); /* gray circle */
+    border-radius: 50%;
+    opacity: 1; /* always visible */
+}
+
+@media (max-width: 991.98px) {
+    #header .nav-link {
+        font-size: 1.15rem !important;
+        line-height: 1.5;
+        padding: 0.7rem 0 !important;
+    }
+
+    #navbarMenu {
+        padding-top: 0.75rem;
+        padding-left: 1.2rem;
+    }
+
+    #navbarMenu .navbar-nav {
+        align-items: flex-start;
+    }
+}
+
+/* Optional hover */
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+    background-color: rgba(128, 128, 128, 0.9);
 }
 
 @media (min-width: 768px) and (max-width: 991.98px) {
