@@ -6,7 +6,7 @@ const legends = [
   { id: 5, key: "funeralCortegeOfChalchuapa", loc: [13.986932, -89.67835] },
   { id: 6, key: "fairJudgeOfTheNight", loc: [14.315494, -89.172335] },
   { id: 7, key: "weepingWoman", loc: [14.329334, -89.150234] },
-  { id: 8, key: "headlessPriest", loc: [13.87073, -88.628353] },
+  { id: 8, key: "headlessPriest", loc: [13.698288, -89.191173] },
   { id: 9, key: "fleshlessWoman", loc: [13.903600, -89.549559] },
   { id: 10, key: "dwarf", loc: [13.87073, -88.628353] }
 ];
