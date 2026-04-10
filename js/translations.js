@@ -257,6 +257,8 @@ fetchData(`js/i18n/lang-${lang}.min.json`)
       document
         .getElementById("btnEditor")
         .style.setProperty("display", "none", "important");
+
+      document.getElementById("menuContactMe").setAttribute('href', 'https://www.cognitoforms.com/FedericoNavarrete1/EntremosEnContactoHistoriasEternas');
     }
 
     //applyTranslations();

@@ -12,7 +12,7 @@ const links_translations = {
         "book": "https://leer.amazon.es/kp/card?asin=B0GHZ857CZ&preview=inline&linkCode=kpe&ref_=cm_sw_r_kb_dp_HJ6YDMXY6BRE1FA9AWE3",
         "contactUs": {
             "key": "hkz0rsUoNkGpGQYpoPHBzg",
-            "form": "3"
+            "form": "10"
         }
     },
     "zh": {
