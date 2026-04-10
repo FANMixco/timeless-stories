@@ -2100,7 +2100,7 @@ h6,
 #header .nav-link {
     padding: 0 12px !important;
     color: #fff !important;
-    font-size: 12px;
+    font-size: 0.9rem;
     text-transform: uppercase;
     font-weight: 400;
 }
