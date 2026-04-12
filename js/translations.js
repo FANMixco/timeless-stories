@@ -8,6 +8,43 @@ let supportedLang = ["en", "es", "zh", "fr"];
 let translations;
 const lang = supportedLang.includes(nLang) ? nLang : "en";
 
+async function fetchTranslationData(url) {
+  try {
+    const response = await fetch(url);
+    return await response.json();
+  } catch (error) {
+    console.error("Error loading JSON:", error);
+    throw error;
+  }
+}
+
+function setDeferredFrameSource(frameId, src) {
+  const frame = document.getElementById(frameId);
+  if (!frame || !src) return;
+
+  const assignSource = () => {
+    if (!frame.getAttribute("src")) {
+      frame.setAttribute("src", src);
+    }
+  };
+
+  if (!("IntersectionObserver" in window)) {
+    assignSource();
+    return;
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        observer.disconnect();
+        assignSource();
+      }
+    });
+  }, { rootMargin: "250px 0px" });
+
+  observer.observe(frame);
+}
+
 function getTranslationValue(obj, path) {
   return path.split(".").reduce((acc, part) => acc && acc[part], obj);
 }
@@ -102,7 +139,6 @@ function renderPriceCarousel() {
   if (!carouselElement || !carouselInner) return;
 
   const itemsPerSlide = getItemsPerSlide();
-
   const existingInstance = bootstrap.Carousel.getInstance(carouselElement);
   if (existingInstance) {
     existingInstance.dispose();
@@ -122,10 +158,10 @@ function renderPriceCarousel() {
     `);
   }
 
-  function buildPriceCard(card, itemsPerSlide) {
-    const colClass = itemsPerSlide === 1 ? "col-12" : "col-12 col-md-4";
+  function buildPriceCard(card, currentItemsPerSlide) {
+    const colClass = currentItemsPerSlide === 1 ? "col-12" : "col-12 col-md-4";
     const bottomClass =
-      itemsPerSlide === 1 ? card.mobileBottomClass : card.desktopBottomClass;
+      currentItemsPerSlide === 1 ? card.mobileBottomClass : card.desktopBottomClass;
 
     return `
     <div class="${colClass}">
@@ -167,7 +203,6 @@ function renderBooksCarousel() {
   if (!carouselElement || !carouselInner) return;
 
   const itemsPerSlide = getItemsPerSlide();
-
   const existingInstance = bootstrap.Carousel.getInstance(carouselElement);
   if (existingInstance) {
     existingInstance.dispose();
@@ -187,8 +222,8 @@ function renderBooksCarousel() {
     `);
   }
 
-  function buildBookCard(card, itemsPerSlide) {
-    const colClass = itemsPerSlide === 1 ? "col-12" : "col-12 col-md-4";
+  function buildBookCard(card, currentItemsPerSlide) {
+    const colClass = currentItemsPerSlide === 1 ? "col-12" : "col-12 col-md-4";
 
     return `
     <div class="${colClass}">
@@ -228,71 +263,69 @@ window.addEventListener("resize", () => {
   }
 });
 
-fetchData(`js/i18n/lang-${lang}.min.json`)
+fetchTranslationData(`js/i18n/lang-${lang}.min.json`)
   .then((data) => {
     translations = data.translations;
 
     document.title = translations.title;
 
     if (lang === "es") {
-      //const tEdition10 = document.getElementById("tEdition10");
-      //const tEdition4 = document.getElementById("tEdition4");
-      //const tEdition2 = document.getElementById("tEdition2");
-      //const tEdition6 = document.getElementById("tEdition6");
-
       document.querySelector("#div-book picture").innerHTML = `
-                <source srcset="img/cover-colorized-v2-sm-es.webp" type="image/webp">
-                <source srcset="img/cover-colorized-v2-sm-es.jpg" type="image/jpeg">
-                <img style="width: 100%;" alt="Historias Eternas de El Salvador — Espejos Españoles"
-                    src="img/cover-colorized-v2-sm-es.jpg" />
-            `;
-
-      //tEdition10.href = "https://adbl.co/4qExKCP";
-      //tEdition4.href = "https://a.co/d/cVQ0B39";
-      //document.getElementById("dEdition8").style.display = "none";
-      //document.getElementById("dEdition12").style.display = "none";
-      //tEdition2.href = "https://a.co/d/e4W03f0";
-      //tEdition6.href = "https://a.co/d/6ycRDq4";
+        <source srcset="img/cover-colorized-v2-sm-es.webp" type="image/webp">
+        <source srcset="img/cover-colorized-v2-sm-es.jpg" type="image/jpeg">
+        <img
+          style="width: 100%;"
+          alt="Historias Eternas de El Salvador - Espejos Espanoles"
+          src="img/cover-colorized-v2-sm-es.jpg"
+          width="500"
+          height="750"
+          fetchpriority="high"
+          decoding="async"
+        />
+      `;
 
       document
         .getElementById("btnEditor")
         .style.setProperty("display", "none", "important");
 
-      document.getElementById("menuContactMe").setAttribute('href', 'https://www.cognitoforms.com/FedericoNavarrete1/EntremosEnContactoHistoriasEternas');
+      document
+        .getElementById("menuContactMe")
+        .setAttribute(
+          "href",
+          "https://www.cognitoforms.com/FedericoNavarrete1/EntremosEnContactoHistoriasEternas",
+        );
     }
-
-    //applyTranslations();
 
     const validLinks = translations.links;
 
-    document
-      .getElementById("bookPreviewFrame")
-      .setAttribute(
-        "src",
-        `https://leer.amazon.es/kp/card?asin=${validLinks.book}&preview=inline&linkCode=kpe&ref_=cm_sw_r_kb_dp_HJ6YDMXY6BRE1FA9AWE3`,
-      );
-    document
-      .getElementById("preziPreviewFrame")
-      .setAttribute("src", `https://prezi.com/p/embed/${validLinks.prezi}`);
+    setDeferredFrameSource(
+      "bookPreviewFrame",
+      `https://leer.amazon.es/kp/card?asin=${validLinks.book}&preview=inline&linkCode=kpe&ref_=cm_sw_r_kb_dp_HJ6YDMXY6BRE1FA9AWE3`,
+    );
+    setDeferredFrameSource(
+      "preziPreviewFrame",
+      `https://prezi.com/p/embed/${validLinks.prezi}`,
+    );
 
     const contactModal = document.getElementById("mContactUs");
     renderPriceCarousel();
     renderBooksCarousel();
     applyTranslations();
 
-    contactModal.addEventListener("show.bs.modal", function () {
+    contactModal.addEventListener("show.bs.modal", () => {
       const cuScriptExist = document.getElementById("cu_script");
 
       if (!cuScriptExist) {
         const script = document.createElement("script");
         script.src = "https://www.cognitoforms.com/f/seamless.js";
         script.id = "cu_script";
+        script.async = true;
         script.dataset.key = validLinks.contactUs.key;
         script.dataset.form = validLinks.contactUs.form;
 
         document.getElementById("divContactUs").appendChild(script);
       }
-    });
+    }, { once: true });
 
     window.dispatchEvent(
       new CustomEvent("translationsLoaded", {

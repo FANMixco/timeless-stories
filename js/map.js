@@ -18,19 +18,76 @@ const legends2 = [
   { id: 4, key: "urco", loc: [42.426911, -8.656881] },
   { id: 5, key: "holyCompany", loc: [43.588495, -5.929513] },
   { id: 6, key: "gaueko", loc: [43.154772, -2.955539] },
-  { id: 7, key: "ploranera", loc: [41.374722, 2.188840] },
+  { id: 7, key: "ploranera", loc: [41.374722, 2.18884] },
   { id: 8, key: "ghostOfSanGines", loc: [40.417214803173316, -3.7071205413454735] },
   { id: 9, key: "girlOnTheCurve", loc: [40.903697, -3.880308] },
   { id: 10, key: "trasgu", loc: [43.187277, -4.820837] }
 ];
 
+let translationsData;
 let mapsInitialized = false;
+let leafletAssetsPromise;
 
 function getLegendTranslation(key) {
   return window.translations?.mapLegends?.[key] || {
     name: key,
     desc: ""
   };
+}
+
+function loadStylesheetOnce(id, href) {
+  if (document.getElementById(id)) {
+    return Promise.resolve();
+  }
+
+  return new Promise((resolve, reject) => {
+    const link = document.createElement("link");
+    link.id = id;
+    link.rel = "stylesheet";
+    link.href = href;
+    link.crossOrigin = "";
+    link.onload = resolve;
+    link.onerror = reject;
+    document.head.appendChild(link);
+  });
+}
+
+function loadScriptOnce(id, src) {
+  if (document.getElementById(id)) {
+    return Promise.resolve();
+  }
+
+  return new Promise((resolve, reject) => {
+    const script = document.createElement("script");
+    script.id = id;
+    script.src = src;
+    script.async = true;
+    script.crossOrigin = "";
+    script.onload = resolve;
+    script.onerror = reject;
+    document.body.appendChild(script);
+  });
+}
+
+function ensureLeafletLoaded() {
+  if (window.L) {
+    return Promise.resolve();
+  }
+
+  if (!leafletAssetsPromise) {
+    leafletAssetsPromise = Promise.all([
+      loadStylesheetOnce(
+        "leaflet_css",
+        "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"
+      ),
+      loadScriptOnce(
+        "leaflet_js",
+        "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"
+      )
+    ]);
+  }
+
+  return leafletAssetsPromise;
 }
 
 function getMarker(id) {
@@ -42,7 +99,7 @@ function getMarker(id) {
 }
 
 function addLegendMarkers(mapInstance, items) {
-  items.forEach(function(obj) {
+  items.forEach((obj) => {
     const marker = getMarker(obj.id);
     const legend = getLegendTranslation(obj.key);
 
@@ -80,12 +137,25 @@ function renderLegendLists() {
   }
 }
 
-function initMaps() {
-  if (mapsInitialized || !window.translations) {
+async function initMaps() {
+  if (mapsInitialized || !translationsData) {
+    return;
+  }
+
+  const previewSection = document.getElementById("preview");
+  if (!previewSection) {
     return;
   }
 
   mapsInitialized = true;
+
+  try {
+    await ensureLeafletLoaded();
+  } catch (error) {
+    mapsInitialized = false;
+    console.error("Unable to load Leaflet assets:", error);
+    return;
+  }
 
   const map = L.map("map").setView([13.8029939, -88.9053364], 8.4);
   L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -104,13 +174,38 @@ function initMaps() {
   renderLegendLists();
 }
 
-window.addEventListener("translationsLoaded", function(event) {
-  window.translations = event.detail.translations;
-  initMaps();
+function initMapsWhenVisible() {
+  const previewSection = document.getElementById("preview");
+  if (!previewSection) {
+    return;
+  }
+
+  if (!("IntersectionObserver" in window)) {
+    initMaps();
+    return;
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        observer.disconnect();
+        initMaps();
+      }
+    });
+  }, { rootMargin: "300px 0px" });
+
+  observer.observe(previewSection);
+}
+
+window.addEventListener("translationsLoaded", (event) => {
+  translationsData = event.detail.translations;
+  window.translations = translationsData;
+  initMapsWhenVisible();
 });
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", () => {
   if (window.translations) {
-    initMaps();
+    translationsData = window.translations;
+    initMapsWhenVisible();
   }
 });
