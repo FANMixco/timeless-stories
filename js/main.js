@@ -289,13 +289,27 @@ function initTikTokEmbed() {
       </section>
     </blockquote>`;
 
-    runWhenVisible(tiktokContainer, () => {
-        tiktokContainer.innerHTML = embedHTML;
-        injectScriptOnce({
-            id: "tiktok_embed",
-            src: "https://www.tiktok.com/embed.js"
-        });
-    }, { rootMargin: "200px 0px" });
+    const loadTikTokEmbed = () => {
+        runWhenVisible(tiktokContainer, () => {
+            tiktokContainer.innerHTML = embedHTML;
+            injectScriptOnce({
+                id: "tiktok_embed",
+                src: "https://www.tiktok.com/embed.js"
+            });
+        }, { rootMargin: "0px" });
+    };
+
+    const onFirstScroll = () => {
+        window.removeEventListener("scroll", onFirstScroll);
+        loadTikTokEmbed();
+    };
+
+    if (window.scrollY > 0) {
+        loadTikTokEmbed();
+        return;
+    }
+
+    window.addEventListener("scroll", onFirstScroll, { passive: true, once: true });
 }
 
 function initDeferredAnalytics() {
