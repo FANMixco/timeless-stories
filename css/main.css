@@ -2075,8 +2075,47 @@ h6,
     background: rgba(1,87,155, 0.95);
 }
 
+.navbar-toggler-icons {
+    position: relative;
+    display: inline-flex;
+    width: 1.75rem;
+    height: 1.75rem;
+    align-items: center;
+    justify-content: center;
+}
+
 .navbar-toggler-icon {
     filter: invert(100%);
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 1.35rem;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.navbar-toggler-icon-open {
+    background-image: url("../img/icons/bars-solid.svg");
+    opacity: 1;
+    transform: scale(1);
+}
+
+.navbar-toggler-icon-close {
+    background-image: url("../img/icons/close-thick.svg");
+    opacity: 0;
+    transform: scale(0.85) rotate(-10deg);
+}
+
+.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon-open {
+    opacity: 0;
+    transform: scale(0.85) rotate(10deg);
+}
+
+.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon-close {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
 }
 
 #header .navbar {

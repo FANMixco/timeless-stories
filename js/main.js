@@ -215,6 +215,30 @@ function initCollapseHandlers() {
     });
 }
 
+function initNavbarToggleState() {
+    const navbarMenu = document.getElementById("navbarMenu");
+    const navbarToggler = document.querySelector(".navbar-toggler");
+
+    if (!navbarMenu || !navbarToggler) {
+        return;
+    }
+
+    const syncExpandedState = () => {
+        const isExpanded = navbarMenu.classList.contains("show");
+        navbarToggler.setAttribute("aria-expanded", String(isExpanded));
+    };
+
+    navbarMenu.addEventListener("show.bs.collapse", () => {
+        navbarToggler.setAttribute("aria-expanded", "true");
+    });
+
+    navbarMenu.addEventListener("hide.bs.collapse", () => {
+        navbarToggler.setAttribute("aria-expanded", "false");
+    });
+
+    syncExpandedState();
+}
+
 function initLazyLoadScripts() {
     runWhenVisible(document.getElementById("aReviews"), () => {
         injectScriptOnce({
@@ -347,6 +371,7 @@ document.addEventListener("DOMContentLoaded", () => {
     initHeaderScroll();
     initCarouselControls();
     initCollapseHandlers();
+    initNavbarToggleState();
     initLazyLoadScripts();
     initDeferredAnalytics();
     setCurrentYear();
