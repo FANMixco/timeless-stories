@@ -26,12 +26,12 @@ https://goo.gl/forms/JArck4uzbGGmTuG72
     <!-- Meta Description -->
     <meta
       name="description"
-      content="A series of books written by Federico Navarrete. They represent the largest collection of Salvadoran oral stories in English."
+      content="A series of books written by Federico Navarrete. They represent the largest collection of Salvadoran and Spanish oral stories in English."
     />
     <!-- Meta Keyword -->
     <meta
       name="keywords"
-      content="timeless stories, el salvador, folklore, legends, fairytales, ciptio, black night, siguanaba, francis drake, children, lodz, poland, madrid, spain, españa, cadejo,Federico Navarrete,audible,kdp,amazon,audiobook,book,cuyancua,fiction,guirola,angel,family,history"
+      content="timeless stories, el salvador, folklore, legends, fairytales, ciptio, black night, siguanaba, francis drake, children, lodz, poland, madrid, spain, españa, cadejo,Federico Navarrete,audible,kdp,amazon,audiobook,book,cuyancua,fiction,guirola,angel,family,history, urco, lavanderies,cultural, hispanic, hispanosphere, hispanidad, hispanismo, hispanismo cultural, hispanismo cultural salvadoreño, salvadoran culture, salvadoran folklore, salvadoran legends, salvadoran fairytales, spanish culture, spanish folklore, spanish legends, spanish fairytales"
     />
     <!-- meta character set -->
     <meta charset="UTF-8" />
@@ -228,7 +228,8 @@ https://goo.gl/forms/JArck4uzbGGmTuG72
                   href="https://www.cognitoforms.com/FedericoNavarrete1/LetsGetInTouchTimelessStories"
                   target="_blank"
                   id="menuContactMe"
-                  data-translation="contactMe"></a>
+                  data-translation="contactMe"
+                ></a>
               </li>
             </ul>
           </div>
@@ -270,16 +271,19 @@ https://goo.gl/forms/JArck4uzbGGmTuG72
               rel="noreferrer noopener"
             >
               <div class="book">
-                <picture>
+                <picture id="bookCoverPicture">
                   <source
+                    id="bookCoverWebpSource"
                     srcset="img/cover-colorized-v2-sm.webp"
                     type="image/webp"
                   />
                   <source
+                    id="bookCoverJpgSource"
                     srcset="img/cover-colorized-v2-sm.jpg"
                     type="image/jpeg"
                   />
                   <img
+                    id="bookCoverImage"
                     style="width: 100%"
                     alt="Timeless Stories of El Salvador - Spanish Mirrors"
                     src="img/cover-colorized-v2-sm.jpg"
@@ -380,16 +384,18 @@ https://goo.gl/forms/JArck4uzbGGmTuG72
                 data-translation="readMore"
               ></button>
               <br />
-              <picture>
-                <source type="image/webp" srcset="img/signature.webp" />
-                <source type="image/png" srcset="img/signature.png" />
-                <img
-                  class="signature"
-                  src="img/signature.png"
-                  alt="Signature"
-                  loading="lazy"
-                />
-              </picture>
+              <a href="https://amazon.com/~/e/B08NJTXQRV" target="_blank">
+                <picture>
+                  <source type="image/webp" srcset="img/signature.webp" />
+                  <source type="image/png" srcset="img/signature.png" />
+                  <img
+                    class="signature"
+                    src="img/signature.png"
+                    alt="Signature"
+                    loading="lazy"
+                  />
+                </picture>
+              </a>
             </div>
           </div>
         </div>
@@ -465,10 +471,7 @@ https://goo.gl/forms/JArck4uzbGGmTuG72
             <div id="btnEditor" class="buttons flex-row d-flex">
               <i class="icon-pen" aria-hidden="true"></i>
               <div class="desc">
-                <a
-                  class="user"
-                  target="_blank"
-                >
+                <a class="user" target="_blank" rel="noreferrer noopener">
                   <p data-translation="sGreetings3"></p>
                 </a>
               </div>
@@ -546,6 +549,7 @@ https://goo.gl/forms/JArck4uzbGGmTuG72
               class="carousel-control-prev"
               type="button"
               data-bs-target="#booksCarousel"
+              aria-label="prev"
               data-bs-slide="prev"
             >
               <span class="carousel-control-prev-icon"></span>
@@ -555,6 +559,7 @@ https://goo.gl/forms/JArck4uzbGGmTuG72
               class="carousel-control-next"
               type="button"
               data-bs-target="#booksCarousel"
+              aria-label="next"
               data-bs-slide="next"
             >
               <span class="carousel-control-next-icon"></span>

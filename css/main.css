@@ -2085,7 +2085,7 @@ h6,
 }
 
 .navbar-toggle-glyph {
-    font-size: xx-large;
+    font-size: xx-large!important;
     position: absolute;
     inset: 0;
     width: 100%;

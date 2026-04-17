@@ -7,6 +7,8 @@ let nLang = (
 let supportedLang = ["en", "es", "zh", "fr"];
 let translations;
 const lang = supportedLang.includes(nLang) ? nLang : "en";
+const bookCoverBasePath = "img/cover-colorized-v2-sm";
+const localizedBookCoverLanguages = new Set(["es"]);
 
 async function fetchTranslationData(url) {
   try {
@@ -43,6 +45,24 @@ function setDeferredFrameSource(frameId, src) {
   }, { rootMargin: "250px 0px" });
 
   observer.observe(frame);
+}
+
+function updateLocalizedBookCover(language) {
+  const webpSource = document.getElementById("bookCoverWebpSource");
+  const jpegSource = document.getElementById("bookCoverJpgSource");
+  const coverImage = document.getElementById("bookCoverImage");
+
+  if (!webpSource || !jpegSource || !coverImage) return;
+
+  const suffix = localizedBookCoverLanguages.has(language) ? `-${language}` : "";
+  const jpegPath = `${bookCoverBasePath}${suffix}.jpg`;
+  const webpPath = `${bookCoverBasePath}${suffix}.webp`;
+  const altText = translations?.bookCoverAlt || translations?.introSM || coverImage.alt;
+
+  webpSource.setAttribute("srcset", webpPath);
+  jpegSource.setAttribute("srcset", jpegPath);
+  coverImage.setAttribute("src", jpegPath);
+  coverImage.setAttribute("alt", altText);
 }
 
 function getTranslationValue(obj, path) {
@@ -268,21 +288,9 @@ fetchTranslationData(`js/i18n/lang-${lang}.min.json`)
     translations = data.translations;
 
     document.title = translations.title;
+    updateLocalizedBookCover(lang);
 
     if (lang === "es") {
-      document.querySelector("#div-book picture").innerHTML = `
-        <source srcset="img/cover-colorized-v2-sm-es.webp" type="image/webp">
-        <source srcset="img/cover-colorized-v2-sm-es.jpg" type="image/jpeg">
-        <img
-          style="width: 100%;"
-          alt="Historias Eternas de El Salvador - Espejos Espanoles"
-          src="img/cover-colorized-v2-sm-es.jpg"
-          width="500"
-          height="750"
-          fetchpriority="high"
-          decoding="async"
-        />
-      `;
 
       document
         .getElementById("btnEditor")
@@ -336,3 +344,4 @@ fetchTranslationData(`js/i18n/lang-${lang}.min.json`)
   .catch((e) => {
     console.error(e);
   });
+
