@@ -811,10 +811,10 @@ th {
     margin-right: 0;
 }
 
-.sample-text-area {
+/*.sample-text-area {
     background: #fff;
     padding: 100px 0 70px 0;
-}
+}*/
 
 .text-heading {
     margin-bottom: 30px;
@@ -873,7 +873,7 @@ h6,
     color: #404040;
 }
 
-.button-area {
+/*.button-area {
     background: #fff;
 }
 
@@ -953,7 +953,7 @@ h6,
     color: #222222;
     background: #f9f9ff;
     border: 1px solid transparent;
-}
+}*/
 
 @media not (hover: hover) {
     .eBPrice {
@@ -983,7 +983,7 @@ h6,
         outline: 0;
     }
 
-    .genric-btn.default:hover {
+    /*.genric-btn.default:hover {
         border: 1px solid #f9f9ff;
         background: #fff;
     }
@@ -1080,7 +1080,7 @@ h6,
     .form-select .nice-select .list .option:hover {
         color: #01579b;
         background: transparent;
-    }
+    }*/
 
     .nav-menu li:hover>ul {
         display: block;
@@ -1175,7 +1175,7 @@ h6,
     }
 }
 
-.genric-btn.default-border {
+/*.genric-btn.default-border {
     border: 1px solid #f9f9ff;
     background: #fff;
 }
@@ -2059,7 +2059,7 @@ h6,
 
 .form-select .nice-select::after {
     right: 20px;
-}
+}*/
 
 /*--------------------------------------------------------------
 # Header
@@ -2766,7 +2766,7 @@ body.mobile-nav-active #mobile-nav-toggle {
     display: inline-flex;
 }
 
-.single-course .sale-btn {
+/*.single-course .sale-btn {
     background-color: #01579b;
     color: #fff;
     width: 140px;
@@ -2791,7 +2791,7 @@ body.mobile-nav-active #mobile-nav-toggle {
     -moz-transition: all 0.3s ease 0s;
     -o-transition: all 0.3s ease 0s;
     transition: all 0.3s ease 0s;
-}
+}*/
 
 @media (max-width: 768px) {
     .call-to-action-area .download-button {
@@ -3134,6 +3134,20 @@ h6 {
 .list-group-alpha>li,
 .list-group-numbered>li {
     display: list-item
+}
+
+
+.multi-column-list {
+  /* Create 2 columns */
+  column-count: 2;
+  column-gap: 20px;
+  display: block; /* Overrides Bootstrap's flex display */
+}
+
+.multi-column-list .list-group-item {
+  display: list-item; /* Required to keep the numbering visible */
+  break-inside: avoid; /* Prevents an item from splitting across columns */
+  margin-bottom: 0; 
 }
 
 .signature {
