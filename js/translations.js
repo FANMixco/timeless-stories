@@ -148,6 +148,33 @@ const carouselCards2 = [
   },
 ];
 
+const massMediaCards = [
+  {
+    text: "mMedia3",
+    href: "https://diarioelsalvador.com/salvadoreno-participo-en-feria-de-libro-en-madrid/369897/",
+    imageBase: "img/fair/diario_el_salvador_2",
+    alt: "diario el salvador",
+  },
+  {
+    text: "mMedia4",
+    href: "https://bit.ly/3QiEzgF",
+    imageBase: "img/fair/pulgarcito",
+    alt: "pulgarcito",
+  },
+  {
+    text: "mMedia1",
+    href: "https://rree.gob.sv/embajada-de-el-salvador-en-austria-apoya-obra-de-escritor-salvadoreno-en-feria-del-libro-en-viena/",
+    imageBase: "img/fair/buch_viena",
+    alt: "buch viena",
+  },
+  {
+    text: "mMedia2",
+    href: "https://diarioelsalvador.com/el-narrador-de-historias-magicas-de-cuscatlan/15042",
+    imageBase: "img/fair/diario_el_salvador",
+    alt: "diario el salvador",
+  },
+];
+
 function getItemsPerSlide() {
   return window.innerWidth < 768 ? 1 : 3;
 }
@@ -271,6 +298,79 @@ function renderBooksCarousel() {
   });
 }
 
+function renderMassMediaCarousel() {
+  const carouselElement = document.getElementById("mMediaCarousel");
+  const carouselInner = document.getElementById("mMediaCarouselInner");
+
+  if (!carouselElement || !carouselInner) return;
+
+  const itemsPerSlide = getItemsPerSlide();
+  const existingInstance = bootstrap.Carousel.getInstance(carouselElement);
+  if (existingInstance) {
+    existingInstance.dispose();
+  }
+
+  const slides = [];
+
+  for (let i = 0; i < massMediaCards.length; i += itemsPerSlide) {
+    const group = massMediaCards.slice(i, i + itemsPerSlide);
+
+    slides.push(`
+      <div class="carousel-item ${i === 0 ? "active" : ""}">
+        <div class="row justify-content-center g-4">
+          ${group.map((card) => buildMassMediaCard(card, itemsPerSlide)).join("")}
+        </div>
+      </div>
+    `);
+  }
+
+  function buildMassMediaCard(card, currentItemsPerSlide) {
+    const colClass = currentItemsPerSlide === 1
+      ? "col-12 mMedia-container"
+      : "col-12 col-md-4 mMedia-container";
+    const cardClass = currentItemsPerSlide === 1 ? "card mx-3" : "card";
+    const imageClass = currentItemsPerSlide === 1 ? "card-img-top img-fluid" : "card-img-top";
+    const bodyClass = currentItemsPerSlide === 1 ? "card-body text-center font-weight-bold" : "card-body";
+
+    return `
+      <div class="${colClass}">
+        <div class="${cardClass}">
+          <a
+            target="_blank"
+            href="${card.href}"
+            class="text-decoration-none text-dark d-block"
+          >
+            <picture>
+              <source type="image/webp" srcset="${card.imageBase}.webp" />
+              <source type="image/jpeg" srcset="${card.imageBase}.jpg" />
+              <img
+                class="${imageClass}"
+                alt="${card.alt}"
+                src="${card.imageBase}.jpg"
+                loading="lazy"
+              />
+            </picture>
+            <div class="${bodyClass}">
+              <p class="card-text" data-translation="${card.text}"></p>
+            </div>
+          </a>
+        </div>
+      </div>`;
+  }
+
+  carouselInner.innerHTML = slides.join("");
+
+  if (typeof applyTranslations === "function") {
+    applyTranslations();
+  }
+
+  new bootstrap.Carousel(carouselElement, {
+    interval: false,
+    ride: false,
+    wrap: true,
+  });
+}
+
 let currentCarouselMode = getItemsPerSlide();
 
 window.addEventListener("resize", () => {
@@ -280,6 +380,7 @@ window.addEventListener("resize", () => {
     currentCarouselMode = newMode;
     renderPriceCarousel();
     renderBooksCarousel();
+    renderMassMediaCarousel();
   }
 });
 
@@ -318,6 +419,7 @@ fetchTranslationData(`js/i18n/lang-${lang}.min.json`)
     const contactModal = document.getElementById("mContactUs");
     renderPriceCarousel();
     renderBooksCarousel();
+    renderMassMediaCarousel();
     applyTranslations();
 
     contactModal.addEventListener("show.bs.modal", () => {

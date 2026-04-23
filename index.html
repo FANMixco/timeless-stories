@@ -493,19 +493,21 @@ https://goo.gl/forms/JArck4uzbGGmTuG72
           </div>
         </div>
 
-        <div class="row">
-          <iframe
-            title="preview"
-            class="bookPreview"
-            id="bookPreviewFrame"
-            allowfullscreen=""
-            frameborder="0"
-            height="550"
-            sandbox="allow-scripts allow-same-origin allow-popups"
-            type="text/html"
-            width="336"
-            loading="lazy"
-          ></iframe>
+        <div class="row justify-content-center">
+          <div class="col-auto">
+              <iframe
+                title="preview"
+                class="bookPreview"
+                id="bookPreviewFrame"
+                allowfullscreen=""
+                frameborder="0"
+                height="550"
+                sandbox="allow-scripts allow-same-origin allow-popups"
+                type="text/html"
+                width="336"
+                loading="lazy"
+              ></iframe>
+            </div>
         </div>
 
         <div class="row mt-5">
@@ -589,247 +591,27 @@ https://goo.gl/forms/JArck4uzbGGmTuG72
             </div>
           </div>
         </div>
-        <!-- DESKTOP VERSION (Visible on lg and up) -->
-        <div class="row d-none d-lg-flex" id="mMediaGallery">
-          <!-- CARD 1 -->
-          <div class="col-md mMedia-container">
-            <div class="card h-100">
-              <a
-                target="_blank"
-                href="https://diarioelsalvador.com/salvadoreno-participo-en-feria-de-libro-en-madrid/369897/"
-                class="text-decoration-none text-dark"
-              >
-                <picture>
-                  <source
-                    type="image/webp"
-                    srcset="img/fair/diario_el_salvador_2.webp"
-                  />
-                  <source
-                    type="image/jpeg"
-                    srcset="img/fair/diario_el_salvador_2.jpg"
-                  />
-                  <img
-                    class="card-img-top"
-                    alt="diario el salvador"
-                    src="img/fair/diario_el_salvador_2.jpg"
-                    loading="lazy"
-                  />
-                </picture>
-                <div class="card-body">
-                  <p class="card-text" data-translation="mMedia3"></p>
-                </div>
-              </a>
-            </div>
-          </div>
+        <div id="mMediaCarousel" class="carousel slide" data-bs-interval="false">
+          <div class="carousel-inner" id="mMediaCarouselInner"></div>
 
-          <!-- CARD 2 -->
-          <div class="col-md mMedia-container">
-            <div class="card h-100">
-              <a
-                target="_blank"
-                href="https://rree.gob.sv/embajada-de-el-salvador-en-austria-apoya-obra-de-escritor-salvadoreno-en-feria-del-libro-en-viena/"
-                class="text-decoration-none text-dark"
-              >
-                <picture>
-                  <source type="image/webp" srcset="img/fair/buch_viena.webp" />
-                  <source type="image/jpeg" srcset="img/fair/buch_viena.jpg" />
-                  <img
-                    class="card-img-top"
-                    alt="buch viena"
-                    src="img/fair/buch_viena.jpg"
-                    loading="lazy"
-                  />
-                </picture>
-                <div class="card-body">
-                  <p class="card-text" data-translation="mMedia1"></p>
-                </div>
-              </a>
-            </div>
-          </div>
-
-          <!-- CARD 3 -->
-          <div class="col-md mMedia-container">
-            <div class="card h-100">
-              <a
-                target="_blank"
-                href="https://diarioelsalvador.com/el-narrador-de-historias-magicas-de-cuscatlan/15042"
-                class="text-decoration-none text-dark"
-              >
-                <picture>
-                  <source
-                    type="image/webp"
-                    srcset="img/fair/diario_el_salvador.webp"
-                  />
-                  <source
-                    type="image/jpeg"
-                    srcset="img/fair/diario_el_salvador.jpg"
-                  />
-                  <img
-                    class="card-img-top"
-                    alt="diario el salvador"
-                    src="img/fair/diario_el_salvador.jpg"
-                    loading="lazy"
-                  />
-                </picture>
-                <div class="card-body">
-                  <p class="card-text" data-translation="mMedia2"></p>
-                </div>
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <!-- MOBILE VERSION (Carousel, visible on sm and below) -->
-        <div
-          id="mMediaCarousel"
-          class="carousel slide d-block d-lg-none"
-          data-bs-ride="carousel"
-        >
-          <div class="carousel-inner">
-            <!-- Slide 1 -->
-            <div class="carousel-item active">
-              <div class="card mx-3">
-                <a
-                  target="_blank"
-                  href="https://diarioelsalvador.com/salvadoreno-participo-en-feria-de-libro-en-madrid/369897/"
-                  class="text-decoration-none text-dark"
-                >
-                  <picture>
-                    <source
-                      type="image/webp"
-                      srcset="img/fair/diario_el_salvador_2.webp"
-                    />
-                    <source
-                      type="image/jpeg"
-                      srcset="img/fair/diario_el_salvador_2.jpg"
-                    />
-                    <img
-                      class="card-img-top img-fluid"
-                      alt="diario el salvador"
-                      src="img/fair/diario_el_salvador_2.jpg"
-                      loading="lazy"
-                    />
-                  </picture>
-                  <div class="card-body text-center font-weight-bold">
-                    <p class="card-text" data-translation="mMedia3"></p>
-                  </div>
-                </a>
-              </div>
-            </div>
-
-            <!-- Slide 2 -->
-            <div class="carousel-item">
-              <div class="card mx-3">
-                <a
-                  target="_blank"
-                  href="https://sincasaca.news/este-escritor-salvadoreno-estuvo-en-la-feria-del-libro-de-madrid/"
-                  class="text-decoration-none text-dark"
-                >
-                  <picture>
-                    <source
-                      type="image/webp"
-                      srcset="img/fair/pulgarcito.webp"
-                    />
-                    <source
-                      type="image/jpeg"
-                      srcset="img/fair/pulgarcito.jpg"
-                    />
-                    <img
-                      class="card-img-top img-fluid"
-                      alt="pulgarcito"
-                      src="img/fair/pulgarcito.jpg"
-                      loading="lazy"
-                    />
-                  </picture>
-                  <div class="card-body text-center font-weight-bold">
-                    <p class="card-text" data-translation="mMedia4"></p>
-                  </div>
-                </a>
-              </div>
-            </div>
-
-            <!-- Slide 3 -->
-            <div class="carousel-item">
-              <div class="card mx-3">
-                <a
-                  target="_blank"
-                  href="https://rree.gob.sv/embajada-de-el-salvador-en-austria-apoya-obra-de-escritor-salvadoreno-en-feria-del-libro-en-viena/"
-                  class="text-decoration-none text-dark"
-                >
-                  <picture>
-                    <source
-                      type="image/webp"
-                      srcset="img/fair/buch_viena.webp"
-                    />
-                    <source
-                      type="image/jpeg"
-                      srcset="img/fair/buch_viena.jpg"
-                    />
-                    <img
-                      class="card-img-top img-fluid"
-                      alt="buch viena"
-                      src="img/fair/buch_viena.jpg"
-                      loading="lazy"
-                    />
-                  </picture>
-                  <div class="card-body text-center font-weight-bold">
-                    <p class="card-text" data-translation="mMedia1"></p>
-                  </div>
-                </a>
-              </div>
-            </div>
-
-            <!-- Slide 4 -->
-            <div class="carousel-item">
-              <div class="card mx-3">
-                <a
-                  target="_blank"
-                  href="https://diarioelsalvador.com/el-narrador-de-historias-magicas-de-cuscatlan/15042"
-                  class="text-decoration-none text-dark"
-                >
-                  <picture>
-                    <source
-                      type="image/webp"
-                      srcset="img/fair/diario_el_salvador.webp"
-                    />
-                    <source
-                      type="image/jpeg"
-                      srcset="img/fair/diario_el_salvador.jpg"
-                    />
-                    <img
-                      class="card-img-top img-fluid"
-                      alt="diario el salvador"
-                      src="img/fair/diario_el_salvador.jpg"
-                      loading="lazy"
-                    />
-                  </picture>
-                  <div class="card-body text-center font-weight-bold">
-                    <p class="card-text" data-translation="mMedia2"></p>
-                  </div>
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <!-- Controls -->
-          <a
+          <button
             class="carousel-control-prev"
-            aria-label="back"
-            href="#mMediaCarousel"
-            role="button"
+            type="button"
+            data-bs-target="#mMediaCarousel"
             data-bs-slide="prev"
+            aria-label="back"
           >
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          </a>
-          <a
+          </button>
+          <button
             class="carousel-control-next"
-            aria-label="next"
-            href="#mMediaCarousel"
-            role="button"
+            type="button"
+            data-bs-target="#mMediaCarousel"
             data-bs-slide="next"
+            aria-label="next"
           >
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          </a>
+          </button>
         </div>
       </div>
     </section>
