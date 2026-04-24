@@ -2721,7 +2721,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 }
 
 .banner-content .availability-countdown {
-    margin-top: 18px;
+    margin-top: 12px;
     color: #fff;
 }
 
@@ -2735,6 +2735,14 @@ body.mobile-nav-active #mobile-nav-toggle {
     color: #222;
     font-size: 12px;
     font-weight: 700;
+}
+
+.banner-content .launch-note {
+    max-width: 560px;
+    margin: 14px auto 0;
+    color: #fff;
+    font-size: 15px;
+    line-height: 1.45;
 }
 
 .availability-countdown-status {
@@ -3018,6 +3026,16 @@ h6 {
 }
 
 @media (max-width: 991.98px) {
+    .banner-area .fullscreen {
+        height: auto !important;
+        min-height: 100vh;
+        padding-bottom: 3rem;
+    }
+
+    #div-book {
+        padding-top: 2.5rem;
+    }
+
     .footer-social {
         justify-content: flex-start;
     }

@@ -176,7 +176,16 @@ const massMediaCards = [
 ];
 
 const availabilityDate = new Date(2026, 4, 1, 0, 0, 0);
+const postLaunchIntroDate = new Date(2026, 4, 2, 0, 0, 0);
 let availabilityCountdownInterval;
+
+function updateHeroIntroTranslation() {
+  const heroIntro = document.getElementById("intro3");
+  if (!heroIntro) return;
+
+  heroIntro.dataset.translation =
+    Date.now() < postLaunchIntroDate.getTime() ? "launchHeroBefore" : "launchHeroAfter";
+}
 
 function getCountdownText(key, fallback) {
   return translations?.[key] || fallback;
@@ -466,6 +475,8 @@ fetchTranslationData(`js/i18n/lang-${lang}.min.json`)
           "https://www.cognitoforms.com/FedericoNavarrete1/EntremosEnContactoHistoriasEternas",
         );
     }
+
+    updateHeroIntroTranslation();
 
     const validLinks = translations.links;
 
