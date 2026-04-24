@@ -67,6 +67,12 @@
         "readMore": "Lire plus",
         "readLess": "Lire moins",
         "bientôt disponible" : "1er mai",
+        "countdownIntro": "Entierement disponible dans",
+        "countdownAvailable": "Entierement disponible maintenant",
+        "countdownDays": "Jours",
+        "countdownHours": "Heures",
+        "countdownMinutes": "Min",
+        "countdownSeconds": "Sec",
         "title": "Légendes Éternelles d’El Salvador | Folklore, légendes et contes de fées",
         "links": {
             "prezi": "k1IXa0mNdi7IbZjRgyOA",

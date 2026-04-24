@@ -2708,6 +2708,91 @@ body.mobile-nav-active #mobile-nav-toggle {
     flex: 0 0 auto;
 }
 
+.availability-countdown {
+    flex: 0 0 100%;
+    max-width: 100%;
+    margin-top: 4px;
+    color: #222;
+    text-align: center;
+}
+
+.get-copy-heading .availability-countdown {
+    margin-top: 18px;
+}
+
+.banner-content .availability-countdown {
+    margin-top: 18px;
+    color: #fff;
+}
+
+.banner-content .availability-countdown-timer span {
+    min-width: 74px;
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 12px 28px rgba(0, 47, 108, 0.18);
+}
+
+.banner-content .availability-countdown-timer small {
+    color: #222;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.availability-countdown-status {
+    margin-bottom: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.availability-countdown-timer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+}
+
+.availability-countdown-timer span {
+    min-width: 58px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 8px 20px rgba(1, 87, 155, 0.12);
+}
+
+.availability-countdown-timer strong,
+.availability-countdown-timer small {
+    display: block;
+    line-height: 1.1;
+}
+
+.availability-countdown-timer strong {
+    font-size: 20px;
+    font-weight: 600;
+    color: #01579b;
+}
+
+.availability-countdown-timer small {
+    margin-top: 4px;
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.single-price:hover .availability-countdown,
+.single-price:hover .availability-countdown-timer strong {
+    color: #fff;
+}
+
+.single-price:hover .availability-countdown-timer span {
+    background: rgba(255, 255, 255, 0.16);
+    box-shadow: none;
+}
+
+.single-price:hover .availability-countdown-timer small {
+    color: #fff;
+}
+
 @media (max-width: 1280px) {
     .single-price .price-bottom {
         margin: 0;

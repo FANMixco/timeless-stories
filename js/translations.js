@@ -175,6 +175,66 @@ const massMediaCards = [
   },
 ];
 
+const availabilityDate = new Date(2026, 4, 1, 0, 0, 0);
+let availabilityCountdownInterval;
+
+function getCountdownText(key, fallback) {
+  return translations?.[key] || fallback;
+}
+
+function updateAvailabilityCountdown() {
+  const countdowns = document.querySelectorAll(".availability-countdown");
+  if (!countdowns.length) return;
+
+  const remaining = availabilityDate.getTime() - Date.now();
+  const isAvailable = remaining <= 0;
+  const safeRemaining = Math.max(remaining, 0);
+  const dayMs = 24 * 60 * 60 * 1000;
+  const hourMs = 60 * 60 * 1000;
+  const minuteMs = 60 * 1000;
+  const days = Math.floor(safeRemaining / dayMs);
+  const hours = Math.floor((safeRemaining % dayMs) / hourMs);
+  const minutes = Math.floor((safeRemaining % hourMs) / minuteMs);
+  const seconds = Math.floor((safeRemaining % minuteMs) / 1000);
+
+  countdowns.forEach((countdown) => {
+    countdown.classList.toggle("is-available", isAvailable);
+    const status = countdown.querySelector(".availability-countdown-status");
+    const timer = countdown.querySelector(".availability-countdown-timer");
+
+    if (status) {
+      status.innerHTML = isAvailable
+        ? getCountdownText("countdownAvailable", "Fully available now")
+        : getCountdownText("countdownIntro", "Fully available in");
+    }
+
+    if (timer) {
+      timer.hidden = isAvailable;
+    }
+
+    [
+      ["days", days],
+      ["hours", hours],
+      ["minutes", minutes],
+      ["seconds", seconds],
+    ].forEach(([unit, value]) => {
+      const item = countdown.querySelector(`[data-countdown-unit="${unit}"]`);
+      if (item) {
+        item.textContent = String(value).padStart(unit === "days" ? 1 : 2, "0");
+      }
+    });
+  });
+}
+
+function initAvailabilityCountdown() {
+  if (availabilityCountdownInterval) {
+    window.clearInterval(availabilityCountdownInterval);
+  }
+
+  updateAvailabilityCountdown();
+  availabilityCountdownInterval = window.setInterval(updateAvailabilityCountdown, 1000);
+}
+
 function getItemsPerSlide() {
   return window.innerWidth < 768 ? 1 : 3;
 }
@@ -235,6 +295,8 @@ function renderPriceCarousel() {
   if (typeof applyTranslations === "function") {
     applyTranslations();
   }
+
+  initAvailabilityCountdown();
 
   new bootstrap.Carousel(carouselElement, {
     interval: false,
@@ -446,4 +508,3 @@ fetchTranslationData(`js/i18n/lang-${lang}.min.json`)
   .catch((e) => {
     console.error(e);
   });
-
