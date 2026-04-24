@@ -3417,6 +3417,10 @@ h6 {
     }
 }
 
+#intro3 {
+    font-size: 1.25rem!important;
+}
+
 #mMediaCarousel .carousel-control-prev-icon,
 #mMediaCarousel .carousel-control-next-icon {
     filter: invert(20%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(90%);
@@ -3463,9 +3467,5 @@ h6 {
     .info-content {
         font-size: 16px!important;
         line-height: 1.6em;
-    }
-
-    #intro3 {
-        font-size: 15px!important;
     }
 }
