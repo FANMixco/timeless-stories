@@ -83,7 +83,7 @@ const carouselCards = [
     edition: "edition4",
     text: "edition5",
     price: "price1",
-    href: "https://a.co/d/hIKdELB",
+    href: "links.carouselCards.ebook",
     itemClass: "col-12 col-md-6 col-lg-4",
     desktopBottomClass: "",
     mobileBottomClass: "eBPrice",
@@ -94,7 +94,7 @@ const carouselCards = [
     edition: "edition2",
     text: "edition3",
     price: "price2",
-    href: "https://a.co/d/0euSZ7mF",
+    href: "links.carouselCards.paperback",
     itemClass: "col-12 col-md-6 col-lg-4",
     desktopBottomClass: "price-bottom-r",
     mobileBottomClass: "eBPriceR",
@@ -105,7 +105,7 @@ const carouselCards = [
     edition: "edition6",
     text: "edition7",
     price: "price3",
-    href: "https://a.co/d/0euSZ7mF",
+    href: "links.carouselCards.hardcover",
     itemClass: "col-12 col-md-6 col-lg-4 d-none d-lg-block",
     desktopBottomClass: "",
     mobileBottomClass: "eBPrice",
@@ -116,7 +116,7 @@ const carouselCards = [
     edition: "edition10",
     text: "edition11",
     price: "price5",
-    href: "https://a.co/d/0euSZ7mF",
+    href: "links.carouselCards.audiobook",
     itemClass: "col-12 col-md-6 col-lg-4 d-none d-lg-block",
     desktopBottomClass: "",
     mobileBottomClass: "eBPrice",
@@ -128,23 +128,23 @@ const carouselCards = [
 const carouselCards2 = [
   {
     edition: "old4",
-    href: "https://a.co/d/00fMsc8u",
+    href: "links.previousBooks.epiphanyEn",
   },
   {
     edition: "old5",
-    href: "https://a.co/d/0c8GXXKx",
+    href: "links.previousBooks.epiphanyEs",
   },
   {
     edition: "old1",
-    href: "https://a.co/d/bdxy6Bz",
+    href: "links.previousBooks.beginningEn",
   },
   {
     edition: "old2",
-    href: "https://a.co/d/5VsAmsE",
+    href: "links.previousBooks.beginningEs",
   },
   {
     edition: "old3",
-    href: "https://a.co/d/7pP9HgH",
+    href: "links.previousBooks.beginningFr",
   },
 ];
 
@@ -189,6 +189,10 @@ function updateHeroIntroTranslation() {
 
 function getCountdownText(key, fallback) {
   return translations?.[key] || fallback;
+}
+
+function getTranslatedLink(path) {
+  return getTranslationValue(translations, path) || "#";
 }
 
 function updateAvailabilityCountdown() {
@@ -291,7 +295,7 @@ function renderPriceCarousel() {
             <span class="h1" data-translation="${card.price}"></span>
           </div>
           <div class="${card.rightClass}">
-            <a href="${card.href}" target="_blank" rel="noopener noreferrer" class="primary-btn" data-translation="editionP"></a>
+            <a href="${getTranslatedLink(card.href)}" target="_blank" rel="noopener noreferrer" class="primary-btn" data-translation="editionP"></a>
           </div>
         </div>
       </div>
@@ -345,7 +349,7 @@ function renderBooksCarousel() {
 
     return `
     <div class="${colClass}">
-      <a class="book-card text-decoration-none d-block h-100" href="${card.href}" target="_blank" rel="noopener noreferrer">
+      <a class="book-card text-decoration-none d-block h-100" href="${getTranslatedLink(card.href)}" target="_blank" rel="noopener noreferrer">
         <div class="card h-100 text-center shadow-sm border-0">
           <div class="card-body d-flex flex-column justify-content-center">
             <i class="icon-download mb-3 fs-1" aria-hidden="true"></i>
