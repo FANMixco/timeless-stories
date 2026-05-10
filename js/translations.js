@@ -161,6 +161,18 @@ const carouselCards2 = [
 
 const massMediaCards = [
   {
+    text: "mMedia7",
+    href: "https://rree.gob.sv/literatura-salvadorena-destaca-en-evento-editorial-internacional-en-marruecos/",
+    imageBase: "img/fair/SIEL",
+    alt: "siel",
+  },
+  {
+    text: "mMedia6",
+    href: "https://rree.gob.sv/embajada-de-el-salvador-en-turkiye-promueve-a-autor-nacional-en-encuentro-de-literatura-iberoamericana/",
+    imageBase: "img/fair/turkey",
+    alt: "turkey",
+  },
+  {
     text: "mMedia3",
     href: "https://diarioelsalvador.com/salvadoreno-participo-en-feria-de-libro-en-madrid/369897/",
     imageBase: "img/fair/diario_el_salvador_2",
@@ -183,6 +195,12 @@ const massMediaCards = [
     href: "https://diarioelsalvador.com/el-narrador-de-historias-magicas-de-cuscatlan/15042",
     imageBase: "img/fair/diario_el_salvador",
     alt: "diario el salvador",
+  },
+  {
+    text: "mMedia5",
+    href: "https://rree.gob.sv/noviembre-es-el-mes-dedicado-a-los-salvadorenos-en-el-exterior/",
+    imageBase: "img/fair/exterior",
+    alt: "exterior",
   },
 ];
 
