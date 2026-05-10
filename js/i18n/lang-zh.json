@@ -34,8 +34,8 @@
         "edition5": "适合所有享受<br>环保和全彩体验的人。",
         "edition6": "精装本📘",
         "edition7": "适合所有享受优雅<br>和真实触感体验的人。",
-        "edition8": "高级版💎",
-        "edition9": "适合所有喜欢<br>全彩和特别精装风格的人。",
+        "edition8": "导演剪辑版💎",
+        "edition9": "此为最终版本，采用全彩印刷，<br>部分镜面设计，附赠额外内容，并采用精装硬皮封面设计。",
         "edition10": "有声读物👂",
         "edition11": "适合所有喜欢<br>在旅途中聆听的人。",
         "edition12": "彩色版🌈",
@@ -86,7 +86,8 @@
                 "ebook": "https://a.co/d/0bhpR0IY",
                 "paperback": "https://amzn.to/4dbF9Vc",
                 "hardcover": "https://amzn.to/4eAqEMR",
-                "audiobook": "https://amzn.to/4dwlh09"
+                "audiobook": "https://amzn.to/4dwlh09",
+                "directorX": "https://amzn.to/4eAqEMR"
             },
             "previousBooks": {
                 "epiphanyEn": "https://a.co/d/00fMsc8u",

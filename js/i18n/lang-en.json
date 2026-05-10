@@ -34,8 +34,8 @@
         "edition5": "For everyone who enjoys the <br>eco-friendly and full color experience.",
         "edition6": "Hardcover 📘",
         "edition7": "For everyone who enjoys the elegant <br>and real touch experience.",
-        "edition8": "Premium 💎",
-        "edition9": "For everyone who enjoys the best <br>with full colors and a especial hardcover style.",
+        "edition8": "Director’s Cut 💎",
+        "edition9": "The definitive edition featuring full colors, <br>partial mirrors, bonus content, and a premium hardcover design.",
         "edition10": "Audiobook 👂",
         "edition11": "For everyone who enjoys to listen <br>while they are on the move.",
         "edition12": "Full Colors 🌈",
@@ -86,7 +86,8 @@
                 "ebook": "https://a.co/d/0bhpR0IY",
                 "paperback": "https://amzn.to/4dbF9Vc",
                 "hardcover": "https://amzn.to/4eAqEMR",
-                "audiobook": "https://amzn.to/4dwlh09"
+                "audiobook": "https://amzn.to/4dwlh09",
+                "directorX": "https://amzn.to/4eAqEMR"
             },
             "previousBooks": {
                 "epiphanyEn": "https://a.co/d/00fMsc8u",

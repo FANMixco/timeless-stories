@@ -34,8 +34,8 @@
         "edition5": "Pour ceux qui apprécient <br>une expérience écologique et en couleurs.",
         "edition6": "Relié 📘",
         "edition7": "Pour ceux qui apprécient une expérience élégante <br>et un toucher authentique.",
-        "edition8": "Premium 💎",
-        "edition9": "Pour ceux qui recherchent le meilleur <br>avec des couleurs complètes et une couverture spéciale.",
+        "edition8": "Version d’auteur 💎",
+        "edition9": "L'édition définitive avec des couleurs intégrales, <br>des miroirs partiels, du contenu bonus et une couverture rigide haut de gamme.",
         "edition10": "Livre audio 👂",
         "edition11": "Pour ceux qui aiment écouter <br>en déplacement.",
         "edition12": "Couleurs intégrales 🌈",
@@ -86,7 +86,8 @@
                 "ebook": "https://a.co/d/0bhpR0IY",
                 "paperback": "https://amzn.to/4dbF9Vc",
                 "hardcover": "https://amzn.to/4eAqEMR",
-                "audiobook": "https://amzn.to/4dwlh09"
+                "audiobook": "https://amzn.to/4dwlh09",
+                "directorX": "https://amzn.to/4eAqEMR"
             },
             "previousBooks": {
                 "epiphanyEn": "https://a.co/d/00fMsc8u",

@@ -34,8 +34,8 @@
         "edition5": "Para todos los que disfrutan de la experiencia ecológica y a color.",
         "edition6": "Tapa dura 📘",
         "edition7": "Para todos los que disfrutan de la experiencia elegante, táctil y real.",
-        "edition8": "Premium 💎",
-        "edition9": "Para quienes disfrutan de lo mejor <br>con colores intensos y un estilo especial de tapa dura.",
+        "edition8": "Versión del Director 💎",
+        "edition9": "La edición definitiva con todo color, <br>espejos parciales, contenido adicional y un diseño de tapa dura de primera calidad.",
         "edition10": "Audiolibro 👂",
         "edition11": "Para quienes disfrutan escuchando <br>en movimiento.",
         "edition12": "A color 🌈",
@@ -85,7 +85,8 @@
                 "ebook": "https://a.co/d/05xm4whB",
                 "paperback": "https://amzn.to/4trMExp",
                 "hardcover": "https://amzn.to/4nmNdXW",
-                "audiobook": "https://amzn.to/4tpV6NE"
+                "audiobook": "https://amzn.to/4tpV6NE",
+                "directorX": "https://amzn.to/4eAqEMR"
             },
             "previousBooks": {
                 "epiphanyEn": "https://a.co/d/00fMsc8u",

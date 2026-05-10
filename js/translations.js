@@ -122,7 +122,18 @@ const carouselCards = [
     mobileBottomClass: "eBPrice",
     leftClass: "row",
     rightClass: "row-auto",
-  },
+  },,
+  {
+    edition: "edition8",
+    text: "edition9",
+    price: "price4",
+    href: "links.carouselCards.dirextorX",
+    itemClass: "col-12 col-md-6 col-lg-4 d-none d-lg-block",
+    desktopBottomClass: "",
+    mobileBottomClass: "eBPrice",
+    leftClass: "row",
+    rightClass: "row-auto",
+  }
 ];
 
 const carouselCards2 = [
