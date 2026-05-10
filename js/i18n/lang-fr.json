@@ -180,6 +180,10 @@
             }
         },
         "country1": "El Salvador 🇸🇻",
-        "country2": "Espagne 🇪🇸"
+        "country2": "Espagne 🇪🇸",
+        "culturalTitle": "Collaborations Culturelles",
+        "culturalSubtitle": "Un projet littéraire fondé sur le dialogue, les échanges culturels et la collaboration internationale.",
+        "cervantesText": "Marrakech",
+        "embassyText": "Soutien culturel et collaboration"
     }
 }

@@ -180,6 +180,10 @@
             }
         },
         "country1": "萨尔瓦多 🇸🇻",
-        "country2": "西班牙 🇪🇸"
+        "country2": "西班牙 🇪🇸",
+        "culturalTitle": "文化合作",
+        "culturalSubtitle": "一个由对话、文化交流和国际合作共同塑造的文学项目。",
+        "cervantesText": "马拉喀什",
+        "embassyText": "文化支持与合作"
     }
 }

@@ -179,6 +179,10 @@
             }
         },
         "country1": "El Salvador 🇸🇻",
-        "country2": "España 🇪🇸"
+        "country2": "España 🇪🇸",
+        "culturalTitle": "Colaboraciones Culturales",
+        "culturalSubtitle": "Un proyecto literario forjado en torno al diálogo, el intercambio cultural y la colaboración internacional.",
+        "cervantesText": "Marrakech",
+        "embassyText": "Apoyo cultural y colaboración"
     }
 }
