@@ -1,4 +1,4 @@
-# Get your copy!
+# Get your copy of Timeless Stories of El Salvador — Spanish Mirrors
 
 [![Spanish Mirrors](https://raw.githubusercontent.com/FANMixco/federiconavarrete/refs/heads/master/img/mybook/mirrors_small.png)](https://a.co/d/0euSZ7mF)
 
