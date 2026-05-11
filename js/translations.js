@@ -198,6 +198,12 @@ const massMediaCards = [
     alt: "diario el salvador",
   },
   {
+    text: "mMedia8",
+    href: "https://rree.gob.sv/embajada-de-el-salvador-en-alemania-presento-el-libro-timeless-stories-of-el-salvador-de-federico-navarrete/",
+    imageBase: "img/fair/diario_el_salvador",
+    alt: "embajada alemania",
+  },
+  {
     text: "mMedia5",
     href: "https://rree.gob.sv/noviembre-es-el-mes-dedicado-a-los-salvadorenos-en-el-exterior/",
     imageBase: "img/fair/exterior",
