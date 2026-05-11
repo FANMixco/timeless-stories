@@ -965,6 +965,15 @@ h6,
         border: 1px solid transparent;
     }
 
+    .eBPriceX {
+        /*color: #fff;*/
+        background: -moz-linear-gradient(90deg, #EF9A9A 0%, #D50000 100%);
+        background: -webkit-linear-gradient(90deg, #EF9A9A 0%, #D50000 100%);
+        background: -ms-linear-gradient(90deg, #EF9A9A 0%, #D50000 100%);
+        background: linear-gradient(90deg, #EF9A9A 0%, #D50000 100%);
+        border: 1px solid transparent;
+    }
+
     .eBPriceR {
         background: -moz-linear-gradient(90deg, #ffc107 0%, #6E5415 100%);
         background: -webkit-linear-gradient(90deg, #ffc107 0%, #6E5415 100%);
@@ -1106,6 +1115,13 @@ h6,
         background: -webkit-linear-gradient(90deg, #ffc107 0%, #6E5415 100%)!important;
         background: -ms-linear-gradient(90deg, #ffc107 0%, #6E5415 100%)!important;
         background: linear-gradient(90deg, #ffc107 0%, #6E5415 100%)!important;
+    }
+
+    .single-price:hover .price-bottom-x {
+        background: -moz-linear-gradient(90deg, #EF9A9A 0%, #D50000 100%)!important;
+        background: -webkit-linear-gradient(90deg, #EF9A9A 0%, #D50000 100%)!important;
+        background: -ms-linear-gradient(90deg, #EF9A9A 0%, #D50000 100%)!important;
+        background: linear-gradient(90deg, #EF9A9A 0%, #D50000 100%)!important;
     }
 
     .footer-social a:hover i {
@@ -3449,13 +3465,11 @@ h6 {
 }
 
 @media (min-width: 768px) and (max-width: 991.98px) {
+    .eBPriceX .h1,
+    .eBPrice .h1,
     .eBPriceR .h1 {
         color: #fff;
     }
-
-    .eBPrice .h1 {
-        color: #fff;
-    }   
 }
 
 @media (max-width: 767px) {
@@ -3490,11 +3504,9 @@ h6 {
         height: 72px;
     }
 
+    .eBPriceX .h1,
+    .eBPrice .h1,
     .eBPriceR .h1 {
-        color: #fff;
-    }
-
-    .eBPrice .h1 {
         color: #fff;
     }
 }

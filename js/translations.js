@@ -130,8 +130,8 @@ const carouselCards = [
     href: "links.carouselCards.directorX",
     cta: "comingSoon",
     itemClass: "col-12 col-md-6 col-lg-4 d-none d-lg-block",
-    desktopBottomClass: "",
-    mobileBottomClass: "eBPrice",
+    desktopBottomClass: "price-bottom-x",
+    mobileBottomClass: "eBPriceX",
     leftClass: "row",
     rightClass: "row-auto",
   }
