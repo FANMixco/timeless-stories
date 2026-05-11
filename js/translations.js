@@ -162,7 +162,7 @@ const carouselCards2 = [
 
 const massMediaCards = [
   {
-    text: "mMedia7",
+    text: "mMedia5",
     href: "https://rree.gob.sv/literatura-salvadorena-destaca-en-evento-editorial-internacional-en-marruecos/",
     imageBase: "img/fair/SIEL",
     alt: "siel",
@@ -210,7 +210,7 @@ const massMediaCards = [
     alt: "embajada alemania",
   },
   {
-    text: "mMedia5",
+    text: "mMedia7",
     href: "https://rree.gob.sv/noviembre-es-el-mes-dedicado-a-los-salvadorenos-en-el-exterior/",
     imageBase: "img/fair/exterior",
     alt: "exterior",
