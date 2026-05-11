@@ -22,6 +22,60 @@ function runWhenVisible(element, callback, options = {}) {
     observer.observe(element);
 }
 
+function debugLazyLoad(message, data) {
+    const debugEnabled =
+        new URLSearchParams(window.location.search).has("debugLazy") ||
+        window.localStorage?.getItem("debugLazy") === "1";
+
+    if (debugEnabled) {
+        console.info(`[lazy-load] ${message}`, data || "");
+    }
+}
+
+function runLazyScriptQueue(scripts, options = {}) {
+    const queue = scripts
+        .filter(({ id, target }) => !document.getElementById(id) && target);
+
+    if (!queue.length) {
+        debugLazyLoad("No scripts queued");
+        return;
+    }
+
+    debugLazyLoad("Watching scripts", queue.map(({ id }) => id));
+
+    if (!("IntersectionObserver" in window)) {
+        debugLazyLoad("IntersectionObserver unavailable; loading scripts now");
+        queue.forEach(({ config }) => injectScriptOnce(config));
+        return;
+    }
+
+    const callbacks = new Map(queue.map(({ target, config }) => [target, config]));
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (!entry.isIntersecting) {
+                return;
+            }
+
+            const config = callbacks.get(entry.target);
+            if (!config) {
+                return;
+            }
+
+            callbacks.delete(entry.target);
+            observer.unobserve(entry.target);
+            debugLazyLoad("Loading script", config.id);
+            injectScriptOnce(config);
+
+            if (!callbacks.size) {
+                debugLazyLoad("All queued scripts loaded; observer disconnected");
+                observer.disconnect();
+            }
+        });
+    }, options);
+
+    callbacks.forEach((config, target) => observer.observe(target));
+}
+
 function injectScriptOnce({ id, src, async = true, defer = false }) {
     if (id && document.getElementById(id)) {
         return;
@@ -240,19 +294,24 @@ function initNavbarToggleState() {
 }
 
 function initLazyLoadScripts() {
-    runWhenVisible(document.getElementById("aReviews"), () => {
-        injectScriptOnce({
+    runLazyScriptQueue([
+        {
             id: "elfsight_platform",
-            src: "https://apps.elfsight.com/p/platform.js"
-        });
-    }, { rootMargin: "300px 0px" });
-
-    runWhenVisible(document.getElementById("google_translate_element"), () => {
-        injectScriptOnce({
+            target: document.getElementById("aReviews"),
+            config: {
+                id: "elfsight_platform",
+                src: "https://apps.elfsight.com/p/platform.js"
+            }
+        },
+        {
             id: "g_translate",
-            src: "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
-        });
-    }, { rootMargin: "250px 0px" });
+            target: document.getElementById("google_translate_element"),
+            config: {
+                id: "g_translate",
+                src: "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+            }
+        }
+    ], { rootMargin: "300px 0px" });
 }
 
 function googleTranslateElementInit() {
@@ -314,6 +373,7 @@ function initTikTokEmbed() {
 
 function initDeferredAnalytics() {
     loadWidgetOnIdle(() => {
+        debugLazyLoad("Loading analytics loader", "ga_loader");
         injectScriptOnce({
             id: "ga_loader",
             src: "js/gAnalyticsLoad.min.js",
