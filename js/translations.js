@@ -123,6 +123,18 @@ const carouselCards = [
     leftClass: "row",
     rightClass: "row-auto",
   },
+  {
+    edition: "edition8",
+    text: "edition9",
+    price: "price4",
+    href: "links.carouselCards.directorX",
+    cta: "comingSoon",
+    itemClass: "col-12 col-md-6 col-lg-4 d-none d-lg-block",
+    desktopBottomClass: "",
+    mobileBottomClass: "eBPrice",
+    leftClass: "row",
+    rightClass: "row-auto",
+  }
 ];
 
 const carouselCards2 = [
@@ -150,6 +162,18 @@ const carouselCards2 = [
 
 const massMediaCards = [
   {
+    text: "mMedia7",
+    href: "https://rree.gob.sv/literatura-salvadorena-destaca-en-evento-editorial-internacional-en-marruecos/",
+    imageBase: "img/fair/SIEL",
+    alt: "siel",
+  },
+  {
+    text: "mMedia6",
+    href: "https://rree.gob.sv/embajada-de-el-salvador-en-turkiye-promueve-a-autor-nacional-en-encuentro-de-literatura-iberoamericana/",
+    imageBase: "img/fair/turkey",
+    alt: "turkey",
+  },
+  {
     text: "mMedia3",
     href: "https://diarioelsalvador.com/salvadoreno-participo-en-feria-de-libro-en-madrid/369897/",
     imageBase: "img/fair/diario_el_salvador_2",
@@ -172,6 +196,12 @@ const massMediaCards = [
     href: "https://diarioelsalvador.com/el-narrador-de-historias-magicas-de-cuscatlan/15042",
     imageBase: "img/fair/diario_el_salvador",
     alt: "diario el salvador",
+  },
+  {
+    text: "mMedia5",
+    href: "https://rree.gob.sv/noviembre-es-el-mes-dedicado-a-los-salvadorenos-en-el-exterior/",
+    imageBase: "img/fair/exterior",
+    alt: "exterior",
   },
 ];
 
@@ -295,7 +325,7 @@ function renderPriceCarousel() {
             <span class="h1" data-translation="${card.price}"></span>
           </div>
           <div class="${card.rightClass}">
-            <a href="${getTranslatedLink(card.href)}" target="_blank" rel="noopener noreferrer" class="primary-btn" data-translation="editionP"></a>
+            <a href="${getTranslatedLink(card.href)}" target="_blank" rel="noopener noreferrer" class="primary-btn" data-translation="${card.cta || "editionP"}"></a>
           </div>
         </div>
       </div>

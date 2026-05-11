@@ -16,7 +16,7 @@
         "price1": "<span>$</span> 4.99",
         "price2": "<span>$</span> 9.99",
         "price3": "<span>$</span> 15.99",
-        "price4": "<span>$</span> 34.49",
+        "price4": "<span>$</span> 36.99",
         "price5": "<span>$</span> 5.99",
         "price6": "<span>$</span> 14.49",
         "author1": "is a Spanish–Salvadoran technology strategist and cultural researcher dedicated to building bridges across nations through the timeless power of folklore.",
@@ -34,8 +34,8 @@
         "edition5": "For everyone who enjoys the <br>eco-friendly and full color experience.",
         "edition6": "Hardcover 📘",
         "edition7": "For everyone who enjoys the elegant <br>and real touch experience.",
-        "edition8": "Premium 💎",
-        "edition9": "For everyone who enjoys the best <br>with full colors and a especial hardcover style.",
+        "edition8": "Director’s Cut 💎",
+        "edition9": "The definitive edition featuring full colors, <br>partial mirrors, bonus content, and a premium hardcover design.",
         "edition10": "Audiobook 👂",
         "edition11": "For everyone who enjoys to listen <br>while they are on the move.",
         "edition12": "Full Colors 🌈",
@@ -55,6 +55,9 @@
         "mMedia2": "Book on Salvadoran mythology causes a sensation in Germany (in Spanish)",
         "mMedia3": "Salvadoran participated in the Book Fair in Madrid (in Spanish)",
         "mMedia4": "This Salvadoran writer was at the Madrid Book Fair (in Spanish)",
+        "mMedia5": "Salvadoran literature takes center stage at an international book fair in Morocco (in Spanish)",
+        "mMedia6": "The Embassy of El Salvador in Türkiye Promotes a National Author at an Ibero-American Literature Event (in Spanish)",
+        "mMedia7": "November is the month dedicated to Salvadorans living abroad (in Spanish)",
         "prezi1": "Are you a bilingual parent?",
         "prezi2": "Would you like to start sharing your origins with your children in a bilingual mode (English and Spanish)?",
         "prezi3": "Then <b>Timeless Stories of El Salvador, Children's Edition</b> is for <b>YOU!</b>",
@@ -67,7 +70,7 @@
         "contactMe": "Contact me",
         "readMore": "Read more",
         "readLess": "Read less",
-        "comingSoon": "May 1<sup>st</sup>",
+        "comingSoon": "Coming soon",
         "countdownIntro": "Fully available in",
         "countdownAvailable": "Fully available now",
         "countdownDays": "Days",
@@ -86,7 +89,8 @@
                 "ebook": "https://a.co/d/0bhpR0IY",
                 "paperback": "https://amzn.to/4dbF9Vc",
                 "hardcover": "https://amzn.to/4eAqEMR",
-                "audiobook": "https://amzn.to/4dwlh09"
+                "audiobook": "https://amzn.to/4dwlh09",
+                "directorX": "https://amzn.to/4eAqEMR"
             },
             "previousBooks": {
                 "epiphanyEn": "https://a.co/d/00fMsc8u",
@@ -179,6 +183,11 @@
             }
         },
         "country1": "El Salvador 🇸🇻",
-        "country2": "Spain 🇪🇸"
+        "country2": "Spain 🇪🇸",
+        "culturalTitle": "Cultural Collaborations",
+        "culturalSubtitle": "A literary project shaped by dialogue, cultural exchange, and international collaboration.",
+        "cervantesText": "Marrakesh",
+        "embassyText": "Cultural support and collaboration",
+        "embassyMA": "Embassy of El Salvador in Morocco"
     }
 }

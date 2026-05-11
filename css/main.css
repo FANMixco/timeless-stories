@@ -2694,8 +2694,9 @@ body.mobile-nav-active #mobile-nav-toggle {
     margin-top: 0;
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     padding-left: 24px;
-    padding-right: 36px;
+    padding-right: 24px;
     min-width: 0;
     background: #222;
     color: #fff;
@@ -2922,6 +2923,60 @@ body.mobile-nav-active #mobile-nav-toggle {
 .buttons p span {
     font-size: 24px;
     font-weight: 600;
+}
+
+.cultural-collaborations {
+    margin-top: 58px;
+}
+
+.cultural-title {
+    display: block;
+    font-size: 28px;
+    font-weight: 600;
+    line-height: 1.25;
+}
+
+.cultural-subtitle {
+    max-width: 620px;
+    margin: 12px auto 26px;
+    font-size: 15px;
+    line-height: 1.6;
+    opacity: 0.9;
+}
+
+.cultural-card {
+    height: 100%;
+    min-height: 138px;
+    padding: 22px 24px;
+    background-color: rgba(255, 255, 255, 0.95);
+    color: #222;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.65);
+    box-shadow: 0 10px 26px rgba(1, 87, 155, 0.14);
+}
+
+.cultural-card img {
+    width: 104px;
+    height: 68px;
+    object-fit: contain;
+    flex: 0 0 auto;
+}
+
+.cultural-card h3 {
+    margin-bottom: 5px;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.25;
+}
+
+.cultural-card p {
+    margin-bottom: 0;
+    font-size: 13px;
+    line-height: 1.45;
+    color: #555;
 }
 
 .testomial-area .owl-carousel .owl-item img {
@@ -3406,6 +3461,33 @@ h6 {
 @media (max-width: 767px) {
     #div-book {
         padding-top: 2.5rem;
+    }
+
+    .cultural-collaborations {
+        margin-top: 44px;
+    }
+
+    .cultural-title {
+        font-size: 24px;
+    }
+
+    .cultural-subtitle {
+        margin-bottom: 22px;
+        padding: 0 12px;
+        font-size: 14px;
+    }
+
+    .cultural-card {
+        max-width: 360px;
+        margin: 0 auto;
+        padding: 20px;
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    .cultural-card img {
+        width: 118px;
+        height: 72px;
     }
 
     .eBPriceR .h1 {

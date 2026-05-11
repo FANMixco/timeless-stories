@@ -16,7 +16,7 @@
         "price1": "<span>美元</span>4.99",
         "price2": "<span>美元</span>9.99",
         "price3": "<span>美元</span>15.99",
-        "price4": "<span>美元</span> 34.49",
+        "price4": "<span>美元</span> 36.99",
         "price5": "<span>美元</span> 5.99",
         "price6": "<span>美元</span> 14.49",
         "author1": "一位西班牙-萨尔瓦多裔技术战略家与文化研究者，致力于通过民间传说这一永恒的力量搭建国家间的桥梁。",
@@ -34,8 +34,8 @@
         "edition5": "适合所有享受<br>环保和全彩体验的人。",
         "edition6": "精装本📘",
         "edition7": "适合所有享受优雅<br>和真实触感体验的人。",
-        "edition8": "高级版💎",
-        "edition9": "适合所有喜欢<br>全彩和特别精装风格的人。",
+        "edition8": "导演剪辑版💎",
+        "edition9": "此为最终版本，采用全彩印刷，<br>部分镜面设计，附赠额外内容，并采用精装硬皮封面设计。",
         "edition10": "有声读物👂",
         "edition11": "适合所有喜欢<br>在旅途中聆听的人。",
         "edition12": "彩色版🌈",
@@ -55,6 +55,9 @@
         "mMedia2": "萨尔瓦多神话书在德国引起轰动（西班牙语）",
         "mMedia3": "萨尔瓦多人参加马德里书展（西班牙语）",
         "mMedia4": "这位萨尔瓦多作家出席马德里书展（西班牙语）",
+        "mMedia5": "萨尔瓦多文学在摩洛哥国际书展上大放异彩（西班牙语）",
+        "mMedia6": "萨尔瓦多驻土耳其大使馆在伊比利亚美洲文学活动上推广一位萨尔瓦多作家（西班牙语）",
+        "mMedia7": "十一月是萨尔瓦多海外侨胞月（西班牙语）",
         "prezi1": "你是双语家长吗？",
         "prezi2": "您是否愿意开始用双语模式（中文和西班牙语）向孩子讲述您的根源？",
         "prezi3": "然后<b>萨尔瓦多永恒的故事,儿童版</b>是给<b>你！</b>的",
@@ -67,7 +70,7 @@
         "contactMe": "联系我",
         "readMore": "阅读更多",
         "readLess": "少读一点",
-        "comingSoon": "5月1日",
+        "comingSoon": "即将推出",
         "countdownIntro": "距离全面上线还有",
         "countdownAvailable": "现已全面上线",
         "countdownDays": "天",
@@ -86,7 +89,8 @@
                 "ebook": "https://a.co/d/0bhpR0IY",
                 "paperback": "https://amzn.to/4dbF9Vc",
                 "hardcover": "https://amzn.to/4eAqEMR",
-                "audiobook": "https://amzn.to/4dwlh09"
+                "audiobook": "https://amzn.to/4dwlh09",
+                "directorX": "https://amzn.to/4eAqEMR"
             },
             "previousBooks": {
                 "epiphanyEn": "https://a.co/d/00fMsc8u",
@@ -179,6 +183,11 @@
             }
         },
         "country1": "萨尔瓦多 🇸🇻",
-        "country2": "西班牙 🇪🇸"
+        "country2": "西班牙 🇪🇸",
+        "culturalTitle": "文化合作",
+        "culturalSubtitle": "一个由对话、文化交流和国际合作共同塑造的文学项目。",
+        "cervantesText": "马拉喀什",
+        "embassyText": "文化支持与合作",
+        "embassyMA": "萨尔瓦多驻摩洛哥大使馆"
     }
 }
