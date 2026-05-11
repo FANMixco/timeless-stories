@@ -1,6 +1,6 @@
-# Get your copy!
+# Get your copy of Timeless Stories of El Salvador — Spanish Mirrors
 
-[![Spanish Mirrors](https://raw.githubusercontent.com/FANMixco/federiconavarrete/refs/heads/master/img/mybook/mirrors.png)](https://a.co/d/0euSZ7mF)
+[![Spanish Mirrors](https://raw.githubusercontent.com/FANMixco/federiconavarrete/refs/heads/master/img/mybook/mirrors_small.png)](https://a.co/d/0euSZ7mF)
 
 ### Presented at SIEL 2026 in Rabat, UNESCO World Book Capital, Spanish Mirrors is the 1st book of its kind: 10 mirrored legends revealing how distant cultures reflect the same symbols and fears.
 
