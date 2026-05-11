@@ -122,12 +122,13 @@ const carouselCards = [
     mobileBottomClass: "eBPrice",
     leftClass: "row",
     rightClass: "row-auto",
-  },,
+  },
   {
     edition: "edition8",
     text: "edition9",
     price: "price4",
-    href: "links.carouselCards.dirextorX",
+    href: "links.carouselCards.directorX",
+    cta: "comingSoon",
     itemClass: "col-12 col-md-6 col-lg-4 d-none d-lg-block",
     desktopBottomClass: "",
     mobileBottomClass: "eBPrice",
@@ -324,7 +325,7 @@ function renderPriceCarousel() {
             <span class="h1" data-translation="${card.price}"></span>
           </div>
           <div class="${card.rightClass}">
-            <a href="${getTranslatedLink(card.href)}" target="_blank" rel="noopener noreferrer" class="primary-btn" data-translation="editionP"></a>
+            <a href="${getTranslatedLink(card.href)}" target="_blank" rel="noopener noreferrer" class="primary-btn" data-translation="${card.cta || "editionP"}"></a>
           </div>
         </div>
       </div>

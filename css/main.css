@@ -2694,8 +2694,9 @@ body.mobile-nav-active #mobile-nav-toggle {
     margin-top: 0;
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     padding-left: 24px;
-    padding-right: 36px;
+    padding-right: 24px;
     min-width: 0;
     background: #222;
     color: #fff;
