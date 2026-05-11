@@ -87,7 +87,7 @@ const carouselCards = [
     itemClass: "col-12 col-md-6 col-lg-4",
     desktopBottomClass: "",
     mobileBottomClass: "eBPrice",
-    leftClass: "row",
+    leftClass: "row-auto",
     rightClass: "row-auto",
   },
   {
@@ -98,7 +98,7 @@ const carouselCards = [
     itemClass: "col-12 col-md-6 col-lg-4",
     desktopBottomClass: "price-bottom-r",
     mobileBottomClass: "eBPriceR",
-    leftClass: "row",
+    leftClass: "row-auto",
     rightClass: "row-auto",
   },
   {
@@ -109,7 +109,7 @@ const carouselCards = [
     itemClass: "col-12 col-md-6 col-lg-4 d-none d-lg-block",
     desktopBottomClass: "",
     mobileBottomClass: "eBPrice",
-    leftClass: "row",
+    leftClass: "row-auto",
     rightClass: "row-auto",
   },
   {
@@ -120,7 +120,7 @@ const carouselCards = [
     itemClass: "col-12 col-md-6 col-lg-4 d-none d-lg-block",
     desktopBottomClass: "",
     mobileBottomClass: "eBPrice",
-    leftClass: "row",
+    leftClass: "row-auto",
     rightClass: "row-auto",
   },
   {
@@ -132,7 +132,7 @@ const carouselCards = [
     itemClass: "col-12 col-md-6 col-lg-4 d-none d-lg-block",
     desktopBottomClass: "price-bottom-x",
     mobileBottomClass: "eBPriceX",
-    leftClass: "row",
+    leftClass: "row-auto",
     rightClass: "row-auto",
   }
 ];
@@ -332,7 +332,7 @@ function renderPriceCarousel() {
           <h4 data-translation="${card.edition}"></h4>
         </div>
         <p data-translation="${card.text}"></p>
-        <div class="price-bottom ${bottomClass} row gx-3 gy-2 align-items-center justify-content-center">
+        <div class="price-bottom ${bottomClass}">
           <div class="${card.leftClass}">
             <span class="h1" data-translation="${card.price}"></span>
           </div>

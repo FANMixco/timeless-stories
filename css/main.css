@@ -2668,6 +2668,7 @@ body.mobile-nav-active #mobile-nav-toggle {
     /*margin: 0 45px 45px 45px;*/
     padding: 35px;
     display: flex;
+    flex-direction: column;
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
@@ -2685,6 +2686,10 @@ body.mobile-nav-active #mobile-nav-toggle {
     max-width: 100%;
 }
 .single-price .price-bottom .h1 {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.12em;
     font-size: 60px;
     font-weight: 300;
     margin: 0;
@@ -2701,9 +2706,10 @@ body.mobile-nav-active #mobile-nav-toggle {
 
 .single-price .price-bottom .h1 span {
     font-size: 25px;
-    margin-top: -14px;
-    position: absolute;
-    margin-left: -20px;
+    line-height: 1;
+    margin-top: 0;
+    position: static;
+    margin-left: 0;
 }
 
 .single-price .price-bottom .primary-btn {
