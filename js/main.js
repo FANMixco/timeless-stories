@@ -22,6 +22,7 @@ function runWhenVisible(element, callback, options = {}) {
     observer.observe(element);
 }
 
+    /*
 function debugLazyLoad(message, data) {
     const debugEnabled =
         new URLSearchParams(window.location.search).has("debugLazy") ||
@@ -31,6 +32,7 @@ function debugLazyLoad(message, data) {
         console.info(`[lazy-load] ${message}`, data || "");
     }
 }
+    */
 
 function runLazyScriptQueue(scripts, options = {}) {
     const queue = scripts
