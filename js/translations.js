@@ -180,6 +180,12 @@ const massMediaCards = [
     alt: "turkey",
   },
   {
+    text: "mMedia10",
+    href: "https://rree.gob.sv/consulado-general-de-el-salvador-en-espana-promueve-participacion-de-escritor-nacional-en-feria-de-libro-de-madrid/",
+    imageBase: "img/fair/consulado_es",
+    alt: "consulado españa",
+  },
+  {
     text: "mMedia3",
     href: "https://diarioelsalvador.com/salvadoreno-participo-en-feria-de-libro-en-madrid/369897/",
     imageBase: "img/fair/diario_el_salvador_2",
