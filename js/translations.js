@@ -234,7 +234,7 @@ const institutionalRecordCards = [
   },
   {
     country: "pCountry4",
-    institution: "Instituto Cervantes New Delhi",
+    institution: "Instituto Cervantes Nueva Delhi",
     title: "Federico Navarrete: Timeless Stories of El Salvador",
     date: "institutionalDateIndia",
     linkLabel: "institutionalEventPage",
@@ -242,7 +242,7 @@ const institutionalRecordCards = [
   },
   {
     country: "pCountry3",
-    institution: "Instituto Cervantes",
+    institution: "Instituto Cervantes Estambul",
     title: 'Estambul celebra por primera vez el Encuentro de Literatura Iberoamericana "12 de octubre"',
     date: "institutionalDateTurkiye",
     linkLabel: "institutionalPressNote",
