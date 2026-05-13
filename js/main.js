@@ -438,43 +438,23 @@ function initMobileMenuHideOnScroll() {
 }
 
 function initContentModal() {
-    const overlay = document.getElementById("contentModalOverlay");
-    const modal = overlay?.querySelector(".content-modal");
+    const modalElement = document.getElementById("contentModal");
     const modalTitle = document.getElementById("contentModalTitle");
     const modalBody = document.getElementById("contentModalBody");
-    const closeButton = document.getElementById("contentModalClose");
     const massMediaSection = document.getElementById("mass-media");
     const massMediaContainer = massMediaSection?.querySelector(".container");
     const institutionalRecords = document.querySelector(".institutional-records");
 
-    if (!overlay || !modal || !modalBody || !closeButton || !massMediaContainer || !institutionalRecords) {
+    if (
+        !modalElement ||
+        !modalBody ||
+        !modalTitle ||
+        !massMediaContainer ||
+        !institutionalRecords ||
+        typeof bootstrap === "undefined"
+    ) {
         return;
     }
-
-    const modalState = {
-        activeTrigger: null,
-    };
-
-    const getFocusableElements = () => Array.from(
-        modal.querySelectorAll(
-            'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])'
-        )
-    ).filter((item) => !item.hasAttribute("disabled") && item.offsetParent !== null);
-
-    const closeModal = () => {
-        if (!overlay.classList.contains("is-open")) {
-            return;
-        }
-
-        overlay.classList.remove("is-open");
-        overlay.setAttribute("aria-hidden", "true");
-        document.body.classList.remove("content-modal-open");
-        modalBody.innerHTML = "";
-
-        if (modalState.activeTrigger) {
-            modalState.activeTrigger.focus({ preventScroll: true });
-        }
-    };
 
     const createExternalLink = (href, label, className = "content-modal-list-link") => {
         const link = document.createElement("a");
@@ -509,16 +489,17 @@ function initContentModal() {
         list.className = "content-modal-list";
 
         institutionalRecords.querySelectorAll(".institutional-record-card").forEach((card) => {
+            const country = card.querySelector(".institutional-record-country")?.textContent?.trim();
             const titleElement = card.querySelector(".institutional-record-title");
             const link = card.querySelector(".institutional-record-link[href]");
             const title = link?.dataset.eventTitle || titleElement?.innerHTML?.trim();
 
-            if (!title || !link) {
+            if (!country || !title || !link) {
                 return;
             }
 
             const item = document.createElement("li");
-            item.appendChild(createExternalLink(link.href, title));
+            item.appendChild(createExternalLink(link.href, `${country}: ${title}`));
             list.appendChild(item);
         });
 
@@ -537,103 +518,27 @@ function initContentModal() {
         return null;
     };
 
-    const openModal = (trigger, content, title) => {
-        if (!content || !content.children.length) {
-            return;
-        }
-
-        if (overlay.classList.contains("is-open")) {
-            closeModal();
-        }
-
-        modalState.activeTrigger = trigger;
-        modalBody.replaceChildren(content);
-
-        if (modalTitle) {
-            modalTitle.textContent = title || "";
-        }
-
-        document.body.classList.add("content-modal-open");
-        overlay.setAttribute("aria-hidden", "false");
-        overlay.classList.add("is-open");
-        closeButton.focus({ preventScroll: true });
-    };
-
-    const openFromTrigger = (trigger, event) => {
-        const target = trigger.dataset.contentModalTarget;
+    modalElement.addEventListener("show.bs.modal", (event) => {
+        const trigger = event.relatedTarget;
+        const target = trigger?.dataset.contentModalTarget;
         const content = getModalContent(target);
 
-        if (!content) {
+        if (!trigger || !content || !content.children.length) {
+            event.preventDefault();
             return;
         }
 
-        event.preventDefault();
-        event.stopPropagation();
-        openModal(trigger, content, trigger.textContent.trim());
-    };
+        modalBody.replaceChildren(content);
+        modalTitle.textContent = trigger.textContent.trim();
+    });
 
     document.querySelectorAll("[data-content-modal-target]").forEach((trigger) => {
         trigger.classList.add("modal-trigger-title");
         trigger.setAttribute("aria-haspopup", "dialog");
     });
 
-    document.addEventListener("click", (event) => {
-        const trigger = event.target.closest("[data-content-modal-target]");
-        if (!trigger) {
-            return;
-        }
-
-        openFromTrigger(trigger, event);
-    }, true);
-
-    document.addEventListener("keydown", (event) => {
-        const trigger = event.target.closest("[data-content-modal-target]");
-        if (!trigger || (event.key !== "Enter" && event.key !== " ")) {
-            return;
-        }
-
-        openFromTrigger(trigger, event);
-    }, true);
-
-    closeButton.addEventListener("click", closeModal);
-    overlay.addEventListener("click", (event) => {
-        if (event.target === overlay) {
-            closeModal();
-        }
-    });
-
-    document.addEventListener("keydown", (event) => {
-        if (!overlay.classList.contains("is-open")) {
-            return;
-        }
-
-        if (event.key === "Escape") {
-            event.preventDefault();
-            closeModal();
-            return;
-        }
-
-        if (event.key !== "Tab") {
-            return;
-        }
-
-        const focusableElements = getFocusableElements();
-        if (!focusableElements.length) {
-            event.preventDefault();
-            closeButton.focus();
-            return;
-        }
-
-        const first = focusableElements[0];
-        const last = focusableElements[focusableElements.length - 1];
-
-        if (event.shiftKey && document.activeElement === first) {
-            event.preventDefault();
-            last.focus();
-        } else if (!event.shiftKey && document.activeElement === last) {
-            event.preventDefault();
-            first.focus();
-        }
+    modalElement.addEventListener("hidden.bs.modal", () => {
+        modalBody.innerHTML = "";
     });
 }
 
