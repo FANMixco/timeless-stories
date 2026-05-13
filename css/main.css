@@ -901,7 +901,6 @@ th {
     display: inline-block;
     padding: 0;
     color: #222;
-    font-family: Poppins, sans-serif;
     font-size: inherit;
     font-weight: 600;
     line-height: 1.2em !important;
@@ -921,9 +920,9 @@ th {
     border-radius: 8px;
 }
 
-.content-modal .modal-dialog {
+/*.content-modal .modal-dialog {
     max-width: min(1200px, calc(100% - 32px));
-}
+}*/
 
 .content-modal .modal-content {
     border: 1px solid rgba(1, 87, 155, 0.12);
@@ -942,7 +941,7 @@ th {
 
 .content-modal-title {
     color: #222;
-    font-size: 34px;
+    /*font-size: 34px;*/
     font-weight: 600;
     line-height: 1.25;
 }
