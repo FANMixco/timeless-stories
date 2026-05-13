@@ -826,9 +826,9 @@ th {
     min-height: 248px;
     padding: 24px;
     background: #fff;
-    border: 1px solid rgba(1, 87, 155, 0.12);
+    border: 1px solid #ddd;
     border-radius: 8px;
-    box-shadow: 0 10px 24px rgba(34, 34, 34, 0.06);
+    box-shadow: none;
 }
 
 .institutional-record-country {
