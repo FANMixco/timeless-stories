@@ -223,6 +223,49 @@ const massMediaCards = [
   },
 ];
 
+const institutionalRecordCards = [
+  {
+    country: "pCountry5",
+    institution: "Instituto Cervantes Marrakech",
+    title: "Historias eternas de El Salvador. Espejos espa&ntilde;oles",
+    date: "institutionalDateMorocco",
+    linkLabel: "institutionalEventPage",
+    href: "https://cultura.cervantes.es/marrakech/es/Historias-eternas-de-El-Salvador.-Espejos-espa%C3%B1oles.-Encuentro-literario-con-el-escritor-Federico-Na/189691",
+  },
+  {
+    country: "pCountry4",
+    institution: "Instituto Cervantes New Delhi",
+    title: "Federico Navarrete: Timeless Stories of El Salvador",
+    date: "institutionalDateIndia",
+    linkLabel: "institutionalEventPage",
+    href: "https://cultura.cervantes.es/nuevadelhi/en/-Federico-Navarrete:-Viajemos-a-Historias-Eternas-de-El-Salvador-/165805",
+  },
+  {
+    country: "pCountry3",
+    institution: "Instituto Cervantes",
+    title: 'Estambul celebra por primera vez el Encuentro de Literatura Iberoamericana "12 de octubre"',
+    date: "institutionalDateTurkiye",
+    linkLabel: "institutionalPressNote",
+    href: "https://cervantes.org/es/sobre-nosotros/sala-prensa/notas-prensa/estambul-celebra-primera-vez-encuentro-literatura",
+  },
+  {
+    country: "pCountry2",
+    institution: "Instituto Cervantes Beijing",
+    title: "D&iacute;a E 2023 &middot; Presentaci&oacute;n de libro Historias Eternas de El Salvador",
+    date: "institutionalDateChina",
+    linkLabel: "institutionalEventPage",
+    href: "https://pekin.cervantes.es/es/cultura_espanol/dia_e/diae_2023_espanol.htm",
+  },
+  {
+    country: "pCountry1",
+    institution: "Instituto Cervantes Vienna",
+    title: "Panorama der zeitgen&ouml;ssischen iberoamerikanischen Literatur I",
+    date: "institutionalDateAustria",
+    linkLabel: "institutionalEventPage",
+    href: "https://cultura.cervantes.es/viena/de-AT/panorama-der-zeitgen%C3%B6ssischen-iberoamerikanischen-literatur-i/156294",
+  },
+];
+
 const availabilityDate = new Date(2026, 4, 1, 0, 0, 0);
 const postLaunchIntroDate = new Date(2026, 4, 2, 0, 0, 0);
 let availabilityCountdownInterval;
@@ -460,6 +503,7 @@ function renderMassMediaCarousel() {
         <div class="${cardClass}">
           <a
             target="_blank"
+            rel="noopener noreferrer"
             href="${card.href}"
             class="text-decoration-none text-dark d-block"
           >
@@ -494,6 +538,70 @@ function renderMassMediaCarousel() {
   });
 }
 
+function renderInstitutionalRecords() {
+  const carouselElement = document.getElementById("institutionalRecordsCarousel");
+  const carouselInner = document.getElementById("institutionalRecordsCarouselInner");
+
+  if (!carouselElement || !carouselInner) return;
+
+  const itemsPerSlide = getItemsPerSlide();
+  const existingInstance = bootstrap.Carousel.getInstance(carouselElement);
+  if (existingInstance) {
+    existingInstance.dispose();
+  }
+
+  const slides = [];
+
+  for (let i = 0; i < institutionalRecordCards.length; i += itemsPerSlide) {
+    const group = institutionalRecordCards.slice(i, i + itemsPerSlide);
+
+    slides.push(`
+      <div class="carousel-item ${i === 0 ? "active" : ""}">
+        <div class="row justify-content-center g-4">
+          ${group.map((card) => buildInstitutionalRecordCard(card, itemsPerSlide)).join("")}
+        </div>
+      </div>
+    `);
+  }
+
+  function buildInstitutionalRecordCard(card, currentItemsPerSlide) {
+    const colClass = currentItemsPerSlide === 1
+      ? "col-12 institutional-record-slide"
+      : "col-12 col-md-4 institutional-record-slide";
+
+    return `
+      <div class="${colClass}">
+        <article class="institutional-record-card">
+          <p class="institutional-record-country" data-translation="${card.country}"></p>
+          <h3>${card.institution}</h3>
+          <p class="institutional-record-title">${card.title}</p>
+          <p class="institutional-record-date" data-translation="${card.date}"></p>
+          <a
+            href="${card.href}"
+            class="institutional-record-link"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-event-title="${card.title}"
+            data-translation="${card.linkLabel}"
+          ></a>
+        </article>
+      </div>
+    `;
+  }
+
+  carouselInner.innerHTML = slides.join("");
+
+  if (typeof applyTranslations === "function") {
+    applyTranslations();
+  }
+
+  new bootstrap.Carousel(carouselElement, {
+    interval: false,
+    ride: false,
+    wrap: true,
+  });
+}
+
 let currentCarouselMode = getItemsPerSlide();
 
 window.addEventListener("resize", () => {
@@ -504,6 +612,7 @@ window.addEventListener("resize", () => {
     renderPriceCarousel();
     renderBooksCarousel();
     renderMassMediaCarousel();
+    renderInstitutionalRecords();
   }
 });
 
@@ -545,6 +654,7 @@ fetchTranslationData(`js/i18n/lang-${lang}.min.json`)
     renderPriceCarousel();
     renderBooksCarousel();
     renderMassMediaCarousel();
+    renderInstitutionalRecords();
     applyTranslations();
 
     contactModal.addEventListener("show.bs.modal", () => {

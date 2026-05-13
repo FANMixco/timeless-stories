@@ -5,7 +5,7 @@
         "menu2": "Get a copy",
         "menu3": "Preview",
         "menu4": "Reviews",
-        "menu5": "Mass Media",
+        "menu5": "International Literary Presence",
         "intro1": "Author: Federico Navarrete",
         "intro2": "Timeless Stories of El Salvador V2: Epiphany",
         "introSM": "Timeless Stories of El Salvador — Spanish Mirrors",
@@ -191,6 +191,19 @@
         "culturalSubtitle": "A literary project shaped by dialogue, cultural exchange, and international collaboration.",
         "cervantesText": "Marrakesh",
         "embassyText": "Cultural support and collaboration",
-        "embassyMA": "Embassy of El Salvador in Morocco"
+        "embassyMA": "Embassy of El Salvador in Morocco",
+        "pCountry1": "🇦🇹 Austria",
+        "pCountry2": "🇨🇳 China",
+        "pCountry3": "🇹🇷 Türkiye",
+        "pCountry4": "🇮🇳 India",
+        "pCountry5": "🇲🇦 Morocco",
+        "institutionalRecordsTitle": "Official Institutional Records",
+        "institutionalEventPage": "Official Event Page",
+        "institutionalPressNote": "Official Press Note",
+        "institutionalDateMorocco": "5 May 2026",
+        "institutionalDateIndia": "14 November 2023",
+        "institutionalDateTurkiye": "11 October 2023",
+        "institutionalDateChina": "3 June 2023",
+        "institutionalDateAustria": "24 November 2022"
     }
 }

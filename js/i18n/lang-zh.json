@@ -5,7 +5,7 @@
     "menu2": "获取副本",
     "menu3": "预览",
     "menu4": "评论",
-    "menu5": "媒体报道",
+    "menu5": "国际文学影响力",
     "intro1": "作者:费德里科·纳瓦雷特",
     "intro2": "Timeless Stories of El Salvador V2: Epiphany",
     "introSM": "Timeless Stories of El Salvador — Spanish Mirrors",
@@ -191,6 +191,19 @@
     "culturalSubtitle": "一个由对话、文化交流和国际合作共同塑造的文学项目。",
     "cervantesText": "马拉喀什",
     "embassyText": "文化支持与合作",
-    "embassyMA": "萨尔瓦多驻摩洛哥大使馆"
+    "embassyMA": "萨尔瓦多驻摩洛哥大使馆",
+    "pCountry1": "🇦🇹 奥地利",
+    "pCountry2": "🇨🇳 中国",
+    "pCountry3": "🇹🇷 土耳其",
+    "pCountry4": "🇮🇳 印度",
+    "pCountry5": "🇲🇦 摩洛哥",
+    "institutionalRecordsTitle": "官方机构记录",
+    "institutionalEventPage": "官方活动页面",
+    "institutionalPressNote": "官方新闻稿",
+    "institutionalDateMorocco": "2026年5月5日",
+    "institutionalDateIndia": "2023年11月14日",
+    "institutionalDateTurkiye": "2023年10月11日",
+    "institutionalDateChina": "2023年6月3日",
+    "institutionalDateAustria": "2022年11月24日"
   }
 }

@@ -5,7 +5,7 @@
     "menu2": "Obtenir un exemplaire",
     "menu3": "Aperçu",
     "menu4": "Avis",
-    "menu5": "Médias",
+    "menu5": "Présence littéraire internationale",
     "intro1": "Auteur : Federico Navarrete",
     "intro2": "Timeless Stories of El Salvador V2 : Epiphany",
     "introSM": "Légendes Éternelles d’El Salvador — Miroirs Espagnols",
@@ -191,6 +191,19 @@
     "culturalSubtitle": "Un projet littéraire fondé sur le dialogue, les échanges culturels et la collaboration internationale.",
     "cervantesText": "Marrakech",
     "embassyText": "Soutien culturel et collaboration",
-    "embassyMA": "Ambassade d'El Salvador au Maroc"
+    "embassyMA": "Ambassade d'El Salvador au Maroc",
+    "pCountry1": "🇦🇹 Autriche",
+    "pCountry2": "🇨🇳 Chine",
+    "pCountry3": "🇹🇷 Turquie",
+    "pCountry4": "🇮🇳 Inde",
+    "pCountry5": "🇲🇦 Maroc",
+    "institutionalRecordsTitle": "Archives institutionnelles officielles",
+    "institutionalEventPage": "Page officielle de l’événement",
+    "institutionalPressNote": "Note de presse officielle",
+    "institutionalDateMorocco": "5 mai 2026",
+    "institutionalDateIndia": "14 novembre 2023",
+    "institutionalDateTurkiye": "11 octobre 2023",
+    "institutionalDateChina": "3 juin 2023",
+    "institutionalDateAustria": "24 novembre 2022"
   }
 }

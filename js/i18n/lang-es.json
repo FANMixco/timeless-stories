@@ -5,7 +5,7 @@
     "menu2": "Obtén una copia",
     "menu3": "Vista previa",
     "menu4": "Reseñas",
-    "menu5": "Apariciones en medios",
+    "menu5": "Presencia literaria internacional",
     "intro1": "Autor: Federico Navarrete",
     "intro2": "Historias Eternas de El Salvador V2: Epifanía",
     "introSM": "Historias Eternas de El Salvador — Espejos Españoles",
@@ -190,6 +190,19 @@
     "culturalSubtitle": "Un proyecto literario forjado en torno al diálogo, el intercambio cultural y la colaboración internacional.",
     "cervantesText": "Marrakech",
     "embassyText": "Apoyo cultural y colaboración",
-    "embassyMA": "Embajada de El Salvador en Marruecos"
+    "embassyMA": "Embajada de El Salvador en Marruecos",
+    "pCountry1": "🇦🇹 Austria",
+    "pCountry2": "🇨🇳 China",
+    "pCountry3": "🇹🇷 Turquía",
+    "pCountry4": "🇮🇳 India",
+    "pCountry5": "🇲🇦 Marruecos",
+    "institutionalRecordsTitle": "Registros institucionales oficiales",
+    "institutionalEventPage": "Página oficial del evento",
+    "institutionalPressNote": "Nota de prensa oficial",
+    "institutionalDateMorocco": "5 de mayo de 2026",
+    "institutionalDateIndia": "14 de noviembre de 2023",
+    "institutionalDateTurkiye": "11 de octubre de 2023",
+    "institutionalDateChina": "3 de junio de 2023",
+    "institutionalDateAustria": "24 de noviembre de 2022"
   }
 }
