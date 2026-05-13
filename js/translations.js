@@ -340,7 +340,9 @@ function initAvailabilityCountdown() {
 }
 
 function getItemsPerSlide() {
-  return window.innerWidth < 768 ? 1 : 3;
+  if (window.innerWidth < 768) return 1;
+  if (window.innerWidth < 992) return 2;
+  return 3;
 }
 
 function renderPriceCarousel() {
@@ -370,7 +372,11 @@ function renderPriceCarousel() {
   }
 
   function buildPriceCard(card, currentItemsPerSlide) {
-    const colClass = currentItemsPerSlide === 1 ? "col-12" : "col-12 col-md-4";
+    const colClass = currentItemsPerSlide === 1
+      ? "col-12"
+      : currentItemsPerSlide === 2
+        ? "col-12 col-md-6"
+        : "col-12 col-md-4";
     const bottomClass =
       currentItemsPerSlide === 1 ? card.mobileBottomClass : card.desktopBottomClass;
 
@@ -436,7 +442,11 @@ function renderBooksCarousel() {
   }
 
   function buildBookCard(card, currentItemsPerSlide) {
-    const colClass = currentItemsPerSlide === 1 ? "col-12" : "col-12 col-md-4";
+    const colClass = currentItemsPerSlide === 1
+      ? "col-12"
+      : currentItemsPerSlide === 2
+        ? "col-12 col-md-6"
+        : "col-12 col-md-4";
 
     return `
     <div class="${colClass}">
@@ -493,7 +503,9 @@ function renderMassMediaCarousel() {
   function buildMassMediaCard(card, currentItemsPerSlide) {
     const colClass = currentItemsPerSlide === 1
       ? "col-12 mMedia-container"
-      : "col-12 col-md-4 mMedia-container";
+      : currentItemsPerSlide === 2
+        ? "col-12 col-md-6 mMedia-container"
+        : "col-12 col-md-4 mMedia-container";
     const cardClass = currentItemsPerSlide === 1 ? "card mx-3" : "card";
     const imageClass = currentItemsPerSlide === 1 ? "card-img-top img-fluid" : "card-img-top";
     const bodyClass = currentItemsPerSlide === 1 ? "card-body text-center font-weight-bold" : "card-body";
@@ -567,7 +579,9 @@ function renderInstitutionalRecords() {
   function buildInstitutionalRecordCard(card, currentItemsPerSlide) {
     const colClass = currentItemsPerSlide === 1
       ? "col-12 institutional-record-slide"
-      : "col-12 col-md-4 institutional-record-slide";
+      : currentItemsPerSlide === 2
+        ? "col-12 col-md-6 institutional-record-slide"
+        : "col-12 col-md-4 institutional-record-slide";
 
     return `
       <div class="${colClass}">

@@ -994,6 +994,11 @@ th {
         padding: 0 16px;
     }
 
+    #priceCarousel,
+    #booksCarousel {
+        padding: 0 32px;
+    }
+
     .institutional-record-card {
         min-height: 0;
         padding: 22px;
@@ -2586,12 +2591,6 @@ body.mobile-nav-active #mobile-nav-toggle {
     margin-bottom: 0;
 }
 
-@media (max-width: 991.98px) {
-    .section-title p br {
-        display: none;
-    }
-}
-
 .p1-gradient-bg,
 .primary-btn,
 .banner-area,
@@ -2692,11 +2691,110 @@ body.mobile-nav-active #mobile-nav-toggle {
     .banner-content h1 {
         font-size: 36px;
     }
-}
 
-@media (max-width: 991.98px) {
+    .section-title p br {
+        display: none;
+    }
+
     .banner-content h1 br {
         display: none;
+    }
+
+    .single-footer-widget {
+        margin-bottom: 30px;
+    }
+
+    .generic-banner .generic-banner-content h2 br {
+        display: none;
+    }
+
+    .generic-banner .generic-banner-content p br {
+        display: none;
+    }
+
+    #header .nav-link {
+        font-size: 1.15rem !important;
+        line-height: 1.5;
+        padding: 0.7rem 0 !important;
+    }
+
+    #navbarMenu {
+        padding-top: 0.75rem;
+        padding-left: 1.2rem;
+    }
+
+    #navbarMenu .navbar-nav {
+        align-items: flex-start;
+    }
+
+    .banner-area .fullscreen {
+        height: auto !important;
+        min-height: auto;
+        padding-top: 7rem;
+        padding-bottom: 4rem;
+        row-gap: 2rem;
+        align-content: flex-start;
+    }
+
+    .banner-content {
+        max-width: 820px;
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+    #intro3 {
+        max-width: 780px;
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+    #div-book {
+        display: flex;
+        justify-content: center;
+        padding-top: 0;
+    }
+
+    .footer-social {
+        justify-content: flex-start;
+    }
+
+    .signature {
+        display: block;
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+    #priceCarousel,
+    #booksCarousel {
+        padding: 0 58px;
+    }
+
+    .single-price {
+        max-width: 360px;
+        height: 100%;
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+    .single-price p {
+        min-height: 128px;
+        padding: 26px 18px;
+    }
+
+    .single-price .price-bottom {
+        padding: 30px 24px;
+    }
+
+    .single-price .price-bottom .h1 {
+        font-size: 54px;
+    }
+
+    .institutional-records .carousel {
+        padding: 0 64px;
+    }
+
+    .institutional-record-card {
+        min-height: 270px;
     }
 }
 
@@ -2754,8 +2852,8 @@ body.mobile-nav-active #mobile-nav-toggle {
 
 @media (max-width: 800px) {
     .info-area .info-content {
-        text-align: center;
-        padding: 80px 30px 80px 0;
+        text-align: left;
+        padding: 50px 42px;
     }
 }
 
@@ -2784,21 +2882,9 @@ body.mobile-nav-active #mobile-nav-toggle {
     height: 100%;
 }
 
-@media (max-width: 991.98px) {
-    .info-area .info-content:after {
-        width: 50px;
-    }
-}
-
 @media (max-width: 575.98px) {
     .info-area .info-content:after {
         display: none;
-    }
-}
-
-@media (max-width: 991.98px) {
-    .info-area .info-content {
-        padding: 30px 30px 30px 0;
     }
 }
 
@@ -2822,6 +2908,24 @@ body.mobile-nav-active #mobile-nav-toggle {
 
 .info-area .info-left {
     z-index: 2;
+}
+
+@media (max-width: 991.98px) {
+    .info-area .info-content:after {
+        display: none;
+    }
+
+    .info-area .info-content {
+        max-width: 820px;
+        margin: 0 auto;
+        padding: 42px;
+        text-align: left;
+    }
+
+    .info-area .info-right {
+        padding-right: 15px !important;
+        padding-left: 15px !important;
+    }
 }
 
 @media (max-width: 800px) {
@@ -3327,22 +3431,6 @@ h6 {
     transition: all 0.3s ease 0s;
 }
 
-@media (max-width: 991.98px) {
-    .banner-area .fullscreen {
-        height: auto !important;
-        min-height: 100vh;
-        padding-bottom: 3rem;
-    }
-
-    #div-book {
-        padding-top: 2.5rem;
-    }
-
-    .footer-social {
-        justify-content: flex-start;
-    }
-}
-
 .single-footer-widget input {
     border: none;
     width: 80% !important;
@@ -3434,12 +3522,6 @@ h6 {
     font-weight: 300;
 }
 
-@media (max-width: 991.98px) {
-    .single-footer-widget {
-        margin-bottom: 30px;
-    }
-}
-
 @media (max-width: 800px) {
     .social-widget {
         margin-top: 30px;
@@ -3478,21 +3560,9 @@ h6 {
     margin-bottom: 20px;
 }
 
-@media (max-width: 991.98px) {
-    .generic-banner .generic-banner-content h2 br {
-        display: none;
-    }
-}
-
 .generic-banner .generic-banner-content p {
     text-align: center;
     font-size: 16px;
-}
-
-@media (max-width: 991.98px) {
-    .generic-banner .generic-banner-content p br {
-        display: none;
-    }
 }
 
 .generic-content h1 {
@@ -3684,23 +3754,6 @@ h6 {
     }
 }
 
-@media (max-width: 991.98px) {
-    #header .nav-link {
-        font-size: 1.15rem !important;
-        line-height: 1.5;
-        padding: 0.7rem 0 !important;
-    }
-
-    #navbarMenu {
-        padding-top: 0.75rem;
-        padding-left: 1.2rem;
-    }
-
-    #navbarMenu .navbar-nav {
-        align-items: flex-start;
-    }
-}
-
 /* Optional hover */
 .carousel-control-prev:hover,
 .carousel-control-next:hover {
@@ -3717,7 +3770,7 @@ h6 {
 
 @media (max-width: 767px) {
     #div-book {
-        padding-top: 2.5rem;
+        padding-top: 0;
     }
 
     .cultural-collaborations {
