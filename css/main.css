@@ -2823,7 +2823,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 
 @media (max-width: 800px) {
     .banner-content {
-        margin-top: 80px;
+        margin-top: 0;
     }
 }
 
