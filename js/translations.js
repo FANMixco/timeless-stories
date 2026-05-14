@@ -1,6 +1,8 @@
 const supportedLang = ["en", "es", "fr", "zh"];
 const languageStorageKey = "timelessStoriesOfficialLanguage";
 let translations;
+let linkRegistry;
+let localizedLinks;
 const browserLang = (
   navigator.languages
     ? navigator.languages[0]
@@ -117,6 +119,33 @@ function getTranslationValue(obj, path) {
   return path.split(".").reduce((acc, part) => acc && acc[part], obj);
 }
 
+function mergeLinkConfig(defaults, overrides = {}) {
+  const merged = { ...defaults };
+
+  Object.entries(overrides).forEach(([key, value]) => {
+    const defaultValue = merged[key];
+    const shouldMerge =
+      value &&
+      typeof value === "object" &&
+      !Array.isArray(value) &&
+      defaultValue &&
+      typeof defaultValue === "object" &&
+      !Array.isArray(defaultValue);
+
+    merged[key] = shouldMerge ? mergeLinkConfig(defaultValue, value) : value;
+  });
+
+  return merged;
+}
+
+function getLinkValue(path) {
+  return getTranslationValue(linkRegistry, path) || "#";
+}
+
+function getLocalizedLink(path) {
+  return getTranslationValue(localizedLinks, path) || "#";
+}
+
 function applyTranslations() {
   document.querySelectorAll("[data-translation]").forEach((item) => {
     const value = getTranslationValue(translations, item.dataset.translation);
@@ -131,7 +160,7 @@ const carouselCards = [
     edition: "edition4",
     text: "edition5",
     price: "price1",
-    href: "links.carouselCards.ebook",
+    href: "carouselCards.ebook",
     itemClass: "col-12 col-md-6 col-lg-4",
     desktopBottomClass: "",
     mobileBottomClass: "eBPrice",
@@ -142,7 +171,7 @@ const carouselCards = [
     edition: "edition2",
     text: "edition3",
     price: "price2",
-    href: "links.carouselCards.paperback",
+    href: "carouselCards.paperback",
     itemClass: "col-12 col-md-6 col-lg-4",
     desktopBottomClass: "price-bottom-r",
     mobileBottomClass: "eBPriceR",
@@ -153,7 +182,7 @@ const carouselCards = [
     edition: "edition6",
     text: "edition7",
     price: "price3",
-    href: "links.carouselCards.hardcover",
+    href: "carouselCards.hardcover",
     itemClass: "col-12 col-md-6 col-lg-4 d-none d-lg-block",
     desktopBottomClass: "",
     mobileBottomClass: "eBPrice",
@@ -164,7 +193,7 @@ const carouselCards = [
     edition: "edition10",
     text: "edition11",
     price: "price5",
-    href: "links.carouselCards.audiobook",
+    href: "carouselCards.audiobook",
     itemClass: "col-12 col-md-6 col-lg-4 d-none d-lg-block",
     desktopBottomClass: "",
     mobileBottomClass: "eBPrice",
@@ -175,7 +204,7 @@ const carouselCards = [
     edition: "edition8",
     text: "edition9",
     price: "price4",
-    href: "links.carouselCards.directorX",
+    href: "carouselCards.directorX",
     cta: "comingSoon",
     itemClass: "col-12 col-md-6 col-lg-4 d-none d-lg-block",
     desktopBottomClass: "price-bottom-x",
@@ -188,84 +217,84 @@ const carouselCards = [
 const carouselCards2 = [
   {
     edition: "old4",
-    href: "links.previousBooks.epiphanyEn",
+    href: "shared.previousBooks.epiphanyEn",
   },
   {
     edition: "old5",
-    href: "links.previousBooks.epiphanyEs",
+    href: "shared.previousBooks.epiphanyEs",
   },
   {
     edition: "old1",
-    href: "links.previousBooks.beginningEn",
+    href: "shared.previousBooks.beginningEn",
   },
   {
     edition: "old2",
-    href: "links.previousBooks.beginningEs",
+    href: "shared.previousBooks.beginningEs",
   },
   {
     edition: "old3",
-    href: "links.previousBooks.beginningFr",
+    href: "shared.previousBooks.beginningFr",
   },
 ];
 
 const massMediaCards = [
   {
     text: "mMedia5",
-    href: "https://rree.gob.sv/literatura-salvadorena-destaca-en-evento-editorial-internacional-en-marruecos/",
+    href: "shared.massMedia.siel",
     imageBase: "img/fair/SIEL",
     alt: "siel",
   },
   {
     text: "mMedia9",
-    href: "https://www.youtube.com/watch?v=44OsqBcTgIo",
+    href: "shared.massMedia.india",
     imageBase: "img/fair/india",
     alt: "india",
   },
   {
     text: "mMedia6",
-    href: "https://rree.gob.sv/embajada-de-el-salvador-en-turkiye-promueve-a-autor-nacional-en-encuentro-de-literatura-iberoamericana/",
+    href: "shared.massMedia.turkiye",
     imageBase: "img/fair/turkey",
     alt: "turkey",
   },
   {
     text: "mMedia10",
-    href: "https://rree.gob.sv/consulado-general-de-el-salvador-en-espana-promueve-participacion-de-escritor-nacional-en-feria-de-libro-de-madrid/",
+    href: "shared.massMedia.consuladoEspana",
     imageBase: "img/fair/consulado_es",
     alt: "consulado españa",
   },
   {
     text: "mMedia3",
-    href: "https://diarioelsalvador.com/salvadoreno-participo-en-feria-de-libro-en-madrid/369897/",
+    href: "shared.massMedia.diarioMadrid",
     imageBase: "img/fair/diario_el_salvador_2",
     alt: "diario el salvador",
   },
   {
     text: "mMedia4",
-    href: "https://bit.ly/3QiEzgF",
+    href: "shared.massMedia.pulgarcito",
     imageBase: "img/fair/pulgarcito",
     alt: "pulgarcito",
   },
   {
     text: "mMedia1",
-    href: "https://rree.gob.sv/embajada-de-el-salvador-en-austria-apoya-obra-de-escritor-salvadoreno-en-feria-del-libro-en-viena/",
+    href: "shared.massMedia.buchWien",
     imageBase: "img/fair/buch_viena",
     alt: "buch viena",
   },
   {
     text: "mMedia2",
-    href: "https://diarioelsalvador.com/el-narrador-de-historias-magicas-de-cuscatlan/15042",
+    href: "shared.massMedia.diarioAlemania",
     imageBase: "img/fair/diario_el_salvador",
     alt: "diario el salvador",
   },
   {
     text: "mMedia8",
-    href: "https://rree.gob.sv/embajada-de-el-salvador-en-alemania-presento-el-libro-timeless-stories-of-el-salvador-de-federico-navarrete/",
+    href: "shared.massMedia.embajadaAlemania",
     imageBase: "img/fair/diario_el_salvador",
     alt: "embajada alemania",
   },
   {
     text: "mMedia7",
-    href: "https://rree.gob.sv/noviembre-es-el-mes-dedicado-a-los-salvadorenos-en-el-exterior/",
+    href: "shared.massMedia.exterior",
     imageBase: "img/fair/exterior",
     alt: "exterior",
   },
@@ -277,35 +306,35 @@ const institutionalRecordCards = [
     event: "event5",
     date: "institutionalDateMorocco",
     linkLabel: "institutionalEventPage",
-    href: "https://cultura.cervantes.es/marrakech/es/Historias-eternas-de-El-Salvador.-Espejos-espa%C3%B1oles.-Encuentro-literario-con-el-escritor-Federico-Na/189691",
+    href: "shared.institutionalRecords.morocco",
   },
   {
     country: "pCountry4",
     event: "event4",
     date: "institutionalDateIndia",
     linkLabel: "institutionalEventPage",
-    href: "https://cultura.cervantes.es/nuevadelhi/en/-Federico-Navarrete:-Viajemos-a-Historias-Eternas-de-El-Salvador-/165805",
+    href: "shared.institutionalRecords.india",
   },
   {
     country: "pCountry3",
     event: "event3",
     date: "institutionalDateTurkiye",
     linkLabel: "institutionalPressNote",
-    href: "https://cervantes.org/es/sobre-nosotros/sala-prensa/notas-prensa/estambul-celebra-primera-vez-encuentro-literatura",
+    href: "shared.institutionalRecords.turkiye",
   },
   {
     country: "pCountry2",
     event: "event2",
     date: "institutionalDateChina",
     linkLabel: "institutionalEventPage",
-    href: "https://pekin.cervantes.es/es/cultura_espanol/dia_e/diae_2023_espanol.htm",
+    href: "shared.institutionalRecords.china",
   },
   {
     country: "pCountry1",
     event: "event1",
     date: "institutionalDateAustria",
     linkLabel: "institutionalEventPage",
-    href: "https://cultura.cervantes.es/viena/de-AT/panorama-der-zeitgen%C3%B6ssischen-iberoamerikanischen-literatur-i/156294",
+    href: "shared.institutionalRecords.austria",
   },
 ];
 
@@ -330,10 +359,6 @@ function updateHeroIntroTranslation() {
 
 function getCountdownText(key, fallback) {
   return translations?.[key] || fallback;
-}
-
-function getTranslatedLink(path) {
-  return getTranslationValue(translations, path) || "#";
 }
 
 function updateAvailabilityCountdown() {
@@ -452,7 +477,7 @@ function renderPriceCarousel() {
             <span class="h1" data-translation="${card.price}"></span>
           </div>
           <div class="${card.rightClass}">
-            <a href="${getTranslatedLink(card.href)}" target="_blank" rel="noopener noreferrer" class="primary-btn" data-translation="${card.cta || "editionP"}"></a>
+            <a href="${getLocalizedLink(card.href)}" target="_blank" rel="noopener noreferrer" class="primary-btn" data-translation="${card.cta || "editionP"}"></a>
           </div>
         </div>
       </div>
@@ -511,7 +536,7 @@ function renderBooksCarousel() {
 
     return `
     <div class="${colClass}">
-      <a class="book-card text-decoration-none d-block h-100" href="${getTranslatedLink(card.href)}" target="_blank" rel="noopener noreferrer">
+      <a class="book-card text-decoration-none d-block h-100" href="${getLinkValue(card.href)}" target="_blank" rel="noopener noreferrer">
         <div class="card h-100 text-center shadow-sm border-0">
           <div class="card-body d-flex flex-column justify-content-center">
             <i class="icon-download mb-3 fs-1" aria-hidden="true"></i>
@@ -582,7 +607,7 @@ function renderMassMediaCarousel() {
           <a
             target="_blank"
             rel="noopener noreferrer"
-            href="${card.href}"
+            href="${getLinkValue(card.href)}"
             class="text-decoration-none text-dark d-block"
           >
             <picture>
@@ -665,7 +690,7 @@ function renderInstitutionalRecords() {
           <p class="institutional-record-title">${title}</p>
           <p class="institutional-record-date" data-translation="${card.date}"></p>
           <a
-            href="${card.href}"
+            href="${getLinkValue(card.href)}"
             class="institutional-record-link"
             target="_blank"
             rel="noopener noreferrer"
@@ -703,9 +728,17 @@ window.addEventListener("resize", () => {
   }
 });
 
-fetchTranslationData(`js/i18n/lang-${lang}.min.json`)
-  .then((data) => {
-    translations = data.translations;
+Promise.all([
+  fetchTranslationData(`js/i18n/lang-${lang}.min.json`),
+  fetchTranslationData("js/data/links.min.json"),
+])
+  .then(([translationData, linksData]) => {
+    translations = translationData.translations;
+    linkRegistry = linksData;
+    localizedLinks = mergeLinkConfig(
+      linkRegistry.localized.default,
+      linkRegistry.localized[lang],
+    );
 
     initOfficialLanguageSelector();
     document.title = translations.title;
@@ -720,19 +753,17 @@ fetchTranslationData(`js/i18n/lang-${lang}.min.json`)
         .getElementById("menuContactMe")
         .setAttribute(
           "href",
-          "https://www.cognitoforms.com/FedericoNavarrete1/EntremosEnContactoHistoriasEternas",
+          getLinkValue("shared.contact.spanishContactForm"),
         );
     }
 
-    const validLinks = translations.links;
-
     setDeferredFrameSource(
       "bookPreviewFrame",
-      `https://leer.amazon.es/kp/card?asin=${validLinks.book}&preview=inline&linkCode=kpe&ref_=cm_sw_r_kb_dp_HJ6YDMXY6BRE1FA9AWE3`,
+      `https://leer.amazon.es/kp/card?asin=${localizedLinks.book}&preview=inline&linkCode=kpe&ref_=cm_sw_r_kb_dp_HJ6YDMXY6BRE1FA9AWE3`,
     );
     setDeferredFrameSource(
       "preziPreviewFrame",
-      `https://prezi.com/p/embed/${validLinks.prezi}`,
+      `https://prezi.com/p/embed/${localizedLinks.prezi}`,
     );
 
     const contactModal = document.getElementById("mContactUs");
@@ -752,8 +783,8 @@ fetchTranslationData(`js/i18n/lang-${lang}.min.json`)
           script.src = "https://www.cognitoforms.com/f/seamless.js";
           script.id = "cu_script";
           script.async = true;
-          script.dataset.key = validLinks.contactUs.key;
-          script.dataset.form = validLinks.contactUs.form;
+          script.dataset.key = localizedLinks.contactUs.key;
+          script.dataset.form = localizedLinks.contactUs.form;
 
           document.getElementById("divContactUs").appendChild(script);
         }

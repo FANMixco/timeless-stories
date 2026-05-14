@@ -81,28 +81,6 @@
     "countdownMinutes": "Min",
     "countdownSeconds": "Sec",
     "title": "Légendes Éternelles d’El Salvador | Folklore, légendes et contes de fées",
-    "links": {
-      "prezi": "k1IXa0mNdi7IbZjRgyOA",
-      "book": "B0GV3V9YDK",
-      "contactUs": {
-        "key": "hkz0rsUoNkGpGQYpoPHBzg",
-        "form": "4"
-      },
-      "carouselCards": {
-        "ebook": "https://a.co/d/0bhpR0IY",
-        "paperback": "https://amzn.to/4dbF9Vc",
-        "hardcover": "https://amzn.to/4eAqEMR",
-        "audiobook": "https://amzn.to/4dwlh09",
-        "directorX": "https://amzn.to/4eAqEMR"
-      },
-      "previousBooks": {
-        "epiphanyEn": "https://a.co/d/00fMsc8u",
-        "epiphanyEs": "https://a.co/d/0c8GXXKx",
-        "beginningEn": "https://a.co/d/bdxy6Bz",
-        "beginningEs": "https://a.co/d/5VsAmsE",
-        "beginningFr": "https://a.co/d/7pP9HgH"
-      }
-    },
     "mapLegends": {
       "blackKnight": {
         "name": "Le Chevalier Noir",

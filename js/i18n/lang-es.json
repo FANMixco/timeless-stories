@@ -1,4 +1,4 @@
-{
+﻿{
   "translations": {
     "menu0": "Inicio",
     "menu1": "Acerca de",
@@ -64,7 +64,7 @@
     "prezi2": "¿Te gustaría empezar a compartir tus orígenes con tus hijos en modo bilingüe (español e inglés)?",
     "prezi3": "¡Entonces <b>Historias Eternas de El Salvador, Edición Infantil</b> es para <b>TI!</b>",
     "footer1": "Acerca de",
-    "footer2": "Timeless Stories es una serie de libros centrados en leyendas y cuentos de hadas sobre El Salvador, España y la hispanosfera.",
+    "footer2": "Historias Eternas es una serie de libros centrados en leyendas y cuentos de hadas sobre El Salvador, España y la hispanosfera.",
     "footer3": "Sígueme",
     "footer4": "Seamos sociales",
     "name": "Federico Navarrete",
@@ -80,28 +80,6 @@
     "countdownMinutes": "Min",
     "countdownSeconds": "Seg",
     "title": "Historias Eternas de El Salvador | Folclore, Leyendas y Cuentos",
-    "links": {
-      "prezi": "3OA2BbhRZgysnB22bzdX",
-      "book": "B0GHZ857CZ",
-      "contactUs": {
-        "key": "hkz0rsUoNkGpGQYpoPHBzg",
-        "form": "3"
-      },
-      "carouselCards": {
-        "ebook": "https://a.co/d/05xm4whB",
-        "paperback": "https://amzn.to/4trMExp",
-        "hardcover": "https://amzn.to/4nmNdXW",
-        "audiobook": "https://amzn.to/4tpV6NE",
-        "directorX": "https://amzn.to/4eAqEMR"
-      },
-      "previousBooks": {
-        "epiphanyEn": "https://a.co/d/00fMsc8u",
-        "epiphanyEs": "https://a.co/d/0c8GXXKx",
-        "beginningEn": "https://a.co/d/bdxy6Bz",
-        "beginningEs": "https://a.co/d/5VsAmsE",
-        "beginningFr": "https://a.co/d/7pP9HgH"
-      }
-    },
     "mapLegends": {
       "blackKnight": {
         "name": "El Caballero Negro",
