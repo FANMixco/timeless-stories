@@ -1,14 +1,56 @@
-let nLang = (
+const supportedLang = ["en", "es", "fr", "zh"];
+const languageStorageKey = "timelessStoriesOfficialLanguage";
+let translations;
+const browserLang = (
   navigator.languages
     ? navigator.languages[0]
     : navigator.language || navigator.userLanguage
 ).split("-")[0];
-
-let supportedLang = ["en", "es", "zh", "fr"];
-let translations;
-const lang = supportedLang.includes(nLang) ? nLang : "en";
+const storedLang = getStoredLanguage();
+const lang = supportedLang.includes(storedLang)
+  ? storedLang
+  : supportedLang.includes(browserLang)
+    ? browserLang
+    : "en";
 const bookCoverBasePath = "img/cover-colorized-v2-sm";
 const localizedBookCoverLanguages = new Set(["es"]);
+
+document.documentElement.lang = lang;
+
+function getStoredLanguage() {
+  try {
+    return window.localStorage.getItem(languageStorageKey);
+  } catch (error) {
+    return null;
+  }
+}
+
+function storeLanguage(language) {
+  try {
+    window.localStorage.setItem(languageStorageKey, language);
+  } catch (error) {
+    return;
+  }
+}
+
+function initOfficialLanguageSelector() {
+  const languageSelect = document.getElementById("officialLanguageSelect");
+  if (!languageSelect) return;
+
+  languageSelect.value = lang;
+  languageSelect.addEventListener("change", () => {
+    const selectedLanguage = languageSelect.value;
+    if (
+      !supportedLang.includes(selectedLanguage) ||
+      selectedLanguage === lang
+    ) {
+      return;
+    }
+
+    storeLanguage(selectedLanguage);
+    window.location.reload();
+  });
+}
 
 async function fetchTranslationData(url) {
   try {
@@ -35,14 +77,17 @@ function setDeferredFrameSource(frameId, src) {
     return;
   }
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        observer.disconnect();
-        assignSource();
-      }
-    });
-  }, { rootMargin: "250px 0px" });
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          observer.disconnect();
+          assignSource();
+        }
+      });
+    },
+    { rootMargin: "250px 0px" },
+  );
 
   observer.observe(frame);
 }
@@ -54,10 +99,13 @@ function updateLocalizedBookCover(language) {
 
   if (!webpSource || !jpegSource || !coverImage) return;
 
-  const suffix = localizedBookCoverLanguages.has(language) ? `-${language}` : "";
+  const suffix = localizedBookCoverLanguages.has(language)
+    ? `-${language}`
+    : "";
   const jpegPath = `${bookCoverBasePath}${suffix}.jpg`;
   const webpPath = `${bookCoverBasePath}${suffix}.webp`;
-  const altText = translations?.bookCoverAlt || translations?.introSM || coverImage.alt;
+  const altText =
+    translations?.bookCoverAlt || translations?.introSM || coverImage.alt;
 
   webpSource.setAttribute("srcset", webpPath);
   jpegSource.setAttribute("srcset", jpegPath);
@@ -134,7 +182,7 @@ const carouselCards = [
     mobileBottomClass: "eBPriceX",
     leftClass: "row-auto",
     rightClass: "row-auto",
-  }
+  },
 ];
 
 const carouselCards2 = [
@@ -226,40 +274,35 @@ const massMediaCards = [
 const institutionalRecordCards = [
   {
     country: "pCountry5",
-    institution: "Instituto Cervantes Marrakech",
-    title: "Historias eternas de El Salvador. Espejos espa&ntilde;oles",
+    event: "event5",
     date: "institutionalDateMorocco",
     linkLabel: "institutionalEventPage",
     href: "https://cultura.cervantes.es/marrakech/es/Historias-eternas-de-El-Salvador.-Espejos-espa%C3%B1oles.-Encuentro-literario-con-el-escritor-Federico-Na/189691",
   },
   {
     country: "pCountry4",
-    institution: "Instituto Cervantes Nueva Delhi",
-    title: "Federico Navarrete: Timeless Stories of El Salvador",
+    event: "event4",
     date: "institutionalDateIndia",
     linkLabel: "institutionalEventPage",
     href: "https://cultura.cervantes.es/nuevadelhi/en/-Federico-Navarrete:-Viajemos-a-Historias-Eternas-de-El-Salvador-/165805",
   },
   {
     country: "pCountry3",
-    institution: "Instituto Cervantes Estambul",
-    title: 'Estambul celebra por primera vez el Encuentro de Literatura Iberoamericana "12 de octubre"',
+    event: "event3",
     date: "institutionalDateTurkiye",
     linkLabel: "institutionalPressNote",
     href: "https://cervantes.org/es/sobre-nosotros/sala-prensa/notas-prensa/estambul-celebra-primera-vez-encuentro-literatura",
   },
   {
     country: "pCountry2",
-    institution: "Instituto Cervantes Beijing",
-    title: "D&iacute;a E 2023 &middot; Presentaci&oacute;n de libro Historias Eternas de El Salvador",
+    event: "event2",
     date: "institutionalDateChina",
     linkLabel: "institutionalEventPage",
     href: "https://pekin.cervantes.es/es/cultura_espanol/dia_e/diae_2023_espanol.htm",
   },
   {
     country: "pCountry1",
-    institution: "Instituto Cervantes Vienna",
-    title: "Panorama der zeitgen&ouml;ssischen iberoamerikanischen Literatur I",
+    event: "event1",
     date: "institutionalDateAustria",
     linkLabel: "institutionalEventPage",
     href: "https://cultura.cervantes.es/viena/de-AT/panorama-der-zeitgen%C3%B6ssischen-iberoamerikanischen-literatur-i/156294",
@@ -280,7 +323,9 @@ function updateHeroIntroTranslation() {
   if (!heroIntro) return;
 
   heroIntro.dataset.translation =
-    Date.now() < postLaunchIntroDate.getTime() ? "launchHeroBefore" : "launchHeroAfter";
+    Date.now() < postLaunchIntroDate.getTime()
+      ? "launchHeroBefore"
+      : "launchHeroAfter";
 }
 
 function getCountdownText(key, fallback) {
@@ -345,7 +390,10 @@ function initAvailabilityCountdown() {
   }
 
   updateAvailabilityCountdown();
-  availabilityCountdownInterval = window.setInterval(updateAvailabilityCountdown, 1000);
+  availabilityCountdownInterval = window.setInterval(
+    updateAvailabilityCountdown,
+    1000,
+  );
 }
 
 function getItemsPerSlide() {
@@ -381,13 +429,16 @@ function renderPriceCarousel() {
   }
 
   function buildPriceCard(card, currentItemsPerSlide) {
-    const colClass = currentItemsPerSlide === 1
-      ? "col-12"
-      : currentItemsPerSlide === 2
-        ? "col-12 col-md-6"
-        : "col-12 col-md-4";
+    const colClass =
+      currentItemsPerSlide === 1
+        ? "col-12"
+        : currentItemsPerSlide === 2
+          ? "col-12 col-md-6"
+          : "col-12 col-md-4";
     const bottomClass =
-      currentItemsPerSlide === 1 ? card.mobileBottomClass : card.desktopBottomClass;
+      currentItemsPerSlide === 1
+        ? card.mobileBottomClass
+        : card.desktopBottomClass;
 
     return `
     <div class="${colClass}">
@@ -451,11 +502,12 @@ function renderBooksCarousel() {
   }
 
   function buildBookCard(card, currentItemsPerSlide) {
-    const colClass = currentItemsPerSlide === 1
-      ? "col-12"
-      : currentItemsPerSlide === 2
-        ? "col-12 col-md-6"
-        : "col-12 col-md-4";
+    const colClass =
+      currentItemsPerSlide === 1
+        ? "col-12"
+        : currentItemsPerSlide === 2
+          ? "col-12 col-md-6"
+          : "col-12 col-md-4";
 
     return `
     <div class="${colClass}">
@@ -510,14 +562,19 @@ function renderMassMediaCarousel() {
   }
 
   function buildMassMediaCard(card, currentItemsPerSlide) {
-    const colClass = currentItemsPerSlide === 1
-      ? "col-12 mMedia-container"
-      : currentItemsPerSlide === 2
-        ? "col-12 col-md-6 mMedia-container"
-        : "col-12 col-md-4 mMedia-container";
+    const colClass =
+      currentItemsPerSlide === 1
+        ? "col-12 mMedia-container"
+        : currentItemsPerSlide === 2
+          ? "col-12 col-md-6 mMedia-container"
+          : "col-12 col-md-4 mMedia-container";
     const cardClass = currentItemsPerSlide === 1 ? "card mx-3" : "card";
-    const imageClass = currentItemsPerSlide === 1 ? "card-img-top img-fluid" : "card-img-top";
-    const bodyClass = currentItemsPerSlide === 1 ? "card-body text-center font-weight-bold" : "card-body";
+    const imageClass =
+      currentItemsPerSlide === 1 ? "card-img-top img-fluid" : "card-img-top";
+    const bodyClass =
+      currentItemsPerSlide === 1
+        ? "card-body text-center font-weight-bold"
+        : "card-body";
 
     return `
       <div class="${colClass}">
@@ -560,8 +617,12 @@ function renderMassMediaCarousel() {
 }
 
 function renderInstitutionalRecords() {
-  const carouselElement = document.getElementById("institutionalRecordsCarousel");
-  const carouselInner = document.getElementById("institutionalRecordsCarouselInner");
+  const carouselElement = document.getElementById(
+    "institutionalRecordsCarousel",
+  );
+  const carouselInner = document.getElementById(
+    "institutionalRecordsCarouselInner",
+  );
 
   if (!carouselElement || !carouselInner) return;
 
@@ -586,25 +647,28 @@ function renderInstitutionalRecords() {
   }
 
   function buildInstitutionalRecordCard(card, currentItemsPerSlide) {
-    const colClass = currentItemsPerSlide === 1
-      ? "col-12 institutional-record-slide"
-      : currentItemsPerSlide === 2
-        ? "col-12 col-md-6 institutional-record-slide"
-        : "col-12 col-md-4 institutional-record-slide";
+    const colClass =
+      currentItemsPerSlide === 1
+        ? "col-12 institutional-record-slide"
+        : currentItemsPerSlide === 2
+          ? "col-12 col-md-6 institutional-record-slide"
+          : "col-12 col-md-4 institutional-record-slide";
+    const event = getTranslationValue(translations, card.event) || {};
+    const institution = event.institution || "";
+    const title = event.title || "";
 
     return `
       <div class="${colClass}">
         <article class="institutional-record-card">
           <p class="institutional-record-country" data-translation="${card.country}"></p>
-          <h3>${card.institution}</h3>
-          <p class="institutional-record-title">${card.title}</p>
+          <h3>${institution}</h3>
+          <p class="institutional-record-title">${title}</p>
           <p class="institutional-record-date" data-translation="${card.date}"></p>
           <a
             href="${card.href}"
             class="institutional-record-link"
             target="_blank"
             rel="noopener noreferrer"
-            data-event-title="${card.title}"
             data-translation="${card.linkLabel}"
           ></a>
         </article>
@@ -643,11 +707,11 @@ fetchTranslationData(`js/i18n/lang-${lang}.min.json`)
   .then((data) => {
     translations = data.translations;
 
+    initOfficialLanguageSelector();
     document.title = translations.title;
     updateLocalizedBookCover(lang);
 
     if (lang === "es") {
-
       document
         .getElementById("btnEditor")
         .style.setProperty("display", "none", "important");
@@ -678,20 +742,24 @@ fetchTranslationData(`js/i18n/lang-${lang}.min.json`)
     renderInstitutionalRecords();
     applyTranslations();
 
-    contactModal.addEventListener("show.bs.modal", () => {
-      const cuScriptExist = document.getElementById("cu_script");
+    contactModal.addEventListener(
+      "show.bs.modal",
+      () => {
+        const cuScriptExist = document.getElementById("cu_script");
 
-      if (!cuScriptExist) {
-        const script = document.createElement("script");
-        script.src = "https://www.cognitoforms.com/f/seamless.js";
-        script.id = "cu_script";
-        script.async = true;
-        script.dataset.key = validLinks.contactUs.key;
-        script.dataset.form = validLinks.contactUs.form;
+        if (!cuScriptExist) {
+          const script = document.createElement("script");
+          script.src = "https://www.cognitoforms.com/f/seamless.js";
+          script.id = "cu_script";
+          script.async = true;
+          script.dataset.key = validLinks.contactUs.key;
+          script.dataset.form = validLinks.contactUs.form;
 
-        document.getElementById("divContactUs").appendChild(script);
-      }
-    }, { once: true });
+          document.getElementById("divContactUs").appendChild(script);
+        }
+      },
+      { once: true },
+    );
 
     window.dispatchEvent(
       new CustomEvent("translationsLoaded", {

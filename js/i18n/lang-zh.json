@@ -10,8 +10,8 @@
     "intro2": "Timeless Stories of El Salvador V2: Epiphany",
     "introSM": "Timeless Stories of El Salvador — Spanish Mirrors",
     "intro3": "这是同类书籍中的首部作品：它将十则萨尔瓦多传说与十则西班牙传说并列比较，揭示了相距遥远的文化如何映射出相同的象征与恐惧。",
-    "launchHeroBefore": "5月1日，<i>Spanish Mirrors</i> 将在拉巴特 <a href='https://siel.ma' class='text-warning fw-bolder' target='_blank'>SIEL 2026</a> 首发。拉巴特是联合国教科文组织世界图书之都。一起踏上这段旅程。",
-    "launchHeroAfter": "<i>Spanish Mirrors</i> 曾在拉巴特 SIEL 2026 展出。拉巴特是联合国教科文组织世界图书之都。本书以十组镜像传说揭示遥远文化如何映照相同的象征与恐惧。",
+    "launchHeroBefore": "5月1日，<i>Spanish Mirrors</i> 将在拉巴特 SIEL 2026 首发。拉巴特是联合国教科文组织世界图书之都。一起踏上这段旅程。",
+    "launchHeroAfter": "<i>Spanish Mirrors</i> 曾在拉巴特 <a href='https://siel.ma' class='text-warning fw-bolder' target='_blank'>SIEL 2026</a> 展出。拉巴特是联合国教科文组织世界图书之都。本书以十组镜像传说揭示遥远文化如何映照相同的象征与恐惧。",
     "price0": "以4.99美元获得副本",
     "price1": "<span>美元</span>4.99",
     "price2": "<span>美元</span>9.99",
@@ -23,7 +23,7 @@
     "author2": "尽管费德里科的专业背景是全球IT战略，但作为故事讲述者的道路源于他在波兰、西班牙和卢森堡作为移民的生活经历。游历二十多个国家时，他遭遇了对祖国的简化认知，却发现萨尔瓦多传说蕴含着普世的深刻共鸣。发现这些故事完全缺乏英文资源后，他创作了首套专为国际舞台设计的萨尔瓦多民间故事系列书籍。",
     "author3": "最初的文化保护演变成了“西班牙之镜”，这是一项比较研究，将萨尔瓦多、西班牙和最近的北非传说进行了直接对话。通过将像Siguanaba这样的人物与Midnight Washerwomen或摩洛哥的Aisha Qandisha配对，Federico研究了“人类密码”：当社会为未知赋予形式时出现的共享原型和道德功能。",
     "author31": "如今，他的作品已成为一座重要的文化桥梁，被正式收录于<a href='https://bit.ly/3PEYdmQ' target='_blank'>国家档案馆</a>，并因其外交价值而广受认可。他的研究成果曾在全球文化峰会上被重点推介，并在三大洲的各国大使馆及塞万提斯学院中心进行过展示，其中包括在奥地利、<a href='https://bit.ly/HispanicSociety-2023' target='_blank'>澳大利亚</a>、 <a href='https://bit.ly/china-dia-e-2023' target='_blank'>中国（线上）</a>、印度、土耳其以及<a href='https://bit.ly/SIEL-SV-2026' target='_blank'>摩洛哥</a>。",
-    "author311": "2026年，他的使命达到了一个新的高峰，在拉巴特作为联合国教科文组织世界图书之都的历史性年份，他的第三本书在SIEL国际书展上正式在全球推出。",
+    "author311": "2026年，在拉巴特举办SIEL国际书展之际，其第三卷作品正式全球发布，标志着他的使命达到新的巅峰。这一年对拉巴特而言具有历史意义，因其被联合国教科文组织授予<a href='https://www.unesco.org/en/articles/unesco-names-rabat-world-book-capital-2026?hub=70337' target='_blank'>2026年联合国教科文组织世界图书之都</a>称号。",
     "author4": "他经常说：“唯一能重塑你命运的人就是你在镜子里看到的那个人。”通过这些故事，他邀请读者不仅以全新的眼光看待萨尔瓦多，而且以全新的视角看待自己。",
     "edition0": "为您选择最佳版本",
     "edition1": "所有这些都有完整的插图。",
@@ -204,6 +204,27 @@
     "institutionalDateIndia": "2023年11月14日",
     "institutionalDateTurkiye": "2023年10月11日",
     "institutionalDateChina": "2023年6月3日",
-    "institutionalDateAustria": "2022年11月24日"
+    "institutionalDateAustria": "2022年11月24日",
+    "blog": "博客",
+    "event5": {
+      "institution": "Instituto Cervantes Marrakech",
+      "title": "Historias eternas de El Salvador. Espejos españoles"
+    },
+    "event4": {
+      "institution": "Instituto Cervantes Nueva Delhi",
+      "title": "Federico Navarrete: Timeless Stories of El Salvador"
+    },
+    "event3": {
+      "institution": "Instituto Cervantes Estambul",
+      "title": "Estambul celebra por primera vez el Encuentro de Literatura Iberoamericana “12 de octubre”"
+    },
+    "event2": {
+      "institution": "Instituto Cervantes Beijing",
+      "title": "D&iacute;a E 2023 &middot; Presentaci&oacute;n de libro Historias Eternas de El Salvador"
+    },
+    "event1": {
+      "institution": "Instituto Cervantes Vienna",
+      "title": "Panorama der zeitgenössischen iberoamerikanischen Literatur I"
+    }
   }
 }

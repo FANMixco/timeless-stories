@@ -492,7 +492,7 @@ function initContentModal() {
             const country = card.querySelector(".institutional-record-country")?.textContent?.trim();
             const titleElement = card.querySelector(".institutional-record-title");
             const link = card.querySelector(".institutional-record-link[href]");
-            const title = link?.dataset.eventTitle || titleElement?.innerHTML?.trim();
+            const title = titleElement?.innerHTML?.trim();
 
             if (!country || !title || !link) {
                 return;
