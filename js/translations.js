@@ -266,10 +266,15 @@ const institutionalRecordCards = [
   },
 ];
 
+// Countdown is currently paused in index.html because SIEL 2026 has passed.
+// To reactivate it for a future launch, uncomment the availability-countdown
+// block in index.html and update this date. Months are zero-based: 4 = May.
 const availabilityDate = new Date(2026, 4, 1, 0, 0, 0);
 const postLaunchIntroDate = new Date(2026, 4, 2, 0, 0, 0);
 let availabilityCountdownInterval;
 
+// Optional helper for future launches. It is intentionally not called now so
+// the hero text does not switch after first paint.
 function updateHeroIntroTranslation() {
   const heroIntro = document.getElementById("intro3");
   if (!heroIntro) return;
@@ -333,6 +338,10 @@ function updateAvailabilityCountdown() {
 function initAvailabilityCountdown() {
   if (availabilityCountdownInterval) {
     window.clearInterval(availabilityCountdownInterval);
+  }
+
+  if (!document.querySelector(".availability-countdown")) {
+    return;
   }
 
   updateAvailabilityCountdown();
@@ -650,8 +659,6 @@ fetchTranslationData(`js/i18n/lang-${lang}.min.json`)
           "https://www.cognitoforms.com/FedericoNavarrete1/EntremosEnContactoHistoriasEternas",
         );
     }
-
-    updateHeroIntroTranslation();
 
     const validLinks = translations.links;
 
