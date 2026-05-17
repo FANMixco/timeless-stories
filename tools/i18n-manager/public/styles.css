@@ -59,6 +59,10 @@ button.primary {
   font-weight: 700;
 }
 
+button.danger {
+  color: var(--danger);
+}
+
 .sidebar {
   border-right: 1px solid var(--line);
   background: var(--panel);
@@ -189,7 +193,7 @@ input {
 
 .editor-header {
   display: grid;
-  grid-template-columns: 1fr auto auto;
+  grid-template-columns: 1fr auto auto auto;
   align-items: center;
   gap: 14px;
   margin-bottom: 24px;
@@ -247,8 +251,17 @@ input {
 }
 
 .field-value textarea,
-.field-value input {
+.field-value input,
+.field-value select {
   width: 100%;
+}
+
+.field-value select {
+  min-height: 40px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #ffffff;
+  padding: 0 12px;
 }
 
 .field-value textarea {
@@ -276,6 +289,115 @@ input {
   padding: 52px 0;
   color: var(--muted);
   text-align: center;
+}
+
+.empty-state.compact {
+  padding: 24px 0 4px;
+}
+
+.nested-value {
+  display: grid;
+  gap: 10px;
+}
+
+.nested-value > button {
+  justify-self: start;
+}
+
+.nested-card {
+  display: grid;
+  gap: 12px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #f9fbfe;
+}
+
+.nested-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.nested-heading-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.nested-label {
+  padding: 12px 18px;
+  border: 1px solid var(--line-strong);
+  border-radius: 8px;
+  background: var(--panel-soft);
+  color: var(--accent-dark);
+  font-weight: 800;
+  font-size: 18px;
+}
+
+.option-nav {
+  display: grid;
+  grid-template-columns: auto minmax(180px, 1fr) auto auto;
+  gap: 10px;
+  align-items: center;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.option-counter {
+  min-width: 64px;
+  color: var(--muted);
+  font-size: 18px;
+  text-align: right;
+}
+
+.nested-path {
+  display: block;
+  margin: 0 0 10px;
+  font-size: 18px;
+}
+
+.nested-field-row {
+  display: grid;
+  grid-template-columns: minmax(140px, 360px) minmax(220px, 1fr);
+  gap: 18px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.nested-field-row:last-child {
+  border-bottom: 0;
+}
+
+.nested-field-row.has-nested-object {
+  grid-template-columns: 1fr;
+}
+
+.nested-field-row.has-nested-object > .field-key {
+  display: none;
+}
+
+.nested-field-row.has-nested-object > .field-value {
+  width: 100%;
+}
+
+.direct-object {
+  padding: 14px 18px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.direct-object .nested-path {
+  margin-bottom: 12px;
+}
+
+.direct-object .nested-field-row {
+  grid-template-columns: minmax(120px, 280px) minmax(220px, 1fr);
 }
 
 dialog {
@@ -354,7 +476,9 @@ dialog::backdrop {
 
   .topbar,
   .editor-header,
-  .field-row {
+  .field-row,
+  .nested-field-row,
+  .option-nav {
     grid-template-columns: 1fr;
   }
 

@@ -3,6 +3,7 @@ const state = {
   current: null,
   json: null,
   path: [],
+  inlineSelections: {},
   dirty: false,
 };
 
@@ -18,6 +19,7 @@ const els = {
   breadcrumbs: document.getElementById("breadcrumbs"),
   nodeMeta: document.getElementById("nodeMeta"),
   fieldList: document.getElementById("fieldList"),
+  addEventButton: document.getElementById("addEventButton"),
   addFieldButton: document.getElementById("addFieldButton"),
   rawButton: document.getElementById("rawButton"),
   validateButton: document.getElementById("validateButton"),
@@ -52,6 +54,44 @@ function getAtPath(path = state.path) {
   return path.reduce((value, key) => value[key], state.json);
 }
 
+function pathLabel(path) {
+  return path.reduce((label, part) => {
+    const isIndex = typeof part === "number" || /^\d+$/.test(String(part));
+    return isIndex ? `${label}[${part}]` : label ? `${label}.${part}` : String(part);
+  }, "");
+}
+
+function selectionKey(path) {
+  return path.map(String).join(".");
+}
+
+function optionEntries(value) {
+  if (Array.isArray(value)) return value.map((item, index) => [Number(index), item]);
+  return Object.entries(value || {});
+}
+
+function isObject(value) {
+  return value && typeof value === "object" && !Array.isArray(value);
+}
+
+function hasOnlyScalarChildren(value) {
+  return isObject(value) && Object.values(value).every((child) => !child || typeof child !== "object");
+}
+
+function selectedOptionKey(path, value) {
+  const entries = optionEntries(value);
+  if (!entries.length) return null;
+
+  const key = selectionKey(path);
+  const saved = state.inlineSelections[key];
+  const match = entries.find(([entryKey]) => String(entryKey) === String(saved));
+  return match ? match[0] : entries[0][0];
+}
+
+function setSelectedOption(path, selected) {
+  state.inlineSelections[selectionKey(path)] = String(selected);
+}
+
 function setDirty(value) {
   state.dirty = value;
   els.saveButton.disabled = !state.current || !state.dirty;
@@ -69,6 +109,31 @@ function itemCount(value) {
   if (Array.isArray(value)) return value.length;
   if (value && typeof value === "object") return Object.keys(value).length;
   return 0;
+}
+
+function eventNumbers(value) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return [];
+  return Object.keys(value)
+    .map((key) => key.match(/^event(\d+)$/))
+    .filter(Boolean)
+    .map((match) => Number(match[1]))
+    .sort((a, b) => a - b);
+}
+
+function canAddEvent(value) {
+  return eventNumbers(value).length > 0;
+}
+
+function readableCollectionName(key) {
+  const spaced = String(key)
+    .replace(/([a-z0-9])([A-Z])/g, "$1 $2")
+    .replace(/[_-]+/g, " ")
+    .toLowerCase();
+  return spaced.endsWith("legends") ? "legend"
+    : spaced.endsWith("technologies") ? "technology"
+      : spaced.endsWith("ies") ? spaced.replace(/ies$/, "y")
+        : spaced.endsWith("s") ? spaced.slice(0, -1)
+          : "item";
 }
 
 function renderSidebar() {
@@ -163,21 +228,9 @@ function parseScalar(value) {
   return value;
 }
 
-function createValueControl(parent, key, value) {
+function createScalarControl(parent, key, value) {
   const wrapper = document.createElement("div");
   wrapper.className = "field-value";
-
-  if (value && typeof value === "object") {
-    const button = document.createElement("button");
-    button.type = "button";
-    button.textContent = `Open ${typeOf(value)} - ${itemCount(value)} items`;
-    button.addEventListener("click", () => {
-      state.path = [...state.path, key];
-      renderEditor();
-    });
-    wrapper.append(button);
-    return wrapper;
-  }
 
   const control = typeof value === "string" && value.length > 48
     ? document.createElement("textarea")
@@ -191,12 +244,285 @@ function createValueControl(parent, key, value) {
   return wrapper;
 }
 
+function createInlineScalar(parent, key, value) {
+  const control = typeof value === "string" && value.length > 48
+    ? document.createElement("textarea")
+    : document.createElement("input");
+  control.value = value === null ? "null" : String(value);
+  control.addEventListener("input", () => {
+    parent[key] = typeof value === "string" ? control.value : parseScalar(control.value);
+    setDirty(true);
+  });
+  return control;
+}
+
+function addNestedValue(collection, path, mode) {
+  if (Array.isArray(collection)) {
+    collection.push(mode === "object" ? {} : "");
+    setSelectedOption(path, collection.length - 1);
+  } else {
+    let index = 1;
+    const base = mode === "object" ? "newGroup" : "newField";
+    let key = base;
+    while (Object.prototype.hasOwnProperty.call(collection, key)) {
+      index += 1;
+      key = `${base}${index}`;
+    }
+    collection[key] = mode === "object" ? {} : "";
+    setSelectedOption(path, key);
+  }
+  setDirty(true);
+  renderEditor();
+}
+
+function emptyClone(value) {
+  if (Array.isArray(value)) return [];
+  if (isObject(value)) {
+    return Object.fromEntries(Object.entries(value).map(([key, child]) => [key, emptyClone(child)]));
+  }
+  return "";
+}
+
+function addCollectionItem(collection, path, selected) {
+  const selectedValue = selected === null ? null : collection[selected];
+  const nextValue = emptyClone(selectedValue);
+
+  if (Array.isArray(collection)) {
+    collection.push(nextValue);
+    setSelectedOption(path, collection.length - 1);
+  } else {
+    const key = prompt("New item key");
+    if (!key) return;
+    const cleanKey = key.trim();
+    if (!cleanKey) return;
+    if (Object.prototype.hasOwnProperty.call(collection, cleanKey)) {
+      toast(`'${cleanKey}' already exists.`, true);
+      return;
+    }
+    collection[cleanKey] = nextValue;
+    setSelectedOption(path, cleanKey);
+  }
+
+  setDirty(true);
+  renderEditor();
+}
+
+function removeNestedValue(collection, path, selected) {
+  if (selected === null) return;
+  const label = readableCollectionName(path[path.length - 1]);
+  if (!confirm(`Delete this ${label}?`)) return;
+
+  if (Array.isArray(collection)) {
+    collection.splice(Number(selected), 1);
+    setSelectedOption(path, Math.max(0, Number(selected) - 1));
+  } else {
+    delete collection[selected];
+    delete state.inlineSelections[selectionKey([...path, selected])];
+  }
+  setDirty(true);
+  renderEditor();
+}
+
+function createSelectedValueEditor(collection, selected, childPath) {
+  const selectedValue = collection[selected];
+  const container = document.createElement("div");
+  container.className = "nested-selected";
+
+  const title = document.createElement("strong");
+  title.className = "nested-path";
+  title.textContent = pathLabel(childPath);
+  container.append(title);
+
+  if (!selectedValue || typeof selectedValue !== "object") {
+    const row = document.createElement("div");
+    row.className = "nested-field-row";
+
+    const keyBlock = document.createElement("div");
+    keyBlock.className = "field-key";
+    keyBlock.innerHTML = `<strong>${selected}</strong><small>${pathLabel(childPath)}</small>`;
+
+    const valueBlock = document.createElement("div");
+    valueBlock.className = "field-value";
+    valueBlock.append(createInlineScalar(collection, selected, selectedValue));
+
+    row.append(keyBlock, valueBlock);
+    container.append(row);
+    return container;
+  }
+
+  const entries = optionEntries(selectedValue);
+  if (!entries.length) {
+    const empty = document.createElement("div");
+    empty.className = "empty-state compact";
+    empty.textContent = "No fields in this item yet.";
+    container.append(empty);
+    return container;
+  }
+
+  for (const [childKey, childValue] of entries) {
+    const row = document.createElement("div");
+    row.className = "nested-field-row";
+
+    const keyBlock = document.createElement("div");
+    keyBlock.className = "field-key";
+    keyBlock.innerHTML = `<strong>${childKey}</strong><small>${pathLabel([...childPath, childKey])}</small>`;
+
+    const valueBlock = document.createElement("div");
+    valueBlock.className = "field-value";
+
+    if (childValue && typeof childValue === "object") {
+      row.classList.add("has-nested-object");
+      valueBlock.append(createNestedControl(selectedValue, childKey, childValue, childPath));
+    } else {
+      valueBlock.append(createInlineScalar(selectedValue, childKey, childValue));
+    }
+
+    row.append(keyBlock, valueBlock);
+    container.append(row);
+  }
+
+  return container;
+}
+
+function createDirectObjectEditor(objectValue, childPath) {
+  const container = document.createElement("div");
+  container.className = "nested-selected direct-object";
+
+  const title = document.createElement("strong");
+  title.className = "nested-path";
+  title.textContent = pathLabel(childPath);
+  container.append(title);
+
+  for (const [childKey, childValue] of Object.entries(objectValue)) {
+    const row = document.createElement("div");
+    row.className = "nested-field-row";
+
+    const keyBlock = document.createElement("div");
+    keyBlock.className = "field-key";
+    keyBlock.innerHTML = `<strong>${childKey}</strong><small>${pathLabel([...childPath, childKey])}</small>`;
+
+    const valueBlock = document.createElement("div");
+    valueBlock.className = "field-value";
+    valueBlock.append(createInlineScalar(objectValue, childKey, childValue));
+
+    row.append(keyBlock, valueBlock);
+    container.append(row);
+  }
+
+  return container;
+}
+
+function createNestedControl(parent, key, value, basePath = state.path) {
+  const path = [...basePath, key];
+  const wrapper = document.createElement("div");
+  wrapper.className = "field-value nested-value";
+
+  if (hasOnlyScalarChildren(value)) {
+    wrapper.append(createDirectObjectEditor(value, path));
+    return wrapper;
+  }
+
+  const entries = optionEntries(value);
+  const selected = selectedOptionKey(path, value);
+  if (!entries.length || selected === null) return wrapper;
+
+  const selectedIndex = entries.findIndex(([entryKey]) => String(entryKey) === String(selected));
+  const card = document.createElement("div");
+  card.className = "nested-card";
+
+  const heading = document.createElement("div");
+  heading.className = "nested-heading";
+
+  const label = document.createElement("div");
+  label.className = "nested-label";
+  label.textContent = `${key} (${entries.length})`;
+
+  const addItemButton = document.createElement("button");
+  addItemButton.type = "button";
+  addItemButton.textContent = `Add ${readableCollectionName(key)}`;
+  addItemButton.addEventListener("click", () => addCollectionItem(value, path, selected));
+
+  const deleteItemButton = document.createElement("button");
+  deleteItemButton.type = "button";
+  deleteItemButton.className = "danger";
+  deleteItemButton.textContent = `Delete ${readableCollectionName(key)}`;
+  deleteItemButton.addEventListener("click", () => removeNestedValue(value, path, selected));
+
+  const headingActions = document.createElement("div");
+  headingActions.className = "nested-heading-actions";
+  headingActions.append(addItemButton, deleteItemButton);
+
+  heading.append(label, headingActions);
+
+  const nav = document.createElement("div");
+  nav.className = "option-nav";
+
+  const previousButton = document.createElement("button");
+  previousButton.type = "button";
+  previousButton.textContent = "Previous";
+  previousButton.disabled = selectedIndex <= 0;
+  previousButton.addEventListener("click", () => {
+    setSelectedOption(path, entries[selectedIndex - 1][0]);
+    renderEditor();
+  });
+
+  const select = document.createElement("select");
+  select.ariaLabel = `Select ${key} item`;
+  for (const [entryKey, entryValue] of entries) {
+    const option = document.createElement("option");
+    option.value = String(entryKey);
+    option.textContent = `${Number.isInteger(entryKey) ? Number(entryKey) + 1 : entryKey}. ${summaryLabel(entryKey, entryValue)}`;
+    option.selected = String(entryKey) === String(selected);
+    select.append(option);
+  }
+  select.addEventListener("change", () => {
+    setSelectedOption(path, select.value);
+    renderEditor();
+  });
+
+  const nextButton = document.createElement("button");
+  nextButton.type = "button";
+  nextButton.textContent = "Next";
+  nextButton.disabled = selectedIndex >= entries.length - 1;
+  nextButton.addEventListener("click", () => {
+    setSelectedOption(path, entries[selectedIndex + 1][0]);
+    renderEditor();
+  });
+
+  const counter = document.createElement("strong");
+  counter.className = "option-counter";
+  counter.textContent = `${selectedIndex + 1} / ${entries.length}`;
+
+  nav.append(previousButton, select, nextButton, counter);
+
+  card.append(heading, nav, createSelectedValueEditor(value, selected, [...path, selected]));
+  wrapper.append(card);
+  return wrapper;
+}
+
+function summaryLabel(key, value) {
+  if (typeof value === "string") return value.slice(0, 80);
+  if (value && typeof value === "object") {
+    return value.name || value.title || value.institution || `${typeOf(value)} - ${itemCount(value)} items`;
+  }
+  return String(value ?? key);
+}
+
+function createValueControl(parent, key, value) {
+  if (value && typeof value === "object") {
+    return createNestedControl(parent, key, value);
+  }
+
+  return createScalarControl(parent, key, value);
+}
+
 function renderEditor() {
   renderBreadcrumbs();
   const node = getAtPath();
   const kind = typeOf(node);
   els.nodeMeta.textContent = `${kind} - ${itemCount(node)} items`;
   els.addFieldButton.disabled = !(node && typeof node === "object");
+  els.addEventButton.hidden = !canAddEvent(node);
   els.fieldList.innerHTML = "";
 
   if (!node || typeof node !== "object") {
@@ -309,6 +635,21 @@ function addField() {
   renderEditor();
 }
 
+function addEvent() {
+  const node = getAtPath();
+  if (!canAddEvent(node)) return;
+
+  const nextNumber = Math.max(...eventNumbers(node)) + 1;
+  const key = `event${nextNumber}`;
+  node[key] = {
+    institution: "",
+    title: "",
+  };
+  setDirty(true);
+  toast(`Added ${key}.`);
+  renderEditor();
+}
+
 els.refreshButton.addEventListener("click", () => refreshFiles().then(() => toast("File list refreshed.")));
 
 els.languageForm.addEventListener("submit", async (event) => {
@@ -355,6 +696,7 @@ els.applyRawButton.addEventListener("click", (event) => {
 
 els.validateButton.addEventListener("click", validateCurrent);
 els.addFieldButton.addEventListener("click", addField);
+els.addEventButton.addEventListener("click", addEvent);
 els.saveButton.addEventListener("click", () => saveCurrent());
 els.minifyButton.addEventListener("click", async () => {
   if (!state.current) return;
