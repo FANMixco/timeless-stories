@@ -2,7 +2,7 @@
 
 [![Spanish Mirrors](https://raw.githubusercontent.com/FANMixco/federiconavarrete/refs/heads/master/img/mybook/mirrors_small.png)](https://a.co/d/0euSZ7mF)
 
-### Presented at [SIEL 2026](https://siel.ma) in Rabat, [UNESCO World Book Capital](https://www.unesco.org/en/articles/unesco-names-rabat-world-book-capital-2026), Spanish Mirrors is the 1st book of its kind: 10 mirrored legends revealing how distant cultures reflect the same symbols and fears in collaboration with the Embassy of El Salvador in Morocco and the Instituto Cervantes of Rabat and Marrakesh.
+### Presented at [SIEL 2026](https://siel.ma) in Rabat, [UNESCO World Book Capital](https://www.unesco.org/en/articles/unesco-names-rabat-world-book-capital-2026), Spanish Mirrors is the 1st book of its kind: 10 mirrored legends revealing how distant cultures reflect the same symbols and fears. The release was supported by the Embassy of El Salvador in Morocco and the Instituto Cervantes centers in Rabat and Marrakesh.
 
 ***
 
@@ -16,11 +16,11 @@ Thanks for downloading this theme!
 
 To download free templates, follow this link: https://themewagon.com/theme_tag/free/
 
-Besides that, you can buy our premium templates for making your web development experience unforgettable.
+Besides that, you can buy our premium templates to make your web development experience unforgettable.
 
 Visit the store from here: https://themewagon.com/theme-categories/premium-templates/
 
-Alternatively, here's our top most trending and selling items:
+Alternatively, here's our top-most trending and selling items:
 
 * [**Sparrow**](https://themewagon.com/themes/sparrow/) - A multipurpose template made with Bootstrap 4.1 and world's finest animation.
 * [**Posh**](https://themewagon.com/themes/posh-html5-bootstrap-4-template/) - Bootstrap 4 template with a myriad number of ready-to-deploy sections. 
