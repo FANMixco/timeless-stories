@@ -239,6 +239,12 @@ const carouselCards2 = [
 
 const massMediaCards = [
   {
+    text: "mMedia11",
+    href: "shared.massMedia.marruecos",
+    imageBase: "img/fair/marruecos",
+    alt: "marruecos",
+  },
+  {
     text: "mMedia5",
     href: "shared.massMedia.siel",
     imageBase: "img/fair/SIEL",

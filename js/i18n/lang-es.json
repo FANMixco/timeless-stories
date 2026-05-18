@@ -1,4 +1,4 @@
-﻿{
+{
   "translations": {
     "menu0": "Inicio",
     "menu1": "Acerca de",
@@ -202,6 +202,7 @@
     "event1": {
       "institution": "Instituto Cervantes Vienna",
       "title": "Panorama der zeitgenössischen iberoamerikanischen Literatur I"
-    }
+    },
+    "mMedia11": "Literatura salvadoreña se expone en Marruecos"
   }
 }
