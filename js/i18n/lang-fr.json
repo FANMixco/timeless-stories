@@ -1,4 +1,4 @@
-﻿{
+{
   "translations": {
     "menu0": "Accueil",
     "menu1": "À propos",
@@ -282,6 +282,118 @@
         "date": "24 novembre 2022",
         "linkLabel": "Page officielle de l’événement",
         "href": "shared.institutionalRecords.austria"
+      }
+    ],
+    "carouselCards": [
+      {
+        "title": "E-book 📱<br><small>Recommandé</small>",
+        "description": "Pour ceux qui apprécient <br>une expérience écologique et en couleurs.",
+        "price": "4,99 <span>$</span>",
+        "href": "carouselCards.ebook",
+        "cta": "Obtenir votre exemplaire",
+        "desktopBottomClass": "",
+        "mobileBottomClass": "eBPrice",
+        "leftClass": "row-auto",
+        "rightClass": "row-auto"
+      },
+      {
+        "title": "Broché 📕<br><small>Le plus populaire</small>",
+        "description": "Pour ceux qui apprécient <br>le contact authentique du papier.",
+        "price": "9,99 <span>$</span>",
+        "href": "carouselCards.paperback",
+        "cta": "Obtenir votre exemplaire",
+        "desktopBottomClass": "price-bottom-r",
+        "mobileBottomClass": "eBPriceR",
+        "leftClass": "row-auto",
+        "rightClass": "row-auto"
+      },
+      {
+        "title": "Relié 📘",
+        "description": "Pour ceux qui apprécient une expérience élégante <br>et un toucher authentique.",
+        "price": "15,99 <span>$</span>",
+        "href": "carouselCards.hardcover",
+        "cta": "Obtenir votre exemplaire",
+        "desktopBottomClass": "",
+        "mobileBottomClass": "eBPrice",
+        "leftClass": "row-auto",
+        "rightClass": "row-auto"
+      },
+      {
+        "title": "Livre audio 👂",
+        "description": "Pour ceux qui aiment écouter <br>en déplacement.",
+        "price": "5,99 <span>$</span>",
+        "href": "carouselCards.audiobook",
+        "cta": "Obtenir votre exemplaire",
+        "desktopBottomClass": "",
+        "mobileBottomClass": "eBPrice",
+        "leftClass": "row-auto",
+        "rightClass": "row-auto"
+      },
+      {
+        "title": "Version d’auteur 💎",
+        "description": "L'édition définitive avec des couleurs intégrales, <br>des miroirs partiels, du contenu bonus et une couverture rigide haut de gamme.",
+        "price": "36,99 <span>$</span>",
+        "href": "carouselCards.directorX",
+        "cta": "Bientôt disponible",
+        "desktopBottomClass": "price-bottom-x",
+        "mobileBottomClass": "eBPriceX",
+        "leftClass": "row-auto",
+        "rightClass": "row-auto"
+      }
+    ],
+    "previousBooks": [
+      {
+        "title": "<span>Timeless Stories of El Salvador V2: Epiphany</span>",
+        "href": "shared.previousBooks.epiphanyEn"
+      },
+      {
+        "title": "<span>Historias Eternas de El Salvador V2: Epifanía</span>",
+        "href": "shared.previousBooks.epiphanyEs"
+      },
+      {
+        "title": "<span>Timeless Stories of El Salvador V1: The Beginning</span>",
+        "href": "shared.previousBooks.beginningEn"
+      },
+      {
+        "title": "<span>Historias Eternas de El Salvador V1: El Comienzo</span>",
+        "href": "shared.previousBooks.beginningEs"
+      },
+      {
+        "title": "<span>Légendes Éternelles d’El Salvador T1 : Le Commencement</span>",
+        "href": "shared.previousBooks.beginningFr"
+      }
+    ],
+    "specialGreetings": [
+      {
+        "name": "Marcos Soriano",
+        "role": "Illustrateur",
+        "icon": "icon-color_lens",
+        "href": "https://www.instagram.com/marsodred/"
+      },
+      {
+        "name": "Samantha Bahn-Williams",
+        "role": "Éditrice",
+        "icon": "icon-pen",
+        "href": "https://www.mercerff.com/recipient/samantha-bahn-williams/"
+      },
+      {
+        "name": "Elizabeth Toole",
+        "role": "Éditrice",
+        "icon": "icon-pen"
+      }
+    ],
+    "culturalCollaborations": [
+      {
+        "name": "Instituto Cervantes",
+        "description": "Marrakech",
+        "image": "img/extras/Cervantes.jpg",
+        "alt": "Instituto Cervantes"
+      },
+      {
+        "name": "Ambassade d’El Salvador au Maroc",
+        "description": "Soutien culturel et collaboration",
+        "image": "img/extras/Embassy.jpg",
+        "alt": "Ambassade d’El Salvador au Maroc"
       }
     ]
   }

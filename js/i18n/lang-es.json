@@ -1,4 +1,4 @@
-﻿{
+{
   "translations": {
     "menu0": "Inicio",
     "menu1": "Acerca de",
@@ -281,6 +281,112 @@
         "date": "24 de noviembre de 2022",
         "linkLabel": "Página oficial del evento",
         "href": "shared.institutionalRecords.austria"
+      }
+    ],
+    "carouselCards": [
+      {
+        "title": "Libro electrónico 📱<br><small>Recomendado</small>",
+        "description": "Para todos los que disfrutan de la experiencia ecológica y a color.",
+        "price": "<span>$</span> 4.99",
+        "href": "carouselCards.ebook",
+        "cta": "Obtén tu copia",
+        "desktopBottomClass": "",
+        "mobileBottomClass": "eBPrice",
+        "leftClass": "row-auto",
+        "rightClass": "row-auto"
+      },
+      {
+        "title": "Tapa blanda 📕<br><small>Más popular</small>",
+        "description": "Para todos los que disfrutan de la experiencia táctil y real.",
+        "price": "<span>$</span> 9.99",
+        "href": "carouselCards.paperback",
+        "cta": "Obtén tu copia",
+        "desktopBottomClass": "price-bottom-r",
+        "mobileBottomClass": "eBPriceR",
+        "leftClass": "row-auto",
+        "rightClass": "row-auto"
+      },
+      {
+        "title": "Tapa dura 📘",
+        "description": "Para todos los que disfrutan de la experiencia elegante, táctil y real.",
+        "price": "<span>$</span> 15.99",
+        "href": "carouselCards.hardcover",
+        "cta": "Obtén tu copia",
+        "desktopBottomClass": "",
+        "mobileBottomClass": "eBPrice",
+        "leftClass": "row-auto",
+        "rightClass": "row-auto"
+      },
+      {
+        "title": "Audiolibro 👂",
+        "description": "Para quienes disfrutan escuchando <br>en movimiento.",
+        "price": "<span>$</span> 5.99",
+        "href": "carouselCards.audiobook",
+        "cta": "Obtén tu copia",
+        "desktopBottomClass": "",
+        "mobileBottomClass": "eBPrice",
+        "leftClass": "row-auto",
+        "rightClass": "row-auto"
+      },
+      {
+        "title": "Versión del Director 💎",
+        "description": "La edición definitiva con todo color, <br>espejos parciales, contenido adicional y un diseño de tapa dura de primera calidad.",
+        "price": "<span>$</span> 38.49",
+        "href": "carouselCards.directorX",
+        "cta": "Muy pronto",
+        "desktopBottomClass": "price-bottom-x",
+        "mobileBottomClass": "eBPriceX",
+        "leftClass": "row-auto",
+        "rightClass": "row-auto"
+      }
+    ],
+    "previousBooks": [
+      {
+        "title": "<span>Timeless Stories of El Salvador V2: Epiphany</span>",
+        "href": "shared.previousBooks.epiphanyEn"
+      },
+      {
+        "title": "<span>Historias Eternas de El Salvador V2: Epifanía</span>",
+        "href": "shared.previousBooks.epiphanyEs"
+      },
+      {
+        "title": "<span>Timeless Stories of El Salvador V1: The Beginning</span>",
+        "href": "shared.previousBooks.beginningEn"
+      },
+      {
+        "title": "<span>Historias Eternas de El Salvador V1: El Comienzo</span>",
+        "href": "shared.previousBooks.beginningEs"
+      },
+      {
+        "title": "<span>Légendes Éternelles d’El Salvador T1 : Le Commencement</span>",
+        "href": "shared.previousBooks.beginningFr"
+      }
+    ],
+    "specialGreetings": [
+      {
+        "name": "Marcos Soriano",
+        "role": "Ilustrador",
+        "icon": "icon-color_lens",
+        "href": "https://www.instagram.com/marsodred/"
+      },
+      {
+        "name": "Lilliam Armijo",
+        "role": "Traductora",
+        "icon": "icon-pen"
+      }
+    ],
+    "culturalCollaborations": [
+      {
+        "name": "Instituto Cervantes",
+        "description": "Marrakech",
+        "image": "img/extras/Cervantes.jpg",
+        "alt": "Instituto Cervantes"
+      },
+      {
+        "name": "Embajada de El Salvador en Marruecos",
+        "description": "Apoyo cultural y colaboración",
+        "image": "img/extras/Embassy.jpg",
+        "alt": "Embajada de El Salvador en Marruecos"
       }
     ]
   }

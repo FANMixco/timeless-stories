@@ -1,4 +1,4 @@
-﻿{
+{
   "translations": {
     "menu0": "主页",
     "menu1": "关于",
@@ -282,6 +282,118 @@
         "date": "2022年11月24日",
         "linkLabel": "官方活动页面",
         "href": "shared.institutionalRecords.austria"
+      }
+    ],
+    "carouselCards": [
+      {
+        "title": "电子书📱<br><small>推荐</small>",
+        "description": "适合所有享受<br>环保和全彩体验的人。",
+        "price": "<span>美元</span>4.99",
+        "href": "carouselCards.ebook",
+        "cta": "获取副本",
+        "desktopBottomClass": "",
+        "mobileBottomClass": "eBPrice",
+        "leftClass": "row-auto",
+        "rightClass": "row-auto"
+      },
+      {
+        "title": "平装本📕<br><small>最受欢迎</small>",
+        "description": "对于所有享受<br>真实触摸体验的人。",
+        "price": "<span>美元</span>9.99",
+        "href": "carouselCards.paperback",
+        "cta": "获取副本",
+        "desktopBottomClass": "price-bottom-r",
+        "mobileBottomClass": "eBPriceR",
+        "leftClass": "row-auto",
+        "rightClass": "row-auto"
+      },
+      {
+        "title": "精装本📘",
+        "description": "适合所有享受优雅<br>和真实触感体验的人。",
+        "price": "<span>美元</span>15.99",
+        "href": "carouselCards.hardcover",
+        "cta": "获取副本",
+        "desktopBottomClass": "",
+        "mobileBottomClass": "eBPrice",
+        "leftClass": "row-auto",
+        "rightClass": "row-auto"
+      },
+      {
+        "title": "有声读物👂",
+        "description": "适合所有喜欢<br>在旅途中聆听的人。",
+        "price": "<span>美元</span> 5.99",
+        "href": "carouselCards.audiobook",
+        "cta": "获取副本",
+        "desktopBottomClass": "",
+        "mobileBottomClass": "eBPrice",
+        "leftClass": "row-auto",
+        "rightClass": "row-auto"
+      },
+      {
+        "title": "导演剪辑版💎",
+        "description": "此为最终版本，采用全彩印刷，<br>部分镜面设计，附赠额外内容，并采用精装硬皮封面设计。",
+        "price": "<span>美元</span> 36.99",
+        "href": "carouselCards.directorX",
+        "cta": "即将推出",
+        "desktopBottomClass": "price-bottom-x",
+        "mobileBottomClass": "eBPriceX",
+        "leftClass": "row-auto",
+        "rightClass": "row-auto"
+      }
+    ],
+    "previousBooks": [
+      {
+        "title": "<span>Timeless Stories of El Salvador V2: Epiphany</span>",
+        "href": "shared.previousBooks.epiphanyEn"
+      },
+      {
+        "title": "<span>Historias Eternas de El Salvador V2: Epifanía</span>",
+        "href": "shared.previousBooks.epiphanyEs"
+      },
+      {
+        "title": "<span>Timeless Stories of El Salvador V1: The Beginning</span>",
+        "href": "shared.previousBooks.beginningEn"
+      },
+      {
+        "title": "<span>Historias Eternas de El Salvador V1: El Comienzo</span>",
+        "href": "shared.previousBooks.beginningEs"
+      },
+      {
+        "title": "<span>Légendes Éternelles d’El Salvador T1 : Le Commencement</span>",
+        "href": "shared.previousBooks.beginningFr"
+      }
+    ],
+    "specialGreetings": [
+      {
+        "name": "Marcos Soriano",
+        "role": "插画师",
+        "icon": "icon-color_lens",
+        "href": "https://www.instagram.com/marsodred/"
+      },
+      {
+        "name": "Samantha Bahn-Williams",
+        "role": "编辑",
+        "icon": "icon-pen",
+        "href": "https://www.mercerff.com/recipient/samantha-bahn-williams/"
+      },
+      {
+        "name": "Elizabeth Toole",
+        "role": "编辑",
+        "icon": "icon-pen"
+      }
+    ],
+    "culturalCollaborations": [
+      {
+        "name": "Instituto Cervantes",
+        "description": "马拉喀什",
+        "image": "img/extras/Cervantes.jpg",
+        "alt": "Instituto Cervantes"
+      },
+      {
+        "name": "萨尔瓦多驻摩洛哥大使馆",
+        "description": "文化支持与合作",
+        "image": "img/extras/Embassy.jpg",
+        "alt": "萨尔瓦多驻摩洛哥大使馆"
       }
     ]
   }

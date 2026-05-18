@@ -155,87 +155,22 @@ function applyTranslations() {
   });
 }
 
-const carouselCards = [
-  {
-    edition: "edition4",
-    text: "edition5",
-    price: "price1",
-    href: "carouselCards.ebook",
-    itemClass: "col-12 col-md-6 col-lg-4",
-    desktopBottomClass: "",
-    mobileBottomClass: "eBPrice",
-    leftClass: "row-auto",
-    rightClass: "row-auto",
-  },
-  {
-    edition: "edition2",
-    text: "edition3",
-    price: "price2",
-    href: "carouselCards.paperback",
-    itemClass: "col-12 col-md-6 col-lg-4",
-    desktopBottomClass: "price-bottom-r",
-    mobileBottomClass: "eBPriceR",
-    leftClass: "row-auto",
-    rightClass: "row-auto",
-  },
-  {
-    edition: "edition6",
-    text: "edition7",
-    price: "price3",
-    href: "carouselCards.hardcover",
-    itemClass: "col-12 col-md-6 col-lg-4 d-none d-lg-block",
-    desktopBottomClass: "",
-    mobileBottomClass: "eBPrice",
-    leftClass: "row-auto",
-    rightClass: "row-auto",
-  },
-  {
-    edition: "edition10",
-    text: "edition11",
-    price: "price5",
-    href: "carouselCards.audiobook",
-    itemClass: "col-12 col-md-6 col-lg-4 d-none d-lg-block",
-    desktopBottomClass: "",
-    mobileBottomClass: "eBPrice",
-    leftClass: "row-auto",
-    rightClass: "row-auto",
-  },
-  {
-    edition: "edition8",
-    text: "edition9",
-    price: "price4",
-    href: "carouselCards.directorX",
-    cta: "comingSoon",
-    itemClass: "col-12 col-md-6 col-lg-4 d-none d-lg-block",
-    desktopBottomClass: "price-bottom-x",
-    mobileBottomClass: "eBPriceX",
-    leftClass: "row-auto",
-    rightClass: "row-auto",
-  },
-];
+function getCarouselCards() {
+  return Array.isArray(translations?.carouselCards)
+    ? translations.carouselCards
+    : [];
+}
 
-const carouselCards2 = [
-  {
-    edition: "old4",
-    href: "shared.previousBooks.epiphanyEn",
-  },
-  {
-    edition: "old5",
-    href: "shared.previousBooks.epiphanyEs",
-  },
-  {
-    edition: "old1",
-    href: "shared.previousBooks.beginningEn",
-  },
-  {
-    edition: "old2",
-    href: "shared.previousBooks.beginningEs",
-  },
-  {
-    edition: "old3",
-    href: "shared.previousBooks.beginningFr",
-  },
-];
+function resolveLocalizedHref(href) {
+  if (!href) return "#";
+  return /^https?:\/\//i.test(href) ? href : getLocalizedLink(href);
+}
+
+function getPreviousBooks() {
+  return Array.isArray(translations?.previousBooks)
+    ? translations.previousBooks
+    : [];
+}
 
 function getMassMediaCards() {
   return Array.isArray(translations?.massMediaCards)
@@ -257,6 +192,74 @@ function getInstitutionalRecords() {
 function resolveInstitutionalRecordHref(href) {
   if (!href) return "#";
   return /^https?:\/\//i.test(href) ? href : getLinkValue(href);
+}
+
+function getSpecialGreetings() {
+  return Array.isArray(translations?.specialGreetings)
+    ? translations.specialGreetings
+    : [];
+}
+
+function getCulturalCollaborations() {
+  return Array.isArray(translations?.culturalCollaborations)
+    ? translations.culturalCollaborations
+    : [];
+}
+
+function renderSpecialGreetings() {
+  const container = document.getElementById("specialGreetingsCards");
+  if (!container) return;
+
+  container.innerHTML = getSpecialGreetings()
+    .filter((card) => card?.name || card?.role)
+    .map((card) => {
+      const content = `
+        <div class="flex-row d-flex">
+          <i class="${card.icon || "icon-pen"}" aria-hidden="true"></i>
+          <div class="desc">
+            <p><span>${card.name || ""}</span> <br>${card.role || ""}</p>
+          </div>
+        </div>`;
+      const attrs = [
+        card.id ? `id="${card.id}"` : "",
+        `class="buttons flex-row d-flex${card.className ? ` ${card.className}` : ""}"`,
+      ].filter(Boolean).join(" ");
+
+      if (!card.href) {
+        return `<div ${attrs}>${content}</div>`;
+      }
+
+      return `
+        <a
+          ${attrs}
+          href="${card.href}"
+          target="_blank"
+          rel="noreferrer noopener"
+        >${content}</a>`;
+    })
+    .join("");
+}
+
+function renderCulturalCollaborations() {
+  const container = document.getElementById("culturalCollaborationCards");
+  if (!container) return;
+
+  container.innerHTML = getCulturalCollaborations()
+    .map((card) => `
+      <div class="col-12 col-md-5 col-lg-4">
+        <div class="cultural-card">
+          <img
+            src="${card.image || ""}"
+            alt="${card.alt || card.name || ""}"
+            loading="lazy"
+          />
+          <div>
+            <h3>${card.name || ""}</h3>
+            <p>${card.description || ""}</p>
+          </div>
+        </div>
+      </div>`)
+    .join("");
 }
 
 // Countdown is currently paused in index.html because SIEL 2026 has passed.
@@ -362,8 +365,10 @@ function renderPriceCarousel() {
 
   const slides = [];
 
-  for (let i = 0; i < carouselCards.length; i += itemsPerSlide) {
-    const group = carouselCards.slice(i, i + itemsPerSlide);
+  const cards = getCarouselCards();
+
+  for (let i = 0; i < cards.length; i += itemsPerSlide) {
+    const group = cards.slice(i, i + itemsPerSlide);
 
     slides.push(`
       <div class="carousel-item ${i === 0 ? "active" : ""}">
@@ -390,15 +395,15 @@ function renderPriceCarousel() {
     <div class="${colClass}">
       <div class="single-price no-padding">
         <div class="price-top">
-          <h4 data-translation="${card.edition}"></h4>
+          <h4>${card.title || ""}</h4>
         </div>
-        <p data-translation="${card.text}"></p>
+        <p>${card.description || ""}</p>
         <div class="price-bottom ${bottomClass}">
           <div class="${card.leftClass}">
-            <span class="h1" data-translation="${card.price}"></span>
+            <span class="h1">${card.price || ""}</span>
           </div>
           <div class="${card.rightClass}">
-            <a href="${getLocalizedLink(card.href)}" target="_blank" rel="noopener noreferrer" class="primary-btn" data-translation="${card.cta || "editionP"}"></a>
+            <a href="${resolveLocalizedHref(card.href)}" target="_blank" rel="noopener noreferrer" class="primary-btn">${card.cta || ""}</a>
           </div>
         </div>
       </div>
@@ -435,8 +440,10 @@ function renderBooksCarousel() {
 
   const slides = [];
 
-  for (let i = 0; i < carouselCards2.length; i += itemsPerSlide) {
-    const group = carouselCards2.slice(i, i + itemsPerSlide);
+  const books = getPreviousBooks();
+
+  for (let i = 0; i < books.length; i += itemsPerSlide) {
+    const group = books.slice(i, i + itemsPerSlide);
 
     slides.push(`
       <div class="carousel-item ${i === 0 ? "active" : ""}">
@@ -461,7 +468,7 @@ function renderBooksCarousel() {
         <div class="card h-100 text-center shadow-sm border-0">
           <div class="card-body d-flex flex-column justify-content-center">
             <i class="icon-download mb-3 fs-1" aria-hidden="true"></i>
-            <p class="mb-0 fw-semibold" data-translation="${card.edition}"></p>
+            <p class="mb-0 fw-semibold">${card.title || ""}</p>
           </div>
         </div>
       </a>
@@ -666,12 +673,8 @@ Promise.all([
     initOfficialLanguageSelector();
     document.title = translations.title;
     updateLocalizedBookCover(lang);
-
+    renderSpecialGreetings();
     if (lang === "es") {
-      document
-        .getElementById("btnEditor")
-        .style.setProperty("display", "none", "important");
-
       document
         .getElementById("menuContactMe")
         .setAttribute(
@@ -690,6 +693,7 @@ Promise.all([
     );
 
     const contactModal = document.getElementById("mContactUs");
+    renderCulturalCollaborations();
     renderPriceCarousel();
     renderBooksCarousel();
     renderMassMediaCarousel();

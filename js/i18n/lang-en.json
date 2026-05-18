@@ -1,4 +1,4 @@
-﻿{
+{
   "translations": {
     "menu0": "Home",
     "menu1": "About",
@@ -282,6 +282,118 @@
         "date": "24 November 2022",
         "linkLabel": "Official Event Page",
         "href": "shared.institutionalRecords.austria"
+      }
+    ],
+    "carouselCards": [
+      {
+        "title": "E-Book 📱<br><small>Recommended</small>",
+        "description": "For everyone who enjoys the <br>eco-friendly and full color experience.",
+        "price": "<span>$</span> 4.99",
+        "href": "carouselCards.ebook",
+        "cta": "Get your copy",
+        "desktopBottomClass": "",
+        "mobileBottomClass": "eBPrice",
+        "leftClass": "row-auto",
+        "rightClass": "row-auto"
+      },
+      {
+        "title": "Paperback 📕<br><small>Most Popular</small>",
+        "description": "For everyone who enjoys <br>the real touch experience.",
+        "price": "<span>$</span> 9.99",
+        "href": "carouselCards.paperback",
+        "cta": "Get your copy",
+        "desktopBottomClass": "price-bottom-r",
+        "mobileBottomClass": "eBPriceR",
+        "leftClass": "row-auto",
+        "rightClass": "row-auto"
+      },
+      {
+        "title": "Hardcover 📘",
+        "description": "For everyone who enjoys the elegant <br>and real touch experience.",
+        "price": "<span>$</span> 15.99",
+        "href": "carouselCards.hardcover",
+        "cta": "Get your copy",
+        "desktopBottomClass": "",
+        "mobileBottomClass": "eBPrice",
+        "leftClass": "row-auto",
+        "rightClass": "row-auto"
+      },
+      {
+        "title": "Audiobook 👂",
+        "description": "For everyone who enjoys to listen <br>while they are on the move.",
+        "price": "<span>$</span> 5.99",
+        "href": "carouselCards.audiobook",
+        "cta": "Get your copy",
+        "desktopBottomClass": "",
+        "mobileBottomClass": "eBPrice",
+        "leftClass": "row-auto",
+        "rightClass": "row-auto"
+      },
+      {
+        "title": "Director’s Cut 💎",
+        "description": "The definitive edition featuring full colors, <br>partial mirrors, bonus content, and a premium hardcover design.",
+        "price": "<span>$</span> 36.99",
+        "href": "carouselCards.directorX",
+        "cta": "Coming soon",
+        "desktopBottomClass": "price-bottom-x",
+        "mobileBottomClass": "eBPriceX",
+        "leftClass": "row-auto",
+        "rightClass": "row-auto"
+      }
+    ],
+    "previousBooks": [
+      {
+        "title": "<span>Timeless Stories of El Salvador V2: Epiphany</span>",
+        "href": "shared.previousBooks.epiphanyEn"
+      },
+      {
+        "title": "<span>Historias Eternas de El Salvador V2: Epifanía</span>",
+        "href": "shared.previousBooks.epiphanyEs"
+      },
+      {
+        "title": "<span>Timeless Stories of El Salvador V1: The Beginning</span>",
+        "href": "shared.previousBooks.beginningEn"
+      },
+      {
+        "title": "<span>Historias Eternas de El Salvador V1: El Comienzo</span>",
+        "href": "shared.previousBooks.beginningEs"
+      },
+      {
+        "title": "<span>Légendes Éternelles d’El Salvador T1 : Le Commencement</span>",
+        "href": "shared.previousBooks.beginningFr"
+      }
+    ],
+    "specialGreetings": [
+      {
+        "name": "Marcos Soriano",
+        "role": "Illustrator",
+        "icon": "icon-color_lens",
+        "href": "https://www.instagram.com/marsodred/"
+      },
+      {
+        "name": "Samantha Bahn-Williams",
+        "role": "Editor",
+        "icon": "icon-pen",
+        "href": "https://www.mercerff.com/recipient/samantha-bahn-williams/"
+      },
+      {
+        "name": "Elizabeth Toole",
+        "role": "Editor",
+        "icon": "icon-pen"
+      }
+    ],
+    "culturalCollaborations": [
+      {
+        "name": "Instituto Cervantes",
+        "description": "Marrakesh",
+        "image": "img/extras/Cervantes.jpg",
+        "alt": "Instituto Cervantes"
+      },
+      {
+        "name": "Embassy of El Salvador in Morocco",
+        "description": "Cultural support and collaboration",
+        "image": "img/extras/Embassy.jpg",
+        "alt": "Embassy of El Salvador in Morocco"
       }
     ]
   }
