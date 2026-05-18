@@ -1,4 +1,4 @@
-{
+﻿{
   "translations": {
     "menu0": "Inicio",
     "menu1": "Acerca de",
@@ -50,16 +50,6 @@
     "old3": "<span>Légendes Éternelles d’El Salvador T1 : Le Commencement</span>",
     "old4": "<span>Timeless Stories of El Salvador V2: Epiphany</span>",
     "old5": "<span>Historias Eternas de El Salvador V2: Epifanía</span>",
-    "mMedia1": "Embajada de El Salvador en Austria apoya obra de escritor salvadoreño en Feria del Libro en Viena",
-    "mMedia2": "Libro sobre mitología salvadoreña causa furor en Alemania",
-    "mMedia3": "Salvadoreño participó en Feria de Libro, en Madrid",
-    "mMedia4": "Este escritor salvadoreño estuvo en la Feria del Libro de Madrid",
-    "mMedia5": "Literatura salvadoreña destaca en evento editorial internacional en Marruecos",
-    "mMedia6": "Embajada de El Salvador en Türkiye promueve a autor nacional en encuentro de literatura iberoamericana",
-    "mMedia7": "Noviembre es el mes dedicado a los salvadoreños en el exterior",
-    "mMedia8": "Embajada de El Salvador en Alemania presentó el libro “Timeless Stories of El Salvador” de Federico Navarrete",
-    "mMedia9": "Timeless Stories of El Salvador en el Instituto Cervantes Nueva Delhi (en español)",
-    "mMedia10": "Consulado General de El Salvador en España promueve participación de escritor nacional en Feria de Libro de Madrid",
     "prezi1": "¿Eres un padre bilingüe?",
     "prezi2": "¿Te gustaría empezar a compartir tus orígenes con tus hijos en modo bilingüe (español e inglés)?",
     "prezi3": "¡Entonces <b>Historias Eternas de El Salvador, Edición Infantil</b> es para <b>TI!</b>",
@@ -183,26 +173,115 @@
     "institutionalDateChina": "3 de junio de 2023",
     "institutionalDateAustria": "24 de noviembre de 2022",
     "blog": "Blog",
-    "event5": {
-      "institution": "Instituto Cervantes Marrakech",
-      "title": "Historias eternas de El Salvador. Espejos españoles"
-    },
-    "event4": {
-      "institution": "Instituto Cervantes Nueva Delhi",
-      "title": "Federico Navarrete: Timeless Stories of El Salvador"
-    },
-    "event3": {
-      "institution": "Instituto Cervantes Estambul",
-      "title": "Estambul celebra por primera vez el Encuentro de Literatura Iberoamericana “12 de octubre”"
-    },
-    "event2": {
-      "institution": "Instituto Cervantes Beijing",
-      "title": "D&iacute;a E 2023 &middot; Presentaci&oacute;n de libro Historias Eternas de El Salvador"
-    },
-    "event1": {
-      "institution": "Instituto Cervantes Vienna",
-      "title": "Panorama der zeitgenössischen iberoamerikanischen Literatur I"
-    },
-    "mMedia11": "Literatura salvadoreña se expone en Marruecos"
+    "massMediaCards": [
+      {
+        "title": "Literatura salvadoreña se expone en Marruecos",
+        "href": "shared.massMedia.marruecos",
+        "imageBase": "img/fair/marruecos",
+        "alt": "marruecos"
+      },
+      {
+        "title": "Literatura salvadoreña destaca en evento editorial internacional en Marruecos",
+        "href": "shared.massMedia.siel",
+        "imageBase": "img/fair/SIEL",
+        "alt": "siel"
+      },
+      {
+        "title": "Timeless Stories of El Salvador en el Instituto Cervantes Nueva Delhi (en español)",
+        "href": "shared.massMedia.india",
+        "imageBase": "img/fair/india",
+        "alt": "india"
+      },
+      {
+        "title": "Embajada de El Salvador en Türkiye promueve a autor nacional en encuentro de literatura iberoamericana",
+        "href": "shared.massMedia.turkiye",
+        "imageBase": "img/fair/turkey",
+        "alt": "turkey"
+      },
+      {
+        "title": "Consulado General de El Salvador en España promueve participación de escritor nacional en Feria de Libro de Madrid",
+        "href": "shared.massMedia.consuladoEspana",
+        "imageBase": "img/fair/consulado_es",
+        "alt": "consulado espana"
+      },
+      {
+        "title": "Salvadoreño participó en Feria de Libro, en Madrid",
+        "href": "shared.massMedia.diarioMadrid",
+        "imageBase": "img/fair/diario_el_salvador_2",
+        "alt": "diario el salvador"
+      },
+      {
+        "title": "Este escritor salvadoreño estuvo en la Feria del Libro de Madrid",
+        "href": "shared.massMedia.pulgarcito",
+        "imageBase": "img/fair/pulgarcito",
+        "alt": "pulgarcito"
+      },
+      {
+        "title": "Embajada de El Salvador en Austria apoya obra de escritor salvadoreño en Feria del Libro en Viena",
+        "href": "shared.massMedia.buchWien",
+        "imageBase": "img/fair/buch_viena",
+        "alt": "buch viena"
+      },
+      {
+        "title": "Libro sobre mitología salvadoreña causa furor en Alemania",
+        "href": "shared.massMedia.diarioAlemania",
+        "imageBase": "img/fair/diario_el_salvador",
+        "alt": "diario el salvador"
+      },
+      {
+        "title": "Embajada de El Salvador en Alemania presentó el libro “Timeless Stories of El Salvador” de Federico Navarrete",
+        "href": "shared.massMedia.embajadaAlemania",
+        "imageBase": "img/fair/diario_el_salvador",
+        "alt": "embajada alemania"
+      },
+      {
+        "title": "Noviembre es el mes dedicado a los salvadoreños en el exterior",
+        "href": "shared.massMedia.exterior",
+        "imageBase": "img/fair/exterior",
+        "alt": "exterior"
+      }
+    ],
+    "institutionalRecords": [
+      {
+        "country": "🇲🇦 Marruecos",
+        "institution": "Instituto Cervantes Marrakech",
+        "title": "Historias eternas de El Salvador. Espejos españoles",
+        "date": "5 de mayo de 2026",
+        "linkLabel": "Página oficial del evento",
+        "href": "shared.institutionalRecords.morocco"
+      },
+      {
+        "country": "🇮🇳 India",
+        "institution": "Instituto Cervantes Nueva Delhi",
+        "title": "Federico Navarrete: Timeless Stories of El Salvador",
+        "date": "14 de noviembre de 2023",
+        "linkLabel": "Página oficial del evento",
+        "href": "shared.institutionalRecords.india"
+      },
+      {
+        "country": "🇹🇷 Turquía",
+        "institution": "Instituto Cervantes Estambul",
+        "title": "Estambul celebra por primera vez el Encuentro de Literatura Iberoamericana “12 de octubre”",
+        "date": "11 de octubre de 2023",
+        "linkLabel": "Nota de prensa oficial",
+        "href": "shared.institutionalRecords.turkiye"
+      },
+      {
+        "country": "🇨🇳 China",
+        "institution": "Instituto Cervantes Beijing",
+        "title": "D&iacute;a E 2023 &middot; Presentaci&oacute;n de libro Historias Eternas de El Salvador",
+        "date": "3 de junio de 2023",
+        "linkLabel": "Página oficial del evento",
+        "href": "shared.institutionalRecords.china"
+      },
+      {
+        "country": "🇦🇹 Austria",
+        "institution": "Instituto Cervantes Vienna",
+        "title": "Panorama der zeitgenössischen iberoamerikanischen Literatur I",
+        "date": "24 de noviembre de 2022",
+        "linkLabel": "Página oficial del evento",
+        "href": "shared.institutionalRecords.austria"
+      }
+    ]
   }
 }

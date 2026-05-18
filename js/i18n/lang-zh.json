@@ -1,4 +1,4 @@
-{
+﻿{
   "translations": {
     "menu0": "主页",
     "menu1": "关于",
@@ -51,16 +51,6 @@
     "old3": "<span>Légendes Éternelles d’El Salvador T1 : Le Commencement</span>",
     "old4": "<span>Timeless Stories of El Salvador V2: Epiphany</span>",
     "old5": "<span>Historias Eternas de El Salvador V2: Epifanía</span>",
-    "mMedia1": "萨尔瓦多驻奥地利大使馆支持萨尔瓦多作家在维也纳书展上的作品,Buch Wien（西班牙语）",
-    "mMedia2": "萨尔瓦多神话书在德国引起轰动（西班牙语）",
-    "mMedia3": "萨尔瓦多人参加马德里书展（西班牙语）",
-    "mMedia4": "这位萨尔瓦多作家出席马德里书展（西班牙语）",
-    "mMedia5": "萨尔瓦多文学在摩洛哥国际书展上大放异彩（西班牙语）",
-    "mMedia6": "萨尔瓦多驻土耳其大使馆在伊比利亚美洲文学活动上推广一位萨尔瓦多作家（西班牙语）",
-    "mMedia7": "十一月是萨尔瓦多海外侨胞月（西班牙语）",
-    "mMedia8": "萨尔瓦多驻德国大使馆推出了费德里科·纳瓦雷特的《Timeless Stories of El Salvador》（西班牙语）",
-    "mMedia9": "新德里塞万提斯学院的《Timeless Stories of El Salvador》（西班牙语）",
-    "mMedia10": "萨尔瓦多驻西班牙领事馆在马德里书展上推广了一位萨尔瓦多作家（西班牙语）",
     "prezi1": "你是双语家长吗？",
     "prezi2": "您是否愿意开始用双语模式（中文和西班牙语）向孩子讲述您的根源？",
     "prezi3": "然后<b>萨尔瓦多永恒的故事,儿童版</b>是给<b>你！</b>的",
@@ -184,26 +174,115 @@
     "institutionalDateChina": "2023年6月3日",
     "institutionalDateAustria": "2022年11月24日",
     "blog": "博客",
-    "event5": {
-      "institution": "Instituto Cervantes Marrakech",
-      "title": "Historias eternas de El Salvador. Espejos españoles"
-    },
-    "event4": {
-      "institution": "Instituto Cervantes Nueva Delhi",
-      "title": "Federico Navarrete: Timeless Stories of El Salvador"
-    },
-    "event3": {
-      "institution": "Instituto Cervantes Estambul",
-      "title": "Estambul celebra por primera vez el Encuentro de Literatura Iberoamericana “12 de octubre”"
-    },
-    "event2": {
-      "institution": "Instituto Cervantes Beijing",
-      "title": "D&iacute;a E 2023 &middot; Presentaci&oacute;n de libro Historias Eternas de El Salvador"
-    },
-    "event1": {
-      "institution": "Instituto Cervantes Vienna",
-      "title": "Panorama der zeitgenössischen iberoamerikanischen Literatur I"
-    },
-    "mMedia11": "萨尔瓦多文学在摩洛哥展出（西班牙语）"
+    "massMediaCards": [
+      {
+        "title": "萨尔瓦多文学在摩洛哥展出（西班牙语）",
+        "href": "shared.massMedia.marruecos",
+        "imageBase": "img/fair/marruecos",
+        "alt": "marruecos"
+      },
+      {
+        "title": "萨尔瓦多文学在摩洛哥国际书展上大放异彩（西班牙语）",
+        "href": "shared.massMedia.siel",
+        "imageBase": "img/fair/SIEL",
+        "alt": "siel"
+      },
+      {
+        "title": "新德里塞万提斯学院的《Timeless Stories of El Salvador》（西班牙语）",
+        "href": "shared.massMedia.india",
+        "imageBase": "img/fair/india",
+        "alt": "india"
+      },
+      {
+        "title": "萨尔瓦多驻土耳其大使馆在伊比利亚美洲文学活动上推广一位萨尔瓦多作家（西班牙语）",
+        "href": "shared.massMedia.turkiye",
+        "imageBase": "img/fair/turkey",
+        "alt": "turkey"
+      },
+      {
+        "title": "萨尔瓦多驻西班牙领事馆在马德里书展上推广了一位萨尔瓦多作家（西班牙语）",
+        "href": "shared.massMedia.consuladoEspana",
+        "imageBase": "img/fair/consulado_es",
+        "alt": "consulado espana"
+      },
+      {
+        "title": "萨尔瓦多人参加马德里书展（西班牙语）",
+        "href": "shared.massMedia.diarioMadrid",
+        "imageBase": "img/fair/diario_el_salvador_2",
+        "alt": "diario el salvador"
+      },
+      {
+        "title": "这位萨尔瓦多作家出席马德里书展（西班牙语）",
+        "href": "shared.massMedia.pulgarcito",
+        "imageBase": "img/fair/pulgarcito",
+        "alt": "pulgarcito"
+      },
+      {
+        "title": "萨尔瓦多驻奥地利大使馆支持萨尔瓦多作家在维也纳书展上的作品,Buch Wien（西班牙语）",
+        "href": "shared.massMedia.buchWien",
+        "imageBase": "img/fair/buch_viena",
+        "alt": "buch viena"
+      },
+      {
+        "title": "萨尔瓦多神话书在德国引起轰动（西班牙语）",
+        "href": "shared.massMedia.diarioAlemania",
+        "imageBase": "img/fair/diario_el_salvador",
+        "alt": "diario el salvador"
+      },
+      {
+        "title": "萨尔瓦多驻德国大使馆推出了费德里科·纳瓦雷特的《Timeless Stories of El Salvador》（西班牙语）",
+        "href": "shared.massMedia.embajadaAlemania",
+        "imageBase": "img/fair/diario_el_salvador",
+        "alt": "embajada alemania"
+      },
+      {
+        "title": "十一月是萨尔瓦多海外侨胞月（西班牙语）",
+        "href": "shared.massMedia.exterior",
+        "imageBase": "img/fair/exterior",
+        "alt": "exterior"
+      }
+    ],
+    "institutionalRecords": [
+      {
+        "country": "🇲🇦 摩洛哥",
+        "institution": "Instituto Cervantes Marrakech",
+        "title": "Historias eternas de El Salvador. Espejos españoles",
+        "date": "2026年5月5日",
+        "linkLabel": "官方活动页面",
+        "href": "shared.institutionalRecords.morocco"
+      },
+      {
+        "country": "🇮🇳 印度",
+        "institution": "Instituto Cervantes Nueva Delhi",
+        "title": "Federico Navarrete: Timeless Stories of El Salvador",
+        "date": "2023年11月14日",
+        "linkLabel": "官方活动页面",
+        "href": "shared.institutionalRecords.india"
+      },
+      {
+        "country": "🇹🇷 土耳其",
+        "institution": "Instituto Cervantes Estambul",
+        "title": "Estambul celebra por primera vez el Encuentro de Literatura Iberoamericana “12 de octubre”",
+        "date": "2023年10月11日",
+        "linkLabel": "官方新闻稿",
+        "href": "shared.institutionalRecords.turkiye"
+      },
+      {
+        "country": "🇨🇳 中国",
+        "institution": "Instituto Cervantes Beijing",
+        "title": "D&iacute;a E 2023 &middot; Presentaci&oacute;n de libro Historias Eternas de El Salvador",
+        "date": "2023年6月3日",
+        "linkLabel": "官方活动页面",
+        "href": "shared.institutionalRecords.china"
+      },
+      {
+        "country": "🇦🇹 奥地利",
+        "institution": "Instituto Cervantes Vienna",
+        "title": "Panorama der zeitgenössischen iberoamerikanischen Literatur I",
+        "date": "2022年11月24日",
+        "linkLabel": "官方活动页面",
+        "href": "shared.institutionalRecords.austria"
+      }
+    ]
   }
 }

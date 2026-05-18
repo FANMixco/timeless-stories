@@ -1,4 +1,4 @@
-{
+﻿{
   "translations": {
     "menu0": "Accueil",
     "menu1": "À propos",
@@ -51,16 +51,6 @@
     "old3": "<span>Légendes Éternelles d’El Salvador T1 : Le Commencement</span>",
     "old4": "<span>Timeless Stories of El Salvador V2: Epiphany</span>",
     "old5": "<span>Historias Eternas de El Salvador V2: Epifanía</span>",
-    "mMedia1": "L'ambassade d’El Salvador en Autriche soutient le travail de l'écrivain salvadorien au Salon du livre de Vienne, Buch Wien (en espagnol)",
-    "mMedia2": "Un livre sur la mythologie salvadorienne fait sensation en Allemagne (en espagnol)",
-    "mMedia3": "Un Salvadorien a participé au Salon du livre de Madrid (en espagnol)",
-    "mMedia4": "Cet écrivain salvadorien était présent au Salon du livre de Madrid (en espagnol)",
-    "mMedia5": "La littérature salvadorienne à l'honneur lors d'un salon international du livre au Maroc (en espagnol)",
-    "mMedia6": "L'ambassade du Salvador en Turquie met en avant un auteur national lors d'un événement littéraire ibéro-américain (en espagnol)",
-    "mMedia7": "Novembre est le mois dédié aux Salvadoriens vivant à l'étranger (en espagnol)",
-    "mMedia8": "L'ambassade d'El Salvador en Allemagne a présenté le livre “Timeless Stories of El Salvador” de Federico Navarrete (en espagnol)",
-    "mMedia9": "Timeless Stories of El Salvador à l'Instituto Cervantes New Delhi (en espagnol)",
-    "mMedia10": "Le consulat général d'El Salvador en Espagne promeut la participation d'un écrivain national à la Foire du livre de Madrid (en espagnol)",
     "prezi1": "Êtes-vous un parent bilingue ? (en espagnol)",
     "prezi2": "Souhaitez-vous commencer à partager vos origines avec vos enfants en mode bilingue (français et espagnol) ?",
     "prezi3": "Alors <b>Légendes Éternelles d’El Salvador, édition pour enfants</b> est <b>fait pour VOUS !</b>",
@@ -184,26 +174,115 @@
     "institutionalDateChina": "3 juin 2023",
     "institutionalDateAustria": "24 novembre 2022",
     "blog": "Blog",
-    "event5": {
-      "institution": "Instituto Cervantes Marrakech",
-      "title": "Historias eternas de El Salvador. Espejos españoles"
-    },
-    "event4": {
-      "institution": "Instituto Cervantes Nueva Delhi",
-      "title": "Federico Navarrete: Timeless Stories of El Salvador"
-    },
-    "event3": {
-      "institution": "Instituto Cervantes Estambul",
-      "title": "Estambul celebra por primera vez el Encuentro de Literatura Iberoamericana “12 de octubre”"
-    },
-    "event2": {
-      "institution": "Instituto Cervantes Beijing",
-      "title": "D&iacute;a E 2023 &middot; Presentaci&oacute;n de libro Historias Eternas de El Salvador"
-    },
-    "event1": {
-      "institution": "Instituto Cervantes Vienna",
-      "title": "Panorama der zeitgenössischen iberoamerikanischen Literatur I"
-    },
-    "mMedia11": "La littérature salvadorienne à l'honneur au Maroc (en espagnol)"
+    "massMediaCards": [
+      {
+        "title": "La littérature salvadorienne à l'honneur au Maroc (en espagnol)",
+        "href": "shared.massMedia.marruecos",
+        "imageBase": "img/fair/marruecos",
+        "alt": "marruecos"
+      },
+      {
+        "title": "La littérature salvadorienne à l'honneur lors d'un salon international du livre au Maroc (en espagnol)",
+        "href": "shared.massMedia.siel",
+        "imageBase": "img/fair/SIEL",
+        "alt": "siel"
+      },
+      {
+        "title": "Timeless Stories of El Salvador à l'Instituto Cervantes New Delhi (en espagnol)",
+        "href": "shared.massMedia.india",
+        "imageBase": "img/fair/india",
+        "alt": "india"
+      },
+      {
+        "title": "L'ambassade du Salvador en Turquie met en avant un auteur national lors d'un événement littéraire ibéro-américain (en espagnol)",
+        "href": "shared.massMedia.turkiye",
+        "imageBase": "img/fair/turkey",
+        "alt": "turkey"
+      },
+      {
+        "title": "Le consulat général d'El Salvador en Espagne promeut la participation d'un écrivain national à la Foire du livre de Madrid (en espagnol)",
+        "href": "shared.massMedia.consuladoEspana",
+        "imageBase": "img/fair/consulado_es",
+        "alt": "consulado espana"
+      },
+      {
+        "title": "Un Salvadorien a participé au Salon du livre de Madrid (en espagnol)",
+        "href": "shared.massMedia.diarioMadrid",
+        "imageBase": "img/fair/diario_el_salvador_2",
+        "alt": "diario el salvador"
+      },
+      {
+        "title": "Cet écrivain salvadorien était présent au Salon du livre de Madrid (en espagnol)",
+        "href": "shared.massMedia.pulgarcito",
+        "imageBase": "img/fair/pulgarcito",
+        "alt": "pulgarcito"
+      },
+      {
+        "title": "L'ambassade d’El Salvador en Autriche soutient le travail de l'écrivain salvadorien au Salon du livre de Vienne, Buch Wien (en espagnol)",
+        "href": "shared.massMedia.buchWien",
+        "imageBase": "img/fair/buch_viena",
+        "alt": "buch viena"
+      },
+      {
+        "title": "Un livre sur la mythologie salvadorienne fait sensation en Allemagne (en espagnol)",
+        "href": "shared.massMedia.diarioAlemania",
+        "imageBase": "img/fair/diario_el_salvador",
+        "alt": "diario el salvador"
+      },
+      {
+        "title": "L'ambassade d'El Salvador en Allemagne a présenté le livre “Timeless Stories of El Salvador” de Federico Navarrete (en espagnol)",
+        "href": "shared.massMedia.embajadaAlemania",
+        "imageBase": "img/fair/diario_el_salvador",
+        "alt": "embajada alemania"
+      },
+      {
+        "title": "Novembre est le mois dédié aux Salvadoriens vivant à l'étranger (en espagnol)",
+        "href": "shared.massMedia.exterior",
+        "imageBase": "img/fair/exterior",
+        "alt": "exterior"
+      }
+    ],
+    "institutionalRecords": [
+      {
+        "country": "🇲🇦 Maroc",
+        "institution": "Instituto Cervantes Marrakech",
+        "title": "Historias eternas de El Salvador. Espejos españoles",
+        "date": "5 mai 2026",
+        "linkLabel": "Page officielle de l’événement",
+        "href": "shared.institutionalRecords.morocco"
+      },
+      {
+        "country": "🇮🇳 Inde",
+        "institution": "Instituto Cervantes Nueva Delhi",
+        "title": "Federico Navarrete: Timeless Stories of El Salvador",
+        "date": "14 novembre 2023",
+        "linkLabel": "Page officielle de l’événement",
+        "href": "shared.institutionalRecords.india"
+      },
+      {
+        "country": "🇹🇷 Turquie",
+        "institution": "Instituto Cervantes Estambul",
+        "title": "Estambul celebra por primera vez el Encuentro de Literatura Iberoamericana “12 de octubre”",
+        "date": "11 octobre 2023",
+        "linkLabel": "Note de presse officielle",
+        "href": "shared.institutionalRecords.turkiye"
+      },
+      {
+        "country": "🇨🇳 Chine",
+        "institution": "Instituto Cervantes Beijing",
+        "title": "D&iacute;a E 2023 &middot; Presentaci&oacute;n de libro Historias Eternas de El Salvador",
+        "date": "3 juin 2023",
+        "linkLabel": "Page officielle de l’événement",
+        "href": "shared.institutionalRecords.china"
+      },
+      {
+        "country": "🇦🇹 Autriche",
+        "institution": "Instituto Cervantes Vienna",
+        "title": "Panorama der zeitgenössischen iberoamerikanischen Literatur I",
+        "date": "24 novembre 2022",
+        "linkLabel": "Page officielle de l’événement",
+        "href": "shared.institutionalRecords.austria"
+      }
+    ]
   }
 }

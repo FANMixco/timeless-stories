@@ -237,112 +237,27 @@ const carouselCards2 = [
   },
 ];
 
-const massMediaCards = [
-  {
-    text: "mMedia11",
-    href: "shared.massMedia.marruecos",
-    imageBase: "img/fair/marruecos",
-    alt: "marruecos",
-  },
-  {
-    text: "mMedia5",
-    href: "shared.massMedia.siel",
-    imageBase: "img/fair/SIEL",
-    alt: "siel",
-  },
-  {
-    text: "mMedia9",
-    href: "shared.massMedia.india",
-    imageBase: "img/fair/india",
-    alt: "india",
-  },
-  {
-    text: "mMedia6",
-    href: "shared.massMedia.turkiye",
-    imageBase: "img/fair/turkey",
-    alt: "turkey",
-  },
-  {
-    text: "mMedia10",
-    href: "shared.massMedia.consuladoEspana",
-    imageBase: "img/fair/consulado_es",
-    alt: "consulado españa",
-  },
-  {
-    text: "mMedia3",
-    href: "shared.massMedia.diarioMadrid",
-    imageBase: "img/fair/diario_el_salvador_2",
-    alt: "diario el salvador",
-  },
-  {
-    text: "mMedia4",
-    href: "shared.massMedia.pulgarcito",
-    imageBase: "img/fair/pulgarcito",
-    alt: "pulgarcito",
-  },
-  {
-    text: "mMedia1",
-    href: "shared.massMedia.buchWien",
-    imageBase: "img/fair/buch_viena",
-    alt: "buch viena",
-  },
-  {
-    text: "mMedia2",
-    href: "shared.massMedia.diarioAlemania",
-    imageBase: "img/fair/diario_el_salvador",
-    alt: "diario el salvador",
-  },
-  {
-    text: "mMedia8",
-    href: "shared.massMedia.embajadaAlemania",
-    imageBase: "img/fair/diario_el_salvador",
-    alt: "embajada alemania",
-  },
-  {
-    text: "mMedia7",
-    href: "shared.massMedia.exterior",
-    imageBase: "img/fair/exterior",
-    alt: "exterior",
-  },
-];
+function getMassMediaCards() {
+  return Array.isArray(translations?.massMediaCards)
+    ? translations.massMediaCards
+    : [];
+}
 
-const institutionalRecordCards = [
-  {
-    country: "pCountry5",
-    event: "event5",
-    date: "institutionalDateMorocco",
-    linkLabel: "institutionalEventPage",
-    href: "shared.institutionalRecords.morocco",
-  },
-  {
-    country: "pCountry4",
-    event: "event4",
-    date: "institutionalDateIndia",
-    linkLabel: "institutionalEventPage",
-    href: "shared.institutionalRecords.india",
-  },
-  {
-    country: "pCountry3",
-    event: "event3",
-    date: "institutionalDateTurkiye",
-    linkLabel: "institutionalPressNote",
-    href: "shared.institutionalRecords.turkiye",
-  },
-  {
-    country: "pCountry2",
-    event: "event2",
-    date: "institutionalDateChina",
-    linkLabel: "institutionalEventPage",
-    href: "shared.institutionalRecords.china",
-  },
-  {
-    country: "pCountry1",
-    event: "event1",
-    date: "institutionalDateAustria",
-    linkLabel: "institutionalEventPage",
-    href: "shared.institutionalRecords.austria",
-  },
-];
+function resolveMassMediaHref(href) {
+  if (!href) return "#";
+  return /^https?:\/\//i.test(href) ? href : getLinkValue(href);
+}
+
+function getInstitutionalRecords() {
+  return Array.isArray(translations?.institutionalRecords)
+    ? translations.institutionalRecords
+    : [];
+}
+
+function resolveInstitutionalRecordHref(href) {
+  if (!href) return "#";
+  return /^https?:\/\//i.test(href) ? href : getLinkValue(href);
+}
 
 // Countdown is currently paused in index.html because SIEL 2026 has passed.
 // To reactivate it for a future launch, uncomment the availability-countdown
@@ -580,8 +495,10 @@ function renderMassMediaCarousel() {
 
   const slides = [];
 
-  for (let i = 0; i < massMediaCards.length; i += itemsPerSlide) {
-    const group = massMediaCards.slice(i, i + itemsPerSlide);
+  const mediaCards = getMassMediaCards();
+
+  for (let i = 0; i < mediaCards.length; i += itemsPerSlide) {
+    const group = mediaCards.slice(i, i + itemsPerSlide);
 
     slides.push(`
       <div class="carousel-item ${i === 0 ? "active" : ""}">
@@ -613,7 +530,7 @@ function renderMassMediaCarousel() {
           <a
             target="_blank"
             rel="noopener noreferrer"
-            href="${getLinkValue(card.href)}"
+            href="${resolveMassMediaHref(card.href)}"
             class="text-decoration-none text-dark d-block"
           >
             <picture>
@@ -627,7 +544,7 @@ function renderMassMediaCarousel() {
               />
             </picture>
             <div class="${bodyClass}">
-              <p class="card-text" data-translation="${card.text}"></p>
+              <p class="card-text">${card.title || ""}</p>
             </div>
           </a>
         </div>
@@ -665,8 +582,10 @@ function renderInstitutionalRecords() {
 
   const slides = [];
 
-  for (let i = 0; i < institutionalRecordCards.length; i += itemsPerSlide) {
-    const group = institutionalRecordCards.slice(i, i + itemsPerSlide);
+  const records = getInstitutionalRecords();
+
+  for (let i = 0; i < records.length; i += itemsPerSlide) {
+    const group = records.slice(i, i + itemsPerSlide);
 
     slides.push(`
       <div class="carousel-item ${i === 0 ? "active" : ""}">
@@ -684,24 +603,22 @@ function renderInstitutionalRecords() {
         : currentItemsPerSlide === 2
           ? "col-12 col-md-6 institutional-record-slide"
           : "col-12 col-md-4 institutional-record-slide";
-    const event = getTranslationValue(translations, card.event) || {};
-    const institution = event.institution || "";
-    const title = event.title || "";
+    const institution = card.institution || "";
+    const title = card.title || "";
 
     return `
       <div class="${colClass}">
         <article class="institutional-record-card">
-          <p class="institutional-record-country" data-translation="${card.country}"></p>
+          <p class="institutional-record-country">${card.country || ""}</p>
           <h3>${institution}</h3>
           <p class="institutional-record-title">${title}</p>
-          <p class="institutional-record-date" data-translation="${card.date}"></p>
+          <p class="institutional-record-date">${card.date || ""}</p>
           <a
-            href="${getLinkValue(card.href)}"
+            href="${resolveInstitutionalRecordHref(card.href)}"
             class="institutional-record-link"
             target="_blank"
             rel="noopener noreferrer"
-            data-translation="${card.linkLabel}"
-          ></a>
+          >${card.linkLabel || ""}</a>
         </article>
       </div>
     `;
