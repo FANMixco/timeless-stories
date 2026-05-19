@@ -2736,6 +2736,11 @@ body.mobile-nav-active #mobile-nav-toggle {
     text-align: center;
 }
 
+.banner-area .fullscreen {
+    box-sizing: border-box;
+    padding-top: 70px;
+}
+
 .banner-content h1 {
     color: #fff;
     font-size: 72px;
