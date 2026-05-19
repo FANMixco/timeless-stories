@@ -890,7 +890,7 @@ th {
 
 #institutionalRecordsCarousel .carousel-control-prev-icon,
 #institutionalRecordsCarousel .carousel-control-next-icon {
-    filter: invert(20%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(90%);
+    filter: none;
 }
 
 .modal-trigger-title {
@@ -912,12 +912,6 @@ th {
 .content-modal-title-link:focus {
     color: #222;
     text-decoration: none;
-}
-
-.modal-trigger-title:focus {
-    outline: 3px solid rgba(1, 87, 155, 0.24);
-    outline-offset: 8px;
-    border-radius: 8px;
 }
 
 /*.content-modal .modal-dialog {
@@ -3753,13 +3747,21 @@ h6 {
 
 .carousel-control-prev,
 .carousel-control-next {
-    width: 50px;
-    height: 50px;
+    width: 32px;
+    height: 32px;
     top: 50%;
     transform: translateY(-50%);
-    background-color: rgba(128, 128, 128, 0.7); /* gray circle */
+    background-color: rgba(128, 128, 128, 0.92);
     border-radius: 50%;
-    opacity: 1; /* always visible */
+    opacity: 1;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    width: 18px;
+    height: 18px;
+    background-size: 100% 100%;
+    filter: none;
 }
 
 @media (min-width: 576px) and (max-width: 991.98px) {
@@ -3777,7 +3779,7 @@ h6 {
 /* Optional hover */
 .carousel-control-prev:hover,
 .carousel-control-next:hover {
-    background-color: rgba(128, 128, 128, 0.9);
+    background-color: rgba(128, 128, 128, 1);
 }
 
 @media (min-width: 768px) and (max-width: 991.98px) {
@@ -3833,12 +3835,12 @@ h6 {
 
 #mMediaCarousel .carousel-control-prev-icon,
 #mMediaCarousel .carousel-control-next-icon {
-    filter: invert(20%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(90%);
+    filter: none;
 }
 
 #multiItemCarousel .carousel-control-prev-icon,
 #multiItemCarousel .carousel-control-next-icon {
-    filter: invert(20%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(90%);
+    filter: none;
 }
 
 #galleryCarousel .carousel-control-prev,
@@ -3849,13 +3851,13 @@ h6 {
 #galleryCarousel .carousel-control-prev-icon,
 #galleryCarousel .carousel-control-next-icon {
     display: inline-block;
-    width: 3rem;
-    height: 3rem;
-    background-color: rgba(0, 0, 0, 0.55);
+    width: 18px;
+    height: 18px;
+    background-color: transparent;
     background-repeat: no-repeat;
     background-position: center;
-    background-size: 60%;
-    border-radius: 50%;
+    background-size: 100% 100%;
+    border-radius: 0;
     opacity: 1;
 }
 
