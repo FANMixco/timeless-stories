@@ -1,5 +1,7 @@
 const supportedLang = ["en", "es", "fr", "zh"];
 const languageStorageKey = "timelessStoriesOfficialLanguage";
+const themeStorageKey = "timelessStoriesColorMode";
+const supportedThemes = ["system", "light", "dark"];
 let translations;
 let linkRegistry;
 let localizedLinks;
@@ -35,6 +37,39 @@ function storeLanguage(language) {
   }
 }
 
+function getStoredTheme() {
+  try {
+    const storedTheme = window.localStorage.getItem(themeStorageKey);
+    return supportedThemes.includes(storedTheme) ? storedTheme : "system";
+  } catch (error) {
+    return "system";
+  }
+}
+
+function storeTheme(theme) {
+  try {
+    if (theme === "system") {
+      window.localStorage.removeItem(themeStorageKey);
+      return;
+    }
+
+    window.localStorage.setItem(themeStorageKey, theme);
+  } catch (error) {
+    return;
+  }
+}
+
+function applyTheme(theme = getStoredTheme()) {
+  const selectedTheme = supportedThemes.includes(theme) ? theme : "system";
+
+  if (selectedTheme === "dark" || selectedTheme === "light") {
+    document.documentElement.dataset.theme = selectedTheme;
+    return;
+  }
+
+  document.documentElement.removeAttribute("data-theme");
+}
+
 function initOfficialLanguageSelector() {
   const languageSelect = document.getElementById("officialLanguageSelect");
   if (!languageSelect) return;
@@ -51,6 +86,23 @@ function initOfficialLanguageSelector() {
 
     storeLanguage(selectedLanguage);
     window.location.reload();
+  });
+}
+
+function initThemeSelector() {
+  const themeSelect = document.getElementById("themeModeSelect");
+  if (!themeSelect) return;
+
+  const storedTheme = getStoredTheme();
+  themeSelect.value = storedTheme;
+  applyTheme(storedTheme);
+  themeSelect.addEventListener("change", () => {
+    const selectedTheme = supportedThemes.includes(themeSelect.value)
+      ? themeSelect.value
+      : "system";
+
+    storeTheme(selectedTheme);
+    applyTheme(selectedTheme);
   });
 }
 
@@ -671,6 +723,7 @@ Promise.all([
     );
 
     initOfficialLanguageSelector();
+    initThemeSelector();
     document.title = translations.title;
     updateLocalizedBookCover(lang);
     renderSpecialGreetings();

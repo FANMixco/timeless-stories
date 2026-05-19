@@ -3436,6 +3436,12 @@ h6 {
     text-align: center;
 }
 
+.appearance-mode-switcher {
+    max-width: 320px;
+    margin: 24px auto 0;
+    text-align: left;
+}
+
 .footer-language-label {
     margin-bottom: 8px;
     color: #ffffff;
@@ -3624,7 +3630,6 @@ h6 {
 .list-group-numbered>li {
     display: list-item
 }
-
 
 .multi-column-list {
   /* Create 2 columns */
@@ -3881,3 +3886,313 @@ h6 {
         line-height: 1.6em;
     }
 }
+
+@media (prefers-color-scheme: dark) {
+    html:not([data-theme="light"]) .info-area,
+    html:not([data-theme="light"]) .price-area,
+    html:not([data-theme="light"]) .course-area,
+    html:not([data-theme="light"]) .testomial-area:not(#reviews) {
+        background: #111820;
+        color: #d8e0e8;
+    }
+
+    html:not([data-theme="light"]) .info-area .info-content,
+    html:not([data-theme="light"]) .info-area .info-content:after,
+    html:not([data-theme="light"]) .single-price,
+    html:not([data-theme="light"]) .single-price .price-top,
+    html:not([data-theme="light"]) .single-price .price-bottom,
+    html:not([data-theme="light"]) .single-testimonial,
+    html:not([data-theme="light"]) .institutional-record-card,
+    html:not([data-theme="light"]) #mMediaCarousel .card,
+    html:not([data-theme="light"]) .modal-content,
+    html:not([data-theme="light"]) .content-modal .modal-content {
+        background: #17212b;
+        border-color: #2a3846;
+        color: #d8e0e8;
+        box-shadow: none;
+    }
+
+    html:not([data-theme="light"]) .single-price .price-top {
+        background: #202a35;
+    }
+
+    html:not([data-theme="light"]) .single-price p {
+        background: #17212b;
+        color: #c6d0da;
+    }
+
+    html:not([data-theme="light"]) .single-price .price-bottom {
+        background: #111820;
+    }
+
+    html:not([data-theme="light"]) .signature {
+        filter: invert(1) brightness(1.7);
+    }
+
+    html:not([data-theme="light"]) .info-area .info-content h1,
+    html:not([data-theme="light"]) .info-area .info-content h2,
+    html:not([data-theme="light"]) .info-area .info-content h3,
+    html:not([data-theme="light"]) .info-area .info-content .meta,
+    html:not([data-theme="light"]) .price-area h1,
+    html:not([data-theme="light"]) .price-area h2,
+    html:not([data-theme="light"]) .price-area h3,
+    html:not([data-theme="light"]) .price-area .h1,
+    html:not([data-theme="light"]) .price-area .h2,
+    html:not([data-theme="light"]) .price-area .h3,
+    html:not([data-theme="light"]) .price-area h4,
+    html:not([data-theme="light"]) .price-area small,
+    html:not([data-theme="light"]) .course-area h1,
+    html:not([data-theme="light"]) .course-area h2,
+    html:not([data-theme="light"]) .course-area h3,
+    html:not([data-theme="light"]) .course-area .h1,
+    html:not([data-theme="light"]) .course-area .h2,
+    html:not([data-theme="light"]) .course-area .h3,
+    html:not([data-theme="light"]) .testomial-area:not(#reviews) h1,
+    html:not([data-theme="light"]) .testomial-area:not(#reviews) h2,
+    html:not([data-theme="light"]) .testomial-area:not(#reviews) h3,
+    html:not([data-theme="light"]) .testomial-area:not(#reviews) .h1,
+    html:not([data-theme="light"]) .testomial-area:not(#reviews) .h2,
+    html:not([data-theme="light"]) .testomial-area:not(#reviews) .h3,
+    html:not([data-theme="light"]) .institutional-records-heading h2,
+    html:not([data-theme="light"]) .institutional-record-card h3,
+    html:not([data-theme="light"]) .content-modal-title-link,
+    html:not([data-theme="light"]) .content-modal-title-link:hover,
+    html:not([data-theme="light"]) .content-modal-title-link:focus,
+    html:not([data-theme="light"]) #mMediaCarousel .card-text,
+    html:not([data-theme="light"]) .modal-title,
+    html:not([data-theme="light"]) .content-modal-title,
+    html:not([data-theme="light"]) .multi-column-list,
+    html:not([data-theme="light"]) .multi-column-list li {
+        color: #f2f6f9;
+    }
+
+    html:not([data-theme="light"]) .single-price .price-bottom,
+    html:not([data-theme="light"]) .institutional-record-title,
+    html:not([data-theme="light"]) .institutional-record-date,
+    html:not([data-theme="light"]) .single-testimonial .desc,
+    html:not([data-theme="light"]) .content-modal-list {
+        color: #c6d0da;
+    }
+
+    html:not([data-theme="light"]) .single-price .price-top,
+    html:not([data-theme="light"]) .single-price .price-bottom,
+    html:not([data-theme="light"]) .single-testimonial,
+    html:not([data-theme="light"]) .institutional-record-card,
+    html:not([data-theme="light"]) #mMediaCarousel .card,
+    html:not([data-theme="light"]) .content-modal-list li {
+        border-color: #2a3846;
+    }
+
+    html:not([data-theme="light"]) .availability-countdown {
+        color: #d8e0e8;
+    }
+
+    html:not([data-theme="light"]) .availability-countdown-timer span {
+        background: #0f151c;
+        box-shadow: none;
+    }
+
+    html:not([data-theme="light"]) .single-price .eBPrice {
+        background: linear-gradient(90deg, #29b6f6 0%, #01579b 100%);
+        border-color: transparent;
+    }
+
+    html:not([data-theme="light"]) .single-price .eBPriceR {
+        background: linear-gradient(90deg, #ffc107 0%, #6E5415 100%);
+        border-color: transparent;
+    }
+
+    html:not([data-theme="light"]) .single-price .eBPriceX {
+        background: linear-gradient(90deg, #EF9A9A 0%, #990000 100%);
+        border-color: transparent;
+    }
+
+    html:not([data-theme="light"]) .course-area .leaflet-tile {
+        filter: brightness(0.72) invert(1) contrast(1.05) hue-rotate(180deg) saturate(0.75);
+    }
+
+    html:not([data-theme="light"]) .course-area .leaflet-popup-content-wrapper,
+    html:not([data-theme="light"]) .course-area .leaflet-popup-tip {
+        background: #17212b;
+        color: #f2f6f9;
+    }
+
+    html:not([data-theme="light"]) #reviews {
+        background: #111820;
+    }
+
+    html:not([data-theme="light"]) #aReviews {
+        filter: invert(1);
+    }
+
+    html:not([data-theme="light"]) .modal .btn-close {
+        filter: invert(1) grayscale(1) brightness(1.8);
+    }
+
+    html:not([data-theme="light"]) #mMediaCarousel a.text-dark {
+        color: #f2f6f9 !important;
+    }
+
+    html:not([data-theme="light"]) .price-area .carousel-control-prev,
+    html:not([data-theme="light"]) .price-area .carousel-control-next,
+    html:not([data-theme="light"]) .course-area .carousel-control-prev,
+    html:not([data-theme="light"]) .course-area .carousel-control-next,
+    html:not([data-theme="light"]) .testomial-area:not(#reviews) .carousel-control-prev,
+    html:not([data-theme="light"]) .testomial-area:not(#reviews) .carousel-control-next {
+        border-color: #2a3846;
+    }
+}
+
+    html[data-theme="dark"] .info-area,
+    html[data-theme="dark"] .price-area,
+    html[data-theme="dark"] .course-area,
+    html[data-theme="dark"] .testomial-area:not(#reviews) {
+        background: #111820;
+        color: #d8e0e8;
+    }
+
+    html[data-theme="dark"] .info-area .info-content,
+    html[data-theme="dark"] .info-area .info-content:after,
+    html[data-theme="dark"] .single-price,
+    html[data-theme="dark"] .single-price .price-top,
+    html[data-theme="dark"] .single-price .price-bottom,
+    html[data-theme="dark"] .single-testimonial,
+    html[data-theme="dark"] .institutional-record-card,
+    html[data-theme="dark"] #mMediaCarousel .card,
+    html[data-theme="dark"] .modal-content,
+    html[data-theme="dark"] .content-modal .modal-content {
+        background: #17212b;
+        border-color: #2a3846;
+        color: #d8e0e8;
+        box-shadow: none;
+    }
+
+    html[data-theme="dark"] .single-price .price-top {
+        background: #202a35;
+    }
+
+    html[data-theme="dark"] .single-price p {
+        background: #17212b;
+        color: #c6d0da;
+    }
+
+    html[data-theme="dark"] .single-price .price-bottom {
+        background: #111820;
+    }
+
+    html[data-theme="dark"] .signature {
+        filter: invert(1) brightness(1.7);
+    }
+
+    html[data-theme="dark"] .info-area .info-content h1,
+    html[data-theme="dark"] .info-area .info-content h2,
+    html[data-theme="dark"] .info-area .info-content h3,
+    html[data-theme="dark"] .info-area .info-content .meta,
+    html[data-theme="dark"] .price-area h1,
+    html[data-theme="dark"] .price-area h2,
+    html[data-theme="dark"] .price-area h3,
+    html[data-theme="dark"] .price-area .h1,
+    html[data-theme="dark"] .price-area .h2,
+    html[data-theme="dark"] .price-area .h3,
+    html[data-theme="dark"] .price-area h4,
+    html[data-theme="dark"] .price-area small,
+    html[data-theme="dark"] .course-area h1,
+    html[data-theme="dark"] .course-area h2,
+    html[data-theme="dark"] .course-area h3,
+    html[data-theme="dark"] .course-area .h1,
+    html[data-theme="dark"] .course-area .h2,
+    html[data-theme="dark"] .course-area .h3,
+    html[data-theme="dark"] .testomial-area:not(#reviews) h1,
+    html[data-theme="dark"] .testomial-area:not(#reviews) h2,
+    html[data-theme="dark"] .testomial-area:not(#reviews) h3,
+    html[data-theme="dark"] .testomial-area:not(#reviews) .h1,
+    html[data-theme="dark"] .testomial-area:not(#reviews) .h2,
+    html[data-theme="dark"] .testomial-area:not(#reviews) .h3,
+    html[data-theme="dark"] .institutional-records-heading h2,
+    html[data-theme="dark"] .institutional-record-card h3,
+    html[data-theme="dark"] .content-modal-title-link,
+    html[data-theme="dark"] .content-modal-title-link:hover,
+    html[data-theme="dark"] .content-modal-title-link:focus,
+    html[data-theme="dark"] #mMediaCarousel .card-text,
+    html[data-theme="dark"] .modal-title,
+    html[data-theme="dark"] .content-modal-title,
+    html[data-theme="dark"] .multi-column-list,
+    html[data-theme="dark"] .multi-column-list li {
+        color: #f2f6f9;
+    }
+
+    html[data-theme="dark"] .single-price .price-bottom,
+    html[data-theme="dark"] .institutional-record-title,
+    html[data-theme="dark"] .institutional-record-date,
+    html[data-theme="dark"] .single-testimonial .desc,
+    html[data-theme="dark"] .content-modal-list {
+        color: #c6d0da;
+    }
+
+    html[data-theme="dark"] .single-price .price-top,
+    html[data-theme="dark"] .single-price .price-bottom,
+    html[data-theme="dark"] .single-testimonial,
+    html[data-theme="dark"] .institutional-record-card,
+    html[data-theme="dark"] #mMediaCarousel .card,
+    html[data-theme="dark"] .content-modal-list li {
+        border-color: #2a3846;
+    }
+
+    html[data-theme="dark"] .availability-countdown {
+        color: #d8e0e8;
+    }
+
+    html[data-theme="dark"] .availability-countdown-timer span {
+        background: #0f151c;
+        box-shadow: none;
+    }
+
+    html[data-theme="dark"] .single-price .eBPrice {
+        background: linear-gradient(90deg, #29b6f6 0%, #01579b 100%);
+        border-color: transparent;
+    }
+
+    html[data-theme="dark"] .single-price .eBPriceR {
+        background: linear-gradient(90deg, #ffc107 0%, #6E5415 100%);
+        border-color: transparent;
+    }
+
+    html[data-theme="dark"] .single-price .eBPriceX {
+        background: linear-gradient(90deg, #EF9A9A 0%, #990000 100%);
+        border-color: transparent;
+    }
+
+    html[data-theme="dark"] .course-area .leaflet-tile {
+        filter: brightness(0.72) invert(1) contrast(1.05) hue-rotate(180deg) saturate(0.75);
+    }
+
+    html[data-theme="dark"] .course-area .leaflet-popup-content-wrapper,
+    html[data-theme="dark"] .course-area .leaflet-popup-tip {
+        background: #17212b;
+        color: #f2f6f9;
+    }
+
+    html[data-theme="dark"] #reviews {
+        background: #111820;
+    }
+
+    html[data-theme="dark"] #aReviews {
+        filter: invert(1);
+    }
+
+    html[data-theme="dark"] .modal .btn-close {
+        filter: invert(1) grayscale(1) brightness(1.8);
+    }
+
+    html[data-theme="dark"] #mMediaCarousel a.text-dark {
+        color: #f2f6f9 !important;
+    }
+
+    html[data-theme="dark"] .price-area .carousel-control-prev,
+    html[data-theme="dark"] .price-area .carousel-control-next,
+    html[data-theme="dark"] .course-area .carousel-control-prev,
+    html[data-theme="dark"] .course-area .carousel-control-next,
+    html[data-theme="dark"] .testomial-area:not(#reviews) .carousel-control-prev,
+    html[data-theme="dark"] .testomial-area:not(#reviews) .carousel-control-next {
+        border-color: #2a3846;
+    }
