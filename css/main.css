@@ -4196,3 +4196,35 @@ h6 {
     html[data-theme="dark"] .testomial-area:not(#reviews) .carousel-control-next {
         border-color: #2a3846;
     }
+
+@media (prefers-color-scheme: dark) {
+    html:not([data-theme="light"]) #mContactUs .modal-content,
+    html:not([data-theme="light"]) #mContactUs .modal-header,
+    html:not([data-theme="light"]) #mContactUs .modal-body {
+        background: #fff;
+        color: #212529;
+    }
+
+    html:not([data-theme="light"]) #mContactUs .modal-content {
+        border-color: rgba(0, 0, 0, 0.2);
+    }
+
+    html:not([data-theme="light"]) #mContactUs .btn-close {
+        filter: none;
+    }
+}
+
+html[data-theme="dark"] #mContactUs .modal-content,
+html[data-theme="dark"] #mContactUs .modal-header,
+html[data-theme="dark"] #mContactUs .modal-body {
+    background: #fff;
+    color: #212529;
+}
+
+html[data-theme="dark"] #mContactUs .modal-content {
+    border-color: rgba(0, 0, 0, 0.2);
+}
+
+html[data-theme="dark"] #mContactUs .btn-close {
+    filter: none;
+}
