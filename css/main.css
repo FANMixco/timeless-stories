@@ -2765,7 +2765,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 
     .single-price {
         max-width: 360px;
-        height: 100%;
+        height: auto;
         margin-right: auto;
         margin-left: auto;
     }
