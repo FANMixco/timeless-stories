@@ -26,7 +26,7 @@
     "old0": "Avez-vous manqué les volumes précédents ?",
     "prezi1": "Êtes-vous un parent bilingue ? (en espagnol)",
     "prezi2": "Souhaitez-vous commencer à partager vos origines avec vos enfants en mode bilingue (français et espagnol) ?",
-    "prezi3": "Alors <b>Légendes Éternelles d’El Salvador, édition pour enfants</b> est <b>fait pour VOUS !</b>",
+    "prezi3": "Alors <span class=\"text-primary fw-bolder\">Légendes Éternelles d’El Salvador, édition pour enfants</span> est <span class=\"text-primary fw-bolder\">fait pour VOUS !</span>",
     "footer1": "À propos",
     "footer2": "Légendes Éternelles est une série de livres consacrée aux légendes et contes d’El Salvador, d'Espagne et de la culture hispanique.",
     "footer3": "Suivez-moi",

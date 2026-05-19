@@ -1041,7 +1041,6 @@ th {
     font-size: 24px;
 }
 
-b,
 sup,
 sub,
 u,
@@ -3983,6 +3982,20 @@ h6 {
         border-color: #2a3846;
     }
 
+    html:not([data-theme="light"]) .institutional-record-link {
+        color: #fff;
+        border-color: #4b82dc;
+        background: #2f6fd6;
+        box-shadow: 0 8px 18px rgba(47, 111, 214, 0.22);
+    }
+
+    html:not([data-theme="light"]) .institutional-record-link:hover,
+    html:not([data-theme="light"]) .institutional-record-link:focus {
+        color: #07111d;
+        border-color: #8ec4ff;
+        background: #8ec4ff;
+    }
+
     html:not([data-theme="light"]) .availability-countdown {
         color: #d8e0e8;
     }
@@ -4136,6 +4149,20 @@ h6 {
     html[data-theme="dark"] #mMediaCarousel .card,
     html[data-theme="dark"] .content-modal-list li {
         border-color: #2a3846;
+    }
+
+    html[data-theme="dark"] .institutional-record-link {
+        color: #fff;
+        border-color: #4b82dc;
+        background: #2f6fd6;
+        box-shadow: 0 8px 18px rgba(47, 111, 214, 0.22);
+    }
+
+    html[data-theme="dark"] .institutional-record-link:hover,
+    html[data-theme="dark"] .institutional-record-link:focus {
+        color: #07111d;
+        border-color: #8ec4ff;
+        background: #8ec4ff;
     }
 
     html[data-theme="dark"] .availability-countdown {
