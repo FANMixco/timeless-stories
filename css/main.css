@@ -4228,3 +4228,47 @@ html[data-theme="dark"] #mContactUs .modal-content {
 html[data-theme="dark"] #mContactUs .btn-close {
     filter: none;
 }
+
+@media (hover: hover) and (prefers-color-scheme: dark) {
+    html:not([data-theme="light"]) .single-price:hover .price-bottom {
+        background: linear-gradient(90deg, #29b6f6 0%, #01579b 100%);
+    }
+
+    html:not([data-theme="light"]) .single-price:hover .price-bottom-r {
+        background: linear-gradient(90deg, #ffc107 0%, #6E5415 100%) !important;
+    }
+
+    html:not([data-theme="light"]) .single-price:hover .price-bottom-x {
+        background: linear-gradient(90deg, #EF9A9A 0%, #990000 100%) !important;
+    }
+
+    html:not([data-theme="light"]) .single-price:hover .price-bottom .h1 {
+        color: #fff;
+    }
+
+    html:not([data-theme="light"]) .single-price:hover .primary-btn {
+        background-color: #002f6c;
+    }
+}
+
+@media (hover: hover) {
+    html[data-theme="dark"] .single-price:hover .price-bottom {
+        background: linear-gradient(90deg, #29b6f6 0%, #01579b 100%);
+    }
+
+    html[data-theme="dark"] .single-price:hover .price-bottom-r {
+        background: linear-gradient(90deg, #ffc107 0%, #6E5415 100%) !important;
+    }
+
+    html[data-theme="dark"] .single-price:hover .price-bottom-x {
+        background: linear-gradient(90deg, #EF9A9A 0%, #990000 100%) !important;
+    }
+
+    html[data-theme="dark"] .single-price:hover .price-bottom .h1 {
+        color: #fff;
+    }
+
+    html[data-theme="dark"] .single-price:hover .primary-btn {
+        background-color: #002f6c;
+    }
+}
