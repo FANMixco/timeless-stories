@@ -674,14 +674,6 @@ Promise.all([
     document.title = translations.title;
     updateLocalizedBookCover(lang);
     renderSpecialGreetings();
-    if (lang === "es") {
-      document
-        .getElementById("menuContactMe")
-        .setAttribute(
-          "href",
-          getLinkValue("shared.contact.spanishContactForm"),
-        );
-    }
 
     setDeferredFrameSource(
       "bookPreviewFrame",
