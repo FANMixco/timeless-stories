@@ -2452,14 +2452,34 @@ h6,
 }
 
 #logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
     flex-shrink: 0;
     flex-grow: 0;
+    color: #fff;
+    line-height: 1;
+    white-space: nowrap;
 }
 
-#logo img {
+#logo:hover,
+#logo:focus {
+    color: #fff;
+}
+
+#logo .logo-mark {
     display: block;
+    width: 32px;
+    height: 32px;
     padding: 0;
     margin: 0;
+}
+
+#logo .logo-title {
+    color: #fff;
+    font-family: "Brush Script MT", "Segoe Script", cursive;
+    font-size: 31px;
+    font-weight: 400;
 }
 
 #header #logo h1 a {
@@ -2480,6 +2500,10 @@ h6,
 
     #header #logo img {
         max-height: 40px;
+    }
+
+    #logo .logo-title {
+        font-size: 28px;
     }
 }
 
@@ -3695,10 +3719,6 @@ h6 {
 
 .footer-txt {
     color: white;
-}
-
-.img-logo {
-    width: 130px;
 }
 
 .yVideo {
