@@ -2773,21 +2773,6 @@ body.mobile-nav-active #mobile-nav-toggle {
         display: none;
     }
 
-    #header .nav-link {
-        font-size: 1.15rem !important;
-        line-height: 1.5;
-        padding: 0.7rem 0 !important;
-    }
-
-    #navbarMenu {
-        padding-top: 0.75rem;
-        padding-left: 1.2rem;
-    }
-
-    #navbarMenu .navbar-nav {
-        align-items: flex-start;
-    }
-
     .banner-area .fullscreen {
         height: auto !important;
         min-height: auto;
@@ -2856,6 +2841,23 @@ body.mobile-nav-active #mobile-nav-toggle {
 
     .institutional-record-card {
         min-height: 270px;
+    }
+}
+
+@media (max-width: 1199.98px) {
+    #header .nav-link {
+        font-size: 1.15rem !important;
+        line-height: 1.5;
+        padding: 0.7rem 0 !important;
+    }
+
+    #navbarMenu {
+        padding-top: 0.75rem;
+        padding-left: 1.2rem;
+    }
+
+    #navbarMenu .navbar-nav {
+        align-items: flex-start;
     }
 }
 
