@@ -3996,6 +3996,39 @@ h6 {
         background: #8ec4ff;
     }
 
+    html:not([data-theme="light"]) .buttons,
+    html:not([data-theme="light"]) .book-card .card,
+    html:not([data-theme="light"]) .cultural-card {
+        background: #17212b;
+        border-color: #2a3846;
+        color: #f2f6f9;
+        box-shadow: none;
+    }
+
+    html:not([data-theme="light"]) .buttons:hover,
+    html:not([data-theme="light"]) .book-card:hover .card,
+    html:not([data-theme="light"]) .cultural-card:hover {
+        border-color: #75b7ff;
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22);
+    }
+
+    html:not([data-theme="light"]) .buttons i,
+    html:not([data-theme="light"]) .book-card i {
+        color: #8ec4ff;
+    }
+
+    html:not([data-theme="light"]) .buttons p,
+    html:not([data-theme="light"]) .buttons p span,
+    html:not([data-theme="light"]) .buttons a,
+    html:not([data-theme="light"]) .book-card p,
+    html:not([data-theme="light"]) .cultural-card h3 {
+        color: #f2f6f9;
+    }
+
+    html:not([data-theme="light"]) .cultural-card p {
+        color: #c6d0da;
+    }
+
     html:not([data-theme="light"]) .availability-countdown {
         color: #d8e0e8;
     }
@@ -4163,6 +4196,39 @@ h6 {
         color: #07111d;
         border-color: #8ec4ff;
         background: #8ec4ff;
+    }
+
+    html[data-theme="dark"] .buttons,
+    html[data-theme="dark"] .book-card .card,
+    html[data-theme="dark"] .cultural-card {
+        background: #17212b;
+        border-color: #2a3846;
+        color: #f2f6f9;
+        box-shadow: none;
+    }
+
+    html[data-theme="dark"] .buttons:hover,
+    html[data-theme="dark"] .book-card:hover .card,
+    html[data-theme="dark"] .cultural-card:hover {
+        border-color: #75b7ff;
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22);
+    }
+
+    html[data-theme="dark"] .buttons i,
+    html[data-theme="dark"] .book-card i {
+        color: #8ec4ff;
+    }
+
+    html[data-theme="dark"] .buttons p,
+    html[data-theme="dark"] .buttons p span,
+    html[data-theme="dark"] .buttons a,
+    html[data-theme="dark"] .book-card p,
+    html[data-theme="dark"] .cultural-card h3 {
+        color: #f2f6f9;
+    }
+
+    html[data-theme="dark"] .cultural-card p {
+        color: #c6d0da;
     }
 
     html[data-theme="dark"] .availability-countdown {
