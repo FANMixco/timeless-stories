@@ -129,10 +129,107 @@ async function listFiles() {
   return { languages, data };
 }
 
+function previewValue(value) {
+  if (value && typeof value === "object") {
+    return Array.isArray(value) ? `Array - ${value.length} items` : `Object - ${Object.keys(value).length} items`;
+  }
+
+  return String(value ?? "");
+}
+
+function searchJson(value, query, path = [], results = []) {
+  const lowerQuery = query.toLowerCase();
+  const pathText = path.join(".");
+  const pathMatches = pathText.toLowerCase().includes(lowerQuery);
+  const valueText = previewValue(value);
+  const valueMatches = valueText.toLowerCase().includes(lowerQuery);
+
+  if (path.length && (pathMatches || valueMatches)) {
+    results.push({
+      path,
+      pathText,
+      value: valueText.length > 160 ? `${valueText.slice(0, 157)}...` : valueText,
+      match: pathMatches ? "key" : "value",
+    });
+  }
+
+  if (value && typeof value === "object") {
+    for (const [key, child] of Object.entries(value)) {
+      searchJson(child, query, [...path, key], results);
+    }
+  }
+
+  return results;
+}
+
+async function searchFile(query, target) {
+  const file = sourceFileFor(target);
+  const json = await readJsonFile(file);
+  const descriptor = target.type === "i18n"
+    ? { type: "i18n", lang: ensureLanguage(target.lang), file: `lang-${ensureLanguage(target.lang)}.json` }
+    : { type: "data", file: ensureDataFile(target.file) };
+
+  return searchJson(json, query).map((match) => ({
+    ...match,
+    ...descriptor,
+    sourcePath: relative(rootDir, file).replaceAll("\\", "/"),
+  }));
+}
+
+async function searchFiles(query, target = {}) {
+  const trimmed = query.trim();
+  if (trimmed.length < 2) return [];
+
+  if (!target.all && target.type) {
+    return (await searchFile(trimmed, target)).slice(0, 80);
+  }
+
+  const matches = [];
+  for (const language of (await listFiles()).languages) {
+    const file = resolve(i18nDir, language.file);
+    const json = await readJsonFile(file);
+    matches.push(
+      ...searchJson(json, trimmed).map((match) => ({
+        ...match,
+        type: "i18n",
+        lang: language.lang,
+        file: language.file,
+        sourcePath: relative(rootDir, file).replaceAll("\\", "/"),
+      })),
+    );
+  }
+
+  for (const dataFile of (await listFiles()).data) {
+    const file = resolve(dataDir, dataFile.file);
+    const json = await readJsonFile(file);
+    matches.push(
+      ...searchJson(json, trimmed).map((match) => ({
+        ...match,
+        type: "data",
+        file: dataFile.file,
+        sourcePath: relative(rootDir, file).replaceAll("\\", "/"),
+      })),
+    );
+  }
+
+  return matches.slice(0, 80);
+}
+
 async function handleApi(request, response, url) {
   try {
     if (request.method === "GET" && url.pathname === "/api/files") {
       return sendJson(response, 200, await listFiles());
+    }
+
+    if (request.method === "GET" && url.pathname === "/api/search") {
+      return sendJson(response, 200, {
+        results: await searchFiles(url.searchParams.get("q") || "", {
+          all: url.searchParams.get("all") === "1",
+          type: url.searchParams.get("type"),
+          lang: url.searchParams.get("lang"),
+          file: url.searchParams.get("file"),
+        }),
+      });
     }
 
     if (request.method === "GET" && url.pathname === "/api/file") {

@@ -4,6 +4,7 @@ const state = {
   json: null,
   path: [],
   inlineSelections: {},
+  activeSearchPath: null,
   dirty: false,
 };
 
@@ -21,6 +22,9 @@ const els = {
   fieldList: document.getElementById("fieldList"),
   addEventButton: document.getElementById("addEventButton"),
   addFieldButton: document.getElementById("addFieldButton"),
+  searchInput: document.getElementById("searchInput"),
+  searchAllFiles: document.getElementById("searchAllFiles"),
+  searchResults: document.getElementById("searchResults"),
   rawButton: document.getElementById("rawButton"),
   validateButton: document.getElementById("validateButton"),
   minifyButton: document.getElementById("minifyButton"),
@@ -61,6 +65,27 @@ function pathLabel(path) {
   }, "");
 }
 
+function pathsEqual(left, right) {
+  if (!left || !right || left.length !== right.length) return false;
+  return left.every((part, index) => String(part) === String(right[index]));
+}
+
+function markSearchHit(element, path) {
+  if (!pathsEqual(path, state.activeSearchPath)) return;
+  element.classList.add("search-hit");
+  element.dataset.searchHit = "true";
+}
+
+function scrollToSearchHit() {
+  requestAnimationFrame(() => {
+    const hit = document.querySelector("[data-search-hit='true']");
+    if (!hit) return;
+    hit.scrollIntoView({ behavior: "smooth", block: "center" });
+    const focusable = hit.querySelector("input, textarea, select, button");
+    if (focusable) focusable.focus({ preventScroll: true });
+  });
+}
+
 function selectionKey(path) {
   return path.map(String).join(".");
 }
@@ -92,6 +117,26 @@ function setSelectedOption(path, selected) {
   state.inlineSelections[selectionKey(path)] = String(selected);
 }
 
+function findCollectionJump(path) {
+  for (let index = path.length - 2; index >= 0; index -= 1) {
+    const parentPath = path.slice(0, index + 1);
+    const parent = parentPath.reduce((value, key) => value?.[key], state.json);
+    const selected = path[index + 1];
+    if (parent && typeof parent === "object" && Object.prototype.hasOwnProperty.call(parent, selected)) {
+      const selectedValue = parent[selected];
+      if (selectedValue && typeof selectedValue === "object") {
+        return {
+          editorPath: parentPath.slice(0, -1),
+          selectionPath: parentPath,
+          selected,
+        };
+      }
+    }
+  }
+
+  return { editorPath: path.slice(0, -1), selectionPath: null, selected: null };
+}
+
 function setDirty(value) {
   state.dirty = value;
   els.saveButton.disabled = !state.current || !state.dirty;
@@ -103,6 +148,14 @@ function toast(message, isError = false) {
   els.toast.classList.add("visible");
   clearTimeout(toast.timer);
   toast.timer = setTimeout(() => els.toast.classList.remove("visible"), 3200);
+}
+
+function debounce(fn, wait) {
+  let timer;
+  return (...args) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => fn(...args), wait);
+  };
 }
 
 function itemCount(value) {
@@ -336,6 +389,7 @@ function createSelectedValueEditor(collection, selected, childPath) {
   if (!selectedValue || typeof selectedValue !== "object") {
     const row = document.createElement("div");
     row.className = "nested-field-row";
+    markSearchHit(row, childPath);
 
     const keyBlock = document.createElement("div");
     keyBlock.className = "field-key";
@@ -360,12 +414,14 @@ function createSelectedValueEditor(collection, selected, childPath) {
   }
 
   for (const [childKey, childValue] of entries) {
+    const rowPath = [...childPath, childKey];
     const row = document.createElement("div");
     row.className = "nested-field-row";
+    markSearchHit(row, rowPath);
 
     const keyBlock = document.createElement("div");
     keyBlock.className = "field-key";
-    keyBlock.innerHTML = `<strong>${childKey}</strong><small>${pathLabel([...childPath, childKey])}</small>`;
+    keyBlock.innerHTML = `<strong>${childKey}</strong><small>${pathLabel(rowPath)}</small>`;
 
     const valueBlock = document.createElement("div");
     valueBlock.className = "field-value";
@@ -394,12 +450,14 @@ function createDirectObjectEditor(objectValue, childPath) {
   container.append(title);
 
   for (const [childKey, childValue] of Object.entries(objectValue)) {
+    const rowPath = [...childPath, childKey];
     const row = document.createElement("div");
     row.className = "nested-field-row";
+    markSearchHit(row, rowPath);
 
     const keyBlock = document.createElement("div");
     keyBlock.className = "field-key";
-    keyBlock.innerHTML = `<strong>${childKey}</strong><small>${pathLabel([...childPath, childKey])}</small>`;
+    keyBlock.innerHTML = `<strong>${childKey}</strong><small>${pathLabel(rowPath)}</small>`;
 
     const valueBlock = document.createElement("div");
     valueBlock.className = "field-value";
@@ -540,14 +598,16 @@ function renderEditor() {
   }
 
   for (const [key, value] of entries) {
+    const rowPath = state.path.concat(key);
     const row = document.createElement("div");
     row.className = "field-row";
+    markSearchHit(row, rowPath);
 
     const keyBlock = document.createElement("div");
     keyBlock.className = "field-key";
 
     if (Array.isArray(node)) {
-      keyBlock.innerHTML = `<strong>${key}</strong><small>${state.path.concat(key).join(".")}</small>`;
+      keyBlock.innerHTML = `<strong>${key}</strong><small>${pathLabel(rowPath)}</small>`;
     } else {
       const keyInput = document.createElement("input");
       keyInput.value = key;
@@ -555,7 +615,7 @@ function renderEditor() {
       keyInput.addEventListener("change", () => updateObjectKey(node, key, keyInput.value.trim()));
       keyBlock.append(keyInput);
       const small = document.createElement("small");
-      small.textContent = state.path.concat(key).join(".");
+      small.textContent = pathLabel(rowPath);
       keyBlock.append(small);
     }
 
@@ -589,14 +649,87 @@ async function loadFile(target) {
 
   const params = new URLSearchParams(target);
   const result = await api(`/api/file?${params.toString()}`);
+  const changedFile = JSON.stringify(state.current) !== JSON.stringify(target);
   state.current = target;
   state.json = result.json;
   state.path = target.type === "i18n" && result.json.translations ? ["translations"] : [];
+  if (changedFile) clearSearch();
   setDirty(false);
   renderSidebar();
   renderHeader(result);
   renderEditor();
 }
+
+async function jumpToResult(result) {
+  const target = result.type === "i18n"
+    ? { type: "i18n", lang: result.lang }
+    : { type: "data", file: result.file };
+  await loadFile(target);
+
+  const jump = findCollectionJump(result.path || []);
+  state.activeSearchPath = result.path || null;
+  state.path = jump.editorPath;
+  if (jump.selectionPath && jump.selected !== null) setSelectedOption(jump.selectionPath, jump.selected);
+  renderEditor();
+  scrollToSearchHit();
+  els.searchResults.hidden = true;
+  toast(`Found ${result.pathText}.`);
+}
+
+function renderSearchResults(results, query) {
+  els.searchResults.innerHTML = "";
+  if (!query.trim()) {
+    els.searchResults.hidden = true;
+    return;
+  }
+
+  els.searchResults.hidden = false;
+  if (!results.length) {
+    els.searchResults.innerHTML = '<div class="search-empty">No matches</div>';
+    return;
+  }
+
+  for (const result of results) {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "search-result";
+    button.innerHTML = `
+      <strong>${result.file}</strong>
+      <span>${result.pathText}</span>
+      <small>${result.value}</small>
+    `;
+    button.addEventListener("click", () => jumpToResult(result));
+    els.searchResults.append(button);
+  }
+}
+
+function clearSearch() {
+  els.searchInput.value = "";
+  els.searchResults.innerHTML = "";
+  els.searchResults.hidden = true;
+  state.activeSearchPath = null;
+}
+
+const runSearch = debounce(async () => {
+  const query = els.searchInput.value.trim();
+  if (query.length < 2) {
+    renderSearchResults([], "");
+    return;
+  }
+
+  try {
+    const params = new URLSearchParams({ q: query });
+    if (els.searchAllFiles.checked || !state.current) {
+      params.set("all", "1");
+    } else {
+      Object.entries(state.current).forEach(([key, value]) => params.set(key, value));
+    }
+    const response = await api(`/api/search?${params}`);
+    renderSearchResults(response.results, query);
+  } catch (error) {
+    toast(error.message, true);
+  }
+}, 180);
 
 function currentPayload(extra = {}) {
   return JSON.stringify({ ...state.current, json: state.json, ...extra });
@@ -651,6 +784,17 @@ function addEvent() {
 }
 
 els.refreshButton.addEventListener("click", () => refreshFiles().then(() => toast("File list refreshed.")));
+els.searchInput.addEventListener("input", runSearch);
+els.searchAllFiles.addEventListener("change", runSearch);
+els.searchInput.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") {
+    els.searchInput.value = "";
+    els.searchResults.hidden = true;
+  }
+});
+document.addEventListener("click", (event) => {
+  if (!event.target.closest(".search")) els.searchResults.hidden = true;
+});
 
 els.languageForm.addEventListener("submit", async (event) => {
   event.preventDefault();

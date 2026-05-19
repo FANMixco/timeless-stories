@@ -41,6 +41,14 @@
           <p id="filePath">js/i18n or js/data</p>
         </div>
         <div class="actions">
+          <div class="search">
+            <input id="searchInput" placeholder="Search keys or values" aria-label="Search keys or values">
+            <label class="search-scope">
+              <input id="searchAllFiles" type="checkbox">
+              <span>All files</span>
+            </label>
+            <div class="search-results" id="searchResults" hidden></div>
+          </div>
           <button id="rawButton" type="button">Raw JSON</button>
           <button id="validateButton" type="button">Validate</button>
           <button id="minifyButton" type="button">Minify current</button>
