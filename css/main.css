@@ -4006,8 +4006,7 @@ h6 {
     }
 
     html:not([data-theme="light"]) .buttons:hover,
-    html:not([data-theme="light"]) .book-card:hover .card,
-    html:not([data-theme="light"]) .cultural-card:hover {
+    html:not([data-theme="light"]) .book-card:hover .card {
         border-color: #75b7ff;
         box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22);
     }
@@ -4208,8 +4207,7 @@ h6 {
     }
 
     html[data-theme="dark"] .buttons:hover,
-    html[data-theme="dark"] .book-card:hover .card,
-    html[data-theme="dark"] .cultural-card:hover {
+    html[data-theme="dark"] .book-card:hover .card {
         border-color: #75b7ff;
         box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22);
     }
