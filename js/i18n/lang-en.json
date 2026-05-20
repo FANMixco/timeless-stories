@@ -410,7 +410,9 @@
         }
       ],
       "winTitle": "Congratulations!",
-      "playAgain": "Play again"
+      "playAgain": "Play again",
+      "getCopy": "Get a copy of the book",
+      "getCopyHref": "carouselCards.ebook"
     }
   }
 }

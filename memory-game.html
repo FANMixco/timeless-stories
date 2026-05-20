@@ -303,6 +303,30 @@
         line-height: 1.4;
       }
 
+      .win-actions {
+        display: grid;
+        gap: 10px;
+      }
+
+      .win-actions .game-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        text-decoration: none;
+      }
+
+      #getCopyButton {
+        background: #f2c744;
+        color: #111820;
+        box-shadow: 0 8px 18px rgba(216, 155, 33, 0.22);
+      }
+
+      #getCopyButton:focus-visible {
+        outline: 3px solid var(--accent-dark);
+        outline-offset: 3px;
+      }
+
       .firework {
         position: absolute;
         width: 7px;
@@ -453,7 +477,10 @@
         <div class="win-card">
           <h2 id="winTitle"></h2>
           <p id="winMessage"></p>
-          <button class="game-button" type="button" id="playAgainButton"></button>
+          <div class="win-actions">
+            <button class="game-button" type="button" id="playAgainButton"></button>
+            <a class="game-button" id="getCopyButton" target="_blank" rel="noopener noreferrer"></a>
+          </div>
         </div>
       </aside>
     </main>
@@ -463,6 +490,8 @@
       const languageStorageKey = "timelessStoriesOfficialLanguage";
       const themeStorageKey = "timelessStoriesColorMode";
       const supportedThemes = ["system", "light", "dark"];
+      let linkRegistry = null;
+      let localizedLinks = null;
       const board = document.getElementById("board");
       const movesValue = document.getElementById("movesValue");
       const matchesValue = document.getElementById("matchesValue");
@@ -473,6 +502,7 @@
       const newGameButton = document.getElementById("newGameButton");
       const peekButton = document.getElementById("peekButton");
       const playAgainButton = document.getElementById("playAgainButton");
+      const getCopyButton = document.getElementById("getCopyButton");
       let memoryGame = { pairs: [] };
 
       let firstCard = null;
@@ -522,18 +552,62 @@
         return supportedLanguages.includes(browserLanguage) ? browserLanguage : "en";
       }
 
+      function getTranslationValue(obj, path) {
+        return path.split(".").reduce((acc, part) => acc && acc[part], obj);
+      }
+
+      function mergeLinkConfig(defaults, overrides = {}) {
+        const merged = { ...defaults };
+
+        Object.entries(overrides || {}).forEach(([key, value]) => {
+          const defaultValue = merged[key];
+          const shouldMerge =
+            value &&
+            typeof value === "object" &&
+            !Array.isArray(value) &&
+            defaultValue &&
+            typeof defaultValue === "object" &&
+            !Array.isArray(defaultValue);
+
+          merged[key] = shouldMerge ? mergeLinkConfig(defaultValue, value) : value;
+        });
+
+        return merged;
+      }
+
+      function resolveGameHref(href) {
+        if (!href) {
+          return "";
+        }
+
+        if (/^https?:\/\//i.test(href)) {
+          return href;
+        }
+
+        return getTranslationValue(localizedLinks, href) || "";
+      }
+
       async function loadTranslations() {
         const language = getLanguage();
         document.documentElement.lang = language;
 
         try {
-          const response = await fetch(`js/i18n/lang-${language}.json`);
-          const data = await response.json();
+          const [translationResponse, linksResponse] = await Promise.all([
+            fetch(`js/i18n/lang-${language}.json`),
+            fetch("js/data/links.min.json"),
+          ]);
+          const data = await translationResponse.json();
+          linkRegistry = await linksResponse.json();
+          localizedLinks = mergeLinkConfig(
+            linkRegistry.localized.default,
+            linkRegistry.localized[language],
+          );
           translations = data.translations;
           memoryGame = translations.memoryGame || { pairs: [] };
         } catch (error) {
           translations = { mapLegends: {}, memoryGame: { pairs: [] } };
           memoryGame = translations.memoryGame;
+          localizedLinks = {};
         }
       }
 
@@ -551,6 +625,8 @@
         newGameButton.textContent = memoryGame.newGame || "";
         peekButton.textContent = memoryGame.peek || "";
         playAgainButton.textContent = memoryGame.playAgain || "";
+        getCopyButton.textContent = memoryGame.getCopy || "";
+        getCopyButton.href = resolveGameHref(memoryGame.getCopyHref);
         winTitle.textContent = memoryGame.winTitle || "";
         document.querySelector(".status-grid").setAttribute("aria-label", memoryGame.statusLabel || "");
         setText('[data-ui-label="moves"]', memoryGame.moves);

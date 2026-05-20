@@ -404,7 +404,9 @@
         }
       ],
       "winTitle": "¡Felicidades!",
-      "playAgain": "Jugar de nuevo"
+      "playAgain": "Jugar de nuevo",
+      "getCopy": "Obtén una copia del libro",
+      "getCopyHref": "carouselCards.ebook"
     }
   }
 }

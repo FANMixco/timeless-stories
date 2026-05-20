@@ -410,7 +410,9 @@
         }
       ],
       "winTitle": "恭喜！",
-      "playAgain": "再玩一次"
+      "playAgain": "再玩一次",
+      "getCopy": "获取本书副本",
+      "getCopyHref": "carouselCards.ebook"
     }
   }
 }
