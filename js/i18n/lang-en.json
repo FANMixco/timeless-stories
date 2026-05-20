@@ -354,6 +354,61 @@
         "alt": "Embassy of El Salvador in Morocco"
       }
     ],
-    "mTitle": "Timeless Stories"
+    "mTitle": "Timeless Stories",
+    "memoryGame": {
+      "title": "Memory game",
+      "subtitle": "Find each mirror pair from Timeless Stories.",
+      "newGame": "New game",
+      "peek": "Peek",
+      "statusLabel": "Game status",
+      "moves": "Moves",
+      "matches": "Matches",
+      "time": "Time",
+      "boardLabel": "Memory cards",
+      "hiddenCard": "Hidden memory card",
+      "win": "You matched all {pairs} pairs in {moves} moves and {time}.",
+      "pairs": [
+        {
+          "source": "blackKnight",
+          "mirror": "caveOfSalamanca"
+        },
+        {
+          "source": "siguanaba",
+          "mirror": "midnightWasherwomen"
+        },
+        {
+          "source": "goodAndBadCadejo",
+          "mirror": "dip"
+        },
+        {
+          "source": "mulus",
+          "mirror": "urco"
+        },
+        {
+          "source": "funeralCortegeOfChalchuapa",
+          "mirror": "holyCompany"
+        },
+        {
+          "source": "fairJudgeOfTheNight",
+          "mirror": "gaueko"
+        },
+        {
+          "source": "weepingWoman",
+          "mirror": "ploranera"
+        },
+        {
+          "source": "headlessPriest",
+          "mirror": "ghostOfSanGines"
+        },
+        {
+          "source": "fleshlessWoman",
+          "mirror": "girlOnTheCurve"
+        },
+        {
+          "source": "dwarf",
+          "mirror": "trasgu"
+        }
+      ]
+    }
   }
 }

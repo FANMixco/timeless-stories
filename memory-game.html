@@ -1,0 +1,656 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title></title>
+    <style>
+      :root {
+        color-scheme: light;
+        --ink: #1f2937;
+        --muted: #5b6472;
+        --paper: #fffaf0;
+        --panel: #ffffff;
+        --line: #d9c7a5;
+        --accent: #0077b6;
+        --accent-dark: #01579b;
+        --gold: #d89b21;
+        --found: #12715b;
+        --shadow: 0 14px 36px rgba(31, 41, 55, 0.13);
+      }
+
+      html[data-theme="dark"] {
+        color-scheme: dark;
+        --ink: #f2f6f9;
+        --muted: #aebdca;
+        --paper: #111820;
+        --panel: #17212b;
+        --line: #2a3846;
+        --accent: #4aa8ff;
+        --accent-dark: #8ec4ff;
+        --gold: #f2bd4a;
+        --found: #8be0c5;
+        --shadow: 0 14px 30px rgba(0, 0, 0, 0.32);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        min-height: 100%;
+      }
+
+      body {
+        margin: 0;
+        background:
+          linear-gradient(135deg, rgba(0, 119, 182, 0.12), transparent 38%),
+          linear-gradient(315deg, rgba(216, 155, 33, 0.14), transparent 42%),
+          var(--paper);
+        color: var(--ink);
+        font-family: Poppins, Arial, Helvetica, sans-serif;
+      }
+
+      button {
+        font: inherit;
+      }
+
+      .game-shell {
+        width: min(100%, 900px);
+        margin: 0 auto;
+        padding: clamp(12px, 2.4vw, 22px);
+      }
+
+      .game-top {
+        display: grid;
+        gap: 12px;
+        grid-template-columns: 1fr;
+        align-items: end;
+        margin-bottom: 14px;
+      }
+
+      .game-title {
+        margin: 0;
+        font-size: clamp(1.35rem, 4vw, 2.15rem);
+        line-height: 1.1;
+        color: var(--accent-dark);
+      }
+
+      .game-subtitle {
+        margin: 6px 0 0;
+        color: var(--muted);
+        font-size: 0.95rem;
+        line-height: 1.45;
+      }
+
+      .game-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .game-button {
+        min-height: 42px;
+        border: 0;
+        border-radius: 8px;
+        padding: 10px 14px;
+        background: var(--accent);
+        color: #ffffff;
+        font-weight: 700;
+        cursor: pointer;
+        box-shadow: 0 8px 18px rgba(0, 119, 182, 0.22);
+      }
+
+      .game-button.secondary {
+        background: #ffffff;
+        color: var(--accent-dark);
+        border: 1px solid rgba(1, 87, 155, 0.24);
+        box-shadow: none;
+      }
+
+      .status-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+        margin-bottom: 12px;
+      }
+
+      .status-item {
+        min-width: 0;
+        padding: 10px;
+        background: rgba(255, 255, 255, 0.78);
+        border: 1px solid rgba(217, 199, 165, 0.9);
+        border-radius: 8px;
+      }
+
+      .status-label {
+        display: block;
+        color: var(--muted);
+        font-size: 0.76rem;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+
+      .status-value {
+        display: block;
+        margin-top: 3px;
+        color: var(--ink);
+        font-size: 1.08rem;
+        font-weight: 800;
+      }
+
+      .board {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: clamp(6px, 1.4vw, 10px);
+        width: 100%;
+        max-width: 760px;
+        margin: 0 auto;
+      }
+
+      .card {
+        position: relative;
+        min-width: 0;
+        aspect-ratio: 4 / 5;
+        height: auto;
+        border: 0;
+        border-radius: 8px;
+        padding: 0;
+        background: transparent;
+        cursor: pointer;
+        perspective: 800px;
+      }
+
+      .card:focus-visible {
+        outline: 3px solid var(--gold);
+        outline-offset: 3px;
+      }
+
+      .card-inner {
+        position: absolute;
+        inset: 0;
+        border-radius: 8px;
+        transform-style: preserve-3d;
+        transition: transform 180ms ease;
+        box-shadow: 0 10px 22px rgba(31, 41, 55, 0.18);
+      }
+
+      .card.is-flipped .card-inner,
+      .card.is-matched .card-inner {
+        transform: rotateY(180deg);
+      }
+
+      .card-face {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        border-radius: 8px;
+        backface-visibility: hidden;
+        overflow: hidden;
+      }
+
+      .card-back {
+        border: 2px solid rgba(255, 255, 255, 0.7);
+        background:
+          radial-gradient(circle at 50% 28%, rgba(255, 255, 255, 0.26), transparent 26%),
+          repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.12) 0 8px, transparent 8px 16px),
+          linear-gradient(145deg, rgba(1, 87, 155, 0.98), rgba(0, 119, 182, 0.92)),
+          #01579b;
+        color: #ffffff;
+      }
+
+      .card-back span {
+        width: clamp(30px, 8vw, 48px);
+        height: clamp(30px, 8vw, 48px);
+        display: grid;
+        place-items: center;
+        border: 2px solid rgba(255, 255, 255, 0.84);
+        border-radius: 50%;
+        font-weight: 800;
+        letter-spacing: 0;
+        box-shadow: inset 0 0 0 4px rgba(255, 255, 255, 0.12);
+      }
+
+      .card-front {
+        transform: rotateY(180deg);
+        border: 2px solid rgba(216, 155, 33, 0.34);
+        background:
+          linear-gradient(180deg, rgba(255, 250, 240, 0.55), transparent 45%),
+          var(--panel);
+        padding: clamp(5px, 1.4vw, 10px);
+        text-align: center;
+      }
+
+      .card.is-matched .card-front {
+        background: linear-gradient(145deg, #f4fff9, #ffffff);
+        border-color: rgba(18, 113, 91, 0.5);
+      }
+
+      .character-mark {
+        display: grid;
+        place-items: center;
+        width: clamp(34px, 7.6vw, 54px);
+        height: clamp(34px, 7.6vw, 54px);
+        border-radius: 50%;
+        background: rgba(216, 155, 33, 0.2);
+        color: var(--accent-dark);
+        font-weight: 900;
+        font-size: clamp(0.88rem, 3vw, 1.25rem);
+      }
+
+      .character-name {
+        width: 100%;
+        color: var(--ink);
+        font-size: clamp(0.66rem, 2.15vw, 0.96rem);
+        font-weight: 800;
+        line-height: 1.12;
+        overflow-wrap: anywhere;
+      }
+
+      .character-origin {
+        color: var(--muted);
+        font-size: clamp(0.56rem, 1.75vw, 0.76rem);
+        font-weight: 800;
+        line-height: 1;
+      }
+
+      .win-panel {
+        display: none;
+        margin: 14px 0 0;
+        padding: 12px;
+        border-radius: 8px;
+        background: #ffffff;
+        border: 1px solid rgba(18, 113, 91, 0.26);
+        color: var(--found);
+        font-weight: 800;
+        text-align: center;
+      }
+
+      .win-panel.is-visible {
+        display: block;
+      }
+
+      html[data-theme="dark"] .game-button.secondary,
+      html[data-theme="dark"] .status-item,
+      html[data-theme="dark"] .win-panel {
+        background: var(--panel);
+        border-color: var(--line);
+      }
+
+      html[data-theme="dark"] .card-front {
+        border-color: rgba(242, 189, 74, 0.36);
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.05), transparent 45%),
+          var(--panel);
+      }
+
+      html[data-theme="dark"] .card.is-matched .card-front {
+        background: linear-gradient(145deg, rgba(18, 113, 91, 0.28), var(--panel));
+        border-color: rgba(139, 224, 197, 0.58);
+      }
+
+      @media (min-width: 560px) {
+        .game-top {
+          grid-template-columns: 1fr auto;
+        }
+      }
+
+      @media (min-width: 820px) {
+        .game-shell {
+          padding: 22px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .card-inner {
+          transition: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="game-shell" aria-label="">
+      <section class="game-top">
+        <div>
+          <p class="game-subtitle"></p>
+        </div>
+        <div class="game-actions">
+          <button class="game-button" type="button" id="newGameButton"></button>
+          <button class="game-button secondary" type="button" id="peekButton"></button>
+        </div>
+      </section>
+
+      <section class="status-grid" aria-label="">
+        <div class="status-item">
+          <span class="status-label" data-ui-label="moves"></span>
+          <span class="status-value" id="movesValue">0</span>
+        </div>
+        <div class="status-item">
+          <span class="status-label" data-ui-label="matches"></span>
+          <span class="status-value" id="matchesValue">0/0</span>
+        </div>
+        <div class="status-item">
+          <span class="status-label" data-ui-label="time"></span>
+          <span class="status-value" id="timeValue">0:00</span>
+        </div>
+      </section>
+
+      <section class="board" id="board" aria-label=""></section>
+      <p class="win-panel" id="winPanel" role="status" aria-live="polite"></p>
+    </main>
+
+    <script>
+      const supportedLanguages = ["en", "es", "fr", "zh"];
+      const languageStorageKey = "timelessStoriesOfficialLanguage";
+      const themeStorageKey = "timelessStoriesColorMode";
+      const supportedThemes = ["system", "light", "dark"];
+      const board = document.getElementById("board");
+      const movesValue = document.getElementById("movesValue");
+      const matchesValue = document.getElementById("matchesValue");
+      const timeValue = document.getElementById("timeValue");
+      const winPanel = document.getElementById("winPanel");
+      const newGameButton = document.getElementById("newGameButton");
+      const peekButton = document.getElementById("peekButton");
+      let memoryGame = { pairs: [] };
+
+      let firstCard = null;
+      let secondCard = null;
+      let lockBoard = false;
+      let moves = 0;
+      let matches = 0;
+      let elapsedSeconds = 0;
+      let timer = null;
+      let translations = null;
+      let deck = [];
+
+      function getStoredTheme() {
+        try {
+          const storedTheme = window.localStorage.getItem(themeStorageKey);
+          return supportedThemes.includes(storedTheme) ? storedTheme : "system";
+        } catch (error) {
+          return "system";
+        }
+      }
+
+      function applyTheme() {
+        const theme = getStoredTheme();
+        const prefersDark = window.matchMedia?.("(prefers-color-scheme: dark)")?.matches;
+        document.documentElement.dataset.theme =
+          theme === "dark" || (theme === "system" && prefersDark) ? "dark" : "light";
+      }
+
+      function getStoredLanguage() {
+        try {
+          return window.localStorage.getItem(languageStorageKey);
+        } catch (error) {
+          return null;
+        }
+      }
+
+      function getLanguage() {
+        const storedLanguage = getStoredLanguage();
+        const browserLanguage = (
+          navigator.languages ? navigator.languages[0] : navigator.language || "en"
+        ).split("-")[0];
+
+        if (supportedLanguages.includes(storedLanguage)) {
+          return storedLanguage;
+        }
+
+        return supportedLanguages.includes(browserLanguage) ? browserLanguage : "en";
+      }
+
+      async function loadTranslations() {
+        const language = getLanguage();
+        document.documentElement.lang = language;
+
+        try {
+          const response = await fetch(`js/i18n/lang-${language}.json`);
+          const data = await response.json();
+          translations = data.translations;
+          memoryGame = translations.memoryGame || { pairs: [] };
+        } catch (error) {
+          translations = { mapLegends: {}, memoryGame: { pairs: [] } };
+          memoryGame = translations.memoryGame;
+        }
+      }
+
+      function setText(selector, value) {
+        const element = document.querySelector(selector);
+        if (element && value !== undefined) {
+          element.textContent = value;
+        }
+      }
+
+      function applyUiCopy() {
+        document.title = memoryGame.title || document.title;
+        document.querySelector(".game-shell").setAttribute("aria-label", memoryGame.title || "");
+        setText(".game-subtitle", memoryGame.subtitle);
+        newGameButton.textContent = memoryGame.newGame || "";
+        peekButton.textContent = memoryGame.peek || "";
+        document.querySelector(".status-grid").setAttribute("aria-label", memoryGame.statusLabel || "");
+        setText('[data-ui-label="moves"]', memoryGame.moves);
+        setText('[data-ui-label="matches"]', memoryGame.matches);
+        setText('[data-ui-label="time"]', memoryGame.time);
+        board.setAttribute("aria-label", memoryGame.boardLabel || "");
+      }
+
+      function getLegendName(key) {
+        return translations?.mapLegends?.[key]?.name || key;
+      }
+
+      function getOriginLabel(side) {
+        return side === "source"
+          ? translations?.country1 || ""
+          : translations?.country2 || "";
+      }
+
+      function getPairCount() {
+        return Array.isArray(memoryGame.pairs) ? memoryGame.pairs.length : 0;
+      }
+
+      function buildDeck() {
+        const pairs = Array.isArray(memoryGame.pairs) ? memoryGame.pairs : [];
+
+        return pairs.flatMap(({ source, mirror }, pairIndex) => [
+          {
+            key: source,
+            pairId: `pair-${pairIndex}`,
+            side: "source",
+            name: getLegendName(source),
+          },
+          {
+            key: mirror,
+            pairId: `pair-${pairIndex}`,
+            side: "mirror",
+            name: getLegendName(mirror),
+          },
+        ]);
+      }
+
+      function shuffle(items) {
+        const shuffled = [...items];
+        for (let i = shuffled.length - 1; i > 0; i -= 1) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        return shuffled;
+      }
+
+      function getInitials(name) {
+        return name
+          .replace(/^The /, "")
+          .split(" ")
+          .slice(0, 2)
+          .map((part) => part[0])
+          .join("")
+          .toUpperCase();
+      }
+
+      function formatTime(totalSeconds) {
+        const minutes = Math.floor(totalSeconds / 60);
+        const seconds = String(totalSeconds % 60).padStart(2, "0");
+        return `${minutes}:${seconds}`;
+      }
+
+      function updateStatus() {
+        movesValue.textContent = moves;
+        matchesValue.textContent = `${matches}/${getPairCount()}`;
+        timeValue.textContent = formatTime(elapsedSeconds);
+      }
+
+      function startTimer() {
+        if (timer) {
+          return;
+        }
+
+        timer = window.setInterval(() => {
+          elapsedSeconds += 1;
+          updateStatus();
+        }, 1000);
+      }
+
+      function stopTimer() {
+        if (!timer) {
+          return;
+        }
+
+        window.clearInterval(timer);
+        timer = null;
+      }
+
+      function createCard(character, index) {
+        const card = document.createElement("button");
+        card.className = "card";
+        card.type = "button";
+        card.dataset.pairId = character.pairId;
+        card.dataset.character = character.name;
+        card.setAttribute("aria-label", memoryGame.hiddenCard || "");
+
+        card.innerHTML = `
+          <span class="card-inner">
+            <span class="card-face card-back" aria-hidden="true">
+              <span>TS</span>
+            </span>
+            <span class="card-face card-front">
+              <span class="character-mark">${getInitials(character.name)}</span>
+              <span class="character-name">${character.name}</span>
+              <span class="character-origin">${getOriginLabel(character.side)}</span>
+            </span>
+          </span>
+        `;
+
+        card.addEventListener("click", () => flipCard(card));
+        card.dataset.index = index;
+        return card;
+      }
+
+      function resetTurn() {
+        firstCard = null;
+        secondCard = null;
+        lockBoard = false;
+      }
+
+      function hideOpenCards() {
+        firstCard.classList.remove("is-flipped");
+        secondCard.classList.remove("is-flipped");
+        firstCard.setAttribute("aria-label", memoryGame.hiddenCard || "");
+        secondCard.setAttribute("aria-label", memoryGame.hiddenCard || "");
+        resetTurn();
+      }
+
+      function markMatch() {
+        firstCard.classList.add("is-matched");
+        secondCard.classList.add("is-matched");
+        firstCard.disabled = true;
+        secondCard.disabled = true;
+        matches += 1;
+        updateStatus();
+
+        if (matches === getPairCount()) {
+          stopTimer();
+          winPanel.textContent = (memoryGame.win || "")
+            .replace("{pairs}", getPairCount())
+            .replace("{moves}", moves)
+            .replace("{time}", formatTime(elapsedSeconds));
+          winPanel.classList.add("is-visible");
+        }
+
+        resetTurn();
+      }
+
+      function flipCard(card) {
+        if (lockBoard || card === firstCard || card.classList.contains("is-matched")) {
+          return;
+        }
+
+        startTimer();
+        card.classList.add("is-flipped");
+        card.setAttribute("aria-label", card.dataset.character);
+
+        if (!firstCard) {
+          firstCard = card;
+          return;
+        }
+
+        secondCard = card;
+        lockBoard = true;
+        moves += 1;
+        updateStatus();
+
+        if (firstCard.dataset.pairId === secondCard.dataset.pairId) {
+          markMatch();
+          return;
+        }
+
+        window.setTimeout(hideOpenCards, 700);
+      }
+
+      function newGame() {
+        stopTimer();
+        firstCard = null;
+        secondCard = null;
+        lockBoard = false;
+        moves = 0;
+        matches = 0;
+        elapsedSeconds = 0;
+        winPanel.classList.remove("is-visible");
+        winPanel.textContent = "";
+        updateStatus();
+
+        deck = shuffle(buildDeck());
+        board.replaceChildren(...deck.map(createCard));
+      }
+
+      function peekCards() {
+        if (lockBoard) {
+          return;
+        }
+
+        const hiddenCards = [...board.querySelectorAll(".card:not(.is-matched)")];
+        hiddenCards.forEach((card) => card.classList.add("is-flipped"));
+        window.setTimeout(() => {
+          hiddenCards.forEach((card) => {
+            if (card !== firstCard && card !== secondCard) {
+              card.classList.remove("is-flipped");
+            }
+          });
+        }, 1200);
+      }
+
+      newGameButton.addEventListener("click", newGame);
+      peekButton.addEventListener("click", peekCards);
+      applyTheme();
+      window.matchMedia?.("(prefers-color-scheme: dark)")?.addEventListener("change", applyTheme);
+      loadTranslations().finally(() => {
+        applyUiCopy();
+        newGame();
+      });
+    </script>
+  </body>
+</html>

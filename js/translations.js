@@ -218,10 +218,36 @@ function resolveLocalizedHref(href) {
   return /^https?:\/\//i.test(href) ? href : getLocalizedLink(href);
 }
 
+function getMemoryGameLabel() {
+  return translations?.memoryGame?.title || "";
+}
+
 function getPreviousBooks() {
-  return Array.isArray(translations?.previousBooks)
+  const previousBooks = Array.isArray(translations?.previousBooks)
     ? translations.previousBooks
     : [];
+
+  return [
+    ...previousBooks,
+    {
+      title: `<span>${getMemoryGameLabel()}</span>`,
+      type: "memoryGame",
+    },
+  ];
+}
+
+function renderMemoryGameModalTitle() {
+  const modalTitle = document.getElementById("memoryGameModalTitle");
+  const modalFrame = document.querySelector("#memoryGameModal iframe");
+  const label = getMemoryGameLabel();
+
+  if (modalTitle) {
+    modalTitle.textContent = label;
+  }
+
+  if (modalFrame) {
+    modalFrame.title = label;
+  }
 }
 
 function getMassMediaCards() {
@@ -513,13 +539,19 @@ function renderBooksCarousel() {
         : currentItemsPerSlide === 2
           ? "col-12 col-md-6"
           : "col-12 col-md-4";
+    const isMemoryGameCard = card.type === "memoryGame";
+    const linkAttributes = isMemoryGameCard
+      ? `href="memory-game.html" data-bs-toggle="modal" data-bs-target="#memoryGameModal"`
+      : `href="${getLinkValue(card.href)}" target="_blank" rel="noopener noreferrer"`;
+    const iconClass = isMemoryGameCard ? "icon-gamepad" : "icon-download";
+    const extraClass = isMemoryGameCard ? " book-card-memory" : "";
 
     return `
     <div class="${colClass}">
-      <a class="book-card text-decoration-none d-block h-100" href="${getLinkValue(card.href)}" target="_blank" rel="noopener noreferrer">
+      <a class="book-card${extraClass} text-decoration-none d-block h-100" ${linkAttributes}>
         <div class="card h-100 text-center shadow-sm border-0">
           <div class="card-body d-flex flex-column justify-content-center">
-            <i class="icon-download mb-3 fs-1" aria-hidden="true"></i>
+            <i class="${iconClass} mb-3 fs-1" aria-hidden="true"></i>
             <p class="mb-0 fw-semibold">${card.title || ""}</p>
           </div>
         </div>
@@ -739,6 +771,7 @@ Promise.all([
 
     const contactModal = document.getElementById("mContactUs");
     renderCulturalCollaborations();
+    renderMemoryGameModalTitle();
     renderPriceCarousel();
     renderBooksCarousel();
     renderMassMediaCarousel();

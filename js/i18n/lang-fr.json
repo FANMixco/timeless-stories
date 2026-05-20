@@ -354,6 +354,61 @@
         "alt": "Ambassade d’El Salvador au Maroc"
       }
     ],
-    "mTitle": "Légendes Éternelles"
+    "mTitle": "Légendes Éternelles",
+    "memoryGame": {
+      "title": "Jeu de mémoire",
+      "subtitle": "Retrouvez chaque paire miroir de Légendes Éternelles.",
+      "newGame": "Nouvelle partie",
+      "peek": "Aperçu",
+      "statusLabel": "Statut du jeu",
+      "moves": "Coups",
+      "matches": "Paires",
+      "time": "Temps",
+      "boardLabel": "Cartes mémoire",
+      "hiddenCard": "Carte mémoire cachée",
+      "win": "Vous avez retrouvé les {pairs} paires en {moves} coups et {time}.",
+      "pairs": [
+        {
+          "source": "blackKnight",
+          "mirror": "caveOfSalamanca"
+        },
+        {
+          "source": "siguanaba",
+          "mirror": "midnightWasherwomen"
+        },
+        {
+          "source": "goodAndBadCadejo",
+          "mirror": "dip"
+        },
+        {
+          "source": "mulus",
+          "mirror": "urco"
+        },
+        {
+          "source": "funeralCortegeOfChalchuapa",
+          "mirror": "holyCompany"
+        },
+        {
+          "source": "fairJudgeOfTheNight",
+          "mirror": "gaueko"
+        },
+        {
+          "source": "weepingWoman",
+          "mirror": "ploranera"
+        },
+        {
+          "source": "headlessPriest",
+          "mirror": "ghostOfSanGines"
+        },
+        {
+          "source": "fleshlessWoman",
+          "mirror": "girlOnTheCurve"
+        },
+        {
+          "source": "dwarf",
+          "mirror": "trasgu"
+        }
+      ]
+    }
   }
 }

@@ -354,6 +354,61 @@
         "alt": "萨尔瓦多驻摩洛哥大使馆"
       }
     ],
-    "mTitle": "永恒的传奇"
+    "mTitle": "永恒的传奇",
+    "memoryGame": {
+      "title": "记忆游戏",
+      "subtitle": "找出《永恒传说》中的镜像配对。",
+      "newGame": "新游戏",
+      "peek": "预览",
+      "statusLabel": "游戏状态",
+      "moves": "步数",
+      "matches": "配对",
+      "time": "时间",
+      "boardLabel": "记忆卡片",
+      "hiddenCard": "隐藏的记忆卡片",
+      "win": "你用 {moves} 步和 {time} 找到了全部 {pairs} 组配对。",
+      "pairs": [
+        {
+          "source": "blackKnight",
+          "mirror": "caveOfSalamanca"
+        },
+        {
+          "source": "siguanaba",
+          "mirror": "midnightWasherwomen"
+        },
+        {
+          "source": "goodAndBadCadejo",
+          "mirror": "dip"
+        },
+        {
+          "source": "mulus",
+          "mirror": "urco"
+        },
+        {
+          "source": "funeralCortegeOfChalchuapa",
+          "mirror": "holyCompany"
+        },
+        {
+          "source": "fairJudgeOfTheNight",
+          "mirror": "gaueko"
+        },
+        {
+          "source": "weepingWoman",
+          "mirror": "ploranera"
+        },
+        {
+          "source": "headlessPriest",
+          "mirror": "ghostOfSanGines"
+        },
+        {
+          "source": "fleshlessWoman",
+          "mirror": "girlOnTheCurve"
+        },
+        {
+          "source": "dwarf",
+          "mirror": "trasgu"
+        }
+      ]
+    }
   }
 }

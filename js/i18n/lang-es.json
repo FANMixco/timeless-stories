@@ -348,6 +348,61 @@
         "alt": "Embajada de El Salvador en Marruecos"
       }
     ],
-    "mTitle": "Historias Eternas"
+    "mTitle": "Historias Eternas",
+    "memoryGame": {
+      "title": "Juego de memoria",
+      "subtitle": "Encuentra cada pareja espejo de Historias Eternas.",
+      "newGame": "Nuevo juego",
+      "peek": "Ver",
+      "statusLabel": "Estado del juego",
+      "moves": "Movimientos",
+      "matches": "Parejas",
+      "time": "Tiempo",
+      "boardLabel": "Cartas de memoria",
+      "hiddenCard": "Carta de memoria oculta",
+      "win": "Encontraste las {pairs} parejas en {moves} movimientos y {time}.",
+      "pairs": [
+        {
+          "source": "blackKnight",
+          "mirror": "caveOfSalamanca"
+        },
+        {
+          "source": "siguanaba",
+          "mirror": "midnightWasherwomen"
+        },
+        {
+          "source": "goodAndBadCadejo",
+          "mirror": "dip"
+        },
+        {
+          "source": "mulus",
+          "mirror": "urco"
+        },
+        {
+          "source": "funeralCortegeOfChalchuapa",
+          "mirror": "holyCompany"
+        },
+        {
+          "source": "fairJudgeOfTheNight",
+          "mirror": "gaueko"
+        },
+        {
+          "source": "weepingWoman",
+          "mirror": "ploranera"
+        },
+        {
+          "source": "headlessPriest",
+          "mirror": "ghostOfSanGines"
+        },
+        {
+          "source": "fleshlessWoman",
+          "mirror": "girlOnTheCurve"
+        },
+        {
+          "source": "dwarf",
+          "mirror": "trasgu"
+        }
+      ]
+    }
   }
 }

@@ -3777,6 +3777,14 @@ h6 {
     color: #2f5da8;
 }
 
+.book-card-memory .card {
+    border: 1px dashed rgba(255, 255, 255, 0.34) !important;
+}
+
+.book-card-memory i {
+    color: #9bc1ff;
+}
+
 .book-card p {
     color: #111;
     font-size: 1.1rem;
