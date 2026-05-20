@@ -408,7 +408,9 @@
           "source": "dwarf",
           "mirror": "trasgu"
         }
-      ]
+      ],
+      "winTitle": "Congratulations!",
+      "playAgain": "Play again"
     }
   }
 }

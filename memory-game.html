@@ -260,24 +260,97 @@
       }
 
       .win-panel {
+        position: fixed;
+        inset: 0;
+        z-index: 20;
         display: none;
-        margin: 14px 0 0;
-        padding: 12px;
-        border-radius: 8px;
-        background: #ffffff;
-        border: 1px solid rgba(18, 113, 91, 0.26);
-        color: var(--found);
-        font-weight: 800;
-        text-align: center;
+        place-items: center;
+        padding: 18px;
+        background: rgba(17, 24, 32, 0.54);
+        overflow: hidden;
       }
 
       .win-panel.is-visible {
-        display: block;
+        display: grid;
+      }
+
+      .win-card {
+        position: relative;
+        z-index: 2;
+        width: min(100%, 420px);
+        padding: 24px;
+        border-radius: 8px;
+        background: var(--panel);
+        border: 1px solid rgba(18, 113, 91, 0.28);
+        color: var(--ink);
+        text-align: center;
+        box-shadow: var(--shadow);
+        animation: win-pop 260ms ease both;
+      }
+
+      .win-card h2 {
+        margin: 0 0 10px;
+        color: var(--found);
+        font-size: clamp(1.55rem, 6vw, 2.25rem);
+        line-height: 1.08;
+      }
+
+      .win-card p {
+        margin: 0 0 18px;
+        color: var(--ink);
+        font-size: clamp(0.95rem, 3vw, 1.1rem);
+        font-weight: 700;
+        line-height: 1.4;
+      }
+
+      .firework {
+        position: absolute;
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--gold);
+        box-shadow:
+          0 -42px 0 #8ec4ff,
+          30px -30px 0 #f2bd4a,
+          42px 0 0 #8be0c5,
+          30px 30px 0 #ffffff,
+          0 42px 0 #f2bd4a,
+          -30px 30px 0 #8ec4ff,
+          -42px 0 0 #8be0c5,
+          -30px -30px 0 #ffffff;
+        opacity: 0;
+        animation: firework-burst 1100ms ease-out infinite;
+      }
+
+      .firework:nth-child(1) {
+        top: 22%;
+        left: 22%;
+      }
+
+      .firework:nth-child(2) {
+        top: 18%;
+        right: 20%;
+        animation-delay: 260ms;
+        transform: scale(0.85);
+      }
+
+      .firework:nth-child(3) {
+        bottom: 24%;
+        left: 30%;
+        animation-delay: 520ms;
+        transform: scale(0.75);
+      }
+
+      .firework:nth-child(4) {
+        right: 28%;
+        bottom: 20%;
+        animation-delay: 780ms;
+        transform: scale(0.9);
       }
 
       html[data-theme="dark"] .game-button.secondary,
       html[data-theme="dark"] .status-item,
-      html[data-theme="dark"] .win-panel {
+      html[data-theme="dark"] .win-card {
         background: var(--panel);
         border-color: var(--line);
       }
@@ -307,8 +380,39 @@
       }
 
       @media (prefers-reduced-motion: reduce) {
-        .card-inner {
+        .card-inner,
+        .win-card,
+        .firework {
           transition: none;
+          animation: none;
+        }
+      }
+
+      @keyframes firework-burst {
+        0% {
+          opacity: 0;
+          transform: scale(0.2);
+        }
+
+        18% {
+          opacity: 1;
+        }
+
+        100% {
+          opacity: 0;
+          transform: scale(1.55);
+        }
+      }
+
+      @keyframes win-pop {
+        0% {
+          opacity: 0;
+          transform: translateY(10px) scale(0.96);
+        }
+
+        100% {
+          opacity: 1;
+          transform: translateY(0) scale(1);
         }
       }
     </style>
@@ -341,7 +445,17 @@
       </section>
 
       <section class="board" id="board" aria-label=""></section>
-      <p class="win-panel" id="winPanel" role="status" aria-live="polite"></p>
+      <aside class="win-panel" id="winPanel" role="status" aria-live="polite">
+        <span class="firework" aria-hidden="true"></span>
+        <span class="firework" aria-hidden="true"></span>
+        <span class="firework" aria-hidden="true"></span>
+        <span class="firework" aria-hidden="true"></span>
+        <div class="win-card">
+          <h2 id="winTitle"></h2>
+          <p id="winMessage"></p>
+          <button class="game-button" type="button" id="playAgainButton"></button>
+        </div>
+      </aside>
     </main>
 
     <script>
@@ -354,8 +468,11 @@
       const matchesValue = document.getElementById("matchesValue");
       const timeValue = document.getElementById("timeValue");
       const winPanel = document.getElementById("winPanel");
+      const winTitle = document.getElementById("winTitle");
+      const winMessage = document.getElementById("winMessage");
       const newGameButton = document.getElementById("newGameButton");
       const peekButton = document.getElementById("peekButton");
+      const playAgainButton = document.getElementById("playAgainButton");
       let memoryGame = { pairs: [] };
 
       let firstCard = null;
@@ -433,6 +550,8 @@
         setText(".game-subtitle", memoryGame.subtitle);
         newGameButton.textContent = memoryGame.newGame || "";
         peekButton.textContent = memoryGame.peek || "";
+        playAgainButton.textContent = memoryGame.playAgain || "";
+        winTitle.textContent = memoryGame.winTitle || "";
         document.querySelector(".status-grid").setAttribute("aria-label", memoryGame.statusLabel || "");
         setText('[data-ui-label="moves"]', memoryGame.moves);
         setText('[data-ui-label="matches"]', memoryGame.matches);
@@ -574,7 +693,7 @@
 
         if (matches === getPairCount()) {
           stopTimer();
-          winPanel.textContent = (memoryGame.win || "")
+          winMessage.textContent = (memoryGame.win || "")
             .replace("{pairs}", getPairCount())
             .replace("{moves}", moves)
             .replace("{time}", formatTime(elapsedSeconds));
@@ -620,7 +739,7 @@
         matches = 0;
         elapsedSeconds = 0;
         winPanel.classList.remove("is-visible");
-        winPanel.textContent = "";
+        winMessage.textContent = "";
         updateStatus();
 
         deck = shuffle(buildDeck());
@@ -645,6 +764,7 @@
 
       newGameButton.addEventListener("click", newGame);
       peekButton.addEventListener("click", peekCards);
+      playAgainButton.addEventListener("click", newGame);
       applyTheme();
       window.matchMedia?.("(prefers-color-scheme: dark)")?.addEventListener("change", applyTheme);
       loadTranslations().finally(() => {

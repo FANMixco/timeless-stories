@@ -402,7 +402,9 @@
           "source": "dwarf",
           "mirror": "trasgu"
         }
-      ]
+      ],
+      "winTitle": "¡Felicidades!",
+      "playAgain": "Jugar de nuevo"
     }
   }
 }
