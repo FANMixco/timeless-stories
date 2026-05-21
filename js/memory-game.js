@@ -1,0 +1,411 @@
+const supportedLanguages = ["en", "es", "fr", "zh"];
+const languageStorageKey = "timelessStoriesOfficialLanguage";
+const themeStorageKey = "timelessStoriesColorMode";
+const supportedThemes = ["system", "light", "dark"];
+let linkRegistry = null;
+let localizedLinks = null;
+const board = document.getElementById("board");
+const movesValue = document.getElementById("movesValue");
+const matchesValue = document.getElementById("matchesValue");
+const timeValue = document.getElementById("timeValue");
+const matchInsight = document.getElementById("matchInsight");
+const matchInsightTitle = document.getElementById("matchInsightTitle");
+const matchInsightText = document.getElementById("matchInsightText");
+const winPanel = document.getElementById("winPanel");
+const winTitle = document.getElementById("winTitle");
+const winMessage = document.getElementById("winMessage");
+const newGameButton = document.getElementById("newGameButton");
+const shareButton = document.getElementById("shareButton");
+const playAgainButton = document.getElementById("playAgainButton");
+const winShareButton = document.getElementById("winShareButton");
+const getCopyButton = document.getElementById("getCopyButton");
+const searchParams = new URLSearchParams(window.location.search);
+const isEmbedded = searchParams.get("embed") === "1";
+let memoryGame = { pairs: [] };
+
+let firstCard = null;
+let secondCard = null;
+let lockBoard = false;
+let moves = 0;
+let matches = 0;
+let elapsedSeconds = 0;
+let timer = null;
+let translations = null;
+let deck = [];
+
+function getStoredTheme() {
+  try {
+    const storedTheme = window.localStorage.getItem(themeStorageKey);
+    return supportedThemes.includes(storedTheme) ? storedTheme : "system";
+  } catch (error) {
+    return "system";
+  }
+}
+
+function applyTheme() {
+  const theme = getStoredTheme();
+  const prefersDark = window.matchMedia?.("(prefers-color-scheme: dark)")?.matches;
+  document.documentElement.dataset.theme =
+    theme === "dark" || (theme === "system" && prefersDark) ? "dark" : "light";
+}
+
+function getShareUrl() {
+  const url = new URL(window.location.href);
+  url.searchParams.delete("embed");
+  return url.href;
+}
+
+function getStoredLanguage() {
+  try {
+    return window.localStorage.getItem(languageStorageKey);
+  } catch (error) {
+    return null;
+  }
+}
+
+function getLanguage() {
+  const storedLanguage = getStoredLanguage();
+  const browserLanguage = (
+    navigator.languages ? navigator.languages[0] : navigator.language || "en"
+  ).split("-")[0];
+
+  if (supportedLanguages.includes(storedLanguage)) {
+    return storedLanguage;
+  }
+
+  return supportedLanguages.includes(browserLanguage) ? browserLanguage : "en";
+}
+
+function getTranslationValue(obj, path) {
+  return path.split(".").reduce((acc, part) => acc && acc[part], obj);
+}
+
+function mergeLinkConfig(defaults, overrides = {}) {
+  const merged = { ...defaults };
+
+  Object.entries(overrides || {}).forEach(([key, value]) => {
+    const defaultValue = merged[key];
+    const shouldMerge =
+      value &&
+      typeof value === "object" &&
+      !Array.isArray(value) &&
+      defaultValue &&
+      typeof defaultValue === "object" &&
+      !Array.isArray(defaultValue);
+
+    merged[key] = shouldMerge ? mergeLinkConfig(defaultValue, value) : value;
+  });
+
+  return merged;
+}
+
+function resolveGameHref(href) {
+  if (!href) {
+    return "";
+  }
+
+  if (/^https?:\/\//i.test(href)) {
+    return href;
+  }
+
+  return getTranslationValue(localizedLinks, href) || "";
+}
+
+async function loadTranslations() {
+  const language = getLanguage();
+  document.documentElement.lang = language;
+
+  try {
+    const [translationResponse, linksResponse] = await Promise.all([
+      fetch(`js/i18n/lang-${language}.json`),
+      fetch("js/data/links.min.json"),
+    ]);
+    const data = await translationResponse.json();
+    linkRegistry = await linksResponse.json();
+    localizedLinks = mergeLinkConfig(
+      linkRegistry.localized.default,
+      linkRegistry.localized[language],
+    );
+    translations = data.translations;
+    memoryGame = translations.memoryGame || { pairs: [] };
+  } catch (error) {
+    translations = { mapLegends: {}, memoryGame: { pairs: [] } };
+    memoryGame = translations.memoryGame;
+    localizedLinks = {};
+  }
+}
+
+function setText(selector, value) {
+  const element = document.querySelector(selector);
+  if (element && value !== undefined) {
+    element.textContent = value;
+  }
+}
+
+function applyUiCopy() {
+  document.title = memoryGame.title || document.title;
+  document.querySelector("meta[name='description']").content = memoryGame.subtitle || "";
+  document.querySelector("meta[property='og:title']").content = memoryGame.title || "";
+  document.querySelector("meta[property='og:description']").content = memoryGame.subtitle || "";
+  document.querySelector("meta[property='og:url']").content = getShareUrl();
+  document.querySelector("meta[property='twitter:title']").content = memoryGame.title || "";
+  document.querySelector("meta[property='twitter:description']").content = memoryGame.subtitle || "";
+  document.querySelector("link[rel='canonical']").href = getShareUrl();
+  document.getElementById("gameTitle").textContent = memoryGame.title || "";
+  document.querySelector(".game-shell").setAttribute("aria-label", memoryGame.title || "");
+  setText(".game-subtitle", memoryGame.subtitle);
+  newGameButton.textContent = memoryGame.newGame || "";
+  shareButton.textContent = memoryGame.share || "";
+  playAgainButton.textContent = memoryGame.playAgain || "";
+  winShareButton.textContent = memoryGame.share || "";
+  getCopyButton.textContent = memoryGame.getCopy || "";
+  getCopyButton.href = resolveGameHref(memoryGame.getCopyHref);
+  winTitle.textContent = memoryGame.winTitle || "";
+  document.querySelector(".status-grid").setAttribute("aria-label", memoryGame.statusLabel || "");
+  setText('[data-ui-label="moves"]', memoryGame.moves);
+  setText('[data-ui-label="matches"]', memoryGame.matches);
+  setText('[data-ui-label="time"]', memoryGame.time);
+  board.setAttribute("aria-label", memoryGame.boardLabel || "");
+}
+
+function getLegendName(key) {
+  return translations?.mapLegends?.[key]?.name || key;
+}
+
+function getOriginLabel(side) {
+  return side === "source"
+    ? translations?.country1 || ""
+    : translations?.country2 || "";
+}
+
+function getPairCount() {
+  return Array.isArray(memoryGame.pairs) ? memoryGame.pairs.length : 0;
+}
+
+function buildDeck() {
+  const pairs = Array.isArray(memoryGame.pairs) ? memoryGame.pairs : [];
+
+  return pairs.flatMap(({ source, mirror, insightTitle, insight }, pairIndex) => [
+    {
+      key: source,
+      pairId: `pair-${pairIndex}`,
+      side: "source",
+      name: getLegendName(source),
+      insightTitle,
+      insight,
+    },
+    {
+      key: mirror,
+      pairId: `pair-${pairIndex}`,
+      side: "mirror",
+      name: getLegendName(mirror),
+      insightTitle,
+      insight,
+    },
+  ]);
+}
+
+function shuffle(items) {
+  const shuffled = [...items];
+  for (let i = shuffled.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+}
+
+function getInitials(name) {
+  return name
+    .replace(/^The /, "")
+    .split(" ")
+    .slice(0, 2)
+    .map((part) => part[0])
+    .join("")
+    .toUpperCase();
+}
+
+function formatTime(totalSeconds) {
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = String(totalSeconds % 60).padStart(2, "0");
+  return `${minutes}:${seconds}`;
+}
+
+function updateStatus() {
+  movesValue.textContent = moves;
+  matchesValue.textContent = `${matches}/${getPairCount()}`;
+  timeValue.textContent = formatTime(elapsedSeconds);
+}
+
+function startTimer() {
+  if (timer) {
+    return;
+  }
+
+  timer = window.setInterval(() => {
+    elapsedSeconds += 1;
+    updateStatus();
+  }, 1000);
+}
+
+function stopTimer() {
+  if (!timer) {
+    return;
+  }
+
+  window.clearInterval(timer);
+  timer = null;
+}
+
+function createCard(character, index) {
+  const card = document.createElement("button");
+  card.className = "card";
+  card.type = "button";
+  card.dataset.pairId = character.pairId;
+  card.dataset.character = character.name;
+  card.dataset.insightTitle = character.insightTitle || "";
+  card.dataset.insight = character.insight || "";
+  card.setAttribute("aria-label", memoryGame.hiddenCard || "");
+
+  card.innerHTML = `
+    <span class="card-inner">
+      <span class="card-face card-back" aria-hidden="true">
+        <span>TS</span>
+      </span>
+      <span class="card-face card-front">
+        <span class="character-mark">${getInitials(character.name)}</span>
+        <span class="character-name">${character.name}</span>
+        <span class="character-origin">${getOriginLabel(character.side)}</span>
+      </span>
+    </span>
+  `;
+
+  card.addEventListener("click", () => flipCard(card));
+  card.dataset.index = index;
+  return card;
+}
+
+function resetTurn() {
+  firstCard = null;
+  secondCard = null;
+  lockBoard = false;
+}
+
+function hideOpenCards() {
+  firstCard.classList.remove("is-flipped");
+  secondCard.classList.remove("is-flipped");
+  firstCard.setAttribute("aria-label", memoryGame.hiddenCard || "");
+  secondCard.setAttribute("aria-label", memoryGame.hiddenCard || "");
+  resetTurn();
+}
+
+function markMatch() {
+  firstCard.classList.add("is-matched");
+  secondCard.classList.add("is-matched");
+  firstCard.disabled = true;
+  secondCard.disabled = true;
+  matches += 1;
+  showMatchInsight(firstCard);
+  updateStatus();
+
+  if (matches === getPairCount()) {
+    stopTimer();
+    winMessage.textContent = (memoryGame.win || "")
+      .replace("{pairs}", getPairCount())
+      .replace("{moves}", moves)
+      .replace("{time}", formatTime(elapsedSeconds));
+    winPanel.classList.add("is-visible");
+  }
+
+  resetTurn();
+}
+
+function showMatchInsight(card) {
+  matchInsightTitle.textContent = card.dataset.insightTitle || "";
+  matchInsightText.textContent = card.dataset.insight || "";
+  matchInsight.classList.toggle(
+    "is-visible",
+    Boolean(card.dataset.insightTitle || card.dataset.insight),
+  );
+}
+
+function flipCard(card) {
+  if (lockBoard || card === firstCard || card.classList.contains("is-matched")) {
+    return;
+  }
+
+  startTimer();
+  card.classList.add("is-flipped");
+  card.setAttribute("aria-label", card.dataset.character);
+
+  if (!firstCard) {
+    firstCard = card;
+    return;
+  }
+
+  secondCard = card;
+  lockBoard = true;
+  moves += 1;
+  updateStatus();
+
+  if (firstCard.dataset.pairId === secondCard.dataset.pairId) {
+    markMatch();
+    return;
+  }
+
+  window.setTimeout(hideOpenCards, 700);
+}
+
+function newGame() {
+  stopTimer();
+  firstCard = null;
+  secondCard = null;
+  lockBoard = false;
+  moves = 0;
+  matches = 0;
+  elapsedSeconds = 0;
+  matchInsight.classList.remove("is-visible");
+  matchInsightTitle.textContent = "";
+  matchInsightText.textContent = "";
+  winPanel.classList.remove("is-visible");
+  winMessage.textContent = "";
+  updateStatus();
+
+  deck = shuffle(buildDeck());
+  board.replaceChildren(...deck.map(createCard));
+}
+
+async function shareGame(button = shareButton) {
+  const shareData = {
+    title: memoryGame.title || document.title,
+    text: memoryGame.shareText || memoryGame.subtitle || "",
+    url: getShareUrl(),
+  };
+
+  if (navigator.share) {
+    await navigator.share(shareData);
+    return;
+  }
+
+  await navigator.clipboard?.writeText(shareData.url);
+  const originalLabel = button.textContent || memoryGame.share || "";
+  button.textContent = memoryGame.shareCopied || originalLabel;
+  window.setTimeout(() => {
+    button.textContent = originalLabel;
+  }, 1600);
+}
+
+newGameButton.addEventListener("click", newGame);
+shareButton.addEventListener("click", () => {
+  shareGame(shareButton).catch(() => {});
+});
+winShareButton.addEventListener("click", () => {
+  shareGame(winShareButton).catch(() => {});
+});
+playAgainButton.addEventListener("click", newGame);
+applyTheme();
+document.documentElement.dataset.embed = String(isEmbedded);
+window.matchMedia?.("(prefers-color-scheme: dark)")?.addEventListener("change", applyTheme);
+loadTranslations().finally(() => {
+  applyUiCopy();
+  newGame();
+});

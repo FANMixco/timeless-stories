@@ -976,7 +976,8 @@ https://goo.gl/forms/JArck4uzbGGmTuG72
           <div class="modal-body p-0">
             <iframe
               src="memory-game.html?embed=1"
-              title=""
+              title="Memory game"
+              allow="web-share; clipboard-write"
               loading="lazy"
               style="display: block; width: 100%; height: calc(100vh - 72px)"
             ></iframe>
@@ -996,15 +997,89 @@ https://goo.gl/forms/JArck4uzbGGmTuG72
 
     <script type="application/ld+json">
       {
-        "@context": "https://schema.org/",
-        "@type": "WebSite",
-        "name": "Timeless Stories of El Salvador",
-        "url": "https://tstories.federiconavarrete.com",
-        "potentialAction": {
-          "@type": "SearchAction",
-          "target": "{search_term_string}",
-          "query-input": "required name=search_term_string"
-        }
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "https://tstories.federiconavarrete.com/#website",
+            "name": "Timeless Stories of El Salvador",
+            "alternateName": "Timeless Stories",
+            "url": "https://tstories.federiconavarrete.com",
+            "inLanguage": ["en", "es", "fr", "zh"],
+            "publisher": {
+              "@id": "https://tstories.federiconavarrete.com/#author"
+            }
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://tstories.federiconavarrete.com/#webpage",
+            "url": "https://tstories.federiconavarrete.com",
+            "name": "Timeless Stories of El Salvador | Folklore, Legends & Fairy tales",
+            "description": "Discover the shared DNA of global folklore through Federico Navarrete's series bridging El Salvador, Spain, and Morocco.",
+            "isPartOf": {
+              "@id": "https://tstories.federiconavarrete.com/#website"
+            },
+            "about": [
+              {
+                "@id": "https://tstories.federiconavarrete.com/#book"
+              },
+              {
+                "@id": "https://tstories.federiconavarrete.com/#author"
+              }
+            ],
+            "primaryImageOfPage": {
+              "@type": "ImageObject",
+              "url": "https://tstories.federiconavarrete.com/img/preview.jpg"
+            },
+            "inLanguage": "en"
+          },
+          {
+            "@type": "Person",
+            "@id": "https://tstories.federiconavarrete.com/#author",
+            "name": "Federico Navarrete",
+            "url": "https://tstories.federiconavarrete.com",
+            "sameAs": [
+              "https://www.amazon.com/stores/Federico-Navarrete/author/B08NJTXQRV",
+              "https://www.goodreads.com/author/show/21125413.Federico_Navarrete",
+              "https://www.tiktok.com/@federicostories",
+              "https://www.facebook.com/federicostories",
+              "https://x.com/FedeStories"
+            ]
+          },
+          {
+            "@type": "Book",
+            "@id": "https://tstories.federiconavarrete.com/#book",
+            "name": "Timeless Stories of El Salvador — Spanish Mirrors",
+            "alternateName": "Historias Eternas de El Salvador — Espejos Españoles",
+            "description": "A comparative folklore book pairing Salvadoran legends with Spanish mirror legends to reveal shared symbols, fears, and archetypes.",
+            "image": "https://tstories.federiconavarrete.com/img/cover-colorized-v2-sm.jpg",
+            "author": {
+              "@id": "https://tstories.federiconavarrete.com/#author"
+            },
+            "publisher": {
+              "@id": "https://tstories.federiconavarrete.com/#author"
+            },
+            "inLanguage": ["en", "es", "fr", "zh"],
+            "genre": ["Folklore", "Legends", "Comparative mythology"],
+            "url": "https://tstories.federiconavarrete.com"
+          },
+          {
+            "@type": "Game",
+            "@id": "https://tstories.federiconavarrete.com/memory-game.html#game",
+            "name": "Timeless Stories - Memory Game",
+            "description": "Match Salvadoran legends with their Spanish mirror legends in this multilingual memory game.",
+            "url": "https://tstories.federiconavarrete.com/memory-game.html",
+            "image": "https://tstories.federiconavarrete.com/img/preview_memory.jpg",
+            "isAccessibleForFree": true,
+            "gamePlatform": "Web browser",
+            "isPartOf": {
+              "@id": "https://tstories.federiconavarrete.com/#website"
+            },
+            "about": {
+              "@id": "https://tstories.federiconavarrete.com/#book"
+            }
+          }
+        ]
       }
     </script>
   </body>
