@@ -4026,6 +4026,14 @@ h6 {
         color: #c6d0da;
     }
 
+    html:not([data-theme="light"]) .content-modal-list-link {
+        color: #8ec4ff;
+    }
+
+    html:not([data-theme="light"]) .content-modal-list-link:focus {
+        color: #b9ddff;
+    }
+
     html:not([data-theme="light"]) .single-price .price-top,
     html:not([data-theme="light"]) .single-price .price-bottom,
     html:not([data-theme="light"]) .single-testimonial,
@@ -4219,6 +4227,14 @@ h6 {
         color: #c6d0da;
     }
 
+    html[data-theme="dark"] .content-modal-list-link {
+        color: #8ec4ff;
+    }
+
+    html[data-theme="dark"] .content-modal-list-link:focus {
+        color: #b9ddff;
+    }
+
     html[data-theme="dark"] .single-price .price-top,
     html[data-theme="dark"] .single-price .price-bottom,
     html[data-theme="dark"] .single-testimonial,
@@ -4363,6 +4379,10 @@ html[data-theme="dark"] #mContactUs .btn-close {
         color: #f2f6f9;
     }
 
+    html:not([data-theme="light"]) .content-modal-list-link:hover {
+        color: #b9ddff;
+    }
+
     html:not([data-theme="light"]) .institutional-record-link:hover {
         color: #07111d;
         border-color: #8ec4ff;
@@ -4410,6 +4430,10 @@ html[data-theme="dark"] #mContactUs .btn-close {
 @media (hover: hover) {
     html[data-theme="dark"] .content-modal-title-link:hover {
         color: #f2f6f9;
+    }
+
+    html[data-theme="dark"] .content-modal-list-link:hover {
+        color: #b9ddff;
     }
 
     html[data-theme="dark"] .institutional-record-link:hover {
