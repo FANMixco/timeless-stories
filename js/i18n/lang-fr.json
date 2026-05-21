@@ -434,7 +434,10 @@
       "getCopyHref": "carouselCards.ebook",
       "share": "Partager",
       "shareCopied": "Lien copié",
-      "shareText": "Je viens d’associer les légendes miroirs du Salvador et d’Espagne. Saurez-vous retrouver les 10 paires ?"
+      "shareText": "Je viens d’associer les légendes miroirs du Salvador et d’Espagne. Saurez-vous retrouver les 10 paires ?",
+      "close": "Fermer",
+      "previewReward": "🏆 Vous avez gagné un aperçu du livre",
+      "previewRewardHref": "https://bit.ly/4dyjiZz"
     }
   }
 }

@@ -96,7 +96,7 @@ html[data-embed="true"] .standalone-only {
   color: #ffffff;
   font-weight: 700;
   cursor: pointer;
-  box-shadow: 0 8px 18px rgba(0, 119, 182, 0.22);
+  box-shadow: none;
 }
 
 .game-button.secondary {
@@ -263,7 +263,7 @@ html[data-theme="dark"] .game-button.secondary:focus-visible {
   background:
     linear-gradient(180deg, rgba(255, 250, 240, 0.55), transparent 45%),
     var(--panel);
-  padding: clamp(5px, 1.4vw, 10px);
+  padding: clamp(5px, 1.2vw, 9px);
   text-align: center;
 }
 
@@ -300,6 +300,10 @@ html[data-theme="dark"] .game-button.secondary:focus-visible {
   line-height: 1;
 }
 
+.character-desc {
+  display: none !important;
+}
+
 .win-panel {
   position: fixed;
   inset: 0;
@@ -319,7 +323,7 @@ html[data-theme="dark"] .game-button.secondary:focus-visible {
   position: relative;
   z-index: 2;
   width: min(100%, 420px);
-  padding: 24px;
+  padding: 32px 24px 24px;
   border-radius: 8px;
   background: var(--panel);
   border: 1px solid rgba(18, 113, 91, 0.28);
@@ -327,6 +331,91 @@ html[data-theme="dark"] .game-button.secondary:focus-visible {
   text-align: center;
   box-shadow: var(--shadow);
   animation: win-pop 260ms ease both;
+}
+
+.win-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 34px;
+  height: 34px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 1.5rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.win-close:hover,
+.win-close:focus-visible {
+  background: rgba(0, 119, 182, 0.1);
+  color: var(--ink);
+}
+
+.legend-toast {
+  position: fixed;
+  right: max(14px, calc((100vw - 900px) / 2 + 14px));
+  bottom: 16px;
+  z-index: 30;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px;
+  align-items: start;
+  width: min(calc(100vw - 28px), 420px);
+  padding: 13px 14px;
+  border: 1px solid rgba(1, 87, 155, 0.24);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.96);
+  color: var(--ink);
+  box-shadow: 0 14px 34px rgba(31, 41, 55, 0.18);
+  animation: toast-in 180ms ease both;
+}
+
+.legend-toast[hidden] {
+  display: none;
+}
+
+.legend-toast strong {
+  display: block;
+  margin-bottom: 3px;
+  color: var(--found);
+  font-size: 0.95rem;
+  line-height: 1.2;
+}
+
+.legend-toast p {
+  margin: 0;
+  color: var(--ink);
+  font-size: 0.84rem;
+  font-weight: 650;
+  line-height: 1.35;
+}
+
+.legend-toast button {
+  width: 28px;
+  height: 28px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 1.2rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.legend-toast button::before,
+.win-close::before {
+  content: "x";
+}
+
+.legend-toast button:hover,
+.legend-toast button:focus-visible {
+  background: rgba(0, 119, 182, 0.1);
+  color: var(--ink);
 }
 
 .win-card h2 {
@@ -357,6 +446,10 @@ html[data-theme="dark"] .game-button.secondary:focus-visible {
   text-decoration: none;
 }
 
+.win-actions .game-button[hidden] {
+  display: none;
+}
+
 .game-footer {
   width: min(100%, 760px);
   margin: clamp(24px, 4vw, 36px) auto 0;
@@ -385,17 +478,33 @@ html[data-theme="dark"] .game-button.secondary:focus-visible {
   background: #f2c744;
   color: #111820;
   border: 0;
-  box-shadow: 0 8px 18px rgba(216, 155, 33, 0.22);
+  box-shadow: none;
+}
+
+#previewRewardButton {
+  background: #12715b;
+  color: #ffffff;
+  box-shadow: none;
+}
+
+#previewRewardButton:hover,
+#previewRewardButton:focus-visible {
+  background: #0f604d;
 }
 
 html[data-theme="light"] #getCopyButton {
   background: #e3b63c;
-  box-shadow: 0 8px 18px rgba(216, 155, 33, 0.2);
+  box-shadow: none;
 }
 
 html[data-theme="light"] #getCopyButton:hover,
 html[data-theme="light"] #getCopyButton:focus-visible {
   background: #d9ab30;
+}
+
+html[data-theme="dark"] .legend-toast {
+  background: rgba(23, 33, 43, 0.98);
+  border-color: var(--line);
 }
 
 #getCopyButton:focus-visible {
@@ -521,6 +630,18 @@ html[data-theme="dark"] .card.is-matched .card-front {
   0% {
     opacity: 0;
     transform: translateY(-6px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes toast-in {
+  0% {
+    opacity: 0;
+    transform: translateY(8px);
   }
 
   100% {

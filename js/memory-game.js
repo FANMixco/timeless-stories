@@ -2,6 +2,7 @@ const supportedLanguages = ["en", "es", "fr", "zh"];
 const languageStorageKey = "timelessStoriesOfficialLanguage";
 const themeStorageKey = "timelessStoriesColorMode";
 const supportedThemes = ["system", "light", "dark"];
+const previewRewardThresholdSeconds = 30;
 let linkRegistry = null;
 let localizedLinks = null;
 const board = document.getElementById("board");
@@ -11,6 +12,10 @@ const timeValue = document.getElementById("timeValue");
 const matchInsight = document.getElementById("matchInsight");
 const matchInsightTitle = document.getElementById("matchInsightTitle");
 const matchInsightText = document.getElementById("matchInsightText");
+const legendToast = document.getElementById("legendToast");
+const legendToastTitle = document.getElementById("legendToastTitle");
+const legendToastText = document.getElementById("legendToastText");
+const legendToastClose = document.getElementById("legendToastClose");
 const winPanel = document.getElementById("winPanel");
 const winTitle = document.getElementById("winTitle");
 const winMessage = document.getElementById("winMessage");
@@ -18,6 +23,8 @@ const newGameButton = document.getElementById("newGameButton");
 const shareButton = document.getElementById("shareButton");
 const playAgainButton = document.getElementById("playAgainButton");
 const winShareButton = document.getElementById("winShareButton");
+const closeWinButton = document.getElementById("closeWinButton");
+const previewRewardButton = document.getElementById("previewRewardButton");
 const getCopyButton = document.getElementById("getCopyButton");
 const searchParams = new URLSearchParams(window.location.search);
 const isEmbedded = searchParams.get("embed") === "1";
@@ -30,6 +37,7 @@ let moves = 0;
 let matches = 0;
 let elapsedSeconds = 0;
 let timer = null;
+let toastTimer = null;
 let translations = null;
 let deck = [];
 
@@ -158,6 +166,11 @@ function applyUiCopy() {
   shareButton.textContent = memoryGame.share || "";
   playAgainButton.textContent = memoryGame.playAgain || "";
   winShareButton.textContent = memoryGame.share || "";
+  closeWinButton.setAttribute("aria-label", memoryGame.close || "Close");
+  legendToastClose.setAttribute("aria-label", memoryGame.close || "Close");
+  previewRewardButton.textContent = memoryGame.previewReward || "Preview the book";
+  previewRewardButton.href =
+    resolveGameHref(memoryGame.previewRewardHref) || "https://bit.ly/4dyjiZz";
   getCopyButton.textContent = memoryGame.getCopy || "";
   getCopyButton.href = resolveGameHref(memoryGame.getCopyHref);
   winTitle.textContent = memoryGame.winTitle || "";
@@ -170,6 +183,10 @@ function applyUiCopy() {
 
 function getLegendName(key) {
   return translations?.mapLegends?.[key]?.name || key;
+}
+
+function getLegendDescription(key) {
+  return translations?.mapLegends?.[key]?.desc || "";
 }
 
 function getOriginLabel(side) {
@@ -191,6 +208,7 @@ function buildDeck() {
       pairId: `pair-${pairIndex}`,
       side: "source",
       name: getLegendName(source),
+      desc: getLegendDescription(source),
       insightTitle,
       insight,
     },
@@ -199,6 +217,7 @@ function buildDeck() {
       pairId: `pair-${pairIndex}`,
       side: "mirror",
       name: getLegendName(mirror),
+      desc: getLegendDescription(mirror),
       insightTitle,
       insight,
     },
@@ -262,6 +281,7 @@ function createCard(character, index) {
   card.type = "button";
   card.dataset.pairId = character.pairId;
   card.dataset.character = character.name;
+  card.dataset.description = character.desc || "";
   card.dataset.insightTitle = character.insightTitle || "";
   card.dataset.insight = character.insight || "";
   card.setAttribute("aria-label", memoryGame.hiddenCard || "");
@@ -301,14 +321,13 @@ function hideOpenCards() {
 function markMatch() {
   firstCard.classList.add("is-matched");
   secondCard.classList.add("is-matched");
-  firstCard.disabled = true;
-  secondCard.disabled = true;
   matches += 1;
   showMatchInsight(firstCard);
   updateStatus();
 
   if (matches === getPairCount()) {
     stopTimer();
+    setPreviewRewardVisibility(elapsedSeconds < previewRewardThresholdSeconds);
     winMessage.textContent = (memoryGame.win || "")
       .replace("{pairs}", getPairCount())
       .replace("{moves}", moves)
@@ -328,8 +347,46 @@ function showMatchInsight(card) {
   );
 }
 
+function hideLegendToast() {
+  legendToast.hidden = true;
+  if (toastTimer) {
+    window.clearTimeout(toastTimer);
+    toastTimer = null;
+  }
+}
+
+function showLegendToast(card) {
+  if (!card.dataset.description) {
+    hideLegendToast();
+    return;
+  }
+
+  legendToastTitle.textContent = card.dataset.character || "";
+  legendToastText.textContent = card.dataset.description;
+  legendToast.hidden = false;
+
+  if (toastTimer) {
+    window.clearTimeout(toastTimer);
+  }
+
+  toastTimer = window.setTimeout(hideLegendToast, 5200);
+}
+
+function setPreviewRewardVisibility(shouldShow) {
+  previewRewardButton.hidden = !shouldShow;
+  previewRewardButton.toggleAttribute("hidden", !shouldShow);
+}
+
 function flipCard(card) {
-  if (lockBoard || card === firstCard || card.classList.contains("is-matched")) {
+  if (card.classList.contains("is-matched")) {
+    showMatchInsight(card);
+    if (matches === getPairCount()) {
+      showLegendToast(card);
+    }
+    return;
+  }
+
+  if (lockBoard || card === firstCard) {
     return;
   }
 
@@ -367,6 +424,8 @@ function newGame() {
   matchInsightTitle.textContent = "";
   matchInsightText.textContent = "";
   winPanel.classList.remove("is-visible");
+  setPreviewRewardVisibility(false);
+  hideLegendToast();
   winMessage.textContent = "";
   updateStatus();
 
@@ -401,6 +460,10 @@ shareButton.addEventListener("click", () => {
 winShareButton.addEventListener("click", () => {
   shareGame(winShareButton).catch(() => {});
 });
+closeWinButton.addEventListener("click", () => {
+  winPanel.classList.remove("is-visible");
+});
+legendToastClose.addEventListener("click", hideLegendToast);
 playAgainButton.addEventListener("click", newGame);
 applyTheme();
 document.documentElement.dataset.embed = String(isEmbedded);

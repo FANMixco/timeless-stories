@@ -434,7 +434,10 @@
       "getCopyHref": "carouselCards.ebook",
       "share": "Share",
       "shareCopied": "Link copied",
-      "shareText": "I just matched the Salvadoran and Spanish mirror legends. Can you find all 10 pairs?"
+      "shareText": "I just matched the Salvadoran and Spanish mirror legends. Can you find all 10 pairs?",
+      "close": "Close",
+      "previewReward": "🏆 You won a preview of the book",
+      "previewRewardHref": "https://bit.ly/4dyjiZz"
     }
   }
 }

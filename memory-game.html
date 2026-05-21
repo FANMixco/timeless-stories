@@ -48,7 +48,7 @@
         }
       }
     </script>
-    <link rel="stylesheet" href="css/memory-game.min.css" />
+    <link rel="stylesheet" href="css/memory-game.min.css?v=20260522-finish-toast" />
   </head>
   <body>
     <main class="game-shell" aria-label="">
@@ -84,16 +84,25 @@
       </section>
 
       <section class="board" id="board" aria-label=""></section>
+      <aside class="legend-toast" id="legendToast" aria-live="polite" hidden>
+        <div>
+          <strong id="legendToastTitle"></strong>
+          <p id="legendToastText"></p>
+        </div>
+        <button type="button" id="legendToastClose"></button>
+      </aside>
       <aside class="win-panel" id="winPanel" role="status" aria-live="polite">
         <span class="firework" aria-hidden="true"></span>
         <span class="firework" aria-hidden="true"></span>
         <span class="firework" aria-hidden="true"></span>
         <span class="firework" aria-hidden="true"></span>
         <div class="win-card">
+          <button class="win-close" type="button" id="closeWinButton"></button>
           <h2 id="winTitle"></h2>
           <p id="winMessage"></p>
           <div class="win-actions">
             <button class="game-button" type="button" id="playAgainButton"></button>
+            <a class="game-button reward" id="previewRewardButton" target="_blank" rel="noopener noreferrer" hidden></a>
             <a class="game-button" id="getCopyButton" target="_blank" rel="noopener noreferrer"></a>
             <button class="game-button secondary" type="button" id="winShareButton"></button>
           </div>
@@ -105,6 +114,6 @@
       </footer>
     </main>
 
-    <script src="js/memory-game.min.js"></script>
+    <script src="js/memory-game.min.js?v=20260522-finish-toast"></script>
   </body>
 </html>

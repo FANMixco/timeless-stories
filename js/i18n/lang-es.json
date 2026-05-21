@@ -428,7 +428,10 @@
       "getCopyHref": "carouselCards.ebook",
       "share": "Compartir",
       "shareCopied": "Enlace copiado",
-      "shareText": "Acabo de unir las leyendas espejo de El Salvador y España. ¿Puedes encontrar las 10 parejas?"
+      "shareText": "Acabo de unir las leyendas espejo de El Salvador y España. ¿Puedes encontrar las 10 parejas?",
+      "close": "Cerrar",
+      "previewReward": "🏆 Ganaste una vista previa del libro",
+      "previewRewardHref": "https://bit.ly/4fAKacs"
     }
   }
 }
