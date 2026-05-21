@@ -360,19 +360,18 @@ html[data-theme="dark"] .game-button.secondary:focus-visible {
 #getCopyButton {
   background: #f2c744;
   color: #111820;
+  border: 0;
   box-shadow: 0 8px 18px rgba(216, 155, 33, 0.22);
 }
 
 html[data-theme="light"] #getCopyButton {
-  background: linear-gradient(180deg, #f3cf63, #e2b83f);
-  border: 1px solid rgba(153, 106, 18, 0.2);
-  box-shadow: 0 8px 18px rgba(216, 155, 33, 0.18);
+  background: #e3b63c;
+  box-shadow: 0 8px 18px rgba(216, 155, 33, 0.2);
 }
 
 html[data-theme="light"] #getCopyButton:hover,
 html[data-theme="light"] #getCopyButton:focus-visible {
-  background: linear-gradient(180deg, #f6d977, #dfaf2d);
-  border-color: rgba(153, 106, 18, 0.34);
+  background: #d9ab30;
 }
 
 #getCopyButton:focus-visible {
