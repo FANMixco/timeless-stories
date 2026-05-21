@@ -357,6 +357,30 @@ html[data-theme="dark"] .game-button.secondary:focus-visible {
   text-decoration: none;
 }
 
+.game-footer {
+  width: min(100%, 760px);
+  margin: clamp(24px, 4vw, 36px) auto 0;
+  padding: 0 12px;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+  line-height: 1.45;
+  text-align: center;
+}
+
+.game-footer a {
+  color: var(--accent-dark);
+  font-weight: 800;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.game-footer a:hover,
+.game-footer a:focus-visible {
+  color: var(--accent);
+}
+
 #getCopyButton {
   background: #f2c744;
   color: #111820;
