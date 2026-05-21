@@ -1,4 +1,4 @@
-{
+﻿{
   "translations": {
     "menu0": "Home",
     "menu1": "About",
@@ -357,9 +357,8 @@
     "mTitle": "Timeless Stories",
     "memoryGame": {
       "title": "Memory game",
-      "subtitle": "Find each mirror pair from Timeless Stories.",
+      "subtitle": "Find each mirror pair from Spanish Mirrors.",
       "newGame": "New game",
-      "peek": "Peek",
       "statusLabel": "Game status",
       "moves": "Moves",
       "matches": "Matches",
@@ -370,49 +369,71 @@
       "pairs": [
         {
           "source": "blackKnight",
-          "mirror": "caveOfSalamanca"
+          "mirror": "caveOfSalamanca",
+          "insightTitle": "The Devil",
+          "insight": "Figures of temptation, contracts, and moral transgression."
         },
         {
           "source": "siguanaba",
-          "mirror": "midnightWasherwomen"
+          "mirror": "midnightWasherwomen",
+          "insightTitle": "Fatal Lures",
+          "insight": "Temptations that draw the living toward irreversible ends."
         },
         {
           "source": "goodAndBadCadejo",
-          "mirror": "dip"
+          "mirror": "dip",
+          "insightTitle": "Guardians & Beasts",
+          "insight": "Protectors or creatures that enforce the boundaries of the night."
         },
         {
           "source": "mulus",
-          "mirror": "urco"
+          "mirror": "urco",
+          "insightTitle": "Heralds & Executors of Death",
+          "insight": "Omens and beings that announce fate before it arrives."
         },
         {
           "source": "funeralCortegeOfChalchuapa",
-          "mirror": "holyCompany"
+          "mirror": "holyCompany",
+          "insightTitle": "Processions of the Dead",
+          "insight": "Collective apparitions that blur the line between the living and the dead."
         },
         {
           "source": "fairJudgeOfTheNight",
-          "mirror": "gaueko"
+          "mirror": "gaueko",
+          "insightTitle": "Rulers of the Night",
+          "insight": "Judges and sovereigns who govern darkness and justice."
         },
         {
           "source": "weepingWoman",
-          "mirror": "ploranera"
+          "mirror": "ploranera",
+          "insightTitle": "Echoes of the Dead",
+          "insight": "Voices that return when the past refuses to rest."
         },
         {
           "source": "headlessPriest",
-          "mirror": "ghostOfSanGines"
+          "mirror": "ghostOfSanGines",
+          "insightTitle": "Restless Spirits",
+          "insight": "Souls trapped between worlds by guilt, duty, or unfinished acts."
         },
         {
           "source": "fleshlessWoman",
-          "mirror": "girlOnTheCurve"
+          "mirror": "girlOnTheCurve",
+          "insightTitle": "Fatal Apparitions",
+          "insight": "Encounters where curiosity, desire, or distraction lead to ruin."
         },
         {
           "source": "dwarf",
-          "mirror": "trasgu"
+          "mirror": "trasgu",
+          "insightTitle": "Domestic Tricksters",
+          "insight": "Household spirits that reward respect and punish neglect."
         }
       ],
       "winTitle": "Congratulations!",
       "playAgain": "Play again",
       "getCopy": "Get a copy of the book",
-      "getCopyHref": "carouselCards.ebook"
+      "getCopyHref": "carouselCards.ebook",
+      "share": "Share",
+      "shareCopied": "Link copied"
     }
   }
 }

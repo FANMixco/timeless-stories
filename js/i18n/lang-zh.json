@@ -1,4 +1,4 @@
-{
+﻿{
   "translations": {
     "menu0": "主页",
     "menu1": "关于",
@@ -357,9 +357,8 @@
     "mTitle": "永恒的传奇",
     "memoryGame": {
       "title": "记忆游戏",
-      "subtitle": "找出《永恒传说》中的镜像配对。",
+      "subtitle": "从《西班牙镜子》中找出每一对镜子。",
       "newGame": "新游戏",
-      "peek": "预览",
       "statusLabel": "游戏状态",
       "moves": "步数",
       "matches": "配对",
@@ -370,49 +369,71 @@
       "pairs": [
         {
           "source": "blackKnight",
-          "mirror": "caveOfSalamanca"
+          "mirror": "caveOfSalamanca",
+          "insightTitle": "魔鬼",
+          "insight": "象征诱惑、契约与道德越界的形象。"
         },
         {
           "source": "siguanaba",
-          "mirror": "midnightWasherwomen"
+          "mirror": "midnightWasherwomen",
+          "insightTitle": "致命诱惑",
+          "insight": "把生者引向无法回头结局的诱惑。"
         },
         {
           "source": "goodAndBadCadejo",
-          "mirror": "dip"
+          "mirror": "dip",
+          "insightTitle": "守护者与怪兽",
+          "insight": "守护者或生物，维护夜晚的边界。"
         },
         {
           "source": "mulus",
-          "mirror": "urco"
+          "mirror": "urco",
+          "insightTitle": "死亡的预告者与执行者",
+          "insight": "在命运降临前发出预兆的存在。"
         },
         {
           "source": "funeralCortegeOfChalchuapa",
-          "mirror": "holyCompany"
+          "mirror": "holyCompany",
+          "insightTitle": "亡者的队列",
+          "insight": "模糊生者与死者界线的集体幽灵显现。"
         },
         {
           "source": "fairJudgeOfTheNight",
-          "mirror": "gaueko"
+          "mirror": "gaueko",
+          "insightTitle": "夜晚的统治者",
+          "insight": "掌管黑暗与正义的审判者和主宰。"
         },
         {
           "source": "weepingWoman",
-          "mirror": "ploranera"
+          "mirror": "ploranera",
+          "insightTitle": "亡者的回声",
+          "insight": "当过去拒绝安息时再次归来的声音。"
         },
         {
           "source": "headlessPriest",
-          "mirror": "ghostOfSanGines"
+          "mirror": "ghostOfSanGines",
+          "insightTitle": "不得安息的灵魂",
+          "insight": "因罪责、职责或未竟之事困在两界之间的灵魂。"
         },
         {
           "source": "fleshlessWoman",
-          "mirror": "girlOnTheCurve"
+          "mirror": "girlOnTheCurve",
+          "insightTitle": "致命显灵",
+          "insight": "好奇、欲望或分心最终引向毁灭的遭遇。"
         },
         {
           "source": "dwarf",
-          "mirror": "trasgu"
+          "mirror": "trasgu",
+          "insightTitle": "家宅捣蛋精灵",
+          "insight": "奖赏尊重、惩罚疏忽的家宅精灵。"
         }
       ],
       "winTitle": "恭喜！",
       "playAgain": "再玩一次",
       "getCopy": "获取本书副本",
-      "getCopyHref": "carouselCards.ebook"
+      "getCopyHref": "carouselCards.ebook",
+      "share": "分享",
+      "shareCopied": "链接已复制"
     }
   }
 }

@@ -1,4 +1,4 @@
-{
+﻿{
   "translations": {
     "menu0": "Accueil",
     "menu1": "À propos",
@@ -357,9 +357,8 @@
     "mTitle": "Légendes Éternelles",
     "memoryGame": {
       "title": "Jeu de mémoire",
-      "subtitle": "Retrouvez chaque paire miroir de Légendes Éternelles.",
+      "subtitle": "Retrouvez chaque paire miroir de Miroirs Espagnols.",
       "newGame": "Nouvelle partie",
-      "peek": "Aperçu",
       "statusLabel": "Statut du jeu",
       "moves": "Coups",
       "matches": "Paires",
@@ -370,49 +369,71 @@
       "pairs": [
         {
           "source": "blackKnight",
-          "mirror": "caveOfSalamanca"
+          "mirror": "caveOfSalamanca",
+          "insightTitle": "Le diable",
+          "insight": "Figures de tentation, de pactes et de transgression morale."
         },
         {
           "source": "siguanaba",
-          "mirror": "midnightWasherwomen"
+          "mirror": "midnightWasherwomen",
+          "insightTitle": "Appâts mortels",
+          "insight": "Tentations qui entraînent les vivants vers des fins irréversibles."
         },
         {
           "source": "goodAndBadCadejo",
-          "mirror": "dip"
+          "mirror": "dip",
+          "insightTitle": "Gardiens et bêtes",
+          "insight": "Protecteurs ou créatures qui font respecter les limites de la nuit."
         },
         {
           "source": "mulus",
-          "mirror": "urco"
+          "mirror": "urco",
+          "insightTitle": "Hérauts et exécuteurs de la mort",
+          "insight": "Présages et êtres qui annoncent le destin avant son arrivée."
         },
         {
           "source": "funeralCortegeOfChalchuapa",
-          "mirror": "holyCompany"
+          "mirror": "holyCompany",
+          "insightTitle": "Processions des morts",
+          "insight": "Apparitions collectives qui brouillent la frontière entre les vivants et les morts."
         },
         {
           "source": "fairJudgeOfTheNight",
-          "mirror": "gaueko"
+          "mirror": "gaueko",
+          "insightTitle": "Maîtres de la nuit",
+          "insight": "Juges et souverains qui gouvernent l’obscurité et la justice."
         },
         {
           "source": "weepingWoman",
-          "mirror": "ploranera"
+          "mirror": "ploranera",
+          "insightTitle": "Échos des morts",
+          "insight": "Voix qui reviennent lorsque le passé refuse de reposer."
         },
         {
           "source": "headlessPriest",
-          "mirror": "ghostOfSanGines"
+          "mirror": "ghostOfSanGines",
+          "insightTitle": "Esprits agités",
+          "insight": "Âmes prises entre deux mondes par la culpabilité, le devoir ou des actes inachevés."
         },
         {
           "source": "fleshlessWoman",
-          "mirror": "girlOnTheCurve"
+          "mirror": "girlOnTheCurve",
+          "insightTitle": "Apparitions mortelles",
+          "insight": "Rencontres où la curiosité, le désir ou la distraction mènent à la ruine."
         },
         {
           "source": "dwarf",
-          "mirror": "trasgu"
+          "mirror": "trasgu",
+          "insightTitle": "Filous domestiques",
+          "insight": "Esprits du foyer qui récompensent le respect et punissent la négligence."
         }
       ],
       "winTitle": "Félicitations !",
       "playAgain": "Rejouer",
       "getCopy": "Obtenir un exemplaire du livre",
-      "getCopyHref": "carouselCards.ebook"
+      "getCopyHref": "carouselCards.ebook",
+      "share": "Partager",
+      "shareCopied": "Lien copié"
     }
   }
 }

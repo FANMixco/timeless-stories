@@ -351,9 +351,8 @@
     "mTitle": "Historias Eternas",
     "memoryGame": {
       "title": "Juego de memoria",
-      "subtitle": "Encuentra cada pareja espejo de Historias Eternas.",
+      "subtitle": "Encuentra cada pareja espejo de Espejos Españoles.",
       "newGame": "Nuevo juego",
-      "peek": "Ver",
       "statusLabel": "Estado del juego",
       "moves": "Movimientos",
       "matches": "Parejas",
@@ -364,49 +363,71 @@
       "pairs": [
         {
           "source": "blackKnight",
-          "mirror": "caveOfSalamanca"
+          "mirror": "caveOfSalamanca",
+          "insightTitle": "El diablo",
+          "insight": "Figuras de tentación, pactos y transgresión moral."
         },
         {
           "source": "siguanaba",
-          "mirror": "midnightWasherwomen"
+          "mirror": "midnightWasherwomen",
+          "insightTitle": "Seducciones fatales",
+          "insight": "Tentaciones que arrastran a los vivos hacia finales irreversibles."
         },
         {
           "source": "goodAndBadCadejo",
-          "mirror": "dip"
+          "mirror": "dip",
+          "insightTitle": "Guardianes y bestias",
+          "insight": "Protectores o criaturas que hacen cumplir los límites de la noche."
         },
         {
           "source": "mulus",
-          "mirror": "urco"
+          "mirror": "urco",
+          "insightTitle": "Heraldos y ejecutores de la muerte",
+          "insight": "Presagios y seres que anuncian el destino antes de que llegue."
         },
         {
           "source": "funeralCortegeOfChalchuapa",
-          "mirror": "holyCompany"
+          "mirror": "holyCompany",
+          "insightTitle": "Procesiones de los muertos",
+          "insight": "Apariciones colectivas que difuminan la línea entre vivos y muertos."
         },
         {
           "source": "fairJudgeOfTheNight",
-          "mirror": "gaueko"
+          "mirror": "gaueko",
+          "insightTitle": "Señoles de la noche",
+          "insight": "Jueces y soberanos que gobiernan la oscuridad y la justicia."
         },
         {
           "source": "weepingWoman",
-          "mirror": "ploranera"
+          "mirror": "ploranera",
+          "insightTitle": "Ecos de los muertos",
+          "insight": "Voces que regresan cuando el pasado se niega a descansar."
         },
         {
           "source": "headlessPriest",
-          "mirror": "ghostOfSanGines"
+          "mirror": "ghostOfSanGines",
+          "insightTitle": "Espíritus errantes",
+          "insight": "Almas atrapadas entre mundos por culpa, deber o actos inconclusos."
         },
         {
           "source": "fleshlessWoman",
-          "mirror": "girlOnTheCurve"
+          "mirror": "girlOnTheCurve",
+          "insightTitle": "Apariciones fatales",
+          "insight": "Encuentros donde la curiosidad, el deseo o la distracción conducen a la ruina."
         },
         {
           "source": "dwarf",
-          "mirror": "trasgu"
+          "mirror": "trasgu",
+          "insightTitle": "Embaucadores domésticos",
+          "insight": "Espíritus del hogar que recompensan el respeto y castigan el descuido."
         }
       ],
       "winTitle": "¡Felicidades!",
       "playAgain": "Jugar de nuevo",
       "getCopy": "Obtén una copia del libro",
-      "getCopyHref": "carouselCards.ebook"
+      "getCopyHref": "carouselCards.ebook",
+      "share": "Compartir",
+      "shareCopied": "Enlace copiado"
     }
   }
 }

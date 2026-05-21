@@ -4,6 +4,22 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title></title>
+    <meta name="description" content="" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="" />
+    <meta property="og:description" content="" />
+    <meta property="og:image" content="https://tstories.federiconavarrete.com/img/preview.jpg" />
+    <meta property="og:url" content="https://tstories.federiconavarrete.com/memory-game.html" />
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:title" content="" />
+    <meta property="twitter:description" content="" />
+    <meta property="twitter:image" content="https://tstories.federiconavarrete.com/img/preview.jpg" />
+    <link rel="canonical" href="https://tstories.federiconavarrete.com/memory-game.html" />
+    <link rel="apple-touch-icon" sizes="180x180" href="img/favicons/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="img/favicons/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="img/favicons/favicon-16x16.png" />
+    <link rel="manifest" href="site.webmanifest" />
+    <script type="application/ld+json" id="memoryGameSchema">{}</script>
     <style>
       :root {
         color-scheme: light;
@@ -68,6 +84,10 @@
         grid-template-columns: 1fr;
         align-items: end;
         margin-bottom: 14px;
+      }
+
+      html[data-embed="true"] .standalone-only {
+        display: none;
       }
 
       .game-title {
@@ -138,6 +158,37 @@
         color: var(--ink);
         font-size: 1.08rem;
         font-weight: 800;
+      }
+
+      .match-insight {
+        display: none;
+        max-width: 760px;
+        margin: 0 auto 12px;
+        padding: 12px 14px;
+        border: 1px solid rgba(18, 113, 91, 0.24);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.82);
+        box-shadow: 0 8px 18px rgba(31, 41, 55, 0.08);
+        animation: insight-in 220ms ease both;
+      }
+
+      .match-insight.is-visible {
+        display: block;
+      }
+
+      .match-insight h2 {
+        margin: 0 0 4px;
+        color: var(--found);
+        font-size: clamp(0.98rem, 2.8vw, 1.22rem);
+        line-height: 1.15;
+      }
+
+      .match-insight p {
+        margin: 0;
+        color: var(--ink);
+        font-size: clamp(0.82rem, 2.2vw, 0.96rem);
+        font-weight: 600;
+        line-height: 1.4;
       }
 
       .board {
@@ -373,6 +424,7 @@
       }
 
       html[data-theme="dark"] .game-button.secondary,
+      html[data-theme="dark"] .match-insight,
       html[data-theme="dark"] .status-item,
       html[data-theme="dark"] .win-card {
         background: var(--panel);
@@ -405,6 +457,7 @@
 
       @media (prefers-reduced-motion: reduce) {
         .card-inner,
+        .match-insight,
         .win-card,
         .firework {
           transition: none;
@@ -439,17 +492,30 @@
           transform: translateY(0) scale(1);
         }
       }
+
+      @keyframes insight-in {
+        0% {
+          opacity: 0;
+          transform: translateY(-6px);
+        }
+
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
     </style>
   </head>
   <body>
     <main class="game-shell" aria-label="">
       <section class="game-top">
         <div>
+          <h1 class="game-title standalone-only" id="gameTitle"></h1>
           <p class="game-subtitle"></p>
         </div>
         <div class="game-actions">
           <button class="game-button" type="button" id="newGameButton"></button>
-          <button class="game-button secondary" type="button" id="peekButton"></button>
+          <button class="game-button secondary" type="button" id="shareButton"></button>
         </div>
       </section>
 
@@ -466,6 +532,11 @@
           <span class="status-label" data-ui-label="time"></span>
           <span class="status-value" id="timeValue">0:00</span>
         </div>
+      </section>
+
+      <section class="match-insight" id="matchInsight" aria-live="polite">
+        <h2 id="matchInsightTitle"></h2>
+        <p id="matchInsightText"></p>
       </section>
 
       <section class="board" id="board" aria-label=""></section>
@@ -496,13 +567,18 @@
       const movesValue = document.getElementById("movesValue");
       const matchesValue = document.getElementById("matchesValue");
       const timeValue = document.getElementById("timeValue");
+      const matchInsight = document.getElementById("matchInsight");
+      const matchInsightTitle = document.getElementById("matchInsightTitle");
+      const matchInsightText = document.getElementById("matchInsightText");
       const winPanel = document.getElementById("winPanel");
       const winTitle = document.getElementById("winTitle");
       const winMessage = document.getElementById("winMessage");
       const newGameButton = document.getElementById("newGameButton");
-      const peekButton = document.getElementById("peekButton");
+      const shareButton = document.getElementById("shareButton");
       const playAgainButton = document.getElementById("playAgainButton");
       const getCopyButton = document.getElementById("getCopyButton");
+      const searchParams = new URLSearchParams(window.location.search);
+      const isEmbedded = searchParams.get("embed") === "1";
       let memoryGame = { pairs: [] };
 
       let firstCard = null;
@@ -529,6 +605,12 @@
         const prefersDark = window.matchMedia?.("(prefers-color-scheme: dark)")?.matches;
         document.documentElement.dataset.theme =
           theme === "dark" || (theme === "system" && prefersDark) ? "dark" : "light";
+      }
+
+      function getShareUrl() {
+        const url = new URL(window.location.href);
+        url.searchParams.delete("embed");
+        return url.href;
       }
 
       function getStoredLanguage() {
@@ -620,10 +702,32 @@
 
       function applyUiCopy() {
         document.title = memoryGame.title || document.title;
+        document.querySelector("meta[name='description']").content = memoryGame.subtitle || "";
+        document.querySelector("meta[property='og:title']").content = memoryGame.title || "";
+        document.querySelector("meta[property='og:description']").content = memoryGame.subtitle || "";
+        document.querySelector("meta[property='og:url']").content = getShareUrl();
+        document.querySelector("meta[property='twitter:title']").content = memoryGame.title || "";
+        document.querySelector("meta[property='twitter:description']").content = memoryGame.subtitle || "";
+        document.querySelector("link[rel='canonical']").href = getShareUrl();
+        document.getElementById("memoryGameSchema").textContent = JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Game",
+          name: memoryGame.title || "",
+          description: memoryGame.subtitle || "",
+          url: getShareUrl(),
+          image: "https://tstories.federiconavarrete.com/img/preview.jpg",
+          inLanguage: document.documentElement.lang,
+          isPartOf: {
+            "@type": "WebSite",
+            name: "Timeless Stories",
+            url: "https://tstories.federiconavarrete.com",
+          },
+        });
+        document.getElementById("gameTitle").textContent = memoryGame.title || "";
         document.querySelector(".game-shell").setAttribute("aria-label", memoryGame.title || "");
         setText(".game-subtitle", memoryGame.subtitle);
         newGameButton.textContent = memoryGame.newGame || "";
-        peekButton.textContent = memoryGame.peek || "";
+        shareButton.textContent = memoryGame.share || "";
         playAgainButton.textContent = memoryGame.playAgain || "";
         getCopyButton.textContent = memoryGame.getCopy || "";
         getCopyButton.href = resolveGameHref(memoryGame.getCopyHref);
@@ -652,18 +756,22 @@
       function buildDeck() {
         const pairs = Array.isArray(memoryGame.pairs) ? memoryGame.pairs : [];
 
-        return pairs.flatMap(({ source, mirror }, pairIndex) => [
+        return pairs.flatMap(({ source, mirror, insightTitle, insight }, pairIndex) => [
           {
             key: source,
             pairId: `pair-${pairIndex}`,
             side: "source",
             name: getLegendName(source),
+            insightTitle,
+            insight,
           },
           {
             key: mirror,
             pairId: `pair-${pairIndex}`,
             side: "mirror",
             name: getLegendName(mirror),
+            insightTitle,
+            insight,
           },
         ]);
       }
@@ -725,6 +833,8 @@
         card.type = "button";
         card.dataset.pairId = character.pairId;
         card.dataset.character = character.name;
+        card.dataset.insightTitle = character.insightTitle || "";
+        card.dataset.insight = character.insight || "";
         card.setAttribute("aria-label", memoryGame.hiddenCard || "");
 
         card.innerHTML = `
@@ -765,6 +875,7 @@
         firstCard.disabled = true;
         secondCard.disabled = true;
         matches += 1;
+        showMatchInsight(firstCard);
         updateStatus();
 
         if (matches === getPairCount()) {
@@ -777,6 +888,15 @@
         }
 
         resetTurn();
+      }
+
+      function showMatchInsight(card) {
+        matchInsightTitle.textContent = card.dataset.insightTitle || "";
+        matchInsightText.textContent = card.dataset.insight || "";
+        matchInsight.classList.toggle(
+          "is-visible",
+          Boolean(card.dataset.insightTitle || card.dataset.insight),
+        );
       }
 
       function flipCard(card) {
@@ -814,6 +934,9 @@
         moves = 0;
         matches = 0;
         elapsedSeconds = 0;
+        matchInsight.classList.remove("is-visible");
+        matchInsightTitle.textContent = "";
+        matchInsightText.textContent = "";
         winPanel.classList.remove("is-visible");
         winMessage.textContent = "";
         updateStatus();
@@ -822,26 +945,33 @@
         board.replaceChildren(...deck.map(createCard));
       }
 
-      function peekCards() {
-        if (lockBoard) {
+      async function shareGame() {
+        const shareData = {
+          title: memoryGame.title || document.title,
+          text: memoryGame.subtitle || "",
+          url: getShareUrl(),
+        };
+
+        if (navigator.share) {
+          await navigator.share(shareData);
           return;
         }
 
-        const hiddenCards = [...board.querySelectorAll(".card:not(.is-matched)")];
-        hiddenCards.forEach((card) => card.classList.add("is-flipped"));
+        await navigator.clipboard?.writeText(shareData.url);
+        const originalLabel = memoryGame.share || "";
+        shareButton.textContent = memoryGame.shareCopied || originalLabel;
         window.setTimeout(() => {
-          hiddenCards.forEach((card) => {
-            if (card !== firstCard && card !== secondCard) {
-              card.classList.remove("is-flipped");
-            }
-          });
-        }, 1200);
+          shareButton.textContent = originalLabel;
+        }, 1600);
       }
 
       newGameButton.addEventListener("click", newGame);
-      peekButton.addEventListener("click", peekCards);
+      shareButton.addEventListener("click", () => {
+        shareGame().catch(() => {});
+      });
       playAgainButton.addEventListener("click", newGame);
       applyTheme();
+      document.documentElement.dataset.embed = String(isEmbedded);
       window.matchMedia?.("(prefers-color-scheme: dark)")?.addEventListener("change", applyTheme);
       loadTranslations().finally(() => {
         applyUiCopy();
