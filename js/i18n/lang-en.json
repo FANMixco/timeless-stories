@@ -1,4 +1,4 @@
-﻿{
+{
   "translations": {
     "menu0": "Home",
     "menu1": "About",
@@ -433,7 +433,8 @@
       "getCopy": "Get a copy of the book",
       "getCopyHref": "carouselCards.ebook",
       "share": "Share",
-      "shareCopied": "Link copied"
+      "shareCopied": "Link copied",
+      "shareText": "I just matched the Salvadoran and Spanish mirror legends. Can you find all 10 pairs?"
     }
   }
 }
