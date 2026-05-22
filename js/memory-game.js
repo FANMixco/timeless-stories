@@ -201,6 +201,24 @@ function getOriginFlag(side) {
   return label.match(/[\u{1F1E6}-\u{1F1FF}]{2}/u)?.[0] || "";
 }
 
+function getPairIcon(source, mirror) {
+  const pairKey = [source, mirror].sort().join("|");
+  const pairIcons = {
+    "blackKnight|caveOfSalamanca": "devil",
+    "midnightWasherwomen|siguanaba": "masks",
+    "dip|goodAndBadCadejo": "paw",
+    "ghostOfSanGines|headlessPriest": "cross",
+    "fleshlessWoman|girlOnTheCurve": "routes",
+    "funeralCortegeOfChalchuapa|holyCompany": "candle",
+    "fairJudgeOfTheNight|gaueko": "night",
+    "ploranera|weepingWoman": "cry",
+    "dwarf|trasgu": "wizard",
+    "mulus|urco": "tomb",
+  };
+
+  return pairIcons[pairKey] || "masks";
+}
+
 function getPairCount() {
   return Array.isArray(memoryGame.pairs) ? memoryGame.pairs.length : 0;
 }
@@ -208,26 +226,32 @@ function getPairCount() {
 function buildDeck() {
   const pairs = Array.isArray(memoryGame.pairs) ? memoryGame.pairs : [];
 
-  return pairs.flatMap(({ source, mirror, insightTitle, insight }, pairIndex) => [
-    {
-      key: source,
-      pairId: `pair-${pairIndex}`,
-      side: "source",
-      name: getLegendName(source),
-      desc: getLegendDescription(source),
-      insightTitle,
-      insight,
-    },
-    {
-      key: mirror,
-      pairId: `pair-${pairIndex}`,
-      side: "mirror",
-      name: getLegendName(mirror),
-      desc: getLegendDescription(mirror),
-      insightTitle,
-      insight,
-    },
-  ]);
+  return pairs.flatMap(({ source, mirror, insightTitle, insight }, pairIndex) => {
+    const icon = getPairIcon(source, mirror);
+
+    return [
+      {
+        key: source,
+        pairId: `pair-${pairIndex}`,
+        side: "source",
+        name: getLegendName(source),
+        desc: getLegendDescription(source),
+        icon,
+        insightTitle,
+        insight,
+      },
+      {
+        key: mirror,
+        pairId: `pair-${pairIndex}`,
+        side: "mirror",
+        name: getLegendName(mirror),
+        desc: getLegendDescription(mirror),
+        icon,
+        insightTitle,
+        insight,
+      },
+    ];
+  });
 }
 
 function shuffle(items) {
@@ -299,7 +323,7 @@ function createCard(character, index) {
       </span>
       <span class="card-face card-front">
         <span class="character-mark">
-          <span class="character-initials">${getInitials(character.name)}</span>
+          <i class="character-icon icon-${character.icon}" aria-hidden="true"></i>
           <span class="character-flag" aria-hidden="true">${getOriginFlag(character.side)}</span>
         </span>
         <span class="character-title">

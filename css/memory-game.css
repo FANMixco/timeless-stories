@@ -300,6 +300,10 @@ html[data-theme="dark"] .game-button.secondary:focus-visible {
   font-size: clamp(0.88rem, 3vw, 1.25rem);
 }
 
+.character-icon {
+  font-size: clamp(1.35rem, 4.4vw, 1.95rem);
+}
+
 .character-name {
   width: 100%;
   color: var(--ink);
@@ -320,6 +324,9 @@ html[data-theme="dark"] .game-button.secondary:focus-visible {
 
 .character-flag {
   display: none;
+  position: absolute;
+  right: -3px;
+  bottom: 0;
   line-height: 1;
 }
 
@@ -635,17 +642,17 @@ html[data-theme="dark"] .card.is-matched .card-front {
   }
 
   .character-name {
-    font-size: clamp(0.78rem, 3.25vw, 1rem);
+    font-size: clamp(0.72rem, 3vw, 0.94rem);
     line-height: 1.08;
+  }
+
+  .character-icon {
+    font-size: clamp(1.05rem, 6vw, 1.45rem);
   }
 
   .character-flag {
     display: block;
-    font-size: clamp(1rem, 5vw, 1.35rem);
-  }
-
-  .character-initials {
-    display: none;
+    font-size: clamp(0.72rem, 2.8vw, 0.9rem);
   }
 
   .character-origin {
