@@ -605,6 +605,10 @@ html[data-theme="dark"] .card.is-matched .card-front {
 }
 
 @media (max-width: 640px) {
+  .board {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
   .legend-toast {
     top: auto;
     right: 14px;
