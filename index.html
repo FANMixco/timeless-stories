@@ -963,7 +963,7 @@ https://goo.gl/forms/JArck4uzbGGmTuG72
       aria-hidden="true"
     >
       <div class="modal-dialog modal-fullscreen">
-        <div class="modal-content">
+        <div class="modal-content" style="height: 100dvh">
           <div class="modal-header">
             <h3 class="modal-title" id="memoryGameModalTitle"></h3>
             <button
@@ -973,13 +973,13 @@ https://goo.gl/forms/JArck4uzbGGmTuG72
               aria-label="Close"
             ></button>
           </div>
-          <div class="modal-body p-0">
+          <div class="modal-body p-0" style="min-height: 0; overflow: hidden">
             <iframe
-              src="memory-game.html?embed=1&v=20260522-finish-toast"
+              src="memory-game.html?embed=1&v=20260522-mobile-viewport"
               title="Memory game"
               allow="web-share; clipboard-write"
               loading="lazy"
-              style="display: block; width: 100%; height: calc(100vh - 72px)"
+              style="display: block; width: 100%; height: 100%; border: 0"
             ></iframe>
           </div>
         </div>

@@ -35,6 +35,10 @@ body {
   min-height: 100%;
 }
 
+html {
+  min-height: 100dvh;
+}
+
 body {
   margin: 0;
   background:
@@ -53,6 +57,7 @@ button {
   width: min(100%, 900px);
   margin: 0 auto;
   padding: clamp(12px, 2.4vw, 22px);
+  padding-bottom: calc(clamp(12px, 2.4vw, 22px) + env(safe-area-inset-bottom, 0px));
 }
 
 .game-top {
@@ -358,7 +363,7 @@ html[data-theme="dark"] .game-button.secondary:focus-visible {
 .legend-toast {
   position: fixed;
   right: max(14px, calc((100vw - 900px) / 2 + 14px));
-  bottom: 16px;
+  bottom: calc(16px + env(safe-area-inset-bottom, 0px));
   z-index: 30;
   display: grid;
   grid-template-columns: 1fr auto;
@@ -585,6 +590,15 @@ html[data-theme="dark"] .card.is-matched .card-front {
 @media (min-width: 820px) {
   .game-shell {
     padding: 22px;
+    padding-bottom: calc(22px + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+@media (max-width: 640px) {
+  .legend-toast {
+    right: 14px;
+    left: 14px;
+    width: auto;
   }
 }
 
