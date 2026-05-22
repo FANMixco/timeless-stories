@@ -990,6 +990,11 @@ th {
         padding: 0 32px;
     }
 
+    .book-card i {
+        font-size: 3rem !important;
+        margin-bottom: 1.15rem !important;
+    }
+
     .institutional-record-card {
         min-height: 0;
         padding: 22px;
@@ -1183,10 +1188,10 @@ h6,
 
     .eBPriceX {
         /*color: #fff;*/
-        background: -moz-linear-gradient(90deg, #EF9A9A 0%, #990000 100%);
-        background: -webkit-linear-gradient(90deg, #EF9A9A 0%, #990000 100%);
-        background: -ms-linear-gradient(90deg, #EF9A9A 0%, #990000 100%);
-        background: linear-gradient(90deg, #EF9A9A 0%, #990000 100%);
+        background: -moz-linear-gradient(90deg, #EF5350 0%, #990000 100%);
+        background: -webkit-linear-gradient(90deg, #EF5350 0%, #990000 100%);
+        background: -ms-linear-gradient(90deg, #EF5350 0%, #990000 100%);
+        background: linear-gradient(90deg, #EF5350 0%, #990000 100%);
         border: 1px solid transparent;
     }
 
@@ -1355,10 +1360,10 @@ h6,
     }
 
     .single-price:hover .price-bottom-x {
-        background: -moz-linear-gradient(90deg, #EF9A9A 0%, #990000 100%)!important;
-        background: -webkit-linear-gradient(90deg, #EF9A9A 0%, #990000 100%)!important;
-        background: -ms-linear-gradient(90deg, #EF9A9A 0%, #990000 100%)!important;
-        background: linear-gradient(90deg, #EF9A9A 0%, #990000 100%)!important;
+        background: -moz-linear-gradient(90deg, #EF5350 0%, #990000 100%)!important;
+        background: -webkit-linear-gradient(90deg, #EF5350 0%, #990000 100%)!important;
+        background: -ms-linear-gradient(90deg, #EF5350 0%, #990000 100%)!important;
+        background: linear-gradient(90deg, #EF5350 0%, #990000 100%)!important;
     }
 
     .footer-social a:hover i {
@@ -4102,7 +4107,7 @@ h6 {
     }
 
     html:not([data-theme="light"]) .single-price .eBPriceX {
-        background: linear-gradient(90deg, #EF9A9A 0%, #990000 100%);
+        background: linear-gradient(90deg, #EF5350 0%, #990000 100%);
         border-color: transparent;
     }
 
@@ -4303,7 +4308,7 @@ h6 {
     }
 
     html[data-theme="dark"] .single-price .eBPriceX {
-        background: linear-gradient(90deg, #EF9A9A 0%, #990000 100%);
+        background: linear-gradient(90deg, #EF5350 0%, #990000 100%);
         border-color: transparent;
     }
 
@@ -4415,7 +4420,7 @@ html[data-theme="dark"] #mContactUs .btn-close {
     }
 
     html:not([data-theme="light"]) .single-price:hover .price-bottom-x {
-        background: linear-gradient(90deg, #EF9A9A 0%, #990000 100%) !important;
+        background: linear-gradient(90deg, #EF5350 0%, #990000 100%) !important;
     }
 
     html:not([data-theme="light"]) .single-price:hover .price-bottom .h1 {
@@ -4468,7 +4473,7 @@ html[data-theme="dark"] #mContactUs .btn-close {
     }
 
     html[data-theme="dark"] .single-price:hover .price-bottom-x {
-        background: linear-gradient(90deg, #EF9A9A 0%, #990000 100%) !important;
+        background: linear-gradient(90deg, #EF5350 0%, #990000 100%) !important;
     }
 
     html[data-theme="dark"] .single-price:hover .price-bottom .h1 {
