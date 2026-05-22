@@ -21,6 +21,7 @@ const winTitle = document.getElementById("winTitle");
 const winMessage = document.getElementById("winMessage");
 const newGameButton = document.getElementById("newGameButton");
 const shareButton = document.getElementById("shareButton");
+const hintButton = document.getElementById("hintButton");
 const playAgainButton = document.getElementById("playAgainButton");
 const winShareButton = document.getElementById("winShareButton");
 const closeWinButton = document.getElementById("closeWinButton");
@@ -165,6 +166,7 @@ function applyUiCopy() {
   setText(".game-subtitle", memoryGame.subtitle);
   newGameButton.textContent = memoryGame.newGame || "";
   shareButton.textContent = memoryGame.share || "";
+  hintButton.textContent = memoryGame.hint || "Hint";
   playAgainButton.textContent = memoryGame.playAgain || "";
   winShareButton.textContent = memoryGame.share || "";
   closeWinButton.setAttribute("aria-label", memoryGame.close || "Close");
@@ -392,14 +394,14 @@ function hideLegendToast() {
   }
 }
 
-function showLegendToast(card) {
-  if (!card.dataset.description) {
+function showToast(title, text) {
+  if (!text) {
     hideLegendToast();
     return;
   }
 
-  legendToastTitle.textContent = card.dataset.character || "";
-  legendToastText.textContent = card.dataset.description;
+  legendToastTitle.textContent = title || "";
+  legendToastText.textContent = text;
   legendToast.hidden = false;
 
   if (toastTimer) {
@@ -407,6 +409,10 @@ function showLegendToast(card) {
   }
 
   toastTimer = window.setTimeout(hideLegendToast, 5200);
+}
+
+function showLegendToast(card) {
+  showToast(card.dataset.character || "", card.dataset.description || "");
 }
 
 function setPreviewRewardVisibility(shouldShow) {
@@ -495,6 +501,9 @@ async function shareGame(button = shareButton) {
 newGameButton.addEventListener("click", newGame);
 shareButton.addEventListener("click", () => {
   shareGame(shareButton).catch(() => {});
+});
+hintButton.addEventListener("click", () => {
+  showToast(memoryGame.hint || "Hint", memoryGame.hintText || "Pay attention to the icons.");
 });
 winShareButton.addEventListener("click", () => {
   shareGame(winShareButton).catch(() => {});

@@ -433,6 +433,8 @@
       "getCopy": "Obtenir un exemplaire du livre",
       "getCopyHref": "carouselCards.ebook",
       "share": "Partager",
+      "hint": "Indice",
+      "hintText": "Faites attention aux icônes. Les cartes associées partagent le même symbole.",
       "shareCopied": "Lien copié",
       "shareText": "Je viens d’associer les légendes miroirs du Salvador et d’Espagne. Saurez-vous retrouver les 10 paires ?",
       "close": "Fermer",
