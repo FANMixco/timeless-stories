@@ -287,8 +287,10 @@ html[data-theme="dark"] .game-button.secondary:focus-visible {
 }
 
 .character-mark {
-  display: grid;
-  place-items: center;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: clamp(34px, 7.6vw, 54px);
   height: clamp(34px, 7.6vw, 54px);
   border-radius: 50%;
@@ -305,6 +307,20 @@ html[data-theme="dark"] .game-button.secondary:focus-visible {
   font-weight: 800;
   line-height: 1.12;
   overflow-wrap: anywhere;
+}
+
+.character-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  width: 100%;
+  min-width: 0;
+}
+
+.character-flag {
+  display: none;
+  line-height: 1;
 }
 
 .character-origin {
@@ -607,6 +623,33 @@ html[data-theme="dark"] .card.is-matched .card-front {
 @media (max-width: 640px) {
   .board {
     grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .card-face {
+    gap: 5px;
+  }
+
+  .character-mark {
+    width: clamp(34px, 12vw, 52px);
+    height: clamp(34px, 12vw, 52px);
+  }
+
+  .character-name {
+    font-size: clamp(0.78rem, 3.25vw, 1rem);
+    line-height: 1.08;
+  }
+
+  .character-flag {
+    display: block;
+    font-size: clamp(1rem, 5vw, 1.35rem);
+  }
+
+  .character-initials {
+    display: none;
+  }
+
+  .character-origin {
+    display: none;
   }
 
   .legend-toast {

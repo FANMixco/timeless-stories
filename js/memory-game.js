@@ -196,6 +196,11 @@ function getOriginLabel(side) {
     : translations?.country2 || "";
 }
 
+function getOriginFlag(side) {
+  const label = getOriginLabel(side);
+  return label.match(/[\u{1F1E6}-\u{1F1FF}]{2}/u)?.[0] || "";
+}
+
 function getPairCount() {
   return Array.isArray(memoryGame.pairs) ? memoryGame.pairs.length : 0;
 }
@@ -293,8 +298,13 @@ function createCard(character, index) {
         <span>TS</span>
       </span>
       <span class="card-face card-front">
-        <span class="character-mark">${getInitials(character.name)}</span>
-        <span class="character-name">${character.name}</span>
+        <span class="character-mark">
+          <span class="character-initials">${getInitials(character.name)}</span>
+          <span class="character-flag" aria-hidden="true">${getOriginFlag(character.side)}</span>
+        </span>
+        <span class="character-title">
+          <span class="character-name">${character.name}</span>
+        </span>
         <span class="character-origin">${getOriginLabel(character.side)}</span>
       </span>
     </span>
