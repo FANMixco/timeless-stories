@@ -38,6 +38,7 @@ let matches = 0;
 let elapsedSeconds = 0;
 let timer = null;
 let toastTimer = null;
+let gameCompleted = false;
 let translations = null;
 let deck = [];
 
@@ -327,6 +328,8 @@ function markMatch() {
 
   if (matches === getPairCount()) {
     stopTimer();
+    gameCompleted = true;
+    board.classList.add("is-complete");
     setPreviewRewardVisibility(elapsedSeconds < previewRewardThresholdSeconds);
     winMessage.textContent = (memoryGame.win || "")
       .replace("{pairs}", getPairCount())
@@ -380,7 +383,7 @@ function setPreviewRewardVisibility(shouldShow) {
 function flipCard(card) {
   if (card.classList.contains("is-matched")) {
     showMatchInsight(card);
-    if (matches === getPairCount()) {
+    if (gameCompleted) {
       showLegendToast(card);
     }
     return;
@@ -420,6 +423,8 @@ function newGame() {
   moves = 0;
   matches = 0;
   elapsedSeconds = 0;
+  gameCompleted = false;
+  board.classList.remove("is-complete");
   matchInsight.classList.remove("is-visible");
   matchInsightTitle.textContent = "";
   matchInsightText.textContent = "";

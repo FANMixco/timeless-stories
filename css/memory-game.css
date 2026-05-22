@@ -277,6 +277,15 @@ html[data-theme="dark"] .game-button.secondary:focus-visible {
   border-color: rgba(18, 113, 91, 0.5);
 }
 
+.board.is-complete .card.is-matched {
+  cursor: pointer;
+}
+
+.board.is-complete .card.is-matched:hover .card-inner,
+.board.is-complete .card.is-matched:focus-visible .card-inner {
+  box-shadow: 0 0 0 3px rgba(18, 113, 91, 0.24);
+}
+
 .character-mark {
   display: grid;
   place-items: center;
@@ -362,14 +371,15 @@ html[data-theme="dark"] .game-button.secondary:focus-visible {
 
 .legend-toast {
   position: fixed;
-  right: max(14px, calc((100vw - 900px) / 2 + 14px));
-  bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  top: calc(14px + env(safe-area-inset-top, 0px));
+  left: 50%;
   z-index: 30;
   display: grid;
   grid-template-columns: 1fr auto;
   gap: 12px;
   align-items: start;
   width: min(calc(100vw - 28px), 420px);
+  transform: translateX(-50%);
   padding: 13px 14px;
   border: 1px solid rgba(1, 87, 155, 0.24);
   border-radius: 8px;
@@ -596,9 +606,12 @@ html[data-theme="dark"] .card.is-matched .card-front {
 
 @media (max-width: 640px) {
   .legend-toast {
+    top: auto;
     right: 14px;
+    bottom: calc(16px + env(safe-area-inset-bottom, 0px));
     left: 14px;
     width: auto;
+    transform: none;
   }
 }
 
@@ -655,11 +668,25 @@ html[data-theme="dark"] .card.is-matched .card-front {
 @keyframes toast-in {
   0% {
     opacity: 0;
-    transform: translateY(8px);
+    transform: translate(-50%, -8px);
   }
 
   100% {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate(-50%, 0);
+  }
+}
+
+@media (max-width: 640px) {
+  @keyframes toast-in {
+    0% {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 }
