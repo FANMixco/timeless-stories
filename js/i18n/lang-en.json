@@ -430,6 +430,8 @@
       ],
       "winTitle": "Congratulations!",
       "playAgain": "Play again",
+      "viewLegends": "View all legends",
+      "legendsTitle": "All mirrored legends",
       "getCopy": "Get a copy of the book",
       "getCopyHref": "carouselCards.ebook",
       "share": "Share",

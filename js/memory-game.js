@@ -20,14 +20,22 @@ const legendToastClose = document.getElementById("legendToastClose");
 const winPanel = document.getElementById("winPanel");
 const winTitle = document.getElementById("winTitle");
 const winMessage = document.getElementById("winMessage");
+const legendsPanel = document.getElementById("legendsPanel");
+const legendsPanelTitle = document.getElementById("legendsPanelTitle");
+const legendsList = document.getElementById("legendsList");
 const newGameButton = document.getElementById("newGameButton");
 const shareButton = document.getElementById("shareButton");
 const hintButton = document.getElementById("hintButton");
+const topGetCopyButton = document.getElementById("topGetCopyButton");
+const topViewLegendsButton = document.getElementById("topViewLegendsButton");
 const playAgainButton = document.getElementById("playAgainButton");
+const viewLegendsButton = document.getElementById("viewLegendsButton");
 const winShareButton = document.getElementById("winShareButton");
 const closeWinButton = document.getElementById("closeWinButton");
+const closeLegendsButton = document.getElementById("closeLegendsButton");
 const previewRewardButton = document.getElementById("previewRewardButton");
 const getCopyButton = document.getElementById("getCopyButton");
+const legendsGetCopyButton = document.getElementById("legendsGetCopyButton");
 const searchParams = new URLSearchParams(window.location.search);
 const isEmbedded = searchParams.get("embed") === "1";
 let memoryGame = { pairs: [] };
@@ -153,6 +161,25 @@ function setText(selector, value) {
   }
 }
 
+function setElementText(element, value) {
+  if (element && value !== undefined) {
+    element.textContent = value;
+  }
+}
+
+function setElementHref(element, value) {
+  if (element) {
+    element.href = value || "";
+  }
+}
+
+function setElementHidden(element, shouldHide) {
+  if (element) {
+    element.hidden = shouldHide;
+    element.toggleAttribute("hidden", shouldHide);
+  }
+}
+
 function applyUiCopy() {
   document.title = memoryGame.title || document.title;
   document.querySelector("meta[name='description']").content = memoryGame.subtitle || "";
@@ -168,16 +195,24 @@ function applyUiCopy() {
   newGameButton.textContent = memoryGame.newGame || "";
   shareButton.textContent = memoryGame.share || "";
   hintButton.textContent = memoryGame.hint || "Hint";
+  setElementText(topGetCopyButton, memoryGame.getCopy || "Get a copy of the book");
+  setElementHref(topGetCopyButton, resolveGameHref(memoryGame.getCopyHref));
+  setElementText(topViewLegendsButton, memoryGame.viewLegends || "View all legends");
   playAgainButton.textContent = memoryGame.playAgain || "";
+  setElementText(viewLegendsButton, memoryGame.viewLegends || "View all legends");
   winShareButton.textContent = memoryGame.share || "";
   closeWinButton.setAttribute("aria-label", memoryGame.close || "Close");
+  closeLegendsButton?.setAttribute("aria-label", memoryGame.close || "Close");
   legendToastClose.setAttribute("aria-label", memoryGame.close || "Close");
   previewRewardButton.textContent = memoryGame.previewReward || "Preview the book";
   previewRewardButton.href =
     resolveGameHref(memoryGame.previewRewardHref) || "https://bit.ly/4dyjiZz";
-  getCopyButton.textContent = memoryGame.getCopy || "";
+  getCopyButton.textContent = memoryGame.getCopy || "Get a copy of the book";
   getCopyButton.href = resolveGameHref(memoryGame.getCopyHref);
+  setElementText(legendsGetCopyButton, memoryGame.getCopy || "Get a copy of the book");
+  setElementHref(legendsGetCopyButton, resolveGameHref(memoryGame.getCopyHref));
   winTitle.textContent = memoryGame.winTitle || "";
+  setElementText(legendsPanelTitle, memoryGame.legendsTitle || "");
   document.querySelector(".status-grid").setAttribute("aria-label", memoryGame.statusLabel || "");
   setText('[data-ui-label="moves"]', memoryGame.moves);
   setText('[data-ui-label="matches"]', memoryGame.matches);
@@ -367,6 +402,7 @@ function markMatch() {
     stopTimer();
     gameCompleted = true;
     board.classList.add("is-complete");
+    setTopLegendActionVisibility(true);
     setPreviewRewardVisibility(elapsedSeconds < previewRewardThresholdSeconds);
     winMessage.textContent = (memoryGame.win || "")
       .replace("{pairs}", getPairCount())
@@ -385,6 +421,49 @@ function showMatchInsight(card) {
     "is-visible",
     Boolean(card.dataset.insightTitle || card.dataset.insight),
   );
+}
+
+function createLegendCell(characterKey, side) {
+  const cell = document.createElement("article");
+  cell.className = "legend-cell";
+  const name = getLegendName(characterKey);
+  const description = getLegendDescription(characterKey);
+
+  cell.innerHTML = `
+    <span class="legend-copy">
+      <strong>${name}</strong>
+      <span>${getOriginLabel(side)}</span>
+      <p>${description}</p>
+    </span>
+  `;
+
+  return cell;
+}
+
+function renderLegendsList() {
+  const pairs = Array.isArray(memoryGame.pairs) ? memoryGame.pairs : [];
+  const rows = pairs.map(({ source, mirror, insightTitle, insight }) => {
+    const row = document.createElement("section");
+    const icon = getPairIcon(source, mirror);
+    row.className = "legend-row";
+    const category = document.createElement("header");
+    category.className = "legend-category";
+    category.innerHTML = `
+      <strong>${insightTitle || ""}</strong>
+      <span>${insight || ""}</span>
+      <span class="legend-mark">
+        <i class="character-icon icon-${icon}" aria-hidden="true"></i>
+      </span>
+    `;
+    row.append(
+      category,
+      createLegendCell(source, "source"),
+      createLegendCell(mirror, "mirror"),
+    );
+    return row;
+  });
+
+  legendsList?.replaceChildren(...rows);
 }
 
 function hideLegendToast() {
@@ -419,6 +498,11 @@ function showLegendToast(card) {
 function setPreviewRewardVisibility(shouldShow) {
   previewRewardButton.hidden = !shouldShow;
   previewRewardButton.toggleAttribute("hidden", !shouldShow);
+}
+
+function setTopLegendActionVisibility(shouldShow) {
+  setElementHidden(topGetCopyButton, !shouldShow);
+  setElementHidden(topViewLegendsButton, !shouldShow);
 }
 
 function flipCard(card) {
@@ -470,13 +554,24 @@ function newGame() {
   matchInsightTitle.textContent = "";
   matchInsightText.textContent = "";
   winPanel.classList.remove("is-visible");
+  legendsPanel?.classList.remove("is-visible");
+  setTopLegendActionVisibility(false);
   setPreviewRewardVisibility(false);
   hideLegendToast();
   winMessage.textContent = "";
   updateStatus();
 
   deck = shuffle(buildDeck());
+  renderLegendsList();
   board.replaceChildren(...deck.map(createCard));
+}
+
+function openLegendsPanel() {
+  if (!gameCompleted) {
+    return;
+  }
+
+  legendsPanel?.classList.add("is-visible");
 }
 
 async function shareGame(button = shareButton) {
@@ -511,6 +606,11 @@ winShareButton.addEventListener("click", () => {
 });
 closeWinButton.addEventListener("click", () => {
   winPanel.classList.remove("is-visible");
+});
+viewLegendsButton?.addEventListener("click", openLegendsPanel);
+topViewLegendsButton?.addEventListener("click", openLegendsPanel);
+closeLegendsButton?.addEventListener("click", () => {
+  legendsPanel?.classList.remove("is-visible");
 });
 legendToastClose.addEventListener("click", hideLegendToast);
 playAgainButton.addEventListener("click", newGame);

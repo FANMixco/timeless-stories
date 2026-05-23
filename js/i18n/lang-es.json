@@ -424,6 +424,8 @@
       ],
       "winTitle": "¡Felicidades!",
       "playAgain": "Jugar de nuevo",
+      "viewLegends": "Ver todas las leyendas",
+      "legendsTitle": "Todas las leyendas espejo",
       "getCopy": "Obtén una copia del libro",
       "getCopyHref": "carouselCards.ebook",
       "share": "Compartir",

@@ -104,6 +104,10 @@ html[data-embed="true"] .standalone-only {
   box-shadow: none;
 }
 
+.game-button[hidden] {
+  display: none;
+}
+
 .game-button.secondary {
   background: #ffffff;
   color: var(--accent-dark);
@@ -341,7 +345,8 @@ html[data-theme="dark"] .game-button.secondary:focus-visible {
   display: none !important;
 }
 
-.win-panel {
+.win-panel,
+.legends-panel {
   position: fixed;
   inset: 0;
   z-index: 20;
@@ -352,11 +357,13 @@ html[data-theme="dark"] .game-button.secondary:focus-visible {
   overflow: hidden;
 }
 
-.win-panel.is-visible {
+.win-panel.is-visible,
+.legends-panel.is-visible {
   display: grid;
 }
 
-.win-card {
+.win-card,
+.legends-card {
   position: relative;
   z-index: 2;
   width: min(100%, 420px);
@@ -368,6 +375,134 @@ html[data-theme="dark"] .game-button.secondary:focus-visible {
   text-align: center;
   box-shadow: var(--shadow);
   animation: win-pop 260ms ease both;
+}
+
+.legends-panel {
+  align-items: stretch;
+  padding: 12px;
+  overflow-y: auto;
+}
+
+.legends-card {
+  width: min(100%, 860px);
+  max-height: calc(100dvh - 24px);
+  margin: auto;
+  overflow: auto;
+  text-align: left;
+}
+
+.legends-card h2 {
+  margin: 0 44px 18px 0;
+  color: var(--found);
+  font-size: clamp(1.35rem, 4vw, 2rem);
+  line-height: 1.1;
+}
+
+.legends-list {
+  display: grid;
+  gap: 10px;
+}
+
+.legends-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 14px;
+}
+
+.legends-footer .game-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  min-width: min(100%, 240px);
+  text-decoration: none;
+}
+
+.legend-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  padding: 10px;
+  border: 1px solid rgba(1, 87, 155, 0.16);
+  border-radius: 8px;
+  background: rgba(255, 250, 240, 0.48);
+}
+
+.legend-category {
+  grid-column: 1 / -1;
+  padding: 4px 6px 10px;
+  text-align: center;
+}
+
+.legend-category strong {
+  display: block;
+  color: var(--found);
+  font-size: clamp(1.08rem, 2.8vw, 1.45rem);
+  line-height: 1.12;
+}
+
+.legend-category > span:not(.legend-mark) {
+  display: block;
+  max-width: 720px;
+  margin: 5px auto 0;
+  color: var(--ink);
+  font-size: clamp(0.82rem, 2vw, 0.98rem);
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.legend-category .legend-mark {
+  width: 58px;
+  height: 58px;
+  margin: 12px auto 0;
+}
+
+.legend-category .character-icon {
+  font-size: 1.85rem;
+}
+
+.legend-cell {
+  display: block;
+  min-width: 0;
+  padding: 2px 4px;
+}
+
+.legend-mark {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(216, 155, 33, 0.2);
+  color: var(--accent-dark);
+}
+
+.legend-copy {
+  min-width: 0;
+}
+
+.legend-copy strong {
+  display: block;
+  color: var(--ink);
+  font-size: 0.92rem;
+  line-height: 1.18;
+}
+
+.legend-copy span {
+  display: block;
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.legend-copy p {
+  margin: 6px 0 0;
+  color: var(--ink);
+  font-size: 0.8rem;
+  font-weight: 600;
+  line-height: 1.35;
 }
 
 .win-close {
@@ -512,7 +647,9 @@ html[data-theme="dark"] .game-button.secondary:focus-visible {
   color: var(--accent);
 }
 
-#getCopyButton {
+#getCopyButton,
+#topGetCopyButton,
+#legendsGetCopyButton {
   background: #f2c744;
   color: #111820;
   border: 0;
@@ -530,13 +667,19 @@ html[data-theme="dark"] .game-button.secondary:focus-visible {
   background: #0f604d;
 }
 
-html[data-theme="light"] #getCopyButton {
+html[data-theme="light"] #getCopyButton,
+html[data-theme="light"] #topGetCopyButton,
+html[data-theme="light"] #legendsGetCopyButton {
   background: #e3b63c;
   box-shadow: none;
 }
 
 html[data-theme="light"] #getCopyButton:hover,
-html[data-theme="light"] #getCopyButton:focus-visible {
+html[data-theme="light"] #getCopyButton:focus-visible,
+html[data-theme="light"] #topGetCopyButton:hover,
+html[data-theme="light"] #topGetCopyButton:focus-visible,
+html[data-theme="light"] #legendsGetCopyButton:hover,
+html[data-theme="light"] #legendsGetCopyButton:focus-visible {
   background: #d9ab30;
 }
 
@@ -545,7 +688,9 @@ html[data-theme="dark"] .legend-toast {
   border-color: var(--line);
 }
 
-#getCopyButton:focus-visible {
+#getCopyButton:focus-visible,
+#topGetCopyButton:focus-visible,
+#legendsGetCopyButton:focus-visible {
   outline: 3px solid var(--accent-dark);
   outline-offset: 3px;
 }
@@ -597,8 +742,14 @@ html[data-theme="dark"] .legend-toast {
 
 html[data-theme="dark"] .match-insight,
 html[data-theme="dark"] .status-item,
-html[data-theme="dark"] .win-card {
+html[data-theme="dark"] .win-card,
+html[data-theme="dark"] .legends-card {
   background: var(--panel);
+  border-color: var(--line);
+}
+
+html[data-theme="dark"] .legend-row {
+  background: rgba(255, 255, 255, 0.03);
   border-color: var(--line);
 }
 
@@ -666,6 +817,37 @@ html[data-theme="dark"] .card.is-matched .card-front {
     left: 14px;
     width: auto;
     transform: none;
+  }
+
+  .legends-panel {
+    padding: 0;
+  }
+
+  .legends-card {
+    width: 100%;
+    min-height: 100dvh;
+    max-height: none;
+    border-radius: 0;
+    border-right: 0;
+    border-left: 0;
+    padding: calc(28px + env(safe-area-inset-top, 0px)) 14px calc(18px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .legend-row {
+    grid-template-columns: 1fr;
+  }
+
+  .legend-category .legend-mark {
+    width: 54px;
+    height: 54px;
+  }
+
+  .legend-category .character-icon {
+    font-size: 1.75rem;
+  }
+
+  .legends-footer .game-button {
+    width: 100%;
   }
 }
 

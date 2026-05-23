@@ -430,6 +430,8 @@
       ],
       "winTitle": "恭喜！",
       "playAgain": "再玩一次",
+      "viewLegends": "查看所有传说",
+      "legendsTitle": "所有镜像传说",
       "getCopy": "获取本书副本",
       "getCopyHref": "carouselCards.ebook",
       "share": "分享",

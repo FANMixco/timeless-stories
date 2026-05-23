@@ -430,6 +430,8 @@
       ],
       "winTitle": "Félicitations !",
       "playAgain": "Rejouer",
+      "viewLegends": "Voir toutes les légendes",
+      "legendsTitle": "Toutes les légendes en miroir",
       "getCopy": "Obtenir un exemplaire du livre",
       "getCopyHref": "carouselCards.ebook",
       "share": "Partager",
