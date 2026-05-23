@@ -54,6 +54,7 @@ let toastTimer = null;
 let gameCompleted = false;
 let translations = null;
 let deck = [];
+let activePairs = [];
 let currentLanguage = "en";
 const languageLabels = {
   en: "English",
@@ -339,9 +340,13 @@ function getLegendDescription(key) {
 }
 
 function getOriginLabel(side) {
-  return side === "source"
-    ? translations?.country1 || ""
-    : translations?.country2 || "";
+  const originLabels = {
+    source: translations?.country1 || "",
+    mirror: translations?.country2 || "",
+    morocco: translations?.country3 || "",
+  };
+
+  return originLabels[side] || "";
 }
 
 function getOriginFlag(side) {
@@ -362,26 +367,57 @@ function getPairIcon(source, mirror) {
     "ploranera|weepingWoman": "cry",
     "dwarf|trasgu": "wizard",
     "mulus|urco": "tomb",
+    "olomegaLagoonSiren|xana": "waves",
+    "aishaKandisha|siguanaba": "masks",
   };
 
   return pairIcons[pairKey] || "masks";
 }
 
 function getPairCount() {
-  return Array.isArray(memoryGame.pairs) ? memoryGame.pairs.length : 0;
+  return activePairs.length || (Array.isArray(memoryGame.pairs) ? memoryGame.pairs.length : 0);
+}
+
+function chooseActivePairs() {
+  const pairs = Array.isArray(memoryGame.pairs) ? memoryGame.pairs.map((pair) => ({ ...pair })) : [];
+  const variants = Array.isArray(memoryGame.rarePairs) ? memoryGame.rarePairs : [];
+  const roll = Math.random();
+  let threshold = 0;
+  const selectedVariant = variants.find((variant) => {
+    threshold += Number(variant.chance) || 0;
+    return roll < threshold;
+  });
+
+  if (!selectedVariant?.pair || !pairs.length) {
+    return pairs;
+  }
+
+  const replacement = { ...selectedVariant.pair };
+  const targetIndex =
+    selectedVariant.replaceSource &&
+    pairs.findIndex((pair) => pair.source === selectedVariant.replaceSource);
+
+  if (Number.isInteger(targetIndex) && targetIndex >= 0) {
+    pairs[targetIndex] = replacement;
+    return pairs;
+  }
+
+  pairs[Math.floor(Math.random() * pairs.length)] = replacement;
+  return pairs;
 }
 
 function buildDeck() {
-  const pairs = Array.isArray(memoryGame.pairs) ? memoryGame.pairs : [];
+  const pairs = activePairs.length ? activePairs : chooseActivePairs();
 
-  return pairs.flatMap(({ source, mirror, insightTitle, insight }, pairIndex) => {
-    const icon = getPairIcon(source, mirror);
+  return pairs.flatMap((pair, pairIndex) => {
+    const { source, mirror, insightTitle, insight } = pair;
+    const icon = pair.icon || getPairIcon(source, mirror);
 
     return [
       {
         key: source,
         pairId: `pair-${pairIndex}`,
-        side: "source",
+        side: pair.sourceOrigin || "source",
         name: getLegendName(source),
         desc: getLegendDescription(source),
         icon,
@@ -391,7 +427,7 @@ function buildDeck() {
       {
         key: mirror,
         pairId: `pair-${pairIndex}`,
-        side: "mirror",
+        side: pair.mirrorOrigin || "mirror",
         name: getLegendName(mirror),
         desc: getLegendDescription(mirror),
         icon,
@@ -551,10 +587,11 @@ function createLegendCell(characterKey, side) {
 }
 
 function renderLegendsList() {
-  const pairs = Array.isArray(memoryGame.pairs) ? memoryGame.pairs : [];
-  const rows = pairs.map(({ source, mirror, insightTitle, insight }) => {
+  const pairs = activePairs.length ? activePairs : chooseActivePairs();
+  const rows = pairs.map((pair) => {
+    const { source, mirror, insightTitle, insight } = pair;
     const row = document.createElement("section");
-    const icon = getPairIcon(source, mirror);
+    const icon = pair.icon || getPairIcon(source, mirror);
     row.className = "legend-row";
     const category = document.createElement("header");
     category.className = "legend-category";
@@ -567,8 +604,8 @@ function renderLegendsList() {
     `;
     row.append(
       category,
-      createLegendCell(source, "source"),
-      createLegendCell(mirror, "mirror"),
+      createLegendCell(source, pair.sourceOrigin || "source"),
+      createLegendCell(mirror, pair.mirrorOrigin || "mirror"),
     );
     return row;
   });
@@ -659,6 +696,7 @@ function newGame() {
   matches = 0;
   elapsedSeconds = 0;
   gameCompleted = false;
+  activePairs = chooseActivePairs();
   board.classList.remove("is-complete");
   matchInsight.classList.remove("is-visible");
   matchInsightTitle.textContent = "";

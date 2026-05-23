@@ -80,6 +80,18 @@
       "trasgu": {
         "name": "El trasgu",
         "desc": "Un ser travieso que molesta a las chicas."
+      },
+      "olomegaLagoonSiren": {
+        "name": "La Sirena de la Laguna de Olomega",
+        "desc": "Una sirena que encanta a los viajeros cerca de la laguna."
+      },
+      "xana": {
+        "name": "La Xana",
+        "desc": "Un espíritu del agua que guarda fuentes, ríos y tesoros ocultos."
+      },
+      "aishaKandisha": {
+        "name": "Aisha Kandisha",
+        "desc": "Un espíritu marroquí que atrae a los hombres hacia el peligro."
       }
     },
     "country1": "El Salvador 🇸🇻",
@@ -172,7 +184,32 @@
       "previewReward": "🏆 Ganaste una vista previa del libro",
       "previewRewardHref": "https://bit.ly/4fAKacs",
       "language": "Idioma",
-      "footer": "Construyendo puentes entre culturas. Derechos de autor {author}."
-    }
+      "footer": "Construyendo puentes entre culturas. Derechos de autor {author}.",
+      "rarePairs": [
+        {
+          "chance": 0.05,
+          "replaceSource": "siguanaba",
+          "pair": {
+            "source": "siguanaba",
+            "mirror": "aishaKandisha",
+            "mirrorOrigin": "morocco",
+            "insightTitle": "Seducciones fatales",
+            "insight": "Tentaciones que arrastran a los vivos hacia finales irreversibles.",
+            "icon": "masks"
+          }
+        },
+        {
+          "chance": 0.1,
+          "pair": {
+            "source": "olomegaLagoonSiren",
+            "mirror": "xana",
+            "insightTitle": "Encantadoras del agua",
+            "insight": "Espíritus del agua cuya belleza y canto atraen a los viajeros hacia profundidades peligrosas.",
+            "icon": "waves"
+          }
+        }
+      ]
+    },
+    "country3": "Marruecos 🇲🇦"
   }
 }

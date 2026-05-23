@@ -80,6 +80,18 @@
       "trasgu": {
         "name": "Le trasgu",
         "desc": "Un être espiègle qui dérange les filles."
+      },
+      "olomegaLagoonSiren": {
+        "name": "La Sirène de la lagune d’Olomega",
+        "desc": "Une sirène qui enchante les voyageurs près de la lagune."
+      },
+      "xana": {
+        "name": "La Xana",
+        "desc": "Un esprit de l’eau qui garde les fontaines, les rivières et les trésors cachés."
+      },
+      "aishaKandisha": {
+        "name": "Aïcha Kandicha",
+        "desc": "Un esprit marocain qui attire les hommes vers le danger."
       }
     },
     "country1": "El Salvador 🇸🇻",
@@ -172,7 +184,32 @@
       "previewReward": "🏆 Vous avez gagné un aperçu du livre",
       "previewRewardHref": "https://bit.ly/4dyjiZz",
       "language": "Langue",
-      "footer": "Construire des ponts entre les cultures. Droits d’auteur {author}."
-    }
+      "footer": "Construire des ponts entre les cultures. Droits d’auteur {author}.",
+      "rarePairs": [
+        {
+          "chance": 0.05,
+          "replaceSource": "siguanaba",
+          "pair": {
+            "source": "siguanaba",
+            "mirror": "aishaKandisha",
+            "mirrorOrigin": "morocco",
+            "insightTitle": "Appâts mortels",
+            "insight": "Tentations qui entraînent les vivants vers des fins irréversibles.",
+            "icon": "masks"
+          }
+        },
+        {
+          "chance": 0.1,
+          "pair": {
+            "source": "olomegaLagoonSiren",
+            "mirror": "xana",
+            "insightTitle": "Enchanteresses des eaux",
+            "insight": "Des esprits de l’eau dont la beauté et le chant attirent les voyageurs vers des profondeurs dangereuses.",
+            "icon": "waves"
+          }
+        }
+      ]
+    },
+    "country3": "Maroc 🇲🇦"
   }
 }

@@ -80,6 +80,18 @@
       "trasgu": {
         "name": "特拉斯古",
         "desc": "一个调皮的生物，打扰女孩。"
+      },
+      "olomegaLagoonSiren": {
+        "name": "奥洛梅加潟湖女妖",
+        "desc": "据说会在潟湖附近迷惑旅人的女妖。"
+      },
+      "xana": {
+        "name": "Xana",
+        "desc": "守护泉水、河流与隐藏宝藏的水之精灵。"
+      },
+      "aishaKandisha": {
+        "name": "Aisha Kandisha",
+        "desc": "将男子引向危险的摩洛哥精灵。"
       }
     },
     "country1": "萨尔瓦多 🇸🇻",
@@ -172,7 +184,32 @@
       "previewReward": "🏆 你赢得了图书预览",
       "previewRewardHref": "https://bit.ly/4dyjiZz",
       "language": "语言",
-      "footer": "在文化之间架起桥梁。版权所有 {author}。"
-    }
+      "footer": "在文化之间架起桥梁。版权所有 {author}。",
+      "rarePairs": [
+        {
+          "chance": 0.05,
+          "replaceSource": "siguanaba",
+          "pair": {
+            "source": "siguanaba",
+            "mirror": "aishaKandisha",
+            "mirrorOrigin": "morocco",
+            "insightTitle": "致命诱惑",
+            "insight": "把生者引向无法回头结局的诱惑。",
+            "icon": "masks"
+          }
+        },
+        {
+          "chance": 0.1,
+          "pair": {
+            "source": "olomegaLagoonSiren",
+            "mirror": "xana",
+            "insightTitle": "水中魅影",
+            "insight": "水之精灵以美貌与歌声引诱旅人走向危险的深处。",
+            "icon": "waves"
+          }
+        }
+      ]
+    },
+    "country3": "摩洛哥 🇲🇦"
   }
 }
