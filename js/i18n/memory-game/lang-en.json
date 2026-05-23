@@ -170,7 +170,9 @@
       "shareText": "I just matched the Salvadoran and Spanish mirror legends. Can you find all 10 pairs?",
       "close": "Close",
       "previewReward": "🏆 You won a preview of the book",
-      "previewRewardHref": "https://bit.ly/4dyjiZz"
+      "previewRewardHref": "https://bit.ly/4dyjiZz",
+      "language": "Language",
+      "footer": "Building bridges across cultures. Copyrights {author}."
     }
   }
 }

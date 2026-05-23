@@ -1,11 +1,11 @@
-const CACHE_VERSION = "memory-game-pwa-20260523";
+const CACHE_VERSION = "memory-game-pwa-20260523-language-switcher";
 const APP_SHELL = [
   "/memory-game.html",
   "/memory-game.webmanifest",
   "/css/poppins.min.css",
   "/css/icon-moon-memory.min.css",
-  "/css/memory-game.min.css?v=20260523-icon-only-actions",
-  "/js/memory-game.min.js?v=20260523-hide-hint-after-win",
+  "/css/memory-game.min.css?v=20260523-language-switcher",
+  "/js/memory-game.min.js?v=20260523-language-switcher",
   "/js/pwa.min.js",
   "/js/data/links.min.json",
   "/js/i18n/memory-game/lang-en.min.json",

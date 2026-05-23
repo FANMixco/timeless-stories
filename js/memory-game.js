@@ -23,7 +23,11 @@ const winMessage = document.getElementById("winMessage");
 const legendsPanel = document.getElementById("legendsPanel");
 const legendsPanelTitle = document.getElementById("legendsPanelTitle");
 const legendsList = document.getElementById("legendsList");
+const gameFooter = document.getElementById("gameFooter");
 const newGameButton = document.getElementById("newGameButton");
+const languageControl = document.getElementById("languageControl");
+const languageButton = document.getElementById("languageButton");
+const languageMenu = document.getElementById("languageMenu");
 const shareButton = document.getElementById("shareButton");
 const hintButton = document.getElementById("hintButton");
 const topViewLegendsButton = document.getElementById("topViewLegendsButton");
@@ -50,6 +54,13 @@ let toastTimer = null;
 let gameCompleted = false;
 let translations = null;
 let deck = [];
+let currentLanguage = "en";
+const languageLabels = {
+  en: "English",
+  es: "Español",
+  fr: "Français",
+  zh: "中文",
+};
 
 function getStoredTheme() {
   try {
@@ -131,6 +142,7 @@ function resolveGameHref(href) {
 
 async function loadTranslations() {
   const language = getLanguage();
+  currentLanguage = language;
   document.documentElement.lang = language;
 
   try {
@@ -216,6 +228,67 @@ function getShareIconClass() {
   return "icon-share-generic";
 }
 
+function closeLanguageMenu() {
+  languageMenu.hidden = true;
+  languageButton.setAttribute("aria-expanded", "false");
+}
+
+function toggleLanguageMenu() {
+  const shouldOpen = languageMenu.hidden;
+  languageMenu.hidden = !shouldOpen;
+  languageButton.setAttribute("aria-expanded", String(shouldOpen));
+}
+
+function setLanguage(language) {
+  if (!supportedLanguages.includes(language) || language === currentLanguage) {
+    closeLanguageMenu();
+    return;
+  }
+
+  try {
+    window.localStorage.setItem(languageStorageKey, language);
+  } catch (error) {}
+
+  window.location.reload();
+}
+
+function renderLanguageMenu() {
+  const options = supportedLanguages.map((language) => {
+    const option = document.createElement("button");
+    option.type = "button";
+    option.className = "language-option";
+    option.dataset.language = language;
+    option.textContent = languageLabels[language] || language;
+    option.setAttribute("role", "menuitemradio");
+    option.setAttribute("aria-checked", String(language === currentLanguage));
+    option.addEventListener("click", () => setLanguage(language));
+    return option;
+  });
+
+  languageMenu.replaceChildren(...options);
+}
+
+function renderFooter() {
+  if (!gameFooter) {
+    return;
+  }
+
+  const text = memoryGame.footer || "";
+  const link = document.createElement("a");
+  link.href = "https://federiconavarrete.com";
+  link.target = "_blank";
+  link.rel = "noopener noreferrer";
+  link.textContent = "Federico Navarrete";
+
+  gameFooter.replaceChildren();
+  const parts = text.split("{author}");
+  gameFooter.append(document.createTextNode(parts[0] || ""), link);
+
+  if (parts.length > 1) {
+    gameFooter.append(document.createTextNode(parts.slice(1).join("{author}")));
+  }
+}
+
 function applyUiCopy() {
   document.title = memoryGame.title || document.title;
   document.querySelector("meta[name='description']").content = memoryGame.subtitle || "";
@@ -228,7 +301,10 @@ function applyUiCopy() {
   document.getElementById("gameTitle").textContent = memoryGame.title || "";
   document.querySelector(".game-shell").setAttribute("aria-label", memoryGame.title || "");
   setText(".game-subtitle", memoryGame.subtitle);
+  renderFooter();
   newGameButton.textContent = memoryGame.newGame || "";
+  setActionButtonContent(languageButton, memoryGame.language || "Language", "icon-translate");
+  renderLanguageMenu();
   setActionButtonContent(shareButton, memoryGame.share || "", getShareIconClass());
   setActionButtonContent(hintButton, memoryGame.hint || "Hint", "icon-bulb");
   setElementText(topViewLegendsButton, memoryGame.viewLegends || "View all legends");
@@ -634,6 +710,23 @@ async function shareGame(button = shareButton) {
 }
 
 newGameButton.addEventListener("click", newGame);
+languageButton.addEventListener("click", (event) => {
+  event.stopPropagation();
+  toggleLanguageMenu();
+});
+languageMenu.addEventListener("click", (event) => {
+  event.stopPropagation();
+});
+document.addEventListener("click", (event) => {
+  if (!languageControl.contains(event.target)) {
+    closeLanguageMenu();
+  }
+});
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") {
+    closeLanguageMenu();
+  }
+});
 shareButton.addEventListener("click", () => {
   shareGame(shareButton).catch(() => {});
 });

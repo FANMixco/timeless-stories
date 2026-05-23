@@ -170,7 +170,9 @@
       "shareText": "Je viens d’associer les légendes miroirs du Salvador et d’Espagne. Saurez-vous retrouver les 10 paires ?",
       "close": "Fermer",
       "previewReward": "🏆 Vous avez gagné un aperçu du livre",
-      "previewRewardHref": "https://bit.ly/4dyjiZz"
+      "previewRewardHref": "https://bit.ly/4dyjiZz",
+      "language": "Langue",
+      "footer": "Construire des ponts entre les cultures. Droits d’auteur {author}."
     }
   }
 }

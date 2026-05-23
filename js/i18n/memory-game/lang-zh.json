@@ -170,7 +170,9 @@
       "shareText": "我刚刚配对了萨尔瓦多与西班牙的镜像传说。你能找出全部10组吗？",
       "close": "关闭",
       "previewReward": "🏆 你赢得了图书预览",
-      "previewRewardHref": "https://bit.ly/4dyjiZz"
+      "previewRewardHref": "https://bit.ly/4dyjiZz",
+      "language": "语言",
+      "footer": "在文化之间架起桥梁。版权所有 {author}。"
     }
   }
 }
