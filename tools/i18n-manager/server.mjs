@@ -7,6 +7,7 @@ const __dirname = fileURLToPath(new URL(".", import.meta.url));
 const rootDir = resolve(__dirname, "../..");
 const managerDir = resolve(__dirname, "public");
 const i18nDir = resolve(rootDir, "js/i18n");
+const memoryI18nDir = resolve(rootDir, "js/i18n/memory-game");
 const dataDir = resolve(rootDir, "js/data");
 const port = Number(process.env.PORT || process.argv[2] || 4173);
 
@@ -50,6 +51,11 @@ function sourceFileFor(target) {
   if (target.type === "i18n") {
     const lang = ensureLanguage(target.lang);
     return resolve(i18nDir, `lang-${lang}.json`);
+  }
+
+  if (target.type === "memory") {
+    const lang = ensureLanguage(target.lang);
+    return resolve(memoryI18nDir, `lang-${lang}.json`);
   }
 
   if (target.type === "data") {
@@ -106,17 +112,20 @@ async function listJsonFiles(dir) {
 
 async function listFiles() {
   const i18nFiles = await listJsonFiles(i18nDir);
+  const memoryFiles = await listJsonFiles(memoryI18nDir);
   const dataFiles = await listJsonFiles(dataDir);
-  const languages = await Promise.all(
-    i18nFiles.map(async (file) => {
+  const buildLanguages = async (dir, files) => Promise.all(
+    files.map(async (file) => {
       const lang = file.replace(/^lang-/, "").replace(/\.json$/, "");
-      const json = await readJsonFile(resolve(i18nDir, file));
+      const json = await readJsonFile(resolve(dir, file));
       const count = json && json.translations && typeof json.translations === "object"
         ? Object.keys(json.translations).length
         : Object.keys(json || {}).length;
       return { lang, file, count };
     }),
   );
+  const languages = await buildLanguages(i18nDir, i18nFiles);
+  const memoryLanguages = await buildLanguages(memoryI18nDir, memoryFiles);
 
   const data = await Promise.all(
     dataFiles.map(async (file) => {
@@ -126,7 +135,7 @@ async function listFiles() {
     }),
   );
 
-  return { languages, data };
+  return { languages, memoryLanguages, data };
 }
 
 function previewValue(value) {
@@ -167,6 +176,8 @@ async function searchFile(query, target) {
   const json = await readJsonFile(file);
   const descriptor = target.type === "i18n"
     ? { type: "i18n", lang: ensureLanguage(target.lang), file: `lang-${ensureLanguage(target.lang)}.json` }
+    : target.type === "memory"
+      ? { type: "memory", lang: ensureLanguage(target.lang), file: `lang-${ensureLanguage(target.lang)}.json` }
     : { type: "data", file: ensureDataFile(target.file) };
 
   return searchJson(json, query).map((match) => ({
@@ -185,7 +196,8 @@ async function searchFiles(query, target = {}) {
   }
 
   const matches = [];
-  for (const language of (await listFiles()).languages) {
+  const availableFiles = await listFiles();
+  for (const language of availableFiles.languages) {
     const file = resolve(i18nDir, language.file);
     const json = await readJsonFile(file);
     matches.push(
@@ -199,7 +211,21 @@ async function searchFiles(query, target = {}) {
     );
   }
 
-  for (const dataFile of (await listFiles()).data) {
+  for (const language of availableFiles.memoryLanguages) {
+    const file = resolve(memoryI18nDir, language.file);
+    const json = await readJsonFile(file);
+    matches.push(
+      ...searchJson(json, trimmed).map((match) => ({
+        ...match,
+        type: "memory",
+        lang: language.lang,
+        file: language.file,
+        sourcePath: relative(rootDir, file).replaceAll("\\", "/"),
+      })),
+    );
+  }
+
+  for (const dataFile of availableFiles.data) {
     const file = resolve(dataDir, dataFile.file);
     const json = await readJsonFile(file);
     matches.push(
@@ -259,6 +285,7 @@ async function handleApi(request, response, url) {
 
       if (body.all) {
         for (const file of await listJsonFiles(i18nDir)) files.push(resolve(i18nDir, file));
+        for (const file of await listJsonFiles(memoryI18nDir)) files.push(resolve(memoryI18nDir, file));
         for (const file of await listJsonFiles(dataDir)) files.push(resolve(dataDir, file));
       } else {
         files.push(sourceFileFor(body));

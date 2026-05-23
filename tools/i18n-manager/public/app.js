@@ -1,5 +1,5 @@
 const state = {
-  files: { languages: [], data: [] },
+  files: { languages: [], memoryLanguages: [], data: [] },
   current: null,
   json: null,
   path: [],
@@ -10,7 +10,9 @@ const state = {
 
 const els = {
   languageList: document.getElementById("languageList"),
+  memoryList: document.getElementById("memoryList"),
   dataList: document.getElementById("dataList"),
+  memoryCount: document.getElementById("memoryCount"),
   dataCount: document.getElementById("dataCount"),
   refreshButton: document.getElementById("refreshButton"),
   languageForm: document.getElementById("languageForm"),
@@ -200,6 +202,17 @@ function renderSidebar() {
     els.languageList.append(button);
   }
 
+  els.memoryCount.textContent = `${state.files.memoryLanguages.length} JSON`;
+  els.memoryList.innerHTML = "";
+  for (const language of state.files.memoryLanguages) {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = state.current?.type === "memory" && state.current.lang === language.lang ? "active" : "";
+    button.innerHTML = `<span>${language.lang}</span><span class="count">${language.count}</span>`;
+    button.addEventListener("click", () => loadFile({ type: "memory", lang: language.lang }));
+    els.memoryList.append(button);
+  }
+
   els.dataCount.textContent = `${state.files.data.length} JSON`;
   els.dataList.innerHTML = "";
   for (const file of state.files.data) {
@@ -221,6 +234,8 @@ function renderHeader(fileInfo = {}) {
 
   els.fileTitle.textContent = state.current.type === "i18n"
     ? `lang-${state.current.lang}.json`
+    : state.current.type === "memory"
+      ? `memory-game/lang-${state.current.lang}.json`
     : state.current.file;
   els.filePath.textContent = fileInfo.path || "";
 }
@@ -663,6 +678,8 @@ async function loadFile(target) {
 async function jumpToResult(result) {
   const target = result.type === "i18n"
     ? { type: "i18n", lang: result.lang }
+    : result.type === "memory"
+      ? { type: "memory", lang: result.lang }
     : { type: "data", file: result.file };
   await loadFile(target);
 
@@ -866,6 +883,8 @@ refreshFiles()
   .then(() => {
     const firstLanguage = state.files.languages[0]?.lang;
     if (firstLanguage) return loadFile({ type: "i18n", lang: firstLanguage });
+    const firstMemoryLanguage = state.files.memoryLanguages[0]?.lang;
+    if (firstMemoryLanguage) return loadFile({ type: "memory", lang: firstMemoryLanguage });
     const firstData = state.files.data[0]?.file;
     if (firstData) return loadFile({ type: "data", file: firstData });
     return undefined;
