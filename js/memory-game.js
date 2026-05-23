@@ -26,7 +26,6 @@ const legendsList = document.getElementById("legendsList");
 const newGameButton = document.getElementById("newGameButton");
 const shareButton = document.getElementById("shareButton");
 const hintButton = document.getElementById("hintButton");
-const topGetCopyButton = document.getElementById("topGetCopyButton");
 const topViewLegendsButton = document.getElementById("topViewLegendsButton");
 const playAgainButton = document.getElementById("playAgainButton");
 const viewLegendsButton = document.getElementById("viewLegendsButton");
@@ -232,8 +231,6 @@ function applyUiCopy() {
   newGameButton.textContent = memoryGame.newGame || "";
   setActionButtonContent(shareButton, memoryGame.share || "", getShareIconClass());
   setActionButtonContent(hintButton, memoryGame.hint || "Hint", "icon-bulb");
-  setElementText(topGetCopyButton, memoryGame.getCopy || "Get a copy of the book");
-  setElementHref(topGetCopyButton, resolveGameHref(memoryGame.getCopyHref));
   setElementText(topViewLegendsButton, memoryGame.viewLegends || "View all legends");
   playAgainButton.textContent = memoryGame.playAgain || "";
   setElementText(viewLegendsButton, memoryGame.viewLegends || "View all legends");
@@ -538,7 +535,7 @@ function setPreviewRewardVisibility(shouldShow) {
 }
 
 function setTopLegendActionVisibility(shouldShow) {
-  setElementHidden(topGetCopyButton, !shouldShow);
+  setElementHidden(hintButton, shouldShow);
   setElementHidden(topViewLegendsButton, !shouldShow);
 }
 
