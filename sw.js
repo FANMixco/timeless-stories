@@ -1,32 +1,18 @@
-const CACHE_VERSION = "timeless-stories-pwa-20260522";
+const CACHE_VERSION = "memory-game-pwa-20260523";
 const APP_SHELL = [
-  "/",
-  "/index.html",
   "/memory-game.html",
-  "/site.webmanifest",
-  "/css/main.min.css?v=20260519-hero-inset",
-  "/css/book.min.css",
+  "/memory-game.webmanifest",
   "/css/poppins.min.css",
-  "/css/icon-moon.min.css",
   "/css/icon-moon-memory.min.css",
-  "/css/memory-game.min.css?v=20260522-memory-icons",
-  "/js/main.min.js?v=20260513-bootstrap-modal",
-  "/js/translations.min.js?v=20260514-link-registry",
-  "/js/map.min.js",
-  "/js/memory-game.min.js?v=20260522-memory-icons",
+  "/css/memory-game.min.css?v=20260523-modal-icon-size",
+  "/js/memory-game.min.js?v=20260523-split-i18n",
+  "/js/pwa.min.js",
   "/js/data/links.min.json",
-  "/js/i18n/lang-en.min.json",
-  "/js/i18n/lang-es.min.json",
-  "/js/i18n/lang-fr.min.json",
-  "/js/i18n/lang-zh.min.json",
-  "/img/logo.png",
-  "/img/logo-full.png",
-  "/img/preview.jpg",
+  "/js/i18n/memory-game/lang-en.min.json",
+  "/js/i18n/memory-game/lang-es.min.json",
+  "/js/i18n/memory-game/lang-fr.min.json",
+  "/js/i18n/memory-game/lang-zh.min.json",
   "/img/preview_memory.jpg",
-  "/img/cover-colorized-v2-sm.jpg",
-  "/img/cover-colorized-v2-sm.webp",
-  "/img/cover-colorized-v2-sm-es.jpg",
-  "/img/cover-colorized-v2-sm-es.webp",
   "/img/favicons/android-chrome-192x192.png",
   "/img/favicons/android-chrome-512x512.png",
   "/img/favicons/apple-touch-icon.png",
@@ -69,7 +55,7 @@ async function networkFirst(request) {
     }
 
     if (request.mode === "navigate") {
-      return cache.match("/index.html");
+      return cache.match("/memory-game.html");
     }
 
     throw error;

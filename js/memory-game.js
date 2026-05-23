@@ -135,17 +135,17 @@ async function loadTranslations() {
   document.documentElement.lang = language;
 
   try {
-    const [translationResponse, linksResponse] = await Promise.all([
-      fetch(`js/i18n/lang-${language}.json`),
+    const [gameResponse, linksResponse] = await Promise.all([
+      fetch(`js/i18n/memory-game/lang-${language}.min.json`),
       fetch("js/data/links.min.json"),
     ]);
-    const data = await translationResponse.json();
+    const gameData = await gameResponse.json();
     linkRegistry = await linksResponse.json();
     localizedLinks = mergeLinkConfig(
       linkRegistry.localized.default,
       linkRegistry.localized[language],
     );
-    translations = data.translations;
+    translations = gameData.translations;
     memoryGame = translations.memoryGame || { pairs: [] };
   } catch (error) {
     translations = { mapLegends: {}, memoryGame: { pairs: [] } };

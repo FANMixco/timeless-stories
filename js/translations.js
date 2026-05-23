@@ -219,7 +219,7 @@ function resolveLocalizedHref(href) {
 }
 
 function getMemoryGameLabel() {
-  return translations?.memoryGame?.title || "";
+  return translations?.memoryGameTitle || "";
 }
 
 function getPreviousBooks() {
