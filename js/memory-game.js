@@ -3,6 +3,7 @@ const languageStorageKey = "timelessStoriesOfficialLanguage";
 const themeStorageKey = "timelessStoriesColorMode";
 const supportedThemes = ["system", "light", "dark"];
 const previewRewardThresholdSeconds = 30;
+const mismatchFlipBackDelayMs = 1200;
 let linkRegistry = null;
 let localizedLinks = null;
 const board = document.getElementById("board");
@@ -452,7 +453,7 @@ function flipCard(card) {
     return;
   }
 
-  window.setTimeout(hideOpenCards, 700);
+  window.setTimeout(hideOpenCards, mismatchFlipBackDelayMs);
 }
 
 function newGame() {
