@@ -180,6 +180,43 @@ function setElementHidden(element, shouldHide) {
   }
 }
 
+function setActionButtonContent(button, label, iconClass) {
+  if (!button) {
+    return;
+  }
+
+  button.dataset.label = label || "";
+  button.setAttribute("aria-label", label || "");
+  button.title = label || "";
+
+  if (!iconClass) {
+    button.textContent = label || "";
+    return;
+  }
+
+  button.innerHTML = `
+    <i class="action-icon ${iconClass}" aria-hidden="true"></i>
+  `;
+}
+
+function getShareIconClass() {
+  const userAgent = navigator.userAgent || "";
+  const platform = navigator.userAgentData?.platform || navigator.platform || "";
+
+  if (
+    /iphone|ipad|ipod/i.test(userAgent) ||
+    /iphone|ipad|ipod|mac/i.test(platform)
+  ) {
+    return "icon-share-apple";
+  }
+
+  if (/win/i.test(platform)) {
+    return "icon-share-windows";
+  }
+
+  return "icon-share-generic";
+}
+
 function applyUiCopy() {
   document.title = memoryGame.title || document.title;
   document.querySelector("meta[name='description']").content = memoryGame.subtitle || "";
@@ -193,8 +230,8 @@ function applyUiCopy() {
   document.querySelector(".game-shell").setAttribute("aria-label", memoryGame.title || "");
   setText(".game-subtitle", memoryGame.subtitle);
   newGameButton.textContent = memoryGame.newGame || "";
-  shareButton.textContent = memoryGame.share || "";
-  hintButton.textContent = memoryGame.hint || "Hint";
+  setActionButtonContent(shareButton, memoryGame.share || "", getShareIconClass());
+  setActionButtonContent(hintButton, memoryGame.hint || "Hint", "icon-bulb");
   setElementText(topGetCopyButton, memoryGame.getCopy || "Get a copy of the book");
   setElementHref(topGetCopyButton, resolveGameHref(memoryGame.getCopyHref));
   setElementText(topViewLegendsButton, memoryGame.viewLegends || "View all legends");
@@ -590,6 +627,11 @@ async function shareGame(button = shareButton) {
   const originalLabel = button.textContent || memoryGame.share || "";
   button.textContent = memoryGame.shareCopied || originalLabel;
   window.setTimeout(() => {
+    if (button === shareButton) {
+      setActionButtonContent(button, button.dataset.label || originalLabel, getShareIconClass());
+      return;
+    }
+
     button.textContent = originalLabel;
   }, 1600);
 }

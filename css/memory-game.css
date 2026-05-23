@@ -92,6 +92,18 @@ html[data-embed="true"] .standalone-only {
   gap: 8px;
 }
 
+.game-actions .game-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.action-icon {
+  flex: 0 0 auto;
+  font-size: 1.18em;
+  line-height: 1;
+}
+
 .game-button {
   min-height: 42px;
   border: 0;
