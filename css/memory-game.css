@@ -60,6 +60,11 @@ button {
   padding-bottom: calc(clamp(12px, 2.4vw, 22px) + env(safe-area-inset-bottom, 0px));
 }
 
+html.is-modal-open .game-shell {
+  max-height: 100dvh;
+  overflow: hidden;
+}
+
 .game-top {
   display: grid;
   gap: 12px;
@@ -443,6 +448,7 @@ html[data-theme="dark"] .card[data-rarity="rare"] .character-icon {
   padding: 18px;
   background: rgba(17, 24, 32, 0.54);
   overflow: hidden;
+  overscroll-behavior: contain;
 }
 
 .win-panel.is-visible,
@@ -469,6 +475,8 @@ html[data-theme="dark"] .card[data-rarity="rare"] .character-icon {
   align-items: stretch;
   padding: 12px;
   overflow-y: auto;
+  touch-action: pan-y;
+  -webkit-overflow-scrolling: touch;
 }
 
 .legends-card {
@@ -476,6 +484,8 @@ html[data-theme="dark"] .card[data-rarity="rare"] .character-icon {
   max-height: calc(100dvh - 24px);
   margin: auto;
   overflow: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
   text-align: left;
 }
 
@@ -919,6 +929,7 @@ html[data-theme="dark"] .card.is-matched .card-front {
     width: 100%;
     min-height: 100dvh;
     max-height: none;
+    overflow: visible;
     border-radius: 0;
     border-right: 0;
     border-left: 0;

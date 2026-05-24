@@ -207,6 +207,26 @@ function setElementHidden(element, shouldHide) {
   }
 }
 
+function lockPageScroll() {
+  document.documentElement.classList.add("is-modal-open");
+}
+
+function unlockPageScroll() {
+  document.documentElement.classList.remove("is-modal-open");
+}
+
+function syncModalScrollLock() {
+  const hasOpenPanel =
+    winPanel.classList.contains("is-visible") || legendsPanel?.classList.contains("is-visible");
+
+  if (hasOpenPanel) {
+    lockPageScroll();
+    return;
+  }
+
+  unlockPageScroll();
+}
+
 function setActionButtonContent(button, label, iconClass) {
   if (!button) {
     return;
@@ -574,6 +594,7 @@ function markMatch() {
       .replace("{moves}", moves)
       .replace("{time}", formatTime(elapsedSeconds));
     winPanel.classList.add("is-visible");
+    syncModalScrollLock();
   }
 
   resetTurn();
@@ -722,6 +743,7 @@ function newGame() {
   matchInsightText.textContent = "";
   winPanel.classList.remove("is-visible");
   legendsPanel?.classList.remove("is-visible");
+  syncModalScrollLock();
   setTopLegendActionVisibility(false);
   setPreviewRewardVisibility(false);
   hideLegendToast();
@@ -739,6 +761,7 @@ function openLegendsPanel() {
   }
 
   legendsPanel?.classList.add("is-visible");
+  syncModalScrollLock();
 }
 
 async function shareGame(button = shareButton) {
@@ -796,11 +819,13 @@ winShareButton.addEventListener("click", () => {
 });
 closeWinButton.addEventListener("click", () => {
   winPanel.classList.remove("is-visible");
+  syncModalScrollLock();
 });
 viewLegendsButton?.addEventListener("click", openLegendsPanel);
 topViewLegendsButton?.addEventListener("click", openLegendsPanel);
 closeLegendsButton?.addEventListener("click", () => {
   legendsPanel?.classList.remove("is-visible");
+  syncModalScrollLock();
 });
 legendToastClose.addEventListener("click", hideLegendToast);
 playAgainButton.addEventListener("click", newGame);
