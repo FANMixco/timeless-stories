@@ -195,7 +195,8 @@
             "mirrorOrigin": "morocco",
             "insightTitle": "Appâts mortels",
             "insight": "Tentations qui entraînent les vivants vers des fins irréversibles.",
-            "icon": "masks"
+            "icon": "masks",
+            "rarity": "rare"
           }
         },
         {
@@ -205,7 +206,8 @@
             "mirror": "xana",
             "insightTitle": "Voix enchantées",
             "insight": "Des êtres dont les chants détournent les vivants de la raison, du chemin ou d’eux-mêmes.",
-            "icon": "waves"
+            "icon": "waves",
+            "rarity": "rare"
           }
         }
       ]

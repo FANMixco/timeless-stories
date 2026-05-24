@@ -374,6 +374,24 @@ html[data-theme="dark"] .language-option[aria-checked="true"] {
   font-size: clamp(1.35rem, 4.4vw, 1.95rem);
 }
 
+.card[data-rarity="rare"] .character-mark {
+  background: rgba(0, 119, 182, 0.16);
+  color: #0b6f8f;
+}
+
+.card[data-rarity="rare"] .character-icon {
+  color: #0b6f8f;
+}
+
+html[data-theme="dark"] .card[data-rarity="rare"] .character-mark {
+  background: rgba(139, 224, 197, 0.16);
+  color: #8be0c5;
+}
+
+html[data-theme="dark"] .card[data-rarity="rare"] .character-icon {
+  color: #8be0c5;
+}
+
 .character-name {
   width: 100%;
   color: var(--ink);

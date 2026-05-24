@@ -195,7 +195,8 @@
             "mirrorOrigin": "morocco",
             "insightTitle": "Fatal Lures",
             "insight": "Temptations that draw the living toward irreversible ends.",
-            "icon": "masks"
+            "icon": "masks",
+            "rarity": "rare"
           }
         },
         {
@@ -205,7 +206,8 @@
             "mirror": "xana",
             "insightTitle": "Enchanted Voices",
             "insight": "Beings whose songs draw the living away from reason, path, or self.",
-            "icon": "waves"
+            "icon": "waves",
+            "rarity": "rare"
           }
         }
       ]

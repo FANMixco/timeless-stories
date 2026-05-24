@@ -418,6 +418,7 @@ function buildDeck() {
         key: source,
         pairId: `pair-${pairIndex}`,
         side: pair.sourceOrigin || "source",
+        rarity: pair.rarity || "",
         name: getLegendName(source),
         desc: getLegendDescription(source),
         icon,
@@ -428,6 +429,7 @@ function buildDeck() {
         key: mirror,
         pairId: `pair-${pairIndex}`,
         side: pair.mirrorOrigin || "mirror",
+        rarity: pair.rarity || "",
         name: getLegendName(mirror),
         desc: getLegendDescription(mirror),
         icon,
@@ -498,6 +500,7 @@ function createCard(character, index) {
   card.dataset.description = character.desc || "";
   card.dataset.insightTitle = character.insightTitle || "";
   card.dataset.insight = character.insight || "";
+  card.dataset.rarity = character.rarity || "";
   card.setAttribute("aria-label", memoryGame.hiddenCard || "");
 
   card.innerHTML = `

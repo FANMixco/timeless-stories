@@ -195,7 +195,8 @@
             "mirrorOrigin": "morocco",
             "insightTitle": "致命诱惑",
             "insight": "把生者引向无法回头结局的诱惑。",
-            "icon": "masks"
+            "icon": "masks",
+            "rarity": "rare"
           }
         },
         {
@@ -205,7 +206,8 @@
             "mirror": "xana",
             "insightTitle": "迷魅之声",
             "insight": "歌声使生者偏离理智、道路或自我的存在。",
-            "icon": "waves"
+            "icon": "waves",
+            "rarity": "rare"
           }
         }
       ]
