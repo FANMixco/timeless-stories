@@ -98,6 +98,10 @@ html[data-embed="true"] .standalone-only {
   justify-content: center;
 }
 
+.large-screen-only {
+  display: none !important;
+}
+
 .language-control {
   position: relative;
   display: inline-flex;
@@ -859,6 +863,10 @@ html[data-theme="dark"] .card.is-matched .card-front {
   .game-shell {
     padding: 22px;
     padding-bottom: calc(22px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .large-screen-only {
+    display: inline-flex !important;
   }
 }
 

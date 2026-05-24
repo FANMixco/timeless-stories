@@ -28,6 +28,7 @@ const newGameButton = document.getElementById("newGameButton");
 const languageControl = document.getElementById("languageControl");
 const languageButton = document.getElementById("languageButton");
 const languageMenu = document.getElementById("languageMenu");
+const themeButton = document.getElementById("themeButton");
 const shareButton = document.getElementById("shareButton");
 const hintButton = document.getElementById("hintButton");
 const topViewLegendsButton = document.getElementById("topViewLegendsButton");
@@ -75,8 +76,22 @@ function getStoredTheme() {
 function applyTheme() {
   const theme = getStoredTheme();
   const prefersDark = window.matchMedia?.("(prefers-color-scheme: dark)")?.matches;
-  document.documentElement.dataset.theme =
+  const resolvedTheme =
     theme === "dark" || (theme === "system" && prefersDark) ? "dark" : "light";
+  document.documentElement.dataset.theme = resolvedTheme;
+  document.querySelector("meta[name='theme-color']").content =
+    resolvedTheme === "dark" ? "#111820" : "#fffaf0";
+  themeButton?.setAttribute("aria-pressed", String(resolvedTheme === "dark"));
+}
+
+function toggleTheme() {
+  const nextTheme = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+
+  try {
+    window.localStorage.setItem(themeStorageKey, nextTheme);
+  } catch (error) {}
+
+  applyTheme();
 }
 
 function getShareUrl() {
@@ -306,6 +321,7 @@ function applyUiCopy() {
   newGameButton.textContent = memoryGame.newGame || "";
   setActionButtonContent(languageButton, memoryGame.language || "Language", "icon-translate");
   renderLanguageMenu();
+  setActionButtonContent(themeButton, memoryGame.theme || "Color mode", "icon-yin-yang");
   setActionButtonContent(shareButton, memoryGame.share || "", getShareIconClass());
   setActionButtonContent(hintButton, memoryGame.hint || "Hint", "icon-bulb");
   setElementText(topViewLegendsButton, memoryGame.viewLegends || "View all legends");
@@ -758,6 +774,7 @@ languageButton.addEventListener("click", (event) => {
 languageMenu.addEventListener("click", (event) => {
   event.stopPropagation();
 });
+themeButton?.addEventListener("click", toggleTheme);
 document.addEventListener("click", (event) => {
   if (!languageControl.contains(event.target)) {
     closeLanguageMenu();
