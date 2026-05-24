@@ -884,6 +884,11 @@ html[data-theme="dark"] .card.is-matched .card-front {
     padding-bottom: calc(22px + env(safe-area-inset-bottom, 0px));
   }
 
+  html[data-embed="true"] .game-subtitle {
+    font-size: clamp(1.05rem, 2vw, 1.28rem);
+    line-height: 1.35;
+  }
+
   .large-screen-only {
     display: inline-flex !important;
   }
