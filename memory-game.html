@@ -55,49 +55,53 @@
       }
     </script>
     <link rel="stylesheet" href="css/icon-moon-memory.min.css" />
-    <link rel="stylesheet" href="css/memory-game.min.css?v=20260524-shell-modal-lock" />
+    <link rel="stylesheet" href="css/memory-game.min.css?v=20260524-landscape-scale" />
   </head>
   <body>
     <main class="game-shell" aria-label="">
-      <section class="game-top">
-        <div>
-          <h1 class="game-title standalone-only" id="gameTitle"></h1>
-          <p class="game-subtitle"></p>
-        </div>
-        <div class="game-actions">
-          <button class="game-button" type="button" id="newGameButton"></button>
-          <button class="game-button secondary" type="button" id="topViewLegendsButton" hidden></button>
-          <button class="game-button secondary" type="button" id="hintButton"></button>
-          <div class="language-control" id="languageControl">
-            <button class="game-button secondary" type="button" id="languageButton" aria-haspopup="menu" aria-expanded="false"></button>
-            <div class="language-menu" id="languageMenu" role="menu" hidden></div>
-          </div>
-          <button class="game-button secondary large-screen-only" type="button" id="themeButton"></button>
-          <button class="game-button secondary" type="button" id="shareButton"></button>
-        </div>
-      </section>
+      <div class="game-layout">
+        <div class="game-sidebar">
+          <section class="game-top">
+            <div>
+              <h1 class="game-title standalone-only" id="gameTitle"></h1>
+              <p class="game-subtitle"></p>
+            </div>
+            <div class="game-actions">
+              <button class="game-button" type="button" id="newGameButton"></button>
+              <button class="game-button secondary" type="button" id="topViewLegendsButton" hidden></button>
+              <button class="game-button secondary" type="button" id="hintButton"></button>
+              <div class="language-control" id="languageControl">
+                <button class="game-button secondary" type="button" id="languageButton" aria-haspopup="menu" aria-expanded="false"></button>
+                <div class="language-menu" id="languageMenu" role="menu" hidden></div>
+              </div>
+              <button class="game-button secondary large-screen-only" type="button" id="themeButton"></button>
+              <button class="game-button secondary" type="button" id="shareButton"></button>
+            </div>
+          </section>
 
-      <section class="status-grid" aria-label="">
-        <div class="status-item">
-          <span class="status-label" data-ui-label="moves"></span>
-          <span class="status-value" id="movesValue">0</span>
-        </div>
-        <div class="status-item">
-          <span class="status-label" data-ui-label="matches"></span>
-          <span class="status-value" id="matchesValue">0/0</span>
-        </div>
-        <div class="status-item">
-          <span class="status-label" data-ui-label="time"></span>
-          <span class="status-value" id="timeValue">0:00</span>
-        </div>
-      </section>
+          <section class="status-grid" aria-label="">
+            <div class="status-item">
+              <span class="status-label" data-ui-label="moves"></span>
+              <span class="status-value" id="movesValue">0</span>
+            </div>
+            <div class="status-item">
+              <span class="status-label" data-ui-label="matches"></span>
+              <span class="status-value" id="matchesValue">0/0</span>
+            </div>
+            <div class="status-item">
+              <span class="status-label" data-ui-label="time"></span>
+              <span class="status-value" id="timeValue">0:00</span>
+            </div>
+          </section>
 
-      <section class="match-insight" id="matchInsight" aria-live="polite">
-        <h2 id="matchInsightTitle"></h2>
-        <p id="matchInsightText"></p>
-      </section>
+          <section class="match-insight" id="matchInsight" aria-live="polite">
+            <h2 id="matchInsightTitle"></h2>
+            <p id="matchInsightText"></p>
+          </section>
+        </div>
 
-      <section class="board" id="board" aria-label=""></section>
+        <section class="board" id="board" aria-label=""></section>
+      </div>
       <aside class="legend-toast" id="legendToast" aria-live="polite" hidden>
         <div>
           <strong id="legendToastTitle"></strong>
@@ -136,7 +140,7 @@
       <footer class="game-footer standalone-only" id="gameFooter"></footer>
     </main>
 
-    <script src="js/memory-game.min.js?v=20260524-shell-modal-lock"></script>
+    <script src="js/memory-game.min.js?v=20260524-landscape-scale"></script>
     <script src="js/pwa.min.js" defer></script>
   </body>
 </html>

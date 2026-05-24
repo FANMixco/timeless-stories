@@ -65,6 +65,15 @@ html.is-modal-open .game-shell {
   overflow: hidden;
 }
 
+.game-layout {
+  display: grid;
+  gap: 12px;
+}
+
+.game-sidebar {
+  min-width: 0;
+}
+
 .game-top {
   display: grid;
   gap: 12px;
@@ -877,6 +886,50 @@ html[data-theme="dark"] .card.is-matched .card-front {
 
   .large-screen-only {
     display: inline-flex !important;
+  }
+}
+
+@media (min-width: 1024px) and (orientation: landscape) {
+  .game-shell {
+    width: min(100%, 1280px);
+    min-height: 100dvh;
+    display: grid;
+    align-items: center;
+  }
+
+  .game-layout {
+    grid-template-columns: minmax(260px, 340px) minmax(0, 1fr);
+    align-items: center;
+    gap: clamp(16px, 2vw, 28px);
+  }
+
+  .game-top {
+    align-items: start;
+    margin-bottom: 12px;
+  }
+
+  .game-title {
+    font-size: clamp(1.85rem, 4vw, 3.1rem);
+  }
+
+  .game-actions {
+    gap: 8px;
+  }
+
+  .status-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .match-insight {
+    margin: 0;
+  }
+
+  .board {
+    --board-gap: clamp(6px, 1vh, 10px);
+    gap: var(--board-gap);
+    width: min(100%, calc(100dvh - 64px));
+    max-width: 780px;
+    margin: 0 auto;
   }
 }
 
