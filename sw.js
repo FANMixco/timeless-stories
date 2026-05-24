@@ -1,11 +1,11 @@
-const CACHE_VERSION = "memory-game-pwa-20260524-landscape-scale";
+const CACHE_VERSION = "memory-game-pwa-20260524-action-pair-width";
 const APP_SHELL = [
   "/memory-game.html",
   "/memory-game.webmanifest",
   "/css/poppins.min.css",
   "/css/icon-moon-memory.min.css",
-  "/css/memory-game.min.css?v=20260524-landscape-scale",
-  "/js/memory-game.min.js?v=20260524-landscape-scale",
+  "/css/memory-game.min.css?v=20260524-action-pair-width",
+  "/js/memory-game.min.js?v=20260524-action-pair-width",
   "/js/pwa.min.js",
   "/js/data/links.min.json",
   "/js/i18n/memory-game/lang-en.min.json",

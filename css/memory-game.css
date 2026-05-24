@@ -913,7 +913,25 @@ html[data-theme="dark"] .card.is-matched .card-front {
   }
 
   .game-actions {
-    gap: 8px;
+    --action-icon-size: 64px;
+    --action-gap: 8px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+    gap: var(--action-gap);
+    width: calc((var(--action-icon-size) * 2) + var(--action-gap));
+    margin-left: auto;
+  }
+
+  #newGameButton,
+  #topViewLegendsButton {
+    flex: 0 0 100%;
+    width: 100%;
+  }
+
+  .game-actions .game-button.secondary {
+    width: var(--action-icon-size);
+    min-width: var(--action-icon-size);
   }
 
   .status-grid {
