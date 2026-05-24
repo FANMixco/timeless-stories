@@ -283,6 +283,11 @@ html[data-theme="dark"] .language-option[aria-checked="true"] {
   margin: 0 auto;
 }
 
+.board.is-intro {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  max-width: min(100%, 320px);
+}
+
 .card {
   position: relative;
   min-width: 0;

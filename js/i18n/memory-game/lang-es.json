@@ -211,7 +211,9 @@
           }
         }
       ],
-      "theme": "Modo de color"
+      "theme": "Modo de color",
+      "introLegend1": "Leyenda 1",
+      "introLegend2": "Leyenda 2"
     },
     "country3": "Marruecos 🇲🇦"
   }

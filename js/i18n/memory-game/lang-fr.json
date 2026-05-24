@@ -211,7 +211,9 @@
           }
         }
       ],
-      "theme": "Mode couleur"
+      "theme": "Mode couleur",
+      "introLegend1": "Légende 1",
+      "introLegend2": "Légende 2"
     },
     "country3": "Maroc 🇲🇦"
   }

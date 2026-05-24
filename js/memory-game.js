@@ -1,6 +1,7 @@
 const supportedLanguages = ["en", "es", "fr", "zh"];
 const languageStorageKey = "timelessStoriesOfficialLanguage";
 const themeStorageKey = "timelessStoriesColorMode";
+const introStorageKey = "timelessMemoryIntroSeen";
 const supportedThemes = ["system", "light", "dark"];
 const previewRewardThresholdSeconds = 30;
 const mismatchFlipBackDelayMs = 1200;
@@ -53,6 +54,7 @@ let elapsedSeconds = 0;
 let timer = null;
 let toastTimer = null;
 let gameCompleted = false;
+let introRunning = false;
 let translations = null;
 let deck = [];
 let activePairs = [];
@@ -106,6 +108,20 @@ function getStoredLanguage() {
   } catch (error) {
     return null;
   }
+}
+
+function hasSeenIntro() {
+  try {
+    return window.localStorage.getItem(introStorageKey) !== null;
+  } catch (error) {
+    return true;
+  }
+}
+
+function setIntroSeen() {
+  try {
+    window.localStorage.setItem(introStorageKey, "true");
+  } catch (error) {}
 }
 
 function getLanguage() {
@@ -693,6 +709,10 @@ function setTopLegendActionVisibility(shouldShow) {
 }
 
 function flipCard(card) {
+  if (introRunning) {
+    return;
+  }
+
   if (card.classList.contains("is-matched")) {
     showMatchInsight(card);
     if (gameCompleted) {
@@ -729,6 +749,7 @@ function flipCard(card) {
 
 function newGame() {
   stopTimer();
+  introRunning = false;
   firstCard = null;
   secondCard = null;
   lockBoard = false;
@@ -737,7 +758,7 @@ function newGame() {
   elapsedSeconds = 0;
   gameCompleted = false;
   activePairs = chooseActivePairs();
-  board.classList.remove("is-complete");
+  board.classList.remove("is-complete", "is-intro");
   matchInsight.classList.remove("is-visible");
   matchInsightTitle.textContent = "";
   matchInsightText.textContent = "";
@@ -753,6 +774,84 @@ function newGame() {
   deck = shuffle(buildDeck());
   renderLegendsList();
   board.replaceChildren(...deck.map(createCard));
+}
+
+function wait(ms) {
+  return new Promise((resolve) => {
+    window.setTimeout(resolve, ms);
+  });
+}
+
+async function runIntroTutorial() {
+  stopTimer();
+  introRunning = true;
+  firstCard = null;
+  secondCard = null;
+  lockBoard = true;
+  moves = 0;
+  matches = 0;
+  elapsedSeconds = 0;
+  gameCompleted = false;
+  activePairs = [];
+  board.classList.remove("is-complete");
+  board.classList.add("is-intro");
+  matchInsight.classList.remove("is-visible");
+  matchInsightTitle.textContent = "";
+  matchInsightText.textContent = "";
+  winPanel.classList.remove("is-visible");
+  legendsPanel?.classList.remove("is-visible");
+  syncModalScrollLock();
+  setTopLegendActionVisibility(false);
+  setPreviewRewardVisibility(false);
+  winMessage.textContent = "";
+  updateStatus();
+
+  const tutorialCards = [
+    {
+      key: "introLegend1",
+      pairId: "intro-pair",
+      side: "source",
+      name: memoryGame.introLegend1 || "Legend 1",
+      desc: "",
+      icon: "book",
+    },
+    {
+      key: "introLegend2",
+      pairId: "intro-pair",
+      side: "mirror",
+      name: memoryGame.introLegend2 || "Legend 2",
+      desc: "",
+      icon: "book",
+    },
+  ];
+
+  board.replaceChildren(...tutorialCards.map(createCard));
+  const cards = [...board.querySelectorAll(".card")];
+  showToast(memoryGame.hint || "Hint", memoryGame.hintText || "Pay attention to the icons.");
+
+  await wait(520);
+  cards[0]?.classList.add("is-flipped");
+  cards[0]?.setAttribute("aria-label", tutorialCards[0].name);
+  await wait(780);
+  cards[1]?.classList.add("is-flipped");
+  cards[1]?.setAttribute("aria-label", tutorialCards[1].name);
+  await wait(520);
+  cards.forEach((card) => card.classList.add("is-matched"));
+  await wait(1500);
+
+  setIntroSeen();
+  introRunning = false;
+  lockBoard = false;
+  newGame();
+}
+
+function startGame() {
+  if (hasSeenIntro()) {
+    newGame();
+    return;
+  }
+
+  runIntroTutorial();
 }
 
 function openLegendsPanel() {
@@ -834,5 +933,5 @@ document.documentElement.dataset.embed = String(isEmbedded);
 window.matchMedia?.("(prefers-color-scheme: dark)")?.addEventListener("change", applyTheme);
 loadTranslations().finally(() => {
   applyUiCopy();
-  newGame();
+  startGame();
 });

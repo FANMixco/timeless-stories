@@ -211,7 +211,9 @@
           }
         }
       ],
-      "theme": "Color mode"
+      "theme": "Color mode",
+      "introLegend1": "Legend 1",
+      "introLegend2": "Legend 2"
     },
     "country3": "Morocco 🇲🇦"
   }

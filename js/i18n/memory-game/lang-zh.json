@@ -211,7 +211,9 @@
           }
         }
       ],
-      "theme": "颜色模式"
+      "theme": "颜色模式",
+      "introLegend1": "传说 1",
+      "introLegend2": "传说 2"
     },
     "country3": "摩洛哥 🇲🇦"
   }
