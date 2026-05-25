@@ -5,7 +5,7 @@ const APP_SHELL = [
   "/css/poppins.min.css",
   "/css/icon-moon-memory.min.css",
   "/css/memory-game.min.css?v=20260525-legends-icon-emphasis",
-  "/js/memory-game.min.js?v=20260525-json-parse",
+  "/js/memory-game.min.js?v=20260525-localized-copy",
   "/js/pwa.min.js",
   "/js/data/links.min.json",
   "/js/i18n/memory-game/lang-en.min.json",

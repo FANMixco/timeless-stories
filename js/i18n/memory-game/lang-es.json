@@ -27,7 +27,7 @@
       },
       "weepingWoman": {
         "name": "La Llorona",
-        "desc": "Un espíritu femenino que llora en los cementerios."
+        "desc": "Una mujer fantasmal que, según se dice, vaga por los cementerios llorando por los muertos."
       },
       "headlessPriest": {
         "name": "El padre sin cabeza",
@@ -43,7 +43,7 @@
       },
       "caveOfSalamanca": {
         "name": "La cueva de Salamanca",
-        "desc": "El diablo con forma de profesor que enseña artes oscuras."
+        "desc": "El diablo en forma de profesor que enseña artes oscuras en una cueva."
       },
       "midnightWasherwomen": {
         "name": "Las Lavandeiras",
@@ -55,19 +55,19 @@
       },
       "urco": {
         "name": "El Urco",
-        "desc": "Una bestia que representa la muerte."
+        "desc": "Una bestia gigantesca encadenada que, según se dice, anuncia la muerte."
       },
       "holyCompany": {
         "name": "La santa Compaña",
-        "desc": "Una procesión nocturna de los muertos."
+        "desc": "Una procesión nocturna y fantasmal de los muertos."
       },
       "gaueko": {
         "name": "Gaueko",
-        "desc": "Un ser que gobierna la noche."
+        "desc": "Un espíritu vasco que, según se dice, gobierna la noche."
       },
       "ploranera": {
         "name": "La Ploranera",
-        "desc": "Un espíritu femenino que llora en la Barceloneta."
+        "desc": "Una mujer fantasmal que, según se dice, vaga por la Barceloneta, llorando en la oscuridad."
       },
       "ghostOfSanGines": {
         "name": "El fantasma de San Ginés",
@@ -79,7 +79,7 @@
       },
       "trasgu": {
         "name": "El trasgu",
-        "desc": "Un ser travieso que molesta a las chicas."
+        "desc": "Un ser travieso que se burla de las chicas."
       },
       "olomegaLagoonSiren": {
         "name": "La Sirena de la Laguna de Olomega",

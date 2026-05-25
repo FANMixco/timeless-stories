@@ -27,7 +27,7 @@
       },
       "weepingWoman": {
         "name": "La pleureuse",
-        "desc": "Un esprit féminin qui pleure dans les cimetières."
+        "desc": "Une femme fantomatique qui, dit-on, erre dans les cimetières en pleurant les morts."
       },
       "headlessPriest": {
         "name": "Le prêtre sans tête",
@@ -43,7 +43,7 @@
       },
       "caveOfSalamanca": {
         "name": "La grotte de Salamanca",
-        "desc": "Le diable sous la forme d’un professeur qui enseigne les arts sombres."
+        "desc": "Le diable sous la forme d’un professeur qui enseigne les arts sombres dans une grotte."
       },
       "midnightWasherwomen": {
         "name": "Les lavandières de la mort",
@@ -55,19 +55,19 @@
       },
       "urco": {
         "name": "L’Urco",
-        "desc": "Une bête qui représente la mort."
+        "desc": "Une gigantesque bête enchaînée qui, dit-on, annonce la mort."
       },
       "holyCompany": {
         "name": "La Sainte Compagnie",
-        "desc": "Une procession nocturne des morts."
+        "desc": "Une procession nocturne et fantomatique des morts."
       },
       "gaueko": {
         "name": "Gaueko",
-        "desc": "Un être qui règne sur la nuit."
+        "desc": "Un esprit basque qui, dit-on, règne sur la nuit."
       },
       "ploranera": {
         "name": "La Ploranera",
-        "desc": "Un esprit féminin qui pleure dans la Barceloneta."
+        "desc": "Une femme fantomatique qui, dit-on, erre dans la Barceloneta, pleurant dans l’obscurité."
       },
       "ghostOfSanGines": {
         "name": "Le fantôme de San Ginés",
@@ -79,7 +79,7 @@
       },
       "trasgu": {
         "name": "Le trasgu",
-        "desc": "Un être espiègle qui dérange les filles."
+        "desc": "Un être malicieux qui taquine les filles."
       },
       "olomegaLagoonSiren": {
         "name": "La Sirène de la lagune d’Olomega",
