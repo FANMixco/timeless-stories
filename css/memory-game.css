@@ -907,6 +907,15 @@ html[data-theme="dark"] .card.is-matched .card-front {
     padding-bottom: calc(22px + env(safe-area-inset-bottom, 0px));
   }
 
+  .character-mark {
+    width: clamp(58px, 5.2vw, 70px);
+    height: clamp(58px, 5.2vw, 70px);
+  }
+
+  .character-icon {
+    font-size: clamp(2rem, 3vw, 2.55rem);
+  }
+
   html[data-embed="true"] .game-subtitle {
     font-size: clamp(1.05rem, 2vw, 1.28rem);
     line-height: 1.35;
@@ -994,7 +1003,7 @@ html[data-theme="dark"] .card.is-matched .card-front {
   }
 
   .character-name {
-    font-size: clamp(0.72rem, 3vw, 0.94rem);
+    font-size: clamp(0.66rem, 2.75vw, 0.86rem);
     line-height: 1.08;
   }
 
