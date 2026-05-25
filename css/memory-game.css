@@ -588,7 +588,7 @@ html[data-theme="dark"] .card[data-rarity="tutorial"] .character-icon {
 }
 
 .legend-category .character-icon {
-  font-size: 1.85rem;
+  font-size: 2.15rem;
 }
 
 .legend-cell {
@@ -1063,7 +1063,7 @@ html[data-theme="dark"] .card.is-matched .card-front {
   }
 
   .legend-category .character-icon {
-    font-size: 1.75rem;
+    font-size: 2.05rem;
   }
 
   .legends-footer .game-button {

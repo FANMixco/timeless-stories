@@ -1,10 +1,10 @@
-const CACHE_VERSION = "memory-game-pwa-20260525-mobile-icon-emphasis";
+const CACHE_VERSION = "memory-game-pwa-20260525-legends-icon-emphasis";
 const APP_SHELL = [
   "/memory-game.html",
   "/memory-game.webmanifest",
   "/css/poppins.min.css",
   "/css/icon-moon-memory.min.css",
-  "/css/memory-game.min.css?v=20260525-mobile-icon-emphasis",
+  "/css/memory-game.min.css?v=20260525-legends-icon-emphasis",
   "/js/memory-game.min.js?v=20260525-json-parse",
   "/js/pwa.min.js",
   "/js/data/links.min.json",
