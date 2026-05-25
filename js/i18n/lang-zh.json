@@ -275,11 +275,11 @@
     "mapLegends": {
       "blackKnight": {
         "name": "黑骑士",
-        "desc": "魔鬼化身。"
+        "desc": "化身为绅士形态的魔鬼。"
       },
       "siguanaba": {
         "name": "西瓜娜巴",
-        "desc": "一个吓唬男人的女性灵魂。"
+        "desc": "在萨尔瓦多河流中惊吓男人的女性灵魂。"
       },
       "goodAndBadCadejo": {
         "name": "好坏卡德霍",
@@ -291,7 +291,7 @@
       },
       "funeralCortegeOfChalchuapa": {
         "name": "查尔楚阿帕的葬礼队伍",
-        "desc": "一个夜间的死亡游行。"
+        "desc": "亡者的夜间送葬队伍。"
       },
       "fairJudgeOfTheNight": {
         "name": "夜晚的公正法官",
@@ -303,7 +303,7 @@
       },
       "headlessPriest": {
         "name": "无头牧师",
-        "desc": "一个被斩首后在街上游荡的牧师。"
+        "desc": "一个被斩首后如今在街上游荡的神父灵魂。"
       },
       "fleshlessWoman": {
         "name": "无肉女人",
@@ -315,11 +315,11 @@
       },
       "caveOfSalamanca": {
         "name": "萨拉曼卡洞穴",
-        "desc": "一个教授黑暗艺术的教授。"
+        "desc": "化身为教授并传授黑暗艺术的魔鬼。"
       },
       "midnightWasherwomen": {
         "name": "午夜洗衣妇",
-        "desc": "吓唬男人的女性灵魂。"
+        "desc": "在加利西亚河流中惊吓男人的女性灵魂。"
       },
       "dip": {
         "name": "浸泡",
@@ -339,7 +339,7 @@
       },
       "ploranera": {
         "name": "哭泣的女人",
-        "desc": "一个在巴塞罗内塔哭泣的女人。"
+        "desc": "在巴塞罗内塔哭泣的女性灵魂。"
       },
       "ghostOfSanGines": {
         "name": "圣吉内斯的幽灵",

@@ -275,11 +275,11 @@
     "mapLegends": {
       "blackKnight": {
         "name": "Le Chevalier Noir",
-        "desc": "L'incarnation du diable."
+        "desc": "Le diable incarné sous la forme d’un gentilhomme."
       },
       "siguanaba": {
         "name": "La Siguanaba",
-        "desc": "Un esprit féminin qui effraie les hommes."
+        "desc": "Un esprit féminin qui effraie les hommes dans les rivières salvadoriennes."
       },
       "goodAndBadCadejo": {
         "name": "Le bon et le mauvais Cadejo",
@@ -291,7 +291,7 @@
       },
       "funeralCortegeOfChalchuapa": {
         "name": "Le cortège funèbre de Chalchuapa",
-        "desc": "Une procession nocturne des morts."
+        "desc": "Un cortège funèbre nocturne des morts."
       },
       "fairJudgeOfTheNight": {
         "name": "Le juge juste de la nuit",
@@ -303,7 +303,7 @@
       },
       "headlessPriest": {
         "name": "Le prêtre sans tête",
-        "desc": "Un prêtre qui a été décapité et qui erre maintenant dans les rues."
+        "desc": "L’esprit d’un prêtre décapité qui erre désormais dans les rues."
       },
       "fleshlessWoman": {
         "name": "La femme sans chair",
@@ -315,11 +315,11 @@
       },
       "caveOfSalamanca": {
         "name": "La grotte de Salamanca",
-        "desc": "Un professeur qui enseigne les arts sombres."
+        "desc": "Le diable sous la forme d’un professeur qui enseigne les arts sombres."
       },
       "midnightWasherwomen": {
         "name": "Les lavandières de la mort",
-        "desc": "Des esprits féminins qui effraient les hommes."
+        "desc": "Des esprits féminins qui effraient les hommes dans les rivières galiciennes."
       },
       "dip": {
         "name": "Le dip",
@@ -339,7 +339,7 @@
       },
       "ploranera": {
         "name": "La Ploranera",
-        "desc": "Une femme qui pleure dans la Barceloneta."
+        "desc": "Un esprit féminin qui pleure dans la Barceloneta."
       },
       "ghostOfSanGines": {
         "name": "Le fantôme de San Ginés",

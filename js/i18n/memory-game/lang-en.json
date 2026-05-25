@@ -3,11 +3,11 @@
     "mapLegends": {
       "blackKnight": {
         "name": "The Black Knight",
-        "desc": "The devil incarnate."
+        "desc": "The devil incarnate in a gentleman's form."
       },
       "siguanaba": {
         "name": "The Siguanaba",
-        "desc": "A female spirit that scares men."
+        "desc": "A female spirit that scares men in Salvadoran rivers."
       },
       "goodAndBadCadejo": {
         "name": "The good and the bad Cadejo",
@@ -19,7 +19,7 @@
       },
       "funeralCortegeOfChalchuapa": {
         "name": "The Funeral Cortege of Chalchuapa",
-        "desc": "A nighttime procession of the dead."
+        "desc": "A nighttime funeral cortege of the dead."
       },
       "fairJudgeOfTheNight": {
         "name": "The Fair Judge of the Night",
@@ -31,7 +31,7 @@
       },
       "headlessPriest": {
         "name": "The Headless Priest",
-        "desc": "A priest that was decapitated and now roams the streets."
+        "desc": "A priest spirit that was decapitated and now roams the streets."
       },
       "fleshlessWoman": {
         "name": "The Fleshless Woman",
@@ -43,11 +43,11 @@
       },
       "caveOfSalamanca": {
         "name": "The Cave of Salamanca",
-        "desc": "A professor that teaches dark arts."
+        "desc": "The devil in a professor's shape who teaches dark arts."
       },
       "midnightWasherwomen": {
         "name": "The Midnight Washerwomen",
-        "desc": "Female spirits that scare men."
+        "desc": "Female spirits that scare men in Galician rivers."
       },
       "dip": {
         "name": "The Dip",
@@ -67,7 +67,7 @@
       },
       "ploranera": {
         "name": "The Ploranera",
-        "desc": "A woman that cries in the Barceloneta."
+        "desc": "A female spirit that cries in the Barceloneta."
       },
       "ghostOfSanGines": {
         "name": "The Ghost of San Ginés",
