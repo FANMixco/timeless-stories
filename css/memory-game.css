@@ -1002,6 +1002,15 @@ html[data-theme="dark"] .card.is-matched .card-front {
     font-size: clamp(1.05rem, 6vw, 1.45rem);
   }
 
+  .card[data-rarity="tutorial"] .character-mark {
+    width: clamp(56px, 18vw, 72px);
+    height: clamp(56px, 18vw, 72px);
+  }
+
+  .card[data-rarity="tutorial"] .character-icon {
+    font-size: clamp(2rem, 9vw, 2.7rem);
+  }
+
   .character-flag {
     display: block;
     font-size: clamp(0.72rem, 2.8vw, 0.9rem);
