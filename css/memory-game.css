@@ -1008,7 +1008,7 @@ html[data-theme="dark"] .card.is-matched .card-front {
   }
 
   .character-icon {
-    font-size: clamp(1.05rem, 6vw, 1.45rem);
+    font-size: clamp(1.35rem, 7.6vw, 1.85rem);
   }
 
   .card[data-rarity="tutorial"] .character-mark {
