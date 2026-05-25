@@ -2,6 +2,7 @@ const supportedLang = ["en", "es", "fr", "zh"];
 const languageStorageKey = "timelessStoriesOfficialLanguage";
 const themeStorageKey = "timelessStoriesColorMode";
 const supportedThemes = ["system", "light", "dark"];
+const i18nCacheVersion = "20260525-json-parse";
 let translations;
 let linkRegistry;
 let localizedLinks;
@@ -743,7 +744,7 @@ window.addEventListener("resize", () => {
 });
 
 Promise.all([
-  fetchTranslationData(`js/i18n/lang-${lang}.min.json`),
+  fetchTranslationData(`js/i18n/lang-${lang}.min.json?v=${i18nCacheVersion}`),
   fetchTranslationData("js/data/links.min.json"),
 ])
   .then(([translationData, linksData]) => {

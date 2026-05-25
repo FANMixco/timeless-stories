@@ -5,6 +5,7 @@ const introStorageKey = "timelessMemoryIntroSeen";
 const supportedThemes = ["system", "light", "dark"];
 const previewRewardThresholdSeconds = 30;
 const mismatchFlipBackDelayMs = 1200;
+const i18nCacheVersion = "20260525-json-parse";
 let linkRegistry = null;
 let localizedLinks = null;
 const board = document.getElementById("board");
@@ -179,7 +180,7 @@ async function loadTranslations() {
 
   try {
     const [gameResponse, linksResponse] = await Promise.all([
-      fetch(`js/i18n/memory-game/lang-${language}.min.json`),
+      fetch(`js/i18n/memory-game/lang-${language}.min.json?v=${i18nCacheVersion}`),
       fetch("js/data/links.min.json"),
     ]);
     const gameData = await gameResponse.json();
