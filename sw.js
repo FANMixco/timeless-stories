@@ -1,11 +1,11 @@
-const CACHE_VERSION = "memory-game-pwa-20260524-intro-pause";
+const CACHE_VERSION = "memory-game-pwa-20260525-tutorial-icon-color";
 const APP_SHELL = [
   "/memory-game.html",
   "/memory-game.webmanifest",
   "/css/poppins.min.css",
   "/css/icon-moon-memory.min.css",
-  "/css/memory-game.min.css?v=20260524-intro-pause",
-  "/js/memory-game.min.js?v=20260524-intro-pause",
+  "/css/memory-game.min.css?v=20260525-tutorial-icon-color",
+  "/js/memory-game.min.js?v=20260525-tutorial-icon-color",
   "/js/pwa.min.js",
   "/js/data/links.min.json",
   "/js/i18n/memory-game/lang-en.min.json",

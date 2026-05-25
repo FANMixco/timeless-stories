@@ -814,6 +814,7 @@ async function runIntroTutorial() {
       name: memoryGame.introLegend1 || "Legend 1",
       desc: "",
       icon: "book",
+      rarity: "tutorial",
     },
     {
       key: "introLegend2",
@@ -822,6 +823,7 @@ async function runIntroTutorial() {
       name: memoryGame.introLegend2 || "Legend 2",
       desc: "",
       icon: "book",
+      rarity: "tutorial",
     },
   ];
 

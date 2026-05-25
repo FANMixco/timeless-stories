@@ -406,6 +406,15 @@ html[data-theme="dark"] .language-option[aria-checked="true"] {
   color: #0b6f8f;
 }
 
+.card[data-rarity="tutorial"] .character-mark {
+  background: rgba(220, 38, 38, 0.16);
+  color: #c92a2a;
+}
+
+.card[data-rarity="tutorial"] .character-icon {
+  color: #c92a2a;
+}
+
 html[data-theme="dark"] .card[data-rarity="rare"] .character-mark {
   background: rgba(139, 224, 197, 0.16);
   color: #8be0c5;
@@ -413,6 +422,15 @@ html[data-theme="dark"] .card[data-rarity="rare"] .character-mark {
 
 html[data-theme="dark"] .card[data-rarity="rare"] .character-icon {
   color: #8be0c5;
+}
+
+html[data-theme="dark"] .card[data-rarity="tutorial"] .character-mark {
+  background: rgba(255, 118, 117, 0.18);
+  color: #ff9f9f;
+}
+
+html[data-theme="dark"] .card[data-rarity="tutorial"] .character-icon {
+  color: #ff9f9f;
 }
 
 .character-name {
