@@ -96,6 +96,10 @@
       "ghostOfTheWhiteWolf": {
         "name": "白狼幽灵",
         "desc": "一位守护狼灵，会引导迷失的旅人穿过森林。"
+      },
+      "creakingCoffin": {
+        "name": "吱呀作响的棺材",
+        "desc": "\u7531\u4e27\u846c\u9f13\u58f0\u5ba3\u544a\u7684\u5348\u591c\u5e7d\u7075\u961f\u4f0d\u3002"
       }
     },
     "country1": "萨尔瓦多 🇸🇻",
@@ -191,6 +195,32 @@
       "footer": "在文化之间架起桥梁。版权所有 {author}。",
       "rarePairs": [
         {
+          "chance": 0.01,
+          "replaceSource": "goodAndBadCadejo",
+          "pair": {
+            "source": "goodAndBadCadejo",
+            "mirror": "ghostOfTheWhiteWolf",
+            "mirrorOrigin": "poland",
+            "insightTitle": "守护者与怪兽",
+            "insight": "守护者或生物，维护夜晚的边界。",
+            "icon": "paw",
+            "rarity": "rare"
+          }
+        },
+        {
+          "chance": 0.01,
+          "replaceSource": "funeralCortegeOfChalchuapa",
+          "pair": {
+            "source": "funeralCortegeOfChalchuapa",
+            "mirror": "creakingCoffin",
+            "mirrorOrigin": "ecuador",
+            "insightTitle": "亡者的队列",
+            "insight": "模糊生者与死者界线的集体幽灵显现。",
+            "icon": "candle",
+            "rarity": "rare"
+          }
+        },
+        {
           "chance": 0.05,
           "replaceSource": "siguanaba",
           "pair": {
@@ -213,19 +243,6 @@
             "icon": "waves",
             "rarity": "rare"
           }
-        },
-        {
-          "chance": 0.01,
-          "replaceSource": "goodAndBadCadejo",
-          "pair": {
-            "source": "goodAndBadCadejo",
-            "mirror": "ghostOfTheWhiteWolf",
-            "mirrorOrigin": "poland",
-            "insightTitle": "守护者与野兽",
-            "insight": "守护者或生灵，维护黑夜的边界。",
-            "icon": "paw",
-            "rarity": "rare"
-          }
         }
       ],
       "theme": "颜色模式",
@@ -234,6 +251,7 @@
       "legendsRarityNote": "有些镜像传说是隐藏稀有角色。再玩一次，看看还会出现谁。"
     },
     "country3": "摩洛哥 🇲🇦",
-    "country4": "波兰 🇵🇱"
+    "country4": "波兰 🇵🇱",
+    "country5": "厄瓜多尔 🇪🇨"
   }
 }

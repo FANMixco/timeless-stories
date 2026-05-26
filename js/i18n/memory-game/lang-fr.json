@@ -96,6 +96,10 @@
       "ghostOfTheWhiteWolf": {
         "name": "Fantôme du Loup Blanc",
         "desc": "Un esprit gardien en forme de loup qui guide les voyageurs perdus à travers la forêt."
+      },
+      "creakingCoffin": {
+        "name": "Le cercueil grinçant",
+        "desc": "Une procession fantomatique de minuit annonc\u00e9e par le son d\u2019un tambour fun\u00e8bre."
       }
     },
     "country1": "El Salvador 🇸🇻",
@@ -191,6 +195,32 @@
       "footer": "Construire des ponts entre les cultures. Droits d’auteur {author}.",
       "rarePairs": [
         {
+          "chance": 0.01,
+          "replaceSource": "goodAndBadCadejo",
+          "pair": {
+            "source": "goodAndBadCadejo",
+            "mirror": "ghostOfTheWhiteWolf",
+            "mirrorOrigin": "poland",
+            "insightTitle": "Gardiens et bêtes",
+            "insight": "Protecteurs ou créatures qui font respecter les limites de la nuit.",
+            "icon": "paw",
+            "rarity": "rare"
+          }
+        },
+        {
+          "chance": 0.01,
+          "replaceSource": "funeralCortegeOfChalchuapa",
+          "pair": {
+            "source": "funeralCortegeOfChalchuapa",
+            "mirror": "creakingCoffin",
+            "mirrorOrigin": "ecuador",
+            "insightTitle": "Processions des morts",
+            "insight": "Apparitions collectives qui brouillent la frontière entre les vivants et les morts.",
+            "icon": "candle",
+            "rarity": "rare"
+          }
+        },
+        {
           "chance": 0.05,
           "replaceSource": "siguanaba",
           "pair": {
@@ -213,19 +243,6 @@
             "icon": "waves",
             "rarity": "rare"
           }
-        },
-        {
-          "chance": 0.01,
-          "replaceSource": "goodAndBadCadejo",
-          "pair": {
-            "source": "goodAndBadCadejo",
-            "mirror": "ghostOfTheWhiteWolf",
-            "mirrorOrigin": "poland",
-            "insightTitle": "Gardiens et bêtes",
-            "insight": "Protecteurs ou créatures qui imposent les frontières de la nuit.",
-            "icon": "paw",
-            "rarity": "rare"
-          }
         }
       ],
       "theme": "Mode couleur",
@@ -234,6 +251,7 @@
       "legendsRarityNote": "Certaines légendes en miroir sont des raretés cachées. Rejouez pour découvrir qui d’autre apparaît."
     },
     "country3": "Maroc 🇲🇦",
-    "country4": "Pologne 🇵🇱"
+    "country4": "Pologne 🇵🇱",
+    "country5": "Équateur 🇪🇨"
   }
 }

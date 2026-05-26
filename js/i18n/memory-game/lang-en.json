@@ -96,6 +96,10 @@
       "ghostOfTheWhiteWolf": {
         "name": "Ghost of the White Wolf",
         "desc": "A guardian wolf spirit that guides lost travelers through the forest."
+      },
+      "creakingCoffin": {
+        "name": "The Creaking Coffin",
+        "desc": "A ghostly midnight procession announced by the sound of a funeral drum."
       }
     },
     "country1": "El Salvador 🇸🇻",
@@ -191,6 +195,32 @@
       "footer": "Building bridges across cultures. Copyrights {author}.",
       "rarePairs": [
         {
+          "chance": 0.01,
+          "replaceSource": "goodAndBadCadejo",
+          "pair": {
+            "source": "goodAndBadCadejo",
+            "mirror": "ghostOfTheWhiteWolf",
+            "mirrorOrigin": "poland",
+            "insightTitle": "Guardians & Beasts",
+            "insight": "Protectors or creatures that enforce the boundaries of the night.",
+            "icon": "paw",
+            "rarity": "rare"
+          }
+        },
+        {
+          "chance": 0.01,
+          "replaceSource": "funeralCortegeOfChalchuapa",
+          "pair": {
+            "source": "funeralCortegeOfChalchuapa",
+            "mirror": "creakingCoffin",
+            "mirrorOrigin": "ecuador",
+            "insightTitle": "Processions of the Dead",
+            "insight": "Collective apparitions that blur the line between the living and the dead.",
+            "icon": "candle",
+            "rarity": "rare"
+          }
+        },
+        {
           "chance": 0.05,
           "replaceSource": "siguanaba",
           "pair": {
@@ -213,19 +243,6 @@
             "icon": "waves",
             "rarity": "rare"
           }
-        },
-        {
-          "chance": 0.01,
-          "replaceSource": "goodAndBadCadejo",
-          "pair": {
-            "source": "goodAndBadCadejo",
-            "mirror": "ghostOfTheWhiteWolf",
-            "mirrorOrigin": "poland",
-            "insightTitle": "Guardians & Beasts",
-            "insight": "Protectors or creatures that enforce the boundaries of the night.",
-            "icon": "paw",
-            "rarity": "rare"
-          }
         }
       ],
       "theme": "Color mode",
@@ -234,6 +251,7 @@
       "legendsRarityNote": "Some mirror legends are hidden rarities. Play again to see who else appears."
     },
     "country3": "Morocco 🇲🇦",
-    "country4": "Poland 🇵🇱"
+    "country4": "Poland 🇵🇱",
+    "country5": "Ecuador 🇪🇨"
   }
 }

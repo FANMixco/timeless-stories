@@ -5,7 +5,7 @@ const introStorageKey = "timelessMemoryIntroSeen";
 const supportedThemes = ["system", "light", "dark"];
 const previewRewardThresholdSeconds = 30;
 const mismatchFlipBackDelayMs = 1200;
-const i18nCacheVersion = "20260526-rarity-note";
+const i18nCacheVersion = "20260526-rare-debug";
 let linkRegistry = null;
 let localizedLinks = null;
 const board = document.getElementById("board");
@@ -400,6 +400,7 @@ function getOriginLabel(side) {
     mirror: translations?.country2 || "",
     morocco: translations?.country3 || "",
     poland: translations?.country4 || "",
+    ecuador: translations?.country5 || "",
   };
 
   return originLabels[side] || "";

@@ -96,6 +96,10 @@
       "ghostOfTheWhiteWolf": {
         "name": "Fantasma del Lobo Blanco",
         "desc": "Un espíritu guardián con forma de lobo que guía a los viajeros perdidos por el bosque."
+      },
+      "creakingCoffin": {
+        "name": "La caja ronca",
+        "desc": "Una procesión fantasmal a medianoche anunciada por el sonido de un tambor fúnebre."
       }
     },
     "country1": "El Salvador 🇸🇻",
@@ -191,6 +195,32 @@
       "footer": "Construyendo puentes entre culturas. Derechos de autor {author}.",
       "rarePairs": [
         {
+          "chance": 0.01,
+          "replaceSource": "goodAndBadCadejo",
+          "pair": {
+            "source": "goodAndBadCadejo",
+            "mirror": "ghostOfTheWhiteWolf",
+            "mirrorOrigin": "poland",
+            "insightTitle": "Guardianes y bestias",
+            "insight": "Protectores o criaturas que hacen cumplir los límites de la noche.",
+            "icon": "paw",
+            "rarity": "rare"
+          }
+        },
+        {
+          "chance": 0.01,
+          "replaceSource": "funeralCortegeOfChalchuapa",
+          "pair": {
+            "source": "funeralCortegeOfChalchuapa",
+            "mirror": "creakingCoffin",
+            "mirrorOrigin": "ecuador",
+            "insightTitle": "Procesiones de los muertos",
+            "insight": "Apariciones colectivas que difuminan la línea entre vivos y muertos.",
+            "icon": "candle",
+            "rarity": "rare"
+          }
+        },
+        {
           "chance": 0.05,
           "replaceSource": "siguanaba",
           "pair": {
@@ -213,19 +243,6 @@
             "icon": "waves",
             "rarity": "rare"
           }
-        },
-        {
-          "chance": 0.01,
-          "replaceSource": "goodAndBadCadejo",
-          "pair": {
-            "source": "goodAndBadCadejo",
-            "mirror": "ghostOfTheWhiteWolf",
-            "mirrorOrigin": "poland",
-            "insightTitle": "Guardianes y bestias",
-            "insight": "Protectores o criaturas que imponen los límites de la noche.",
-            "icon": "paw",
-            "rarity": "rare"
-          }
         }
       ],
       "theme": "Modo de color",
@@ -234,6 +251,7 @@
       "legendsRarityNote": "Algunas leyendas espejo son rarezas ocultas. Juega de nuevo para descubrir quién más aparece."
     },
     "country3": "Marruecos 🇲🇦",
-    "country4": "Polonia 🇵🇱"
+    "country4": "Polonia 🇵🇱",
+    "country5": "Ecuador 🇪🇨"
   }
 }
