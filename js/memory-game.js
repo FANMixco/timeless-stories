@@ -5,7 +5,7 @@ const introStorageKey = "timelessMemoryIntroSeen";
 const supportedThemes = ["system", "light", "dark"];
 const previewRewardThresholdSeconds = 30;
 const mismatchFlipBackDelayMs = 1200;
-const i18nCacheVersion = "20260525-localized-copy";
+const i18nCacheVersion = "20260526-rarity-note";
 let linkRegistry = null;
 let localizedLinks = null;
 const board = document.getElementById("board");
@@ -25,6 +25,7 @@ const winMessage = document.getElementById("winMessage");
 const legendsPanel = document.getElementById("legendsPanel");
 const legendsPanelTitle = document.getElementById("legendsPanelTitle");
 const legendsList = document.getElementById("legendsList");
+const legendsRarityNote = document.getElementById("legendsRarityNote");
 const gameFooter = document.getElementById("gameFooter");
 const newGameButton = document.getElementById("newGameButton");
 const languageControl = document.getElementById("languageControl");
@@ -377,6 +378,7 @@ function applyUiCopy() {
   setElementHref(legendsGetCopyButton, resolveGameHref(memoryGame.getCopyHref));
   winTitle.textContent = memoryGame.winTitle || "";
   setElementText(legendsPanelTitle, memoryGame.legendsTitle || "");
+  setElementText(legendsRarityNote, memoryGame.legendsRarityNote || "");
   document.querySelector(".status-grid").setAttribute("aria-label", memoryGame.statusLabel || "");
   setText('[data-ui-label="moves"]', memoryGame.moves);
   setText('[data-ui-label="matches"]', memoryGame.matches);
@@ -397,6 +399,7 @@ function getOriginLabel(side) {
     source: translations?.country1 || "",
     mirror: translations?.country2 || "",
     morocco: translations?.country3 || "",
+    poland: translations?.country4 || "",
   };
 
   return originLabels[side] || "";

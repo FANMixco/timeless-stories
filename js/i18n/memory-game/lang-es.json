@@ -11,7 +11,7 @@
       },
       "goodAndBadCadejo": {
         "name": "El cadejo bueno y el malo",
-        "desc": "Un par de bestias que protegen o asustan a las personas por la noche."
+        "desc": "Un par de bestias sobrenaturales que protegen o aterrorizan a los viajeros por la noche."
       },
       "mulus": {
         "name": "El Mulus",
@@ -92,6 +92,10 @@
       "aishaKandisha": {
         "name": "Aisha Qandisha",
         "desc": "Un espíritu marroquí que atrae a los hombres hacia el peligro."
+      },
+      "ghostOfTheWhiteWolf": {
+        "name": "Fantasma del Lobo Blanco",
+        "desc": "Un espíritu guardián con forma de lobo que guía a los viajeros perdidos por el bosque."
       }
     },
     "country1": "El Salvador 🇸🇻",
@@ -209,12 +213,27 @@
             "icon": "waves",
             "rarity": "rare"
           }
+        },
+        {
+          "chance": 0.01,
+          "replaceSource": "goodAndBadCadejo",
+          "pair": {
+            "source": "goodAndBadCadejo",
+            "mirror": "ghostOfTheWhiteWolf",
+            "mirrorOrigin": "poland",
+            "insightTitle": "Guardianes y bestias",
+            "insight": "Protectores o criaturas que imponen los límites de la noche.",
+            "icon": "paw",
+            "rarity": "rare"
+          }
         }
       ],
       "theme": "Modo de color",
       "introLegend1": "Leyenda 1",
-      "introLegend2": "Leyenda 2"
+      "introLegend2": "Leyenda 2",
+      "legendsRarityNote": "Algunas leyendas espejo son rarezas ocultas. Juega de nuevo para descubrir quién más aparece."
     },
-    "country3": "Marruecos 🇲🇦"
+    "country3": "Marruecos 🇲🇦",
+    "country4": "Polonia 🇵🇱"
   }
 }

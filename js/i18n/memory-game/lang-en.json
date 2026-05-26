@@ -11,7 +11,7 @@
       },
       "goodAndBadCadejo": {
         "name": "The good and the bad Cadejo",
-        "desc": "A pair of beasts that protect or scare people at night."
+        "desc": "A pair of supernatural beasts that protect or terrify travelers at night."
       },
       "mulus": {
         "name": "The Mulus",
@@ -92,6 +92,10 @@
       "aishaKandisha": {
         "name": "Aisha Qandisha",
         "desc": "A Moroccan spirit who lures men toward danger."
+      },
+      "ghostOfTheWhiteWolf": {
+        "name": "Ghost of the White Wolf",
+        "desc": "A guardian wolf spirit that guides lost travelers through the forest."
       }
     },
     "country1": "El Salvador 🇸🇻",
@@ -209,12 +213,27 @@
             "icon": "waves",
             "rarity": "rare"
           }
+        },
+        {
+          "chance": 0.01,
+          "replaceSource": "goodAndBadCadejo",
+          "pair": {
+            "source": "goodAndBadCadejo",
+            "mirror": "ghostOfTheWhiteWolf",
+            "mirrorOrigin": "poland",
+            "insightTitle": "Guardians & Beasts",
+            "insight": "Protectors or creatures that enforce the boundaries of the night.",
+            "icon": "paw",
+            "rarity": "rare"
+          }
         }
       ],
       "theme": "Color mode",
       "introLegend1": "Legend 1",
-      "introLegend2": "Legend 2"
+      "introLegend2": "Legend 2",
+      "legendsRarityNote": "Some mirror legends are hidden rarities. Play again to see who else appears."
     },
-    "country3": "Morocco 🇲🇦"
+    "country3": "Morocco 🇲🇦",
+    "country4": "Poland 🇵🇱"
   }
 }

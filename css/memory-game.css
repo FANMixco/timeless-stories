@@ -535,8 +535,22 @@ html[data-theme="dark"] .card[data-rarity="tutorial"] .character-icon {
 
 .legends-footer {
   display: flex;
+  flex-direction: column;
+  align-items: flex-end;
   justify-content: flex-end;
+  gap: 10px;
   margin-top: 14px;
+}
+
+.legends-rarity-note {
+  width: 100%;
+  max-width: none;
+  margin: 0 0 4px;
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 650;
+  line-height: 1.35;
+  text-align: center;
 }
 
 .legends-footer .game-button {
@@ -1068,6 +1082,11 @@ html[data-theme="dark"] .card.is-matched .card-front {
 
   .legends-footer .game-button {
     width: 100%;
+  }
+
+  .legends-rarity-note {
+    max-width: none;
+    text-align: center;
   }
 }
 
