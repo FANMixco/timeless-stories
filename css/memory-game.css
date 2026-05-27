@@ -726,7 +726,7 @@ html[data-theme="dark"] .card[data-rarity="tutorial"] .character-icon {
 
 .legend-toast button::before,
 .win-close::before {
-  content: "✕";
+  content: "✖";
 }
 
 .legend-toast button:hover,
