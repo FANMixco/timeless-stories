@@ -140,7 +140,7 @@ html[data-embed="true"] .standalone-only {
 }
 
 .game-button[hidden] {
-  display: none;
+  display: none !important;
 }
 
 .game-button.secondary {
@@ -178,7 +178,7 @@ html[data-theme="dark"] .game-button.secondary:focus-visible {
 }
 
 .language-menu[hidden] {
-  display: none;
+  display: none !important;
 }
 
 .language-option {
@@ -692,7 +692,7 @@ html[data-theme="dark"] .card[data-rarity="tutorial"] .character-icon {
 }
 
 .legend-toast[hidden] {
-  display: none;
+  display: none !important;
 }
 
 .legend-toast strong {
@@ -764,7 +764,7 @@ html[data-theme="dark"] .card[data-rarity="tutorial"] .character-icon {
 }
 
 .win-actions .game-button[hidden] {
-  display: none;
+  display: none !important;
 }
 
 .game-footer {
@@ -983,6 +983,11 @@ html[data-theme="dark"] .card.is-matched .card-front {
   .game-actions .game-button.secondary {
     width: var(--action-icon-size);
     min-width: var(--action-icon-size);
+  }
+
+  .game-actions:has(#topViewLegendsButton:not([hidden])) #shareButton {
+    margin-right: auto;
+    margin-left: auto;
   }
 
   .status-grid {
