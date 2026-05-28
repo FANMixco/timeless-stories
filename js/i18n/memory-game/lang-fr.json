@@ -99,7 +99,15 @@
       },
       "creakingCoffin": {
         "name": "Le cercueil grinçant",
-        "desc": "Une procession fantomatique de minuit annonc\u00e9e par le son d\u2019un tambour fun\u00e8bre."
+        "desc": "Une procession fantomatique de minuit annoncée par le son d’un tambour funèbre."
+      },
+      "cursedBeastOfWolfGorge": {
+        "name": "La bête maudite de la gorge du Loup",
+        "desc": "Un esprit de loup noir né d’un pacte sombre garde un trésor caché au fond de la gorge."
+      },
+      "ghostHoundOfGoshen": {
+        "name": "Le chien fantôme de Goshen",
+        "desc": "Un chien noir fantomatique erre sur les routes solitaires et dans les forêts sous le couvert de la nuit."
       }
     },
     "country1": "El Salvador 🇸🇻",
@@ -199,6 +207,32 @@
           "replaceSource": "goodAndBadCadejo",
           "pair": {
             "source": "goodAndBadCadejo",
+            "mirror": "cursedBeastOfWolfGorge",
+            "mirrorOrigin": "luxembourg",
+            "insightTitle": "Gardiens et bêtes",
+            "insight": "Protecteurs ou créatures qui font respecter les limites de la nuit.",
+            "icon": "paw",
+            "rarity": "rare"
+          }
+        },
+        {
+          "chance": 0.01,
+          "replaceSource": "goodAndBadCadejo",
+          "pair": {
+            "source": "goodAndBadCadejo",
+            "mirror": "ghostHoundOfGoshen",
+            "mirrorOrigin": "usa",
+            "insightTitle": "Gardiens et bêtes",
+            "insight": "Protecteurs ou créatures qui font respecter les limites de la nuit.",
+            "icon": "paw",
+            "rarity": "rare"
+          }
+        },
+        {
+          "chance": 0.01,
+          "replaceSource": "goodAndBadCadejo",
+          "pair": {
+            "source": "goodAndBadCadejo",
             "mirror": "ghostOfTheWhiteWolf",
             "mirrorOrigin": "poland",
             "insightTitle": "Gardiens et bêtes",
@@ -252,6 +286,8 @@
     },
     "country3": "Maroc 🇲🇦",
     "country4": "Pologne 🇵🇱",
-    "country5": "Équateur 🇪🇨"
+    "country5": "Équateur 🇪🇨",
+    "country6": "Luxembourg 🇱🇺",
+    "country7": "États-Unis 🇺🇸"
   }
 }

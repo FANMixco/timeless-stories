@@ -100,6 +100,14 @@
       "creakingCoffin": {
         "name": "La caja ronca",
         "desc": "Una procesión fantasmal a medianoche anunciada por el sonido de un tambor fúnebre."
+      },
+      "cursedBeastOfWolfGorge": {
+        "name": "La bestia maldita del desfiladero del lobo",
+        "desc": "Un espíritu de lobo negro nacido de un pacto oscuro guarda un tesoro oculto en lo profundo del desfiladero."
+      },
+      "ghostHoundOfGoshen": {
+        "name": "El perro fantasma de Goshen",
+        "desc": "Un perro negro fantasmal recorre caminos solitarios y bosques bajo el manto de la noche."
       }
     },
     "country1": "El Salvador 🇸🇻",
@@ -199,6 +207,32 @@
           "replaceSource": "goodAndBadCadejo",
           "pair": {
             "source": "goodAndBadCadejo",
+            "mirror": "cursedBeastOfWolfGorge",
+            "mirrorOrigin": "luxembourg",
+            "insightTitle": "Guardianes y bestias",
+            "insight": "Protectores o criaturas que hacen cumplir los límites de la noche.",
+            "icon": "paw",
+            "rarity": "rare"
+          }
+        },
+        {
+          "chance": 0.01,
+          "replaceSource": "goodAndBadCadejo",
+          "pair": {
+            "source": "goodAndBadCadejo",
+            "mirror": "ghostHoundOfGoshen",
+            "mirrorOrigin": "usa",
+            "insightTitle": "Guardianes y bestias",
+            "insight": "Protectores o criaturas que hacen cumplir los límites de la noche.",
+            "icon": "paw",
+            "rarity": "rare"
+          }
+        },
+        {
+          "chance": 0.01,
+          "replaceSource": "goodAndBadCadejo",
+          "pair": {
+            "source": "goodAndBadCadejo",
             "mirror": "ghostOfTheWhiteWolf",
             "mirrorOrigin": "poland",
             "insightTitle": "Guardianes y bestias",
@@ -252,6 +286,8 @@
     },
     "country3": "Marruecos 🇲🇦",
     "country4": "Polonia 🇵🇱",
-    "country5": "Ecuador 🇪🇨"
+    "country5": "Ecuador 🇪🇨",
+    "country6": "Luxemburgo 🇱🇺",
+    "country7": "Estados Unidos 🇺🇸"
   }
 }

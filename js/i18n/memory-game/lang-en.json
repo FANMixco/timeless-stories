@@ -100,6 +100,14 @@
       "creakingCoffin": {
         "name": "The Creaking Coffin",
         "desc": "A ghostly midnight procession announced by the sound of a funeral drum."
+      },
+      "cursedBeastOfWolfGorge": {
+        "name": "The Cursed Beast of Wolf Gorge",
+        "desc": "A black wolf spirit born from a dark pact guards hidden treasure deep within the gorge."
+      },
+      "ghostHoundOfGoshen": {
+        "name": "The Ghost Hound of Goshen",
+        "desc": "A phantom black dog roams lonely roads and forests beneath the cover of night."
       }
     },
     "country1": "El Salvador 🇸🇻",
@@ -199,6 +207,32 @@
           "replaceSource": "goodAndBadCadejo",
           "pair": {
             "source": "goodAndBadCadejo",
+            "mirror": "cursedBeastOfWolfGorge",
+            "mirrorOrigin": "luxembourg",
+            "insightTitle": "Guardians & Beasts",
+            "insight": "Protectors or creatures that enforce the boundaries of the night.",
+            "icon": "paw",
+            "rarity": "rare"
+          }
+        },
+        {
+          "chance": 0.01,
+          "replaceSource": "goodAndBadCadejo",
+          "pair": {
+            "source": "goodAndBadCadejo",
+            "mirror": "ghostHoundOfGoshen",
+            "mirrorOrigin": "usa",
+            "insightTitle": "Guardians & Beasts",
+            "insight": "Protectors or creatures that enforce the boundaries of the night.",
+            "icon": "paw",
+            "rarity": "rare"
+          }
+        },
+        {
+          "chance": 0.01,
+          "replaceSource": "goodAndBadCadejo",
+          "pair": {
+            "source": "goodAndBadCadejo",
             "mirror": "ghostOfTheWhiteWolf",
             "mirrorOrigin": "poland",
             "insightTitle": "Guardians & Beasts",
@@ -252,6 +286,8 @@
     },
     "country3": "Morocco 🇲🇦",
     "country4": "Poland 🇵🇱",
-    "country5": "Ecuador 🇪🇨"
+    "country5": "Ecuador 🇪🇨",
+    "country6": "Luxembourg 🇱🇺",
+    "country7": "United States 🇺🇸"
   }
 }

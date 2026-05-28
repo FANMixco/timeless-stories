@@ -99,7 +99,15 @@
       },
       "creakingCoffin": {
         "name": "吱呀作响的棺材",
-        "desc": "\u7531\u4e27\u846c\u9f13\u58f0\u5ba3\u544a\u7684\u5348\u591c\u5e7d\u7075\u961f\u4f0d\u3002"
+        "desc": "由丧葬鼓声宣告的午夜幽灵队伍。"
+      },
+      "cursedBeastOfWolfGorge": {
+        "name": "狼峡谷的诅咒野兽",
+        "desc": "一只由黑暗契约诞生的黑狼灵，守护着峡谷深处的隐藏宝藏。"
+      },
+      "ghostHoundOfGoshen": {
+        "name": "戈申的幽灵猎犬",
+        "desc": "一只幽灵般的黑狗在夜色掩护下游荡于寂静道路与森林。"
       }
     },
     "country1": "萨尔瓦多 🇸🇻",
@@ -199,6 +207,32 @@
           "replaceSource": "goodAndBadCadejo",
           "pair": {
             "source": "goodAndBadCadejo",
+            "mirror": "cursedBeastOfWolfGorge",
+            "mirrorOrigin": "luxembourg",
+            "insightTitle": "守护者与怪兽",
+            "insight": "守护者或生物，维护夜晚的边界。",
+            "icon": "paw",
+            "rarity": "rare"
+          }
+        },
+        {
+          "chance": 0.01,
+          "replaceSource": "goodAndBadCadejo",
+          "pair": {
+            "source": "goodAndBadCadejo",
+            "mirror": "ghostHoundOfGoshen",
+            "mirrorOrigin": "usa",
+            "insightTitle": "守护者与怪兽",
+            "insight": "守护者或生物，维护夜晚的边界。",
+            "icon": "paw",
+            "rarity": "rare"
+          }
+        },
+        {
+          "chance": 0.01,
+          "replaceSource": "goodAndBadCadejo",
+          "pair": {
+            "source": "goodAndBadCadejo",
             "mirror": "ghostOfTheWhiteWolf",
             "mirrorOrigin": "poland",
             "insightTitle": "守护者与怪兽",
@@ -252,6 +286,8 @@
     },
     "country3": "摩洛哥 🇲🇦",
     "country4": "波兰 🇵🇱",
-    "country5": "厄瓜多尔 🇪🇨"
+    "country5": "厄瓜多尔 🇪🇨",
+    "country6": "卢森堡 🇱🇺",
+    "country7": "美国 🇺🇸"
   }
 }

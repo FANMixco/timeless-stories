@@ -5,7 +5,7 @@ const introStorageKey = "timelessMemoryIntroSeen";
 const supportedThemes = ["system", "light", "dark"];
 const previewRewardThresholdSeconds = 30;
 const mismatchFlipBackDelayMs = 1200;
-const i18nCacheVersion = "20260526-rare-debug";
+const i18nCacheVersion = "20260528-wolf-hound-debug";
 let linkRegistry = null;
 let localizedLinks = null;
 const board = document.getElementById("board");
@@ -401,6 +401,8 @@ function getOriginLabel(side) {
     morocco: translations?.country3 || "",
     poland: translations?.country4 || "",
     ecuador: translations?.country5 || "",
+    luxembourg: translations?.country6 || "",
+    usa: translations?.country7 || "",
   };
 
   return originLabels[side] || "";
