@@ -1,10 +1,10 @@
-const CACHE_VERSION = "memory-game-pwa-20260528-wolf-hound-debug";
+const CACHE_VERSION = "memory-game-pwa-20260528-button-height-icons";
 const APP_SHELL = [
   "/memory-game.html",
   "/memory-game.webmanifest",
   "/css/poppins.min.css",
   "/css/icon-moon-memory.min.css",
-  "/css/memory-game.min.css?v=20260527-share-center",
+  "/css/memory-game.min.css?v=20260528-button-height-icons",
   "/js/memory-game.min.js?v=20260528-wolf-hound-debug",
   "/js/pwa.min.js",
   "/js/data/links.min.json",

@@ -1095,6 +1095,77 @@ html[data-theme="dark"] .card.is-matched .card-front {
   }
 }
 
+@media (max-width: 320px) {
+  .game-shell {
+    padding-right: 10px;
+    padding-left: 10px;
+  }
+
+  .game-actions {
+    --narrow-action-size: 42px;
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  .game-actions .game-button {
+    min-width: 0;
+  }
+
+  #newGameButton {
+    flex: 1 1 calc(100% - var(--narrow-action-size) - 8px);
+  }
+
+  .game-actions > .game-button.secondary,
+  .game-actions > .language-control {
+    flex: 0 0 var(--narrow-action-size);
+    width: var(--narrow-action-size);
+    min-width: var(--narrow-action-size);
+    max-width: var(--narrow-action-size);
+  }
+
+  .game-actions > .game-button.secondary,
+  .language-control .game-button {
+    height: var(--narrow-action-size);
+    min-height: var(--narrow-action-size);
+    padding: 0;
+  }
+
+  .language-control {
+    display: inline-flex;
+  }
+
+  .language-control .game-button {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .status-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .status-item {
+    padding: 9px 10px;
+  }
+
+  .board {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .character-mark {
+    width: clamp(46px, 24vw, 58px);
+    height: clamp(46px, 24vw, 58px);
+  }
+
+  .character-icon {
+    font-size: clamp(1.9rem, 12vw, 2.35rem);
+  }
+
+  .character-name {
+    font-size: clamp(0.78rem, 5vw, 0.98rem);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .card-inner,
   .match-insight,
