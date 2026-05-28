@@ -105,9 +105,9 @@
         "name": "La bête maudite de la gorge du Loup",
         "desc": "Un esprit de loup noir né d’un pacte sombre garde un trésor caché au fond de la gorge."
       },
-      "ghostHoundOfGoshen": {
-        "name": "Le chien fantôme de Goshen",
-        "desc": "Un chien noir fantomatique erre sur les routes solitaires et dans les forêts sous le couvert de la nuit."
+      "resurrectionMary": {
+        "name": "Mary la ressuscitée",
+        "desc": "Une jeune femme fantomatique apparaît sur des routes solitaires avant de disparaître sans laisser de trace."
       }
     },
     "country1": "El Salvador 🇸🇻",
@@ -217,14 +217,14 @@
         },
         {
           "chance": 0.01,
-          "replaceSource": "goodAndBadCadejo",
+          "replaceSource": "fleshlessWoman",
           "pair": {
-            "source": "goodAndBadCadejo",
-            "mirror": "ghostHoundOfGoshen",
+            "source": "fleshlessWoman",
+            "mirror": "resurrectionMary",
             "mirrorOrigin": "usa",
-            "insightTitle": "Gardiens et bêtes",
-            "insight": "Protecteurs ou créatures qui font respecter les limites de la nuit.",
-            "icon": "paw",
+            "insightTitle": "Apparitions mortelles",
+            "insight": "Rencontres où la curiosité, le désir ou la distraction mènent à la ruine.",
+            "icon": "routes",
             "rarity": "rare"
           }
         },

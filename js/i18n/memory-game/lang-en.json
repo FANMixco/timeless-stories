@@ -105,9 +105,9 @@
         "name": "The Cursed Beast of Wolf Gorge",
         "desc": "A black wolf spirit born from a dark pact guards hidden treasure deep within the gorge."
       },
-      "ghostHoundOfGoshen": {
-        "name": "The Ghost Hound of Goshen",
-        "desc": "A phantom black dog roams lonely roads and forests beneath the cover of night."
+      "resurrectionMary": {
+        "name": "Resurrection Mary",
+        "desc": "A ghostly young woman appears on lonely roads before vanishing without a trace."
       }
     },
     "country1": "El Salvador 🇸🇻",
@@ -217,14 +217,14 @@
         },
         {
           "chance": 0.01,
-          "replaceSource": "goodAndBadCadejo",
+          "replaceSource": "fleshlessWoman",
           "pair": {
-            "source": "goodAndBadCadejo",
-            "mirror": "ghostHoundOfGoshen",
+            "source": "fleshlessWoman",
+            "mirror": "resurrectionMary",
             "mirrorOrigin": "usa",
-            "insightTitle": "Guardians & Beasts",
-            "insight": "Protectors or creatures that enforce the boundaries of the night.",
-            "icon": "paw",
+            "insightTitle": "Fatal Apparitions",
+            "insight": "Encounters where curiosity, desire, or distraction lead to ruin.",
+            "icon": "routes",
             "rarity": "rare"
           }
         },

@@ -105,9 +105,9 @@
         "name": "La bestia maldita del desfiladero del lobo",
         "desc": "Un espíritu de lobo negro nacido de un pacto oscuro guarda un tesoro oculto en lo profundo del desfiladero."
       },
-      "ghostHoundOfGoshen": {
-        "name": "El perro fantasma de Goshen",
-        "desc": "Un perro negro fantasmal recorre caminos solitarios y bosques bajo el manto de la noche."
+      "resurrectionMary": {
+        "name": "Mary Resucitada",
+        "desc": "Una joven fantasmal aparece en caminos solitarios antes de desvanecerse sin dejar rastro."
       }
     },
     "country1": "El Salvador 🇸🇻",
@@ -217,14 +217,14 @@
         },
         {
           "chance": 0.01,
-          "replaceSource": "goodAndBadCadejo",
+          "replaceSource": "fleshlessWoman",
           "pair": {
-            "source": "goodAndBadCadejo",
-            "mirror": "ghostHoundOfGoshen",
+            "source": "fleshlessWoman",
+            "mirror": "resurrectionMary",
             "mirrorOrigin": "usa",
-            "insightTitle": "Guardianes y bestias",
-            "insight": "Protectores o criaturas que hacen cumplir los límites de la noche.",
-            "icon": "paw",
+            "insightTitle": "Apariciones fatales",
+            "insight": "Encuentros donde la curiosidad, el deseo o la distracción conducen a la ruina.",
+            "icon": "routes",
             "rarity": "rare"
           }
         },

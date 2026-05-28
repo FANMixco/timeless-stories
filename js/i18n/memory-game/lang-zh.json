@@ -105,9 +105,9 @@
         "name": "狼峡谷的诅咒野兽",
         "desc": "一只由黑暗契约诞生的黑狼灵，守护着峡谷深处的隐藏宝藏。"
       },
-      "ghostHoundOfGoshen": {
-        "name": "戈申的幽灵猎犬",
-        "desc": "一只幽灵般的黑狗在夜色掩护下游荡于寂静道路与森林。"
+      "resurrectionMary": {
+        "name": "复活玛丽",
+        "desc": "一位幽灵般的年轻女子出现在孤寂道路上，随后消失得无影无踪。"
       }
     },
     "country1": "萨尔瓦多 🇸🇻",
@@ -217,14 +217,14 @@
         },
         {
           "chance": 0.01,
-          "replaceSource": "goodAndBadCadejo",
+          "replaceSource": "fleshlessWoman",
           "pair": {
-            "source": "goodAndBadCadejo",
-            "mirror": "ghostHoundOfGoshen",
+            "source": "fleshlessWoman",
+            "mirror": "resurrectionMary",
             "mirrorOrigin": "usa",
-            "insightTitle": "守护者与怪兽",
-            "insight": "守护者或生物，维护夜晚的边界。",
-            "icon": "paw",
+            "insightTitle": "致命显灵",
+            "insight": "好奇、欲望或分心最终引向毁灭的遭遇。",
+            "icon": "routes",
             "rarity": "rare"
           }
         },
