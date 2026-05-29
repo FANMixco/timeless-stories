@@ -4,7 +4,7 @@ const APP_SHELL = [
   "/memory-game.webmanifest",
   "/css/poppins.min.css",
   "/css/icon-moon-memory.min.css",
-  "/css/memory-game.min.css?v=20260529-ultra-rare-preview",
+  "/css/memory-game.min.css?v=20260529-ultra-rare-final",
   "/js/memory-game.min.js?v=20260529-ultra-rare-final",
   "/js/pwa.min.js",
   "/js/data/links.min.json",
