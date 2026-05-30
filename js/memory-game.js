@@ -5,7 +5,7 @@ const introStorageKey = "timelessMemoryIntroSeen";
 const supportedThemes = ["system", "light", "dark"];
 const previewRewardThresholdSeconds = 30;
 const mismatchFlipBackDelayMs = 1200;
-const i18nCacheVersion = "20260529-ultra-rare-final";
+const i18nCacheVersion = "20260530-refresh-warning-native";
 let linkRegistry = null;
 let localizedLinks = null;
 const board = document.getElementById("board");
@@ -550,6 +550,19 @@ function stopTimer() {
   timer = null;
 }
 
+function hasGameInProgress() {
+  return !introRunning && !gameCompleted && (elapsedSeconds > 0 || moves > 0 || matches > 0);
+}
+
+function warnBeforeLeaving(event) {
+  if (!hasGameInProgress()) {
+    return;
+  }
+
+  event.preventDefault();
+  event.returnValue = "";
+}
+
 function createCard(character, index) {
   const card = document.createElement("button");
   card.className = "card";
@@ -916,6 +929,7 @@ document.addEventListener("keydown", (event) => {
     closeLanguageMenu();
   }
 });
+window.addEventListener("beforeunload", warnBeforeLeaving);
 shareButton.addEventListener("click", () => {
   shareGame(shareButton).catch(() => {});
 });
