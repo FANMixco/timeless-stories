@@ -282,7 +282,31 @@
       "theme": "Mode couleur",
       "introLegend1": "Légende 1",
       "introLegend2": "Légende 2",
-      "legendsRarityNote": "Certaines légendes en miroir sont des raretés cachées. Rejouez pour découvrir qui d’autre apparaît."
+      "legendsRarityNote": "Certaines légendes en miroir sont des raretés cachées. Rejouez pour découvrir qui d’autre apparaît.",
+      "rarityInfoTitle": "Raretés cachées",
+      "rarityInfoCards": [
+        {
+          "title": "Légende miroir",
+          "label": "Collection principale",
+          "description": "Histoires de la collection principale de Miroirs Espagnols.",
+          "rarity": "",
+          "icon": "book"
+        },
+        {
+          "title": "Miroir rare",
+          "label": "Version D’auteur",
+          "description": "Légendes spéciales de l’édition Version D’auteur.",
+          "rarity": "rare",
+          "icon": "book"
+        },
+        {
+          "title": "Miroir doré",
+          "label": "Rareté cachée",
+          "description": "Légendes spéciales découvertes grâce aux lecteurs, aux voyages et aux événements littéraires liés au projet.",
+          "rarity": "ultra-rare",
+          "icon": "book"
+        }
+      ]
     },
     "country3": "Maroc 🇲🇦",
     "country4": "Pologne 🇵🇱",

@@ -489,7 +489,8 @@ html[data-theme="dark"] .card[data-rarity="tutorial"] .character-icon {
 }
 
 .win-panel,
-.legends-panel {
+.legends-panel,
+.rarity-panel {
   position: fixed;
   inset: 0;
   z-index: 20;
@@ -502,12 +503,14 @@ html[data-theme="dark"] .card[data-rarity="tutorial"] .character-icon {
 }
 
 .win-panel.is-visible,
-.legends-panel.is-visible {
+.legends-panel.is-visible,
+.rarity-panel.is-visible {
   display: grid;
 }
 
 .win-card,
-.legends-card {
+.legends-card,
+.rarity-card {
   position: relative;
   z-index: 2;
   width: min(100%, 420px);
@@ -561,14 +564,26 @@ html[data-theme="dark"] .card[data-rarity="tutorial"] .character-icon {
 }
 
 .legends-rarity-note {
+  display: block;
   width: 100%;
   max-width: none;
   margin: 0 0 4px;
+  padding: 2px 8px 8px;
+  background: transparent;
   color: var(--muted);
   font-size: 0.82rem;
   font-weight: 650;
   line-height: 1.35;
   text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.legends-rarity-note:hover,
+.legends-rarity-note:focus-visible {
+  color: var(--accent-dark);
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .legends-footer .game-button {
@@ -665,6 +680,83 @@ html[data-theme="dark"] .card[data-rarity="tutorial"] .character-icon {
   font-size: 0.8rem;
   font-weight: 600;
   line-height: 1.35;
+}
+
+.rarity-panel {
+  z-index: 25;
+}
+
+.rarity-card {
+  width: min(100%, 560px);
+  text-align: center;
+}
+
+.rarity-card h2 {
+  margin: 0 44px 16px;
+  color: var(--found);
+  font-size: clamp(1.35rem, 4vw, 1.85rem);
+  line-height: 1.1;
+}
+
+.rarity-preview-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.rarity-preview-card {
+  display: flex;
+  min-width: 0;
+  min-height: 190px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 14px 10px;
+  border: 2px solid rgba(216, 155, 33, 0.34);
+  border-radius: 8px;
+  background: linear-gradient(180deg, rgba(255, 250, 240, 0.55), transparent 45%), var(--panel);
+  text-align: center;
+  pointer-events: none;
+}
+
+.rarity-preview-card[data-rarity="rare"] .character-mark {
+  background: rgba(0, 119, 182, 0.16);
+  color: #0b6f8f;
+}
+
+.rarity-preview-card[data-rarity="rare"] .character-icon {
+  color: #0b6f8f;
+}
+
+.rarity-preview-card[data-rarity="ultra-rare"] .character-mark {
+  background: rgba(216, 155, 33, 0.28);
+  color: #9a5b00;
+}
+
+.rarity-preview-card[data-rarity="ultra-rare"] .character-icon {
+  color: #9a5b00;
+}
+
+.rarity-preview-card h3 {
+  margin: 2px 0 0;
+  color: var(--ink);
+  font-size: 0.92rem;
+  line-height: 1.12;
+}
+
+.rarity-preview-card strong {
+  color: var(--muted);
+  font-size: 0.72rem;
+  line-height: 1.2;
+}
+
+.rarity-preview-card p {
+  margin: 0;
+  color: var(--ink);
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: 1.32;
 }
 
 .win-close {
@@ -905,7 +997,8 @@ html[data-theme="dark"] .legend-toast {
 html[data-theme="dark"] .match-insight,
 html[data-theme="dark"] .status-item,
 html[data-theme="dark"] .win-card,
-html[data-theme="dark"] .legends-card {
+html[data-theme="dark"] .legends-card,
+html[data-theme="dark"] .rarity-card {
   background: var(--panel);
   border-color: var(--line);
 }
@@ -915,11 +1008,41 @@ html[data-theme="dark"] .legend-row {
   border-color: var(--line);
 }
 
+html[data-theme="dark"] .legends-rarity-note:hover,
+html[data-theme="dark"] .legends-rarity-note:focus-visible {
+  color: #d8ebff;
+}
+
 html[data-theme="dark"] .card-front {
   border-color: rgba(242, 189, 74, 0.36);
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.05), transparent 45%),
     var(--panel);
+}
+
+html[data-theme="dark"] .rarity-preview-card {
+  border-color: rgba(242, 189, 74, 0.36);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05), transparent 45%),
+    var(--panel);
+}
+
+html[data-theme="dark"] .rarity-preview-card[data-rarity="rare"] .character-mark {
+  background: rgba(139, 224, 197, 0.16);
+  color: #8be0c5;
+}
+
+html[data-theme="dark"] .rarity-preview-card[data-rarity="rare"] .character-icon {
+  color: #8be0c5;
+}
+
+html[data-theme="dark"] .rarity-preview-card[data-rarity="ultra-rare"] .character-mark {
+  background: rgba(242, 189, 74, 0.2);
+  color: #f2bd4a;
+}
+
+html[data-theme="dark"] .rarity-preview-card[data-rarity="ultra-rare"] .character-icon {
+  color: #f2bd4a;
 }
 
 html[data-theme="dark"] .card.is-matched .card-front {
@@ -1110,6 +1233,23 @@ html[data-theme="dark"] .card.is-matched .card-front {
   .legends-rarity-note {
     max-width: none;
     text-align: center;
+  }
+
+  .rarity-panel {
+    padding: 12px;
+  }
+
+  .rarity-card {
+    padding: 30px 14px 16px;
+  }
+
+  .rarity-preview-list {
+    grid-template-columns: 1fr;
+  }
+
+  .rarity-preview-card {
+    min-height: 132px;
+    padding: 12px 14px;
   }
 }
 

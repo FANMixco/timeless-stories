@@ -282,7 +282,31 @@
       "theme": "Color mode",
       "introLegend1": "Legend 1",
       "introLegend2": "Legend 2",
-      "legendsRarityNote": "Some mirror legends are hidden rarities. Play again to see who else appears."
+      "legendsRarityNote": "Some mirror legends are hidden rarities. Play again to see who else appears.",
+      "rarityInfoTitle": "Hidden Rarities",
+      "rarityInfoCards": [
+        {
+          "title": "Mirror Legend",
+          "label": "Main collection",
+          "description": "Stories from the main Spanish Mirrors collection.",
+          "rarity": "",
+          "icon": "book"
+        },
+        {
+          "title": "Rare Mirror",
+          "label": "Director's Cut",
+          "description": "Special legends from the Director's Cut edition.",
+          "rarity": "rare",
+          "icon": "book"
+        },
+        {
+          "title": "Golden Mirror",
+          "label": "Hidden rarity",
+          "description": "Special legends discovered through readers, travels, and literary events connected to the project.",
+          "rarity": "ultra-rare",
+          "icon": "book"
+        }
+      ]
     },
     "country3": "Morocco 🇲🇦",
     "country4": "Poland 🇵🇱",

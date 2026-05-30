@@ -5,7 +5,7 @@ const introStorageKey = "timelessMemoryIntroSeen";
 const supportedThemes = ["system", "light", "dark"];
 const previewRewardThresholdSeconds = 30;
 const mismatchFlipBackDelayMs = 1200;
-const i18nCacheVersion = "20260530-refresh-warning-native";
+const i18nCacheVersion = "20260530-rarity-info-modal-2";
 let linkRegistry = null;
 let localizedLinks = null;
 const board = document.getElementById("board");
@@ -26,6 +26,9 @@ const legendsPanel = document.getElementById("legendsPanel");
 const legendsPanelTitle = document.getElementById("legendsPanelTitle");
 const legendsList = document.getElementById("legendsList");
 const legendsRarityNote = document.getElementById("legendsRarityNote");
+const rarityPanel = document.getElementById("rarityPanel");
+const rarityPanelTitle = document.getElementById("rarityPanelTitle");
+const rarityPreviewList = document.getElementById("rarityPreviewList");
 const gameFooter = document.getElementById("gameFooter");
 const newGameButton = document.getElementById("newGameButton");
 const languageControl = document.getElementById("languageControl");
@@ -40,6 +43,7 @@ const viewLegendsButton = document.getElementById("viewLegendsButton");
 const winShareButton = document.getElementById("winShareButton");
 const closeWinButton = document.getElementById("closeWinButton");
 const closeLegendsButton = document.getElementById("closeLegendsButton");
+const closeRarityButton = document.getElementById("closeRarityButton");
 const previewRewardButton = document.getElementById("previewRewardButton");
 const getCopyButton = document.getElementById("getCopyButton");
 const legendsGetCopyButton = document.getElementById("legendsGetCopyButton");
@@ -235,7 +239,9 @@ function unlockPageScroll() {
 
 function syncModalScrollLock() {
   const hasOpenPanel =
-    winPanel.classList.contains("is-visible") || legendsPanel?.classList.contains("is-visible");
+    winPanel.classList.contains("is-visible") ||
+    legendsPanel?.classList.contains("is-visible") ||
+    rarityPanel?.classList.contains("is-visible");
 
   if (hasOpenPanel) {
     lockPageScroll();
@@ -368,6 +374,7 @@ function applyUiCopy() {
   winShareButton.textContent = memoryGame.share || "";
   closeWinButton.setAttribute("aria-label", memoryGame.close || "Close");
   closeLegendsButton?.setAttribute("aria-label", memoryGame.close || "Close");
+  closeRarityButton?.setAttribute("aria-label", memoryGame.close || "Close");
   legendToastClose.setAttribute("aria-label", memoryGame.close || "Close");
   previewRewardButton.textContent = memoryGame.previewReward || "Preview the book";
   previewRewardButton.href =
@@ -379,6 +386,8 @@ function applyUiCopy() {
   winTitle.textContent = memoryGame.winTitle || "";
   setElementText(legendsPanelTitle, memoryGame.legendsTitle || "");
   setElementText(legendsRarityNote, memoryGame.legendsRarityNote || "");
+  setElementText(rarityPanelTitle, memoryGame.rarityInfoTitle || "Hidden Rarities");
+  renderRarityPreviewList();
   document.querySelector(".status-grid").setAttribute("aria-label", memoryGame.statusLabel || "");
   setText('[data-ui-label="moves"]', memoryGame.moves);
   setText('[data-ui-label="matches"]', memoryGame.matches);
@@ -689,6 +698,42 @@ function renderLegendsList() {
   legendsList?.replaceChildren(...rows);
 }
 
+function renderRarityPreviewList() {
+  if (!rarityPreviewList) {
+    return;
+  }
+
+  const items = Array.isArray(memoryGame.rarityInfoCards) ? memoryGame.rarityInfoCards : [];
+  const cards = items.map((item) => {
+    const card = document.createElement("article");
+    card.className = "rarity-preview-card";
+    card.dataset.rarity = item.rarity || "";
+    card.setAttribute("aria-label", [item.title, item.label].filter(Boolean).join(". "));
+    card.innerHTML = `
+      <span class="character-mark">
+        <i class="character-icon icon-${item.icon || "book"}" aria-hidden="true"></i>
+      </span>
+      <h3>${item.title || ""}</h3>
+      <strong>${item.label || ""}</strong>
+      <p>${item.description || ""}</p>
+    `;
+    return card;
+  });
+
+  rarityPreviewList.replaceChildren(...cards);
+}
+
+function openRarityPanel() {
+  renderRarityPreviewList();
+  rarityPanel?.classList.add("is-visible");
+  syncModalScrollLock();
+}
+
+function closeRarityPanel() {
+  rarityPanel?.classList.remove("is-visible");
+  syncModalScrollLock();
+}
+
 function hideLegendToast() {
   legendToast.hidden = true;
   if (toastTimer) {
@@ -784,6 +829,7 @@ function newGame() {
   matchInsightText.textContent = "";
   winPanel.classList.remove("is-visible");
   legendsPanel?.classList.remove("is-visible");
+  rarityPanel?.classList.remove("is-visible");
   syncModalScrollLock();
   setTopLegendActionVisibility(false);
   setPreviewRewardVisibility(false);
@@ -820,6 +866,7 @@ async function runIntroTutorial() {
   matchInsightText.textContent = "";
   winPanel.classList.remove("is-visible");
   legendsPanel?.classList.remove("is-visible");
+  rarityPanel?.classList.remove("is-visible");
   syncModalScrollLock();
   setTopLegendActionVisibility(false);
   setPreviewRewardVisibility(false);
@@ -923,10 +970,18 @@ document.addEventListener("click", (event) => {
   if (!languageControl.contains(event.target)) {
     closeLanguageMenu();
   }
+
+  if (event.target.closest?.("#legendsRarityNote")) {
+    event.preventDefault();
+    openRarityPanel();
+  }
 });
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape") {
     closeLanguageMenu();
+    if (rarityPanel?.classList.contains("is-visible")) {
+      closeRarityPanel();
+    }
   }
 });
 window.addEventListener("beforeunload", warnBeforeLeaving);
@@ -948,6 +1003,12 @@ topViewLegendsButton?.addEventListener("click", openLegendsPanel);
 closeLegendsButton?.addEventListener("click", () => {
   legendsPanel?.classList.remove("is-visible");
   syncModalScrollLock();
+});
+closeRarityButton?.addEventListener("click", closeRarityPanel);
+rarityPanel?.addEventListener("click", (event) => {
+  if (event.target === rarityPanel) {
+    closeRarityPanel();
+  }
 });
 legendToastClose.addEventListener("click", hideLegendToast);
 playAgainButton.addEventListener("click", newGame);

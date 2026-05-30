@@ -282,7 +282,31 @@
       "theme": "Modo de color",
       "introLegend1": "Leyenda 1",
       "introLegend2": "Leyenda 2",
-      "legendsRarityNote": "Algunas leyendas espejo son rarezas ocultas. Juega de nuevo para descubrir quién más aparece."
+      "legendsRarityNote": "Algunas leyendas espejo son rarezas ocultas. Juega de nuevo para descubrir quién más aparece.",
+      "rarityInfoTitle": "Rarezas ocultas",
+      "rarityInfoCards": [
+        {
+          "title": "Leyenda espejo",
+          "label": "Colección principal",
+          "description": "Historias de la colección principal de Espejos Españoles.",
+          "rarity": "",
+          "icon": "book"
+        },
+        {
+          "title": "Espejo raro",
+          "label": "Versión del Director",
+          "description": "Leyendas especiales de la Versión del Director.",
+          "rarity": "rare",
+          "icon": "book"
+        },
+        {
+          "title": "Espejo dorado",
+          "label": "Rareza oculta",
+          "description": "Leyendas especiales descubiertas a través de lectores, viajes y eventos literarios vinculados al proyecto.",
+          "rarity": "ultra-rare",
+          "icon": "book"
+        }
+      ]
     },
     "country3": "Marruecos 🇲🇦",
     "country4": "Polonia 🇵🇱",

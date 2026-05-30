@@ -55,7 +55,7 @@
       }
     </script>
     <link rel="stylesheet" href="css/icon-moon-memory.min.css" />
-    <link rel="stylesheet" href="css/memory-game.min.css?v=20260529-ultra-rare-final" />
+    <link rel="stylesheet" href="css/memory-game.min.css?v=20260530-rarity-info-modal-2" />
   </head>
   <body>
     <main class="game-shell" aria-label="">
@@ -133,15 +133,22 @@
           <h2 id="legendsPanelTitle"></h2>
           <div class="legends-list" id="legendsList"></div>
           <div class="legends-footer">
-            <p class="legends-rarity-note" id="legendsRarityNote"></p>
+            <a class="legends-rarity-note" id="legendsRarityNote" href="#hidden-rarities"></a>
             <a class="game-button" id="legendsGetCopyButton" target="_blank" rel="noopener noreferrer"></a>
           </div>
+        </div>
+      </aside>
+      <aside class="rarity-panel" id="rarityPanel" aria-labelledby="rarityPanelTitle" aria-modal="true" role="dialog">
+        <div class="rarity-card">
+          <button class="win-close" type="button" id="closeRarityButton"></button>
+          <h2 id="rarityPanelTitle"></h2>
+          <div class="rarity-preview-list" id="rarityPreviewList"></div>
         </div>
       </aside>
       <footer class="game-footer standalone-only" id="gameFooter"></footer>
     </main>
 
-    <script src="js/memory-game.min.js?v=20260530-refresh-warning-native"></script>
+    <script src="js/memory-game.min.js?v=20260530-rarity-info-modal-2"></script>
     <script src="js/pwa.min.js" defer></script>
   </body>
 </html>

@@ -282,7 +282,31 @@
       "theme": "颜色模式",
       "introLegend1": "传说 1",
       "introLegend2": "传说 2",
-      "legendsRarityNote": "有些镜像传说是隐藏稀有角色。再玩一次，看看还会出现谁。"
+      "legendsRarityNote": "有些镜像传说是隐藏稀有角色。再玩一次，看看还会出现谁。",
+      "rarityInfoTitle": "隐藏稀有传说",
+      "rarityInfoCards": [
+        {
+          "title": "镜像传说",
+          "label": "主系列",
+          "description": "来自《西班牙镜像》主系列的故事。",
+          "rarity": "",
+          "icon": "book"
+        },
+        {
+          "title": "稀有镜像",
+          "label": "导演剪辑版",
+          "description": "导演剪辑版中的特别花絮。",
+          "rarity": "rare",
+          "icon": "book"
+        },
+        {
+          "title": "黄金镜像",
+          "label": "隐藏稀有",
+          "description": "通过读者、旅行以及与项目相关的文学活动发现的特殊传说。",
+          "rarity": "ultra-rare",
+          "icon": "book"
+        }
+      ]
     },
     "country3": "摩洛哥 🇲🇦",
     "country4": "波兰 🇵🇱",
