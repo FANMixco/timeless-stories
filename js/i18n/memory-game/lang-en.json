@@ -203,7 +203,7 @@
       "footer": "Building bridges across cultures. Copyrights {author}.",
       "rarePairs": [
         {
-          "chance": 0.01,
+          "chance": 0.025,
           "replaceSource": "goodAndBadCadejo",
           "pair": {
             "source": "goodAndBadCadejo",
@@ -216,7 +216,7 @@
           }
         },
         {
-          "chance": 0.01,
+          "chance": 0.025,
           "replaceSource": "fleshlessWoman",
           "pair": {
             "source": "fleshlessWoman",
@@ -229,7 +229,7 @@
           }
         },
         {
-          "chance": 0.01,
+          "chance": 0.025,
           "replaceSource": "goodAndBadCadejo",
           "pair": {
             "source": "goodAndBadCadejo",
@@ -242,7 +242,7 @@
           }
         },
         {
-          "chance": 0.01,
+          "chance": 0.025,
           "replaceSource": "funeralCortegeOfChalchuapa",
           "pair": {
             "source": "funeralCortegeOfChalchuapa",
