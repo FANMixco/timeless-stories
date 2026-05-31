@@ -435,7 +435,7 @@ function getPairIcon(source, mirror) {
     "ploranera|weepingWoman": "cry",
     "dwarf|trasgu": "wizard",
     "mulus|urco": "tomb",
-    "olomegaLagoonSiren|xana": "waves",
+    "olomegaLagoonSiren|xana": "music",
     "aishaKandisha|siguanaba": "masks",
   };
 
