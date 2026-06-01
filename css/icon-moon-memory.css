@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('fonts/icomoon-memory.eot?cabqh');
-  src:  url('fonts/icomoon-memory.eot?cabqh#iefix') format('embedded-opentype'),
-    url('fonts/icomoon-memory.ttf?cabqh') format('truetype'),
-    url('fonts/icomoon-memory.woff?cabqh') format('woff'),
-    url('fonts/icomoon-memory.svg?cabqh#icomoon') format('svg');
+  src:  url('fonts/icon-moon-memory.eot?wvxxo4');
+  src:  url('fonts/icon-moon-memory.eot?wvxxo4#iefix') format('embedded-opentype'),
+    url('fonts/icon-moon-memory.ttf?wvxxo4') format('truetype'),
+    url('fonts/icon-moon-memory.woff?wvxxo4') format('woff'),
+    url('fonts/icon-moon-memory.svg?wvxxo4#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -27,15 +27,6 @@
 
 .icon-music:before {
   content: "\e908";
-}
-.icon-book:before {
-  content: "\e91f";
-}
-.icon-share-windows:before {
-  content: "\ea7d";
-}
-.icon-share-generic:before {
-  content: "\ea82";
 }
 .icon-yin-yang:before {
   content: "\e90e";
@@ -78,4 +69,13 @@
 }
 .icon-cross:before {
   content: "\e909";
+}
+.icon-book:before {
+  content: "\e91f";
+}
+.icon-share-windows:before {
+  content: "\ea7d";
+}
+.icon-share-generic:before {
+  content: "\ea82";
 }
