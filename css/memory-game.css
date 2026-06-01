@@ -1081,7 +1081,7 @@ html[data-theme="dark"] .card.is-matched .card-front {
   }
 }
 
-@media (min-width: 1024px) and (orientation: landscape) {
+@media (min-width: 1024px) and (min-height: 600px) and (orientation: landscape) {
   .game-shell {
     width: min(100%, 1280px);
     min-height: 100dvh;
