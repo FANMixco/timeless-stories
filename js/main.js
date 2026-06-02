@@ -147,12 +147,30 @@ function animateScroll(targetScroll, duration) {
     requestAnimationFrame(scroll);
 }
 
+function getFixedHeaderOffset() {
+    const header = document.getElementById("header");
+    const navbar = header?.querySelector(".navbar");
+    return navbar?.offsetHeight || header?.offsetHeight || 0;
+}
+
+function scrollToTarget(target, duration = 1500) {
+    const targetTop = Math.max(
+        target.getBoundingClientRect().top + window.scrollY - getFixedHeaderOffset(),
+        0
+    );
+    animateScroll(targetTop, duration);
+}
+
 function initSmoothScroll() {
     document.querySelectorAll(".nav-link, .scrollto").forEach((link) => {
         link.addEventListener("click", function (e) {
             try {
                 const href = this.getAttribute("href");
                 if (!href || !href.startsWith("#")) {
+                    return;
+                }
+
+                if (this.getAttribute("data-bs-toggle") === "modal") {
                     return;
                 }
 
@@ -163,11 +181,6 @@ function initSmoothScroll() {
 
                 e.preventDefault();
 
-                const header = document.getElementById("header");
-                const topSpace = header ? header.offsetHeight : 0;
-                const targetTop = target.offsetTop - topSpace;
-                animateScroll(targetTop, 1500);
-
                 document.querySelectorAll(".nav-link.active").forEach((el) => {
                     el.classList.remove("active");
                 });
@@ -176,8 +189,20 @@ function initSmoothScroll() {
 
                 const navbarCollapse = document.querySelector(".navbar-collapse");
                 if (navbarCollapse && navbarCollapse.classList.contains("show")) {
-                    document.querySelector(".navbar-toggler")?.click();
+                    const collapseInstance =
+                        bootstrap.Collapse.getInstance(navbarCollapse) ||
+                        new bootstrap.Collapse(navbarCollapse, { toggle: false });
+
+                    navbarCollapse.addEventListener(
+                        "hidden.bs.collapse",
+                        () => scrollToTarget(target),
+                        { once: true }
+                    );
+                    collapseInstance.hide();
+                    return;
                 }
+
+                scrollToTarget(target);
             } catch (err) {
                 console.error("Smooth scroll error:", err);
             }
@@ -196,8 +221,7 @@ function handleInitialHash() {
             return;
         }
 
-        const topSpace = document.getElementById("header")?.offsetHeight || 0;
-        animateScroll(target.offsetTop - topSpace, 1000);
+        scrollToTarget(target, 1000);
     }, 0);
 }
 
