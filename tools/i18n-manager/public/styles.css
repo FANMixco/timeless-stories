@@ -325,6 +325,14 @@ input {
   box-shadow: inset 0 0 0 2px #e0b84d;
 }
 
+.field-row.collection-view {
+  display: block;
+}
+
+.field-row.collection-view > .field-value {
+  width: 100%;
+}
+
 .field-key {
   min-width: 0;
 }

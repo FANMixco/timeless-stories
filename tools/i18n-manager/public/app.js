@@ -91,7 +91,10 @@ function scrollToSearchHit() {
 }
 
 function selectionKey(path) {
-  return path.map(String).join(".");
+  const fileKey = state.current
+    ? Object.entries(state.current).map(([key, value]) => `${key}:${value}`).join("|")
+    : "no-file";
+  return `${fileKey}::${path.map(String).join(".")}`;
 }
 
 function optionEntries(value) {
@@ -105,6 +108,19 @@ function isObject(value) {
 
 function hasOnlyScalarChildren(value) {
   return isObject(value) && Object.values(value).every((child) => !child || typeof child !== "object");
+}
+
+function isCollectionObject(value) {
+  return isObject(value)
+    && Object.values(value).length > 1
+    && Object.values(value).every((child) => child && typeof child === "object");
+}
+
+function isCollectionViewNode(path, value) {
+  const key = path[path.length - 1];
+  if (key === "mapLegends") return isObject(value);
+  if (key === "pairs") return Array.isArray(value);
+  return isCollectionObject(value);
 }
 
 function selectedOptionKey(path, value) {
@@ -172,6 +188,10 @@ function canCloneToLanguages() {
   return state.current?.type === "i18n" || state.current?.type === "memory";
 }
 
+function shouldOpenTranslations(target, json) {
+  return (target?.type === "i18n" || target?.type === "memory") && json?.translations;
+}
+
 async function cloneToOtherLanguages(path, value, label = "field") {
   if (!canCloneToLanguages()) return;
 
@@ -210,6 +230,7 @@ function readableCollectionName(key) {
     .replace(/[_-]+/g, " ")
     .toLowerCase();
   return spaced.endsWith("legends") ? "legend"
+    : spaced === "pairs" ? "pair"
     : spaced.endsWith("technologies") ? "technology"
       : spaced.endsWith("ies") ? spaced.replace(/ies$/, "y")
         : spaced.endsWith("s") ? spaced.slice(0, -1)
@@ -517,6 +538,11 @@ function createNestedControl(parent, key, value, basePath = state.path) {
   const wrapper = document.createElement("div");
   wrapper.className = "field-value nested-value";
 
+  if (key === "translations") {
+    wrapper.append(createSelectedValueEditor(parent, key, path));
+    return wrapper;
+  }
+
   if (hasOnlyScalarChildren(value)) {
     wrapper.append(createDirectObjectEditor(value, path));
     return wrapper;
@@ -609,9 +635,20 @@ function createNestedControl(parent, key, value, basePath = state.path) {
 function summaryLabel(key, value) {
   if (typeof value === "string") return value.slice(0, 80);
   if (value && typeof value === "object") {
+    if (value.insightTitle || (value.source && value.mirror)) {
+      const source = legendName(value.source);
+      const mirror = legendName(value.mirror);
+      const pair = source && mirror ? `${source} / ${mirror}` : [value.source, value.mirror].filter(Boolean).join(" / ");
+      return [value.insightTitle, pair].filter(Boolean).join(" - ");
+    }
     return value.name || value.title || value.institution || `${typeOf(value)} - ${itemCount(value)} items`;
   }
   return String(value ?? key);
+}
+
+function legendName(key) {
+  if (!key) return "";
+  return state.json?.translations?.mapLegends?.[key]?.name || key;
 }
 
 function createValueControl(parent, key, value) {
@@ -633,6 +670,17 @@ function renderEditor() {
 
   if (!node || typeof node !== "object") {
     els.fieldList.innerHTML = '<div class="empty-state">This value can be edited from the parent or raw JSON view.</div>';
+    return;
+  }
+
+  if (state.path.length && isCollectionViewNode(state.path, node)) {
+    const parentPath = state.path.slice(0, -1);
+    const collectionKey = state.path[state.path.length - 1];
+    const parent = getAtPath(parentPath);
+    const row = document.createElement("div");
+    row.className = "field-row collection-view";
+    row.append(createNestedControl(parent, collectionKey, node, parentPath));
+    els.fieldList.append(row);
     return;
   }
 
@@ -708,7 +756,7 @@ async function loadFile(target) {
   const changedFile = JSON.stringify(state.current) !== JSON.stringify(target);
   state.current = target;
   state.json = result.json;
-  state.path = target.type === "i18n" && result.json.translations ? ["translations"] : [];
+  state.path = shouldOpenTranslations(target, result.json) ? ["translations"] : [];
   if (changedFile) clearSearch();
   setDirty(false);
   renderSidebar();
@@ -887,7 +935,7 @@ els.formatRawButton.addEventListener("click", () => {
 els.applyRawButton.addEventListener("click", (event) => {
   try {
     state.json = JSON.parse(els.rawEditor.value);
-    state.path = state.current?.type === "i18n" && state.json.translations ? ["translations"] : [];
+    state.path = shouldOpenTranslations(state.current, state.json) ? ["translations"] : [];
     setDirty(true);
     renderEditor();
   } catch (error) {

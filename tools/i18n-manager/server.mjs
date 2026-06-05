@@ -10,7 +10,8 @@ const i18nDir = resolve(rootDir, "js/i18n");
 const memoryI18nDir = resolve(rootDir, "js/i18n/memory-game");
 const dataDir = resolve(rootDir, "js/data");
 const requestedPort = process.env.PORT || process.argv[2];
-const port = requestedPort ? Number(requestedPort) : 0;
+const defaultPort = 4173;
+const port = requestedPort ? Number(requestedPort) : defaultPort;
 
 const jsonHeaders = { "content-type": "application/json; charset=utf-8" };
 const mimeTypes = new Map([
@@ -401,6 +402,7 @@ async function serveStatic(request, response, url) {
     const content = await readFile(file);
     send(response, 200, content, {
       "content-type": mimeTypes.get(extname(file)) || "application/octet-stream",
+      "cache-control": "no-store",
     });
   } catch {
     send(response, 404, "Not found");
@@ -418,8 +420,17 @@ const server = createServer(async (request, response) => {
   await serveStatic(request, response, url);
 });
 
-server.listen(port, "127.0.0.1", () => {
+server.on("error", (error) => {
+  if (!requestedPort && error.code === "EADDRINUSE") {
+    server.listen(0, "localhost");
+    return;
+  }
+
+  throw error;
+});
+
+server.listen(port, "localhost", () => {
   const address = server.address();
   const selectedPort = typeof address === "object" && address ? address.port : port;
-  console.log(`i18n Manager running at http://127.0.0.1:${selectedPort}`);
+  console.log(`i18n Manager running at http://localhost:${selectedPort}`);
 });
