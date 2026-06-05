@@ -395,6 +395,24 @@ function initTikTokEmbed() {
     window.addEventListener("scroll", onFirstScroll, { passive: true, once: true });
 }
 
+function initDeferredCookiebot() {
+    loadWidgetOnIdle(() => {
+        if (document.getElementById("Cookiebot")) {
+            return;
+        }
+
+        const script = document.createElement("script");
+        script.id = "Cookiebot";
+        script.src = "https://consent.cookiebot.com/uc.js";
+        script.type = "text/javascript";
+        script.async = true;
+        script.defer = true;
+        script.setAttribute("data-cbid", "78149afe-6653-4dcf-80de-2ef63de89ffc");
+        script.setAttribute("data-blockingmode", "auto");
+        document.head.appendChild(script);
+    }, 1200);
+}
+
 function initDeferredAnalytics() {
     loadWidgetOnIdle(() => {
         debugLazyLoad("Loading analytics loader", "ga_loader");
@@ -626,6 +644,7 @@ document.addEventListener("DOMContentLoaded", () => {
     initCollapseHandlers();
     initNavbarToggleState();
     initLazyLoadScripts();
+    initDeferredCookiebot();
     initDeferredAnalytics();
     setCurrentYear();
     initTikTokEmbed();
