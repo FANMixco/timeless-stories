@@ -575,7 +575,6 @@ html[data-theme="dark"] .card[data-rarity="tutorial"] .character-icon {
   font-weight: 650;
   line-height: 1.35;
   text-align: center;
-  text-decoration: none;
   cursor: pointer;
 }
 
@@ -583,7 +582,7 @@ html[data-theme="dark"] .card[data-rarity="tutorial"] .character-icon {
 .legends-rarity-note:focus-visible {
   color: var(--accent-dark);
   text-decoration: underline;
-  text-underline-offset: 3px;
+  /*text-underline-offset: 3px;*/
 }
 
 .legends-footer .game-button {
