@@ -166,6 +166,29 @@ function itemCount(value) {
   return 0;
 }
 
+function canCloneToLanguages() {
+  return state.current?.type === "i18n" || state.current?.type === "memory";
+}
+
+async function cloneToOtherLanguages(path, value, label = "field") {
+  if (!canCloneToLanguages()) return;
+
+  const result = await api("/api/clone-field", {
+    method: "POST",
+    body: JSON.stringify({
+      ...state.current,
+      path,
+      value,
+    }),
+  });
+
+  if (result.cloned.length) {
+    toast(`Cloned ${label} to ${result.cloned.map((item) => item.lang).join(", ")}.`);
+  } else {
+    toast(`${label} already exists in the other languages.`);
+  }
+}
+
 function eventNumbers(value) {
   if (!value || typeof value !== "object" || Array.isArray(value)) return [];
   return Object.keys(value)
@@ -515,6 +538,12 @@ function createNestedControl(parent, key, value, basePath = state.path) {
   addItemButton.textContent = `Add ${readableCollectionName(key)}`;
   addItemButton.addEventListener("click", () => addCollectionItem(value, path, selected));
 
+  const cloneItemButton = document.createElement("button");
+  cloneItemButton.type = "button";
+  cloneItemButton.textContent = `Clone ${readableCollectionName(key)}`;
+  cloneItemButton.hidden = !canCloneToLanguages();
+  cloneItemButton.addEventListener("click", () => cloneToOtherLanguages([...path, selected], value[selected], readableCollectionName(key)));
+
   const deleteItemButton = document.createElement("button");
   deleteItemButton.type = "button";
   deleteItemButton.className = "danger";
@@ -523,7 +552,7 @@ function createNestedControl(parent, key, value, basePath = state.path) {
 
   const headingActions = document.createElement("div");
   headingActions.className = "nested-heading-actions";
-  headingActions.append(addItemButton, deleteItemButton);
+  headingActions.append(addItemButton, cloneItemButton, deleteItemButton);
 
   heading.append(label, headingActions);
 
@@ -636,6 +665,14 @@ function renderEditor() {
 
     const tools = document.createElement("div");
     tools.className = "field-tools";
+
+    const cloneButton = document.createElement("button");
+    cloneButton.type = "button";
+    cloneButton.title = "Clone field to missing language files";
+    cloneButton.textContent = "Clone";
+    cloneButton.hidden = !canCloneToLanguages();
+    cloneButton.addEventListener("click", () => cloneToOtherLanguages(rowPath, value, key));
+    tools.append(cloneButton);
 
     const deleteButton = document.createElement("button");
     deleteButton.type = "button";

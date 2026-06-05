@@ -94,6 +94,69 @@ async function writeJsonPair(file, json, minify = false) {
   }
 }
 
+function cloneTargetDirectory(type) {
+  if (type === "i18n") return i18nDir;
+  if (type === "memory") return memoryI18nDir;
+  throw new Error("Field cloning is only available for language files.");
+}
+
+function hasPath(root, path) {
+  let cursor = root;
+  for (const part of path) {
+    if (!cursor || typeof cursor !== "object" || !Object.prototype.hasOwnProperty.call(cursor, part)) {
+      return false;
+    }
+    cursor = cursor[part];
+  }
+  return true;
+}
+
+function setMissingPath(root, path, value) {
+  if (!Array.isArray(path) || !path.length) {
+    throw new Error("Clone path is required.");
+  }
+
+  if (path.some((part) => !/^[\w.-]+$/.test(String(part)) || ["__proto__", "prototype", "constructor"].includes(String(part)))) {
+    throw new Error("Clone path contains an invalid key.");
+  }
+
+  if (hasPath(root, path)) return false;
+
+  let cursor = root;
+  for (const part of path.slice(0, -1)) {
+    if (!cursor[part] || typeof cursor[part] !== "object" || Array.isArray(cursor[part])) {
+      cursor[part] = {};
+    }
+    cursor = cursor[part];
+  }
+  cursor[path[path.length - 1]] = value;
+  return true;
+}
+
+async function cloneField({ type, lang, path, value }) {
+  const sourceLang = ensureLanguage(lang);
+  const dir = cloneTargetDirectory(type);
+  const files = await listJsonFiles(dir);
+  const cloned = [];
+  const skipped = [];
+
+  for (const file of files) {
+    const targetLang = file.replace(/^lang-/, "").replace(/\.json$/, "");
+    if (targetLang === sourceLang) continue;
+
+    const targetFile = resolve(dir, file);
+    const json = await readJsonFile(targetFile);
+    if (setMissingPath(json, path, value)) {
+      await writeJsonPair(targetFile, json, true);
+      cloned.push({ lang: targetLang, file: relative(rootDir, targetFile).replaceAll("\\", "/") });
+    } else {
+      skipped.push({ lang: targetLang, reason: "exists" });
+    }
+  }
+
+  return { cloned, skipped };
+}
+
 async function minifyFile(file) {
   const json = await readJsonFile(file);
   const minFile = minFileFor(file);
@@ -278,6 +341,11 @@ async function handleApi(request, response, url) {
       const json = typeof body.json === "string" ? JSON.parse(body.json) : body.json;
       await writeJsonPair(sourceFile, json, Boolean(body.minify));
       return sendJson(response, 200, { ok: true, minified: Boolean(body.minify) });
+    }
+
+    if (request.method === "POST" && url.pathname === "/api/clone-field") {
+      const body = await readBody(request);
+      return sendJson(response, 200, { ok: true, ...(await cloneField(body)) });
     }
 
     if (request.method === "POST" && url.pathname === "/api/minify") {
