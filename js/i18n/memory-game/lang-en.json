@@ -3,7 +3,7 @@
     "mapLegends": {
       "blackKnight": {
         "name": "The Black Knight",
-        "desc": "The devil incarnate in a gentleman’s form."
+        "desc": "The devil incarnate in a gentleman’s form, offering deals nobody can deny."
       },
       "siguanaba": {
         "name": "The Siguanaba",
@@ -71,7 +71,7 @@
       },
       "ghostOfSanGines": {
         "name": "The Ghost of San Ginés",
-        "desc": "A ghost that appears in the Church of San Ginés."
+        "desc": "A beheaded ghost that appears in the Church of San Ginés."
       },
       "girlOnTheCurve": {
         "name": "The Girl on the Curve",

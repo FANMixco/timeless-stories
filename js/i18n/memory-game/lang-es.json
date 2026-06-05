@@ -3,7 +3,7 @@
     "mapLegends": {
       "blackKnight": {
         "name": "El Caballero Negro",
-        "desc": "El diablo encarnado con forma de caballero."
+        "desc": "El diablo encarnado en la forma de un caballero, que ofrece tratos que nadie puede rechazar."
       },
       "siguanaba": {
         "name": "La Siguanaba",
@@ -71,7 +71,7 @@
       },
       "ghostOfSanGines": {
         "name": "El fantasma de San Ginés",
-        "desc": "Un fantasma que aparece en la Iglesia de San Ginés."
+        "desc": "Un fantasma decapitado que aparece en la iglesia de San Ginés."
       },
       "girlOnTheCurve": {
         "name": "La chica de la curva",

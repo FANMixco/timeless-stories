@@ -3,7 +3,7 @@
     "mapLegends": {
       "blackKnight": {
         "name": "Le Chevalier Noir",
-        "desc": "Le diable incarné sous la forme d’un gentilhomme."
+        "desc": "Le diable incarné sous des traits de gentleman, proposant des offres que personne ne peut refuser."
       },
       "siguanaba": {
         "name": "La Siguanaba",
@@ -71,7 +71,7 @@
       },
       "ghostOfSanGines": {
         "name": "Le fantôme de San Ginés",
-        "desc": "Un fantôme qui apparaît dans l'église de San Ginés."
+        "desc": "Un fantôme décapité qui apparaît dans l'église de San Ginés."
       },
       "girlOnTheCurve": {
         "name": "La fille de la courbe",
