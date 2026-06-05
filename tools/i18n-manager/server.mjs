@@ -9,7 +9,8 @@ const managerDir = resolve(__dirname, "public");
 const i18nDir = resolve(rootDir, "js/i18n");
 const memoryI18nDir = resolve(rootDir, "js/i18n/memory-game");
 const dataDir = resolve(rootDir, "js/data");
-const port = Number(process.env.PORT || process.argv[2] || 4173);
+const requestedPort = process.env.PORT || process.argv[2];
+const port = requestedPort ? Number(requestedPort) : 0;
 
 const jsonHeaders = { "content-type": "application/json; charset=utf-8" };
 const mimeTypes = new Map([
@@ -338,7 +339,7 @@ async function serveStatic(request, response, url) {
   }
 }
 
-createServer(async (request, response) => {
+const server = createServer(async (request, response) => {
   const url = new URL(request.url || "/", `http://${request.headers.host}`);
 
   if (url.pathname.startsWith("/api/")) {
@@ -347,6 +348,10 @@ createServer(async (request, response) => {
   }
 
   await serveStatic(request, response, url);
-}).listen(port, () => {
-  console.log(`i18n Manager running at http://localhost:${port}`);
+});
+
+server.listen(port, "127.0.0.1", () => {
+  const address = server.address();
+  const selectedPort = typeof address === "object" && address ? address.port : port;
+  console.log(`i18n Manager running at http://127.0.0.1:${selectedPort}`);
 });

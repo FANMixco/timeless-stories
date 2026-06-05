@@ -1,0 +1,7 @@
+{
+  "name": "timeless-stories",
+  "private": true,
+  "scripts": {
+    "i18n:manager": "node tools/i18n-manager/server.mjs"
+  }
+}
