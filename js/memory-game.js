@@ -681,11 +681,11 @@ function renderLegendsList() {
     const category = document.createElement("header");
     category.className = "legend-category";
     category.innerHTML = `
-      <strong>${insightTitle || ""}</strong>
-      <span>${insight || ""}</span>
       <span class="legend-mark">
         <i class="character-icon icon-${icon}" aria-hidden="true"></i>
       </span>
+      <strong>${insightTitle || ""}</strong>
+      <span>${insight || ""}</span>
     `;
     row.append(
       category,

@@ -631,7 +631,7 @@ html[data-theme="dark"] .card[data-rarity="tutorial"] .character-icon {
 .legend-category .legend-mark {
   width: 58px;
   height: 58px;
-  margin: 12px auto 0;
+  margin: auto auto 12px;
 }
 
 .legend-category .character-icon {
