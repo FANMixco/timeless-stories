@@ -566,6 +566,56 @@ function initContentModal() {
     });
 }
 
+function applyFloatingCookieBannerLayout() {
+    const banner = document.getElementById("cookiebanner") || document.getElementById("CybotCookiebotDialog");
+
+    if (!banner) {
+        return false;
+    }
+
+    const mobileLayout = window.innerWidth <= 767;
+    const edgeInset = mobileLayout ? "12px" : "16px";
+
+    banner.style.setProperty("position", "fixed", "important");
+    banner.style.setProperty("left", edgeInset, "important");
+    banner.style.setProperty("right", edgeInset, "important");
+    banner.style.setProperty("bottom", edgeInset, "important");
+    banner.style.setProperty("top", "auto", "important");
+    banner.style.setProperty("width", "auto", "important");
+    banner.style.setProperty("max-width", "1120px", "important");
+    banner.style.setProperty("margin", "0 auto", "important");
+    banner.style.setProperty("z-index", "2147483000", "important");
+
+    return true;
+}
+
+function initCookieBannerObserver() {
+    const syncBannerLayout = () => {
+        if (!applyFloatingCookieBannerLayout()) {
+            return;
+        }
+
+        window.requestAnimationFrame(() => {
+            window.requestAnimationFrame(initializePageDimensions);
+        });
+    };
+
+    syncBannerLayout();
+
+    const observer = new MutationObserver(() => {
+        syncBannerLayout();
+    });
+
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true,
+        attributes: true,
+        attributeFilter: ["style", "class"]
+    });
+
+    window.addEventListener("resize", syncBannerLayout);
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     initializePageDimensions();
     initUserLinks();
@@ -582,6 +632,7 @@ document.addEventListener("DOMContentLoaded", () => {
     initMobileMenuOutsideClose();
     initMobileMenuHideOnScroll();
     initContentModal();
+    initCookieBannerObserver();
 });
 
 window.addEventListener("resize", initializePageDimensions);
