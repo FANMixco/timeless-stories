@@ -120,6 +120,9 @@ function isCollectionViewNode(path, value) {
   const key = path[path.length - 1];
   if (key === "mapLegends") return isObject(value);
   if (key === "pairs") return Array.isArray(value);
+  if (Array.isArray(value)) {
+    return value.length > 1 && value.every((child) => child && typeof child === "object");
+  }
   return isCollectionObject(value);
 }
 
@@ -443,10 +446,13 @@ function createSelectedValueEditor(collection, selected, childPath) {
   container.className = "nested-selected";
   markSearchHit(container, childPath);
 
+  const header = document.createElement("div");
+  header.className = "nested-selected-header";
+
   const title = document.createElement("strong");
   title.className = "nested-path";
   title.textContent = pathLabel(childPath);
-  container.append(title);
+  header.append(title);
 
   if (!selectedValue || typeof selectedValue !== "object") {
     const row = document.createElement("div");
@@ -461,10 +467,28 @@ function createSelectedValueEditor(collection, selected, childPath) {
     valueBlock.className = "field-value";
     valueBlock.append(createInlineScalar(collection, selected, selectedValue));
 
-    row.append(keyBlock, valueBlock);
+    row.append(keyBlock, valueBlock, createNestedFieldTools(collection, selected, childPath, selectedValue));
+    container.append(header);
     container.append(row);
     return container;
   }
+
+  if (isCollectionViewNode(childPath, selectedValue)) {
+    header.append(document.createElement("span"));
+    container.append(header);
+    container.append(createNestedControl(collection, selected, selectedValue, childPath.slice(0, -1)));
+    return container;
+  }
+
+  const addFieldButton = document.createElement("button");
+  addFieldButton.type = "button";
+  addFieldButton.textContent = "Add field";
+  addFieldButton.addEventListener("click", () => {
+    addObjectField(selectedValue);
+    renderEditor();
+  });
+  header.append(addFieldButton);
+  container.append(header);
 
   const entries = optionEntries(selectedValue);
   if (!entries.length) {
@@ -495,7 +519,7 @@ function createSelectedValueEditor(collection, selected, childPath) {
       valueBlock.append(createInlineScalar(selectedValue, childKey, childValue));
     }
 
-    row.append(keyBlock, valueBlock);
+    row.append(keyBlock, valueBlock, createNestedFieldTools(selectedValue, childKey, rowPath, childValue));
     container.append(row);
   }
 
@@ -507,10 +531,23 @@ function createDirectObjectEditor(objectValue, childPath) {
   container.className = "nested-selected direct-object";
   markSearchHit(container, childPath);
 
+  const header = document.createElement("div");
+  header.className = "nested-selected-header";
+
   const title = document.createElement("strong");
   title.className = "nested-path";
   title.textContent = pathLabel(childPath);
-  container.append(title);
+  header.append(title);
+
+  const addFieldButton = document.createElement("button");
+  addFieldButton.type = "button";
+  addFieldButton.textContent = "Add field";
+  addFieldButton.addEventListener("click", () => {
+    addObjectField(objectValue);
+    renderEditor();
+  });
+  header.append(addFieldButton);
+  container.append(header);
 
   for (const [childKey, childValue] of Object.entries(objectValue)) {
     const rowPath = [...childPath, childKey];
@@ -526,11 +563,49 @@ function createDirectObjectEditor(objectValue, childPath) {
     valueBlock.className = "field-value";
     valueBlock.append(createInlineScalar(objectValue, childKey, childValue));
 
-    row.append(keyBlock, valueBlock);
+    row.append(keyBlock, valueBlock, createNestedFieldTools(objectValue, childKey, rowPath, childValue));
     container.append(row);
   }
 
   return container;
+}
+
+function addObjectField(objectValue) {
+  let index = 1;
+  let key = "newField";
+  while (Object.prototype.hasOwnProperty.call(objectValue, key)) {
+    index += 1;
+    key = `newField${index}`;
+  }
+  objectValue[key] = "";
+  setDirty(true);
+}
+
+function createNestedFieldTools(parent, key, path, value) {
+  const tools = document.createElement("div");
+  tools.className = "field-tools nested-field-tools";
+
+  const cloneButton = document.createElement("button");
+  cloneButton.type = "button";
+  cloneButton.title = "Clone field to missing language files";
+  cloneButton.textContent = "Clone";
+  cloneButton.hidden = !canCloneToLanguages();
+  cloneButton.addEventListener("click", () => cloneToOtherLanguages(path, value, key));
+  tools.append(cloneButton);
+
+  const deleteButton = document.createElement("button");
+  deleteButton.type = "button";
+  deleteButton.title = "Delete field";
+  deleteButton.textContent = "Del";
+  deleteButton.addEventListener("click", () => {
+    if (Array.isArray(parent)) parent.splice(Number(key), 1);
+    else delete parent[key];
+    setDirty(true);
+    renderEditor();
+  });
+  tools.append(deleteButton);
+
+  return tools;
 }
 
 function createNestedControl(parent, key, value, basePath = state.path) {
