@@ -4484,3 +4484,27 @@ html[data-theme="dark"] #mContactUs .btn-close {
         background-color: #002f6c;
     }
 }
+
+#CybotCookiebotDialog {
+    position: fixed !important;
+    left: 16px !important;
+    right: 16px !important;
+    bottom: 16px !important;
+    width: auto !important;
+    max-width: 1120px !important;
+    margin: 0 auto !important;
+    border-radius: 18px !important;
+    box-shadow: 0 24px 60px rgba(7, 17, 29, 0.28) !important;
+    z-index: 2147483000 !important;
+}
+
+@media (max-width: 767px) {
+    #CybotCookiebotDialog {
+        left: 12px !important;
+        right: 12px !important;
+        bottom: 12px !important;
+        max-height: calc(100vh - 24px) !important;
+        overflow-y: auto !important;
+        border-radius: 16px !important;
+    }
+}
