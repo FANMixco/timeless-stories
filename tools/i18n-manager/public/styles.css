@@ -315,7 +315,8 @@ input {
 }
 
 .field-row.search-hit,
-.nested-field-row.search-hit {
+.nested-field-row.search-hit,
+.nested-selected.search-hit {
   margin: 0 -12px;
   padding-left: 12px;
   padding-right: 12px;

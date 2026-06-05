@@ -79,13 +79,15 @@ function markSearchHit(element, path) {
 }
 
 function scrollToSearchHit() {
-  requestAnimationFrame(() => {
+  const scroll = () => {
     const hit = document.querySelector("[data-search-hit='true']");
     if (!hit) return;
     hit.scrollIntoView({ behavior: "smooth", block: "center" });
     const focusable = hit.querySelector("input, textarea, select, button");
     if (focusable) focusable.focus({ preventScroll: true });
-  });
+  };
+  requestAnimationFrame(scroll);
+  setTimeout(scroll, 120);
 }
 
 function selectionKey(path) {
@@ -418,6 +420,7 @@ function createSelectedValueEditor(collection, selected, childPath) {
   const selectedValue = collection[selected];
   const container = document.createElement("div");
   container.className = "nested-selected";
+  markSearchHit(container, childPath);
 
   const title = document.createElement("strong");
   title.className = "nested-path";
@@ -481,6 +484,7 @@ function createSelectedValueEditor(collection, selected, childPath) {
 function createDirectObjectEditor(objectValue, childPath) {
   const container = document.createElement("div");
   container.className = "nested-selected direct-object";
+  markSearchHit(container, childPath);
 
   const title = document.createElement("strong");
   title.className = "nested-path";
