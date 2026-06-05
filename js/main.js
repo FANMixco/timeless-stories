@@ -585,3 +585,20 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 window.addEventListener("resize", initializePageDimensions);
+
+window.requestAnimationFrame(() => {
+    window.requestAnimationFrame(initializePageDimensions);
+});
+
+if (document.fonts?.ready) {
+    document.fonts.ready
+        .then(() => {
+            window.requestAnimationFrame(initializePageDimensions);
+        })
+        .catch(() => {});
+}
+
+const initialHeroImage = document.querySelector("#div-book img");
+if (initialHeroImage && !initialHeroImage.complete) {
+    initialHeroImage.addEventListener("load", initializePageDimensions, { once: true });
+}
