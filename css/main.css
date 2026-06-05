@@ -4508,3 +4508,43 @@ html[data-theme="dark"] #mContactUs .btn-close {
         border-radius: 16px !important;
     }
 }
+
+#cookiebanner {
+    position: fixed !important;
+    left: 16px !important;
+    right: 16px !important;
+    bottom: 16px !important;
+    width: auto !important;
+    max-width: 1120px !important;
+    margin: 0 auto !important;
+    padding: 20px 24px !important;
+    border-radius: 18px !important;
+    box-shadow: 0 24px 60px rgba(7, 17, 29, 0.28) !important;
+    z-index: 2147483000 !important;
+}
+
+#cookiebanner #c-left,
+#cookiebanner #c-right {
+    float: none !important;
+}
+
+#cookiebanner #c-right {
+    margin-top: 16px !important;
+    text-align: right !important;
+}
+
+@media (max-width: 767px) {
+    #cookiebanner {
+        left: 12px !important;
+        right: 12px !important;
+        bottom: 12px !important;
+        padding: 16px !important;
+        max-height: calc(100vh - 24px) !important;
+        overflow-y: auto !important;
+        border-radius: 16px !important;
+    }
+
+    #cookiebanner #c-right {
+        text-align: left !important;
+    }
+}
