@@ -18,7 +18,7 @@ const lang = supportedLang.includes(storedLang)
     ? browserLang
     : "en";
 const bookCoverBasePath = "img/cover-colorized-v2-sm";
-const localizedBookCoverLanguages = new Set(["es"]);
+const localizedBookCoverLanguages = new Set(["es", "fr"]);
 
 document.documentElement.lang = lang;
 
@@ -166,6 +166,20 @@ function updateLocalizedBookCover(language) {
   jpegSource.setAttribute("srcset", jpegPath);
   coverImage.setAttribute("src", jpegPath);
   coverImage.setAttribute("alt", altText);
+}
+
+function getLocalizedEbookLink() {
+  return localizedLinks?.carouselCards?.ebook
+    || linkRegistry?.localized?.default?.carouselCards?.ebook
+    || "#";
+}
+
+function updateLocalizedEbookLinks() {
+  const ebookHref = getLocalizedEbookLink();
+
+  document.querySelectorAll(".localized-ebook-link").forEach((link) => {
+    link.setAttribute("href", ebookHref);
+  });
 }
 
 function getTranslationValue(obj, path) {
@@ -759,6 +773,7 @@ Promise.all([
     initThemeSelector();
     document.title = translations.title;
     updateLocalizedBookCover(lang);
+    updateLocalizedEbookLinks();
     renderSpecialGreetings();
 
     setDeferredFrameSource(

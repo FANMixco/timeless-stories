@@ -182,17 +182,6 @@
         "rightClass": "row-auto"
       },
       {
-        "title": "Relié 📘",
-        "description": "Pour ceux qui apprécient une expérience élégante <br>et un toucher authentique.",
-        "price": "15,99 <span>$</span>",
-        "href": "carouselCards.hardcover",
-        "cta": "Obtenir votre exemplaire",
-        "desktopBottomClass": "",
-        "mobileBottomClass": "eBPrice",
-        "leftClass": "row-auto",
-        "rightClass": "row-auto"
-      },
-      {
         "title": "Livre audio 👂",
         "description": "Pour ceux qui aiment écouter <br>en déplacement.",
         "price": "5,99 <span>$</span>",
@@ -200,17 +189,6 @@
         "cta": "Obtenir votre exemplaire",
         "desktopBottomClass": "",
         "mobileBottomClass": "eBPrice",
-        "leftClass": "row-auto",
-        "rightClass": "row-auto"
-      },
-      {
-        "title": "Version d’auteur 💎",
-        "description": "L'édition définitive avec des couleurs intégrales, <br>des miroirs partiels, du contenu bonus et une couverture rigide haut de gamme.",
-        "price": "36,99 <span>$</span>",
-        "href": "carouselCards.directorX",
-        "cta": "Bientôt disponible",
-        "desktopBottomClass": "price-bottom-x",
-        "mobileBottomClass": "eBPriceX",
         "leftClass": "row-auto",
         "rightClass": "row-auto"
       }
@@ -245,15 +223,10 @@
         "href": "https://www.instagram.com/marsodred/"
       },
       {
-        "name": "Samantha Bahn-Williams",
+        "name": "Geneviève Clairmont",
         "role": "Éditrice",
         "icon": "icon-pen",
-        "href": "https://www.mercerff.com/recipient/samantha-bahn-williams/"
-      },
-      {
-        "name": "Elizabeth Toole",
-        "role": "Éditrice",
-        "icon": "icon-pen"
+        "href": ""
       }
     ],
     "culturalCollaborations": [

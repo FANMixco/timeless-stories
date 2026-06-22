@@ -30,7 +30,13 @@
       }
     },
     "fr": {
-      "prezi": "k1IXa0mNdi7IbZjRgyOA"
+      "prezi": "k1IXa0mNdi7IbZjRgyOA",
+      "book": "B0H67S4MXY",
+      "carouselCards": {
+        "ebook": "https://a.co/d/07pLdMts",
+        "paperback": "https://a.co/d/0j5fs6t9",
+        "audiobook": "https://a.co/d/07pLdMts"
+      }
     },
     "zh": {
       "prezi": "8IwA2B6lYhPwonEWAyi9"
