@@ -986,7 +986,7 @@ th {
     background: #fff;
     border: 1px solid rgba(1, 87, 155, 0.12);
     border-radius: 8px;
-    box-shadow: 0 12px 30px rgba(1, 87, 155, 0.08);
+    /*box-shadow: 0 12px 30px rgba(1, 87, 155, 0.08);*/
 }
 
 .reviews-source {
@@ -1122,7 +1122,7 @@ th {
     background: #fff;
     border: 1px solid rgba(1, 87, 155, 0.12);
     border-radius: 8px;
-    box-shadow: 0 12px 30px rgba(1, 87, 155, 0.08);
+    /*box-shadow: 0 12px 30px rgba(1, 87, 155, 0.08);*/
 }
 
 .review-author {
