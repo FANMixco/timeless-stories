@@ -330,9 +330,10 @@ function initLazyLoadScripts() {
     ], { rootMargin: "300px 0px" });
 }
 
-const reviewsDataUrl = "js/data/reviews.min.json?v=20260626-external-reviews";
+const reviewsDataUrl = "js/data/reviews.min.json?v=20260626-readers-count";
 let seriesReviews = [];
 let seriesRatings = [];
+let seriesReaders = null;
 let currentReviewsCarouselMode;
 
 async function loadSeriesReviews() {
@@ -340,6 +341,7 @@ async function loadSeriesReviews() {
     const data = await response.json();
     seriesReviews = Array.isArray(data?.reviews) ? data.reviews : [];
     seriesRatings = Array.isArray(data?.ratings) ? data.ratings : [];
+    seriesReaders = data?.readers && Number(data.readers.count) ? data.readers : null;
 }
 
 function escapeHtml(value = "") {
@@ -405,18 +407,26 @@ function formatReviewCountry(countryCode) {
     }
 }
 
+function getReviewEditionFlag(editionKey) {
+    return editionKey === "spanishEdition" ? "🇪🇸" : "🇺🇸";
+}
+
 function formatReviewEdition(review) {
     const book = getReviewTranslation(review.bookKey, review.bookKey === "book2" ? "Book 2" : "Book 1");
-    const edition = getReviewTranslation(
-        review.editionKey,
-        review.editionKey === "spanishEdition" ? "Spanish edition" : "English edition"
-    );
 
-    return `${book} - ${edition} - ${formatReviewCountry(review.country)}`;
+    return `${book} ${getReviewEditionFlag(review.editionKey)} - ${formatReviewCountry(review.country)}`;
 }
 
 function formatReviewRating(value) {
     return Number(value).toFixed(1);
+}
+
+function formatReviewNumber(value) {
+    try {
+        return new Intl.NumberFormat(getReviewLocale()).format(value);
+    } catch (error) {
+        return String(value);
+    }
 }
 
 function getSeriesRatingsSummary() {
@@ -438,7 +448,16 @@ function formatRatingsCount(count) {
         "{count} global ratings across series editions"
     );
 
-    return template.replace("{count}", String(count));
+    return template.replace("{count}", formatReviewNumber(count));
+}
+
+function formatReadersCount(count) {
+    const template = getReviewTranslation(
+        "readersCountTemplate",
+        "{count}+ readers across the series"
+    );
+
+    return template.replace("{count}", formatReviewNumber(count));
 }
 
 function formatRatingAriaLabel(rating) {
@@ -458,6 +477,7 @@ function renderReviewsSummary() {
     const averageRating = document.getElementById("reviewsAverageRating");
     const ratingsCount = document.getElementById("reviewsRatingsCount");
     const ratingsContainer = document.getElementById("reviewsEditionRatings");
+    const readers = document.getElementById("reviewsReaders");
     const score = document.getElementById("reviewsScore");
     const summary = getSeriesRatingsSummary();
     const formattedRating = formatReviewRating(summary.rating);
@@ -478,14 +498,14 @@ function renderReviewsSummary() {
         ratingsContainer.innerHTML = seriesRatings
             .map((item) => {
                 const book = getReviewTranslation(item.bookKey, item.bookKey === "book2" ? "Book 2" : "Book 1");
-                const edition = getReviewTranslation(
-                    item.editionKey,
-                    item.editionKey === "spanishEdition" ? "Spanish" : "English"
-                );
 
-                return `<span>${escapeHtml(book)} ${escapeHtml(edition)}: ${escapeHtml(formatReviewRating(item.rating))} (${escapeHtml(item.count)})</span>`;
+                return `<span>${escapeHtml(book)} ${getReviewEditionFlag(item.editionKey)}: ${escapeHtml(formatReviewRating(item.rating))} (${escapeHtml(item.count)})</span>`;
             })
             .join("");
+    }
+
+    if (readers && seriesReaders?.count) {
+        readers.textContent = formatReadersCount(seriesReaders.count);
     }
 }
 

@@ -1,4 +1,7 @@
 {
+  "readers": {
+    "count": 1200
+  },
   "ratings": [
     {
       "bookKey": "book1",

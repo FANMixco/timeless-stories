@@ -48,7 +48,8 @@
       "readMore": "Read more",
       "readLess": "Read less",
       "ratingsCountTemplate": "{count} global ratings across series editions",
-      "ratingAriaLabel": "Average rating {rating} out of 5 stars"
+      "ratingAriaLabel": "Average rating {rating} out of 5 stars",
+      "readersCountTemplate": "{count}+ readers across the series"
     },
     "comingSoon": "Coming soon",
     "countdownIntro": "Fully available in",

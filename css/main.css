@@ -1063,6 +1063,14 @@ th {
     border-radius: 999px;
 }
 
+.reviews-readers {
+    margin: 10px 0 0;
+    color: #6b7280;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.45;
+}
+
 .reviews-amazon-link {
     display: inline-flex;
     min-height: 46px;
@@ -4337,6 +4345,7 @@ h6 {
     html:not([data-theme="light"]) .content-modal-list,
     html:not([data-theme="light"]) .review-text,
     html:not([data-theme="light"]) .reviews-count,
+    html:not([data-theme="light"]) .reviews-readers,
     html:not([data-theme="light"]) .reviews-editions span,
     html:not([data-theme="light"]) .review-author p,
     html:not([data-theme="light"]) .review-edition,
@@ -4568,6 +4577,7 @@ h6 {
     html[data-theme="dark"] .content-modal-list,
     html[data-theme="dark"] .review-text,
     html[data-theme="dark"] .reviews-count,
+    html[data-theme="dark"] .reviews-readers,
     html[data-theme="dark"] .reviews-editions span,
     html[data-theme="dark"] .review-author p,
     html[data-theme="dark"] .review-edition,

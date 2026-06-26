@@ -368,7 +368,8 @@
       "readMore": "阅读更多",
       "readLess": "收起",
       "ratingsCountTemplate": "本系列各版本共 {count} 条全球评分",
-      "ratingAriaLabel": "平均评分 {rating}，满分 5 星"
+      "ratingAriaLabel": "平均评分 {rating}，满分 5 星",
+      "readersCountTemplate": "本系列已有 {count}+ 位读者"
     }
   }
 }

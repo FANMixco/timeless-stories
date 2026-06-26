@@ -362,7 +362,8 @@
       "readMore": "Leer más",
       "readLess": "Leer menos",
       "ratingsCountTemplate": "{count} valoraciones globales en las ediciones de la serie",
-      "ratingAriaLabel": "Valoración media de {rating} sobre 5 estrellas"
+      "ratingAriaLabel": "Valoración media de {rating} sobre 5 estrellas",
+      "readersCountTemplate": "Más de {count} lectores en la serie"
     }
   }
 }

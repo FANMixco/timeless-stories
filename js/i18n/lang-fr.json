@@ -341,7 +341,8 @@
       "readMore": "Lire plus",
       "readLess": "Lire moins",
       "ratingsCountTemplate": "{count} évaluations mondiales pour les éditions de la série",
-      "ratingAriaLabel": "Note moyenne de {rating} sur 5 étoiles"
+      "ratingAriaLabel": "Note moyenne de {rating} sur 5 étoiles",
+      "readersCountTemplate": "Plus de {count} lecteurs dans la série"
     }
   }
 }
