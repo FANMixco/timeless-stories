@@ -355,6 +355,20 @@
       }
     },
     "country1": "萨尔瓦多 🇸🇻",
-    "country2": "西班牙 🇪🇸"
+    "country2": "西班牙 🇪🇸",
+    "reviews": {
+      "heading": "读者评价",
+      "subheading": "关于本系列",
+      "reviewCta": "评价本系列",
+      "postedOn": "发布于",
+      "book1": "第 1 本",
+      "book2": "第 2 本",
+      "englishEdition": "英文版",
+      "spanishEdition": "西班牙文版",
+      "readMore": "阅读更多",
+      "readLess": "收起",
+      "ratingsCountTemplate": "本系列各版本共 {count} 条全球评分",
+      "ratingAriaLabel": "平均评分 {rating}，满分 5 星"
+    }
   }
 }

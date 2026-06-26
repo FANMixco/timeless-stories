@@ -2,7 +2,7 @@ const supportedLang = ["en", "es", "fr", "zh"];
 const languageStorageKey = "timelessStoriesOfficialLanguage";
 const themeStorageKey = "timelessStoriesColorMode";
 const supportedThemes = ["system", "light", "dark"];
-const i18nCacheVersion = "20260526-white-wolf";
+const i18nCacheVersion = "20260626-localized-reviews";
 let translations;
 let linkRegistry;
 let localizedLinks;

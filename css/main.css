@@ -972,6 +972,275 @@ th {
     text-decoration: underline;
 }
 
+.reviews-widget {
+    color: #202832;
+}
+
+.reviews-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 30px;
+    padding: 28px 32px;
+    background: #fff;
+    border: 1px solid rgba(1, 87, 155, 0.12);
+    border-radius: 8px;
+    box-shadow: 0 12px 30px rgba(1, 87, 155, 0.08);
+}
+
+.reviews-source {
+    margin: 0 0 8px;
+    color: #222;
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.reviews-amazon-wordmark {
+    position: relative;
+    display: inline-block;
+    margin-right: 4px;
+    font-weight: 700;
+}
+
+.reviews-amazon-wordmark::after {
+    content: "";
+    position: absolute;
+    left: 5px;
+    right: 7px;
+    bottom: -3px;
+    height: 3px;
+    border-bottom: 3px solid #ff9900;
+    border-radius: 50%;
+}
+
+.reviews-score {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    color: #6b7280;
+    line-height: 1;
+}
+
+.reviews-score strong {
+    color: #222;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.review-stars {
+    color: #1d5bd7;
+    font-size: 21px;
+    letter-spacing: 0;
+    line-height: 1;
+}
+
+.reviews-count {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.reviews-editions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.reviews-editions span {
+    display: inline-flex;
+    align-items: center;
+    min-height: 28px;
+    padding: 0 10px;
+    color: #01579b;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1;
+    background: rgba(1, 87, 155, 0.07);
+    border: 1px solid rgba(1, 87, 155, 0.14);
+    border-radius: 999px;
+}
+
+.reviews-amazon-link {
+    display: inline-flex;
+    min-height: 46px;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    padding: 0 24px;
+    color: #111820;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1;
+    background: #f7b500;
+    border: 1px solid #d89b00;
+    border-radius: 6px;
+    text-decoration: none;
+}
+
+.reviews-amazon-link:focus {
+    color: #111820;
+    text-decoration: none;
+    box-shadow: 0 0 0 3px rgba(247, 181, 0, 0.28);
+}
+
+.reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+}
+
+.reviews-carousel {
+    padding: 0 54px;
+}
+
+.reviews-carousel .carousel-control-prev-icon,
+.reviews-carousel .carousel-control-next-icon {
+    filter: none;
+}
+
+.review-slide-card {
+    display: flex;
+}
+
+.review-card {
+    display: flex;
+    width: 100%;
+    min-height: 398px;
+    flex-direction: column;
+    padding: 26px;
+    background: #fff;
+    border: 1px solid rgba(1, 87, 155, 0.12);
+    border-radius: 8px;
+    box-shadow: 0 12px 30px rgba(1, 87, 155, 0.08);
+}
+
+.review-author {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 20px;
+}
+
+.review-avatar {
+    display: inline-flex;
+    width: 46px;
+    height: 46px;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    color: #fff;
+    font-weight: 700;
+    background: #111820;
+    border-radius: 50%;
+}
+
+.review-author h3 {
+    margin-bottom: 4px;
+    color: #222;
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.review-author p {
+    margin: 0;
+    color: #777;
+    font-size: 13px;
+    font-weight: 400;
+}
+
+.review-card h4 {
+    margin: 10px 0 8px;
+    color: #222;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.35;
+}
+
+.review-edition {
+    margin: 14px 0 0;
+    color: #01579b;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.35;
+}
+
+.review-text {
+    min-height: 104px;
+    max-height: none;
+    margin: 0;
+    color: #404040;
+    font-size: 16px;
+    line-height: 1.55;
+}
+
+.review-toggle {
+    align-self: flex-start;
+    margin: 14px 0 22px;
+    padding: 0;
+    color: #777;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.3;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+}
+
+.review-toggle:focus {
+    color: #01579b;
+    outline: 2px solid rgba(1, 87, 155, 0.28);
+    outline-offset: 3px;
+}
+
+.review-card footer {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: auto;
+    color: #777;
+    font-size: 13px;
+    line-height: 1.35;
+}
+
+.review-card footer a {
+    display: block;
+    margin-top: 2px;
+    color: #b47a00;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.review-amazon-icon {
+    display: inline-flex;
+    width: 32px;
+    height: 32px;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    color: #111820;
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 1;
+    background: #f0f2f5;
+    border-radius: 50%;
+}
+
+.review-modal-author {
+    margin: 0 0 8px;
+    color: #01579b;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.review-modal-text {
+    color: #404040;
+    font-size: 17px;
+    line-height: 1.7;
+}
+
 @media (max-width: 575.98px) {
     .institutional-records {
         margin-top: 54px;
@@ -1015,6 +1284,19 @@ th {
     .content-modal-list {
         font-size: 20px;
     }
+
+    .reviews-summary {
+        padding: 22px;
+    }
+
+    .review-card {
+        min-height: 0;
+        padding: 22px;
+    }
+
+    .reviews-carousel {
+        padding: 0 16px;
+    }
 }
 
 @media (max-width: 767px) {
@@ -1025,6 +1307,25 @@ th {
     #map {
         max-width: 100%;
         margin: auto;
+    }
+
+    .reviews-summary {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .reviews-amazon-link {
+        width: 100%;
+    }
+
+    .reviews-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1199.98px) {
+    .reviews-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 }
 
@@ -3949,7 +4250,7 @@ h6 {
     html:not([data-theme="light"]) .info-area,
     html:not([data-theme="light"]) .price-area,
     html:not([data-theme="light"]) .course-area,
-    html:not([data-theme="light"]) .testomial-area:not(#reviews) {
+    html:not([data-theme="light"]) .testomial-area {
         background: #111820;
         color: #d8e0e8;
     }
@@ -3963,7 +4264,9 @@ h6 {
     html:not([data-theme="light"]) .institutional-record-card,
     html:not([data-theme="light"]) #mMediaCarousel .card,
     html:not([data-theme="light"]) .modal-content,
-    html:not([data-theme="light"]) .content-modal .modal-content {
+    html:not([data-theme="light"]) .content-modal .modal-content,
+    html:not([data-theme="light"]) .reviews-summary,
+    html:not([data-theme="light"]) .review-card {
         background: #17212b;
         border-color: #2a3846;
         color: #d8e0e8;
@@ -4005,12 +4308,12 @@ h6 {
     html:not([data-theme="light"]) .course-area .h1,
     html:not([data-theme="light"]) .course-area .h2,
     html:not([data-theme="light"]) .course-area .h3,
-    html:not([data-theme="light"]) .testomial-area:not(#reviews) h1,
-    html:not([data-theme="light"]) .testomial-area:not(#reviews) h2,
-    html:not([data-theme="light"]) .testomial-area:not(#reviews) h3,
-    html:not([data-theme="light"]) .testomial-area:not(#reviews) .h1,
-    html:not([data-theme="light"]) .testomial-area:not(#reviews) .h2,
-    html:not([data-theme="light"]) .testomial-area:not(#reviews) .h3,
+    html:not([data-theme="light"]) .testomial-area h1,
+    html:not([data-theme="light"]) .testomial-area h2,
+    html:not([data-theme="light"]) .testomial-area h3,
+    html:not([data-theme="light"]) .testomial-area .h1,
+    html:not([data-theme="light"]) .testomial-area .h2,
+    html:not([data-theme="light"]) .testomial-area .h3,
     html:not([data-theme="light"]) .institutional-records-heading h2,
     html:not([data-theme="light"]) .institutional-record-card h3,
     html:not([data-theme="light"]) .content-modal-title-link,
@@ -4019,7 +4322,11 @@ h6 {
     html:not([data-theme="light"]) .modal-title,
     html:not([data-theme="light"]) .content-modal-title,
     html:not([data-theme="light"]) .multi-column-list,
-    html:not([data-theme="light"]) .multi-column-list li {
+    html:not([data-theme="light"]) .multi-column-list li,
+    html:not([data-theme="light"]) .reviews-source,
+    html:not([data-theme="light"]) .reviews-score strong,
+    html:not([data-theme="light"]) .review-author h3,
+    html:not([data-theme="light"]) .review-card h4 {
         color: #f2f6f9;
     }
 
@@ -4027,8 +4334,19 @@ h6 {
     html:not([data-theme="light"]) .institutional-record-title,
     html:not([data-theme="light"]) .institutional-record-date,
     html:not([data-theme="light"]) .single-testimonial .desc,
-    html:not([data-theme="light"]) .content-modal-list {
+    html:not([data-theme="light"]) .content-modal-list,
+    html:not([data-theme="light"]) .review-text,
+    html:not([data-theme="light"]) .reviews-count,
+    html:not([data-theme="light"]) .reviews-editions span,
+    html:not([data-theme="light"]) .review-author p,
+    html:not([data-theme="light"]) .review-edition,
+    html:not([data-theme="light"]) .review-card footer {
         color: #c6d0da;
+    }
+
+    html:not([data-theme="light"]) .reviews-editions span {
+        background: rgba(142, 196, 255, 0.09);
+        border-color: rgba(142, 196, 255, 0.2);
     }
 
     html:not([data-theme="light"]) .content-modal-list-link {
@@ -4121,12 +4439,25 @@ h6 {
         color: #f2f6f9;
     }
 
-    html:not([data-theme="light"]) #reviews {
-        background: #111820;
+    html:not([data-theme="light"]) .review-toggle {
+        color: #9ba8b5;
     }
 
-    html:not([data-theme="light"]) #aReviews {
-        filter: invert(1);
+    html:not([data-theme="light"]) .review-avatar {
+        background: #0f151c;
+    }
+
+    html:not([data-theme="light"]) .review-amazon-icon {
+        color: #111820;
+        background: #d8e0e8;
+    }
+
+    html:not([data-theme="light"]) .review-modal-author {
+        color: #8ec4ff;
+    }
+
+    html:not([data-theme="light"]) .review-modal-text {
+        color: #c6d0da;
     }
 
     html:not([data-theme="light"]) .modal .btn-close {
@@ -4141,8 +4472,8 @@ h6 {
     html:not([data-theme="light"]) .price-area .carousel-control-next,
     html:not([data-theme="light"]) .course-area .carousel-control-prev,
     html:not([data-theme="light"]) .course-area .carousel-control-next,
-    html:not([data-theme="light"]) .testomial-area:not(#reviews) .carousel-control-prev,
-    html:not([data-theme="light"]) .testomial-area:not(#reviews) .carousel-control-next {
+    html:not([data-theme="light"]) .testomial-area .carousel-control-prev,
+    html:not([data-theme="light"]) .testomial-area .carousel-control-next {
         border-color: #2a3846;
     }
 }
@@ -4150,7 +4481,7 @@ h6 {
     html[data-theme="dark"] .info-area,
     html[data-theme="dark"] .price-area,
     html[data-theme="dark"] .course-area,
-    html[data-theme="dark"] .testomial-area:not(#reviews) {
+    html[data-theme="dark"] .testomial-area {
         background: #111820;
         color: #d8e0e8;
     }
@@ -4164,7 +4495,9 @@ h6 {
     html[data-theme="dark"] .institutional-record-card,
     html[data-theme="dark"] #mMediaCarousel .card,
     html[data-theme="dark"] .modal-content,
-    html[data-theme="dark"] .content-modal .modal-content {
+    html[data-theme="dark"] .content-modal .modal-content,
+    html[data-theme="dark"] .reviews-summary,
+    html[data-theme="dark"] .review-card {
         background: #17212b;
         border-color: #2a3846;
         color: #d8e0e8;
@@ -4206,12 +4539,12 @@ h6 {
     html[data-theme="dark"] .course-area .h1,
     html[data-theme="dark"] .course-area .h2,
     html[data-theme="dark"] .course-area .h3,
-    html[data-theme="dark"] .testomial-area:not(#reviews) h1,
-    html[data-theme="dark"] .testomial-area:not(#reviews) h2,
-    html[data-theme="dark"] .testomial-area:not(#reviews) h3,
-    html[data-theme="dark"] .testomial-area:not(#reviews) .h1,
-    html[data-theme="dark"] .testomial-area:not(#reviews) .h2,
-    html[data-theme="dark"] .testomial-area:not(#reviews) .h3,
+    html[data-theme="dark"] .testomial-area h1,
+    html[data-theme="dark"] .testomial-area h2,
+    html[data-theme="dark"] .testomial-area h3,
+    html[data-theme="dark"] .testomial-area .h1,
+    html[data-theme="dark"] .testomial-area .h2,
+    html[data-theme="dark"] .testomial-area .h3,
     html[data-theme="dark"] .institutional-records-heading h2,
     html[data-theme="dark"] .institutional-record-card h3,
     html[data-theme="dark"] .content-modal-title-link,
@@ -4220,7 +4553,11 @@ h6 {
     html[data-theme="dark"] .modal-title,
     html[data-theme="dark"] .content-modal-title,
     html[data-theme="dark"] .multi-column-list,
-    html[data-theme="dark"] .multi-column-list li {
+    html[data-theme="dark"] .multi-column-list li,
+    html[data-theme="dark"] .reviews-source,
+    html[data-theme="dark"] .reviews-score strong,
+    html[data-theme="dark"] .review-author h3,
+    html[data-theme="dark"] .review-card h4 {
         color: #f2f6f9;
     }
 
@@ -4228,8 +4565,19 @@ h6 {
     html[data-theme="dark"] .institutional-record-title,
     html[data-theme="dark"] .institutional-record-date,
     html[data-theme="dark"] .single-testimonial .desc,
-    html[data-theme="dark"] .content-modal-list {
+    html[data-theme="dark"] .content-modal-list,
+    html[data-theme="dark"] .review-text,
+    html[data-theme="dark"] .reviews-count,
+    html[data-theme="dark"] .reviews-editions span,
+    html[data-theme="dark"] .review-author p,
+    html[data-theme="dark"] .review-edition,
+    html[data-theme="dark"] .review-card footer {
         color: #c6d0da;
+    }
+
+    html[data-theme="dark"] .reviews-editions span {
+        background: rgba(142, 196, 255, 0.09);
+        border-color: rgba(142, 196, 255, 0.2);
     }
 
     html[data-theme="dark"] .content-modal-list-link {
@@ -4322,12 +4670,25 @@ h6 {
         color: #f2f6f9;
     }
 
-    html[data-theme="dark"] #reviews {
-        background: #111820;
+    html[data-theme="dark"] .review-toggle {
+        color: #9ba8b5;
     }
 
-    html[data-theme="dark"] #aReviews {
-        filter: invert(1);
+    html[data-theme="dark"] .review-avatar {
+        background: #0f151c;
+    }
+
+    html[data-theme="dark"] .review-amazon-icon {
+        color: #111820;
+        background: #d8e0e8;
+    }
+
+    html[data-theme="dark"] .review-modal-author {
+        color: #8ec4ff;
+    }
+
+    html[data-theme="dark"] .review-modal-text {
+        color: #c6d0da;
     }
 
     html[data-theme="dark"] .modal .btn-close {
@@ -4342,8 +4703,8 @@ h6 {
     html[data-theme="dark"] .price-area .carousel-control-next,
     html[data-theme="dark"] .course-area .carousel-control-prev,
     html[data-theme="dark"] .course-area .carousel-control-next,
-    html[data-theme="dark"] .testomial-area:not(#reviews) .carousel-control-prev,
-    html[data-theme="dark"] .testomial-area:not(#reviews) .carousel-control-next {
+    html[data-theme="dark"] .testomial-area .carousel-control-prev,
+    html[data-theme="dark"] .testomial-area .carousel-control-next {
         border-color: #2a3846;
     }
 

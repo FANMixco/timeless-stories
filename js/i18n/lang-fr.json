@@ -328,6 +328,20 @@
       }
     },
     "country1": "El Salvador 🇸🇻",
-    "country2": "Espagne 🇪🇸"
+    "country2": "Espagne 🇪🇸",
+    "reviews": {
+      "heading": "Ce que disent les lecteurs",
+      "subheading": "À propos de la série",
+      "reviewCta": "Évaluer la série",
+      "postedOn": "Publié sur",
+      "book1": "Livre 1",
+      "book2": "Livre 2",
+      "englishEdition": "édition anglaise",
+      "spanishEdition": "édition espagnole",
+      "readMore": "Lire plus",
+      "readLess": "Lire moins",
+      "ratingsCountTemplate": "{count} évaluations mondiales pour les éditions de la série",
+      "ratingAriaLabel": "Note moyenne de {rating} sur 5 étoiles"
+    }
   }
 }

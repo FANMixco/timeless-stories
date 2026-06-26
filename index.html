@@ -130,7 +130,7 @@ https://goo.gl/forms/JArck4uzbGGmTuG72
       <link rel="stylesheet" href="css/animate.min.css" />
     </noscript-->
 
-    <link rel="stylesheet" href="css/main.min.css?v=20260519-hero-inset" />
+    <link rel="stylesheet" href="css/main.min.css?v=20260626-localized-reviews" />
     <link rel="stylesheet" href="css/book.min.css" />
 
     <!-- Open Graph / Facebook -->
@@ -619,10 +619,82 @@ https://goo.gl/forms/JArck4uzbGGmTuG72
     <!-- Start testomial Area -->
     <section class="testomial-area section-gap" id="reviews">
       <div class="container">
-        <div
-          id="aReviews"
-          class="elfsight-app-88963536-04ec-4180-93c7-e43a8c133bfe"
-        ></div>
+        <div class="row d-flex justify-content-center">
+          <div class="menu-content pb-60 col-lg-8">
+            <div class="title text-center">
+              <h2 class="h1 mb-10" data-translation="reviews.heading">
+                What the readers say
+              </h2>
+              <p data-translation="reviews.subheading">About the series</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="reviews-widget" aria-labelledby="reviewsHeading">
+          <div class="reviews-summary">
+            <div>
+              <p class="reviews-source" id="reviewsHeading">
+                <span class="reviews-amazon-wordmark">amazon</span> Reviews
+              </p>
+              <div
+                class="reviews-score"
+                id="reviewsScore"
+                aria-label="Average rating 4.8 out of 5 stars"
+              >
+                <strong id="reviewsAverageRating">4.8</strong>
+                <span class="review-stars" aria-hidden="true">
+                  <span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span><span>&#9733;</span>
+                </span>
+                <span class="reviews-count" id="reviewsRatingsCount">45 global ratings across series editions</span>
+              </div>
+              <div
+                class="reviews-editions"
+                id="reviewsEditionRatings"
+                aria-label="Edition ratings"
+              >
+                <span>Book 1 English: 4.8 (27)</span>
+                <span>Book 1 Spanish: 4.8 (10)</span>
+                <span>Book 2 English: 4.8 (7)</span>
+                <span>Book 2 Spanish: 5.0 (1)</span>
+              </div>
+            </div>
+            <a
+              class="reviews-amazon-link"
+              href="https://www.amazon.com/product-reviews/B08MQFZNM5"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span data-translation="reviews.reviewCta">Review the series</span>
+            </a>
+          </div>
+
+          <div
+            id="reviewsCarousel"
+            class="carousel slide reviews-carousel"
+            data-bs-interval="false"
+          >
+            <div class="carousel-inner" id="reviewsCarouselInner"></div>
+
+            <button
+              class="carousel-control-prev"
+              type="button"
+              data-bs-target="#reviewsCarousel"
+              data-bs-slide="prev"
+              aria-label="back"
+            >
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            </button>
+            <button
+              class="carousel-control-next"
+              type="button"
+              data-bs-target="#reviewsCarousel"
+              data-bs-slide="next"
+              aria-label="next"
+            >
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            </button>
+          </div>
+        </div>
       </div>
     </section>
     <!-- End testomial Area -->
@@ -971,6 +1043,46 @@ https://goo.gl/forms/JArck4uzbGGmTuG72
     </div>
 
     <div
+      class="modal fade content-modal review-modal"
+      id="reviewModal"
+      tabindex="-1"
+      aria-labelledby="reviewModalTitle"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <div>
+              <p class="review-modal-author" id="reviewModalAuthor"></p>
+              <h3 class="modal-title content-modal-title" id="reviewModalTitle"></h3>
+            </div>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="review-stars mb-20" aria-label="5 out of 5 stars">
+              <span aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+            </div>
+            <p class="review-modal-text" id="reviewModalText"></p>
+            <a
+              id="reviewModalLink"
+              class="reviews-amazon-link"
+              href="https://www.amazon.com/product-reviews/B08MQFZNM5"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              View on Amazon
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
       class="modal fade"
       id="memoryGameModal"
       tabindex="-1"
@@ -1005,8 +1117,8 @@ https://goo.gl/forms/JArck4uzbGGmTuG72
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
       crossorigin="anonymous"
     ></script>
-    <script src="js/translations.min.js?v=20260526-white-wolf"></script>
-    <script src="js/main.min.js?v=20260602-mobile-scroll-collapse"></script>
+    <script src="js/translations.min.js?v=20260626-localized-reviews"></script>
+    <script src="js/main.min.js?v=20260626-external-reviews"></script>
 
     <script src="js/map.min.js" defer></script>
 

@@ -320,14 +320,6 @@ function initNavbarToggleState() {
 function initLazyLoadScripts() {
     runLazyScriptQueue([
         {
-            id: "elfsight_platform",
-            target: document.getElementById("aReviews"),
-            config: {
-                id: "elfsight_platform",
-                src: "https://apps.elfsight.com/p/platform.js"
-            }
-        },
-        {
             id: "g_translate",
             target: document.getElementById("google_translate_element"),
             config: {
@@ -336,6 +328,336 @@ function initLazyLoadScripts() {
             }
         }
     ], { rootMargin: "300px 0px" });
+}
+
+const reviewsDataUrl = "js/data/reviews.min.json?v=20260626-external-reviews";
+let seriesReviews = [];
+let seriesRatings = [];
+let currentReviewsCarouselMode;
+
+async function loadSeriesReviews() {
+    const response = await fetch(reviewsDataUrl);
+    const data = await response.json();
+    seriesReviews = Array.isArray(data?.reviews) ? data.reviews : [];
+    seriesRatings = Array.isArray(data?.ratings) ? data.ratings : [];
+}
+
+function escapeHtml(value = "") {
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+function getReviewItemsPerSlide() {
+    if (typeof getItemsPerSlide === "function") {
+        return getItemsPerSlide();
+    }
+
+    return window.innerWidth < 768 ? 1 : window.innerWidth < 992 ? 2 : 3;
+}
+
+function getReviewTranslation(key, fallback) {
+    const reviewTranslations =
+        typeof translations !== "undefined" && translations?.reviews
+            ? translations.reviews
+            : {};
+
+    return reviewTranslations[key] || fallback;
+}
+
+function getBaseTranslation(key, fallback) {
+    return typeof translations !== "undefined" && translations?.[key]
+        ? translations[key]
+        : fallback;
+}
+
+function getReviewLocale() {
+    const pageLanguage = document.documentElement.lang || navigator.language || "en";
+
+    if (pageLanguage.startsWith("en")) {
+        return "en-US";
+    }
+
+    return pageLanguage;
+}
+
+function formatReviewDate(date) {
+    try {
+        return new Intl.DateTimeFormat(getReviewLocale(), {
+            day: "numeric",
+            month: "long",
+            timeZone: "UTC",
+            year: "numeric"
+        }).format(new Date(`${date}T00:00:00Z`));
+    } catch (error) {
+        return date;
+    }
+}
+
+function formatReviewCountry(countryCode) {
+    try {
+        return new Intl.DisplayNames([getReviewLocale()], { type: "region" }).of(countryCode);
+    } catch (error) {
+        return countryCode;
+    }
+}
+
+function formatReviewEdition(review) {
+    const book = getReviewTranslation(review.bookKey, review.bookKey === "book2" ? "Book 2" : "Book 1");
+    const edition = getReviewTranslation(
+        review.editionKey,
+        review.editionKey === "spanishEdition" ? "Spanish edition" : "English edition"
+    );
+
+    return `${book} - ${edition} - ${formatReviewCountry(review.country)}`;
+}
+
+function formatReviewRating(value) {
+    return Number(value).toFixed(1);
+}
+
+function getSeriesRatingsSummary() {
+    const totalRatings = seriesRatings.reduce((sum, item) => sum + Number(item.count || 0), 0);
+    const weightedRating = seriesRatings.reduce(
+        (sum, item) => sum + Number(item.rating || 0) * Number(item.count || 0),
+        0
+    );
+
+    return {
+        count: totalRatings,
+        rating: totalRatings ? weightedRating / totalRatings : 0
+    };
+}
+
+function formatRatingsCount(count) {
+    const template = getReviewTranslation(
+        "ratingsCountTemplate",
+        "{count} global ratings across series editions"
+    );
+
+    return template.replace("{count}", String(count));
+}
+
+function formatRatingAriaLabel(rating) {
+    const template = getReviewTranslation(
+        "ratingAriaLabel",
+        "Average rating {rating} out of 5 stars"
+    );
+
+    return template.replace("{rating}", formatReviewRating(rating));
+}
+
+function renderReviewsSummary() {
+    if (!seriesRatings.length) {
+        return;
+    }
+
+    const averageRating = document.getElementById("reviewsAverageRating");
+    const ratingsCount = document.getElementById("reviewsRatingsCount");
+    const ratingsContainer = document.getElementById("reviewsEditionRatings");
+    const score = document.getElementById("reviewsScore");
+    const summary = getSeriesRatingsSummary();
+    const formattedRating = formatReviewRating(summary.rating);
+
+    if (averageRating) {
+        averageRating.textContent = formattedRating;
+    }
+
+    if (ratingsCount) {
+        ratingsCount.textContent = formatRatingsCount(summary.count);
+    }
+
+    if (score) {
+        score.setAttribute("aria-label", formatRatingAriaLabel(summary.rating));
+    }
+
+    if (ratingsContainer) {
+        ratingsContainer.innerHTML = seriesRatings
+            .map((item) => {
+                const book = getReviewTranslation(item.bookKey, item.bookKey === "book2" ? "Book 2" : "Book 1");
+                const edition = getReviewTranslation(
+                    item.editionKey,
+                    item.editionKey === "spanishEdition" ? "Spanish" : "English"
+                );
+
+                return `<span>${escapeHtml(book)} ${escapeHtml(edition)}: ${escapeHtml(formatReviewRating(item.rating))} (${escapeHtml(item.count)})</span>`;
+            })
+            .join("");
+    }
+}
+
+function getReviewExcerpt(text) {
+    return text.length > 170 ? `${text.slice(0, 167).trim()}...` : text;
+}
+
+function getSortedSeriesReviews() {
+    return seriesReviews
+        .map((review, index) => ({ ...review, sourceIndex: index }))
+        .sort((first, second) => {
+            const dateDiff = new Date(`${second.date}T00:00:00Z`) - new Date(`${first.date}T00:00:00Z`);
+            return dateDiff || first.sourceIndex - second.sourceIndex;
+        });
+}
+
+function renderReviewCard(review, index, itemsPerSlide) {
+    const columnClass = itemsPerSlide === 1 ? "col-12" : itemsPerSlide === 2 ? "col-12 col-md-6" : "col-12 col-lg-4";
+    const initial = escapeHtml(review.author.charAt(0));
+    const reviewIndex = review.sourceIndex ?? index;
+
+    return `
+      <div class="${columnClass} review-slide-card">
+        <article class="review-card h-100">
+          <header class="review-author">
+            <span class="review-avatar" aria-hidden="true">${initial}</span>
+            <div>
+              <h3>${escapeHtml(review.author)}</h3>
+              <p>${escapeHtml(formatReviewDate(review.date))}</p>
+            </div>
+          </header>
+          <div class="review-stars" aria-label="5 out of 5 stars">
+            <span aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+          </div>
+          <p class="review-edition">${escapeHtml(formatReviewEdition(review))}</p>
+          <h4>${escapeHtml(review.title)}</h4>
+          <p class="review-text" data-review-excerpt="${escapeHtml(getReviewExcerpt(review.text))}">${escapeHtml(getReviewExcerpt(review.text))}</p>
+          <button
+            class="review-toggle"
+            type="button"
+            data-bs-toggle="modal"
+            data-bs-target="#reviewModal"
+            data-review-index="${reviewIndex}"
+          >${escapeHtml(getReviewTranslation("readMore", getBaseTranslation("readMore", "Read more")))}</button>
+          <footer>
+            <span class="review-amazon-icon" aria-hidden="true">a</span>
+            <span>${escapeHtml(getReviewTranslation("postedOn", "Posted on"))} <a href="${escapeHtml(review.href)}" target="_blank" rel="noopener noreferrer">Amazon</a></span>
+          </footer>
+        </article>
+      </div>
+    `;
+}
+
+function renderReviewsCarousel() {
+    const carousel = document.getElementById("reviewsCarousel");
+    const inner = document.getElementById("reviewsCarouselInner");
+
+    if (!carousel || !inner) {
+        return;
+    }
+
+    if (!seriesReviews.length) {
+        inner.innerHTML = "";
+        return;
+    }
+
+    renderReviewsSummary();
+
+    const itemsPerSlide = getReviewItemsPerSlide();
+    const BootstrapCarousel = window.bootstrap?.Carousel;
+    const existingCarousel = BootstrapCarousel?.getInstance(carousel);
+
+    if (existingCarousel) {
+        existingCarousel.dispose();
+    }
+
+    const slides = [];
+
+    const sortedReviews = getSortedSeriesReviews();
+
+    for (let index = 0; index < sortedReviews.length; index += itemsPerSlide) {
+        const group = sortedReviews.slice(index, index + itemsPerSlide);
+        slides.push(`
+          <div class="carousel-item ${index === 0 ? "active" : ""}">
+            <div class="row justify-content-center g-4">
+              ${group.map((review, offset) => renderReviewCard(review, index + offset, itemsPerSlide)).join("")}
+            </div>
+          </div>
+        `);
+    }
+
+    inner.innerHTML = slides.join("");
+
+    if (BootstrapCarousel) {
+        new BootstrapCarousel(carousel, { interval: false, ride: false, wrap: true });
+    }
+}
+
+function initReviewsWidget() {
+    currentReviewsCarouselMode = getReviewItemsPerSlide();
+
+    loadSeriesReviews()
+        .then(() => {
+            renderReviewsSummary();
+            renderReviewsCarousel();
+        })
+        .catch((error) => {
+            console.error("Error loading reviews:", error);
+        });
+
+    window.addEventListener("resize", () => {
+        const nextMode = getReviewItemsPerSlide();
+
+        if (nextMode === currentReviewsCarouselMode) {
+            return;
+        }
+
+        currentReviewsCarouselMode = nextMode;
+        renderReviewsCarousel();
+    });
+
+    window.addEventListener("translationsLoaded", () => {
+        renderReviewsSummary();
+        renderReviewsCarousel();
+    });
+
+    document.getElementById("reviewsCarousel")?.addEventListener("click", (event) => {
+        const button = event.target.closest(".review-toggle");
+
+        if (!button || window.bootstrap?.Modal) {
+            return;
+        }
+
+        const review = seriesReviews[Number(button.dataset.reviewIndex)];
+        const card = button.closest(".review-card");
+        const reviewText = card?.querySelector(".review-text");
+
+        if (!review || !reviewText) {
+            return;
+        }
+
+        const expanded = card.classList.toggle("is-expanded");
+        reviewText.textContent = expanded ? review.text : reviewText.dataset.reviewExcerpt;
+        button.textContent = expanded
+            ? getReviewTranslation("readLess", getBaseTranslation("readLess", "Read less"))
+            : getReviewTranslation("readMore", getBaseTranslation("readMore", "Read more"));
+    });
+
+    const modal = document.getElementById("reviewModal");
+    const title = document.getElementById("reviewModalTitle");
+    const author = document.getElementById("reviewModalAuthor");
+    const text = document.getElementById("reviewModalText");
+    const link = document.getElementById("reviewModalLink");
+
+    if (!modal || !title || !author || !text || !link || typeof bootstrap === "undefined") {
+        return;
+    }
+
+    modal.addEventListener("show.bs.modal", (event) => {
+        const index = Number(event.relatedTarget?.dataset.reviewIndex);
+        const review = seriesReviews[index];
+
+        if (!review) {
+            event.preventDefault();
+            return;
+        }
+
+        title.textContent = review.title;
+        author.textContent = `${review.author} - ${formatReviewDate(review.date)} - ${formatReviewEdition(review)}`;
+        text.textContent = review.text;
+        link.href = review.href;
+    });
 }
 
 function googleTranslateElementInit() {
@@ -644,6 +966,7 @@ document.addEventListener("DOMContentLoaded", () => {
     initCollapseHandlers();
     initNavbarToggleState();
     initLazyLoadScripts();
+    initReviewsWidget();
     initDeferredCookiebot();
     initDeferredAnalytics();
     setCurrentYear();
