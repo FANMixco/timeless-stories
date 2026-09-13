@@ -357,6 +357,14 @@
       "trasgu": {
         "name": "El trasgu",
         "desc": "Un ser travieso que se burla de las chicas."
+      },
+      "siren": {
+        "name": "La sirena de la laguna de Olomega",
+        "desc": "Una mujer hermosa que atrae a los pescadores hacia su perdición. (Versión del Director solamente)"
+      },
+      "xana": {
+        "name": "La xana",
+        "desc": "Una mujer hermosa que atrae a los pescadores hacia su perdición. (Versión del Director solamente)"
       }
     },
     "country1": "El Salvador 🇸🇻",

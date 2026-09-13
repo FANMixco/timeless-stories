@@ -378,6 +378,14 @@
       "trasgu": {
         "name": "The Trasgu",
         "desc": "A mischievous being who teases girls."
+      },
+      "siren": {
+        "name": "The Siren of the Olomega Lagoon",
+        "desc": "A beautiful woman who lures fishermen to their doom. (Director's Cut Only)"
+      },
+      "xana": {
+        "name": "Xana",
+        "desc": "A beautiful woman who drives men to madness. (Director's Cut Only)"
       }
     },
     "country1": "El Salvador 🇸🇻",
