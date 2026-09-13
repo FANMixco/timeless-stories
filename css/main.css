@@ -1249,6 +1249,66 @@ th {
     line-height: 1.7;
 }
 
+.book-card-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 18px;
+}
+
+.book-card-primary {
+    min-height: 38px;
+    padding: 0 18px;
+    line-height: 38px;
+}
+
+.book-card-map-button {
+    min-height: 38px;
+    padding: 0 16px;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 6px;
+}
+
+.volume-map-modal .modal-dialog {
+    max-width: min(1140px, calc(100% - 28px));
+}
+
+.volume-map-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr);
+    gap: 26px;
+    align-items: start;
+}
+
+.volume-map-preview {
+    width: 100%;
+    min-height: 520px;
+}
+
+.volume-map-legend {
+    column-count: 1;
+    font-size: 15px;
+    line-height: 1.55;
+}
+
+.volume-map-modal .modal-content,
+.volume-map-modal .modal-body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+.volume-map-legend .list-group-numbered {
+    margin-bottom: 0;
+}
+
+.volume-map-legend li {
+    break-inside: avoid;
+    margin-bottom: 8px;
+}
+
 @media (max-width: 575.98px) {
     .institutional-records {
         margin-top: 54px;
@@ -1302,6 +1362,15 @@ th {
         padding: 22px;
     }
 
+    .book-card-actions {
+        flex-direction: column;
+    }
+
+    .book-card-primary,
+    .book-card-map-button {
+        width: 100%;
+    }
+
     .reviews-carousel {
         padding: 0 16px;
     }
@@ -1328,6 +1397,38 @@ th {
 
     .reviews-grid {
         grid-template-columns: 1fr;
+    }
+
+    .volume-map-layout {
+        grid-template-columns: 1fr;
+        gap: 18px;
+        min-width: 0;
+    }
+
+    .volume-map-preview {
+        width: 100%;
+        min-height: 420px;
+    }
+
+    .volume-map-modal .modal-dialog {
+        max-width: none;
+        margin-right: 8px;
+        margin-left: 8px;
+    }
+
+    .volume-map-modal .modal-header {
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .volume-map-modal .content-modal-title {
+        min-width: 0;
+        overflow-wrap: anywhere;
+    }
+
+    .volume-map-legend {
+        width: 100%;
+        min-width: 0;
     }
 }
 
@@ -4033,6 +4134,14 @@ h6 {
     max-width: 100%;
 }
 
+.volume-map-preview.mapPreview {
+    width: 100%;
+}
+
+.volume-map-legend.multi-column-list {
+    column-count: 1;
+}
+
 .preziPreview {
     max-width: 100%;
     margin: auto !important;
@@ -4438,12 +4547,15 @@ h6 {
         border-color: transparent;
     }
 
-    html:not([data-theme="light"]) .course-area .leaflet-tile {
+    html:not([data-theme="light"]) .course-area .leaflet-tile,
+    html:not([data-theme="light"]) .volume-map-modal .leaflet-tile {
         filter: brightness(0.72) invert(1) contrast(1.05) hue-rotate(180deg) saturate(0.75);
     }
 
     html:not([data-theme="light"]) .course-area .leaflet-popup-content-wrapper,
-    html:not([data-theme="light"]) .course-area .leaflet-popup-tip {
+    html:not([data-theme="light"]) .course-area .leaflet-popup-tip,
+    html:not([data-theme="light"]) .volume-map-modal .leaflet-popup-content-wrapper,
+    html:not([data-theme="light"]) .volume-map-modal .leaflet-popup-tip {
         background: #17212b;
         color: #f2f6f9;
     }
@@ -4670,12 +4782,15 @@ h6 {
         border-color: transparent;
     }
 
-    html[data-theme="dark"] .course-area .leaflet-tile {
+    html[data-theme="dark"] .course-area .leaflet-tile,
+    html[data-theme="dark"] .volume-map-modal .leaflet-tile {
         filter: brightness(0.72) invert(1) contrast(1.05) hue-rotate(180deg) saturate(0.75);
     }
 
     html[data-theme="dark"] .course-area .leaflet-popup-content-wrapper,
-    html[data-theme="dark"] .course-area .leaflet-popup-tip {
+    html[data-theme="dark"] .course-area .leaflet-popup-tip,
+    html[data-theme="dark"] .volume-map-modal .leaflet-popup-content-wrapper,
+    html[data-theme="dark"] .volume-map-modal .leaflet-popup-tip {
         background: #17212b;
         color: #f2f6f9;
     }

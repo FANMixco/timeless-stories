@@ -36,6 +36,7 @@
     "contactMe": "Contáctame",
     "readMore": "Leer más",
     "readLess": "Leer menos",
+    "exploreMap": "Explorar mapa",
     "comingSoon": "Muy pronto",
     "countdownIntro": "Disponible por completo en",
     "countdownAvailable": "Disponible por completo ahora",
@@ -218,11 +219,13 @@
     "previousBooks": [
       {
         "title": "<span>Timeless Stories of El Salvador V2: Epiphany</span>",
-        "href": "shared.previousBooks.epiphanyEn"
+        "href": "shared.previousBooks.epiphanyEn",
+        "mapKey": "volume2"
       },
       {
         "title": "<span>Historias Eternas de El Salvador V2: Epifanía</span>",
-        "href": "shared.previousBooks.epiphanyEs"
+        "href": "shared.previousBooks.epiphanyEs",
+        "mapKey": "volume2"
       },
       {
         "title": "<span>Timeless Stories of El Salvador V1: The Beginning</span>",
