@@ -1254,22 +1254,8 @@ th {
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 12px;
     margin-top: 18px;
-}
-
-.book-card-primary {
-    min-height: 38px;
-    padding: 0 18px;
-    line-height: 38px;
-}
-
-.book-card-map-button {
-    min-height: 38px;
-    padding: 0 16px;
-    font-size: 13px;
-    font-weight: 600;
-    border-radius: 6px;
 }
 
 .volume-map-modal .modal-dialog {
@@ -3122,6 +3108,38 @@ body.mobile-nav-active #mobile-nav-toggle {
     -moz-transition: all 0.3s ease 0s;
     -o-transition: all 0.3s ease 0s;
     transition: all 0.3s ease 0s;
+}
+
+.book-card-actions .book-card-primary,
+.book-card-actions .book-card-map-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 150px;
+    min-height: 54px;
+    padding: 0 26px;
+    border-radius: 999px;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: 0;
+    text-align: center;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.book-card-actions .book-card-map-button {
+    color: #285ee8;
+    background: transparent;
+    border: 2px solid rgba(40, 94, 232, 0.7);
+    box-shadow: none;
+}
+
+.book-card-actions .book-card-map-button:focus {
+    color: #1f4fd0;
+    background: rgba(40, 94, 232, 0.08);
+    border-color: #285ee8;
+    box-shadow: 0 0 0 3px rgba(40, 94, 232, 0.18);
 }
 
 .primary-btn.white {
