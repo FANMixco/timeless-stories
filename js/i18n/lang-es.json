@@ -220,24 +220,32 @@
       {
         "title": "<span>Timeless Stories of El Salvador V2: Epiphany</span>",
         "href": "shared.previousBooks.epiphanyEn",
-        "mapKey": "volume2"
+        "mapKey": "volume2",
+        "mapLanguage": "en"
       },
       {
         "title": "<span>Historias Eternas de El Salvador V2: Epifanía</span>",
         "href": "shared.previousBooks.epiphanyEs",
-        "mapKey": "volume2"
+        "mapKey": "volume2",
+        "mapLanguage": "es"
       },
       {
         "title": "<span>Timeless Stories of El Salvador V1: The Beginning</span>",
-        "href": "shared.previousBooks.beginningEn"
+        "href": "shared.previousBooks.beginningEn",
+        "mapKey": "volume1",
+        "mapLanguage": "en"
       },
       {
         "title": "<span>Historias Eternas de El Salvador V1: El Comienzo</span>",
-        "href": "shared.previousBooks.beginningEs"
+        "href": "shared.previousBooks.beginningEs",
+        "mapKey": "volume1",
+        "mapLanguage": "es"
       },
       {
         "title": "<span>Légendes Éternelles d’El Salvador T1 : Le Commencement</span>",
-        "href": "shared.previousBooks.beginningFr"
+        "href": "shared.previousBooks.beginningFr",
+        "mapKey": "volume1",
+        "mapLanguage": "fr"
       }
     ],
     "specialGreetings": [
@@ -367,6 +375,266 @@
       "ratingsCountTemplate": "{count} valoraciones globales en las ediciones de la serie",
       "ratingAriaLabel": "Valoración media de {rating} sobre 5 estrellas",
       "readersCountTemplate": "Más de {count} lectores en la serie"
+    },
+    "volumeMaps": {
+      "volume1": {
+        "title": "Historias Eternas de El Salvador V1: El Comienzo",
+        "items": {
+          "1": {
+            "name": "El cadejo bueno y el malo",
+            "desc": "Un par de bestias sobrenaturales que protegen o aterrorizan a los viajeros por la noche."
+          },
+          "2": {
+            "name": "La Siguanaba",
+            "desc": "Un espíritu femenino que aterroriza a los hombres en los ríos salvadoreños."
+          },
+          "3": {
+            "name": "Cipitío",
+            "desc": "Un niño con poderes sobrenaturales que gasta bromas a la gente."
+          },
+          "4": {
+            "name": "El padre sin cabeza",
+            "desc": "Un espíritu de un sacerdote que fue decapitado y ahora vagabundea por las calles."
+          },
+          "5": {
+            "name": "El caballero negro",
+            "desc": "El diablo encarnado en la forma de un caballero, ofreciendo tratos que nadie puede rechazar."
+          },
+          "6": {
+            "name": "La familia Guirola",
+            "desc": "Una familia infame conocida por su trato con el diablo."
+          },
+          "7": {
+            "name": "El Partideño",
+            "desc": "Un espíritu nocturno que roba el ganado de la gente."
+          },
+          "8": {
+            "name": "La carreta chillona",
+            "desc": "A mysterious wagon that appears in the night and makes squeaking sounds."
+          },
+          "9": {
+            "name": "Las lechuzas",
+            "desc": "Aves misteriosas que en vidas anteriores fueron brujos."
+          },
+          "10": {
+            "name": "La señora de los anillos",
+            "desc": "Una mujer que lleva anillos mágicos malvados y secuestra a niños."
+          },
+          "11": {
+            "name": "La Cuyancua",
+            "desc": "Una criatura semicerdo y semiserpiente que vive en las bocas de los ríos."
+          },
+          "12": {
+            "name": "El Justo Juez de la Noche",
+            "desc": "Un juez que aparece por la noche para castigar a los culpables."
+          },
+          "13": {
+            "name": "Las Managuas",
+            "desc": "Mujeres blancas que aparecían durante las tormentas eléctricas."
+          },
+          "14": {
+            "name": "Chasca, «La virgen del agua»",
+            "desc": "Una historia de amor que acaba en tragedia."
+          },
+          "15": {
+            "name": "La Descarnada",
+            "desc": "Un espíritu femenino que aterroriza a los hombres por las calles por la noche."
+          },
+          "16": {
+            "name": "La laguna encantada de Ulupa",
+            "desc": "Una antigua laguna que, según se dice, está encantada por los espíritus del pasado."
+          },
+          "17": {
+            "name": "Nuestra Señora Santa Ana",
+            "desc": "La patrona de San Ana."
+          },
+          "18": {
+            "name": "El gritón de medianoche",
+            "desc": "Un espíritu que grita a medianoche."
+          },
+          "19": {
+            "name": "El río Lempa",
+            "desc": "La historia del río más famoso en El Salvador."
+          },
+          "20": {
+            "name": "La puerta del diablo",
+            "desc": "Una historia sobre cómo el diablo creó la puerta."
+          },
+          "21": {
+            "name": "Comizahual, «La mujer blanca»",
+            "desc": "Una mujer blanca legendaria que apareció en los tiempos precoloniales."
+          },
+          "22": {
+            "name": "El volcán de Izalco",
+            "desc": "La historia del tesoro del diablo."
+          },
+          "23": {
+            "name": "La cueva de la Luna",
+            "desc": "La historia de la luna y su cueva antes de que desapareciera."
+          },
+          "24": {
+            "name": "El árbol de amate",
+            "desc": "El árbol del diablo y su origen."
+          },
+          "25": {
+            "name": "La Chancha Bruja",
+            "desc": "Una bruja malvada que se transforma en una puerca."
+          },
+          "26": {
+            "name": "El Tabudo",
+            "desc": "Un protector de lagos que tiene una forma muy poco común."
+          },
+          "27": {
+            "name": "Don Dinero y Doña Fortuna",
+            "desc": "La historia de un matrimonio famoso y cómo hacen a otros ricos."
+          },
+          "28": {
+            "name": "La princesa Naba y el árbol de bálsamo",
+            "desc": "La historia de cómo nació el árbol de bálsamo."
+          },
+          "29": {
+            "name": "La tamalera de la laguna de Cuzcachapa",
+            "desc": "La historia de una vendedora malvada que crea tamales misteriosos."
+          },
+          "30": {
+            "name": "La roca viviente de Nahuizalco",
+            "desc": "Una roca viva que emite sonidos que dan miedo."
+          },
+          "31": {
+            "name": "La sirena de la laguna de Alegría",
+            "desc": "La historia de una sirena y de cómo surgió su laguna."
+          }
+        }
+      },
+      "volume2": {
+        "title": "Historias Eternas de El Salvador V2: Epifanía",
+        "items": {
+          "1": {
+            "name": "Francis Drake",
+            "desc": "The primer pirata del Pacífico."
+          },
+          "2": {
+            "name": "La Muerte del Brujo de La Nahuaterique",
+            "desc": "Un viejo brujo indígena."
+          },
+          "3": {
+            "name": "El Mulus",
+            "desc": "Una bestia que juzga a los muertos en los cementerios."
+          },
+          "4": {
+            "name": "El Todopoderoso Tlaloc",
+            "desc": "El dios del trueno y la lluvia."
+          },
+          "5": {
+            "name": "La mujer misteriosa del río Sapo",
+            "desc": "Una mujer aterradora que vive en los ríos."
+          },
+          "6": {
+            "name": "Lago de Ilopango",
+            "desc": "Un lago místico con muchos misterios."
+          },
+          "7": {
+            "name": "El carreta embrujado",
+            "desc": "Una carreta aterradora que visita los cementerios por la noche."
+          },
+          "8": {
+            "name": "El Duende",
+            "desc": "Un ser travieso que molesta a las chicas bonitas."
+          },
+          "9": {
+            "name": "La Mona Bruja",
+            "desc": "Un ser mágico que asusta a los hombres."
+          },
+          "10": {
+            "name": "La Llorona",
+            "desc": "Una mujer fantasmal que, según se dice, vaga por los cementerios llorando por los muertos."
+          },
+          "11": {
+            "name": "La Virgen de Izalco",
+            "desc": "La Virgen María que protege a Izalco."
+          },
+          "12": {
+            "name": "El jinete sin cabeza",
+            "desc": "Una trágica historia de amor entre un granjero y una mujer."
+          },
+          "13": {
+            "name": "Tenancín, la novia de Cipitío",
+            "desc": "Una chica que conoció a Cipitío y se hicieron buenos amigos."
+          },
+          "14": {
+            "name": "El príncipe Atonal",
+            "desc": "Un príncipe indígena que luchó valientemente contra los españoles."
+          },
+          "15": {
+            "name": "Los tesoros piratas de la isla Meanguera",
+            "desc": "Una isla que esconde el tesoro de Francis Drake."
+          },
+          "16": {
+            "name": "El Caballo Negro",
+            "desc": "El Compañero del Caballero Negro"
+          },
+          "17": {
+            "name": "Tangaloa",
+            "desc": "El Guardián del Mar."
+          },
+          "18": {
+            "name": "El Cacao",
+            "desc": "El tesoro indígena más valioso."
+          },
+          "19": {
+            "name": "Serpiente del lago de Coatepeque",
+            "desc": "Una serpiente que crea terremotos."
+          },
+          "20": {
+            "name": "La mujer del Chinchontepec",
+            "desc": "La triste historia de una bella mujer."
+          },
+          "21": {
+            "name": "La Flor de Amate",
+            "desc": "El mayor tesoro del Caballero Negro."
+          },
+          "22": {
+            "name": "Titilcíhuat",
+            "desc": "La mujer del fuego."
+          },
+          "23": {
+            "name": "Los Arbolarios",
+            "desc": "Los genios malvados de la lluvia."
+          },
+          "24": {
+            "name": "La Poza del diablo y su gemela",
+            "desc": "La guarida secreta del Caballero Negro."
+          },
+          "25": {
+            "name": "El Zapamiche",
+            "desc": "La viagra del mar."
+          },
+          "26": {
+            "name": "La erupción del volcán San Salvador",
+            "desc": "Una colección de historias de la erupción."
+          },
+          "27": {
+            "name": "La Giganta de Jocoro",
+            "desc": "La historia de unos huesos misteriosos."
+          },
+          "28": {
+            "name": "La roca embrujada",
+            "desc": "Un lugar maldito que visitan magos y brujas."
+          },
+          "29": {
+            "name": "La Iglesia Vieja de San Dionisio",
+            "desc": "La historia del sonido de unas misteriosas campanas."
+          },
+          "30": {
+            "name": "La cueva Cukinca",
+            "desc": "Una cueva que produce sonidos malignos."
+          },
+          "31": {
+            "name": "Cuicuizcatl y Los Inframundos de Chinchontepec",
+            "desc": "La historia de una indígena valiente."
+          }
+        }
+      }
     }
   }
 }

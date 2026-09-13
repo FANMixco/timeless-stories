@@ -198,24 +198,32 @@
       {
         "title": "<span>Timeless Stories of El Salvador V2: Epiphany</span>",
         "href": "shared.previousBooks.epiphanyEn",
-        "mapKey": "volume2"
+        "mapKey": "volume2",
+        "mapLanguage": "en"
       },
       {
         "title": "<span>Historias Eternas de El Salvador V2: Epifanía</span>",
         "href": "shared.previousBooks.epiphanyEs",
-        "mapKey": "volume2"
+        "mapKey": "volume2",
+        "mapLanguage": "es"
       },
       {
         "title": "<span>Timeless Stories of El Salvador V1: The Beginning</span>",
-        "href": "shared.previousBooks.beginningEn"
+        "href": "shared.previousBooks.beginningEn",
+        "mapKey": "volume1",
+        "mapLanguage": "en"
       },
       {
         "title": "<span>Historias Eternas de El Salvador V1: El Comienzo</span>",
-        "href": "shared.previousBooks.beginningEs"
+        "href": "shared.previousBooks.beginningEs",
+        "mapKey": "volume1",
+        "mapLanguage": "es"
       },
       {
         "title": "<span>Légendes Éternelles d’El Salvador T1 : Le Commencement</span>",
-        "href": "shared.previousBooks.beginningFr"
+        "href": "shared.previousBooks.beginningFr",
+        "mapKey": "volume1",
+        "mapLanguage": "fr"
       }
     ],
     "specialGreetings": [
@@ -346,6 +354,235 @@
       "ratingsCountTemplate": "{count} évaluations mondiales pour les éditions de la série",
       "ratingAriaLabel": "Note moyenne de {rating} sur 5 étoiles",
       "readersCountTemplate": "Plus de {count} lecteurs dans la série"
+    },
+    "volumeMaps": {
+      "volume1": {
+        "title": "Légendes Éternelles d’El Salvador T1 : Le Commencement",
+        "items": {
+          "1": {
+            "name": "Le bon et le mauvais Cadejo"
+          },
+          "2": {
+            "name": "La Siguanaba"
+          },
+          "3": {
+            "name": "Cipitio"
+          },
+          "4": {
+            "name": "Le prêtre sans tête"
+          },
+          "5": {
+            "name": "Le Chevalier Noir"
+          },
+          "6": {
+            "name": "La famille Guirola"
+          },
+          "7": {
+            "name": "Le Partidegno"
+          },
+          "8": {
+            "name": "La charrette grinçante"
+          },
+          "9": {
+            "name": "Les hiboux"
+          },
+          "10": {
+            "name": "La dame aux anneaux"
+          },
+          "11": {
+            "name": "La Cuyancua"
+          },
+          "12": {
+            "name": "Le Juste Juge de la Nuit"
+          },
+          "13": {
+            "name": "Les Managuas"
+          },
+          "14": {
+            "name": "Chasca « La Vierge des Eaux »"
+          },
+          "15": {
+            "name": "La femme sans chair"
+          },
+          "16": {
+            "name": "La lagune enchantée d’Ulupa"
+          },
+          "17": {
+            "name": "Notre-Dame Sainte-Anne"
+          },
+          "18": {
+            "name": "Le Hurleur de Minuit"
+          },
+          "19": {
+            "name": "Le fleuve Lempa"
+          },
+          "20": {
+            "name": "La Porte du Diable"
+          },
+          "21": {
+            "name": "Comizahual « La Femme Blanche »"
+          },
+          "22": {
+            "name": "Le volcan Izalco"
+          },
+          "23": {
+            "name": "La caverne de la Lune"
+          },
+          "24": {
+            "name": "L’arbre d’Amate"
+          },
+          "25": {
+            "name": "La Sorcière Cochonne"
+          },
+          "26": {
+            "name": "Le Tabudo"
+          },
+          "27": {
+            "name": "Monsieur Argent et Madame Fortune"
+          },
+          "28": {
+            "name": "La Princesse Naba et l’arbre à baume"
+          },
+          "29": {
+            "name": "La vendeuse de tamales de la lagune de Cuzcachapa"
+          },
+          "30": {
+            "name": "La roche vivante de Nahuizalco"
+          },
+          "31": {
+            "name": "La sirène de la lagune d’Alegría"
+          }
+        }
+      },
+      "volume2": {
+        "title": "Timeless Stories of El Salvador V2: Epiphany",
+        "items": {
+          "1": {
+            "name": "Sir Francis Drake",
+            "desc": "The first pirate of the Pacific."
+          },
+          "2": {
+            "name": "The Death of The Sorcerer of La Nahuaterique",
+            "desc": "An old Indian wizard."
+          },
+          "3": {
+            "name": "Le Mulus",
+            "desc": "Une bête qui juge les morts dans les cimetières."
+          },
+          "4": {
+            "name": "The Almighty Tlaloc",
+            "desc": "The god of thunder and rain."
+          },
+          "5": {
+            "name": "The Mysterious Woman of The Toad River",
+            "desc": "A scary woman living in rivers."
+          },
+          "6": {
+            "name": "Lake Ilopango",
+            "desc": "A mystical lake with many mysteries."
+          },
+          "7": {
+            "name": "The Bewitched Wagon",
+            "desc": "A scary wagon that visits cemeteries at night."
+          },
+          "8": {
+            "name": "Le lutin",
+            "desc": "Un être espiègle qui dérange les jolies filles."
+          },
+          "9": {
+            "name": "The Bandari Witch",
+            "desc": "A magical being that frightens men."
+          },
+          "10": {
+            "name": "La pleureuse",
+            "desc": "Une femme fantomatique qui, dit-on, erre dans les cimetières en pleurant les morts."
+          },
+          "11": {
+            "name": "The Virgin of Izalco",
+            "desc": "The Virgin Mary who protects Izalco."
+          },
+          "12": {
+            "name": "The Headless Horseman",
+            "desc": "A tragic love story between a farmer and a woman."
+          },
+          "13": {
+            "name": "Tenancin, Cipitio's girlfriend",
+            "desc": "A girl who met Cipitio and became good friends."
+          },
+          "14": {
+            "name": "Prince Atonal",
+            "desc": "A Indian prince who bravely fought the Spaniards."
+          },
+          "15": {
+            "name": "The Pirate Treasures of Meanguera Island",
+            "desc": "An island that hides Sir Francis Drake's Treasure."
+          },
+          "16": {
+            "name": "The Black Horse",
+            "desc": "The Black Knight's Companion"
+          },
+          "17": {
+            "name": "Tangaloa",
+            "desc": "The Guardian of The Sea."
+          },
+          "18": {
+            "name": "The Cocoa",
+            "desc": "The most valuable Indian treasure."
+          },
+          "19": {
+            "name": "Lake Coatepeque Snake",
+            "desc": "A snake that creates earthquakes."
+          },
+          "20": {
+            "name": "The Woman of The Chinchontepec",
+            "desc": "A beautiful woman's sad story."
+          },
+          "21": {
+            "name": "The Amate Flower",
+            "desc": "The Black Knight's greatest treasure."
+          },
+          "22": {
+            "name": "Titilcíhuat",
+            "desc": "The Fire Woman."
+          },
+          "23": {
+            "name": "The Arbolarios",
+            "desc": "The rain evil genies."
+          },
+          "24": {
+            "name": "Devil's Pool and its twin",
+            "desc": "The Black Knight's secret den."
+          },
+          "25": {
+            "name": "The Frogfish",
+            "desc": "The viagra of the sea."
+          },
+          "26": {
+            "name": "The Eruption of The San Salvador Volcano",
+            "desc": "A collection of stories of the eruption."
+          },
+          "27": {
+            "name": "The Giantess of Jocoro",
+            "desc": "The story of some mysterious bones."
+          },
+          "28": {
+            "name": "The Bewitched Rock",
+            "desc": "A cursed place that wizards and witches visit."
+          },
+          "29": {
+            "name": "The Old Church of San Dionisio",
+            "desc": "The story of some mysterious bells ringing."
+          },
+          "30": {
+            "name": "The Cukinca Cave",
+            "desc": "A cave that produces evil sounds."
+          },
+          "31": {
+            "name": "Cuicuizcatl and The Chinchontepec Underworlds",
+            "desc": "The story of a brave Indian woman."
+          }
+        }
+      }
     }
   }
 }

@@ -235,24 +235,32 @@
       {
         "title": "<span>Timeless Stories of El Salvador V2: Epiphany</span>",
         "href": "shared.previousBooks.epiphanyEn",
-        "mapKey": "volume2"
+        "mapKey": "volume2",
+        "mapLanguage": "en"
       },
       {
         "title": "<span>Historias Eternas de El Salvador V2: Epifanía</span>",
         "href": "shared.previousBooks.epiphanyEs",
-        "mapKey": "volume2"
+        "mapKey": "volume2",
+        "mapLanguage": "es"
       },
       {
         "title": "<span>Timeless Stories of El Salvador V1: The Beginning</span>",
-        "href": "shared.previousBooks.beginningEn"
+        "href": "shared.previousBooks.beginningEn",
+        "mapKey": "volume1",
+        "mapLanguage": "en"
       },
       {
         "title": "<span>Historias Eternas de El Salvador V1: El Comienzo</span>",
-        "href": "shared.previousBooks.beginningEs"
+        "href": "shared.previousBooks.beginningEs",
+        "mapKey": "volume1",
+        "mapLanguage": "es"
       },
       {
         "title": "<span>Légendes Éternelles d’El Salvador T1 : Le Commencement</span>",
-        "href": "shared.previousBooks.beginningFr"
+        "href": "shared.previousBooks.beginningFr",
+        "mapKey": "volume1",
+        "mapLanguage": "fr"
       }
     ],
     "specialGreetings": [
@@ -373,6 +381,266 @@
       }
     },
     "country1": "El Salvador 🇸🇻",
-    "country2": "Spain 🇪🇸"
+    "country2": "Spain 🇪🇸",
+    "volumeMaps": {
+      "volume1": {
+        "title": "Timeless Stories of El Salvador V1: The Beginning",
+        "items": {
+          "1": {
+            "name": "The good and the bad Cadejo",
+            "desc": "A pair of supernatural beasts that protect or terrify travelers at night."
+          },
+          "2": {
+            "name": "The Siguanaba",
+            "desc": "A female spirit that terrifies men in Salvadoran rivers."
+          },
+          "3": {
+            "name": "Cipitio",
+            "desc": "A supernatural boy that plays pranks on people."
+          },
+          "4": {
+            "name": "The Headless Priest",
+            "desc": "A priest spirit who was decapitated and now roams the streets."
+          },
+          "5": {
+            "name": "The Black Knight",
+            "desc": "The devil incarnate in a gentleman’s form, offering deals nobody can deny."
+          },
+          "6": {
+            "name": "The Guirola Family",
+            "desc": "An infamous family known for their deal with the devil."
+          },
+          "7": {
+            "name": "The Partideño",
+            "desc": "A night spirit that steals people’s cattle."
+          },
+          "8": {
+            "name": "The Squeaky Wagon",
+            "desc": "A mysterious wagon that appears in the night and makes squeaking sounds."
+          },
+          "9": {
+            "name": "The Owls",
+            "desc": "Mysterious birds that were be wizards in previous lives."
+          },
+          "10": {
+            "name": "The Lady of the Rings",
+            "desc": "A woman who wears magical evil rings and kidnaps children."
+          },
+          "11": {
+            "name": "The Cuyancua",
+            "desc": "A half-pig, half-serpent creature that lives along the riverbanks."
+          },
+          "12": {
+            "name": "The Fair Judge of the Night",
+            "desc": "A judge who appears at night to punish the guilty."
+          },
+          "13": {
+            "name": "The Managuas",
+            "desc": "White women who appeared during thunderstorms."
+          },
+          "14": {
+            "name": "Chasca \"The virgin of the water\"",
+            "desc": "A love story that ends up in a tragedy."
+          },
+          "15": {
+            "name": "The Fleshless Woman",
+            "desc": "A female spirit that terrifies men on the streets at night."
+          },
+          "16": {
+            "name": "The Enchanted Ulupa Lagoon",
+            "desc": "An ancient lagoon that is said to be enchanted by the spirits of the past."
+          },
+          "17": {
+            "name": "Our Lady Saint Anne",
+            "desc": "The patron of San Ana."
+          },
+          "18": {
+            "name": "The Midnight Yeller",
+            "desc": "A spirit that screams at midnight."
+          },
+          "19": {
+            "name": "The Lempa River",
+            "desc": "The story of the most famous river in El Salvador."
+          },
+          "20": {
+            "name": "Devil's Door",
+            "desc": "A story of how the devil created the door."
+          },
+          "21": {
+            "name": "Comizahual \"The white woman\"",
+            "desc": "A legandary white woman who appeared in pre-colonial times."
+          },
+          "22": {
+            "name": "Izalco Volcano",
+            "desc": "The story of the devil's treasure."
+          },
+          "23": {
+            "name": "The Moon's Cave",
+            "desc": "The story of the moon and its cave before she vanished."
+          },
+          "24": {
+            "name": "The Amate Tree",
+            "desc": "The devil’s tree and its creation."
+          },
+          "25": {
+            "name": "The Pig Witch",
+            "desc": "An evil witch who transforms into a pig."
+          },
+          "26": {
+            "name": "The Tabudo",
+            "desc": "A protector of lakes who has a very uncommon shape."
+          },
+          "27": {
+            "name": "Mr. Money and Mrs. Fortune",
+            "desc": "The story of a famous couple and how they make others wealthy."
+          },
+          "28": {
+            "name": "The Princess Naba and the Balsam Tree",
+            "desc": "The story of how the Balsam Tree came to be."
+          },
+          "29": {
+            "name": "The Tamales Woman of Cuzcachapa Lagoon",
+            "desc": "The story of an evil seller who creates mysterious tamales."
+          },
+          "30": {
+            "name": "The Living Rock of Nahuizalco",
+            "desc": "A living rock that produces scary sounds."
+          },
+          "31": {
+            "name": "The Alegria Lagoon Siren",
+            "desc": "The story of a siren and how her lagoon came to be."
+          }
+        }
+      },
+      "volume2": {
+        "title": "Timeless Stories of El Salvador V2: Epiphany",
+        "items": {
+          "1": {
+            "name": "Sir Francis Drake",
+            "desc": "The first pirate of the Pacific."
+          },
+          "2": {
+            "name": "The Death of The Sorcerer of La Nahuaterique",
+            "desc": "An old Indian wizard."
+          },
+          "3": {
+            "name": "The Mulus",
+            "desc": "A beast that judges the dead in cemeteries."
+          },
+          "4": {
+            "name": "The Almighty Tlaloc",
+            "desc": "The god of thunder and rain."
+          },
+          "5": {
+            "name": "The Mysterious Woman of The Toad River",
+            "desc": "A scary woman living in rivers."
+          },
+          "6": {
+            "name": "Lake Ilopango",
+            "desc": "A mystical lake with many mysteries."
+          },
+          "7": {
+            "name": "The Bewitched Wagon",
+            "desc": "A scary wagon that visits cemeteries at night."
+          },
+          "8": {
+            "name": "The Dwarf",
+            "desc": "A mischievous being who bothers pretty girls."
+          },
+          "9": {
+            "name": "The Bandari Witch",
+            "desc": "A magical being that frightens men."
+          },
+          "10": {
+            "name": "The Weeping Woman",
+            "desc": "A ghostly woman said to wander cemeteries, crying for the dead."
+          },
+          "11": {
+            "name": "The Virgin of Izalco",
+            "desc": "The Virgin Mary who protects Izalco."
+          },
+          "12": {
+            "name": "The Headless Horseman",
+            "desc": "A tragic love story between a farmer and a woman."
+          },
+          "13": {
+            "name": "Tenancin, Cipitio's girlfriend",
+            "desc": "A girl who met Cipitio and became good friends."
+          },
+          "14": {
+            "name": "Prince Atonal",
+            "desc": "A Indian prince who bravely fought the Spaniards."
+          },
+          "15": {
+            "name": "The Pirate Treasures of Meanguera Island",
+            "desc": "An island that hides Sir Francis Drake's Treasure."
+          },
+          "16": {
+            "name": "The Black Horse",
+            "desc": "The Black Knight's Companion"
+          },
+          "17": {
+            "name": "Tangaloa",
+            "desc": "The Guardian of The Sea."
+          },
+          "18": {
+            "name": "The Cocoa",
+            "desc": "The most valuable Indian treasure."
+          },
+          "19": {
+            "name": "Lake Coatepeque Snake",
+            "desc": "A snake that creates earthquakes."
+          },
+          "20": {
+            "name": "The Woman of The Chinchontepec",
+            "desc": "A beautiful woman's sad story."
+          },
+          "21": {
+            "name": "The Amate Flower",
+            "desc": "The Black Knight's greatest treasure."
+          },
+          "22": {
+            "name": "Titilcíhuat",
+            "desc": "The Fire Woman."
+          },
+          "23": {
+            "name": "The Arbolarios",
+            "desc": "The rain evil genies."
+          },
+          "24": {
+            "name": "Devil's Pool and its twin",
+            "desc": "The Black Knight's secret den."
+          },
+          "25": {
+            "name": "The Frogfish",
+            "desc": "The viagra of the sea."
+          },
+          "26": {
+            "name": "The Eruption of The San Salvador Volcano",
+            "desc": "A collection of stories of the eruption."
+          },
+          "27": {
+            "name": "The Giantess of Jocoro",
+            "desc": "The story of some mysterious bones."
+          },
+          "28": {
+            "name": "The Bewitched Rock",
+            "desc": "A cursed place that wizards and witches visit."
+          },
+          "29": {
+            "name": "The Old Church of San Dionisio",
+            "desc": "The story of some mysterious bells ringing."
+          },
+          "30": {
+            "name": "The Cukinca Cave",
+            "desc": "A cave that produces evil sounds."
+          },
+          "31": {
+            "name": "Cuicuizcatl and The Chinchontepec Underworlds",
+            "desc": "The story of a brave Indian woman."
+          }
+        }
+      }
+    }
   }
 }

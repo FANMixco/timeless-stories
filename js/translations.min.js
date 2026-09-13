@@ -2,7 +2,8 @@ const supportedLang = ["en", "es", "fr", "zh"];
 const languageStorageKey = "timelessStoriesOfficialLanguage";
 const themeStorageKey = "timelessStoriesColorMode";
 const supportedThemes = ["system", "light", "dark"];
-const i18nCacheVersion = "20260913-volume-map-mobile";
+const i18nCacheVersion = "20260913-volume-map-i18n";
+window.timelessStoriesI18nCacheVersion = i18nCacheVersion;
 let translations;
 let linkRegistry;
 let localizedLinks;
@@ -561,6 +562,7 @@ function renderBooksCarousel() {
     const iconClass = isMemoryGameCard ? "icon-gamepad" : "icon-download";
     const extraClass = isMemoryGameCard ? " book-card-memory" : "";
     const exploreMapLabel = translations?.exploreMap || "Explore map";
+    const mapLanguage = card.mapLanguage || "";
 
     if (!isMemoryGameCard && card.mapKey) {
       return `
@@ -572,7 +574,7 @@ function renderBooksCarousel() {
             <p class="mb-0 fw-semibold">${card.title || ""}</p>
             <div class="book-card-actions">
               <a class="primary-btn book-card-primary" href="${getLinkValue(card.href)}" target="_blank" rel="noopener noreferrer">${translations?.menu2 || "Get a copy"}</a>
-              <button class="btn btn-outline-primary book-card-map-button" type="button" data-bs-toggle="modal" data-bs-target="#volumeMapModal" data-volume-map-target="${card.mapKey}">${exploreMapLabel}</button>
+              <button class="btn btn-outline-primary book-card-map-button" type="button" data-bs-toggle="modal" data-bs-target="#volumeMapModal" data-volume-map-target="${card.mapKey}" data-volume-map-language="${mapLanguage}">${exploreMapLabel}</button>
             </div>
           </div>
         </div>
