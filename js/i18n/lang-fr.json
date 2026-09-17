@@ -360,97 +360,128 @@
         "title": "Légendes Éternelles d’El Salvador T1 : Le Commencement",
         "items": {
           "1": {
-            "name": "Le bon et le mauvais Cadejo"
+            "name": "Le bon et le mauvais Cadejo",
+            "desc": "Deux bêtes surnaturelles qui protègent ou terrifient les voyageurs la nuit."
           },
           "2": {
-            "name": "La Siguanaba"
+            "name": "La Siguanaba",
+            "desc": "Un esprit féminin qui terrifie les hommes dans les rivières salvadoriennes."
           },
           "3": {
-            "name": "Cipitio"
+            "name": "Cipitio",
+            "desc": "Un garçon surnaturel qui joue des tours aux gens."
           },
           "4": {
-            "name": "Le prêtre sans tête"
+            "name": "Le prêtre sans tête",
+            "desc": "L’esprit d’un prêtre décapité qui erre désormais dans les rues."
           },
           "5": {
-            "name": "Le Chevalier Noir"
+            "name": "Le Chevalier Noir",
+            "desc": "Le diable incarné sous les traits d’un gentilhomme, offrant des pactes que personne ne peut refuser."
           },
           "6": {
-            "name": "La famille Guirola"
+            "name": "La famille Guirola",
+            "desc": "Une famille tristement célèbre pour son pacte avec le diable."
           },
           "7": {
-            "name": "Le Partidegno"
+            "name": "Le Partidegno",
+            "desc": "Un esprit nocturne qui vole le bétail des gens."
           },
           "8": {
-            "name": "La charrette grinçante"
+            "name": "La charrette grinçante",
+            "desc": "Une charrette mystérieuse qui apparaît la nuit en produisant des grincements."
           },
           "9": {
-            "name": "Les hiboux"
+            "name": "Les hiboux",
+            "desc": "Des oiseaux mystérieux qui auraient été des sorciers dans une vie antérieure."
           },
           "10": {
-            "name": "La dame aux anneaux"
+            "name": "La dame aux anneaux",
+            "desc": "Une femme portant des anneaux maléfiques magiques et enlevant des enfants."
           },
           "11": {
-            "name": "La Cuyancua"
+            "name": "La Cuyancua",
+            "desc": "Une créature mi-cochon, mi-serpent qui vit le long des berges."
           },
           "12": {
-            "name": "Le Juste Juge de la Nuit"
+            "name": "Le Juste Juge de la Nuit",
+            "desc": "Un juge qui apparaît la nuit pour punir les coupables."
           },
           "13": {
-            "name": "Les Managuas"
+            "name": "Les Managuas",
+            "desc": "Des femmes blanches qui apparaissaient pendant les orages."
           },
           "14": {
-            "name": "Chasca « La Vierge des Eaux »"
+            "name": "Chasca « La Vierge des Eaux »",
+            "desc": "Une histoire d’amour qui se termine en tragédie."
           },
           "15": {
-            "name": "La femme sans chair"
+            "name": "La femme sans chair",
+            "desc": "Un esprit féminin qui terrifie les hommes dans les rues la nuit."
           },
           "16": {
-            "name": "La lagune enchantée d’Ulupa"
+            "name": "La lagune enchantée d’Ulupa",
+            "desc": "Une ancienne lagune que l’on dit enchantée par les esprits du passé."
           },
           "17": {
-            "name": "Notre-Dame Sainte-Anne"
+            "name": "Notre-Dame Sainte-Anne",
+            "desc": "La patronne de Santa Ana."
           },
           "18": {
-            "name": "Le Hurleur de Minuit"
+            "name": "Le Hurleur de Minuit",
+            "desc": "Un esprit qui hurle à minuit."
           },
           "19": {
-            "name": "Le fleuve Lempa"
+            "name": "Le fleuve Lempa",
+            "desc": "L’histoire du fleuve le plus célèbre d’El Salvador."
           },
           "20": {
-            "name": "La Porte du Diable"
+            "name": "La Porte du Diable",
+            "desc": "L’histoire de la façon dont le diable créa cette porte."
           },
           "21": {
-            "name": "Comizahual « La Femme Blanche »"
+            "name": "Comizahual « La Femme Blanche »",
+            "desc": "Une légendaire femme blanche apparue à l’époque précoloniale."
           },
           "22": {
-            "name": "Le volcan Izalco"
+            "name": "Le volcan Izalco",
+            "desc": "L’histoire du trésor du diable."
           },
           "23": {
-            "name": "La caverne de la Lune"
+            "name": "La caverne de la Lune",
+            "desc": "L’histoire de la lune et de sa caverne avant sa disparition."
           },
           "24": {
-            "name": "L’arbre d’Amate"
+            "name": "L’arbre d’Amate",
+            "desc": "L’arbre du diable et l’histoire de sa création."
           },
           "25": {
-            "name": "La Sorcière Cochonne"
+            "name": "La Sorcière Cochonne",
+            "desc": "Une sorcière maléfique qui se transforme en truie."
           },
           "26": {
-            "name": "Le Tabudo"
+            "name": "Le Tabudo",
+            "desc": "Un protecteur des lacs à la forme très singulière."
           },
           "27": {
-            "name": "Monsieur Argent et Madame Fortune"
+            "name": "Monsieur Argent et Madame Fortune",
+            "desc": "L’histoire d’un célèbre couple et de la façon dont il enrichit les autres."
           },
           "28": {
-            "name": "La Princesse Naba et l’arbre à baume"
+            "name": "La Princesse Naba et l’arbre à baume",
+            "desc": "L’histoire de l’origine de l’arbre à baume."
           },
           "29": {
-            "name": "La vendeuse de tamales de la lagune de Cuzcachapa"
+            "name": "La vendeuse de tamales de la lagune de Cuzcachapa",
+            "desc": "L’histoire d’une vendeuse maléfique qui prépare de mystérieux tamales."
           },
           "30": {
-            "name": "La roche vivante de Nahuizalco"
+            "name": "La roche vivante de Nahuizalco",
+            "desc": "Une roche vivante qui produit des sons effrayants."
           },
           "31": {
-            "name": "La sirène de la lagune d’Alegría"
+            "name": "La sirène de la lagune d’Alegría",
+            "desc": "L’histoire d’une sirène et de la naissance de sa lagune."
           }
         }
       },
