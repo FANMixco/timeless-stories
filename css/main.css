@@ -3174,11 +3174,32 @@ body.mobile-nav-active #mobile-nav-toggle {
     box-shadow: none;
 }
 
+.book-card-actions .book-card-map-button:hover {
+    color: #fff;
+    background: #285ee8;
+    border-color: #285ee8;
+    box-shadow: 0 10px 20px rgba(40, 94, 232, 0.18);
+}
+
 .book-card-actions .book-card-map-button:focus {
     color: #1f4fd0;
     background: rgba(40, 94, 232, 0.08);
     border-color: #285ee8;
     box-shadow: 0 0 0 3px rgba(40, 94, 232, 0.18);
+}
+
+.book-card:hover .book-card-actions .book-card-map-button {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.82);
+}
+
+.book-card:hover .book-card-actions .book-card-map-button:hover,
+.book-card:hover .book-card-actions .book-card-map-button:focus {
+    color: #1f4fd0;
+    background: #fff;
+    border-color: #fff;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18);
 }
 
 .primary-btn.white {
