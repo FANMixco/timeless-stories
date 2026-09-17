@@ -15,7 +15,8 @@ const mirrorComparisonState = {
     salvador: new Map(),
     spain: new Map()
   },
-  selectedId: null
+  selectedId: null,
+  isClearingSelection: false
 };
 
 function getLegendTranslation(key) {
@@ -191,6 +192,8 @@ function clearMirrorSelection() {
     return;
   }
 
+  mirrorComparisonState.isClearingSelection = true;
+
   Object.values(mirrorComparisonState.markers).forEach((markers) => {
     const marker = markers.get(mirrorComparisonState.selectedId);
     setMirrorMarkerSelected(marker, false);
@@ -198,6 +201,7 @@ function clearMirrorSelection() {
   });
 
   mirrorComparisonState.selectedId = null;
+  mirrorComparisonState.isClearingSelection = false;
 }
 
 function selectMirrorPair(pairId) {
@@ -214,6 +218,17 @@ function selectMirrorPair(pairId) {
   });
 }
 
+function handleMirrorPopupClose(pairId) {
+  if (
+    mirrorComparisonState.isClearingSelection ||
+    mirrorComparisonState.selectedId !== pairId
+  ) {
+    return;
+  }
+
+  clearMirrorSelection();
+}
+
 function addLegendMarkers(mapInstance, items, language, mapTranslations, collectionKey, comparisonSide) {
   items.forEach((obj) => {
     const marker = getMarker(obj.id);
@@ -226,6 +241,12 @@ function addLegendMarkers(mapInstance, items, language, mapTranslations, collect
     if (comparisonSide) {
       mirrorComparisonState.markers[comparisonSide].set(obj.id, leafletMarker);
       leafletMarker.on("click", () => selectMirrorPair(obj.id));
+      leafletMarker.on("popupclose", () => handleMirrorPopupClose(obj.id));
+      mapInstance.on("popupclose", (event) => {
+        if (event.popup?._source === leafletMarker) {
+          handleMirrorPopupClose(obj.id);
+        }
+      });
       leafletMarker.on("add", () => {
         setMirrorMarkerSelected(
           leafletMarker,
