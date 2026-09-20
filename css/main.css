@@ -2864,6 +2864,43 @@ h6,
     gap: 0;
 }
 
+/* Critical Bootstrap fallback for intermittent CDN failures. */
+#header .navbar > .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 1140px;
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: 12px;
+    padding-left: 12px;
+}
+
+.collapse:not(.show) {
+    display: none;
+}
+
+.collapsing {
+    height: 0;
+    overflow: hidden;
+    transition: height 0.35s ease;
+}
+
+#navbarMenu.navbar-collapse {
+    flex-basis: 100%;
+    flex-grow: 1;
+}
+
+#navbarMenu .navbar-nav {
+    display: flex;
+    flex-direction: column;
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+}
+
 #header .nav-link {
     padding: 0 12px !important;
     color: #fff !important;
@@ -4210,6 +4247,22 @@ h6 {
     width: 700px;
     height: 450px;
     max-width: 100%;
+}
+
+@media (min-width: 1200px) {
+    #header .navbar > .container {
+        flex-wrap: nowrap;
+    }
+
+    #navbarMenu.navbar-collapse {
+        display: flex !important;
+        flex-basis: auto;
+    }
+
+    #navbarMenu .navbar-nav {
+        flex-direction: row;
+        margin-left: auto;
+    }
 }
 
 .mapPreview .mirror-comparison-marker-selected {

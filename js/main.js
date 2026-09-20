@@ -317,6 +317,52 @@ function initNavbarToggleState() {
     syncExpandedState();
 }
 
+function initBootstrapFallbacks() {
+    const navbarMenu = document.getElementById("navbarMenu");
+    const navbarToggler = document.querySelector(".navbar-toggler");
+
+    if (!navbarMenu || !navbarToggler) {
+        return;
+    }
+
+    const setupFallback = () => {
+        if (window.bootstrap?.Collapse || navbarToggler.dataset.bootstrapFallbackBound) {
+            return;
+        }
+
+        navbarToggler.dataset.bootstrapFallbackBound = "true";
+        navbarToggler.addEventListener("click", (event) => {
+            if (window.bootstrap?.Collapse) {
+                return;
+            }
+
+            event.preventDefault();
+            event.stopPropagation();
+            const isExpanded = navbarMenu.classList.toggle("show");
+            navbarToggler.setAttribute("aria-expanded", String(isExpanded));
+        });
+
+        document.addEventListener("click", (event) => {
+            if (window.bootstrap?.Collapse || !navbarMenu.classList.contains("show")) {
+                return;
+            }
+
+            if (!navbarMenu.contains(event.target) && !navbarToggler.contains(event.target)) {
+                navbarMenu.classList.remove("show");
+                navbarToggler.setAttribute("aria-expanded", "false");
+            }
+        });
+    };
+
+    const scheduleFallback = () => window.setTimeout(setupFallback, 800);
+
+    if (document.readyState === "complete") {
+        scheduleFallback();
+    } else {
+        window.addEventListener("load", scheduleFallback, { once: true });
+    }
+}
+
 function initLazyLoadScripts() {
     runLazyScriptQueue([
         {
@@ -985,6 +1031,7 @@ document.addEventListener("DOMContentLoaded", () => {
     initCarouselControls();
     initCollapseHandlers();
     initNavbarToggleState();
+    initBootstrapFallbacks();
     initLazyLoadScripts();
     initReviewsWidget();
     initDeferredCookiebot();
