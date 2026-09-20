@@ -4266,10 +4266,20 @@ h6 {
 }
 
 .mapPreview .mirror-comparison-marker-selected {
-    filter: drop-shadow(0 0 3px #fff) drop-shadow(0 0 9px #f7c948) brightness(1.12);
+    filter: drop-shadow(0 0 2px #fff) drop-shadow(0 0 3px #8f350e) drop-shadow(0 0 8px #df5b18) brightness(1.12);
     transform-origin: bottom center;
     transition: filter 0.16s ease, transform 0.16s ease;
     z-index: 1000 !important;
+}
+
+@media (prefers-color-scheme: dark) {
+    html:not([data-theme="light"]) .mapPreview .mirror-comparison-marker-selected {
+        filter: drop-shadow(0 0 3px #fff) drop-shadow(0 0 9px #f7c948) brightness(1.12);
+    }
+}
+
+html[data-theme="dark"] .mapPreview .mirror-comparison-marker-selected {
+    filter: drop-shadow(0 0 3px #fff) drop-shadow(0 0 9px #f7c948) brightness(1.12);
 }
 
 .volume-map-preview.mapPreview {
