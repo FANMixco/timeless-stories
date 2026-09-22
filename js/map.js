@@ -1,6 +1,7 @@
 const {
   legends = [],
   legends2 = [],
+  mirrorExtraMarkers = {},
   volumeMapCollections = {}
 } = window.TimelessStoriesMapData || {};
 
@@ -15,8 +16,13 @@ const mirrorComparisonState = {
     salvador: new Map(),
     spain: new Map()
   },
+  extraMarkers: {
+    salvador: [],
+    spain: []
+  },
   selectedId: null,
-  isClearingSelection: false
+  isClearingSelection: false,
+  isInteractingWithExtraMarker: false
 };
 
 function getLegendTranslation(key) {
@@ -227,12 +233,42 @@ function setMirrorMarkerSelected(marker, isSelected) {
   }
 }
 
+function setMirrorExtraMarkersVisible(pairId) {
+  Object.entries(mirrorComparisonState.extraMarkers).forEach(([side, extraMarkers]) => {
+    const mapInstance = mirrorComparisonState.maps[side];
+
+    extraMarkers.forEach(({ marker, revealOnPair }) => {
+      const shouldShow = pairId && revealOnPair === pairId;
+
+      if (shouldShow && mapInstance && !mapInstance.hasLayer(marker)) {
+        marker.addTo(mapInstance);
+      } else if (!shouldShow && mapInstance?.hasLayer(marker)) {
+        marker.closePopup();
+        marker.remove();
+      }
+
+      setMirrorMarkerSelected(marker, shouldShow);
+
+      if (shouldShow) {
+        [80, 250].forEach((delay) => {
+          window.setTimeout(() => {
+            if (mapInstance?.hasLayer(marker)) {
+              marker.openPopup();
+            }
+          }, delay);
+        });
+      }
+    });
+  });
+}
+
 function clearMirrorSelection() {
   if (!mirrorComparisonState.selectedId) {
     return;
   }
 
   mirrorComparisonState.isClearingSelection = true;
+  setMirrorExtraMarkersVisible(null);
 
   Object.values(mirrorComparisonState.markers).forEach((markers) => {
     const marker = markers.get(mirrorComparisonState.selectedId);
@@ -256,11 +292,14 @@ function selectMirrorPair(pairId) {
       marker.openPopup();
     }
   });
+
+  setMirrorExtraMarkersVisible(pairId);
 }
 
 function handleMirrorPopupClose(pairId) {
   if (
     mirrorComparisonState.isClearingSelection ||
+    mirrorComparisonState.isInteractingWithExtraMarker ||
     mirrorComparisonState.selectedId !== pairId
   ) {
     return;
@@ -275,8 +314,11 @@ function addLegendMarkers(mapInstance, items, language, mapTranslations, collect
     const legend = collectionKey
       ? getVolumeMapItemText(collectionKey, obj, mapTranslations)
       : getMapItemText(obj, language);
+    const popupOptions = comparisonSide
+      ? { autoClose: false, closeOnClick: false }
+      : undefined;
     const leafletMarker = L.marker(obj.loc, { icon: marker }).addTo(mapInstance)
-      .bindPopup(getPopupContent(legend));
+      .bindPopup(getPopupContent(legend), popupOptions);
 
     if (comparisonSide) {
       leafletMarker.off("click");
@@ -295,6 +337,67 @@ function addLegendMarkers(mapInstance, items, language, mapTranslations, collect
         );
       });
     }
+  });
+}
+
+function addMirrorExtraMarkers(mapInstance, items = [], language, comparisonSide) {
+  if (!comparisonSide) {
+    return;
+  }
+
+  items.forEach((obj) => {
+    const legend = getMapItemText(obj, language);
+    const leafletMarker = L.marker(obj.loc, {
+      icon: getMarker(obj.markerId || obj.id),
+      zIndexOffset: 500
+    }).bindPopup(getPopupContent(legend), {
+      autoClose: false,
+      closeOnClick: false
+    });
+
+    leafletMarker.on("click", () => {
+      mirrorComparisonState.isInteractingWithExtraMarker = true;
+
+      if (mirrorComparisonState.selectedId !== obj.revealOnPair) {
+        selectMirrorPair(obj.revealOnPair);
+      }
+
+      window.setTimeout(() => {
+        leafletMarker.openPopup();
+      }, 0);
+
+      window.setTimeout(() => {
+        mirrorComparisonState.isInteractingWithExtraMarker = false;
+      }, 100);
+    });
+
+    leafletMarker.on("add", () => {
+      setMirrorMarkerSelected(leafletMarker, true);
+    });
+
+    leafletMarker.on("popupclose", () => {
+      if (
+        !mirrorComparisonState.isClearingSelection &&
+        mirrorComparisonState.selectedId === obj.revealOnPair
+      ) {
+        clearMirrorSelection();
+      }
+    });
+
+    mapInstance.on("popupclose", (event) => {
+      if (
+        event.popup?._source === leafletMarker &&
+        !mirrorComparisonState.isClearingSelection &&
+        mirrorComparisonState.selectedId === obj.revealOnPair
+      ) {
+        clearMirrorSelection();
+      }
+    });
+
+    mirrorComparisonState.extraMarkers[comparisonSide].push({
+      marker: leafletMarker,
+      revealOnPair: obj.revealOnPair
+    });
   });
 }
 
@@ -331,6 +434,16 @@ function createLegendMap(mapId, items, center, zoom, language, mapTranslations, 
     collectionKey,
     comparisonSide
   );
+
+  if (comparisonSide && mirrorExtraMarkers[comparisonSide]) {
+    addMirrorExtraMarkers(
+      mapInstance,
+      mirrorExtraMarkers[comparisonSide],
+      language,
+      comparisonSide
+    );
+  }
+
   return mapInstance;
 }
 

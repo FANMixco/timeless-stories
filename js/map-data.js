@@ -26,6 +26,18 @@
     { id: 10, key: "trasgu", loc: [43.187277, -4.820837] },
     { id: 11, key: "xana", loc: [43.060562, -6.657641] }
   ];
+
+  const mirrorExtraMarkers = {
+    spain: [
+      {
+        id: 2,
+        markerId: 2,
+        key: "aishaQandisha",
+        loc: [35.185143, -6.128515],
+        revealOnPair: 2
+      }
+    ]
+  };
   
   const volumeMapCollections = {
     "volume1": {
@@ -485,6 +497,7 @@
   window.TimelessStoriesMapData = {
     legends,
     legends2,
+    mirrorExtraMarkers,
     volumeMapCollections
   };
 })(window);

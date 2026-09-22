@@ -360,11 +360,15 @@
       },
       "siren": {
         "name": "La sirena de la laguna de Olomega",
-        "desc": "Una mujer hermosa que atrae a los pescadores hacia su perdición. (Versión del Director solamente)"
+        "desc": "Una mujer hermosa que atrae a los pescadores hacia su perdición. (Exclusivo de la Versión del Director)"
       },
       "xana": {
         "name": "La xana",
-        "desc": "Una mujer hermosa que atrae a los pescadores hacia su perdición. (Versión del Director solamente)"
+        "desc": "Una mujer hermosa que atrae a los pescadores hacia su perdición. (Exclusivo de la Versión del Director)"
+      },
+      "aishaQandisha": {
+        "name": "Aisha Kandisha",
+        "desc": "Un espíritu femenino que seduce a los hombres y los lleva a la locura. (Exclusivo de la Versión del Director)"
       }
     },
     "country1": "El Salvador 🇸🇻",
