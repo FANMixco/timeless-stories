@@ -7,9 +7,13 @@ const {
 
 let translationsData;
 let mapsInitialized = false;
+let mapsVisibilityObserverStarted = false;
+let mapRefreshListenersInitialized = false;
+let mapRefreshTimeout;
 let leafletAssetsPromise;
 let modalMapState;
 const volumeMapTranslationCache = new Map();
+const mapTileLayerState = new WeakMap();
 const mirrorComparisonState = {
   maps: {},
   markers: {
@@ -24,12 +28,43 @@ const mirrorComparisonState = {
   isClearingSelection: false,
   isInteractingWithExtraMarker: false
 };
+const tileProviders = [
+  {
+    url: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+    options: {
+      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }
+  },
+  {
+    url: "https://a.tile.openstreetmap.org/{z}/{x}/{y}.png",
+    options: {
+      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }
+  },
+  {
+    url: "https://b.tile.openstreetmap.org/{z}/{x}/{y}.png",
+    options: {
+      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }
+  },
+  {
+    url: "https://c.tile.openstreetmap.org/{z}/{x}/{y}.png",
+    options: {
+      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }
+  }
+];
 
 function getLegendTranslation(key) {
   return window.translations?.mapLegends?.[key] || {
     name: key,
     desc: ""
   };
+}
+
+function getOptionalLegendTranslation(key) {
+  const legend = window.translations?.mapLegends?.[key];
+  return legend?.name ? legend : null;
 }
 
 function getCurrentLanguage() {
@@ -44,6 +79,36 @@ function getMapItemText(item, language = getCurrentLanguage()) {
   return item.lang?.[language] || item.lang?.en || {
     name: "",
     desc: ""
+  };
+}
+
+function getOptionalMapItemText(item, language = getCurrentLanguage()) {
+  if (item.key) {
+    return getOptionalLegendTranslation(item.key);
+  }
+
+  const legend = item.lang?.[language] || item.lang?.en;
+  return legend?.name ? legend : null;
+}
+
+function getLocalizedMirrorItems(salvadorItems, spainItems, language = getCurrentLanguage()) {
+  const spainItemsById = new Map(spainItems.map((item) => [item.id, item]));
+  const visiblePairIds = new Set(
+    salvadorItems
+      .filter((item) => {
+        const pairedItem = spainItemsById.get(item.id);
+        return (
+          pairedItem &&
+          getOptionalMapItemText(item, language) &&
+          getOptionalMapItemText(pairedItem, language)
+        );
+      })
+      .map((item) => item.id)
+  );
+
+  return {
+    salvador: salvadorItems.filter((item) => visiblePairIds.has(item.id)),
+    spain: spainItems.filter((item) => visiblePairIds.has(item.id))
   };
 }
 
@@ -202,6 +267,91 @@ function retryTileLoad(event) {
   }, 250);
 }
 
+function createResilientTileLayer(mapInstance, providerIndex = 0) {
+  const provider = tileProviders[providerIndex % tileProviders.length] || tileProviders[0];
+  let fallbackScheduled = false;
+  let loadedTileCount = 0;
+  const tileLayer = L.tileLayer(provider.url, {
+    maxZoom: 20,
+    ...provider.options
+  });
+  mapTileLayerState.set(mapInstance, { layer: tileLayer, providerIndex });
+
+  const useNextTileProvider = (delay = 0) => {
+    if (fallbackScheduled) {
+      return;
+    }
+
+    fallbackScheduled = true;
+
+    window.setTimeout(() => {
+      if (!mapInstance.hasLayer(tileLayer)) {
+        return;
+      }
+
+      replaceMapTileLayer(mapInstance, providerIndex + 1);
+    }, delay);
+  };
+
+  tileLayer.on("tileload", () => {
+    loadedTileCount += 1;
+  });
+
+  tileLayer.on("tileerror", (event) => {
+    retryTileLoad(event);
+    useNextTileProvider(800);
+  });
+
+  [2500, 5000].forEach((delay) => {
+    window.setTimeout(() => {
+      if (loadedTileCount === 0) {
+        useNextTileProvider();
+      }
+    }, delay);
+  });
+
+  return tileLayer;
+}
+
+function replaceMapTileLayer(mapInstance, providerIndex) {
+  if (!mapInstance) {
+    return;
+  }
+
+  const currentTileLayer = mapTileLayerState.get(mapInstance)?.layer;
+
+  if (currentTileLayer && mapInstance.hasLayer(currentTileLayer)) {
+    currentTileLayer.remove();
+  }
+
+  createResilientTileLayer(mapInstance, providerIndex).addTo(mapInstance);
+  refreshLeafletMap(mapInstance);
+}
+
+function recoverLeafletMapTiles(mapInstance) {
+  if (!mapInstance) {
+    return;
+  }
+
+  const container = mapInstance.getContainer();
+  const hasMarkers = container.querySelectorAll(".leaflet-marker-icon").length > 0;
+  const tiles = Array.from(container.querySelectorAll(".leaflet-tile"));
+  const loadedTiles = tiles.filter((tile) => tile.complete && tile.naturalWidth > 0).length;
+
+  if (!hasMarkers || loadedTiles > 0) {
+    return;
+  }
+
+  const now = Date.now();
+  if (now - (mapInstance._timelessTileLastRecovery || 0) < 2600) {
+    return;
+  }
+
+  mapInstance._timelessTileLastRecovery = now;
+  const providerIndex = (mapTileLayerState.get(mapInstance)?.providerIndex || 0) + 1;
+  replaceMapTileLayer(mapInstance, providerIndex);
+}
+
 function refreshLeafletMap(mapInstance) {
   if (!mapInstance) {
     return;
@@ -216,6 +366,60 @@ function refreshLeafletMap(mapInstance) {
 
   [80, 250, 600].forEach((delay) => {
     window.setTimeout(invalidate, delay);
+  });
+}
+
+function refreshAllLeafletMaps() {
+  Object.values(mirrorComparisonState.maps).forEach((mapInstance) => {
+    refreshLeafletMap(mapInstance);
+    recoverLeafletMapTiles(mapInstance);
+  });
+  refreshLeafletMap(modalMapState?.map);
+  recoverLeafletMapTiles(modalMapState?.map);
+}
+
+function scheduleAllMapRefresh() {
+  [0, 100, 300, 800, 1600].forEach((delay) => {
+    window.setTimeout(refreshAllLeafletMaps, delay);
+  });
+}
+
+function queueMapRefresh() {
+  window.clearTimeout(mapRefreshTimeout);
+  mapRefreshTimeout = window.setTimeout(scheduleAllMapRefresh, 120);
+}
+
+function isElementNearViewport(element) {
+  if (!element) {
+    return false;
+  }
+
+  const rect = element.getBoundingClientRect();
+  const margin = 300;
+
+  return (
+    rect.width > 0 &&
+    rect.height > 0 &&
+    rect.bottom >= -margin &&
+    rect.top <= window.innerHeight + margin
+  );
+}
+
+function initMapRefreshListeners() {
+  if (mapRefreshListenersInitialized) {
+    return;
+  }
+
+  mapRefreshListenersInitialized = true;
+  window.addEventListener("load", scheduleAllMapRefresh);
+  window.addEventListener("pageshow", scheduleAllMapRefresh);
+  window.addEventListener("resize", queueMapRefresh);
+  window.addEventListener("orientationchange", scheduleAllMapRefresh);
+  window.addEventListener("scroll", queueMapRefresh, { passive: true });
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden) {
+      scheduleAllMapRefresh();
+    }
   });
 }
 
@@ -346,7 +550,12 @@ function addMirrorExtraMarkers(mapInstance, items = [], language, comparisonSide
   }
 
   items.forEach((obj) => {
-    const legend = getMapItemText(obj, language);
+    const legend = getOptionalMapItemText(obj, language);
+
+    if (!legend) {
+      return;
+    }
+
     const leafletMarker = L.marker(obj.loc, {
       icon: getMarker(obj.markerId || obj.id),
       zIndexOffset: 500
@@ -421,10 +630,7 @@ function buildLegendListHtml(items, language, mapTranslations, collectionKey) {
 function createLegendMap(mapId, items, center, zoom, language, mapTranslations, collectionKey, comparisonSide) {
   const mapInstance = L.map(mapId).setView(center, zoom);
 
-  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    maxZoom: 20,
-    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-  }).on("tileerror", retryTileLoad).addTo(mapInstance);
+  createResilientTileLayer(mapInstance).addTo(mapInstance);
 
   addLegendMarkers(
     mapInstance,
@@ -451,21 +657,21 @@ function getCollectionTitle(collectionKey, mapTranslations) {
   return getVolumeMapCollectionText(collectionKey, mapTranslations).title || "";
 }
 
-function renderLegendLists() {
+function renderLegendLists(salvadorItems = legends, spainItems = legends2) {
   const svList = document.getElementById("legendListSV");
   const esList = document.getElementById("legendListES");
   const modalList = document.getElementById("storiesList");
 
   if (svList) {
-    svList.innerHTML = buildLegendListHtml(legends);
+    svList.innerHTML = buildLegendListHtml(salvadorItems);
   }
 
   if (esList) {
-    esList.innerHTML = buildLegendListHtml(legends2);
+    esList.innerHTML = buildLegendListHtml(spainItems);
   }
 
   if (modalList) {
-    modalList.innerHTML = buildLegendListHtml([...legends, ...legends2]);
+    modalList.innerHTML = buildLegendListHtml([...salvadorItems, ...spainItems]);
   }
 }
 
@@ -480,18 +686,20 @@ async function initMaps() {
   }
 
   mapsInitialized = true;
+  const mirrorItems = getLocalizedMirrorItems(legends, legends2);
 
   try {
     await ensureLeafletLoaded();
   } catch (error) {
     mapsInitialized = false;
+    mapsVisibilityObserverStarted = false;
     console.error("Unable to load Leaflet assets:", error);
     return;
   }
 
   mirrorComparisonState.maps.salvador = createLegendMap(
     "map",
-    legends,
+    mirrorItems.salvador,
     [13.8029939, -88.9053364],
     8.4,
     undefined,
@@ -501,7 +709,7 @@ async function initMaps() {
   );
   mirrorComparisonState.maps.spain = createLegendMap(
     "map2",
-    legends2,
+    mirrorItems.spain,
     [39.896027, -2.487694],
     5.4,
     undefined,
@@ -510,7 +718,8 @@ async function initMaps() {
     "spain"
   );
 
-  renderLegendLists();
+  renderLegendLists(mirrorItems.salvador, mirrorItems.spain);
+  scheduleAllMapRefresh();
 }
 
 async function renderVolumeMapModal(collectionKey, language) {
@@ -590,8 +799,19 @@ function initVolumeMapModal() {
 }
 
 function initMapsWhenVisible() {
+  if (mapsInitialized || mapsVisibilityObserverStarted) {
+    return;
+  }
+
   const previewSection = document.getElementById("preview");
   if (!previewSection) {
+    return;
+  }
+
+  mapsVisibilityObserverStarted = true;
+
+  if (isElementNearViewport(previewSection)) {
+    initMaps();
     return;
   }
 
@@ -612,17 +832,49 @@ function initMapsWhenVisible() {
   observer.observe(previewSection);
 }
 
-window.addEventListener("translationsLoaded", (event) => {
-  translationsData = event.detail.translations;
-  window.translations = translationsData;
+function getLoadedTranslations() {
+  if (window.translations) {
+    return window.translations;
+  }
+
+  try {
+    if (typeof translations !== "undefined" && translations) {
+      return translations;
+    }
+  } catch (error) {
+    return null;
+  }
+
+  return null;
+}
+
+function initMapsWithTranslations(loadedTranslations) {
+  if (!loadedTranslations) {
+    return false;
+  }
+
+  translationsData = loadedTranslations;
+  window.translations = loadedTranslations;
   initMapsWhenVisible();
+  return true;
+}
+
+function initMapsWhenTranslationsReady() {
+  if (initMapsWithTranslations(getLoadedTranslations())) {
+    return;
+  }
+
+  [50, 150, 400, 900, 1800].forEach((delay) => {
+    window.setTimeout(() => initMapsWithTranslations(getLoadedTranslations()), delay);
+  });
+}
+
+window.addEventListener("translationsLoaded", (event) => {
+  initMapsWithTranslations(event.detail.translations);
 });
 
 document.addEventListener("DOMContentLoaded", () => {
-  if (window.translations) {
-    translationsData = window.translations;
-    initMapsWhenVisible();
-  }
-
+  initMapRefreshListeners();
+  initMapsWhenTranslationsReady();
   initVolumeMapModal();
 });
