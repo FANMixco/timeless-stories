@@ -356,22 +356,37 @@ function createResilientTileLayer(mapInstance, providerIndex = 0) {
         return;
       }
 
+      revealCompletedLeafletTiles(mapInstance);
+
+      if (isLeafletMapHealthy(mapInstance)) {
+        fallbackScheduled = false;
+        return;
+      }
+
       replaceMapTileLayer(mapInstance, normalizedProviderIndex + 1);
     }, delay);
   };
 
   tileLayer.on("tileload", () => {
     loadedTileCount += 1;
+    revealCompletedLeafletTiles(mapInstance);
   });
 
   tileLayer.on("tileerror", (event) => {
     retryTileLoad(event);
+
+    if (isLeafletMapHealthy(mapInstance)) {
+      return;
+    }
+
     useNextTileProvider(800);
   });
 
   [2500, 5000].forEach((delay) => {
     window.setTimeout(() => {
-      if (loadedTileCount === 0) {
+      revealCompletedLeafletTiles(mapInstance);
+
+      if (loadedTileCount === 0 && !isLeafletMapHealthy(mapInstance)) {
         useNextTileProvider();
       }
     }, delay);
@@ -508,7 +523,7 @@ function refreshAllLeafletMaps({ force = false } = {}) {
 }
 
 function scheduleAllMapRefresh({ force = false } = {}) {
-  [0, 100, 300, 800, 1600, 3000, 5000].forEach((delay) => {
+  [0, 100, 300, 800, 1600].forEach((delay) => {
     window.setTimeout(() => refreshAllLeafletMaps({ force: force && delay <= 800 }), delay);
   });
 }
