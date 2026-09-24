@@ -4235,7 +4235,40 @@ h6 {
 }
 
 .signature {
+    display: block;
     max-width: 70%;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.signature-animation {
+    width: min(523px, 70%);
+    aspect-ratio: 523 / 123;
+    background-image: url("../img/signature-animation.webp");
+    background-repeat: no-repeat;
+    background-size: 100% 8600%;
+    background-position: 0 100%;
+}
+
+.signature-animation-ready {
+    background-position: 0 0;
+}
+
+.signature-animation-visible {
+    animation: write-signature 3.5s 0.2s steps(85) forwards;
+}
+
+@keyframes write-signature {
+    to {
+        background-position: 0 100%;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .signature-animation {
+        animation: none;
+        background-position: 0 100%;
+    }
 }
 
 .bookPreview {

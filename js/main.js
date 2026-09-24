@@ -1022,6 +1022,39 @@ function initCookieBannerObserver() {
     window.addEventListener("resize", syncBannerLayout);
 }
 
+function initSignatureAnimation() {
+    const signature = document.querySelector(".signature-animation");
+
+    if (!signature) {
+        return;
+    }
+
+    signature.classList.add("signature-animation-ready");
+
+    const playSignature = () => {
+        signature.classList.add("signature-animation-visible");
+    };
+
+    if (!("IntersectionObserver" in window)) {
+        playSignature();
+        return;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting && entry.intersectionRatio >= 0.35) {
+                observer.disconnect();
+                playSignature();
+            }
+        });
+    }, {
+        threshold: [0.35],
+        rootMargin: "0px 0px -10% 0px"
+    });
+
+    observer.observe(signature);
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     initializePageDimensions();
     initUserLinks();
@@ -1042,6 +1075,7 @@ document.addEventListener("DOMContentLoaded", () => {
     initMobileMenuHideOnScroll();
     initContentModal();
     initCookieBannerObserver();
+    initSignatureAnimation();
 });
 
 window.addEventListener("resize", initializePageDimensions);
