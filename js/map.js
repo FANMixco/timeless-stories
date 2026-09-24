@@ -280,6 +280,36 @@ function isRenderedTile(tile) {
   return tile.complete && tile.naturalWidth > 0;
 }
 
+function getLeafletTileStats(mapInstance) {
+  if (!mapInstance) {
+    return {
+      total: 0,
+      rendered: 0,
+      hiddenRendered: 0
+    };
+  }
+
+  const tiles = Array.from(mapInstance.getContainer().querySelectorAll(".leaflet-tile"));
+
+  return tiles.reduce(
+    (stats, tile) => {
+      const rendered = isRenderedTile(tile);
+
+      stats.total += 1;
+      stats.rendered += rendered ? 1 : 0;
+      stats.hiddenRendered +=
+        rendered && getComputedStyle(tile).visibility === "hidden" ? 1 : 0;
+
+      return stats;
+    },
+    {
+      total: 0,
+      rendered: 0,
+      hiddenRendered: 0
+    }
+  );
+}
+
 function revealCompletedLeafletTiles(mapInstance) {
   if (!mapInstance) {
     return;
@@ -295,6 +325,12 @@ function revealCompletedLeafletTiles(mapInstance) {
     tile.classList.add("leaflet-tile-loaded");
     tile.style.removeProperty("visibility");
   });
+}
+
+function isLeafletMapHealthy(mapInstance) {
+  const stats = getLeafletTileStats(mapInstance);
+
+  return stats.rendered > 0 && stats.hiddenRendered === 0;
 }
 
 function createResilientTileLayer(mapInstance, providerIndex = 0) {
@@ -356,7 +392,7 @@ function replaceMapTileLayer(mapInstance, providerIndex) {
   }
 
   createResilientTileLayer(mapInstance, providerIndex).addTo(mapInstance);
-  refreshLeafletMap(mapInstance);
+  refreshLeafletMap(mapInstance, { force: true });
 }
 
 function rebuildMirrorMapSide(side) {
@@ -390,7 +426,7 @@ function rebuildMirrorMapSide(side) {
     undefined,
     side
   );
-  scheduleAllMapRefresh();
+  scheduleAllMapRefresh({ force: true });
   return true;
 }
 
@@ -437,8 +473,13 @@ function recoverLeafletMapTiles(mapInstance) {
   replaceMapTileLayer(mapInstance, providerIndex);
 }
 
-function refreshLeafletMap(mapInstance) {
+function refreshLeafletMap(mapInstance, { force = false } = {}) {
   if (!mapInstance) {
+    return;
+  }
+
+  if (!force && isLeafletMapHealthy(mapInstance)) {
+    revealCompletedLeafletTiles(mapInstance);
     return;
   }
 
@@ -457,24 +498,24 @@ function refreshLeafletMap(mapInstance) {
   });
 }
 
-function refreshAllLeafletMaps() {
+function refreshAllLeafletMaps({ force = false } = {}) {
   Object.values(mirrorComparisonState.maps).forEach((mapInstance) => {
-    refreshLeafletMap(mapInstance);
+    refreshLeafletMap(mapInstance, { force });
     recoverLeafletMapTiles(mapInstance);
   });
-  refreshLeafletMap(modalMapState?.map);
+  refreshLeafletMap(modalMapState?.map, { force });
   recoverLeafletMapTiles(modalMapState?.map);
 }
 
-function scheduleAllMapRefresh() {
+function scheduleAllMapRefresh({ force = false } = {}) {
   [0, 100, 300, 800, 1600, 3000, 5000].forEach((delay) => {
-    window.setTimeout(refreshAllLeafletMaps, delay);
+    window.setTimeout(() => refreshAllLeafletMaps({ force: force && delay <= 800 }), delay);
   });
 }
 
-function queueMapRefresh() {
+function queueMapRefresh({ force = false } = {}) {
   window.clearTimeout(mapRefreshTimeout);
-  mapRefreshTimeout = window.setTimeout(scheduleAllMapRefresh, 120);
+  mapRefreshTimeout = window.setTimeout(() => scheduleAllMapRefresh({ force }), 120);
 }
 
 function isElementNearViewport(element) {
@@ -499,14 +540,14 @@ function initMapRefreshListeners() {
   }
 
   mapRefreshListenersInitialized = true;
-  window.addEventListener("load", scheduleAllMapRefresh);
-  window.addEventListener("pageshow", scheduleAllMapRefresh);
-  window.addEventListener("resize", queueMapRefresh);
-  window.addEventListener("orientationchange", scheduleAllMapRefresh);
+  window.addEventListener("load", () => scheduleAllMapRefresh({ force: true }));
+  window.addEventListener("pageshow", () => scheduleAllMapRefresh({ force: true }));
+  window.addEventListener("resize", () => queueMapRefresh({ force: true }));
+  window.addEventListener("orientationchange", () => scheduleAllMapRefresh({ force: true }));
   window.addEventListener("scroll", queueMapRefresh, { passive: true });
   document.addEventListener("visibilitychange", () => {
     if (!document.hidden) {
-      scheduleAllMapRefresh();
+      scheduleAllMapRefresh({ force: true });
     }
   });
 }
@@ -804,7 +845,7 @@ function buildMirrorMaps() {
     "salvador"
   );
   renderLegendLists(mirrorItems.salvador, mirrorItems.spain);
-  scheduleAllMapRefresh();
+  scheduleAllMapRefresh({ force: true });
 
   window.setTimeout(() => {
     if (buildToken !== mirrorMapsBuildToken) {
@@ -821,7 +862,7 @@ function buildMirrorMaps() {
       undefined,
       "spain"
     );
-    scheduleAllMapRefresh();
+    scheduleAllMapRefresh({ force: true });
   }, 450);
 }
 
@@ -905,7 +946,7 @@ async function renderVolumeMapModal(collectionKey, language) {
     };
   }
 
-  refreshLeafletMap(modalMapState.map);
+  refreshLeafletMap(modalMapState.map, { force: true });
 }
 
 function initVolumeMapModal() {
