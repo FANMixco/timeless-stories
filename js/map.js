@@ -10,6 +10,7 @@ let mapsInitialized = false;
 let mapsVisibilityObserverStarted = false;
 let mapRefreshListenersInitialized = false;
 let mapRefreshTimeout;
+let mirrorMapsBuildToken = 0;
 let leafletAssetsPromise;
 let modalMapState;
 const volumeMapTranslationCache = new Map();
@@ -23,6 +24,14 @@ const mirrorComparisonState = {
   extraMarkers: {
     salvador: [],
     spain: []
+  },
+  items: {
+    salvador: [],
+    spain: []
+  },
+  recoveryCounts: {
+    salvador: 0,
+    spain: 0
   },
   selectedId: null,
   isClearingSelection: false,
@@ -267,15 +276,37 @@ function retryTileLoad(event) {
   }, 250);
 }
 
+function isRenderedTile(tile) {
+  return tile.complete && tile.naturalWidth > 0;
+}
+
+function revealCompletedLeafletTiles(mapInstance) {
+  if (!mapInstance) {
+    return;
+  }
+
+  const tiles = Array.from(mapInstance.getContainer().querySelectorAll(".leaflet-tile"));
+
+  tiles.forEach((tile) => {
+    if (!isRenderedTile(tile)) {
+      return;
+    }
+
+    tile.classList.add("leaflet-tile-loaded");
+    tile.style.removeProperty("visibility");
+  });
+}
+
 function createResilientTileLayer(mapInstance, providerIndex = 0) {
-  const provider = tileProviders[providerIndex % tileProviders.length] || tileProviders[0];
+  const normalizedProviderIndex = providerIndex % tileProviders.length;
+  const provider = tileProviders[normalizedProviderIndex] || tileProviders[0];
   let fallbackScheduled = false;
   let loadedTileCount = 0;
   const tileLayer = L.tileLayer(provider.url, {
     maxZoom: 20,
     ...provider.options
   });
-  mapTileLayerState.set(mapInstance, { layer: tileLayer, providerIndex });
+  mapTileLayerState.set(mapInstance, { layer: tileLayer, providerIndex: normalizedProviderIndex });
 
   const useNextTileProvider = (delay = 0) => {
     if (fallbackScheduled) {
@@ -289,7 +320,7 @@ function createResilientTileLayer(mapInstance, providerIndex = 0) {
         return;
       }
 
-      replaceMapTileLayer(mapInstance, providerIndex + 1);
+      replaceMapTileLayer(mapInstance, normalizedProviderIndex + 1);
     }, delay);
   };
 
@@ -328,15 +359,52 @@ function replaceMapTileLayer(mapInstance, providerIndex) {
   refreshLeafletMap(mapInstance);
 }
 
+function rebuildMirrorMapSide(side) {
+  const config = {
+    salvador: {
+      mapId: "map",
+      center: [13.8029939, -88.9053364],
+      zoom: 8.4
+    },
+    spain: {
+      mapId: "map2",
+      center: [39.896027, -2.487694],
+      zoom: 5.4
+    }
+  }[side];
+
+  if (!config || !mirrorComparisonState.items[side]?.length) {
+    return false;
+  }
+
+  removeMirrorMap(side);
+  mirrorComparisonState.markers[side].clear();
+  mirrorComparisonState.extraMarkers[side] = [];
+  mirrorComparisonState.maps[side] = createLegendMap(
+    config.mapId,
+    mirrorComparisonState.items[side],
+    config.center,
+    config.zoom,
+    undefined,
+    undefined,
+    undefined,
+    side
+  );
+  scheduleAllMapRefresh();
+  return true;
+}
+
 function recoverLeafletMapTiles(mapInstance) {
   if (!mapInstance) {
     return;
   }
 
+  revealCompletedLeafletTiles(mapInstance);
+
   const container = mapInstance.getContainer();
   const hasMarkers = container.querySelectorAll(".leaflet-marker-icon").length > 0;
   const tiles = Array.from(container.querySelectorAll(".leaflet-tile"));
-  const loadedTiles = tiles.filter((tile) => tile.complete && tile.naturalWidth > 0).length;
+  const loadedTiles = tiles.filter(isRenderedTile).length;
 
   if (!hasMarkers || loadedTiles > 0) {
     return;
@@ -348,6 +416,23 @@ function recoverLeafletMapTiles(mapInstance) {
   }
 
   mapInstance._timelessTileLastRecovery = now;
+
+  const comparisonSide = Object.entries(mirrorComparisonState.maps).find(
+    ([, mirrorMap]) => mirrorMap === mapInstance
+  )?.[0];
+
+  if (comparisonSide) {
+    const recoveryCount = mirrorComparisonState.recoveryCounts[comparisonSide] || 0;
+
+    if (recoveryCount < 1) {
+      mirrorComparisonState.recoveryCounts[comparisonSide] = recoveryCount + 1;
+
+      if (rebuildMirrorMapSide(comparisonSide)) {
+        return;
+      }
+    }
+  }
+
   const providerIndex = (mapTileLayerState.get(mapInstance)?.providerIndex || 0) + 1;
   replaceMapTileLayer(mapInstance, providerIndex);
 }
@@ -357,7 +442,10 @@ function refreshLeafletMap(mapInstance) {
     return;
   }
 
-  const invalidate = () => mapInstance.invalidateSize({ pan: false });
+  const invalidate = () => {
+    mapInstance.invalidateSize({ pan: false });
+    revealCompletedLeafletTiles(mapInstance);
+  };
 
   if (typeof requestAnimationFrame === "function") {
     requestAnimationFrame(invalidate);
@@ -379,7 +467,7 @@ function refreshAllLeafletMaps() {
 }
 
 function scheduleAllMapRefresh() {
-  [0, 100, 300, 800, 1600].forEach((delay) => {
+  [0, 100, 300, 800, 1600, 3000, 5000].forEach((delay) => {
     window.setTimeout(refreshAllLeafletMaps, delay);
   });
 }
@@ -675,27 +763,35 @@ function renderLegendLists(salvadorItems = legends, spainItems = legends2) {
   }
 }
 
-async function initMaps() {
-  if (mapsInitialized || !translationsData) {
-    return;
-  }
+function resetMirrorComparisonState() {
+  mirrorComparisonState.markers.salvador.clear();
+  mirrorComparisonState.markers.spain.clear();
+  mirrorComparisonState.extraMarkers.salvador = [];
+  mirrorComparisonState.extraMarkers.spain = [];
+  mirrorComparisonState.recoveryCounts.salvador = 0;
+  mirrorComparisonState.recoveryCounts.spain = 0;
+  mirrorComparisonState.selectedId = null;
+  mirrorComparisonState.isClearingSelection = false;
+  mirrorComparisonState.isInteractingWithExtraMarker = false;
+}
 
-  const previewSection = document.getElementById("preview");
-  if (!previewSection) {
-    return;
-  }
+function removeMirrorMap(side) {
+  const mapInstance = mirrorComparisonState.maps[side];
 
-  mapsInitialized = true;
+  if (mapInstance) {
+    mapInstance.remove();
+    mirrorComparisonState.maps[side] = null;
+  }
+}
+
+function buildMirrorMaps() {
+  const buildToken = ++mirrorMapsBuildToken;
   const mirrorItems = getLocalizedMirrorItems(legends, legends2);
 
-  try {
-    await ensureLeafletLoaded();
-  } catch (error) {
-    mapsInitialized = false;
-    mapsVisibilityObserverStarted = false;
-    console.error("Unable to load Leaflet assets:", error);
-    return;
-  }
+  resetMirrorComparisonState();
+  mirrorComparisonState.items = mirrorItems;
+  removeMirrorMap("salvador");
+  removeMirrorMap("spain");
 
   mirrorComparisonState.maps.salvador = createLegendMap(
     "map",
@@ -707,19 +803,50 @@ async function initMaps() {
     undefined,
     "salvador"
   );
-  mirrorComparisonState.maps.spain = createLegendMap(
-    "map2",
-    mirrorItems.spain,
-    [39.896027, -2.487694],
-    5.4,
-    undefined,
-    undefined,
-    undefined,
-    "spain"
-  );
-
   renderLegendLists(mirrorItems.salvador, mirrorItems.spain);
   scheduleAllMapRefresh();
+
+  window.setTimeout(() => {
+    if (buildToken !== mirrorMapsBuildToken) {
+      return;
+    }
+
+    mirrorComparisonState.maps.spain = createLegendMap(
+      "map2",
+      mirrorItems.spain,
+      [39.896027, -2.487694],
+      5.4,
+      undefined,
+      undefined,
+      undefined,
+      "spain"
+    );
+    scheduleAllMapRefresh();
+  }, 450);
+}
+
+async function initMaps() {
+  if (mapsInitialized || !translationsData) {
+    return;
+  }
+
+  const previewSection = document.getElementById("preview");
+  if (!previewSection) {
+    return;
+  }
+
+  mapsInitialized = true;
+
+  try {
+    await ensureLeafletLoaded();
+  } catch (error) {
+    mapsInitialized = false;
+    mapsVisibilityObserverStarted = false;
+    console.error("Unable to load Leaflet assets:", error);
+    return;
+  }
+
+  buildMirrorMaps();
 }
 
 async function renderVolumeMapModal(collectionKey, language) {
