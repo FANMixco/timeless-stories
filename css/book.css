@@ -16,6 +16,158 @@
   border-radius: 6px;
 }
 
+.book-preview-card {
+  width: min(336px, calc(100vw - 28px));
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.28);
+}
+
+.book-preview-card-cover {
+  display: block;
+  background: #111923;
+}
+
+.book-preview-card-cover img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+}
+
+.book-preview-card-actions {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr) 48px;
+  gap: 8px;
+  align-items: center;
+  padding: 10px 8px;
+  background: #fff;
+}
+
+.book-preview-card-actions a,
+.book-preview-card-actions button {
+  min-height: 42px;
+  border-radius: 999px;
+  font: inherit;
+  font-size: clamp(0.78rem, 4vw, 0.95rem);
+  font-weight: 500;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  min-width: 0;
+  transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease, box-shadow 180ms ease;
+}
+
+.book-preview-card-get,
+.book-preview-card-read,
+.book-preview-card-share {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.book-preview-card-get {
+  gap: 8px;
+  padding: 0 12px;
+  color: #fff;
+  background: #1f2937;
+  border: 1px solid #1f2937;
+  box-shadow: 0 10px 22px rgba(31, 41, 55, 0.18);
+  text-decoration: none;
+}
+
+.book-preview-card-get [class^="icon-"],
+.book-preview-card-get [class*=" icon-"] {
+  flex: 0 0 auto;
+  font-size: 1rem;
+}
+
+.book-preview-card-get span:last-child,
+.book-preview-card-read span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.book-preview-card-read,
+.book-preview-card-share {
+  color: #111923;
+  background: #fff;
+  border: 1px solid rgba(17, 25, 35, 0.42);
+}
+
+.book-preview-card-share {
+  padding: 0;
+}
+
+.book-preview-card-share svg {
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.book-preview-card-actions a:hover,
+.book-preview-card-actions a:focus,
+.book-preview-card-actions button:hover,
+.book-preview-card-actions button:focus {
+  color: #111923;
+  background: #facb36;
+  border-color: #facb36;
+  box-shadow: 0 10px 28px rgba(250, 203, 54, 0.24);
+  outline: 0;
+}
+
+.book-preview-card-actions button {
+  cursor: pointer;
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme="light"]) .book-preview-card {
+    background: #0b111b;
+  }
+
+  html:not([data-theme="light"]) .book-preview-card-actions {
+    background: #0b111b;
+  }
+
+  html:not([data-theme="light"]) .book-preview-card-get {
+    color: #fff;
+    background: #1f2937;
+    border-color: rgba(255, 255, 255, 0.14);
+  }
+
+  html:not([data-theme="light"]) .book-preview-card-read,
+  html:not([data-theme="light"]) .book-preview-card-share {
+    color: #f8fafc;
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.36);
+  }
+}
+
+html[data-theme="dark"] .book-preview-card {
+  background: #0b111b;
+}
+
+html[data-theme="dark"] .book-preview-card-actions {
+  background: #0b111b;
+}
+
+html[data-theme="dark"] .book-preview-card-get {
+  color: #fff;
+  background: #1f2937;
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+html[data-theme="dark"] .book-preview-card-read,
+html[data-theme="dark"] .book-preview-card-share {
+  color: #f8fafc;
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.36);
+}
+
 @media (min-width: 992px) {
   .book-container {
     scale: 1.18;

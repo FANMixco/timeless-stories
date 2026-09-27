@@ -661,7 +661,9 @@
       "loading": "Opening the book...",
       "fallback": "Read the official sample on Amazon Kindle",
       "openPreview": "Open preview",
-      "frameTitle": "Amazon Kindle preview of Spanish Mirrors"
+      "frameTitle": "Amazon Kindle preview of Spanish Mirrors",
+      "readSample": "Read sample",
+      "share": "Share"
     }
   }
 }

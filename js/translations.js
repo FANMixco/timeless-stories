@@ -2,7 +2,7 @@ const supportedLang = ["en", "es", "fr", "zh"];
 const languageStorageKey = "timelessStoriesOfficialLanguage";
 const themeStorageKey = "timelessStoriesColorMode";
 const supportedThemes = ["system", "light", "dark"];
-const i18nCacheVersion = "20260927-book-preview-i18n";
+const i18nCacheVersion = "20260927-book-preview-card-i18n";
 window.timelessStoriesI18nCacheVersion = i18nCacheVersion;
 let translations;
 let linkRegistry;
@@ -20,6 +20,20 @@ const lang = supportedLang.includes(storedLang)
     : "en";
 const bookCoverBasePath = "img/cover-colorized-v2-sm";
 const localizedBookCoverLanguages = new Set(["es", "fr"]);
+const previewCoverLanguageMap = {
+  en: {
+    jpg: "img/covers/cover_en.jpg",
+    webp: "img/covers/cover_en.webp",
+  },
+  es: {
+    jpg: "img/covers/cover_es.jpg",
+    webp: "img/covers/cover_es.webp",
+  },
+  fr: {
+    jpg: "img/covers/cover_fr.jpg",
+    webp: "img/covers/cover_fr.webp",
+  },
+};
 
 document.documentElement.lang = lang;
 
@@ -149,24 +163,43 @@ function setDeferredFrameSource(frameId, src) {
 }
 
 function updateLocalizedBookCover(language) {
-  const webpSource = document.getElementById("bookCoverWebpSource");
-  const jpegSource = document.getElementById("bookCoverJpgSource");
-  const coverImage = document.getElementById("bookCoverImage");
-
-  if (!webpSource || !jpegSource || !coverImage) return;
-
   const suffix = localizedBookCoverLanguages.has(language)
     ? `-${language}`
     : "";
   const jpegPath = `${bookCoverBasePath}${suffix}.jpg`;
   const webpPath = `${bookCoverBasePath}${suffix}.webp`;
-  const altText =
-    translations?.bookCoverAlt || translations?.introSM || coverImage.alt;
+  const previewCover =
+    previewCoverLanguageMap[language] || previewCoverLanguageMap.en;
+  const altText = translations?.bookCoverAlt || translations?.introSM;
 
-  webpSource.setAttribute("srcset", webpPath);
-  jpegSource.setAttribute("srcset", jpegPath);
-  coverImage.setAttribute("src", jpegPath);
-  coverImage.setAttribute("alt", altText);
+  document
+    .querySelectorAll("#bookCoverWebpSource")
+    .forEach((source) => source.setAttribute("srcset", webpPath));
+  document
+    .querySelectorAll("#bookCoverJpgSource")
+    .forEach((source) => source.setAttribute("srcset", jpegPath));
+  document
+    .querySelectorAll("#bookCoverImage")
+    .forEach((image) => {
+      image.setAttribute("src", jpegPath);
+      if (altText) {
+        image.setAttribute("alt", altText);
+      }
+    });
+  document
+    .querySelectorAll("[data-book-preview-cover-webp]")
+    .forEach((source) => source.setAttribute("srcset", previewCover.webp));
+  document
+    .querySelectorAll("[data-book-preview-cover-jpg]")
+    .forEach((source) => source.setAttribute("srcset", previewCover.jpg));
+  document
+    .querySelectorAll("[data-book-preview-cover-image]")
+    .forEach((image) => {
+      image.setAttribute("src", previewCover.jpg);
+      if (altText) {
+        image.setAttribute("alt", altText);
+      }
+    });
 }
 
 function getLocalizedEbookLink() {
@@ -797,10 +830,6 @@ Promise.all([
     updateLocalizedEbookLinks();
     renderSpecialGreetings();
 
-    setDeferredFrameSource(
-      "bookPreviewFrame",
-      `https://read.amazon.com/kp/card?asin=${localizedLinks.book}&preview=inline&linkCode=kpe&ref_=cm_sw_r_kb_dp_HJ6YDMXY6BRE1FA9AWE3`,
-    );
     setDeferredFrameSource(
       "preziPreviewFrame",
       `https://prezi.com/p/embed/${localizedLinks.prezi}`,

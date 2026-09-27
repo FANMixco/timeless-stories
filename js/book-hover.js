@@ -1,16 +1,21 @@
 (() => {
+  const triggers = document.querySelectorAll('.book-preview-trigger');
   const container = document.querySelector('.book-preview-trigger');
   const book = container?.querySelector('.book');
   const modalElement = document.getElementById('bookPreviewModal');
-  if (!container || !book || !modalElement || typeof bootstrap === 'undefined') return;
+  if (!triggers.length || !container || !modalElement) return;
 
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const hasFinePointer = window.matchMedia('(pointer: fine)');
-  const modal = new bootstrap.Modal(modalElement);
+  const bootstrapModal = typeof bootstrap !== 'undefined'
+    ? new bootstrap.Modal(modalElement)
+    : null;
+  let managedBackdrop = null;
   const frame = modalElement.querySelector('[data-preview-frame]');
   const loading = modalElement.querySelector('[data-preview-loading]');
   const fallback = modalElement.querySelector('[data-preview-fallback]');
   const previewLinks = modalElement.querySelectorAll('[data-book-preview-link]');
+  const shareButton = document.querySelector('[data-book-preview-share]');
   const readerRevealDelay = 1800;
   let readerRevealTimer;
   let readerLoaded = false;
@@ -24,6 +29,47 @@
     book.style.transform = '';
   };
 
+  const handleHidden = () => {
+    triggers.forEach((trigger) => trigger.setAttribute('aria-expanded', 'false'));
+    resetReader();
+    if (lastFocusedElement && typeof lastFocusedElement.focus === 'function') {
+      lastFocusedElement.focus({ preventScroll: true });
+    } else {
+      container.focus({ preventScroll: true });
+    }
+  };
+
+  const showModal = () => {
+    if (bootstrapModal) {
+      bootstrapModal.show();
+      return;
+    }
+
+    managedBackdrop = document.createElement('div');
+    managedBackdrop.className = 'modal-backdrop fade show book-preview-managed-backdrop';
+    document.body.appendChild(managedBackdrop);
+    document.body.classList.add('modal-open');
+    modalElement.style.display = 'block';
+    modalElement.removeAttribute('aria-hidden');
+    modalElement.classList.add('show');
+    modalElement.focus();
+  };
+
+  const hideModal = () => {
+    if (bootstrapModal) {
+      bootstrapModal.hide();
+      return;
+    }
+
+    modalElement.classList.remove('show');
+    modalElement.style.display = 'none';
+    modalElement.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('modal-open');
+    managedBackdrop?.remove();
+    managedBackdrop = null;
+    handleHidden();
+  };
+
   const getLocalizedBookId = () => {
     return localizedBookId;
   };
@@ -32,8 +78,12 @@
 
   const updatePreviewLinks = () => {
     const previewUrl = buildPreviewUrl(getLocalizedBookId());
-    container.setAttribute('href', previewUrl);
-    container.dataset.previewUrl = previewUrl;
+    triggers.forEach((trigger) => {
+      if (trigger.tagName === 'A') {
+        trigger.setAttribute('href', previewUrl);
+      }
+      trigger.dataset.previewUrl = previewUrl;
+    });
     previewLinks.forEach((link) => {
       link.setAttribute('href', previewUrl);
     });
@@ -53,7 +103,11 @@
 
     const triggerLabel = getTranslationValue(container.dataset.previewAriaLabel);
     if (triggerLabel) {
-      container.setAttribute('aria-label', triggerLabel);
+      triggers.forEach((trigger) => {
+        if (trigger.dataset.previewAriaLabel) {
+          trigger.setAttribute('aria-label', triggerLabel);
+        }
+      });
     }
 
     const frameTitlePath = frame?.dataset.previewTitle;
@@ -92,6 +146,7 @@
   };
 
   container.addEventListener('pointermove', (event) => {
+    if (!book) return;
     if (!hasFinePointer.matches || event.pointerType !== 'mouse' || reducedMotion.matches) return;
     const bounds = container.getBoundingClientRect();
     const x = (event.clientX - bounds.left) / bounds.width * 2 - 1;
@@ -148,7 +203,7 @@
       await linksConfigReady;
     }
     updatePreviewLinks();
-    const previewUrl = container.dataset.previewUrl;
+    const previewUrl = buildPreviewUrl(getLocalizedBookId());
 
     if (!frame || !previewUrl) {
       showFallback();
@@ -162,15 +217,16 @@
     readerRevealTimer = window.setTimeout(revealReader, readerRevealDelay);
   };
 
-  const animateCoverOpen = () => new Promise((resolve) => {
-    if (reducedMotion.matches) {
+  const animateCoverOpen = (trigger) => new Promise((resolve) => {
+    const sourceBook = trigger.querySelector('.book');
+    if (!sourceBook || reducedMotion.matches) {
       window.setTimeout(resolve, 80);
       return;
     }
 
-    const bounds = book.getBoundingClientRect();
+    const bounds = sourceBook.getBoundingClientRect();
     const clone = document.createElement('div');
-    const bookClone = book.cloneNode(true);
+    const bookClone = sourceBook.cloneNode(true);
     const startX = bounds.left + bounds.width / 2 - window.innerWidth / 2;
     const startY = bounds.top + bounds.height / 2 - window.innerHeight / 2;
 
@@ -196,20 +252,55 @@
     }, 900);
   });
 
-  const openPreview = async (event) => {
+  const openPreview = async (event, trigger = event.currentTarget) => {
     event.preventDefault();
+    event.stopPropagation();
     if (opening) return;
     opening = true;
     lastFocusedElement = document.activeElement;
-    container.setAttribute('aria-expanded', 'true');
+    triggers.forEach((item) => item.setAttribute('aria-expanded', 'true'));
     reset();
-    await animateCoverOpen();
+    await animateCoverOpen(trigger);
     await loadReader();
-    modal.show();
+    showModal();
     opening = false;
   };
 
-  container.addEventListener('click', openPreview);
+  window.timelessStoriesOpenBookPreview = openPreview;
+
+  const handlePreviewTriggerEvent = (event) => {
+    const target = event.target.nodeType === Node.ELEMENT_NODE
+      ? event.target
+      : event.target.parentElement;
+    const trigger = target?.closest('.book-preview-trigger');
+    if (!trigger) return;
+    openPreview(event, trigger);
+  };
+
+  document.addEventListener('click', handlePreviewTriggerEvent);
+  document.addEventListener('pointerup', handlePreviewTriggerEvent);
+
+  shareButton?.addEventListener('click', async () => {
+    updatePreviewLinks();
+    const previewUrl = buildPreviewUrl(getLocalizedBookId());
+    const title = getTranslationValue('bookPreview.title') || document.title;
+
+    if (navigator.share) {
+      try {
+        await navigator.share({ title, url: previewUrl });
+        return;
+      } catch (error) {
+        if (error?.name === 'AbortError') return;
+      }
+    }
+
+    try {
+      await navigator.clipboard.writeText(previewUrl);
+    } catch (error) {
+      window.open(previewUrl, '_blank', 'noopener,noreferrer');
+    }
+  });
+
   window.addEventListener('translationsLoaded', (event) => {
     previewTranslations = event.detail?.translations || previewTranslations;
     updatePreviewLinks();
@@ -219,13 +310,13 @@
   loadPreviewTranslations();
   updatePreviewLinks();
 
-  modalElement.addEventListener('hidden.bs.modal', () => {
-    container.setAttribute('aria-expanded', 'false');
-    resetReader();
-    if (lastFocusedElement && typeof lastFocusedElement.focus === 'function') {
-      lastFocusedElement.focus({ preventScroll: true });
-    } else {
-      container.focus({ preventScroll: true });
+  modalElement.addEventListener('hidden.bs.modal', handleHidden);
+  modalElement.querySelectorAll('[data-bs-dismiss="modal"]').forEach((button) => {
+    button.addEventListener('click', hideModal);
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && modalElement.classList.contains('show')) {
+      hideModal();
     }
   });
 })();

@@ -622,7 +622,9 @@
       "loading": "Ouverture du livre...",
       "fallback": "Lire un extrait officiel sur Amazon Kindle",
       "openPreview": "Ouvrir un extrait",
-      "frameTitle": "Extrait Amazon Kindle de Miroirs espagnols"
+      "frameTitle": "Extrait Amazon Kindle de Miroirs espagnols",
+      "readSample": "Lire un extrait",
+      "share": "Partager"
     }
   }
 }

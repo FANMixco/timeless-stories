@@ -661,7 +661,9 @@
       "loading": "正在打开书籍...",
       "fallback": "在 Amazon Kindle 阅读官方试读",
       "openPreview": "打开预览",
-      "frameTitle": "Spanish Mirrors 的 Amazon Kindle 预览"
+      "frameTitle": "Spanish Mirrors 的 Amazon Kindle 预览",
+      "readSample": "阅读试读",
+      "share": "分享"
     }
   }
 }
