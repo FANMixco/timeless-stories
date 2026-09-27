@@ -559,25 +559,40 @@ https://goo.gl/forms/JArck4uzbGGmTuG72
         <div class="row justify-content-center">
           <div class="col-auto">
             <article class="book-preview-card" aria-labelledby="lookInsideTitle">
-              <picture class="book-preview-card-cover">
-                <source
-                  data-book-preview-cover-webp
-                  srcset="img/covers/cover_en.webp"
-                  type="image/webp"
-                />
-                <source
-                  data-book-preview-cover-jpg
-                  srcset="img/covers/cover_en.jpg"
-                  type="image/jpeg"
-                />
-                <img
-                  data-book-preview-cover-image
-                  src="img/covers/cover_en.jpg"
-                  alt="Timeless Stories of El Salvador - Spanish Mirrors"
-                  loading="lazy"
-                  decoding="async"
-                />
-              </picture>
+              <a
+                class="book-preview-card-cover book-preview-trigger"
+                href="https://read.amazon.com/sample/B0GV3V9YDK?clientId=share"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Read a preview of Spanish Mirrors"
+                data-preview-aria-label="bookPreview.triggerLabel"
+                aria-haspopup="dialog"
+                aria-controls="bookPreviewModal"
+                aria-expanded="false"
+                data-default-book-id="B0GV3V9YDK"
+                data-preview-url="https://read.amazon.com/sample/B0GV3V9YDK?clientId=share"
+                onclick="window.timelessStoriesOpenBookPreview?.(event, this)"
+              >
+                <picture>
+                  <source
+                    data-book-preview-cover-webp
+                    srcset="img/covers/cover_en.webp"
+                    type="image/webp"
+                  />
+                  <source
+                    data-book-preview-cover-jpg
+                    srcset="img/covers/cover_en.jpg"
+                    type="image/jpeg"
+                  />
+                  <img
+                    data-book-preview-cover-image
+                    src="img/covers/cover_en.jpg"
+                    alt="Timeless Stories of El Salvador - Spanish Mirrors"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </picture>
+              </a>
               <div class="book-preview-card-actions">
                 <a
                   class="book-preview-card-get localized-ebook-link"
