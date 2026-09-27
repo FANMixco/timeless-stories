@@ -799,7 +799,7 @@ Promise.all([
 
     setDeferredFrameSource(
       "bookPreviewFrame",
-      `https://leer.amazon.es/kp/card?asin=${localizedLinks.book}&preview=inline&linkCode=kpe&ref_=cm_sw_r_kb_dp_HJ6YDMXY6BRE1FA9AWE3`,
+      `https://read.amazon.com/kp/card?asin=${localizedLinks.book}&preview=inline&linkCode=kpe&ref_=cm_sw_r_kb_dp_HJ6YDMXY6BRE1FA9AWE3`,
     );
     setDeferredFrameSource(
       "preziPreviewFrame",
