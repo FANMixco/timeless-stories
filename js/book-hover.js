@@ -12,6 +12,7 @@
     : null;
   let managedBackdrop = null;
   const frame = modalElement.querySelector('[data-preview-frame]');
+  const reader = modalElement.querySelector('[data-preview-reader]');
   const loading = modalElement.querySelector('[data-preview-loading]');
   const fallback = modalElement.querySelector('[data-preview-fallback]');
   const previewLinks = modalElement.querySelectorAll('[data-book-preview-link]');
@@ -24,6 +25,8 @@
   let localizedBookId = container.dataset.defaultBookId || 'B0GV3V9YDK';
   let linksConfigReady;
   let previewTranslations = {};
+  let readerResizeTimer;
+  let lastReaderSize = { width: 0, height: 0 };
 
   const reset = () => {
     book.style.transform = '';
@@ -69,6 +72,12 @@
     managedBackdrop = null;
     handleHidden();
   };
+
+  const isModalOpen = () => modalElement.classList.contains('show');
+
+  const waitForModalReady = () => new Promise((resolve) => {
+    window.requestAnimationFrame(() => window.requestAnimationFrame(resolve));
+  });
 
   const getLocalizedBookId = () => {
     return localizedBookId;
@@ -173,6 +182,7 @@
 
   const resetReader = () => {
     window.clearTimeout(readerRevealTimer);
+    window.clearTimeout(readerResizeTimer);
     readerLoaded = false;
     if (frame) {
       frame.removeAttribute('src');
@@ -217,6 +227,34 @@
     readerRevealTimer = window.setTimeout(revealReader, readerRevealDelay);
   };
 
+  const refreshReaderLayout = () => {
+    if (!isModalOpen() || !readerLoaded || !frame?.src) return;
+    const currentSrc = frame.getAttribute('src') || frame.src;
+    if (!currentSrc) return;
+    const cleanSrc = currentSrc
+      .replace(/([?&])resizeRefresh=\d+(&)?/, (match, prefix, suffix) => (suffix ? prefix : ''))
+      .replace(/[?&]$/, '');
+    const separator = cleanSrc.includes('?') ? '&' : '?';
+    window.clearTimeout(readerRevealTimer);
+    frame.addEventListener('load', revealReader, { once: true });
+    frame.addEventListener('error', showFallback, { once: true });
+    frame.setAttribute('src', `${cleanSrc}${separator}resizeRefresh=${Date.now()}`);
+    readerRevealTimer = window.setTimeout(revealReader, readerRevealDelay);
+  };
+
+  const scheduleReaderLayoutRefresh = () => {
+    if (!reader) return;
+    const bounds = reader.getBoundingClientRect();
+    const width = Math.round(bounds.width);
+    const height = Math.round(bounds.height);
+    if (Math.abs(width - lastReaderSize.width) < 8 && Math.abs(height - lastReaderSize.height) < 8) {
+      return;
+    }
+    lastReaderSize = { width, height };
+    window.clearTimeout(readerResizeTimer);
+    readerResizeTimer = window.setTimeout(refreshReaderLayout, 360);
+  };
+
   const animateCoverOpen = (trigger) => new Promise((resolve) => {
     const sourceBook = trigger.querySelector('.book');
     if (!sourceBook || reducedMotion.matches) {
@@ -257,13 +295,19 @@
     event.stopPropagation();
     if (opening) return;
     opening = true;
-    lastFocusedElement = document.activeElement;
-    triggers.forEach((item) => item.setAttribute('aria-expanded', 'true'));
-    reset();
-    await animateCoverOpen(trigger);
-    await loadReader();
-    showModal();
-    opening = false;
+    try {
+      lastFocusedElement = document.activeElement;
+      triggers.forEach((item) => item.setAttribute('aria-expanded', 'true'));
+      reset();
+      await animateCoverOpen(trigger);
+      resetReader();
+      showModal();
+      await waitForModalReady();
+      scheduleReaderLayoutRefresh();
+      await loadReader();
+    } finally {
+      opening = false;
+    }
   };
 
   window.timelessStoriesOpenBookPreview = openPreview;
@@ -306,6 +350,12 @@
     updatePreviewLinks();
     updatePreviewCopy();
   });
+  if (reader && 'ResizeObserver' in window) {
+    const readerResizeObserver = new ResizeObserver(scheduleReaderLayoutRefresh);
+    readerResizeObserver.observe(reader);
+  } else {
+    window.addEventListener('resize', scheduleReaderLayoutRefresh);
+  }
   linksConfigReady = loadLocalizedBookId();
   loadPreviewTranslations();
   updatePreviewLinks();
