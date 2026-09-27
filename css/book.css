@@ -526,17 +526,57 @@ html[data-theme="dark"] .book-preview-card-share {
   }
 
   .book-preview-modal .modal-header {
-    align-items: flex-start;
-    min-height: 54px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: center;
+    min-height: 58px;
     padding: 8px 10px;
+    position: relative;
+  }
+
+  .book-preview-modal .modal-title {
+    grid-column: 2;
+    grid-row: 1;
+    max-width: 42vw;
+    overflow: hidden;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .book-preview-actions {
+    grid-column: 1 / -1;
+    grid-row: 1;
     gap: 8px;
+    justify-content: space-between;
+    margin-left: 0;
+    min-width: 0;
+    width: 100%;
   }
 
   .book-preview-actions a {
     font-size: 0.78rem;
+  }
+
+  .book-preview-amazon-link {
+    display: inline-grid;
+    width: 44px;
+    height: 44px;
+    max-width: none;
+    place-items: center;
+    overflow: visible;
+    border-radius: 999px;
+    font-size: 0 !important;
+    text-decoration: none;
+  }
+
+  .book-preview-amazon-link::before {
+    content: "\e905";
+    font-family: "icomoon" !important;
+    font-size: 1.2rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1;
   }
 
   .book-preview-copy-link {
