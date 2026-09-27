@@ -2,7 +2,7 @@ const supportedLang = ["en", "es", "fr", "zh"];
 const languageStorageKey = "timelessStoriesOfficialLanguage";
 const themeStorageKey = "timelessStoriesColorMode";
 const supportedThemes = ["system", "light", "dark"];
-const i18nCacheVersion = "20260913-volume-map-i18n";
+const i18nCacheVersion = "20260927-book-preview-i18n";
 window.timelessStoriesI18nCacheVersion = i18nCacheVersion;
 let translations;
 let linkRegistry;

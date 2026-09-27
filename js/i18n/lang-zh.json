@@ -653,6 +653,15 @@
           }
         }
       }
+    },
+    "bookPreview": {
+      "title": "Spanish Mirrors",
+      "triggerLabel": "阅读 Spanish Mirrors 预览",
+      "openAmazon": "在 Amazon 打开",
+      "loading": "正在打开书籍...",
+      "fallback": "在 Amazon Kindle 阅读官方试读",
+      "openPreview": "打开预览",
+      "frameTitle": "Spanish Mirrors 的 Amazon Kindle 预览"
     }
   }
 }

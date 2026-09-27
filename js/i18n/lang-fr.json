@@ -614,6 +614,15 @@
           }
         }
       }
+    },
+    "bookPreview": {
+      "title": "Miroirs espagnols",
+      "triggerLabel": "Lire un extrait de Miroirs espagnols",
+      "openAmazon": "Ouvrir sur Amazon",
+      "loading": "Ouverture du livre...",
+      "fallback": "Lire un extrait officiel sur Amazon Kindle",
+      "openPreview": "Ouvrir un extrait",
+      "frameTitle": "Extrait Amazon Kindle de Miroirs espagnols"
     }
   }
 }

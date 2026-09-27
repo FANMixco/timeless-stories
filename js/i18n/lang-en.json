@@ -653,6 +653,15 @@
           }
         }
       }
+    },
+    "bookPreview": {
+      "title": "Spanish Mirrors",
+      "triggerLabel": "Read a preview of Spanish Mirrors",
+      "openAmazon": "Open on Amazon",
+      "loading": "Opening the book...",
+      "fallback": "Read the official sample on Amazon Kindle",
+      "openPreview": "Open preview",
+      "frameTitle": "Amazon Kindle preview of Spanish Mirrors"
     }
   }
 }

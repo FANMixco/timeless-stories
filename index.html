@@ -138,7 +138,7 @@ https://goo.gl/forms/JArck4uzbGGmTuG72
     </noscript-->
 
     <link rel="stylesheet" href="css/main.min.css?v=20260924-signature-scroll-trigger" />
-    <link rel="stylesheet" href="css/book.min.css?v=20260920-desktop-book" />
+    <link rel="stylesheet" href="css/book.min.css?v=20260927-book-preview" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
@@ -331,10 +331,17 @@ https://goo.gl/forms/JArck4uzbGGmTuG72
           </div>
           <div class="col-lg-5 banner-right" id="div-book">
             <a
-              class="book-container localized-ebook-link"
-              href="https://a.co/d/0euSZ7mF"
+              class="book-container book-preview-trigger"
+              href="https://read.amazon.com/sample/B0GV3V9YDK?clientId=share"
               target="_blank"
-              rel="noreferrer noopener"
+              rel="noopener noreferrer"
+              aria-label="Read a preview of Spanish Mirrors"
+              data-preview-aria-label="bookPreview.triggerLabel"
+              aria-haspopup="dialog"
+              aria-controls="bookPreviewModal"
+              aria-expanded="false"
+              data-default-book-id="B0GV3V9YDK"
+              data-preview-url="https://read.amazon.com/sample/B0GV3V9YDK?clientId=share"
             >
               <div class="book">
                 <picture id="bookCoverPicture">
@@ -1150,6 +1157,87 @@ https://goo.gl/forms/JArck4uzbGGmTuG72
       </div>
     </div>
 
+    <div
+      class="modal fade book-preview-modal"
+      id="bookPreviewModal"
+      tabindex="-1"
+      aria-labelledby="bookPreviewModalTitle"
+      aria-modal="true"
+    >
+      <div class="modal-dialog modal-fullscreen">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3
+              class="modal-title"
+              id="bookPreviewModalTitle"
+              data-translation="bookPreview.title"
+            >
+              Spanish Mirrors
+            </h3>
+            <div class="book-preview-actions">
+              <a
+                class="book-preview-amazon-link"
+                data-book-preview-link
+                href="https://read.amazon.com/sample/B0GV3V9YDK?clientId=share"
+                target="_blank"
+                rel="noopener noreferrer"
+                data-translation="bookPreview.openAmazon"
+              >Open on Amazon</a>
+              <a
+                class="book-preview-copy-link localized-ebook-link"
+                href="https://a.co/d/0euSZ7mF"
+                target="_blank"
+                rel="noopener noreferrer"
+                data-translation="menu2"
+              >Get a copy</a>
+              <button
+                type="button"
+                class="btn-close btn-close-white"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+          </div>
+          <div class="modal-body">
+            <div class="book-preview-reader" data-preview-reader>
+              <div
+                class="book-preview-loading"
+                data-preview-loading
+                data-translation="bookPreview.loading"
+              >
+                Opening the book...
+              </div>
+              <iframe
+                title="Amazon Kindle preview of Spanish Mirrors"
+                data-preview-title="bookPreview.frameTitle"
+                class="book-preview-reader-frame"
+                data-preview-frame
+                allowfullscreen
+                sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"
+              ></iframe>
+              <div
+                class="book-preview-fallback"
+                data-preview-fallback
+                hidden
+              >
+                <p data-translation="bookPreview.fallback">
+                  Read the official sample on Amazon Kindle
+                </p>
+                <a
+                  class="primary-btn"
+                  data-book-preview-link
+                  href="https://read.amazon.com/sample/B0GV3V9YDK?clientId=share"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-translation="bookPreview.openPreview"
+                >Open preview</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <script
       id="bootstrap_js"
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
@@ -1161,9 +1249,9 @@ https://goo.gl/forms/JArck4uzbGGmTuG72
         this.src = this.dataset.fallbackSrc;
       "
     ></script>
-    <script src="js/translations.min.js?v=20260913-volume-map-i18n"></script>
+    <script src="js/translations.min.js?v=20260927-book-preview-i18n"></script>
     <script src="js/main.min.js?v=20260924-signature-scroll-trigger"></script>
-    <script src="js/book-hover.min.js?v=20260918-full-rotation"></script>
+    <script src="js/book-hover.min.js?v=20260927-book-preview"></script>
 
     <script src="js/map-data.min.js?v=20260922-aisha-marker-2"></script>
     <script src="js/map.min.js?v=20260924-stop-map-pulses" defer></script>

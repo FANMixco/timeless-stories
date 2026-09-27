@@ -647,6 +647,15 @@
           }
         }
       }
+    },
+    "bookPreview": {
+      "title": "Espejos Españoles",
+      "triggerLabel": "Lee una vista previa de Espejos Españoles",
+      "openAmazon": "Abrir en Amazon",
+      "loading": "Abriendo el libro...",
+      "fallback": "Lee la muestra oficial en Amazon Kindle",
+      "openPreview": "Abrir vista previa",
+      "frameTitle": "Vista previa de Amazon Kindle de Espejos Españoles"
     }
   }
 }
