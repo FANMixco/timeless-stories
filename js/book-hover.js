@@ -27,6 +27,7 @@
   let previewTranslations = {};
   let readerResizeTimer;
   let lastReaderSize = { width: 0, height: 0 };
+  let suppressReaderResizeUntil = 0;
 
   const reset = () => {
     book.style.transform = '';
@@ -34,7 +35,8 @@
 
   const handleHidden = () => {
     triggers.forEach((trigger) => trigger.setAttribute('aria-expanded', 'false'));
-    resetReader();
+    window.clearTimeout(readerRevealTimer);
+    window.clearTimeout(readerResizeTimer);
     if (lastFocusedElement && typeof lastFocusedElement.focus === 'function') {
       lastFocusedElement.focus({ preventScroll: true });
     } else {
@@ -180,6 +182,13 @@
     }
   };
 
+  const getCleanReaderSrc = () => {
+    const currentSrc = frame?.getAttribute('src') || frame?.src || '';
+    return currentSrc
+      .replace(/([?&])resizeRefresh=\d+(&)?/, (match, prefix, suffix) => (suffix ? prefix : ''))
+      .replace(/[?&]$/, '');
+  };
+
   const resetReader = () => {
     window.clearTimeout(readerRevealTimer);
     window.clearTimeout(readerResizeTimer);
@@ -217,7 +226,19 @@
 
     if (!frame || !previewUrl) {
       showFallback();
-      return;
+      return false;
+    }
+
+    if (getCleanReaderSrc() === previewUrl) {
+      if (readerLoaded) {
+        revealReader();
+        return true;
+      }
+
+      frame.addEventListener('load', revealReader, { once: true });
+      frame.addEventListener('error', showFallback, { once: true });
+      readerRevealTimer = window.setTimeout(revealReader, readerRevealDelay);
+      return true;
     }
 
     resetReader();
@@ -225,15 +246,13 @@
     frame.addEventListener('error', showFallback, { once: true });
     frame.setAttribute('src', previewUrl);
     readerRevealTimer = window.setTimeout(revealReader, readerRevealDelay);
+    return false;
   };
 
   const refreshReaderLayout = () => {
     if (!isModalOpen() || !readerLoaded || !frame?.src) return;
-    const currentSrc = frame.getAttribute('src') || frame.src;
-    if (!currentSrc) return;
-    const cleanSrc = currentSrc
-      .replace(/([?&])resizeRefresh=\d+(&)?/, (match, prefix, suffix) => (suffix ? prefix : ''))
-      .replace(/[?&]$/, '');
+    const cleanSrc = getCleanReaderSrc();
+    if (!cleanSrc) return;
     const separator = cleanSrc.includes('?') ? '&' : '?';
     window.clearTimeout(readerRevealTimer);
     frame.addEventListener('load', revealReader, { once: true });
@@ -242,11 +261,31 @@
     readerRevealTimer = window.setTimeout(revealReader, readerRevealDelay);
   };
 
-  const scheduleReaderLayoutRefresh = () => {
-    if (!reader) return;
+  const getReaderSize = () => {
+    if (!reader) return null;
     const bounds = reader.getBoundingClientRect();
-    const width = Math.round(bounds.width);
-    const height = Math.round(bounds.height);
+    return {
+      width: Math.round(bounds.width),
+      height: Math.round(bounds.height),
+    };
+  };
+
+  const rememberReaderSize = () => {
+    const size = getReaderSize();
+    if (size) {
+      lastReaderSize = size;
+    }
+  };
+
+  const scheduleReaderLayoutRefresh = () => {
+    if (!isModalOpen()) return;
+    if (Date.now() < suppressReaderResizeUntil) {
+      rememberReaderSize();
+      return;
+    }
+    const size = getReaderSize();
+    if (!size) return;
+    const { width, height } = size;
     if (Math.abs(width - lastReaderSize.width) < 8 && Math.abs(height - lastReaderSize.height) < 8) {
       return;
     }
@@ -300,11 +339,16 @@
       triggers.forEach((item) => item.setAttribute('aria-expanded', 'true'));
       reset();
       await animateCoverOpen(trigger);
-      resetReader();
       showModal();
       await waitForModalReady();
-      scheduleReaderLayoutRefresh();
-      await loadReader();
+      const reusedReader = await loadReader();
+      if (reusedReader) {
+        rememberReaderSize();
+        suppressReaderResizeUntil = Date.now() + 1200;
+      } else {
+        suppressReaderResizeUntil = 0;
+        scheduleReaderLayoutRefresh();
+      }
     } finally {
       opening = false;
     }
