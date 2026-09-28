@@ -357,6 +357,7 @@
   window.timelessStoriesOpenBookPreview = openPreview;
 
   const handlePreviewTriggerEvent = (event) => {
+    if (typeof event.button === 'number' && event.button !== 0) return;
     const target = event.target.nodeType === Node.ELEMENT_NODE
       ? event.target
       : event.target.parentElement;
