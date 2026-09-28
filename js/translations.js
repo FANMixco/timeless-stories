@@ -18,8 +18,16 @@ const lang = supportedLang.includes(storedLang)
   : supportedLang.includes(browserLang)
     ? browserLang
     : "en";
-const bookCoverBasePath = "img/cover-colorized-v2-sm";
-const localizedBookCoverLanguages = new Set(["es", "fr"]);
+const heroCoverLanguageMap = {
+  en: {
+    jpg: "img/covers/cover_basic_en.jpg",
+    webp: "img/covers/cover_basic_en.webp",
+  },
+  es: {
+    jpg: "img/covers/cover_basic_es.jpg",
+    webp: "img/covers/cover_basic_es.webp",
+  },
+};
 const previewCoverLanguageMap = {
   en: {
     jpg: "img/covers/cover_en.jpg",
@@ -163,25 +171,24 @@ function setDeferredFrameSource(frameId, src) {
 }
 
 function updateLocalizedBookCover(language) {
-  const suffix = localizedBookCoverLanguages.has(language)
-    ? `-${language}`
-    : "";
-  const jpegPath = `${bookCoverBasePath}${suffix}.jpg`;
-  const webpPath = `${bookCoverBasePath}${suffix}.webp`;
+  const heroCover =
+    heroCoverLanguageMap[language]
+    || previewCoverLanguageMap[language]
+    || heroCoverLanguageMap.en;
   const previewCover =
     previewCoverLanguageMap[language] || previewCoverLanguageMap.en;
   const altText = translations?.bookCoverAlt || translations?.introSM;
 
   document
     .querySelectorAll("#bookCoverWebpSource")
-    .forEach((source) => source.setAttribute("srcset", webpPath));
+    .forEach((source) => source.setAttribute("srcset", heroCover.webp));
   document
     .querySelectorAll("#bookCoverJpgSource")
-    .forEach((source) => source.setAttribute("srcset", jpegPath));
+    .forEach((source) => source.setAttribute("srcset", heroCover.jpg));
   document
     .querySelectorAll("#bookCoverImage")
     .forEach((image) => {
-      image.setAttribute("src", jpegPath);
+      image.setAttribute("src", heroCover.jpg);
       if (altText) {
         image.setAttribute("alt", altText);
       }

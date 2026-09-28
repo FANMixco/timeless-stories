@@ -35,6 +35,13 @@
   object-fit: cover;
 }
 
+#bookCoverImage {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .book-preview-card-actions {
   display: grid;
   grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr) 48px;
