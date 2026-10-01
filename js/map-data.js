@@ -10,7 +10,7 @@
     { id: 8, key: "headlessPriest", loc: [13.698288, -89.191173] },
     { id: 9, key: "fleshlessWoman", loc: [13.903600, -89.549559] },
     { id: 10, key: "dwarf", loc: [13.87073, -88.628353] },
-    { id: 11, key: "siren", loc: [13.310158, -88.064383] }
+    { id: 11, key: "siren", loc: [13.310158, -88.064383], italic: true }
   ];
   
   const legends2 = [
@@ -24,7 +24,7 @@
     { id: 8, key: "ghostOfSanGines", loc: [40.417214803173316, -3.7071205413454735] },
     { id: 9, key: "girlOnTheCurve", loc: [40.903697, -3.880308] },
     { id: 10, key: "trasgu", loc: [43.187277, -4.820837] },
-    { id: 11, key: "xana", loc: [43.060562, -6.657641] }
+    { id: 11, key: "xana", loc: [43.060562, -6.657641], italic: true }
   ];
 
   const mirrorExtraMarkers = {

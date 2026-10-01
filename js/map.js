@@ -765,7 +765,9 @@ function buildLegendListHtml(items, language, mapTranslations, collectionKey) {
         const legend = collectionKey
           ? getVolumeMapItemText(collectionKey, item, mapTranslations)
           : getMapItemText(item, language);
-        return `<li>${legend.name}</li>`;
+        const itemClass = item.italic ? ' class="map-legend-item-italic"' : "";
+
+        return `<li${itemClass}>${legend.name}</li>`;
       }).join("")}
     </ol>
   `;
