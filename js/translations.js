@@ -379,9 +379,8 @@ function renderCulturalCollaborations() {
   if (!container) return;
 
   container.innerHTML = getCulturalCollaborations()
-    .map((card) => `
-      <div class="col-12 col-md-5 col-lg-4">
-        <div class="cultural-card">
+    .map((card) => {
+      const content = `
           <img
             src="${card.image || ""}"
             alt="${card.alt || card.name || ""}"
@@ -390,9 +389,17 @@ function renderCulturalCollaborations() {
           <div>
             <h3>${card.name || ""}</h3>
             <p>${card.description || ""}</p>
-          </div>
-        </div>
-      </div>`)
+          </div>`;
+
+      return `
+      <div class="col-12 col-md-5 col-lg-4">
+        ${
+          card.href
+            ? `<a class="cultural-card" href="${card.href}" target="_blank" rel="noopener noreferrer">${content}</a>`
+            : `<div class="cultural-card">${content}</div>`
+        }
+      </div>`;
+    })
     .join("");
 }
 

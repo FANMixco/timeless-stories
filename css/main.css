@@ -1892,6 +1892,19 @@ h6,
         color: #fff !important;
     }
 
+    .cultural-card:hover {
+        cursor: pointer;
+        box-shadow: 0px 20px 20px 0px rgba(0, 0, 0, 0.1);
+        background: transparent;
+        color: #fff;
+        border: 1px solid #fff;
+    }
+
+    .cultural-card:hover h3,
+    .cultural-card:hover p {
+        color: #fff;
+    }
+
     .carousel-control-prev:hover,
     .carousel-control-next:hover {
         background-color: rgba(128, 128, 128, 1);
@@ -3886,12 +3899,20 @@ body.mobile-nav-active #mobile-nav-toggle {
     padding: 22px 24px;
     background-color: rgba(255, 255, 255, 0.95);
     color: #222;
+    text-decoration: none;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 20px;
     border: 1px solid rgba(255, 255, 255, 0.65);
     box-shadow: 0 10px 26px rgba(1, 87, 155, 0.14);
+}
+
+.cultural-card:focus {
+    color: #222;
+    text-decoration: none;
+    outline: 3px solid rgba(255, 255, 255, 0.55);
+    outline-offset: 4px;
 }
 
 .cultural-card img {
@@ -5071,6 +5092,12 @@ html[data-theme="dark"] #mContactUs .btn-close {
         box-shadow: 0px 20px 20px 0px rgba(0, 0, 0, 0.1);
     }
 
+    html:not([data-theme="light"]) .cultural-card:hover {
+        background: transparent;
+        border: 1px solid #fff !important;
+        box-shadow: 0px 20px 20px 0px rgba(0, 0, 0, 0.1);
+    }
+
     html:not([data-theme="light"]) .book-card:hover .card {
         background: transparent;
         border: 1px solid #fff !important;
@@ -5119,6 +5146,12 @@ html[data-theme="dark"] #mContactUs .btn-close {
     }
 
     html[data-theme="dark"] .buttons:hover {
+        background: transparent;
+        border: 1px solid #fff !important;
+        box-shadow: 0px 20px 20px 0px rgba(0, 0, 0, 0.1);
+    }
+
+    html[data-theme="dark"] .cultural-card:hover {
         background: transparent;
         border: 1px solid #fff !important;
         box-shadow: 0px 20px 20px 0px rgba(0, 0, 0, 0.1);

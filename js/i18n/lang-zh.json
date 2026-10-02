@@ -272,13 +272,15 @@
         "name": "Instituto Cervantes",
         "description": "马拉喀什",
         "image": "img/extras/Cervantes.jpg",
-        "alt": "Instituto Cervantes"
+        "alt": "Instituto Cervantes",
+        "href": "https://marrakech.cervantes.es/fr/default.shtm"
       },
       {
         "name": "萨尔瓦多驻摩洛哥大使馆",
         "description": "文化支持与合作",
         "image": "img/extras/Embassy.jpg",
-        "alt": "萨尔瓦多驻摩洛哥大使馆"
+        "alt": "萨尔瓦多驻摩洛哥大使馆",
+        "href": "https://www.facebook.com/EmbajadaMarruecosSV/"
       }
     ],
     "mTitle": "永恒的传奇",

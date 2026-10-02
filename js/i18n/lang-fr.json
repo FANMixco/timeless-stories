@@ -245,13 +245,15 @@
         "name": "Instituto Cervantes",
         "description": "Marrakech",
         "image": "img/extras/Cervantes.jpg",
-        "alt": "Instituto Cervantes"
+        "alt": "Instituto Cervantes",
+        "href": "https://marrakech.cervantes.es/fr/default.shtm"
       },
       {
         "name": "Ambassade d’El Salvador au Maroc",
         "description": "Soutien culturel et collaboration",
         "image": "img/extras/Embassy.jpg",
-        "alt": "Ambassade d’El Salvador au Maroc"
+        "alt": "Ambassade d’El Salvador au Maroc",
+        "href": "https://www.facebook.com/EmbajadaMarruecosSV/"
       }
     ],
     "mTitle": "Légendes Éternelles",

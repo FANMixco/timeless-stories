@@ -287,13 +287,15 @@
         "name": "Instituto Cervantes",
         "description": "Marrakesh",
         "image": "img/extras/Cervantes.jpg",
-        "alt": "Instituto Cervantes"
+        "alt": "Instituto Cervantes",
+        "href": "https://marrakech.cervantes.es/fr/default.shtm"
       },
       {
         "name": "Embassy of El Salvador in Morocco",
         "description": "Cultural support and collaboration",
         "image": "img/extras/Embassy.jpg",
-        "alt": "Embassy of El Salvador in Morocco"
+        "alt": "Embassy of El Salvador in Morocco",
+        "href": "https://www.facebook.com/EmbajadaMarruecosSV/"
       }
     ],
     "mTitle": "Timeless Stories",
