@@ -232,9 +232,25 @@ function initHeaderScroll() {
     }
 
     let ticking = false;
+    let lastScrollY = window.scrollY;
 
     const updateHeader = () => {
-        header.classList.toggle("header-scrolled", window.scrollY > 100);
+        const currentScrollY = Math.max(window.scrollY, 0);
+        const scrollingDown = currentScrollY > lastScrollY;
+        const scrollDelta = Math.abs(currentScrollY - lastScrollY);
+        const menuIsOpen = document.getElementById("navbarMenu")?.classList.contains("show");
+
+        header.classList.toggle("header-scrolled", currentScrollY > 100);
+
+        if (!menuIsOpen && scrollDelta > 6) {
+            header.classList.toggle("header-hidden", scrollingDown && currentScrollY > header.offsetHeight);
+        }
+
+        if (currentScrollY <= 0) {
+            header.classList.remove("header-hidden");
+        }
+
+        lastScrollY = currentScrollY;
         ticking = false;
     };
 
@@ -296,22 +312,80 @@ function initCollapseHandlers() {
 function initNavbarToggleState() {
     const navbarMenu = document.getElementById("navbarMenu");
     const navbarToggler = document.querySelector(".navbar-toggler");
+    const header = document.getElementById("header");
 
     if (!navbarMenu || !navbarToggler) {
         return;
     }
 
+    const clearDrawerAnimationClasses = () => {
+        navbarMenu.classList.remove("drawer-opening");
+        navbarMenu.classList.remove("drawer-closing");
+    };
+
     const syncExpandedState = () => {
         const isExpanded = navbarMenu.classList.contains("show");
         navbarToggler.setAttribute("aria-expanded", String(isExpanded));
+        header?.classList.toggle("header-menu-open", isExpanded);
     };
+
+    const openDrawer = () => {
+        clearDrawerAnimationClasses();
+        navbarMenu.classList.add("show");
+        navbarMenu.classList.add("drawer-opening");
+        navbarToggler.setAttribute("aria-expanded", "true");
+        header?.classList.add("header-menu-open");
+        window.setTimeout(() => navbarMenu.classList.remove("drawer-opening"), 270);
+    };
+
+    const closeDrawer = () => {
+        clearDrawerAnimationClasses();
+        navbarMenu.classList.add("drawer-closing");
+        navbarToggler.setAttribute("aria-expanded", "false");
+        window.setTimeout(() => {
+            navbarMenu.classList.remove("show");
+            navbarMenu.classList.remove("drawer-closing");
+            header?.classList.remove("header-menu-open");
+        }, 220);
+    };
+
+    navbarToggler.addEventListener("click", (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        event.stopImmediatePropagation();
+
+        if (navbarMenu.classList.contains("show")) {
+            closeDrawer();
+            return;
+        }
+
+        openDrawer();
+    }, true);
 
     navbarMenu.addEventListener("show.bs.collapse", () => {
         navbarToggler.setAttribute("aria-expanded", "true");
+        navbarMenu.classList.add("drawer-opening");
+        navbarMenu.classList.remove("drawer-closing");
+        header?.classList.add("header-menu-open");
+    });
+
+    navbarMenu.addEventListener("shown.bs.collapse", () => {
+        navbarMenu.classList.remove("drawer-opening");
     });
 
     navbarMenu.addEventListener("hide.bs.collapse", () => {
         navbarToggler.setAttribute("aria-expanded", "false");
+        navbarMenu.classList.add("drawer-closing");
+        navbarMenu.classList.remove("drawer-opening");
+    });
+
+    navbarMenu.addEventListener("hidden.bs.collapse", () => {
+        window.setTimeout(() => {
+            navbarMenu.classList.remove("drawer-closing");
+            if (!navbarMenu.classList.contains("show")) {
+                header?.classList.remove("header-menu-open");
+            }
+        }, 220);
     });
 
     syncExpandedState();
@@ -338,8 +412,24 @@ function initBootstrapFallbacks() {
 
             event.preventDefault();
             event.stopPropagation();
-            const isExpanded = navbarMenu.classList.toggle("show");
-            navbarToggler.setAttribute("aria-expanded", String(isExpanded));
+            const isExpanded = navbarMenu.classList.contains("show");
+            navbarMenu.classList.remove("drawer-opening");
+            navbarMenu.classList.remove("drawer-closing");
+
+            if (isExpanded) {
+                navbarMenu.classList.add("drawer-closing");
+                navbarToggler.setAttribute("aria-expanded", "false");
+                window.setTimeout(() => {
+                    navbarMenu.classList.remove("show");
+                    navbarMenu.classList.remove("drawer-closing");
+                }, 220);
+                return;
+            }
+
+            navbarMenu.classList.add("show");
+            navbarMenu.classList.add("drawer-opening");
+            navbarToggler.setAttribute("aria-expanded", "true");
+            window.setTimeout(() => navbarMenu.classList.remove("drawer-opening"), 270);
         });
 
         document.addEventListener("click", (event) => {
@@ -348,8 +438,12 @@ function initBootstrapFallbacks() {
             }
 
             if (!navbarMenu.contains(event.target) && !navbarToggler.contains(event.target)) {
-                navbarMenu.classList.remove("show");
+                navbarMenu.classList.add("drawer-closing");
                 navbarToggler.setAttribute("aria-expanded", "false");
+                window.setTimeout(() => {
+                    navbarMenu.classList.remove("show");
+                    navbarMenu.classList.remove("drawer-closing");
+                }, 220);
             }
         });
     };

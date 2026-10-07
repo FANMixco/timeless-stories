@@ -306,6 +306,13 @@ html[data-theme="dark"] .book-preview-card-share {
   }
 }
 
+@media (max-width: 991.98px) {
+  body:not(.book-preview-opening):not(.modal-open) #div-book > .book-container > .book {
+    animation: none;
+    transform: rotateY(0deg);
+  }
+}
+
 .book-preview-cover-clone {
   position: fixed;
   z-index: 2056;

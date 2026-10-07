@@ -27,6 +27,7 @@
   let previewTranslations = {};
   let readerResizeTimer;
   let lastReaderSize = { width: 0, height: 0 };
+  let lastReaderLayoutKey = '';
   let suppressReaderResizeUntil = 0;
 
   const reset = () => {
@@ -270,11 +271,26 @@
     };
   };
 
+  const getReaderLayoutKey = () => {
+    const widthMode = window.innerWidth < 992 ? 'stacked' : 'wide';
+    const orientation = window.innerWidth < window.innerHeight ? 'portrait' : 'landscape';
+    return `${widthMode}:${orientation}`;
+  };
+
   const rememberReaderSize = () => {
     const size = getReaderSize();
-    if (size) {
-      lastReaderSize = size;
+    if (!size) {
+      return false;
     }
+
+    const layoutKey = getReaderLayoutKey();
+    const sizeChanged =
+      Math.abs(size.width - lastReaderSize.width) >= 8
+      || Math.abs(size.height - lastReaderSize.height) >= 8;
+    const layoutChanged = layoutKey !== lastReaderLayoutKey;
+    lastReaderSize = size;
+    lastReaderLayoutKey = layoutKey;
+    return sizeChanged || layoutChanged;
   };
 
   const scheduleReaderLayoutRefresh = () => {
@@ -286,10 +302,16 @@
     const size = getReaderSize();
     if (!size) return;
     const { width, height } = size;
-    if (Math.abs(width - lastReaderSize.width) < 8 && Math.abs(height - lastReaderSize.height) < 8) {
+    const layoutKey = getReaderLayoutKey();
+    if (
+      Math.abs(width - lastReaderSize.width) < 8
+      && Math.abs(height - lastReaderSize.height) < 8
+      && layoutKey === lastReaderLayoutKey
+    ) {
       return;
     }
     lastReaderSize = { width, height };
+    lastReaderLayoutKey = layoutKey;
     window.clearTimeout(readerResizeTimer);
     readerResizeTimer = window.setTimeout(refreshReaderLayout, 360);
   };
@@ -338,18 +360,24 @@
       lastFocusedElement = document.activeElement;
       triggers.forEach((item) => item.setAttribute('aria-expanded', 'true'));
       reset();
+      document.body.classList.add('book-preview-opening');
       await animateCoverOpen(trigger);
       showModal();
       await waitForModalReady();
       const reusedReader = await loadReader();
       if (reusedReader) {
-        rememberReaderSize();
-        suppressReaderResizeUntil = Date.now() + 1200;
+        const readerSizeChanged = rememberReaderSize();
+        suppressReaderResizeUntil = readerSizeChanged ? 0 : Date.now() + 1200;
+        if (readerSizeChanged) {
+          window.clearTimeout(readerResizeTimer);
+          readerResizeTimer = window.setTimeout(refreshReaderLayout, 80);
+        }
       } else {
         suppressReaderResizeUntil = 0;
         scheduleReaderLayoutRefresh();
       }
     } finally {
+      document.body.classList.remove('book-preview-opening');
       opening = false;
     }
   };

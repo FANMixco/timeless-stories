@@ -141,8 +141,8 @@ https://goo.gl/forms/JArck4uzbGGmTuG72
       <link rel="stylesheet" href="css/animate.min.css" />
     </noscript-->
 
-    <link rel="stylesheet" href="css/main.min.css?v=20261001-italic-map-legends" />
-    <link rel="stylesheet" href="css/book.min.css?v=20260928-hero-hq-cover" />
+    <link rel="stylesheet" href="css/main.min.css?v=20261007-pottermore-drawer-show-slide" />
+    <link rel="stylesheet" href="css/book.min.css?v=20261007-hero-book-stacked-preview-safe" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
@@ -172,40 +172,88 @@ https://goo.gl/forms/JArck4uzbGGmTuG72
 
   <body style="overflow-x: hidden">
     <header id="header">
-      <nav class="navbar navbar-expand-xl navbar-light bg-transparent">
-        <div class="container px-0">
-          <a
-            class="navbar-brand"
-            href="index.html"
-            id="logo"
-            aria-label="Timeless Stories"
-          >
-            <img
-              src="img/favicons/android-chrome-512x512.svg"
-              class="logo-mark"
-              width="32"
-              height="32"
-              alt=""
-              aria-hidden="true"
-            />
-            <span class="logo-title" data-translation="mTitle">Timeless Stories</span>
-          </a>
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarMenu"
-            aria-controls="navbarMenu"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span class="navbar-toggler-icons" aria-hidden="true">
-              <span class="navbar-toggle-glyph navbar-toggle-glyph-open icon-th-menu"></span>
-              <span class="navbar-toggle-glyph navbar-toggle-glyph-close icon-close"></span>
-            </span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarMenu">
-            <ul class="navbar-nav ms-auto">
+      <nav class="navbar navbar-expand-xl navbar-light bg-transparent" aria-label="Primary navigation">
+        <div class="container px-0 header-shell">
+          <div class="header-topbar">
+            <div class="header-social" aria-label="Social media">
+              <a
+                title="amazon"
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://www.amazon.com/stores/Federico-Navarrete/author/B08NJTXQRV"
+                aria-label="amazon"
+              >
+                <span class="icon-amazon"></span>
+              </a>
+              <a
+                title="goodreads"
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://www.goodreads.com/author/show/21125413.Federico_Navarrete"
+                aria-label="goodreads"
+              >
+                <span class="icon-goodreads-brands"></span>
+              </a>
+              <a
+                title="tiktok"
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://www.tiktok.com/@federicostories"
+                aria-label="tiktok"
+              >
+                <span class="icon-tiktok"></span>
+              </a>
+              <a
+                title="facebook"
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://www.facebook.com/federicostories"
+                aria-label="facebook"
+              >
+                <span class="icon-facebook"></span>
+              </a>
+              <a
+                title="x, twitter"
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://x.com/FedeStories"
+                aria-label="x, twitter"
+              >
+                <span class="icon-x"></span>
+              </a>
+            </div>
+            <a
+              class="navbar-brand"
+              href="index.html"
+              id="logo"
+              aria-label="Timeless Stories"
+            >
+              <img
+                src="img/favicons/android-chrome-512x512.svg"
+                class="logo-mark"
+                width="32"
+                height="32"
+                alt=""
+                aria-hidden="true"
+              />
+              <span class="logo-title" data-translation="mTitle">Timeless Stories</span>
+            </a>
+            <button
+              class="navbar-toggler"
+              type="button"
+              aria-controls="navbarMenu"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span class="navbar-toggler-icons" aria-hidden="true">
+                <span class="navbar-toggle-glyph navbar-toggle-glyph-open icon-th-menu"></span>
+                <span class="navbar-toggle-glyph navbar-toggle-glyph-close icon-close"></span>
+              </span>
+            </button>
+          </div>
+          <div class="header-menubar">
+            <div class="collapse navbar-collapse" id="navbarMenu">
+              <ul class="navbar-nav">
               <li class="nav-item">
                 <a class="nav-link" href="#home" data-translation="menu0"></a>
               </li>
@@ -243,21 +291,21 @@ https://goo.gl/forms/JArck4uzbGGmTuG72
               <li class="nav-item">
                 <a
                   class="nav-link"
-                  href="https://federicostories.blogspot.com"
-                  target="_blank"
-                  data-translation="blog"
-                  ></a
-                >
-              </li>
-              <li class="nav-item d-md-none">
-                <a
-                  class="nav-link"
                   href="#memoryGameModal"
                   data-bs-toggle="modal"
                   data-bs-target="#memoryGameModal"
                   id="menuMemoryGame"
                   data-translation="memoryGameTitle"
                 ></a>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  href="https://federicostories.blogspot.com"
+                  target="_blank"
+                  data-translation="blog"
+                  ></a
+                >
+              </li>
               </li>
               <li class="nav-item d-md-none">
                 <a
@@ -269,7 +317,55 @@ https://goo.gl/forms/JArck4uzbGGmTuG72
                   data-translation="contactMe"
                 ></a>
               </li>
-            </ul>
+              </ul>
+              <div class="header-menu-social" aria-label="Social media">
+                <a
+                  title="amazon"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href="https://www.amazon.com/stores/Federico-Navarrete/author/B08NJTXQRV"
+                  aria-label="amazon"
+                >
+                  <span class="icon-amazon"></span>
+                </a>
+                <a
+                  title="goodreads"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href="https://www.goodreads.com/author/show/21125413.Federico_Navarrete"
+                  aria-label="goodreads"
+                >
+                  <span class="icon-goodreads-brands"></span>
+                </a>
+                <a
+                  title="tiktok"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href="https://www.tiktok.com/@federicostories"
+                  aria-label="tiktok"
+                >
+                  <span class="icon-tiktok"></span>
+                </a>
+                <a
+                  title="facebook"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href="https://www.facebook.com/federicostories"
+                  aria-label="facebook"
+                >
+                  <span class="icon-facebook"></span>
+                </a>
+                <a
+                  title="x, twitter"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href="https://x.com/FedeStories"
+                  aria-label="x, twitter"
+                >
+                  <span class="icon-x"></span>
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </nav>
@@ -967,8 +1063,7 @@ https://goo.gl/forms/JArck4uzbGGmTuG72
           </div>
           <div class="col-lg-2 col-md-6 col-sm-6 social-widget">
             <div class="single-footer-widget">
-              <h6 data-translation="footer3"></h6>
-              <p data-translation="footer4" class="footer-txt"></p>
+              <h6 data-translation="footer4"></h6>
               <div class="footer-social d-flex align-items-center">
                 <a
                   title="amazon"
@@ -1337,8 +1432,8 @@ https://goo.gl/forms/JArck4uzbGGmTuG72
       "
     ></script>
     <script src="js/translations.min.js?v=20260928-hero-basic-cover"></script>
-    <script src="js/main.min.js?v=20260924-signature-scroll-trigger"></script>
-    <script src="js/book-hover.min.js?v=20260928-book-preview-primary-pointer"></script>
+    <script src="js/main.min.js?v=20261007-pottermore-drawer-show-slide-minified"></script>
+    <script src="js/book-hover.min.js?v=20261007-book-preview-layout-guard"></script>
 
     <script src="js/map-data.min.js?v=20261001-italic-map-legends"></script>
     <script src="js/map.min.js?v=20261001-italic-map-legends" defer></script>
