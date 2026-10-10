@@ -2821,50 +2821,73 @@ h6,
 
 .navbar-toggler-icons {
     position: relative;
-    display: inline-flex;
-    width: 2.35rem;
-    height: 2.35rem;
-    align-items: center;
-    justify-content: center;
+    display: grid;
+    width: 44px;
+    height: 44px;
+    place-items: center;
 }
 
 .navbar-toggle-glyph {
-    font-size: 2.35rem!important;
     position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+    left: 50%;
+    top: 50%;
+    display: block;
+    width: 32px;
+    height: 32px;
     color: #fff;
-    font-size: 1.2rem;
-    line-height: 1;
+    transform: translate(-50%, -50%) scale(1);
     transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
-.navbar-toggle-glyph::before {
+.navbar-toggle-glyph::before,
+.navbar-toggle-glyph::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
     display: block;
+    width: 32px;
+    height: 5px;
+    border-radius: 999px;
+    background: currentColor;
+    transform: translate(-50%, -50%);
+    transform-origin: center;
 }
 
 .navbar-toggle-glyph-open {
     opacity: 1;
-    transform: scale(1);
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.navbar-toggle-glyph-open::before {
+    box-shadow: 0 -11px 0 currentColor, 0 11px 0 currentColor;
+}
+
+.navbar-toggle-glyph-open::after {
+    display: none;
 }
 
 .navbar-toggle-glyph-close {
     opacity: 0;
-    transform: scale(0.85) rotate(-10deg);
+    transform: translate(-50%, -50%) scale(0.85) rotate(-10deg);
+}
+
+.navbar-toggle-glyph-close::before {
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.navbar-toggle-glyph-close::after {
+    transform: translate(-50%, -50%) rotate(-45deg);
 }
 
 .navbar-toggler[aria-expanded="true"] .navbar-toggle-glyph-open {
     opacity: 0;
-    transform: scale(0.85) rotate(10deg);
+    transform: translate(-50%, -50%) scale(0.85) rotate(10deg);
 }
 
 .navbar-toggler[aria-expanded="true"] .navbar-toggle-glyph-close {
     opacity: 1;
-    transform: scale(1) rotate(0deg);
+    transform: translate(-50%, -50%) scale(1) rotate(0deg);
 }
 
 #header .navbar {
@@ -4667,6 +4690,9 @@ html[data-theme="dark"] .mapPreview .mirror-comparison-marker-selected {
 
 .navbar-toggler {
     background: transparent;
+    display: grid;
+    place-items: center;
+    line-height: 1;
 }
 
 .book-card .card {
