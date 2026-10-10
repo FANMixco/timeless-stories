@@ -4685,6 +4685,13 @@ html[data-theme="dark"] .mapPreview .mirror-comparison-marker-selected {
 
 .book-card-memory i {
     color: #2f5da8;
+    font-size: clamp(3rem, 5vw, 4.75rem) !important;
+}
+
+@media (max-width: 1199.98px) {
+    .book-card-memory i {
+        font-size: clamp(4.5rem, 12vw, 6rem) !important;
+    }
 }
 
 .book-card p {
