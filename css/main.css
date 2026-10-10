@@ -2938,8 +2938,30 @@ h6,
     display: none;
 }
 
+.header-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    justify-self: end;
+}
+
+.header-game-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    color: #ffffff;
+    font-size: 1.55rem;
+    line-height: 1;
+    text-decoration: none;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
 .header-social a:hover,
-.header-social a:focus {
+.header-social a:focus,
+.header-game-link:hover,
+.header-game-link:focus {
     color: #d7ecff;
     transform: translateY(-1px);
 }
@@ -3077,6 +3099,10 @@ h6,
     #header .navbar-toggler {
         display: none;
     }
+
+    .nav-memory-game {
+        display: none;
+    }
 }
 
 @media (max-width: 1199.98px) {
@@ -3087,6 +3113,10 @@ h6,
     }
 
     .header-social {
+        display: none;
+    }
+
+    .header-actions {
         display: none;
     }
 
