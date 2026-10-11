@@ -1299,6 +1299,66 @@ th {
     overflow-x: hidden;
 }
 
+@media (max-width: 1199.98px) {
+    .volume-map-modal .modal-dialog {
+        width: 100vw;
+        max-width: none;
+        height: 100%;
+        margin: 0;
+    }
+
+    .volume-map-modal .modal-content {
+        min-height: 100dvh;
+        border: 0;
+        border-radius: 0;
+    }
+
+    .volume-map-modal .modal-header {
+        flex: 0 0 auto;
+        padding: 24px 28px 16px;
+        align-items: flex-start;
+        gap: 16px;
+    }
+
+    .volume-map-modal .modal-body {
+        flex: 1 1 auto;
+        min-height: 0;
+        padding: 0 28px 28px;
+        overflow-y: auto;
+    }
+
+    .volume-map-modal .content-modal-title {
+        min-width: 0;
+        overflow-wrap: anywhere;
+    }
+}
+
+@media (max-width: 1199.98px) and (orientation: portrait) {
+    .volume-map-layout {
+        --volume-map-panel-height: clamp(420px, 52dvh, 640px);
+        grid-template-columns: 1fr;
+        gap: 22px;
+        min-width: 0;
+    }
+
+    .volume-map-legend {
+        max-height: none;
+        overflow: visible;
+        padding-right: 0;
+    }
+
+    .volume-map-legend .volume-map-list {
+        columns: 2;
+        column-gap: 28px;
+    }
+}
+
+@media (max-width: 1199.98px) and (orientation: landscape) {
+    .volume-map-legend {
+        max-height: calc(100dvh - 128px);
+    }
+}
+
 .volume-map-legend .list-group-numbered {
     margin-bottom: 0;
     width: 100%;
@@ -1433,27 +1493,46 @@ th {
         height: var(--volume-map-panel-height);
     }
 
-    .volume-map-modal .modal-dialog {
-        max-width: none;
-        margin-right: 8px;
-        margin-left: 8px;
-    }
-
-    .volume-map-modal .modal-header {
-        align-items: flex-start;
-        gap: 12px;
-    }
-
-    .volume-map-modal .content-modal-title {
-        min-width: 0;
-        overflow-wrap: anywhere;
-    }
-
     .volume-map-legend {
         max-height: none;
         overflow: visible;
         padding-right: 0;
         font-size: 14px;
+    }
+
+    .volume-map-modal .modal-header {
+        padding: 24px 18px 14px;
+        gap: 12px;
+    }
+
+    .volume-map-modal .modal-body {
+        padding: 0 18px 24px;
+    }
+
+    .volume-map-legend .volume-map-list {
+        columns: 1;
+    }
+}
+
+@media (max-width: 1199.98px) and (orientation: landscape) and (max-height: 575px) {
+    .volume-map-modal .modal-header {
+        padding: 14px 18px 10px;
+    }
+
+    .volume-map-modal .modal-body {
+        padding: 0 18px 16px;
+        overflow-y: hidden;
+    }
+
+    .volume-map-layout {
+        --volume-map-panel-height: calc(100dvh - 96px);
+        gap: 18px;
+    }
+
+    .volume-map-legend {
+        max-height: calc(100dvh - 96px);
+        overflow-y: auto;
+        padding-right: 10px;
     }
 }
 
@@ -4645,6 +4724,8 @@ html[data-theme="dark"] .mapPreview .mirror-comparison-marker-selected {
 
 .volume-map-preview.mapPreview {
     width: 100%;
+    height: var(--volume-map-panel-height);
+    min-height: 0;
 }
 
 .volume-map-legend.multi-column-list {

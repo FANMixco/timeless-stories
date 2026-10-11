@@ -608,12 +608,15 @@ html[data-theme="dark"] .book-preview-card-share {
     opacity: 0.75;
   }
 
-  .book-preview-modal .btn-close {
-    grid-column: 3;
+  .modal .modal-header .btn-close {
     width: 44px;
     height: 44px;
     padding: 0;
     background-size: 1.35rem;
+  }
+
+  .book-preview-modal .btn-close {
+    grid-column: 3;
     justify-self: center;
   }
 
