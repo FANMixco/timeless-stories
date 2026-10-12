@@ -161,6 +161,40 @@ function scrollToTarget(target, duration = 1500) {
     animateScroll(targetTop, duration);
 }
 
+function closeNavbarMenuImmediately(navbarMenu) {
+    if (!navbarMenu?.classList.contains("show")) {
+        return;
+    }
+
+    const navbarToggler = document.querySelector(".navbar-toggler");
+    const header = document.getElementById("header");
+
+    navbarMenu.classList.remove("show", "collapsing", "drawer-opening", "drawer-closing");
+    navbarMenu.style.removeProperty("height");
+    navbarToggler?.setAttribute("aria-expanded", "false");
+    header?.classList.remove("header-menu-open");
+}
+
+function initMobileMenuFastLinkClose() {
+    const navbarMenu = document.getElementById("navbarMenu");
+
+    if (!navbarMenu) {
+        return;
+    }
+
+    navbarMenu.addEventListener("click", (event) => {
+        const clickTarget = event.target.nodeType === Node.ELEMENT_NODE
+            ? event.target
+            : event.target.parentElement;
+        const link = clickTarget?.closest("a");
+        if (!link || !navbarMenu.contains(link)) {
+            return;
+        }
+
+        closeNavbarMenuImmediately(navbarMenu);
+    }, true);
+}
+
 function initSmoothScroll() {
     document.querySelectorAll(".nav-link, .scrollto").forEach((link) => {
         link.addEventListener("click", function (e) {
@@ -189,16 +223,8 @@ function initSmoothScroll() {
 
                 const navbarCollapse = document.querySelector(".navbar-collapse");
                 if (navbarCollapse && navbarCollapse.classList.contains("show")) {
-                    const collapseInstance =
-                        bootstrap.Collapse.getInstance(navbarCollapse) ||
-                        new bootstrap.Collapse(navbarCollapse, { toggle: false });
-
-                    navbarCollapse.addEventListener(
-                        "hidden.bs.collapse",
-                        () => scrollToTarget(target),
-                        { once: true }
-                    );
-                    collapseInstance.hide();
+                    closeNavbarMenuImmediately(navbarCollapse);
+                    scrollToTarget(target, 900);
                     return;
                 }
 
@@ -1152,6 +1178,7 @@ function initSignatureAnimation() {
 document.addEventListener("DOMContentLoaded", () => {
     initializePageDimensions();
     initUserLinks();
+    initMobileMenuFastLinkClose();
     initSmoothScroll();
     handleInitialHash();
     initHeaderScroll();
