@@ -88,6 +88,31 @@
 
   const buildPreviewUrl = (bookId) => `https://read.amazon.com/sample/${bookId}?clientId=share`;
 
+  const getBookShareData = () => ({
+    title: getTranslationValue('bookPreview.title') || document.title,
+    url: buildPreviewUrl(getLocalizedBookId()),
+  });
+
+  const canUseNativeShare = (shareData) => (
+    typeof navigator.share === 'function'
+    && (
+      typeof navigator.canShare !== 'function'
+      || navigator.canShare(shareData)
+    )
+  );
+
+  const getSharePlatform = () => {
+    const userAgent = navigator.userAgent || '';
+    const platform = navigator.userAgentData?.platform || navigator.platform || '';
+    if (/win/i.test(platform)) return 'windows';
+    if (/android/i.test(userAgent) || /android/i.test(platform)) return 'android';
+    return 'apple';
+  };
+
+  const updateShareIcon = () => {
+    shareButton?.setAttribute('data-share-platform', getSharePlatform());
+  };
+
   const updatePreviewLinks = () => {
     const previewUrl = buildPreviewUrl(getLocalizedBookId());
     triggers.forEach((trigger) => {
@@ -399,12 +424,11 @@
 
   shareButton?.addEventListener('click', async () => {
     updatePreviewLinks();
-    const previewUrl = buildPreviewUrl(getLocalizedBookId());
-    const title = getTranslationValue('bookPreview.title') || document.title;
+    const shareData = getBookShareData();
 
-    if (navigator.share) {
+    if (canUseNativeShare(shareData)) {
       try {
-        await navigator.share({ title, url: previewUrl });
+        await navigator.share(shareData);
         return;
       } catch (error) {
         if (error?.name === 'AbortError') return;
@@ -412,9 +436,9 @@
     }
 
     try {
-      await navigator.clipboard.writeText(previewUrl);
+      await navigator.clipboard.writeText(shareData.url);
     } catch (error) {
-      window.open(previewUrl, '_blank', 'noopener,noreferrer');
+      window.open(shareData.url, '_blank', 'noopener,noreferrer');
     }
   });
 
@@ -432,6 +456,7 @@
   linksConfigReady = loadLocalizedBookId();
   loadPreviewTranslations();
   updatePreviewLinks();
+  updateShareIcon();
 
   modalElement.addEventListener('hidden.bs.modal', handleHidden);
   modalElement.querySelectorAll('[data-bs-dismiss="modal"]').forEach((button) => {

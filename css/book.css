@@ -116,6 +116,23 @@
   stroke-linejoin: round;
 }
 
+.book-preview-card-share .book-preview-share-icon-windows {
+  fill: currentColor;
+  stroke: none;
+  transform: scaleY(-1);
+  transform-origin: center;
+}
+
+.book-preview-share-icon {
+  display: none;
+}
+
+.book-preview-card-share[data-share-platform="apple"] .book-preview-share-icon-apple,
+.book-preview-card-share[data-share-platform="android"] .book-preview-share-icon-android,
+.book-preview-card-share[data-share-platform="windows"] .book-preview-share-icon-windows {
+  display: block;
+}
+
 .book-preview-card-actions a:hover,
 .book-preview-card-actions a:focus,
 .book-preview-card-actions button:hover,

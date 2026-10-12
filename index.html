@@ -727,9 +727,13 @@ https://goo.gl/forms/JArck4uzbGGmTuG72
                 <button
                   class="book-preview-card-share"
                   type="button"
+                  aria-label="Share this book"
+                  title="Share this book"
+                  data-share-platform="apple"
                   data-book-preview-share
                 >
                   <svg
+                    class="book-preview-share-icon book-preview-share-icon-apple"
                     aria-hidden="true"
                     viewBox="0 0 24 24"
                     focusable="false"
@@ -737,6 +741,26 @@ https://goo.gl/forms/JArck4uzbGGmTuG72
                     <path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7" />
                     <path d="M12 3v13" />
                     <path d="m7 8 5-5 5 5" />
+                  </svg>
+                  <svg
+                    class="book-preview-share-icon book-preview-share-icon-android"
+                    aria-hidden="true"
+                    viewBox="0 0 24 24"
+                    focusable="false"
+                  >
+                    <path d="M8.7 14.2l6.6 3.6" />
+                    <path d="M15.3 6.2 8.7 9.8" />
+                    <circle cx="6" cy="12" r="3" />
+                    <circle cx="18" cy="5" r="3" />
+                    <circle cx="18" cy="19" r="3" />
+                  </svg>
+                  <svg
+                    class="book-preview-share-icon book-preview-share-icon-windows"
+                    aria-hidden="true"
+                    viewBox="0 0 1024 1024"
+                    focusable="false"
+                  >
+                    <path d="M256 320c0 0 58.824 192 384 192v-192l384 256-384 256v-192c-256 0-384-159.672-384-320zM704 192h-576v384h125.876c10.094 11.918 20.912 23.334 32.488 34.18 43.964 41.19 96.562 72.652 156.114 93.82h-442.478v-640h832v268.624l-128-85.334v-55.29z" />
                   </svg>
                   <span class="visually-hidden" data-translation="bookPreview.share">Share</span>
                 </button>
