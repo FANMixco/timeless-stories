@@ -10,6 +10,20 @@
 
 Thanks for downloading this theme!
 
+## Asset minification
+
+Run the asset minifier after editing files in `css/` or `js/`:
+
+```sh
+npm run minify
+```
+
+This regenerates matching `.min.css`, `.min.js`, and `.min.json` files. To verify that minified files are current without changing files, run:
+
+```sh
+npm run check:minified
+```
+
 ## Other Useful Links
 
 **ThemeWagon** is a great source for downloading free HTML templates built with the latest technology.

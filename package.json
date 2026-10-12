@@ -2,6 +2,12 @@
   "name": "timeless-stories",
   "private": true,
   "scripts": {
+    "minify": "node tools/minify-assets.mjs",
+    "check:minified": "node tools/minify-assets.mjs --check",
     "i18n:manager": "node tools/i18n-manager/server.mjs"
+  },
+  "devDependencies": {
+    "clean-css": "^5.3.3",
+    "terser": "^5.51.2"
   }
 }
