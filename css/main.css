@@ -84,6 +84,15 @@ iframe {
     border: 0;
 }
 
+#tiktok-container {
+    min-height: 0;
+}
+
+#tiktok-container .tiktok-embed,
+#tiktok-container iframe {
+    max-width: 100% !important;
+}
+
 a,
 a:focus {
     text-decoration: none;
@@ -3918,6 +3927,13 @@ body.mobile-nav-active #mobile-nav-toggle {
     .info-area .info-right {
         padding-right: 15px !important;
         padding-left: 15px !important;
+    }
+
+    #tiktok-container {
+        min-height: min(760px, calc(100vw + 160px));
+        display: flex !important;
+        justify-content: center;
+        margin-top: 28px;
     }
 }
 

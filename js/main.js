@@ -1,5 +1,9 @@
 "use strict";
 
+let activeScrollFrame = null;
+let programmaticScrollEndTimer = null;
+let isProgrammaticScrolling = false;
+
 function runWhenVisible(element, callback, options = {}) {
     if (!element || typeof callback !== "function") {
         return;
@@ -123,28 +127,50 @@ function initUserLinks() {
     });
 }
 
+function getTargetScrollTop(target) {
+    return Math.max(
+        target.getBoundingClientRect().top + window.scrollY - getFixedHeaderOffset(),
+        0
+    );
+}
+
+function getScrollDuration(targetScroll, requestedDuration) {
+    const startScroll = window.scrollY;
+    const distance = Math.abs(targetScroll - startScroll);
+    const duration = requestedDuration ?? Math.min(Math.max(distance * 0.18, 180), 420);
+    return Math.max(duration, 0);
+}
+
+function getScrollEase(t) {
+    return 1 - Math.pow(1 - t, 3);
+}
+
 function animateScroll(targetScroll, duration) {
+    if (activeScrollFrame) {
+        cancelAnimationFrame(activeScrollFrame);
+        activeScrollFrame = null;
+    }
+
     const startScroll = window.scrollY;
     const distance = targetScroll - startScroll;
     const startTime = performance.now();
 
-    function easeInOutExpo(t) {
-        return t === 0 ? 0 : t === 1 ? 1 : t < 0.5 ? Math.pow(2, 20 * t - 10) / 2 : (2 - Math.pow(2, -20 * t + 10)) / 2;
-    }
-
     function scroll(currentTime) {
         const elapsed = currentTime - startTime;
         const progress = Math.min(elapsed / duration, 1);
-        const ease = easeInOutExpo(progress);
+        const ease = getScrollEase(progress);
 
         window.scrollTo(0, startScroll + distance * ease);
 
         if (progress < 1) {
-            requestAnimationFrame(scroll);
+            activeScrollFrame = requestAnimationFrame(scroll);
+            return;
         }
+
+        activeScrollFrame = null;
     }
 
-    requestAnimationFrame(scroll);
+    activeScrollFrame = requestAnimationFrame(scroll);
 }
 
 function getFixedHeaderOffset() {
@@ -153,12 +179,41 @@ function getFixedHeaderOffset() {
     return navbar?.offsetHeight || header?.offsetHeight || 0;
 }
 
-function scrollToTarget(target, duration = 1500) {
-    const targetTop = Math.max(
-        target.getBoundingClientRect().top + window.scrollY - getFixedHeaderOffset(),
-        0
-    );
-    animateScroll(targetTop, duration);
+function scheduleTargetScrollCorrection(target, startDelay = 0) {
+    [90, 220, 420, 760].forEach((delay) => {
+        window.setTimeout(() => {
+            const targetTop = getTargetScrollTop(target);
+            if (Math.abs(window.scrollY - targetTop) > 4) {
+                window.scrollTo(0, targetTop);
+            }
+        }, startDelay + delay);
+    });
+}
+
+function keepHeaderStableDuringScroll(duration) {
+    isProgrammaticScrolling = true;
+    window.clearTimeout(programmaticScrollEndTimer);
+    programmaticScrollEndTimer = window.setTimeout(() => {
+        isProgrammaticScrolling = false;
+    }, duration + 850);
+}
+
+function scrollToTarget(target, duration) {
+    const targetTop = getTargetScrollTop(target);
+    const scrollDuration = getScrollDuration(targetTop, duration);
+    keepHeaderStableDuringScroll(scrollDuration);
+
+    if (
+        scrollDuration === 0 ||
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
+        window.scrollTo(0, targetTop);
+        scheduleTargetScrollCorrection(target);
+        return;
+    }
+
+    animateScroll(targetTop, scrollDuration);
+    scheduleTargetScrollCorrection(target, scrollDuration);
 }
 
 function closeNavbarMenuImmediately(navbarMenu) {
@@ -224,7 +279,7 @@ function initSmoothScroll() {
                 const navbarCollapse = document.querySelector(".navbar-collapse");
                 if (navbarCollapse && navbarCollapse.classList.contains("show")) {
                     closeNavbarMenuImmediately(navbarCollapse);
-                    scrollToTarget(target, 900);
+                    scrollToTarget(target);
                     return;
                 }
 
@@ -267,6 +322,13 @@ function initHeaderScroll() {
         const menuIsOpen = document.getElementById("navbarMenu")?.classList.contains("show");
 
         header.classList.toggle("header-scrolled", currentScrollY > 100);
+
+        if (isProgrammaticScrolling) {
+            header.classList.remove("header-hidden");
+            lastScrollY = currentScrollY;
+            ticking = false;
+            return;
+        }
 
         if (!menuIsOpen && scrollDelta > 6) {
             header.classList.toggle("header-hidden", scrollingDown && currentScrollY > header.offsetHeight);
