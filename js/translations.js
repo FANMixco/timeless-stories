@@ -88,10 +88,23 @@ function applyTheme(theme = getStoredTheme()) {
 
   if (selectedTheme === "dark" || selectedTheme === "light") {
     document.documentElement.dataset.theme = selectedTheme;
+    syncMemoryGameTheme(selectedTheme);
     return;
   }
 
   document.documentElement.removeAttribute("data-theme");
+  syncMemoryGameTheme(selectedTheme);
+}
+
+function syncMemoryGameTheme(theme = getStoredTheme()) {
+  const frame = document.getElementById("memoryGameFrame");
+  if (!frame?.contentWindow) return;
+
+  frame.contentWindow.postMessage({
+    source: "timelessStories",
+    type: "themeChanged",
+    theme,
+  }, window.location.origin);
 }
 
 function initOfficialLanguageSelector() {
@@ -129,6 +142,18 @@ function initThemeSelector() {
     applyTheme(selectedTheme);
   });
 }
+
+window.addEventListener("storage", (event) => {
+  if (event.key !== themeStorageKey) return;
+
+  const storedTheme = getStoredTheme();
+  const themeSelect = document.getElementById("themeModeSelect");
+  if (themeSelect) {
+    themeSelect.value = storedTheme;
+  }
+
+  applyTheme(storedTheme);
+});
 
 async function fetchTranslationData(url) {
   try {

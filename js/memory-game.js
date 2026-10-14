@@ -81,11 +81,15 @@ function getStoredTheme() {
   }
 }
 
-function applyTheme() {
-  const theme = getStoredTheme();
+function resolveTheme(theme) {
+  return supportedThemes.includes(theme) ? theme : "system";
+}
+
+function applyTheme(theme = getStoredTheme()) {
+  const selectedTheme = resolveTheme(theme);
   const prefersDark = window.matchMedia?.("(prefers-color-scheme: dark)")?.matches;
   const resolvedTheme =
-    theme === "dark" || (theme === "system" && prefersDark) ? "dark" : "light";
+    selectedTheme === "dark" || (selectedTheme === "system" && prefersDark) ? "dark" : "light";
   document.documentElement.dataset.theme = resolvedTheme;
   document.querySelector("meta[name='theme-color']").content =
     resolvedTheme === "dark" ? "#111820" : "#fffaf0";
@@ -99,7 +103,7 @@ function toggleTheme() {
     window.localStorage.setItem(themeStorageKey, nextTheme);
   } catch (error) {}
 
-  applyTheme();
+  applyTheme(nextTheme);
 }
 
 function getShareUrl() {
@@ -982,6 +986,21 @@ document.addEventListener("keydown", (event) => {
     if (rarityPanel?.classList.contains("is-visible")) {
       closeRarityPanel();
     }
+  }
+});
+window.addEventListener("message", (event) => {
+  if (event.origin !== window.location.origin) {
+    return;
+  }
+
+  const data = event.data || {};
+  if (data.source === "timelessStories" && data.type === "themeChanged") {
+    applyTheme(data.theme);
+  }
+});
+window.addEventListener("storage", (event) => {
+  if (event.key === themeStorageKey) {
+    applyTheme();
   }
 });
 window.addEventListener("beforeunload", warnBeforeLeaving);

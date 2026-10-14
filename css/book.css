@@ -133,15 +133,30 @@
   display: block;
 }
 
-.book-preview-card-actions a:hover,
-.book-preview-card-actions a:focus,
-.book-preview-card-actions button:hover,
-.book-preview-card-actions button:focus {
+.book-preview-card-actions a:focus-visible,
+.book-preview-card-actions button:focus-visible {
   color: #111923;
   background: #facb36;
   border-color: #facb36;
   box-shadow: 0 10px 28px rgba(250, 203, 54, 0.24);
   outline: 0;
+}
+
+.book-preview-card-actions a:active,
+.book-preview-card-actions button:active {
+  transform: translateY(1px);
+  box-shadow: 0 6px 16px rgba(31, 41, 55, 0.18);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .book-preview-card-actions a:hover,
+  .book-preview-card-actions button:hover {
+    color: #111923;
+    background: #facb36;
+    border-color: #facb36;
+    box-shadow: 0 10px 28px rgba(250, 203, 54, 0.24);
+    outline: 0;
+  }
 }
 
 .book-preview-card-actions button {
