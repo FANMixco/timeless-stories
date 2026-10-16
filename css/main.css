@@ -3069,6 +3069,34 @@ h6,
     transition: color 0.2s ease, transform 0.2s ease;
 }
 
+/* Animate the glyph so the link's hit area stays steady. */
+.header-game-link .icon-gamepad,
+.header-game-link .icon-gamepad::before {
+    display: inline-block;
+    transform-origin: center;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .header-game-link .icon-gamepad::before {
+        animation: gamepad-calm-shake 1.0s ease-in-out 0.3s;
+    }
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+    .header-game-link:hover .icon-gamepad {
+        animation: gamepad-calm-shake 1.0s ease-in-out;
+    }
+}
+
+/* Separate elements keep mouse leave from replaying the welcome animation. */
+@keyframes gamepad-calm-shake {
+    0%, 100% { transform: rotate(0deg); }
+    20% { transform: rotate(-4deg); }
+    40% { transform: rotate(4deg); }
+    60% { transform: rotate(-2deg); }
+    80% { transform: rotate(2deg); }
+}
+
 .header-social a:hover,
 .header-social a:focus,
 .header-game-link:hover,
