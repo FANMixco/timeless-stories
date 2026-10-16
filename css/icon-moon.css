@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('fonts/icomoon.eot?topt1x');
-  src:  url('fonts/icomoon.eot?topt1x#iefix') format('embedded-opentype'),
-    url('fonts/icomoon.ttf?topt1x') format('truetype'),
-    url('fonts/icomoon.woff?topt1x') format('woff'),
-    url('fonts/icomoon.svg?topt1x#icomoon') format('svg');
+  src:  url('fonts/icomoon.eot?l4qoo');
+  src:  url('fonts/icomoon.eot?l4qoo#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?l4qoo') format('truetype'),
+    url('fonts/icomoon.woff?l4qoo') format('woff'),
+    url('fonts/icomoon.svg?l4qoo#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -46,10 +46,10 @@
 .icon-th-menu:before {
   content: "\e906";
 }
-.icon-close:before {
+.icon-cancel:before {
   content: "\e907";
 }
-.icon-pen:before {
+.icon-blog:before {
   content: "\e909";
 }
 .icon-amazon:before {
@@ -57,4 +57,7 @@
 }
 .icon-facebook:before {
   content: "\ea90";
+}
+.icon-mail:before {
+  content: "\e945";
 }
