@@ -406,6 +406,18 @@ function initNavbarToggleState() {
         return;
     }
 
+    const syncDrawerTop = () => {
+        if (header) {
+            header.style.setProperty("--navbar-drawer-top", `${header.offsetHeight}px`);
+        }
+    };
+    syncDrawerTop();
+    if (header && "ResizeObserver" in window) {
+        new ResizeObserver(syncDrawerTop).observe(header);
+    } else {
+        window.addEventListener("resize", syncDrawerTop);
+    }
+
     const clearDrawerAnimationClasses = () => {
         navbarMenu.classList.remove("drawer-opening");
         navbarMenu.classList.remove("drawer-closing");
