@@ -411,6 +411,32 @@ function initNavbarToggleState() {
         navbarMenu.classList.remove("drawer-closing");
     };
 
+    const backdrop = document.createElement("div");
+    backdrop.className = "navbar-backdrop";
+    backdrop.hidden = true;
+    backdrop.setAttribute("aria-hidden", "true");
+    document.body.appendChild(backdrop);
+
+    const mobileMenuQuery = window.matchMedia("(max-width: 1199.98px)");
+    const syncBackdrop = () => {
+        backdrop.hidden = !mobileMenuQuery.matches || ![
+            "show", "collapsing", "drawer-opening", "drawer-closing"
+        ].some((className) => navbarMenu.classList.contains(className));
+    };
+    new MutationObserver(syncBackdrop).observe(navbarMenu, {
+        attributes: true,
+        attributeFilter: ["class"]
+    });
+    mobileMenuQuery.addEventListener("change", syncBackdrop);
+    backdrop.addEventListener("click", (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        if (!navbarMenu.classList.contains("drawer-closing")) {
+            closeDrawer();
+        }
+    });
+    syncBackdrop();
+
     const syncExpandedState = () => {
         const isExpanded = navbarMenu.classList.contains("show");
         navbarToggler.setAttribute("aria-expanded", String(isExpanded));

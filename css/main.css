@@ -2907,6 +2907,14 @@ h6,
     transform: translateY(0);
 }
 
+.navbar-backdrop:not([hidden]) {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.45);
+    touch-action: none;
+}
+
 .navbar-toggler-icons {
     position: relative;
     display: grid;
@@ -3314,7 +3322,7 @@ h6,
         align-items: stretch;
         justify-content: flex-start;
         overflow-y: auto;
-        box-shadow: 9999px 0 0 9999px rgba(0, 0, 0, 0.45);
+        box-shadow: none;
         transform: translateX(0);
         will-change: transform;
         transition: none;
