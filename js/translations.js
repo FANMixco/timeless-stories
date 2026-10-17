@@ -2,7 +2,7 @@ const supportedLang = ["en", "es", "fr", "zh"];
 const languageStorageKey = "timelessStoriesOfficialLanguage";
 const themeStorageKey = "timelessStoriesColorMode";
 const supportedThemes = ["system", "light", "dark"];
-const i18nCacheVersion = "20260927-book-preview-card-i18n";
+const i18nCacheVersion = "20261017-original-legends";
 window.timelessStoriesI18nCacheVersion = i18nCacheVersion;
 let translations;
 let linkRegistry;
@@ -836,6 +836,64 @@ function renderInstitutionalRecords() {
   });
 }
 
+function renderLegendsCarousel() {
+  const carouselElement = document.getElementById("legendsCarousel");
+  const carouselInner = document.getElementById("legendsCarouselInner");
+  if (!carouselElement || !carouselInner) return;
+
+  const itemsPerSlide = getItemsPerSlide();
+  bootstrap.Carousel.getInstance(carouselElement)?.dispose();
+  const legends = Array.isArray(translations?.legendsList) ? translations.legendsList : [];
+  // isActive selects the initial slide; every legend remains available.
+  const activeIndex = Math.max(0, legends.findIndex((legend) => legend.isActive));
+  carouselInner.replaceChildren();
+
+  for (let i = 0; i < legends.length; i += itemsPerSlide) {
+    const slide = document.createElement("div");
+    slide.className = `carousel-item${Math.floor(activeIndex / itemsPerSlide) === i / itemsPerSlide ? " active" : ""}`;
+    const row = document.createElement("div");
+    row.className = "row justify-content-center g-4";
+
+    legends.slice(i, i + itemsPerSlide).forEach((legend) => {
+      const column = document.createElement("div");
+      column.className = "col-12 col-md-6 col-lg-4 mMedia-container";
+      const card = document.createElement("div");
+      card.className = itemsPerSlide === 1 ? "card mx-3" : "card";
+      const link = document.createElement("a");
+      link.className = "text-decoration-none text-dark d-block";
+      link.href = legend.link;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      const picture = document.createElement("picture");
+      const source = document.createElement("source");
+      source.type = "image/webp";
+      source.srcset = `img/legends/${legend.img}.webp`;
+      const image = document.createElement("img");
+      image.className = itemsPerSlide === 1 ? "card-img-top img-fluid" : "card-img-top";
+      image.src = `img/legends/${legend.img}.jpg`;
+      image.alt = "";
+      image.loading = "lazy";
+      picture.append(source, image);
+      const body = document.createElement("div");
+      body.className = itemsPerSlide === 1 ? "card-body text-center font-weight-bold" : "card-body";
+      const title = document.createElement("p");
+      title.className = "card-text";
+      title.textContent = legend.title;
+      body.append(title);
+      link.append(picture, body);
+      card.append(link);
+      column.append(card);
+      row.append(column);
+    });
+
+    slide.append(row);
+    carouselInner.append(slide);
+  }
+
+  carouselElement.querySelector(".legends-controls").hidden = legends.length <= itemsPerSlide;
+  new bootstrap.Carousel(carouselElement, { interval: false, ride: false, wrap: true });
+}
+
 let currentCarouselMode = getItemsPerSlide();
 
 window.addEventListener("resize", () => {
@@ -845,6 +903,7 @@ window.addEventListener("resize", () => {
     currentCarouselMode = newMode;
     renderPriceCarousel();
     renderBooksCarousel();
+    renderLegendsCarousel();
     renderMassMediaCarousel();
     renderInstitutionalRecords();
   }
@@ -879,6 +938,7 @@ Promise.all([
     renderMemoryGameModalTitle();
     renderPriceCarousel();
     renderBooksCarousel();
+    renderLegendsCarousel();
     renderMassMediaCarousel();
     renderInstitutionalRecords();
     applyTranslations();

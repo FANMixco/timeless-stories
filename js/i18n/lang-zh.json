@@ -1,5 +1,62 @@
 {
   "translations": {
+    "legendsTitle": "探索所有原版传说",
+    "legendsDescription": "探索启发了 Timeless Stories 的部分传说的原始、未经编辑的版本",
+    "legendsPrevious": "上一组传说",
+    "legendsNext": "下一组传说",
+    "legendsList": [
+      {
+        "title": "善良的卡德霍与邪恶的卡德霍",
+        "img": "cadejo",
+        "link": "https://federicostories.blogspot.com/2017/10/the-good-and-bad-cadejo.html",
+        "isActive": true
+      },
+      {
+        "title": "吉罗拉家族",
+        "img": "guirola",
+        "link": "https://federicostories.blogspot.com/2018/04/the-guirolas-family.html"
+      },
+      {
+        "title": "穆卢斯",
+        "img": "mulus",
+        "link": "https://federicostories.blogspot.com/2020/10/the-mulus.html"
+      },
+      {
+        "title": "阿尔博拉里奥斯",
+        "img": "arbolario",
+        "link": "https://federicostories.blogspot.com/2020/01/the-arbolarios.html"
+      },
+      {
+        "title": "黑骑士",
+        "img": "knight",
+        "link": "https://federicostories.blogspot.com/2017/10/the-dark-knight.html"
+      },
+      {
+        "title": "吱呀作响的马车",
+        "img": "wagon",
+        "link": "https://federicostories.blogspot.com/2018/02/the-squeaky-wagon.html"
+      },
+      {
+        "title": "库扬夸",
+        "img": "cuyancua",
+        "link": "https://federicostories.blogspot.com/2017/11/the-cuyancua.html"
+      },
+      {
+        "title": "西瓜纳巴的吊床",
+        "img": "siguanaba",
+        "link": "https://federicostories.blogspot.com/2020/04/the-hammock-of-siguanaba.html"
+      },
+      {
+        "title": "查斯卡：“水中圣女”",
+        "img": "chasca",
+        "link": "https://federicostories.blogspot.com/2017/12/chasca-virgin-of-water.html"
+      },
+      {
+        "title": "梅安格拉岛的海盗宝藏",
+        "img": "treasure",
+        "link": "https://federicostories.blogspot.com/2020/08/pirate-treasures-of-meanguera-island.html"
+      }
+    ],
     "menu0": "主页",
     "menu1": "关于",
     "menu2": "获取副本",

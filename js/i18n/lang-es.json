@@ -1,5 +1,62 @@
 {
   "translations": {
+    "legendsTitle": "Explora todas las leyendas originales",
+    "legendsDescription": "Descubre las versiones originales, sin editar, de algunas de las leyendas que inspiraron Historias Eternas",
+    "legendsPrevious": "Leyendas anteriores",
+    "legendsNext": "Leyendas siguientes",
+    "legendsList": [
+      {
+        "title": "El Cadejo bueno y el Cadejo malo",
+        "img": "cadejo",
+        "link": "https://federicostories.blogspot.com/2017/10/the-good-and-bad-cadejo.html",
+        "isActive": true
+      },
+      {
+        "title": "La familia Guirola",
+        "img": "guirola",
+        "link": "https://federicostories.blogspot.com/2018/04/the-guirolas-family.html"
+      },
+      {
+        "title": "Los mulus",
+        "img": "mulus",
+        "link": "https://federicostories.blogspot.com/2020/10/the-mulus.html"
+      },
+      {
+        "title": "Los arbolarios",
+        "img": "arbolario",
+        "link": "https://federicostories.blogspot.com/2020/01/the-arbolarios.html"
+      },
+      {
+        "title": "El caballero negro",
+        "img": "knight",
+        "link": "https://federicostories.blogspot.com/2017/10/the-dark-knight.html"
+      },
+      {
+        "title": "La carreta chillona",
+        "img": "wagon",
+        "link": "https://federicostories.blogspot.com/2018/02/the-squeaky-wagon.html"
+      },
+      {
+        "title": "La Cuyancúa",
+        "img": "cuyancua",
+        "link": "https://federicostories.blogspot.com/2017/11/the-cuyancua.html"
+      },
+      {
+        "title": "La hamaca de la Siguanaba",
+        "img": "siguanaba",
+        "link": "https://federicostories.blogspot.com/2020/04/the-hammock-of-siguanaba.html"
+      },
+      {
+        "title": "Chasca, «La virgen del agua»",
+        "img": "chasca",
+        "link": "https://federicostories.blogspot.com/2017/12/chasca-virgin-of-water.html"
+      },
+      {
+        "title": "Los tesoros piratas de la isla de Meanguera",
+        "img": "treasure",
+        "link": "https://federicostories.blogspot.com/2020/08/pirate-treasures-of-meanguera-island.html"
+      }
+    ],
     "menu0": "Inicio",
     "menu1": "Acerca de",
     "menu2": "Obtén una copia",

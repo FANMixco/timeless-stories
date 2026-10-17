@@ -1,5 +1,62 @@
 {
   "translations": {
+    "legendsTitle": "Explore All Original Legends",
+    "legendsDescription": "Discover the original, unedited versions of some of the legends that inspired Timeless Stories",
+    "legendsPrevious": "Previous legends",
+    "legendsNext": "Next legends",
+    "legendsList": [
+      {
+        "title": "The Good and The Bad Cadejo",
+        "img": "cadejo",
+        "link": "https://federicostories.blogspot.com/2017/10/the-good-and-bad-cadejo.html",
+        "isActive": true
+      },
+      {
+        "title": "The Guirola Family",
+        "img": "guirola",
+        "link": "https://federicostories.blogspot.com/2018/04/the-guirolas-family.html"
+      },
+      {
+        "title": "The Mulus",
+        "img": "mulus",
+        "link": "https://federicostories.blogspot.com/2020/10/the-mulus.html"
+      },
+      {
+        "title": "The Arbolarios",
+        "img": "arbolario",
+        "link": "https://federicostories.blogspot.com/2020/01/the-arbolarios.html"
+      },
+      {
+        "title": "The Black Knight",
+        "img": "knight",
+        "link": "https://federicostories.blogspot.com/2017/10/the-dark-knight.html"
+      },
+      {
+        "title": "The Squeaky Wagon",
+        "img": "wagon",
+        "link": "https://federicostories.blogspot.com/2018/02/the-squeaky-wagon.html"
+      },
+      {
+        "title": "The Cuyancua",
+        "img": "cuyancua",
+        "link": "https://federicostories.blogspot.com/2017/11/the-cuyancua.html"
+      },
+      {
+        "title": "The Siguanaba’s hammock",
+        "img": "siguanaba",
+        "link": "https://federicostories.blogspot.com/2020/04/the-hammock-of-siguanaba.html"
+      },
+      {
+        "title": "Chasca “The virgin of the water”",
+        "img": "chasca",
+        "link": "https://federicostories.blogspot.com/2017/12/chasca-virgin-of-water.html"
+      },
+      {
+        "title": "The Pirate Treasures of Meanguera Island",
+        "img": "treasure",
+        "link": "https://federicostories.blogspot.com/2020/08/pirate-treasures-of-meanguera-island.html"
+      }
+    ],
     "menu0": "Home",
     "menu1": "About",
     "menu2": "Get a copy",

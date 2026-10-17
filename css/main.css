@@ -4970,8 +4970,8 @@ html[data-theme="dark"] .mapPreview .mirror-comparison-marker-selected {
     font-size: 1.25rem!important;
 }
 
-#mMediaCarousel .carousel-control-prev-icon,
-#mMediaCarousel .carousel-control-next-icon {
+:is(#mMediaCarousel, #legendsCarousel) .carousel-control-prev-icon,
+:is(#mMediaCarousel, #legendsCarousel) .carousel-control-next-icon {
     filter: none;
 }
 
@@ -5035,7 +5035,7 @@ html[data-theme="dark"] .mapPreview .mirror-comparison-marker-selected {
     html:not([data-theme="light"]) .single-price .price-bottom,
     html:not([data-theme="light"]) .single-testimonial,
     html:not([data-theme="light"]) .institutional-record-card,
-    html:not([data-theme="light"]) #mMediaCarousel .card,
+    html:not([data-theme="light"]) :is(#mMediaCarousel, #legendsCarousel) .card,
     html:not([data-theme="light"]) .modal-content,
     html:not([data-theme="light"]) .content-modal .modal-content,
     html:not([data-theme="light"]) .reviews-summary,
@@ -5091,7 +5091,7 @@ html[data-theme="dark"] .mapPreview .mirror-comparison-marker-selected {
     html:not([data-theme="light"]) .institutional-record-card h3,
     html:not([data-theme="light"]) .content-modal-title-link,
     html:not([data-theme="light"]) .content-modal-title-link:focus,
-    html:not([data-theme="light"]) #mMediaCarousel .card-text,
+    html:not([data-theme="light"]) :is(#mMediaCarousel, #legendsCarousel) .card-text,
     html:not([data-theme="light"]) .modal-title,
     html:not([data-theme="light"]) .content-modal-title,
     html:not([data-theme="light"]) .multi-column-list,
@@ -5135,7 +5135,7 @@ html[data-theme="dark"] .mapPreview .mirror-comparison-marker-selected {
     html:not([data-theme="light"]) .single-price .price-bottom,
     html:not([data-theme="light"]) .single-testimonial,
     html:not([data-theme="light"]) .institutional-record-card,
-    html:not([data-theme="light"]) #mMediaCarousel .card,
+    html:not([data-theme="light"]) :is(#mMediaCarousel, #legendsCarousel) .card,
     html:not([data-theme="light"]) .content-modal-list li {
         border-color: #2a3846;
     }
@@ -5241,7 +5241,7 @@ html[data-theme="dark"] .mapPreview .mirror-comparison-marker-selected {
         filter: invert(1) grayscale(1) brightness(1.8);
     }
 
-    html:not([data-theme="light"]) #mMediaCarousel a.text-dark {
+    html:not([data-theme="light"]) :is(#mMediaCarousel, #legendsCarousel) a.text-dark {
         color: #f2f6f9 !important;
     }
 
@@ -5270,7 +5270,7 @@ html[data-theme="dark"] .mapPreview .mirror-comparison-marker-selected {
     html[data-theme="dark"] .single-price .price-bottom,
     html[data-theme="dark"] .single-testimonial,
     html[data-theme="dark"] .institutional-record-card,
-    html[data-theme="dark"] #mMediaCarousel .card,
+    html[data-theme="dark"] :is(#mMediaCarousel, #legendsCarousel) .card,
     html[data-theme="dark"] .modal-content,
     html[data-theme="dark"] .content-modal .modal-content,
     html[data-theme="dark"] .reviews-summary,
@@ -5326,7 +5326,7 @@ html[data-theme="dark"] .mapPreview .mirror-comparison-marker-selected {
     html[data-theme="dark"] .institutional-record-card h3,
     html[data-theme="dark"] .content-modal-title-link,
     html[data-theme="dark"] .content-modal-title-link:focus,
-    html[data-theme="dark"] #mMediaCarousel .card-text,
+    html[data-theme="dark"] :is(#mMediaCarousel, #legendsCarousel) .card-text,
     html[data-theme="dark"] .modal-title,
     html[data-theme="dark"] .content-modal-title,
     html[data-theme="dark"] .multi-column-list,
@@ -5370,7 +5370,7 @@ html[data-theme="dark"] .mapPreview .mirror-comparison-marker-selected {
     html[data-theme="dark"] .single-price .price-bottom,
     html[data-theme="dark"] .single-testimonial,
     html[data-theme="dark"] .institutional-record-card,
-    html[data-theme="dark"] #mMediaCarousel .card,
+    html[data-theme="dark"] :is(#mMediaCarousel, #legendsCarousel) .card,
     html[data-theme="dark"] .content-modal-list li {
         border-color: #2a3846;
     }
@@ -5476,7 +5476,7 @@ html[data-theme="dark"] .mapPreview .mirror-comparison-marker-selected {
         filter: invert(1) grayscale(1) brightness(1.8);
     }
 
-    html[data-theme="dark"] #mMediaCarousel a.text-dark {
+    html[data-theme="dark"] :is(#mMediaCarousel, #legendsCarousel) a.text-dark {
         color: #f2f6f9 !important;
     }
 
