@@ -1,3 +1,5 @@
 /tmp
 node_modules/
 css/main-new.css.bk.txt
+/tools/*.py
+/backups

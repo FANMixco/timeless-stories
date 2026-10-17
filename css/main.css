@@ -3086,23 +3086,18 @@ h6,
 
 @media (prefers-reduced-motion: no-preference) {
     .header-game-link .icon-gamepad::before {
-        animation: gamepad-calm-shake 1.2s ease-in-out 0.3s;
+        animation: header-card-cycle 300s ease-in-out 0.3s infinite;
     }
 }
 
-@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
-    .header-game-link:hover .icon-gamepad {
-        animation: gamepad-calm-shake 1.2s ease-in-out;
-    }
-}
-
-/* Separate elements keep mouse leave from replaying the welcome animation. */
-@keyframes gamepad-calm-shake {
-    0%, 100% { transform: rotate(0deg); }
-    20% { transform: rotate(-4deg); }
-    40% { transform: rotate(4deg); }
-    60% { transform: rotate(-2deg); }
-    80% { transform: rotate(2deg); }
+/* The shake occupies 1.2 seconds, followed by a quiet five-minute cycle.
+   The inline hourglass starts at 1.75 seconds, after the cards settle. */
+@keyframes header-card-cycle {
+    0%, 0.4%, 100% { transform: rotate(0deg); }
+    0.08% { transform: rotate(-4deg); }
+    0.16% { transform: rotate(4deg); }
+    0.24% { transform: rotate(-2deg); }
+    0.32% { transform: rotate(2deg); }
 }
 
 .header-social a:hover,
@@ -3192,8 +3187,10 @@ h6,
 
 #logo .logo-mark {
     display: block;
-    width: 42px;
-    height: 42px;
+    width: 64px;
+    height: 64px;
+    flex-shrink: 0;
+    pointer-events: none;
     padding: 0;
     margin: 0;
 }
@@ -3222,7 +3219,7 @@ h6,
     }
 
     #header #logo img {
-        max-height: 40px;
+        max-height: 48px;
     }
 
     #logo .logo-title {
@@ -3292,8 +3289,8 @@ h6,
     }
 
     #logo .logo-mark {
-        width: 34px;
-        height: 34px;
+        width: 48px;
+        height: 48px;
     }
 
     .header-menubar {
@@ -3420,8 +3417,8 @@ h6,
     }
 
     #logo .logo-mark {
-        width: 30px;
-        height: 30px;
+        width: 44px;
+        height: 44px;
     }
 }
 
