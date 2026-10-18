@@ -524,7 +524,7 @@ function getCurrencySymbol() {
   try {
     region = new Intl.Locale(locale).region;
   } catch {
-    return "US$";
+    return "🇺🇸<br>$";
   }
 
   if (region === "GB") return "£";
@@ -535,7 +535,7 @@ function getCurrencySymbol() {
     "LU", "MT", "NL", "PT", "SK", "SI", "ES",
   ]);
 
-  return euroCountries.has(region) ? "€" : "US$";
+  return euroCountries.has(region) ? "€" : "🇺🇸<br>$";
 }
 
 function renderPriceCarousel() {
