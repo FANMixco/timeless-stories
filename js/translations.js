@@ -517,6 +517,27 @@ function getItemsPerSlide() {
   return 3;
 }
 
+function getCurrencySymbol() {
+  const locale = navigator.language || "en-US";
+  let region;
+
+  try {
+    region = new Intl.Locale(locale).region;
+  } catch {
+    return "US$";
+  }
+
+  if (region === "GB") return "£";
+
+  const euroCountries = new Set([
+    "AT", "BE", "BG", "HR", "CY", "EE", "FI",
+    "FR", "DE", "GR", "IE", "IT", "LV", "LT",
+    "LU", "MT", "NL", "PT", "SK", "SI", "ES",
+  ]);
+
+  return euroCountries.has(region) ? "€" : "US$";
+}
+
 function renderPriceCarousel() {
   const carouselElement = document.getElementById("priceCarousel");
   const carouselInner = document.getElementById("priceCarouselInner");
@@ -524,6 +545,7 @@ function renderPriceCarousel() {
   if (!carouselElement || !carouselInner) return;
 
   const itemsPerSlide = getItemsPerSlide();
+  const currencySymbol = getCurrencySymbol();
   const existingInstance = bootstrap.Carousel.getInstance(carouselElement);
   if (existingInstance) {
     existingInstance.dispose();
@@ -566,7 +588,7 @@ function renderPriceCarousel() {
         <p>${card.description || ""}</p>
         <div class="price-bottom ${bottomClass}">
           <div class="${card.leftClass}">
-            <span class="h1">${card.price || ""}</span>
+            <span class="h1">${(card.price || "").replace(/(<span>)(?:\$|€|£|美元)(<\/span>)/, (_, open, close) => open + currencySymbol + close)}</span>
           </div>
           <div class="${card.rightClass}">
             <a href="${resolveLocalizedHref(card.href)}" target="_blank" rel="noopener noreferrer" class="primary-btn">${card.cta || ""}</a>
