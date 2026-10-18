@@ -384,17 +384,29 @@ function initCollapseHandlers() {
     const collapseEl = document.getElementById("moreAuthorsCollapse");
     const btnReadMore = document.getElementById("btnReadMore");
 
-    if (!collapseEl || !btnReadMore || typeof translations === "undefined") {
+    if (!collapseEl || !btnReadMore) {
         return;
     }
 
+    let expanded = collapseEl.classList.contains("show");
+    const updateLabel = () => {
+        const key = expanded ? "readLess" : "readMore";
+        btnReadMore.dataset.translation = key;
+        btnReadMore.textContent = getBaseTranslation(key, expanded ? "Read less" : "Read more");
+    };
+
     collapseEl.addEventListener("show.bs.collapse", () => {
-        btnReadMore.textContent = translations.readLess;
+        expanded = true;
+        updateLabel();
     });
 
     collapseEl.addEventListener("hide.bs.collapse", () => {
-        btnReadMore.textContent = translations.readMore;
+        expanded = false;
+        updateLabel();
     });
+
+    window.addEventListener("translationsLoaded", updateLabel);
+    updateLabel();
 }
 
 function initNavbarToggleState() {
