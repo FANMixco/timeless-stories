@@ -487,7 +487,7 @@ html[data-theme="dark"] .card[data-rarity="tutorial"] .character-icon {
 .character-name,
 .character-origin-text,
 .collection-mirror strong {
-  opacity: 0.9;
+  opacity: 0.5;
 }
 
 .character-desc {
