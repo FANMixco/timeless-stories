@@ -306,7 +306,16 @@
           "rarity": "ultra-rare",
           "icon": "book"
         }
-      ]
+      ],
+      "collection": {
+        "title": "Mi colección",
+        "progress": "Espejos descubiertos: {found} / {total}",
+        "original": "Espejos originales",
+        "directorsCut": "Versión del director",
+        "other": "Otros espejos",
+        "contribute": "¿Conoces otro espejo? Comparte una nueva comparación a través de nuestro formulario de contacto.",
+        "submit": "Enviar una comparación"
+      }
     },
     "country3": "Marruecos 🇲🇦",
     "country4": "Polonia 🇵🇱",

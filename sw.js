@@ -1,27 +1,24 @@
-const CACHE_VERSION = "memory-game-pwa-20261014-theme-sync";
+const CACHE_VERSION = "memory-game-pwa-20261021-preview-spacer";
 const APP_SHELL = [
   "/memory-game.html",
   "/memory-game.webmanifest",
   "/css/poppins.min.css",
-  "/css/icon-moon-memory.min.css?v=20260601-music-icon-font",
-  "/css/memory-game.min.css?v=202606052300-order-icon",
-  "/js/memory-game.min.js?v=20261014-theme-sync",
+  "/css/icon-moon-memory.min.css?v=20261021-collection",
+  "/css/memory-game.min.css?v=20261021-preview-spacer",
+  "/js/memory-game.min.js?v=20261021-preview-no-heading",
   "/js/pwa.min.js",
   "/js/data/links.min.json",
-  "/js/i18n/memory-game/lang-en.min.json",
-  "/js/i18n/memory-game/lang-es.min.json",
-  "/js/i18n/memory-game/lang-fr.min.json",
-  "/js/i18n/memory-game/lang-zh.min.json",
+  "/js/i18n/memory-game/lang-en.min.json?v=20261021-collection",
+  "/js/i18n/memory-game/lang-es.min.json?v=20261021-collection",
+  "/js/i18n/memory-game/lang-fr.min.json?v=20261021-collection",
+  "/js/i18n/memory-game/lang-zh.min.json?v=20261021-collection",
   "/img/preview_memory.jpg",
-  "/img/favicons/android-chrome-192x192.png",
-  "/img/favicons/android-chrome-512x512.png",
   "/img/favicons/maskable_icon_x192.png",
   "/img/favicons/maskable_icon_x512.png",
   "/img/favicons/apple-touch-icon.png",
   "/img/favicons/favicon-32x32.png",
   "/img/favicons/favicon-16x16.png",
-  "/css/fonts/icomoon.woff",
-  "/css/fonts/icomoon-memory.woff"
+  "/css/fonts/icon-moon-memory.woff?1fgial"
 ];
 
 self.addEventListener("install", (event) => {

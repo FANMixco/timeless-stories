@@ -2,10 +2,11 @@ const supportedLanguages = ["en", "es", "fr", "zh"];
 const languageStorageKey = "timelessStoriesOfficialLanguage";
 const themeStorageKey = "timelessStoriesColorMode";
 const introStorageKey = "timelessMemoryIntroSeen";
+const collectionStorageKey = "timelessMemoryCollection";
 const supportedThemes = ["system", "light", "dark"];
 const previewRewardThresholdSeconds = 30;
 const mismatchFlipBackDelayMs = 1200;
-const i18nCacheVersion = "20260605-i18n-refresh";
+const i18nCacheVersion = "20261021-collection";
 let linkRegistry = null;
 let localizedLinks = null;
 const board = document.getElementById("board");
@@ -38,6 +39,11 @@ const themeButton = document.getElementById("themeButton");
 const shareButton = document.getElementById("shareButton");
 const hintButton = document.getElementById("hintButton");
 const topViewLegendsButton = document.getElementById("topViewLegendsButton");
+const collectionButton = document.getElementById("collectionButton");
+const collectionPanel = document.getElementById("collectionPanel");
+const closeCollectionButton = document.getElementById("closeCollectionButton");
+let discoveries = readDiscoveries();
+let collectionDetailTrigger = null;
 const playAgainButton = document.getElementById("playAgainButton");
 const viewLegendsButton = document.getElementById("viewLegendsButton");
 const winShareButton = document.getElementById("winShareButton");
@@ -79,6 +85,127 @@ function getStoredTheme() {
   } catch (error) {
     return "system";
   }
+}
+
+function readDiscoveries() {
+  try {
+    const saved = JSON.parse(window.localStorage.getItem(collectionStorageKey));
+    return new Set(Array.isArray(saved) ? saved.filter((id) => typeof id === "string") : []);
+  } catch (error) {
+    return new Set();
+  }
+}
+
+function getMirrorId(pair) {
+  return `${pair.source}|${pair.mirror}`;
+}
+
+function getMirrorCatalogue() {
+  const pairs = [...(memoryGame.pairs || []), ...(memoryGame.rarePairs || []).map((item) => item.pair)];
+  return [...new Map(pairs.filter(Boolean).map((pair) => [getMirrorId(pair), pair])).values()];
+}
+
+function saveCompletedDiscoveries() {
+  // Merge other tabs' progress; only the completed game's results grant discoveries.
+  discoveries = new Set([...readDiscoveries(), ...discoveries, ...activePairs.map(getMirrorId)]);
+  try {
+    window.localStorage.setItem(collectionStorageKey, JSON.stringify([...discoveries]));
+  } catch (error) {}
+  setElementHidden(collectionButton, discoveries.size === 0);
+}
+
+function renderCollection() {
+  const copy = memoryGame.collection || {};
+  const catalogue = getMirrorCatalogue();
+  const found = catalogue.filter((pair) => discoveries.has(getMirrorId(pair))).length;
+  setElementText(document.getElementById("collectionTitle"), copy.title || "My Collection");
+  setElementText(document.getElementById("collectionProgressText"), (copy.progress || "Discovered mirrors: {found} / {total}")
+    .replace("{found}", found).replace("{total}", catalogue.length));
+  const progress = document.getElementById("collectionProgress");
+  progress.max = catalogue.length || 1;
+  progress.value = found;
+  const groups = [
+    { rarity: "", title: copy.original || "Original Mirrors" },
+    { rarity: "rare", title: copy.directorsCut || "Director's Cut" },
+    { rarity: "ultra-rare", title: copy.other || "Other Mirrors" },
+  ].map(({ rarity, title }) => {
+    const section = document.createElement("section");
+    section.className = "collection-group";
+    section.dataset.rarity = rarity;
+    const heading = document.createElement("h3");
+    heading.textContent = title;
+    const grid = document.createElement("div");
+    grid.className = "collection-grid";
+    catalogue.filter((pair) => (pair.rarity || "") === rarity).forEach((pair) => {
+      const discovered = discoveries.has(getMirrorId(pair));
+      const card = document.createElement("button");
+      card.type = "button";
+      card.className = "collection-mirror rarity-preview-card";
+      card.dataset.rarity = rarity;
+      card.disabled = !discovered;
+      const mark = document.createElement("span");
+      mark.className = "character-mark";
+      mark.setAttribute("aria-hidden", "true");
+      if (discovered) {
+        const icon = document.createElement("i");
+        icon.className = `character-icon icon-${pair.icon || getPairIcon(pair.source, pair.mirror)}`;
+        mark.append(icon);
+      } else {
+        mark.textContent = "?";
+      }
+      const name = document.createElement("strong");
+      name.textContent = discovered ? getLegendName(pair.mirror) : "???";
+      const flags = document.createElement("span");
+      flags.textContent = discovered
+        ? `${getOriginFlag(pair.sourceOrigin || "source")} · ${getOriginFlag(pair.mirrorOrigin || "mirror")}`
+        : rarity === "" ? "🇸🇻 · 🇪🇸" : "🇸🇻 · ❓";
+      card.append(mark, name, flags);
+      if (discovered) {
+        card.addEventListener("click", () => {
+          collectionDetailTrigger = card;
+          renderLegendsList([pair], pair);
+          legendsPanel.classList.add("is-visible");
+          collectionPanel.style.display = "none";
+          closeLegendsButton.focus();
+          syncModalScrollLock();
+        });
+      }
+      grid.append(card);
+    });
+    section.append(heading, grid);
+    return section;
+  });
+  document.getElementById("collectionGroups").replaceChildren(...groups);
+  setElementText(document.getElementById("collectionContribution"), copy.contribute || "Know another mirror? Share a new comparison through our contact form.");
+  const submit = document.getElementById("collectionSubmit");
+  submit.textContent = copy.submit || "Submit a comparison";
+  submit.href = linkRegistry?.shared?.contact?.spanishContactForm || "";
+  setElementHidden(submit, !submit.getAttribute("href"));
+}
+
+function openCollection() {
+  if (!discoveries.size) return;
+  renderCollection();
+  collectionPanel.classList.add("is-visible");
+  closeCollectionButton.focus();
+  syncModalScrollLock();
+}
+
+function closeCollection() {
+  collectionPanel.classList.remove("is-visible");
+  collectionButton.focus();
+  syncModalScrollLock();
+}
+
+function closeLegendsPanel() {
+  legendsPanel.classList.remove("is-visible");
+  if (collectionDetailTrigger) {
+    collectionPanel.style.display = "";
+    collectionDetailTrigger.focus();
+    collectionDetailTrigger = null;
+    renderLegendsList();
+  }
+  syncModalScrollLock();
 }
 
 function resolveTheme(theme) {
@@ -245,7 +372,8 @@ function syncModalScrollLock() {
   const hasOpenPanel =
     winPanel.classList.contains("is-visible") ||
     legendsPanel?.classList.contains("is-visible") ||
-    rarityPanel?.classList.contains("is-visible");
+    rarityPanel?.classList.contains("is-visible") ||
+    collectionPanel?.classList.contains("is-visible");
 
   if (hasOpenPanel) {
     lockPageScroll();
@@ -372,7 +500,10 @@ function applyUiCopy() {
   setActionButtonContent(themeButton, memoryGame.theme || "Color mode", "icon-yin-yang");
   setActionButtonContent(shareButton, memoryGame.share || "", getShareIconClass());
   setActionButtonContent(hintButton, memoryGame.hint || "Hint", "icon-bulb");
-  setElementText(topViewLegendsButton, memoryGame.viewLegends || "View all legends");
+  setActionButtonContent(topViewLegendsButton, memoryGame.viewLegends || "View all legends", "icon-table-eye");
+  setActionButtonContent(collectionButton, memoryGame.collection?.title || "My Collection", "icon-book-open");
+  setElementHidden(collectionButton, discoveries.size === 0);
+  closeCollectionButton.setAttribute("aria-label", memoryGame.close || "Close");
   playAgainButton.textContent = memoryGame.playAgain || "";
   setElementText(viewLegendsButton, memoryGame.viewLegends || "View all legends");
   winShareButton.textContent = memoryGame.share || "";
@@ -601,7 +732,7 @@ function createCard(character, index) {
         <span class="character-title">
           <span class="character-name">${character.name}</span>
         </span>
-        <span class="character-origin">${getOriginLabel(character.side)}</span>
+        <span class="character-origin"><span class="character-origin-text">${getOriginLabel(character.side).replace(getOriginFlag(character.side), "").trim()}</span> ${getOriginFlag(character.side)}</span>
       </span>
     </span>
   `;
@@ -635,6 +766,7 @@ function markMatch() {
   if (matches === getPairCount()) {
     stopTimer();
     gameCompleted = true;
+    saveCompletedDiscoveries();
     board.classList.add("is-complete");
     setTopLegendActionVisibility(true);
     setPreviewRewardVisibility(elapsedSeconds < previewRewardThresholdSeconds);
@@ -675,8 +807,10 @@ function createLegendCell(characterKey, side) {
   return cell;
 }
 
-function renderLegendsList() {
-  const pairs = activePairs.length ? activePairs : chooseActivePairs();
+function renderLegendsList(pairs = activePairs.length ? activePairs : chooseActivePairs(), detailPair = null) {
+  setElementText(legendsPanelTitle, detailPair ? getLegendName(detailPair.mirror) : memoryGame.legendsTitle || "");
+  setElementHidden(legendsPanelTitle, Boolean(detailPair));
+  setElementHidden(document.getElementById("legendsFooter"), Boolean(detailPair));
   const rows = pairs.map((pair) => {
     const { source, mirror, insightTitle, insight } = pair;
     const row = document.createElement("section");
@@ -981,10 +1115,29 @@ document.addEventListener("click", (event) => {
   }
 });
 document.addEventListener("keydown", (event) => {
+  if (event.key === "Tab" && collectionPanel.classList.contains("is-visible")) {
+    const panel = rarityPanel.classList.contains("is-visible") ? rarityPanel
+      : collectionDetailTrigger ? legendsPanel : collectionPanel;
+    const controls = [...panel.querySelectorAll("button:not(:disabled), a[href]")]
+      .filter((element) => !element.hidden && element.getClientRects().length);
+    const first = controls[0];
+    const last = controls[controls.length - 1];
+    if (event.shiftKey && (document.activeElement === first || !panel.contains(document.activeElement))) {
+      event.preventDefault();
+      last?.focus();
+    } else if (!event.shiftKey && (document.activeElement === last || !panel.contains(document.activeElement))) {
+      event.preventDefault();
+      first?.focus();
+    }
+  }
   if (event.key === "Escape") {
     closeLanguageMenu();
     if (rarityPanel?.classList.contains("is-visible")) {
       closeRarityPanel();
+    } else if (legendsPanel.classList.contains("is-visible") && collectionDetailTrigger) {
+      closeLegendsPanel();
+    } else if (collectionPanel.classList.contains("is-visible")) {
+      closeCollection();
     }
   }
 });
@@ -1019,9 +1172,11 @@ closeWinButton.addEventListener("click", () => {
 });
 viewLegendsButton?.addEventListener("click", openLegendsPanel);
 topViewLegendsButton?.addEventListener("click", openLegendsPanel);
-closeLegendsButton?.addEventListener("click", () => {
-  legendsPanel?.classList.remove("is-visible");
-  syncModalScrollLock();
+closeLegendsButton?.addEventListener("click", closeLegendsPanel);
+collectionButton.addEventListener("click", openCollection);
+closeCollectionButton.addEventListener("click", closeCollection);
+collectionPanel.addEventListener("click", (event) => {
+  if (event.target === collectionPanel) closeCollection();
 });
 closeRarityButton?.addEventListener("click", closeRarityPanel);
 rarityPanel?.addEventListener("click", (event) => {

@@ -306,7 +306,16 @@
           "rarity": "ultra-rare",
           "icon": "book"
         }
-      ]
+      ],
+      "collection": {
+        "title": "我的收藏",
+        "progress": "已发现的镜像：{found} / {total}",
+        "original": "原版镜像",
+        "directorsCut": "导演剪辑版",
+        "other": "其他镜像",
+        "contribute": "知道其他镜像故事吗？通过联系表单分享新的故事比较。",
+        "submit": "提交故事比较"
+      }
     },
     "country3": "摩洛哥 🇲🇦",
     "country4": "波兰 🇵🇱",

@@ -55,8 +55,8 @@
         }
       }
     </script>
-    <link rel="stylesheet" href="css/icon-moon-memory.min.css?v=20260601-music-icon-font" />
-    <link rel="stylesheet" href="css/memory-game.min.css?v=202606052300-order-icon" />
+    <link rel="stylesheet" href="css/icon-moon-memory.min.css?v=20261021-collection" />
+    <link rel="stylesheet" href="css/memory-game.min.css?v=20261021-preview-spacer" />
   </head>
   <body>
     <main class="game-shell" aria-label="">
@@ -70,6 +70,7 @@
             <div class="game-actions">
               <button class="game-button" type="button" id="newGameButton"></button>
               <button class="game-button secondary" type="button" id="topViewLegendsButton" hidden></button>
+              <button class="game-button secondary" type="button" id="collectionButton" hidden></button>
               <button class="game-button secondary" type="button" id="hintButton"></button>
               <div class="language-control" id="languageControl">
                 <button class="game-button secondary" type="button" id="languageButton" aria-haspopup="menu" aria-expanded="false"></button>
@@ -133,7 +134,7 @@
           <button class="win-close" type="button" id="closeLegendsButton"></button>
           <h2 id="legendsPanelTitle"></h2>
           <div class="legends-list" id="legendsList"></div>
-          <div class="legends-footer">
+          <div class="legends-footer" id="legendsFooter">
             <a class="legends-rarity-note" id="legendsRarityNote" href="#hidden-rarities"></a>
             <a class="game-button" id="legendsGetCopyButton" target="_blank" rel="noopener noreferrer"></a>
           </div>
@@ -146,10 +147,23 @@
           <div class="rarity-preview-list" id="rarityPreviewList"></div>
         </div>
       </aside>
+      <aside class="legends-panel collection-panel" id="collectionPanel" aria-labelledby="collectionTitle" aria-modal="true" role="dialog">
+        <div class="legends-card">
+          <button class="win-close" type="button" id="closeCollectionButton"></button>
+          <h2 id="collectionTitle"></h2>
+          <p id="collectionProgressText"></p>
+          <progress id="collectionProgress" max="1" value="0" aria-labelledby="collectionProgressText"></progress>
+          <div id="collectionGroups"></div>
+          <footer class="collection-contribution">
+            <p id="collectionContribution"></p>
+            <a class="game-button" id="collectionSubmit" target="_blank" rel="noopener noreferrer"></a>
+          </footer>
+        </div>
+      </aside>
       <footer class="game-footer standalone-only" id="gameFooter"></footer>
     </main>
 
-    <script src="js/memory-game.min.js?v=20261014-theme-sync"></script>
+    <script src="js/memory-game.min.js?v=20261021-preview-no-heading"></script>
     <script src="js/gAnalyticsIdleLoad.min.js" defer></script>
     <script src="js/pwa.min.js" defer></script>
   </body>

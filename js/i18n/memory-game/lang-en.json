@@ -306,7 +306,16 @@
           "rarity": "ultra-rare",
           "icon": "book"
         }
-      ]
+      ],
+      "collection": {
+        "title": "My Collection",
+        "progress": "Discovered mirrors: {found} / {total}",
+        "original": "Original Mirrors",
+        "directorsCut": "Director’s Cut",
+        "other": "Other Mirrors",
+        "contribute": "Know another mirror? Share a new comparison through our contact form.",
+        "submit": "Submit a comparison"
+      }
     },
     "country3": "Morocco 🇲🇦",
     "country4": "Poland 🇵🇱",
