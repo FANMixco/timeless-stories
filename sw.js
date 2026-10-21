@@ -1,12 +1,12 @@
-const CACHE_VERSION = "memory-game-pwa-20261021-archive-info";
+const CACHE_PREFIX = "memory-game-pwa-";
+const CACHE_VERSION = `${CACHE_PREFIX}20261021-registration-fix`;
 const APP_SHELL = [
   "/memory-game.html",
   "/memory-game.webmanifest",
-  "/css/poppins.min.css",
   "/css/icon-moon-memory.min.css?v=20261021-collection",
   "/css/memory-game.min.css?v=20261021-archive-info",
   "/js/memory-game.min.js?v=20261021-collection-archive",
-  "/js/pwa.min.js",
+  "/js/pwa.min.js?v=20261021-pwa-registration",
   "/js/data/links.min.json",
   "/js/i18n/memory-game/lang-en.min.json?v=20261021-collection-archive",
   "/js/i18n/memory-game/lang-es.min.json?v=20261021-collection-archive",
@@ -15,10 +15,13 @@ const APP_SHELL = [
   "/img/preview_memory.jpg",
   "/img/favicons/maskable_icon_x192.png",
   "/img/favicons/maskable_icon_x512.png",
+  "/img/favicons/android-chrome-192x192.png",
+  "/img/favicons/android-chrome-512x512.png",
   "/img/favicons/apple-touch-icon.png",
   "/img/favicons/favicon-32x32.png",
   "/img/favicons/favicon-16x16.png",
-  "/css/fonts/icon-moon-memory.woff?1fgial"
+  "/css/fonts/icon-moon-memory.woff?1fgial",
+  "/css/fonts/icon-moon-memory.ttf?1fgial"
 ];
 
 self.addEventListener("install", (event) => {
@@ -32,7 +35,7 @@ self.addEventListener("activate", (event) => {
     caches
       .keys()
       .then((keys) =>
-        Promise.all(keys.filter((key) => key !== CACHE_VERSION).map((key) => caches.delete(key)))
+        Promise.all(keys.filter((key) => key.startsWith(CACHE_PREFIX) && key !== CACHE_VERSION).map((key) => caches.delete(key)))
       )
       .then(() => self.clients.claim())
   );
@@ -53,7 +56,7 @@ async function networkFirst(request) {
       return cached;
     }
 
-    if (request.mode === "navigate") {
+    if (request.mode === "navigate" && new URL(request.url).pathname === "/memory-game.html") {
       return cache.match("/memory-game.html");
     }
 
@@ -62,14 +65,14 @@ async function networkFirst(request) {
 }
 
 async function cacheFirst(request) {
-  const cached = await caches.match(request);
+  const cache = await caches.open(CACHE_VERSION);
+  const cached = await cache.match(request);
   if (cached) {
     return cached;
   }
 
   const response = await fetch(request);
   if (response.ok) {
-    const cache = await caches.open(CACHE_VERSION);
     cache.put(request, response.clone());
   }
   return response;
@@ -79,6 +82,11 @@ self.addEventListener("fetch", (event) => {
   const url = new URL(event.request.url);
 
   if (url.origin !== self.location.origin || event.request.method !== "GET") {
+    return;
+  }
+
+  // Keep navigation outside the game under normal browser/network handling.
+  if (event.request.mode === "navigate" && url.pathname !== "/memory-game.html") {
     return;
   }
 

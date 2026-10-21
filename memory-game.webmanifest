@@ -36,6 +36,7 @@
   "theme_color": "#111820",
   "background_color": "#111820",
   "display": "standalone",
+  "prefer_related_applications": false,
   "display_override": [
     "standalone",
     "minimal-ui",
