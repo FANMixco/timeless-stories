@@ -6,7 +6,7 @@ const collectionStorageKey = "timelessMemoryCollection";
 const supportedThemes = ["system", "light", "dark"];
 const previewRewardThresholdSeconds = 30;
 const mismatchFlipBackDelayMs = 1200;
-const i18nCacheVersion = "20261021-collection-polish";
+const i18nCacheVersion = "20261021-card-hierarchy";
 let linkRegistry = null;
 let localizedLinks = null;
 const board = document.getElementById("board");
@@ -631,6 +631,7 @@ function buildDeck() {
         side: pair.sourceOrigin || "source",
         rarity: pair.rarity || "",
         name: getLegendName(source),
+        shortName: translations?.mapLegends?.[source]?.shortName,
         desc: getLegendDescription(source),
         icon,
         insightTitle,
@@ -642,6 +643,7 @@ function buildDeck() {
         side: pair.mirrorOrigin || "mirror",
         rarity: pair.rarity || "",
         name: getLegendName(mirror),
+        shortName: translations?.mapLegends?.[mirror]?.shortName,
         desc: getLegendDescription(mirror),
         icon,
         insightTitle,
@@ -726,6 +728,9 @@ function createCard(character, index) {
   card.dataset.insight = character.insight || "";
   card.dataset.rarity = character.rarity || "";
   card.setAttribute("aria-label", memoryGame.hiddenCard || "");
+  const nameContent = character.shortName
+    ? `<span class="character-name-full">${character.name}</span><span class="character-name-short">${character.shortName}</span>`
+    : character.name;
 
   card.innerHTML = `
     <span class="card-inner">
@@ -738,9 +743,9 @@ function createCard(character, index) {
           <span class="character-flag" aria-hidden="true">${getOriginFlag(character.side)}</span>
         </span>
         <span class="character-title">
-          <span class="character-name">${character.name}</span>
+          <span class="character-name">${nameContent}</span>
         </span>
-        <span class="character-origin"><span class="character-origin-text">${getOriginLabel(character.side).replace(getOriginFlag(character.side), "").trim()}</span> ${getOriginFlag(character.side)}</span>
+        <span class="character-origin"><span class="character-origin-text">${getOriginLabel(character.side).replace(getOriginFlag(character.side), "").trim()}</span> <span class="character-origin-flag">${getOriginFlag(character.side)}</span></span>
       </span>
     </span>
   `;

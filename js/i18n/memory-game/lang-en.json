@@ -3,7 +3,8 @@
     "mapLegends": {
       "blackKnight": {
         "name": "The Black Knight",
-        "desc": "The devil incarnate in a gentleman’s form, offering deals nobody can deny."
+        "desc": "The devil incarnate in a gentleman’s form, offering deals nobody can deny.",
+        "shortName": "Black Knight"
       },
       "siguanaba": {
         "name": "The Siguanaba",
@@ -11,7 +12,8 @@
       },
       "goodAndBadCadejo": {
         "name": "The good and the bad Cadejo",
-        "desc": "A pair of supernatural beasts that protect or terrify travelers at night."
+        "desc": "A pair of supernatural beasts that protect or terrify travelers at night.",
+        "shortName": "The Cadejos"
       },
       "mulus": {
         "name": "The Mulus",
@@ -19,23 +21,28 @@
       },
       "funeralCortegeOfChalchuapa": {
         "name": "The Funeral Cortege of Chalchuapa",
-        "desc": "A nighttime funeral cortege of the dead."
+        "desc": "A nighttime funeral cortege of the dead.",
+        "shortName": "Funeral Cortege"
       },
       "fairJudgeOfTheNight": {
         "name": "The Fair Judge of the Night",
-        "desc": "A judge who appears at night to punish the guilty."
+        "desc": "A judge who appears at night to punish the guilty.",
+        "shortName": "Fair Judge"
       },
       "weepingWoman": {
         "name": "The Weeping Woman",
-        "desc": "A ghostly woman said to wander cemeteries, crying for the dead."
+        "desc": "A ghostly woman said to wander cemeteries, crying for the dead.",
+        "shortName": "Weeping Woman"
       },
       "headlessPriest": {
         "name": "The Headless Priest",
-        "desc": "A priest spirit who was decapitated and now roams the streets."
+        "desc": "A priest spirit who was decapitated and now roams the streets.",
+        "shortName": "Headless Priest"
       },
       "fleshlessWoman": {
         "name": "The Fleshless Woman",
-        "desc": "A female spirit that terrifies men on the streets at night."
+        "desc": "A female spirit that terrifies men on the streets at night.",
+        "shortName": "Fleshless Woman"
       },
       "dwarf": {
         "name": "The Dwarf",
@@ -43,11 +50,13 @@
       },
       "caveOfSalamanca": {
         "name": "The Cave of Salamanca",
-        "desc": "The devil in a professor’s form who teaches dark arts in a cave."
+        "desc": "The devil in a professor’s form who teaches dark arts in a cave.",
+        "shortName": "The Professor"
       },
       "midnightWasherwomen": {
         "name": "The Midnight Washerwomen",
-        "desc": "Female spirits that terrify men in Galician rivers."
+        "desc": "Female spirits that terrify men in Galician rivers.",
+        "shortName": "Night Washerwomen"
       },
       "dip": {
         "name": "The Dip",
@@ -59,7 +68,8 @@
       },
       "holyCompany": {
         "name": "The Holy Company",
-        "desc": "A ghostly nighttime procession of the dead."
+        "desc": "A ghostly nighttime procession of the dead.",
+        "shortName": "Holy Company"
       },
       "gaueko": {
         "name": "Gaueko",
@@ -71,11 +81,13 @@
       },
       "ghostOfSanGines": {
         "name": "The Ghost of San Ginés",
-        "desc": "A beheaded ghost that appears in the Church of San Ginés."
+        "desc": "A beheaded ghost that appears in the Church of San Ginés.",
+        "shortName": "San Ginés Ghost"
       },
       "girlOnTheCurve": {
         "name": "The Girl on the Curve",
-        "desc": "A female spirit that warns men on the streets at night."
+        "desc": "A female spirit that warns men on the streets at night.",
+        "shortName": "Girl on the Curve"
       },
       "trasgu": {
         "name": "The Trasgu",
@@ -83,7 +95,8 @@
       },
       "olomegaLagoonSiren": {
         "name": "The Olomega Lagoon Siren",
-        "desc": "A siren said to enchant travelers near the lagoon."
+        "desc": "A siren said to enchant travelers near the lagoon.",
+        "shortName": "Olomega Siren"
       },
       "xana": {
         "name": "The Xana",
@@ -95,15 +108,18 @@
       },
       "ghostOfTheWhiteWolf": {
         "name": "Ghost of the White Wolf",
-        "desc": "A guardian wolf spirit that guides lost travelers through the forest."
+        "desc": "A guardian wolf spirit that guides lost travelers through the forest.",
+        "shortName": "White Wolf"
       },
       "creakingCoffin": {
         "name": "The Creaking Coffin",
-        "desc": "A ghostly midnight procession announced by the sound of a funeral drum."
+        "desc": "A ghostly midnight procession announced by the sound of a funeral drum.",
+        "shortName": "Creaking Coffin"
       },
       "cursedBeastOfWolfGorge": {
         "name": "The Cursed Beast of Wolf Gorge",
-        "desc": "A black wolf spirit born from a dark pact guards hidden treasure deep within the gorge."
+        "desc": "A black wolf spirit born from a dark pact guards hidden treasure deep within the gorge.",
+        "shortName": "Wolf Gorge Beast"
       },
       "resurrectionMary": {
         "name": "Resurrection Mary",

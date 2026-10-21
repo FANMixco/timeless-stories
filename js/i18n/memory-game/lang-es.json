@@ -3,7 +3,8 @@
     "mapLegends": {
       "blackKnight": {
         "name": "El Caballero Negro",
-        "desc": "El diablo encarnado en la forma de un caballero, que ofrece tratos que nadie puede rechazar."
+        "desc": "El diablo encarnado en la forma de un caballero, que ofrece tratos que nadie puede rechazar.",
+        "shortName": "Caballero Negro"
       },
       "siguanaba": {
         "name": "La Siguanaba",
@@ -11,7 +12,8 @@
       },
       "goodAndBadCadejo": {
         "name": "El cadejo bueno y el malo",
-        "desc": "Un par de bestias sobrenaturales que protegen o aterrorizan a los viajeros por la noche."
+        "desc": "Un par de bestias sobrenaturales que protegen o aterrorizan a los viajeros por la noche.",
+        "shortName": "Los Cadejos"
       },
       "mulus": {
         "name": "El Mulus",
@@ -19,23 +21,28 @@
       },
       "funeralCortegeOfChalchuapa": {
         "name": "El entierro de Chalchuapa",
-        "desc": "Un cortejo fúnebre nocturno de los muertos."
+        "desc": "Un cortejo fúnebre nocturno de los muertos.",
+        "shortName": "Cortejo fúnebre"
       },
       "fairJudgeOfTheNight": {
         "name": "El juez justo de la noche",
-        "desc": "Un juez que aparece en la noche para castigar a los culpables."
+        "desc": "Un juez que aparece en la noche para castigar a los culpables.",
+        "shortName": "Juez justo"
       },
       "weepingWoman": {
         "name": "La Llorona",
-        "desc": "Una mujer fantasmal que, según se dice, vaga por los cementerios llorando por los muertos."
+        "desc": "Una mujer fantasmal que, según se dice, vaga por los cementerios llorando por los muertos.",
+        "shortName": "La Llorona"
       },
       "headlessPriest": {
         "name": "El padre sin cabeza",
-        "desc": "El espíritu de un sacerdote que fue decapitado y ahora recorre las calles."
+        "desc": "El espíritu de un sacerdote que fue decapitado y ahora recorre las calles.",
+        "shortName": "Padre sin cabeza"
       },
       "fleshlessWoman": {
         "name": "La descarnada",
-        "desc": "Una espíritu femenino que aterra a los hombres en las calles por la noche."
+        "desc": "Una espíritu femenino que aterra a los hombres en las calles por la noche.",
+        "shortName": "La descarnada"
       },
       "dwarf": {
         "name": "El Duende",
@@ -43,11 +50,13 @@
       },
       "caveOfSalamanca": {
         "name": "La cueva de Salamanca",
-        "desc": "El diablo en forma de profesor que enseña artes oscuras en una cueva."
+        "desc": "El diablo en forma de profesor que enseña artes oscuras en una cueva.",
+        "shortName": "El Profesor"
       },
       "midnightWasherwomen": {
         "name": "Las Lavandeiras",
-        "desc": "Espíritus femeninos que asustan a los hombres en los ríos gallegos."
+        "desc": "Espíritus femeninos que asustan a los hombres en los ríos gallegos.",
+        "shortName": "Las Lavandeiras"
       },
       "dip": {
         "name": "El dip",
@@ -59,7 +68,8 @@
       },
       "holyCompany": {
         "name": "La santa Compaña",
-        "desc": "Una procesión nocturna y fantasmal de los muertos."
+        "desc": "Una procesión nocturna y fantasmal de los muertos.",
+        "shortName": "Santa Compaña"
       },
       "gaueko": {
         "name": "Gaueko",
@@ -71,11 +81,13 @@
       },
       "ghostOfSanGines": {
         "name": "El fantasma de San Ginés",
-        "desc": "Un fantasma decapitado que aparece en la iglesia de San Ginés."
+        "desc": "Un fantasma decapitado que aparece en la iglesia de San Ginés.",
+        "shortName": "San Ginés"
       },
       "girlOnTheCurve": {
         "name": "La chica de la curva",
-        "desc": "Un espíritu femenino que advierte a los hombres en las calles por la noche."
+        "desc": "Un espíritu femenino que advierte a los hombres en las calles por la noche.",
+        "shortName": "Chica de la curva"
       },
       "trasgu": {
         "name": "El trasgu",
@@ -83,7 +95,8 @@
       },
       "olomegaLagoonSiren": {
         "name": "La Sirena de la Laguna de Olomega",
-        "desc": "Una sirena que encanta a los viajeros cerca de la laguna."
+        "desc": "Una sirena que encanta a los viajeros cerca de la laguna.",
+        "shortName": "Sirena de Olomega"
       },
       "xana": {
         "name": "La Xana",
@@ -95,15 +108,18 @@
       },
       "ghostOfTheWhiteWolf": {
         "name": "Fantasma del Lobo Blanco",
-        "desc": "Un espíritu guardián con forma de lobo que guía a los viajeros perdidos por el bosque."
+        "desc": "Un espíritu guardián con forma de lobo que guía a los viajeros perdidos por el bosque.",
+        "shortName": "Lobo Blanco"
       },
       "creakingCoffin": {
         "name": "La caja ronca",
-        "desc": "Una procesión fantasmal a medianoche anunciada por el sonido de un tambor fúnebre."
+        "desc": "Una procesión fantasmal a medianoche anunciada por el sonido de un tambor fúnebre.",
+        "shortName": "La caja ronca"
       },
       "cursedBeastOfWolfGorge": {
         "name": "La bestia maldita del desfiladero del lobo",
-        "desc": "Un espíritu de lobo negro nacido de un pacto oscuro guarda un tesoro oculto en lo profundo del desfiladero."
+        "desc": "Un espíritu de lobo negro nacido de un pacto oscuro guarda un tesoro oculto en lo profundo del desfiladero.",
+        "shortName": "Bestia del lobo"
       },
       "resurrectionMary": {
         "name": "Mary Resucitada",

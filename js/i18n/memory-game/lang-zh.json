@@ -3,7 +3,8 @@
     "mapLegends": {
       "blackKnight": {
         "name": "黑骑士",
-        "desc": "他形如绅士，实为化身的恶魔，所提出的交易无人能拒。"
+        "desc": "他形如绅士，实为化身的恶魔，所提出的交易无人能拒。",
+        "shortName": "黑骑士"
       },
       "siguanaba": {
         "name": "西瓜娜巴",
@@ -11,7 +12,8 @@
       },
       "goodAndBadCadejo": {
         "name": "好坏卡德霍",
-        "desc": "一对会在夜晚保护或恐吓旅人的超自然野兽。"
+        "desc": "一对会在夜晚保护或恐吓旅人的超自然野兽。",
+        "shortName": "好坏卡德霍"
       },
       "mulus": {
         "name": "骡子",
@@ -19,23 +21,28 @@
       },
       "funeralCortegeOfChalchuapa": {
         "name": "查尔楚阿帕的葬礼队伍",
-        "desc": "亡者的夜间送葬队伍。"
+        "desc": "亡者的夜间送葬队伍。",
+        "shortName": "葬礼队伍"
       },
       "fairJudgeOfTheNight": {
         "name": "夜晚的公正法官",
-        "desc": "一个在夜晚出现来惩罚有罪之人。"
+        "desc": "一个在夜晚出现来惩罚有罪之人。",
+        "shortName": "公正法官"
       },
       "weepingWoman": {
         "name": "哭泣的女人",
-        "desc": "据说会在墓地游荡、为死者哭泣的幽灵女子。"
+        "desc": "据说会在墓地游荡、为死者哭泣的幽灵女子。",
+        "shortName": "哭泣女人"
       },
       "headlessPriest": {
         "name": "无头牧师",
-        "desc": "一个被斩首后如今在街上游荡的神父灵魂。"
+        "desc": "一个被斩首后如今在街上游荡的神父灵魂。",
+        "shortName": "无头牧师"
       },
       "fleshlessWoman": {
         "name": "无肉女人",
-        "desc": "一个在夜晚吓唬男人的女性灵魂。"
+        "desc": "一个在夜晚吓唬男人的女性灵魂。",
+        "shortName": "无肉女人"
       },
       "dwarf": {
         "name": "矮人",
@@ -43,11 +50,13 @@
       },
       "caveOfSalamanca": {
         "name": "萨拉曼卡洞穴",
-        "desc": "化身为教授、在洞穴中教授黑暗法术的魔鬼。"
+        "desc": "化身为教授、在洞穴中教授黑暗法术的魔鬼。",
+        "shortName": "教授"
       },
       "midnightWasherwomen": {
         "name": "午夜洗衣妇",
-        "desc": "在加利西亚河流中惊吓男人的女性灵魂。"
+        "desc": "在加利西亚河流中惊吓男人的女性灵魂。",
+        "shortName": "午夜洗衣妇"
       },
       "dip": {
         "name": "浸泡",
@@ -59,7 +68,8 @@
       },
       "holyCompany": {
         "name": "圣公司",
-        "desc": "一支幽灵般的亡者夜间队伍。"
+        "desc": "一支幽灵般的亡者夜间队伍。",
+        "shortName": "圣公司"
       },
       "gaueko": {
         "name": "夜晚",
@@ -71,11 +81,13 @@
       },
       "ghostOfSanGines": {
         "name": "圣吉内斯的幽灵",
-        "desc": "在圣吉内斯教堂里出现的一个被斩首的鬼魂。"
+        "desc": "在圣吉内斯教堂里出现的一个被斩首的鬼魂。",
+        "shortName": "圣吉内斯幽灵"
       },
       "girlOnTheCurve": {
         "name": "弯道上的女孩",
-        "desc": "一个在夜晚警告男人的女性灵魂。"
+        "desc": "一个在夜晚警告男人的女性灵魂。",
+        "shortName": "弯道女孩"
       },
       "trasgu": {
         "name": "特拉斯古",
@@ -83,7 +95,8 @@
       },
       "olomegaLagoonSiren": {
         "name": "奥洛梅加潟湖女妖",
-        "desc": "据说会在潟湖附近迷惑旅人的女妖。"
+        "desc": "据说会在潟湖附近迷惑旅人的女妖。",
+        "shortName": "奥洛梅加女妖"
       },
       "xana": {
         "name": "Xana",
@@ -95,15 +108,18 @@
       },
       "ghostOfTheWhiteWolf": {
         "name": "白狼幽灵",
-        "desc": "一位守护狼灵，会引导迷失的旅人穿过森林。"
+        "desc": "一位守护狼灵，会引导迷失的旅人穿过森林。",
+        "shortName": "白狼"
       },
       "creakingCoffin": {
         "name": "吱呀作响的棺材",
-        "desc": "由丧葬鼓声宣告的午夜幽灵队伍。"
+        "desc": "由丧葬鼓声宣告的午夜幽灵队伍。",
+        "shortName": "吱响棺材"
       },
       "cursedBeastOfWolfGorge": {
         "name": "狼峡谷的诅咒野兽",
-        "desc": "一只由黑暗契约诞生的黑狼灵，守护着峡谷深处的隐藏宝藏。"
+        "desc": "一只由黑暗契约诞生的黑狼灵，守护着峡谷深处的隐藏宝藏。",
+        "shortName": "狼峡谷野兽"
       },
       "resurrectionMary": {
         "name": "复活玛丽",

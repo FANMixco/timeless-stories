@@ -454,10 +454,25 @@ html[data-theme="dark"] .card[data-rarity="tutorial"] .character-icon {
 .character-name {
   width: 100%;
   color: var(--muted);
-  font-size: clamp(0.66rem, 2.15vw, 0.96rem);
-  font-weight: 550;
+  font-size: clamp(0.594rem, 1.935vw, 0.864rem);
+  font-weight: 500;
   line-height: 1.12;
   overflow-wrap: anywhere;
+}
+
+.character-name-short {
+  display: none;
+}
+
+.card .character-flag,
+.card .character-origin-flag {
+  opacity: 0.5;
+  transition: opacity 180ms ease;
+}
+
+.card.is-matched .character-flag,
+.card.is-matched .character-origin-flag {
+  opacity: 1;
 }
 
 .character-title {
@@ -482,6 +497,14 @@ html[data-theme="dark"] .card[data-rarity="tutorial"] .character-icon {
   font-size: clamp(0.56rem, 1.75vw, 0.76rem);
   font-weight: 550;
   line-height: 1;
+}
+
+.card .character-origin-text {
+  font-weight: 500;
+}
+
+.card.is-matched .character-origin-text {
+  font-weight: 550;
 }
 
 .character-name,
@@ -1202,12 +1225,32 @@ html[data-theme="dark"] .collection-mirror:not(:disabled) strong { color: #fffff
   }
 
   .character-name {
-    font-size: clamp(0.66rem, 2.75vw, 0.86rem);
+    font-size: clamp(0.594rem, 2.475vw, 0.774rem);
     line-height: 1.08;
+  }
+
+  .card .character-name-full {
+    display: none;
+  }
+
+  .card .character-name-short {
+    display: inline;
+  }
+
+  .card .character-mark {
+    flex-shrink: 0;
+  }
+
+  .card .card-front {
+    gap: 4px;
   }
 
   .character-icon {
     font-size: clamp(1.35rem, 7.6vw, 1.85rem);
+  }
+
+  .card .character-icon {
+    font-size: clamp(1.62rem, 9.12vw, 2.22rem);
   }
 
   .card[data-rarity="tutorial"] .character-mark {
@@ -1216,7 +1259,7 @@ html[data-theme="dark"] .collection-mirror:not(:disabled) strong { color: #fffff
   }
 
   .card[data-rarity="tutorial"] .character-icon {
-    font-size: clamp(2rem, 9vw, 2.7rem);
+    font-size: clamp(2.4rem, 10.8vw, 3.24rem);
   }
 
   .character-flag {
@@ -1373,12 +1416,18 @@ html[data-theme="dark"] .collection-mirror:not(:disabled) strong { color: #fffff
     font-size: clamp(1.9rem, 12vw, 2.35rem);
   }
 
+  .card .character-icon {
+    font-size: clamp(2.28rem, 14.4vw, 2.82rem);
+  }
+
   .character-name {
-    font-size: clamp(0.78rem, 5vw, 0.98rem);
+    font-size: clamp(0.702rem, 4.5vw, 0.882rem);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .card .character-flag,
+  .card .character-origin-flag,
   .card-inner,
   .match-insight,
   .win-card,
