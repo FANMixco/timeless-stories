@@ -126,24 +126,36 @@
         "desc": "一位幽灵般的年轻女子出现在孤寂道路上，随后消失得无影无踪。"
       },
       "nakk": {
-        "name": "Näkk",
+        "name": "奈克",
         "desc": "能变化形态的水中精灵，将毫无戒心的人引入湖泊或河流。"
       },
       "huldra": {
-        "name": "Huldra",
+        "name": "胡尔德拉",
         "desc": "迷人的森林精灵，隐藏超自然特征，将旅人引入林中。"
       },
       "kludde": {
-        "name": "Kludde",
+        "name": "圣诞小精灵",
         "desc": "化为火眼巨大黑犬的超自然生物，惊吓夜间旅人。"
       },
       "jolasveinar": {
-        "name": "Jólasveinar",
+        "name": "圣诞小精灵",
         "desc": "圣诞节造访冰岛家庭的十三个调皮角色，偷食物、摔门并恶作剧。"
       },
       "monacello": {
-        "name": "Monacello",
+        "name": "莫纳切洛",
         "desc": "来自那不勒斯的小小家宅精灵，其恶作剧可能带来好运或厄运。"
+      },
+      "perchta": {
+        "name": "羊皮纸",
+        "desc": "与冬季有关的超自然角色，奖赏遵守传统习俗者，惩罚违背习俗者。"
+      },
+      "karakoncolos": {
+        "name": "卡拉孔科洛斯",
+        "desc": "可怕的冬日生物，向夜间旅人提问，并威胁回答不合要求的人。"
+      },
+      "churel": {
+        "name": "丘雷尔",
+        "desc": "伪装成美女引诱男子的女性幽灵，隐藏着可怕的真容和反向的双脚。"
       }
     },
     "country1": "萨尔瓦多 🇸🇻",
@@ -239,7 +251,7 @@
       "footer": "在文化之间架起桥梁。版权所有 {author}。",
       "rarePairs": [
         {
-          "chance": 0.011111111111111112,
+          "chance": 0.008333333333333333,
           "replaceSource": "goodAndBadCadejo",
           "pair": {
             "source": "goodAndBadCadejo",
@@ -252,7 +264,7 @@
           }
         },
         {
-          "chance": 0.011111111111111112,
+          "chance": 0.008333333333333333,
           "replaceSource": "fleshlessWoman",
           "pair": {
             "source": "fleshlessWoman",
@@ -265,7 +277,7 @@
           }
         },
         {
-          "chance": 0.011111111111111112,
+          "chance": 0.008333333333333333,
           "replaceSource": "goodAndBadCadejo",
           "pair": {
             "source": "goodAndBadCadejo",
@@ -278,7 +290,7 @@
           }
         },
         {
-          "chance": 0.011111111111111112,
+          "chance": 0.008333333333333333,
           "replaceSource": "funeralCortegeOfChalchuapa",
           "pair": {
             "source": "funeralCortegeOfChalchuapa",
@@ -315,7 +327,7 @@
           }
         },
         {
-          "chance": 0.011111111111111112,
+          "chance": 0.008333333333333333,
           "replaceSource": "siguanaba",
           "pair": {
             "source": "siguanaba",
@@ -328,7 +340,7 @@
           }
         },
         {
-          "chance": 0.011111111111111112,
+          "chance": 0.008333333333333333,
           "replaceSource": "siguanaba",
           "pair": {
             "source": "siguanaba",
@@ -341,7 +353,7 @@
           }
         },
         {
-          "chance": 0.011111111111111112,
+          "chance": 0.008333333333333333,
           "replaceSource": "goodAndBadCadejo",
           "pair": {
             "source": "goodAndBadCadejo",
@@ -354,7 +366,7 @@
           }
         },
         {
-          "chance": 0.011111111111111112,
+          "chance": 0.008333333333333333,
           "replaceSource": "dwarf",
           "pair": {
             "source": "dwarf",
@@ -367,7 +379,7 @@
           }
         },
         {
-          "chance": 0.011111111111111112,
+          "chance": 0.008333333333333333,
           "replaceSource": "dwarf",
           "pair": {
             "source": "dwarf",
@@ -376,6 +388,45 @@
             "insight": "奖赏尊重、惩罚疏忽的家宅精灵。",
             "mirrorOrigin": "italy",
             "icon": "wizard",
+            "rarity": "ultra-rare"
+          }
+        },
+        {
+          "chance": 0.008333333333333333,
+          "replaceSource": "fairJudgeOfTheNight",
+          "pair": {
+            "source": "fairJudgeOfTheNight",
+            "mirror": "perchta",
+            "insightTitle": "夜晚的统治者",
+            "insight": "掌管黑暗与正义的审判者和主宰。",
+            "mirrorOrigin": "austria",
+            "icon": "night",
+            "rarity": "ultra-rare"
+          }
+        },
+        {
+          "chance": 0.008333333333333333,
+          "replaceSource": "fairJudgeOfTheNight",
+          "pair": {
+            "source": "fairJudgeOfTheNight",
+            "mirror": "karakoncolos",
+            "insightTitle": "夜晚的统治者",
+            "insight": "掌管黑暗与正义的审判者和主宰。",
+            "mirrorOrigin": "turkey",
+            "icon": "night",
+            "rarity": "ultra-rare"
+          }
+        },
+        {
+          "chance": 0.008333333333333333,
+          "replaceSource": "siguanaba",
+          "pair": {
+            "source": "siguanaba",
+            "mirror": "churel",
+            "insightTitle": "致命诱惑",
+            "insight": "把生者引向无法回头结局的诱惑。",
+            "mirrorOrigin": "india",
+            "icon": "masks",
             "rarity": "ultra-rare"
           }
         }
@@ -427,6 +478,9 @@
     "country9": "瑞典 🇸🇪",
     "country10": "比利时 🇧🇪",
     "country11": "冰岛 🇮🇸",
-    "country12": "意大利 🇮🇹"
+    "country12": "意大利 🇮🇹",
+    "country13": "奥地利 🇦🇹",
+    "country14": "土耳其 🇹🇷",
+    "country15": "印度 🇮🇳"
   }
 }

@@ -144,6 +144,18 @@
       "monacello": {
         "name": "Monacello",
         "desc": "A small household spirit from Naples whose tricks can bring good or bad fortune."
+      },
+      "perchta": {
+        "name": "Perchta",
+        "desc": "A supernatural winter figure who rewards respect for traditional customs and punishes violations."
+      },
+      "karakoncolos": {
+        "name": "Karakoncolos",
+        "desc": "A frightening winter creature that questions night travelers and threatens those giving unacceptable answers."
+      },
+      "churel": {
+        "name": "Churel",
+        "desc": "A female spirit who lures men in a beautiful disguise, hiding a terrifying form and backward feet."
       }
     },
     "country1": "El Salvador 🇸🇻",
@@ -239,7 +251,7 @@
       "footer": "Building bridges across cultures. Copyrights {author}.",
       "rarePairs": [
         {
-          "chance": 0.011111111111111112,
+          "chance": 0.008333333333333333,
           "replaceSource": "goodAndBadCadejo",
           "pair": {
             "source": "goodAndBadCadejo",
@@ -252,7 +264,7 @@
           }
         },
         {
-          "chance": 0.011111111111111112,
+          "chance": 0.008333333333333333,
           "replaceSource": "fleshlessWoman",
           "pair": {
             "source": "fleshlessWoman",
@@ -265,7 +277,7 @@
           }
         },
         {
-          "chance": 0.011111111111111112,
+          "chance": 0.008333333333333333,
           "replaceSource": "goodAndBadCadejo",
           "pair": {
             "source": "goodAndBadCadejo",
@@ -278,7 +290,7 @@
           }
         },
         {
-          "chance": 0.011111111111111112,
+          "chance": 0.008333333333333333,
           "replaceSource": "funeralCortegeOfChalchuapa",
           "pair": {
             "source": "funeralCortegeOfChalchuapa",
@@ -315,7 +327,7 @@
           }
         },
         {
-          "chance": 0.011111111111111112,
+          "chance": 0.008333333333333333,
           "replaceSource": "siguanaba",
           "pair": {
             "source": "siguanaba",
@@ -328,7 +340,7 @@
           }
         },
         {
-          "chance": 0.011111111111111112,
+          "chance": 0.008333333333333333,
           "replaceSource": "siguanaba",
           "pair": {
             "source": "siguanaba",
@@ -341,7 +353,7 @@
           }
         },
         {
-          "chance": 0.011111111111111112,
+          "chance": 0.008333333333333333,
           "replaceSource": "goodAndBadCadejo",
           "pair": {
             "source": "goodAndBadCadejo",
@@ -354,7 +366,7 @@
           }
         },
         {
-          "chance": 0.011111111111111112,
+          "chance": 0.008333333333333333,
           "replaceSource": "dwarf",
           "pair": {
             "source": "dwarf",
@@ -367,7 +379,7 @@
           }
         },
         {
-          "chance": 0.011111111111111112,
+          "chance": 0.008333333333333333,
           "replaceSource": "dwarf",
           "pair": {
             "source": "dwarf",
@@ -376,6 +388,45 @@
             "insight": "Household spirits that reward respect and punish neglect.",
             "mirrorOrigin": "italy",
             "icon": "wizard",
+            "rarity": "ultra-rare"
+          }
+        },
+        {
+          "chance": 0.008333333333333333,
+          "replaceSource": "fairJudgeOfTheNight",
+          "pair": {
+            "source": "fairJudgeOfTheNight",
+            "mirror": "perchta",
+            "insightTitle": "Rulers of the Night",
+            "insight": "Judges and sovereigns who govern darkness and justice.",
+            "mirrorOrigin": "austria",
+            "icon": "night",
+            "rarity": "ultra-rare"
+          }
+        },
+        {
+          "chance": 0.008333333333333333,
+          "replaceSource": "fairJudgeOfTheNight",
+          "pair": {
+            "source": "fairJudgeOfTheNight",
+            "mirror": "karakoncolos",
+            "insightTitle": "Rulers of the Night",
+            "insight": "Judges and sovereigns who govern darkness and justice.",
+            "mirrorOrigin": "turkey",
+            "icon": "night",
+            "rarity": "ultra-rare"
+          }
+        },
+        {
+          "chance": 0.008333333333333333,
+          "replaceSource": "siguanaba",
+          "pair": {
+            "source": "siguanaba",
+            "mirror": "churel",
+            "insightTitle": "Fatal Lures",
+            "insight": "Temptations that draw the living toward irreversible ends.",
+            "mirrorOrigin": "india",
+            "icon": "masks",
             "rarity": "ultra-rare"
           }
         }
@@ -427,6 +478,9 @@
     "country9": "Sweden 🇸🇪",
     "country10": "Belgium 🇧🇪",
     "country11": "Iceland 🇮🇸",
-    "country12": "Italy 🇮🇹"
+    "country12": "Italy 🇮🇹",
+    "country13": "Austria 🇦🇹",
+    "country14": "Turkey 🇹🇷",
+    "country15": "India 🇮🇳"
   }
 }

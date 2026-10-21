@@ -21,11 +21,11 @@ class Element {
 const source = fs.readFileSync('js/memory-game.js', 'utf8');
 const sharedStorage = new Map([['timelessMemoryIntroSeen', 'true']]);
 const data = JSON.parse(fs.readFileSync('js/i18n/memory-game/lang-en.json', 'utf8'));
-const newMirrors = ['nakk', 'huldra', 'kludde', 'jolasveinar', 'monacello'];
+const newMirrors = ['nakk', 'huldra', 'kludde', 'jolasveinar', 'monacello', 'perchta', 'karakoncolos', 'churel'];
 for (const language of ['en', 'es', 'fr', 'zh']) {
   const localized = JSON.parse(fs.readFileSync(`js/i18n/memory-game/lang-${language}.json`, 'utf8')).translations;
   const golden = localized.memoryGame.rarePairs.filter(item => item.pair.rarity === 'ultra-rare');
-  assert.equal(golden.length, 9);
+  assert.equal(golden.length, 12);
   assert.ok(Math.abs(golden.reduce((sum, item) => sum + item.chance, 0) - 0.1) < 1e-12, 'Golden Mirrors retain their total 10% chance');
   assert.ok(Math.abs(localized.memoryGame.rarePairs.reduce((sum, item) => sum + item.chance, 0) - 0.25) < 1e-12, 'total variant probability remains unchanged');
   for (const mirror of newMirrors) {
@@ -81,14 +81,14 @@ assert.equal(JSON.parse(sharedStorage.get('timelessMemoryCollection')).length, 1
 page = await load();
 assert.equal(page.get('collectionButton').hidden, false, 'collection remains available after a fresh page load');
 assert.equal(page.run('discoveries.size'), 10);
-assert.equal(page.run('getMirrorCatalogue().length'), 21);
+assert.equal(page.run('getMirrorCatalogue().length'), 24);
 page.run('openCollection()');
 assert.equal(page.get('collectionProgress').value, 10);
-assert.equal(page.get('collectionProgress').max, 21);
+assert.equal(page.get('collectionProgress').max, 24);
 const groups = page.get('collectionGroups').children;
 assert.equal(groups[2].children[0].textContent, 'Online exclusive mirrors');
 assert.equal(page.get('collectionSubmit').href, links.shared.contact.englishContactForm);
-assert.deepEqual(groups.map(group => group.children[1].children.length), [10, 2, 9]);
+assert.deepEqual(groups.map(group => group.children[1].children.length), [10, 2, 12]);
 assert.equal(groups[1].children[1].children[0].disabled, true);
 assert.equal(groups[1].children[1].children[0].children[1].textContent, '???');
 assert.equal(groups[1].children[1].children[0].children[2].textContent, '🇸🇻 · ❓');
@@ -98,7 +98,8 @@ discovered.listeners.click();
 assert.equal(page.get('legendsList').children.length, 1, 'discovered details reuse comparison renderer');
 assert.equal(page.get('legendsPanelTitle').hidden, true, 'single preview omits the visible heading');
 assert.equal(page.get('legendsPanelTitle').textContent, 'The Cave of Salamanca', 'dialog retains an accessible name');
-assert.equal(page.get('legendsFooter').hidden, true, 'single preview hides purchase and rarity sections');
+assert.equal(page.get('legendsFooter').hidden, false, 'single preview includes the existing book link');
+assert.equal(page.get('legendsRarityNote').hidden, true, 'single preview hides the rarity note');
 assert.equal(page.get('collectionPanel').classList.contains('is-visible'), true, 'collection stays open beneath details');
 assert.equal(page.get('legendsPanel').classList.contains('is-collection-detail'), true, 'details use the overlay layer');
 assert.equal(page.get('collectionPanel').inert, true, 'background collection does not receive interaction');
@@ -114,7 +115,7 @@ for (const language of ['es', 'en', 'fr', 'zh']) {
   assert.equal(page.get('collectionSubmit').href, language === 'es' ? links.shared.contact.spanishContactForm : links.shared.contact.englishContactForm);
 }
 page.run('memoryGame.pairs.push({source:"futureSource", mirror:"futureMirror"}); renderCollection()');
-assert.equal(page.get('collectionProgress').max, 22, 'future catalogue additions appear automatically');
+assert.equal(page.get('collectionProgress').max, 25, 'future catalogue additions appear automatically');
 assert.equal(page.get('collectionProgress').value, 10);
 page = await load(new Map([['timelessMemoryIntroSeen', 'true']]));
 page.run('activePairs = memoryGame.pairs.map(pair => ({...pair})); activePairs[0] = memoryGame.rarePairs[0].pair; deck = buildDeck();');

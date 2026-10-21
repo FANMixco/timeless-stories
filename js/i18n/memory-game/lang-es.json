@@ -144,6 +144,18 @@
       "monacello": {
         "name": "Monacello",
         "desc": "Un pequeño espíritu doméstico de Nápoles cuyas travesuras pueden traer buena o mala fortuna."
+      },
+      "perchta": {
+        "name": "Perchta",
+        "desc": "Una figura sobrenatural del invierno que recompensa el respeto por las costumbres tradicionales y castiga su incumplimiento."
+      },
+      "karakoncolos": {
+        "name": "Karakoncolos",
+        "desc": "Una aterradora criatura invernal que interroga a viajeros nocturnos y amenaza a quienes dan respuestas inaceptables."
+      },
+      "churel": {
+        "name": "Churel",
+        "desc": "Un espíritu femenino que atrae a hombres con un hermoso disfraz, ocultando una forma aterradora y pies al revés."
       }
     },
     "country1": "El Salvador 🇸🇻",
@@ -239,7 +251,7 @@
       "footer": "Construyendo puentes entre culturas. Derechos de autor {author}.",
       "rarePairs": [
         {
-          "chance": 0.011111111111111112,
+          "chance": 0.008333333333333333,
           "replaceSource": "goodAndBadCadejo",
           "pair": {
             "source": "goodAndBadCadejo",
@@ -252,7 +264,7 @@
           }
         },
         {
-          "chance": 0.011111111111111112,
+          "chance": 0.008333333333333333,
           "replaceSource": "fleshlessWoman",
           "pair": {
             "source": "fleshlessWoman",
@@ -265,7 +277,7 @@
           }
         },
         {
-          "chance": 0.011111111111111112,
+          "chance": 0.008333333333333333,
           "replaceSource": "goodAndBadCadejo",
           "pair": {
             "source": "goodAndBadCadejo",
@@ -278,7 +290,7 @@
           }
         },
         {
-          "chance": 0.011111111111111112,
+          "chance": 0.008333333333333333,
           "replaceSource": "funeralCortegeOfChalchuapa",
           "pair": {
             "source": "funeralCortegeOfChalchuapa",
@@ -315,7 +327,7 @@
           }
         },
         {
-          "chance": 0.011111111111111112,
+          "chance": 0.008333333333333333,
           "replaceSource": "siguanaba",
           "pair": {
             "source": "siguanaba",
@@ -328,7 +340,7 @@
           }
         },
         {
-          "chance": 0.011111111111111112,
+          "chance": 0.008333333333333333,
           "replaceSource": "siguanaba",
           "pair": {
             "source": "siguanaba",
@@ -341,7 +353,7 @@
           }
         },
         {
-          "chance": 0.011111111111111112,
+          "chance": 0.008333333333333333,
           "replaceSource": "goodAndBadCadejo",
           "pair": {
             "source": "goodAndBadCadejo",
@@ -354,7 +366,7 @@
           }
         },
         {
-          "chance": 0.011111111111111112,
+          "chance": 0.008333333333333333,
           "replaceSource": "dwarf",
           "pair": {
             "source": "dwarf",
@@ -367,7 +379,7 @@
           }
         },
         {
-          "chance": 0.011111111111111112,
+          "chance": 0.008333333333333333,
           "replaceSource": "dwarf",
           "pair": {
             "source": "dwarf",
@@ -376,6 +388,45 @@
             "insight": "Espíritus del hogar que recompensan el respeto y castigan el descuido.",
             "mirrorOrigin": "italy",
             "icon": "wizard",
+            "rarity": "ultra-rare"
+          }
+        },
+        {
+          "chance": 0.008333333333333333,
+          "replaceSource": "fairJudgeOfTheNight",
+          "pair": {
+            "source": "fairJudgeOfTheNight",
+            "mirror": "perchta",
+            "insightTitle": "Señoles de la noche",
+            "insight": "Jueces y soberanos que gobiernan la oscuridad y la justicia.",
+            "mirrorOrigin": "austria",
+            "icon": "night",
+            "rarity": "ultra-rare"
+          }
+        },
+        {
+          "chance": 0.008333333333333333,
+          "replaceSource": "fairJudgeOfTheNight",
+          "pair": {
+            "source": "fairJudgeOfTheNight",
+            "mirror": "karakoncolos",
+            "insightTitle": "Señoles de la noche",
+            "insight": "Jueces y soberanos que gobiernan la oscuridad y la justicia.",
+            "mirrorOrigin": "turkey",
+            "icon": "night",
+            "rarity": "ultra-rare"
+          }
+        },
+        {
+          "chance": 0.008333333333333333,
+          "replaceSource": "siguanaba",
+          "pair": {
+            "source": "siguanaba",
+            "mirror": "churel",
+            "insightTitle": "Seducciones fatales",
+            "insight": "Tentaciones que arrastran a los vivos hacia finales irreversibles.",
+            "mirrorOrigin": "india",
+            "icon": "masks",
             "rarity": "ultra-rare"
           }
         }
@@ -427,6 +478,9 @@
     "country9": "Suecia 🇸🇪",
     "country10": "Bélgica 🇧🇪",
     "country11": "Islandia 🇮🇸",
-    "country12": "Italia 🇮🇹"
+    "country12": "Italia 🇮🇹",
+    "country13": "Austria 🇦🇹",
+    "country14": "Turquía 🇹🇷",
+    "country15": "India 🇮🇳"
   }
 }

@@ -144,6 +144,18 @@
       "monacello": {
         "name": "Monacello",
         "desc": "Un petit esprit domestique de Naples dont les tours peuvent apporter bonne ou mauvaise fortune."
+      },
+      "perchta": {
+        "name": "Perchta",
+        "desc": "Une figure surnaturelle hivernale qui récompense le respect des coutumes traditionnelles et punit leur transgression."
+      },
+      "karakoncolos": {
+        "name": "Karakoncolos",
+        "desc": "Une effrayante créature hivernale qui interroge les voyageurs nocturnes et menace ceux dont les réponses sont inacceptables."
+      },
+      "churel": {
+        "name": "Churel",
+        "desc": "Un esprit féminin qui attire les hommes sous une belle apparence, cachant une forme terrifiante et des pieds retournés."
       }
     },
     "country1": "El Salvador 🇸🇻",
@@ -239,7 +251,7 @@
       "footer": "Construire des ponts entre les cultures. Droits d’auteur {author}.",
       "rarePairs": [
         {
-          "chance": 0.011111111111111112,
+          "chance": 0.008333333333333333,
           "replaceSource": "goodAndBadCadejo",
           "pair": {
             "source": "goodAndBadCadejo",
@@ -252,7 +264,7 @@
           }
         },
         {
-          "chance": 0.011111111111111112,
+          "chance": 0.008333333333333333,
           "replaceSource": "fleshlessWoman",
           "pair": {
             "source": "fleshlessWoman",
@@ -265,7 +277,7 @@
           }
         },
         {
-          "chance": 0.011111111111111112,
+          "chance": 0.008333333333333333,
           "replaceSource": "goodAndBadCadejo",
           "pair": {
             "source": "goodAndBadCadejo",
@@ -278,7 +290,7 @@
           }
         },
         {
-          "chance": 0.011111111111111112,
+          "chance": 0.008333333333333333,
           "replaceSource": "funeralCortegeOfChalchuapa",
           "pair": {
             "source": "funeralCortegeOfChalchuapa",
@@ -315,7 +327,7 @@
           }
         },
         {
-          "chance": 0.011111111111111112,
+          "chance": 0.008333333333333333,
           "replaceSource": "siguanaba",
           "pair": {
             "source": "siguanaba",
@@ -328,7 +340,7 @@
           }
         },
         {
-          "chance": 0.011111111111111112,
+          "chance": 0.008333333333333333,
           "replaceSource": "siguanaba",
           "pair": {
             "source": "siguanaba",
@@ -341,7 +353,7 @@
           }
         },
         {
-          "chance": 0.011111111111111112,
+          "chance": 0.008333333333333333,
           "replaceSource": "goodAndBadCadejo",
           "pair": {
             "source": "goodAndBadCadejo",
@@ -354,7 +366,7 @@
           }
         },
         {
-          "chance": 0.011111111111111112,
+          "chance": 0.008333333333333333,
           "replaceSource": "dwarf",
           "pair": {
             "source": "dwarf",
@@ -367,7 +379,7 @@
           }
         },
         {
-          "chance": 0.011111111111111112,
+          "chance": 0.008333333333333333,
           "replaceSource": "dwarf",
           "pair": {
             "source": "dwarf",
@@ -376,6 +388,45 @@
             "insight": "Esprits du foyer qui récompensent le respect et punissent la négligence.",
             "mirrorOrigin": "italy",
             "icon": "wizard",
+            "rarity": "ultra-rare"
+          }
+        },
+        {
+          "chance": 0.008333333333333333,
+          "replaceSource": "fairJudgeOfTheNight",
+          "pair": {
+            "source": "fairJudgeOfTheNight",
+            "mirror": "perchta",
+            "insightTitle": "Maîtres de la nuit",
+            "insight": "Juges et souverains qui gouvernent l’obscurité et la justice.",
+            "mirrorOrigin": "austria",
+            "icon": "night",
+            "rarity": "ultra-rare"
+          }
+        },
+        {
+          "chance": 0.008333333333333333,
+          "replaceSource": "fairJudgeOfTheNight",
+          "pair": {
+            "source": "fairJudgeOfTheNight",
+            "mirror": "karakoncolos",
+            "insightTitle": "Maîtres de la nuit",
+            "insight": "Juges et souverains qui gouvernent l’obscurité et la justice.",
+            "mirrorOrigin": "turkey",
+            "icon": "night",
+            "rarity": "ultra-rare"
+          }
+        },
+        {
+          "chance": 0.008333333333333333,
+          "replaceSource": "siguanaba",
+          "pair": {
+            "source": "siguanaba",
+            "mirror": "churel",
+            "insightTitle": "Appâts mortels",
+            "insight": "Tentations qui entraînent les vivants vers des fins irréversibles.",
+            "mirrorOrigin": "india",
+            "icon": "masks",
             "rarity": "ultra-rare"
           }
         }
@@ -427,6 +478,9 @@
     "country9": "Suède 🇸🇪",
     "country10": "Belgique 🇧🇪",
     "country11": "Islande 🇮🇸",
-    "country12": "Italie 🇮🇹"
+    "country12": "Italie 🇮🇹",
+    "country13": "Autriche 🇦🇹",
+    "country14": "Turquie 🇹🇷",
+    "country15": "Inde 🇮🇳"
   }
 }
