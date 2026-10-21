@@ -6,7 +6,7 @@ const collectionStorageKey = "timelessMemoryCollection";
 const supportedThemes = ["system", "light", "dark"];
 const previewRewardThresholdSeconds = 30;
 const mismatchFlipBackDelayMs = 1200;
-const i18nCacheVersion = "20261021-card-hierarchy";
+const i18nCacheVersion = "20261021-collection-archive";
 let linkRegistry = null;
 let localizedLinks = null;
 const board = document.getElementById("board");
@@ -44,6 +44,7 @@ const collectionPanel = document.getElementById("collectionPanel");
 const closeCollectionButton = document.getElementById("closeCollectionButton");
 let discoveries = readDiscoveries();
 let collectionDetailTrigger = null;
+let collectionRarityTrigger = null;
 const playAgainButton = document.getElementById("playAgainButton");
 const viewLegendsButton = document.getElementById("viewLegendsButton");
 const winShareButton = document.getElementById("winShareButton");
@@ -134,6 +135,17 @@ function renderCollection() {
     section.dataset.rarity = rarity;
     const heading = document.createElement("h3");
     heading.textContent = title;
+    const info = document.createElement("button");
+    info.type = "button";
+    info.className = "collection-info";
+    const rarityInfo = memoryGame.rarityInfoCards?.find((item) => (item.rarity || "") === rarity);
+    const infoLabel = `${title}: ${rarityInfo?.title || memoryGame.rarityInfoTitle || "Hidden Rarities"}`;
+    info.setAttribute("aria-label", infoLabel);
+    info.setAttribute("aria-haspopup", "dialog");
+    info.title = infoLabel;
+    info.innerHTML = `<svg class="collection-info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v6"></path><circle cx="12" cy="7" r="1" fill="currentColor" stroke="none"></circle></svg>`;
+    info.addEventListener("click", () => openRarityPanel(rarity, info));
+    heading.append(info);
     const grid = document.createElement("div");
     grid.className = "collection-grid";
     catalogue.filter((pair) => (pair.rarity || "") === rarity).forEach((pair) => {
@@ -204,7 +216,7 @@ function closeLegendsPanel() {
   if (collectionDetailTrigger) {
     collectionPanel.inert = false;
     collectionPanel.setAttribute("aria-modal", "true");
-    collectionDetailTrigger.focus();
+    collectionDetailTrigger.focus({ preventScroll: true });
     collectionDetailTrigger = null;
     renderLegendsList();
   }
@@ -823,7 +835,8 @@ function createLegendCell(characterKey, side) {
 function renderLegendsList(pairs = activePairs.length ? activePairs : chooseActivePairs(), detailPair = null) {
   setElementText(legendsPanelTitle, detailPair ? getLegendName(detailPair.mirror) : memoryGame.legendsTitle || "");
   setElementHidden(legendsPanelTitle, Boolean(detailPair));
-  setElementHidden(document.getElementById("legendsFooter"), Boolean(detailPair));
+  setElementHidden(document.getElementById("legendsFooter"), false);
+  setElementHidden(legendsRarityNote, Boolean(detailPair));
   const rows = pairs.map((pair) => {
     const { source, mirror, insightTitle, insight } = pair;
     const row = document.createElement("section");
@@ -849,13 +862,13 @@ function renderLegendsList(pairs = activePairs.length ? activePairs : chooseActi
   legendsList?.replaceChildren(...rows);
 }
 
-function renderRarityPreviewList() {
+function renderRarityPreviewList(rarity = null) {
   if (!rarityPreviewList) {
     return;
   }
 
   const items = Array.isArray(memoryGame.rarityInfoCards) ? memoryGame.rarityInfoCards : [];
-  const cards = items.map((item) => {
+  const cards = items.filter((item) => rarity === null || (item.rarity || "") === rarity).map((item) => {
     const card = document.createElement("article");
     card.className = "rarity-preview-card";
     card.dataset.rarity = item.rarity || "";
@@ -872,16 +885,29 @@ function renderRarityPreviewList() {
   });
 
   rarityPreviewList.replaceChildren(...cards);
+  rarityPreviewList.classList.toggle("is-single", rarity !== null);
 }
 
-function openRarityPanel() {
-  renderRarityPreviewList();
+function openRarityPanel(rarity = null, trigger = null) {
+  renderRarityPreviewList(rarity);
+  collectionRarityTrigger = trigger;
+  if (trigger) {
+    collectionPanel.inert = true;
+    collectionPanel.setAttribute("aria-modal", "false");
+  }
   rarityPanel?.classList.add("is-visible");
+  closeRarityButton?.focus();
   syncModalScrollLock();
 }
 
 function closeRarityPanel() {
   rarityPanel?.classList.remove("is-visible");
+  if (collectionRarityTrigger) {
+    collectionPanel.inert = false;
+    collectionPanel.setAttribute("aria-modal", "true");
+    collectionRarityTrigger.focus({ preventScroll: true });
+    collectionRarityTrigger = null;
+  }
   syncModalScrollLock();
 }
 

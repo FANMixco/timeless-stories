@@ -734,6 +734,10 @@ html[data-theme="dark"] .card[data-rarity="tutorial"] .character-icon {
   gap: 10px;
 }
 
+.rarity-preview-list.is-single {
+  grid-template-columns: 1fr;
+}
+
 .rarity-preview-card {
   display: flex;
   min-width: 0;
@@ -1185,12 +1189,17 @@ html[data-theme="dark"] .card.is-matched .card-front {
   }
 }
 
-.legends-footer[hidden] { display: none; }
+.legends-footer[hidden],
+.legends-rarity-note[hidden] { display: none; }
 .collection-panel { z-index: 21; }
 .legends-panel.is-collection-detail { z-index: 22; }
 #collectionProgress { width: 100%; height: 18px; accent-color: var(--found); }
 .collection-group { margin-top: 24px; }
-.collection-group h3 { color: var(--accent-dark); }
+.collection-group h3 { display: flex; align-items: center; gap: 8px; color: var(--accent-dark); }
+.collection-info { display: inline-flex; flex: 0 0 32px; align-items: center; justify-content: center; width: 32px; height: 32px; padding: 6px; border: 0; border-radius: 50%; background: transparent; color: inherit; cursor: pointer; }
+.collection-info-icon { width: 20px; height: 20px; }
+.collection-info:hover { background: rgba(0, 119, 182, 0.1); }
+.collection-info:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
 .collection-group[data-rarity="rare"] h3 { color: #0b6f8f; }
 .collection-group[data-rarity="ultra-rare"] h3 { color: #9a5b00; }
 html[data-theme="dark"] .collection-group[data-rarity="rare"] h3 { color: #8be0c5; }
