@@ -397,7 +397,7 @@
         "progress": "已发现的镜像：{found} / {total}",
         "original": "原版镜像",
         "directorsCut": "导演剪辑版",
-        "other": "其他镜像",
+        "other": "线上独家镜像",
         "contribute": "知道其他镜像故事吗？通过联系表单分享新的故事比较。",
         "submit": "提交故事比较"
       }

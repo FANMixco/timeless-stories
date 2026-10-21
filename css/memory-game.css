@@ -1128,8 +1128,7 @@ html[data-theme="dark"] .card.is-matched .card-front {
     margin-left: auto;
   }
 
-  #newGameButton,
-  #topViewLegendsButton {
+  #newGameButton {
     flex: 0 0 100%;
     width: 100%;
   }
@@ -1163,6 +1162,7 @@ html[data-theme="dark"] .card.is-matched .card-front {
 
 .legends-footer[hidden] { display: none; }
 .collection-panel { z-index: 21; }
+.legends-panel.is-collection-detail { z-index: 22; }
 #collectionProgress { width: 100%; height: 18px; accent-color: var(--found); }
 .collection-group { margin-top: 24px; }
 .collection-group h3 { color: var(--accent-dark); }

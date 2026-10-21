@@ -86,6 +86,8 @@ page.run('openCollection()');
 assert.equal(page.get('collectionProgress').value, 10);
 assert.equal(page.get('collectionProgress').max, 21);
 const groups = page.get('collectionGroups').children;
+assert.equal(groups[2].children[0].textContent, 'Online exclusive mirrors');
+assert.equal(page.get('collectionSubmit').href, links.shared.contact.englishContactForm);
 assert.deepEqual(groups.map(group => group.children[1].children.length), [10, 2, 9]);
 assert.equal(groups[1].children[1].children[0].disabled, true);
 assert.equal(groups[1].children[1].children[0].children[1].textContent, '???');
@@ -97,12 +99,20 @@ assert.equal(page.get('legendsList').children.length, 1, 'discovered details reu
 assert.equal(page.get('legendsPanelTitle').hidden, true, 'single preview omits the visible heading');
 assert.equal(page.get('legendsPanelTitle').textContent, 'The Cave of Salamanca', 'dialog retains an accessible name');
 assert.equal(page.get('legendsFooter').hidden, true, 'single preview hides purchase and rarity sections');
-assert.equal(page.get('collectionPanel').style.display, 'none');
+assert.equal(page.get('collectionPanel').classList.contains('is-visible'), true, 'collection stays open beneath details');
+assert.equal(page.get('legendsPanel').classList.contains('is-collection-detail'), true, 'details use the overlay layer');
+assert.equal(page.get('collectionPanel').inert, true, 'background collection does not receive interaction');
 page.run('closeLegendsPanel()');
-assert.equal(page.get('collectionPanel').style.display, '');
+assert.equal(page.get('collectionPanel').classList.contains('is-visible'), true);
+assert.equal(page.get('collectionPanel').inert, false);
+assert.equal(page.get('legendsPanel').classList.contains('is-collection-detail'), false);
 assert.equal(page.get('legendsPanelTitle').textContent, data.translations.memoryGame.legendsTitle);
 assert.equal(page.get('legendsPanelTitle').hidden, false, 'full legends view restores its heading');
 assert.equal(page.get('legendsFooter').hidden, false, 'full legends view restores its footer');
+for (const language of ['es', 'en', 'fr', 'zh']) {
+  page.run(`currentLanguage = '${language}'; renderCollection();`);
+  assert.equal(page.get('collectionSubmit').href, language === 'es' ? links.shared.contact.spanishContactForm : links.shared.contact.englishContactForm);
+}
 page.run('memoryGame.pairs.push({source:"futureSource", mirror:"futureMirror"}); renderCollection()');
 assert.equal(page.get('collectionProgress').max, 22, 'future catalogue additions appear automatically');
 assert.equal(page.get('collectionProgress').value, 10);

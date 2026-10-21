@@ -6,7 +6,7 @@ const collectionStorageKey = "timelessMemoryCollection";
 const supportedThemes = ["system", "light", "dark"];
 const previewRewardThresholdSeconds = 30;
 const mismatchFlipBackDelayMs = 1200;
-const i18nCacheVersion = "20261021-short-mirror-descriptions";
+const i18nCacheVersion = "20261021-collection-polish";
 let linkRegistry = null;
 let localizedLinks = null;
 const board = document.getElementById("board");
@@ -127,7 +127,7 @@ function renderCollection() {
   const groups = [
     { rarity: "", title: copy.original || "Original Mirrors" },
     { rarity: "rare", title: copy.directorsCut || "Director's Cut" },
-    { rarity: "ultra-rare", title: copy.other || "Other Mirrors" },
+    { rarity: "ultra-rare", title: copy.other || "Online exclusive mirrors" },
   ].map(({ rarity, title }) => {
     const section = document.createElement("section");
     section.className = "collection-group";
@@ -164,8 +164,9 @@ function renderCollection() {
         card.addEventListener("click", () => {
           collectionDetailTrigger = card;
           renderLegendsList([pair], pair);
-          legendsPanel.classList.add("is-visible");
-          collectionPanel.style.display = "none";
+          legendsPanel.classList.add("is-visible", "is-collection-detail");
+          collectionPanel.inert = true;
+          collectionPanel.setAttribute("aria-modal", "false");
           closeLegendsButton.focus();
           syncModalScrollLock();
         });
@@ -179,7 +180,8 @@ function renderCollection() {
   setElementText(document.getElementById("collectionContribution"), copy.contribute || "Know another mirror? Share a new comparison through our contact form.");
   const submit = document.getElementById("collectionSubmit");
   submit.textContent = copy.submit || "Submit a comparison";
-  submit.href = linkRegistry?.shared?.contact?.spanishContactForm || "";
+  const formKey = currentLanguage === "es" ? "spanishContactForm" : "englishContactForm";
+  submit.href = linkRegistry?.shared?.contact?.[formKey] || "";
   setElementHidden(submit, !submit.getAttribute("href"));
 }
 
@@ -198,9 +200,10 @@ function closeCollection() {
 }
 
 function closeLegendsPanel() {
-  legendsPanel.classList.remove("is-visible");
+  legendsPanel.classList.remove("is-visible", "is-collection-detail");
   if (collectionDetailTrigger) {
-    collectionPanel.style.display = "";
+    collectionPanel.inert = false;
+    collectionPanel.setAttribute("aria-modal", "true");
     collectionDetailTrigger.focus();
     collectionDetailTrigger = null;
     renderLegendsList();
