@@ -476,6 +476,10 @@ function unlockPageScroll() {
 
 function syncModalScrollLock() {
   syncModalHistory();
+  refreshModalScrollLock();
+}
+
+function refreshModalScrollLock() {
   const hasOpenPanel =
     winPanel.classList.contains("is-visible") ||
     legendsPanel?.classList.contains("is-visible") ||
@@ -1123,9 +1127,13 @@ function newGame() {
   matchInsight.classList.remove("is-visible");
   matchInsightTitle.textContent = "";
   matchInsightText.textContent = "";
-  winPanel.classList.remove("is-visible");
-  legendsPanel?.classList.remove("is-visible");
-  rarityPanel?.classList.remove("is-visible");
+  modalPanels.forEach(panel => panel?.classList.remove("is-visible", "is-collection-detail"));
+  collectionPanel.inert = false;
+  collectionPanel.setAttribute("aria-modal", "true");
+  collectionDetailTrigger = null;
+  collectionRarityTrigger = null;
+  modalDetailPair = null;
+  modalRarity = null;
   syncModalScrollLock();
   setTopLegendActionVisibility(false);
   setPreviewRewardVisibility(false);
@@ -1142,6 +1150,14 @@ function wait(ms) {
   return new Promise((resolve) => {
     window.setTimeout(resolve, ms);
   });
+}
+
+function restartGame() {
+  newGame();
+  // Reset an already-scrolled board after its previous match description and
+  // dialogs disappear. Preserve the user's scroll position on ordinary resume.
+  newGameButton.focus({ preventScroll: true });
+  window.scrollTo({ top: 0, left: 0, behavior: "auto" });
 }
 
 async function runIntroTutorial() {
@@ -1253,7 +1269,7 @@ async function shareGame(button = shareButton) {
   }, 1600);
 }
 
-newGameButton.addEventListener("click", newGame);
+newGameButton.addEventListener("click", restartGame);
 languageButton.addEventListener("click", (event) => {
   event.stopPropagation();
   toggleLanguageMenu();
@@ -1320,6 +1336,14 @@ window.addEventListener("storage", (event) => {
   }
 });
 window.addEventListener("beforeunload", warnBeforeLeaving);
+// Android may resume the existing page after an external link, or restore it
+// from the back/forward cache. Derive the lock from the visible dialogs without
+// creating or traversing history entries during those lifecycle events.
+window.addEventListener("pageshow", refreshModalScrollLock);
+window.addEventListener("focus", refreshModalScrollLock);
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "visible") refreshModalScrollLock();
+});
 shareButton.addEventListener("click", () => {
   shareGame(shareButton).catch(() => {});
 });
@@ -1348,7 +1372,7 @@ rarityPanel?.addEventListener("click", (event) => {
   }
 });
 legendToastClose.addEventListener("click", hideLegendToast);
-playAgainButton.addEventListener("click", newGame);
+playAgainButton.addEventListener("click", restartGame);
 applyTheme();
 document.documentElement.dataset.embed = String(isEmbedded);
 window.matchMedia?.("(prefers-color-scheme: dark)")?.addEventListener("change", applyTheme);

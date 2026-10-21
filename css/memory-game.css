@@ -60,8 +60,10 @@ button {
   padding-bottom: calc(clamp(12px, 2.4vw, 22px) + env(safe-area-inset-bottom, 0px));
 }
 
-html.is-modal-open .game-shell {
-  max-height: 100dvh;
+html.is-modal-open,
+html.is-modal-open body {
+  /* Lock the document without clipping/resizing the board. Android can change
+     the visual viewport when its toolbar opens or an external link returns. */
   overflow: hidden;
 }
 
@@ -553,6 +555,14 @@ html[data-theme="dark"] .card[data-rarity="tutorial"] .character-icon {
   text-align: center;
   box-shadow: var(--shadow);
   animation: win-pop 260ms ease both;
+}
+
+.win-card,
+.rarity-card {
+  max-height: calc(100dvh - 36px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
 }
 
 .legends-panel {
