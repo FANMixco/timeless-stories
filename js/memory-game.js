@@ -154,7 +154,7 @@ function renderCollection() {
         mark.textContent = "?";
       }
       const name = document.createElement("strong");
-      name.textContent = discovered ? getLegendName(pair.mirror) : "???";
+      name.textContent = discovered ? pair.insightTitle || "" : "???";
       const flags = document.createElement("span");
       flags.textContent = discovered
         ? `${getOriginFlag(pair.sourceOrigin || "source")} · ${getOriginFlag(pair.mirrorOrigin || "mirror")}`

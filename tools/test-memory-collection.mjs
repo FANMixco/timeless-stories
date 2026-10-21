@@ -60,6 +60,7 @@ assert.equal(groups[1].children[1].children[0].disabled, true);
 assert.equal(groups[1].children[1].children[0].children[1].textContent, '???');
 assert.equal(groups[1].children[1].children[0].children[2].textContent, '🇸🇻 · ❓');
 const discovered = groups[0].children[1].children[0];
+assert.equal(discovered.children[1].textContent, 'The Devil', 'collection cards display comparison categories');
 discovered.listeners.click();
 assert.equal(page.get('legendsList').children.length, 1, 'discovered details reuse comparison renderer');
 assert.equal(page.get('legendsPanelTitle').hidden, true, 'single preview omits the visible heading');
