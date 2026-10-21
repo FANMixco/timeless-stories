@@ -6,5 +6,4 @@ css/main-new.css.bk.txt
 img/loading.svg
 img/logo.min.svg
 img/favicons/hourglass-animated.svg
-tools/test-pwa.mjs
-tools/test-memory-collection.mjs
+tools/*.mjs

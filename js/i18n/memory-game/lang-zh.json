@@ -251,7 +251,7 @@
       "footer": "在文化之间架起桥梁。版权所有 {author}。",
       "rarePairs": [
         {
-          "chance": 0.008333333333333333,
+          "chance": 0.0125,
           "replaceSource": "goodAndBadCadejo",
           "pair": {
             "source": "goodAndBadCadejo",
@@ -264,7 +264,7 @@
           }
         },
         {
-          "chance": 0.008333333333333333,
+          "chance": 0.0125,
           "replaceSource": "fleshlessWoman",
           "pair": {
             "source": "fleshlessWoman",
@@ -277,7 +277,7 @@
           }
         },
         {
-          "chance": 0.008333333333333333,
+          "chance": 0.0125,
           "replaceSource": "goodAndBadCadejo",
           "pair": {
             "source": "goodAndBadCadejo",
@@ -290,7 +290,7 @@
           }
         },
         {
-          "chance": 0.008333333333333333,
+          "chance": 0.0125,
           "replaceSource": "funeralCortegeOfChalchuapa",
           "pair": {
             "source": "funeralCortegeOfChalchuapa",
@@ -303,7 +303,7 @@
           }
         },
         {
-          "chance": 0.05,
+          "chance": 0.06666666666666667,
           "replaceSource": "siguanaba",
           "pair": {
             "source": "siguanaba",
@@ -316,7 +316,7 @@
           }
         },
         {
-          "chance": 0.1,
+          "chance": 0.13333333333333333,
           "pair": {
             "source": "olomegaLagoonSiren",
             "mirror": "xana",
@@ -327,7 +327,7 @@
           }
         },
         {
-          "chance": 0.008333333333333333,
+          "chance": 0.0125,
           "replaceSource": "siguanaba",
           "pair": {
             "source": "siguanaba",
@@ -340,7 +340,7 @@
           }
         },
         {
-          "chance": 0.008333333333333333,
+          "chance": 0.0125,
           "replaceSource": "siguanaba",
           "pair": {
             "source": "siguanaba",
@@ -353,7 +353,7 @@
           }
         },
         {
-          "chance": 0.008333333333333333,
+          "chance": 0.0125,
           "replaceSource": "goodAndBadCadejo",
           "pair": {
             "source": "goodAndBadCadejo",
@@ -366,7 +366,7 @@
           }
         },
         {
-          "chance": 0.008333333333333333,
+          "chance": 0.0125,
           "replaceSource": "dwarf",
           "pair": {
             "source": "dwarf",
@@ -379,7 +379,7 @@
           }
         },
         {
-          "chance": 0.008333333333333333,
+          "chance": 0.0125,
           "replaceSource": "dwarf",
           "pair": {
             "source": "dwarf",
@@ -392,7 +392,7 @@
           }
         },
         {
-          "chance": 0.008333333333333333,
+          "chance": 0.0125,
           "replaceSource": "fairJudgeOfTheNight",
           "pair": {
             "source": "fairJudgeOfTheNight",
@@ -405,7 +405,7 @@
           }
         },
         {
-          "chance": 0.008333333333333333,
+          "chance": 0.0125,
           "replaceSource": "fairJudgeOfTheNight",
           "pair": {
             "source": "fairJudgeOfTheNight",
@@ -418,7 +418,7 @@
           }
         },
         {
-          "chance": 0.008333333333333333,
+          "chance": 0.0125,
           "replaceSource": "siguanaba",
           "pair": {
             "source": "siguanaba",

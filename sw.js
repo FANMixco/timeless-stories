@@ -1,17 +1,17 @@
 const CACHE_PREFIX = "memory-game-pwa-";
-const CACHE_VERSION = `${CACHE_PREFIX}20261021-readable-legends`;
+const CACHE_VERSION = `${CACHE_PREFIX}20261021-rarity-balance`;
 const APP_SHELL = [
   "/memory-game.html",
   "/memory-game.webmanifest",
   "/css/icon-moon-memory.min.css?v=20261021-collection",
   "/css/memory-game.min.css?v=20261021-readable-legends",
-  "/js/memory-game.min.js?v=20261021-winter-mirrors",
+  "/js/memory-game.min.js?v=20261021-rarity-balance",
   "/js/pwa.min.js?v=20261021-pwa-registration",
   "/js/data/links.min.json",
-  "/js/i18n/memory-game/lang-en.min.json?v=20261021-winter-mirrors",
-  "/js/i18n/memory-game/lang-es.min.json?v=20261021-winter-mirrors",
-  "/js/i18n/memory-game/lang-fr.min.json?v=20261021-winter-mirrors",
-  "/js/i18n/memory-game/lang-zh.min.json?v=20261021-winter-mirrors",
+  "/js/i18n/memory-game/lang-en.min.json?v=20261021-rarity-balance",
+  "/js/i18n/memory-game/lang-es.min.json?v=20261021-rarity-balance",
+  "/js/i18n/memory-game/lang-fr.min.json?v=20261021-rarity-balance",
+  "/js/i18n/memory-game/lang-zh.min.json?v=20261021-rarity-balance",
   "/img/preview_memory.jpg",
   "/img/favicons/maskable_icon_x192.png",
   "/img/favicons/maskable_icon_x512.png",

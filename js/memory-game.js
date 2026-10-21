@@ -6,7 +6,7 @@ const collectionStorageKey = "timelessMemoryCollection";
 const supportedThemes = ["system", "light", "dark"];
 const previewRewardThresholdSeconds = 30;
 const mismatchFlipBackDelayMs = 1200;
-const i18nCacheVersion = "20261021-winter-mirrors-new";
+const i18nCacheVersion = "20261021-rarity-balance";
 let linkRegistry = null;
 let localizedLinks = null;
 const board = document.getElementById("board");
@@ -72,6 +72,95 @@ let translations = null;
 let deck = [];
 let activePairs = [];
 let currentLanguage = "en";
+let modalDetailPair = null;
+let modalRarity = null;
+let restoringModalHistory = false;
+let pendingModalNavigation = false;
+const modalHistorySession = `${Date.now()}-${Math.random()}`;
+const modalHistoryKey = "timelessMemoryModals";
+const modalPanels = [winPanel, collectionPanel, legendsPanel, rarityPanel];
+const modalHistory = !isEmbedded ? window.history : null;
+
+function getModalSnapshot() {
+  return {
+    panels: modalPanels.filter(panel => panel?.classList.contains("is-visible")).map(panel => panel.id),
+    detail: modalDetailPair,
+    rarity: modalRarity
+  };
+}
+
+function writeModalHistory(snapshot, push = false) {
+  const state = { ...modalHistory.state, [modalHistoryKey]: { session: modalHistorySession, ...snapshot } };
+  modalHistory[push ? "pushState" : "replaceState"](state, "");
+}
+
+function syncModalHistory() {
+  if (!modalHistory || restoringModalHistory || pendingModalNavigation) return;
+  const snapshot = getModalSnapshot();
+  const previous = modalHistory.state?.[modalHistoryKey];
+  if (previous?.session !== modalHistorySession) {
+    writeModalHistory({ panels: [], detail: null, rarity: null });
+  }
+  const depth = previous?.session === modalHistorySession ? previous.panels.length : 0;
+  if (snapshot.panels.length < depth) {
+    // Keep close buttons immediate; consume their history entries asynchronously.
+    pendingModalNavigation = true;
+    modalHistory.go(snapshot.panels.length - depth);
+  } else if (snapshot.panels.length > depth) {
+    writeModalHistory(snapshot, true);
+  } else {
+    writeModalHistory(snapshot);
+  }
+}
+
+function restoreModalSnapshot(snapshot) {
+  restoringModalHistory = true;
+  try {
+    const visible = new Set(snapshot.panels.filter(id => {
+      // Forward must not resurrect a previous round's completion dialogs.
+      if (id === "winPanel" || (id === "legendsPanel" && !snapshot.detail)) return gameCompleted;
+      return true;
+    }));
+    if (!visible.has("rarityPanel")) closeRarityPanel();
+    if (!visible.has("legendsPanel")) closeLegendsPanel();
+    if (!visible.has("collectionPanel") && collectionPanel.classList.contains("is-visible")) closeCollection();
+    modalPanels.forEach(panel => panel?.classList.toggle("is-visible", visible.has(panel.id)));
+    modalDetailPair = snapshot.detail;
+    modalRarity = snapshot.rarity;
+    if (visible.has("legendsPanel")) {
+      renderLegendsList(snapshot.detail ? [snapshot.detail] : undefined, snapshot.detail);
+      legendsPanel.classList.toggle("is-collection-detail", Boolean(snapshot.detail));
+      if (snapshot.detail && !collectionDetailTrigger) collectionDetailTrigger = collectionButton;
+    }
+    if (visible.has("rarityPanel")) {
+      renderRarityPreviewList(snapshot.rarity);
+      if (visible.has("collectionPanel") && !collectionRarityTrigger) collectionRarityTrigger = collectionButton;
+    }
+    const coveredCollection = visible.has("collectionPanel") && (visible.has("rarityPanel") || Boolean(snapshot.detail));
+    collectionPanel.inert = coveredCollection;
+    collectionPanel.setAttribute("aria-modal", String(!coveredCollection));
+    // Move focus into the newly active layer (including after Forward).
+    if (visible.has("rarityPanel")) closeRarityButton.focus();
+    else if (visible.has("legendsPanel")) closeLegendsButton.focus();
+    else if (visible.has("collectionPanel")) closeCollectionButton.focus();
+    else if (visible.has("winPanel")) closeWinButton.focus();
+    syncModalScrollLock();
+  } finally {
+    restoringModalHistory = false;
+  }
+}
+
+window.addEventListener("popstate", event => {
+  if (!modalHistory) return;
+  if (pendingModalNavigation) {
+    pendingModalNavigation = false;
+    // A user may have opened or closed another layer while history was moving.
+    syncModalHistory();
+    return;
+  }
+  const snapshot = event.state?.[modalHistoryKey];
+  restoreModalSnapshot(snapshot?.session === modalHistorySession ? snapshot : { panels: [], detail: null, rarity: null });
+});
 const languageLabels = {
   en: "English",
   es: "Español",
@@ -175,6 +264,7 @@ function renderCollection() {
       if (discovered) {
         card.addEventListener("click", () => {
           collectionDetailTrigger = card;
+          modalDetailPair = pair;
           renderLegendsList([pair], pair);
           legendsPanel.classList.add("is-visible", "is-collection-detail");
           collectionPanel.inert = true;
@@ -212,6 +302,7 @@ function closeCollection() {
 }
 
 function closeLegendsPanel() {
+  modalDetailPair = null;
   legendsPanel.classList.remove("is-visible", "is-collection-detail");
   if (collectionDetailTrigger) {
     collectionPanel.inert = false;
@@ -384,6 +475,7 @@ function unlockPageScroll() {
 }
 
 function syncModalScrollLock() {
+  syncModalHistory();
   const hasOpenPanel =
     winPanel.classList.contains("is-visible") ||
     legendsPanel?.classList.contains("is-visible") ||
@@ -604,31 +696,53 @@ function getPairCount() {
   return activePairs.length || (Array.isArray(memoryGame.pairs) ? memoryGame.pairs.length : 0);
 }
 
-function chooseActivePairs() {
-  const pairs = Array.isArray(memoryGame.pairs) ? memoryGame.pairs.map((pair) => ({ ...pair })) : [];
-  const variants = Array.isArray(memoryGame.rarePairs) ? memoryGame.rarePairs : [];
-  const roll = Math.random();
+function chooseWeightedVariant(variants) {
+  const total = variants.reduce((sum, variant) => sum + (Number(variant.chance) || 0), 0);
+  const roll = Math.random() * total;
   let threshold = 0;
-  const selectedVariant = variants.find((variant) => {
+  return variants.find(variant => {
     threshold += Number(variant.chance) || 0;
     return roll < threshold;
   });
+}
 
-  if (!selectedVariant?.pair || !pairs.length) {
-    return pairs;
+function chooseActivePairs() {
+  const pairs = Array.isArray(memoryGame.pairs) ? memoryGame.pairs.map((pair) => ({ ...pair })) : [];
+  const variants = Array.isArray(memoryGame.rarePairs) ? memoryGame.rarePairs : [];
+  let selectedVariants;
+  // One percent of rounds have two specials. The remaining rounds use the
+  // configured 65/20/15 distribution, with at most one special pair.
+  if (Math.random() < 0.01 && pairs.length >= 2) {
+    const superRare = variants.filter(variant => variant.pair?.rarity === "ultra-rare");
+    const directorsCut = variants.filter(variant => variant.pair?.rarity === "rare");
+    const first = chooseWeightedVariant(Math.random() < 0.5 ? directorsCut : superRare);
+    // A source legend must occur only once on the board. Two variants of the
+    // same original would otherwise overwrite each other or duplicate a source.
+    const compatible = superRare.filter(variant => first &&
+      variant.pair.source !== first.pair.source &&
+      variant.pair.mirror !== first.pair.mirror);
+    selectedVariants = [first, chooseWeightedVariant(compatible)].filter(Boolean);
+  } else {
+    const roll = Math.random();
+    let threshold = 0;
+    const selected = variants.find(variant => {
+      threshold += Number(variant.chance) || 0;
+      return roll < threshold;
+    });
+    selectedVariants = selected?.pair ? [selected] : [];
   }
 
-  const replacement = { ...selectedVariant.pair };
-  const targetIndex =
-    selectedVariant.replaceSource &&
-    pairs.findIndex((pair) => pair.source === selectedVariant.replaceSource);
-
-  if (Number.isInteger(targetIndex) && targetIndex >= 0) {
-    pairs[targetIndex] = replacement;
-    return pairs;
+  const replaced = new Set();
+  for (const variant of selectedVariants) {
+    const available = pairs.map((_, index) => index).filter(index => !replaced.has(index));
+    if (!available.length) break;
+    const target = variant.replaceSource
+      ? pairs.findIndex(pair => pair.source === variant.replaceSource) : -1;
+    const index = target >= 0 && !replaced.has(target)
+      ? target : available[Math.floor(Math.random() * available.length)];
+    pairs[index] = { ...variant.pair };
+    replaced.add(index);
   }
-
-  pairs[Math.floor(Math.random() * pairs.length)] = replacement;
   return pairs;
 }
 
@@ -892,6 +1006,7 @@ function renderRarityPreviewList(rarity = null) {
 }
 
 function openRarityPanel(rarity = null, trigger = null) {
+  modalRarity = rarity;
   renderRarityPreviewList(rarity);
   collectionRarityTrigger = trigger;
   if (trigger) {
@@ -904,6 +1019,7 @@ function openRarityPanel(rarity = null, trigger = null) {
 }
 
 function closeRarityPanel() {
+  modalRarity = null;
   rarityPanel?.classList.remove("is-visible");
   if (collectionRarityTrigger) {
     collectionPanel.inert = false;
@@ -1180,6 +1296,11 @@ document.addEventListener("keydown", (event) => {
       closeLegendsPanel();
     } else if (collectionPanel.classList.contains("is-visible")) {
       closeCollection();
+    } else if (legendsPanel.classList.contains("is-visible")) {
+      closeLegendsPanel();
+    } else if (winPanel.classList.contains("is-visible")) {
+      winPanel.classList.remove("is-visible");
+      syncModalScrollLock();
     }
   }
 });
