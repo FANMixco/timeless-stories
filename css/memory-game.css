@@ -1245,6 +1245,21 @@ html[data-theme="dark"] .collection-group[data-rarity="ultra-rare"] h3 { color: 
     padding: calc(28px + env(safe-area-inset-top, 0px)) 14px calc(18px + env(safe-area-inset-bottom, 0px));
   }
 
+  .legends-panel.is-collection-detail {
+    align-items: center;
+    padding: calc(12px + env(safe-area-inset-top, 0px)) 12px calc(12px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .legends-panel.is-collection-detail .legends-card {
+    width: min(100%, 560px);
+    min-height: 0;
+    max-height: calc(100dvh - 24px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));
+    overflow-y: auto;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 28px 14px 18px;
+  }
+
   .legend-row {
     grid-template-columns: 1fr;
   }
