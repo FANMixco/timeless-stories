@@ -241,7 +241,7 @@
       "getCopyHref": "carouselCards.ebook",
       "share": "分享",
       "hint": "提示",
-      "hintText": "注意图标。配对的卡片会使用相同的符号。",
+      "hintText": "注意图标！相互匹配的卡牌拥有相同的符号，例如 🃏 🃏。",
       "shareCopied": "链接已复制",
       "shareText": "我刚刚配对了萨尔瓦多与西班牙的镜像传说。你能找出全部10组吗？",
       "close": "关闭",
