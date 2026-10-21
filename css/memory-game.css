@@ -503,10 +503,6 @@ html[data-theme="dark"] .card[data-rarity="tutorial"] .character-icon {
   font-weight: 500;
 }
 
-.card.is-matched .character-origin-text {
-  font-weight: 550;
-}
-
 .character-name,
 .character-origin-text,
 .collection-mirror strong {
@@ -515,6 +511,7 @@ html[data-theme="dark"] .card[data-rarity="tutorial"] .character-icon {
 
 .card.is-matched .character-name,
 .card.is-matched .character-origin-text {
+  font-weight: 550;
   opacity: 1;
 }
 

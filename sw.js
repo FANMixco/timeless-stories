@@ -1,10 +1,10 @@
-const CACHE_VERSION = "memory-game-pwa-20261021-country-weight";
+const CACHE_VERSION = "memory-game-pwa-20261021-matched-name-weight";
 const APP_SHELL = [
   "/memory-game.html",
   "/memory-game.webmanifest",
   "/css/poppins.min.css",
   "/css/icon-moon-memory.min.css?v=20261021-collection",
-  "/css/memory-game.min.css?v=20261021-country-weight",
+  "/css/memory-game.min.css?v=20261021-matched-name-weight",
   "/js/memory-game.min.js?v=20261021-card-hierarchy",
   "/js/pwa.min.js",
   "/js/data/links.min.json",
