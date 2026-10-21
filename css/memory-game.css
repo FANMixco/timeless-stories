@@ -602,7 +602,7 @@ html[data-theme="dark"] .card[data-rarity="tutorial"] .character-icon {
   padding: 2px 8px 8px;
   background: transparent;
   color: var(--muted);
-  font-size: 0.82rem;
+  font-size: 1rem;
   font-weight: 650;
   line-height: 1.35;
   text-align: center;
@@ -628,8 +628,8 @@ html[data-theme="dark"] .card[data-rarity="tutorial"] .character-icon {
 .legend-row {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
-  padding: 10px;
+  gap: 16px;
+  padding: 14px;
   border: 1px solid rgba(1, 87, 155, 0.16);
   border-radius: 8px;
   background: rgba(255, 250, 240, 0.48);
@@ -644,8 +644,8 @@ html[data-theme="dark"] .card[data-rarity="tutorial"] .character-icon {
 .legend-category strong {
   display: block;
   color: var(--found);
-  font-size: clamp(1.08rem, 2.8vw, 1.45rem);
-  line-height: 1.12;
+  font-size: clamp(1.25rem, 3.2vw, 1.5rem);
+  line-height: 1.25;
 }
 
 .legend-category > span:not(.legend-mark) {
@@ -653,9 +653,9 @@ html[data-theme="dark"] .card[data-rarity="tutorial"] .character-icon {
   max-width: 720px;
   margin: 5px auto 0;
   color: var(--ink);
-  font-size: clamp(0.82rem, 2vw, 0.98rem);
-  font-weight: 700;
-  line-height: 1.35;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.5;
 }
 
 .legend-category .legend-mark {
@@ -686,30 +686,31 @@ html[data-theme="dark"] .card[data-rarity="tutorial"] .character-icon {
 
 .legend-copy {
   min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .legend-copy strong {
   display: block;
   color: var(--ink);
-  font-size: 0.92rem;
-  line-height: 1.18;
+  font-size: 1.125rem;
+  line-height: 1.35;
 }
 
 .legend-copy span {
   display: block;
-  margin-top: 2px;
+  margin-top: 4px;
   color: var(--muted);
-  font-size: 0.72rem;
-  font-weight: 800;
-  line-height: 1.2;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.4;
 }
 
 .legend-copy p {
   margin: 6px 0 0;
   color: var(--ink);
-  font-size: 0.8rem;
-  font-weight: 600;
-  line-height: 1.35;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.5;
 }
 
 .rarity-panel {
@@ -775,22 +776,22 @@ html[data-theme="dark"] .card[data-rarity="tutorial"] .character-icon {
 .rarity-preview-card h3 {
   margin: 2px 0 0;
   color: var(--ink);
-  font-size: 0.92rem;
-  line-height: 1.12;
+  font-size: 1.125rem;
+  line-height: 1.35;
 }
 
 .rarity-preview-card strong {
   color: var(--muted);
-  font-size: 0.72rem;
-  line-height: 1.2;
+  font-size: 1rem;
+  line-height: 1.4;
 }
 
 .rarity-preview-card p {
   margin: 0;
   color: var(--ink);
-  font-size: 0.72rem;
-  font-weight: 600;
-  line-height: 1.32;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.5;
 }
 
 .win-close {
@@ -1204,12 +1205,12 @@ html[data-theme="dark"] .card.is-matched .card-front {
 .collection-group[data-rarity="ultra-rare"] h3 { color: #9a5b00; }
 html[data-theme="dark"] .collection-group[data-rarity="rare"] h3 { color: #8be0c5; }
 html[data-theme="dark"] .collection-group[data-rarity="ultra-rare"] h3 { color: #f2bd4a; }
-.collection-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 145px), 1fr)); gap: 10px; }
+.collection-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 160px), 1fr)); gap: 10px; }
 .collection-mirror.rarity-preview-card { width: 100%; min-height: 170px; font: inherit; color: var(--ink); pointer-events: auto; cursor: pointer; }
-.collection-mirror strong { color: var(--muted); font-size: 0.9rem; font-weight: 550; }
+.collection-mirror strong { color: var(--muted); font-size: 1.0625rem; font-weight: 550; line-height: 1.4; overflow-wrap: anywhere; opacity: 0.8; }
 .collection-mirror:not(:disabled) strong { opacity: 1; }
 html[data-theme="dark"] .collection-mirror:not(:disabled) strong { color: #ffffff; }
-.collection-mirror > span:last-child { color: var(--muted); font-weight: 550; }
+.collection-mirror > span:last-child { color: var(--muted); font-size: 1.25rem; font-weight: 550; line-height: 1.4; }
 .collection-mirror:disabled { cursor: default; }
 .collection-mirror:disabled .character-mark { font-size: 2.2rem; font-weight: 800; }
 .collection-mirror:focus-visible { outline: 3px solid var(--accent-dark); outline-offset: 2px; }
