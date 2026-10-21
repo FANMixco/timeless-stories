@@ -108,6 +108,26 @@
       "resurrectionMary": {
         "name": "Resurrection Mary",
         "desc": "A ghostly young woman appears on lonely roads before vanishing without a trace."
+      },
+      "nakk": {
+        "name": "Näkk",
+        "desc": "A shapeshifting water spirit that lures unsuspecting people into lakes or rivers."
+      },
+      "huldra": {
+        "name": "Huldra",
+        "desc": "An alluring forest spirit who hides supernatural features and lures travelers into the woods."
+      },
+      "kludde": {
+        "name": "Kludde",
+        "desc": "A supernatural creature appearing as a giant black dog with fiery eyes, frightening night travelers."
+      },
+      "jolasveinar": {
+        "name": "Jólasveinar",
+        "desc": "Thirteen Christmas visitors to Icelandic homes who steal food, slam doors, and play tricks."
+      },
+      "monacello": {
+        "name": "Monacello",
+        "desc": "A small household spirit from Naples whose tricks can bring good or bad fortune."
       }
     },
     "country1": "El Salvador 🇸🇻",
@@ -203,7 +223,7 @@
       "footer": "Building bridges across cultures. Copyrights {author}.",
       "rarePairs": [
         {
-          "chance": 0.025,
+          "chance": 0.011111111111111112,
           "replaceSource": "goodAndBadCadejo",
           "pair": {
             "source": "goodAndBadCadejo",
@@ -216,7 +236,7 @@
           }
         },
         {
-          "chance": 0.025,
+          "chance": 0.011111111111111112,
           "replaceSource": "fleshlessWoman",
           "pair": {
             "source": "fleshlessWoman",
@@ -229,7 +249,7 @@
           }
         },
         {
-          "chance": 0.025,
+          "chance": 0.011111111111111112,
           "replaceSource": "goodAndBadCadejo",
           "pair": {
             "source": "goodAndBadCadejo",
@@ -242,7 +262,7 @@
           }
         },
         {
-          "chance": 0.025,
+          "chance": 0.011111111111111112,
           "replaceSource": "funeralCortegeOfChalchuapa",
           "pair": {
             "source": "funeralCortegeOfChalchuapa",
@@ -276,6 +296,71 @@
             "insight": "Beings whose songs draw the living away from reason, path, or self.",
             "icon": "music",
             "rarity": "rare"
+          }
+        },
+        {
+          "chance": 0.011111111111111112,
+          "replaceSource": "siguanaba",
+          "pair": {
+            "source": "siguanaba",
+            "mirror": "nakk",
+            "insightTitle": "Fatal Lures",
+            "insight": "Temptations that draw the living toward irreversible ends.",
+            "mirrorOrigin": "estonia",
+            "icon": "masks",
+            "rarity": "ultra-rare"
+          }
+        },
+        {
+          "chance": 0.011111111111111112,
+          "replaceSource": "siguanaba",
+          "pair": {
+            "source": "siguanaba",
+            "mirror": "huldra",
+            "insightTitle": "Fatal Lures",
+            "insight": "Temptations that draw the living toward irreversible ends.",
+            "mirrorOrigin": "sweden",
+            "icon": "masks",
+            "rarity": "ultra-rare"
+          }
+        },
+        {
+          "chance": 0.011111111111111112,
+          "replaceSource": "goodAndBadCadejo",
+          "pair": {
+            "source": "goodAndBadCadejo",
+            "mirror": "kludde",
+            "insightTitle": "Guardians & Beasts",
+            "insight": "Protectors or creatures that enforce the boundaries of the night.",
+            "mirrorOrigin": "belgium",
+            "icon": "paw",
+            "rarity": "ultra-rare"
+          }
+        },
+        {
+          "chance": 0.011111111111111112,
+          "replaceSource": "dwarf",
+          "pair": {
+            "source": "dwarf",
+            "mirror": "jolasveinar",
+            "insightTitle": "Domestic Tricksters",
+            "insight": "Household spirits that reward respect and punish neglect.",
+            "mirrorOrigin": "iceland",
+            "icon": "wizard",
+            "rarity": "ultra-rare"
+          }
+        },
+        {
+          "chance": 0.011111111111111112,
+          "replaceSource": "dwarf",
+          "pair": {
+            "source": "dwarf",
+            "mirror": "monacello",
+            "insightTitle": "Domestic Tricksters",
+            "insight": "Household spirits that reward respect and punish neglect.",
+            "mirrorOrigin": "italy",
+            "icon": "wizard",
+            "rarity": "ultra-rare"
           }
         }
       ],
@@ -321,6 +406,11 @@
     "country4": "Poland 🇵🇱",
     "country5": "Ecuador 🇪🇨",
     "country6": "Luxembourg 🇱🇺",
-    "country7": "United States 🇺🇸"
+    "country7": "United States 🇺🇸",
+    "country8": "Estonia 🇪🇪",
+    "country9": "Sweden 🇸🇪",
+    "country10": "Belgium 🇧🇪",
+    "country11": "Iceland 🇮🇸",
+    "country12": "Italy 🇮🇹"
   }
 }

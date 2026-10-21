@@ -108,6 +108,26 @@
       "resurrectionMary": {
         "name": "Mary la ressuscitée",
         "desc": "Une jeune femme fantomatique apparaît sur des routes solitaires avant de disparaître sans laisser de trace."
+      },
+      "nakk": {
+        "name": "Näkk",
+        "desc": "Un esprit des eaux métamorphe qui attire les imprudents dans les lacs ou rivières."
+      },
+      "huldra": {
+        "name": "Huldra",
+        "desc": "Un séduisant esprit forestier qui cache des traits surnaturels et attire les voyageurs dans les bois."
+      },
+      "kludde": {
+        "name": "Kludde",
+        "desc": "Une créature surnaturelle apparaissant en chien noir géant aux yeux de feu, effrayant les voyageurs nocturnes."
+      },
+      "jolasveinar": {
+        "name": "Jólasveinar",
+        "desc": "Treize visiteurs de Noël des foyers islandais qui volent de la nourriture, claquent les portes et jouent des tours."
+      },
+      "monacello": {
+        "name": "Monacello",
+        "desc": "Un petit esprit domestique de Naples dont les tours peuvent apporter bonne ou mauvaise fortune."
       }
     },
     "country1": "El Salvador 🇸🇻",
@@ -203,7 +223,7 @@
       "footer": "Construire des ponts entre les cultures. Droits d’auteur {author}.",
       "rarePairs": [
         {
-          "chance": 0.025,
+          "chance": 0.011111111111111112,
           "replaceSource": "goodAndBadCadejo",
           "pair": {
             "source": "goodAndBadCadejo",
@@ -216,7 +236,7 @@
           }
         },
         {
-          "chance": 0.025,
+          "chance": 0.011111111111111112,
           "replaceSource": "fleshlessWoman",
           "pair": {
             "source": "fleshlessWoman",
@@ -229,7 +249,7 @@
           }
         },
         {
-          "chance": 0.025,
+          "chance": 0.011111111111111112,
           "replaceSource": "goodAndBadCadejo",
           "pair": {
             "source": "goodAndBadCadejo",
@@ -242,7 +262,7 @@
           }
         },
         {
-          "chance": 0.025,
+          "chance": 0.011111111111111112,
           "replaceSource": "funeralCortegeOfChalchuapa",
           "pair": {
             "source": "funeralCortegeOfChalchuapa",
@@ -276,6 +296,71 @@
             "insight": "Des êtres dont les chants détournent les vivants de la raison, du chemin ou d’eux-mêmes.",
             "icon": "music",
             "rarity": "rare"
+          }
+        },
+        {
+          "chance": 0.011111111111111112,
+          "replaceSource": "siguanaba",
+          "pair": {
+            "source": "siguanaba",
+            "mirror": "nakk",
+            "insightTitle": "Appâts mortels",
+            "insight": "Tentations qui entraînent les vivants vers des fins irréversibles.",
+            "mirrorOrigin": "estonia",
+            "icon": "masks",
+            "rarity": "ultra-rare"
+          }
+        },
+        {
+          "chance": 0.011111111111111112,
+          "replaceSource": "siguanaba",
+          "pair": {
+            "source": "siguanaba",
+            "mirror": "huldra",
+            "insightTitle": "Appâts mortels",
+            "insight": "Tentations qui entraînent les vivants vers des fins irréversibles.",
+            "mirrorOrigin": "sweden",
+            "icon": "masks",
+            "rarity": "ultra-rare"
+          }
+        },
+        {
+          "chance": 0.011111111111111112,
+          "replaceSource": "goodAndBadCadejo",
+          "pair": {
+            "source": "goodAndBadCadejo",
+            "mirror": "kludde",
+            "insightTitle": "Gardiens et bêtes",
+            "insight": "Protecteurs ou créatures qui font respecter les limites de la nuit.",
+            "mirrorOrigin": "belgium",
+            "icon": "paw",
+            "rarity": "ultra-rare"
+          }
+        },
+        {
+          "chance": 0.011111111111111112,
+          "replaceSource": "dwarf",
+          "pair": {
+            "source": "dwarf",
+            "mirror": "jolasveinar",
+            "insightTitle": "Filous domestiques",
+            "insight": "Esprits du foyer qui récompensent le respect et punissent la négligence.",
+            "mirrorOrigin": "iceland",
+            "icon": "wizard",
+            "rarity": "ultra-rare"
+          }
+        },
+        {
+          "chance": 0.011111111111111112,
+          "replaceSource": "dwarf",
+          "pair": {
+            "source": "dwarf",
+            "mirror": "monacello",
+            "insightTitle": "Filous domestiques",
+            "insight": "Esprits du foyer qui récompensent le respect et punissent la négligence.",
+            "mirrorOrigin": "italy",
+            "icon": "wizard",
+            "rarity": "ultra-rare"
           }
         }
       ],
@@ -321,6 +406,11 @@
     "country4": "Pologne 🇵🇱",
     "country5": "Équateur 🇪🇨",
     "country6": "Luxembourg 🇱🇺",
-    "country7": "États-Unis 🇺🇸"
+    "country7": "États-Unis 🇺🇸",
+    "country8": "Estonie 🇪🇪",
+    "country9": "Suède 🇸🇪",
+    "country10": "Belgique 🇧🇪",
+    "country11": "Islande 🇮🇸",
+    "country12": "Italie 🇮🇹"
   }
 }

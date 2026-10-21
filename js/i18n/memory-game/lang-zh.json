@@ -108,6 +108,26 @@
       "resurrectionMary": {
         "name": "复活玛丽",
         "desc": "一位幽灵般的年轻女子出现在孤寂道路上，随后消失得无影无踪。"
+      },
+      "nakk": {
+        "name": "Näkk",
+        "desc": "能变化形态的水中精灵，将毫无戒心的人引入湖泊或河流。"
+      },
+      "huldra": {
+        "name": "Huldra",
+        "desc": "迷人的森林精灵，隐藏超自然特征，将旅人引入林中。"
+      },
+      "kludde": {
+        "name": "Kludde",
+        "desc": "化为火眼巨大黑犬的超自然生物，惊吓夜间旅人。"
+      },
+      "jolasveinar": {
+        "name": "Jólasveinar",
+        "desc": "圣诞节造访冰岛家庭的十三个调皮角色，偷食物、摔门并恶作剧。"
+      },
+      "monacello": {
+        "name": "Monacello",
+        "desc": "来自那不勒斯的小小家宅精灵，其恶作剧可能带来好运或厄运。"
       }
     },
     "country1": "萨尔瓦多 🇸🇻",
@@ -203,7 +223,7 @@
       "footer": "在文化之间架起桥梁。版权所有 {author}。",
       "rarePairs": [
         {
-          "chance": 0.025,
+          "chance": 0.011111111111111112,
           "replaceSource": "goodAndBadCadejo",
           "pair": {
             "source": "goodAndBadCadejo",
@@ -216,7 +236,7 @@
           }
         },
         {
-          "chance": 0.025,
+          "chance": 0.011111111111111112,
           "replaceSource": "fleshlessWoman",
           "pair": {
             "source": "fleshlessWoman",
@@ -229,7 +249,7 @@
           }
         },
         {
-          "chance": 0.025,
+          "chance": 0.011111111111111112,
           "replaceSource": "goodAndBadCadejo",
           "pair": {
             "source": "goodAndBadCadejo",
@@ -242,7 +262,7 @@
           }
         },
         {
-          "chance": 0.025,
+          "chance": 0.011111111111111112,
           "replaceSource": "funeralCortegeOfChalchuapa",
           "pair": {
             "source": "funeralCortegeOfChalchuapa",
@@ -276,6 +296,71 @@
             "insight": "歌声使生者偏离理智、道路或自我的存在。",
             "icon": "music",
             "rarity": "rare"
+          }
+        },
+        {
+          "chance": 0.011111111111111112,
+          "replaceSource": "siguanaba",
+          "pair": {
+            "source": "siguanaba",
+            "mirror": "nakk",
+            "insightTitle": "致命诱惑",
+            "insight": "把生者引向无法回头结局的诱惑。",
+            "mirrorOrigin": "estonia",
+            "icon": "masks",
+            "rarity": "ultra-rare"
+          }
+        },
+        {
+          "chance": 0.011111111111111112,
+          "replaceSource": "siguanaba",
+          "pair": {
+            "source": "siguanaba",
+            "mirror": "huldra",
+            "insightTitle": "致命诱惑",
+            "insight": "把生者引向无法回头结局的诱惑。",
+            "mirrorOrigin": "sweden",
+            "icon": "masks",
+            "rarity": "ultra-rare"
+          }
+        },
+        {
+          "chance": 0.011111111111111112,
+          "replaceSource": "goodAndBadCadejo",
+          "pair": {
+            "source": "goodAndBadCadejo",
+            "mirror": "kludde",
+            "insightTitle": "守护者与怪兽",
+            "insight": "守护者或生物，维护夜晚的边界。",
+            "mirrorOrigin": "belgium",
+            "icon": "paw",
+            "rarity": "ultra-rare"
+          }
+        },
+        {
+          "chance": 0.011111111111111112,
+          "replaceSource": "dwarf",
+          "pair": {
+            "source": "dwarf",
+            "mirror": "jolasveinar",
+            "insightTitle": "家宅捣蛋精灵",
+            "insight": "奖赏尊重、惩罚疏忽的家宅精灵。",
+            "mirrorOrigin": "iceland",
+            "icon": "wizard",
+            "rarity": "ultra-rare"
+          }
+        },
+        {
+          "chance": 0.011111111111111112,
+          "replaceSource": "dwarf",
+          "pair": {
+            "source": "dwarf",
+            "mirror": "monacello",
+            "insightTitle": "家宅捣蛋精灵",
+            "insight": "奖赏尊重、惩罚疏忽的家宅精灵。",
+            "mirrorOrigin": "italy",
+            "icon": "wizard",
+            "rarity": "ultra-rare"
           }
         }
       ],
@@ -321,6 +406,11 @@
     "country4": "波兰 🇵🇱",
     "country5": "厄瓜多尔 🇪🇨",
     "country6": "卢森堡 🇱🇺",
-    "country7": "美国 🇺🇸"
+    "country7": "美国 🇺🇸",
+    "country8": "爱沙尼亚 🇪🇪",
+    "country9": "瑞典 🇸🇪",
+    "country10": "比利时 🇧🇪",
+    "country11": "冰岛 🇮🇸",
+    "country12": "意大利 🇮🇹"
   }
 }

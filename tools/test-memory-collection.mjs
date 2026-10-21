@@ -21,6 +21,21 @@ class Element {
 const source = fs.readFileSync('js/memory-game.js', 'utf8');
 const sharedStorage = new Map([['timelessMemoryIntroSeen', 'true']]);
 const data = JSON.parse(fs.readFileSync('js/i18n/memory-game/lang-en.json', 'utf8'));
+const newMirrors = ['nakk', 'huldra', 'kludde', 'jolasveinar', 'monacello'];
+for (const language of ['en', 'es', 'fr', 'zh']) {
+  const localized = JSON.parse(fs.readFileSync(`js/i18n/memory-game/lang-${language}.json`, 'utf8')).translations;
+  const golden = localized.memoryGame.rarePairs.filter(item => item.pair.rarity === 'ultra-rare');
+  assert.equal(golden.length, 9);
+  assert.ok(Math.abs(golden.reduce((sum, item) => sum + item.chance, 0) - 0.1) < 1e-12, 'Golden Mirrors retain their total 10% chance');
+  assert.ok(Math.abs(localized.memoryGame.rarePairs.reduce((sum, item) => sum + item.chance, 0) - 0.25) < 1e-12, 'total variant probability remains unchanged');
+  for (const mirror of newMirrors) {
+    const variant = golden.find(item => item.pair.mirror === mirror);
+    assert.ok(variant?.chance > 0, `${language}: ${mirror} can appear`);
+    assert.ok(localized.mapLegends[mirror]?.desc, `${language}: ${mirror} has a description`);
+    assert.equal(variant.replaceSource, variant.pair.source);
+    assert.equal(variant.pair.insightTitle, localized.memoryGame.pairs.find(pair => pair.source === variant.pair.source).insightTitle);
+  }
+}
 const links = JSON.parse(fs.readFileSync('js/data/links.json', 'utf8'));
 async function load(storage = sharedStorage) {
   const elements = new Map();
@@ -40,6 +55,22 @@ const solve = `for (const pairId of new Set(deck.map(card => card.pairId))) {
   flipCard(createCard(deck.find(card => card.pairId === pairId), 0));
   flipCard(createCard(deck.filter(card => card.pairId === pairId)[1], 1));
 }`;
+for (const mirror of newMirrors) {
+  const storage = new Map([['timelessMemoryIntroSeen', 'true']]);
+  const runtime = await load(storage);
+  const index = data.translations.memoryGame.rarePairs.findIndex(item => item.pair.mirror === mirror);
+  const variants = data.translations.memoryGame.rarePairs;
+  const roll = variants.slice(0, index).reduce((sum, item) => sum + item.chance, 0) + variants[index].chance / 2;
+  runtime.run(`Math.random = () => ${roll}; newGame();`);
+  assert.equal(runtime.run(`activePairs.some(pair => pair.mirror === '${mirror}')`), true, `${mirror} is selected through the existing probability logic`);
+  assert.equal(runtime.run('activePairs.length'), 10);
+  assert.equal(storage.has('timelessMemoryCollection'), false);
+  runtime.run(solve);
+  assert.equal(runtime.run(`discoveries.has(getMirrorId(activePairs.find(pair => pair.mirror === '${mirror}')))`), true);
+  assert.ok(runtime.run(`getOriginFlag('${variants[index].pair.mirrorOrigin}')`).length > 0);
+  const reloaded = await load(storage);
+  assert.equal(reloaded.run(`discoveries.has('${variants[index].pair.source}|${mirror}')`), true, `${mirror} discovery survives reload`);
+}
 page.run(`activePairs = memoryGame.pairs.map(pair => ({...pair})); deck = buildDeck();`);
 page.run(`flipCard(createCard(deck[0], 0)); flipCard(createCard(deck[1], 1));`);
 assert.equal(sharedStorage.has('timelessMemoryCollection'), false, 'a match grants nothing before completion');
@@ -50,12 +81,12 @@ assert.equal(JSON.parse(sharedStorage.get('timelessMemoryCollection')).length, 1
 page = await load();
 assert.equal(page.get('collectionButton').hidden, false, 'collection remains available after a fresh page load');
 assert.equal(page.run('discoveries.size'), 10);
-assert.equal(page.run('getMirrorCatalogue().length'), 16);
+assert.equal(page.run('getMirrorCatalogue().length'), 21);
 page.run('openCollection()');
 assert.equal(page.get('collectionProgress').value, 10);
-assert.equal(page.get('collectionProgress').max, 16);
+assert.equal(page.get('collectionProgress').max, 21);
 const groups = page.get('collectionGroups').children;
-assert.deepEqual(groups.map(group => group.children[1].children.length), [10, 2, 4]);
+assert.deepEqual(groups.map(group => group.children[1].children.length), [10, 2, 9]);
 assert.equal(groups[1].children[1].children[0].disabled, true);
 assert.equal(groups[1].children[1].children[0].children[1].textContent, '???');
 assert.equal(groups[1].children[1].children[0].children[2].textContent, '🇸🇻 · ❓');
@@ -73,7 +104,7 @@ assert.equal(page.get('legendsPanelTitle').textContent, data.translations.memory
 assert.equal(page.get('legendsPanelTitle').hidden, false, 'full legends view restores its heading');
 assert.equal(page.get('legendsFooter').hidden, false, 'full legends view restores its footer');
 page.run('memoryGame.pairs.push({source:"futureSource", mirror:"futureMirror"}); renderCollection()');
-assert.equal(page.get('collectionProgress').max, 17, 'future catalogue additions appear automatically');
+assert.equal(page.get('collectionProgress').max, 22, 'future catalogue additions appear automatically');
 assert.equal(page.get('collectionProgress').value, 10);
 page = await load(new Map([['timelessMemoryIntroSeen', 'true']]));
 page.run('activePairs = memoryGame.pairs.map(pair => ({...pair})); activePairs[0] = memoryGame.rarePairs[0].pair; deck = buildDeck();');

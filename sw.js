@@ -1,17 +1,17 @@
-const CACHE_VERSION = "memory-game-pwa-20261021-collection-categories";
+const CACHE_VERSION = "memory-game-pwa-20261021-short-mirror-descriptions";
 const APP_SHELL = [
   "/memory-game.html",
   "/memory-game.webmanifest",
   "/css/poppins.min.css",
   "/css/icon-moon-memory.min.css?v=20261021-collection",
   "/css/memory-game.min.css?v=20261021-card-alpha-50",
-  "/js/memory-game.min.js?v=20261021-collection-categories",
+  "/js/memory-game.min.js?v=20261021-short-mirror-descriptions",
   "/js/pwa.min.js",
   "/js/data/links.min.json",
-  "/js/i18n/memory-game/lang-en.min.json?v=20261021-collection",
-  "/js/i18n/memory-game/lang-es.min.json?v=20261021-collection",
-  "/js/i18n/memory-game/lang-fr.min.json?v=20261021-collection",
-  "/js/i18n/memory-game/lang-zh.min.json?v=20261021-collection",
+  "/js/i18n/memory-game/lang-en.min.json?v=20261021-short-mirror-descriptions",
+  "/js/i18n/memory-game/lang-es.min.json?v=20261021-short-mirror-descriptions",
+  "/js/i18n/memory-game/lang-fr.min.json?v=20261021-short-mirror-descriptions",
+  "/js/i18n/memory-game/lang-zh.min.json?v=20261021-short-mirror-descriptions",
   "/img/preview_memory.jpg",
   "/img/favicons/maskable_icon_x192.png",
   "/img/favicons/maskable_icon_x512.png",

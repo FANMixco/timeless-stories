@@ -6,7 +6,7 @@ const collectionStorageKey = "timelessMemoryCollection";
 const supportedThemes = ["system", "light", "dark"];
 const previewRewardThresholdSeconds = 30;
 const mismatchFlipBackDelayMs = 1200;
-const i18nCacheVersion = "20261021-collection";
+const i18nCacheVersion = "20261021-short-mirror-descriptions";
 let linkRegistry = null;
 let localizedLinks = null;
 const board = document.getElementById("board");
@@ -547,6 +547,11 @@ function getOriginLabel(side) {
     ecuador: translations?.country5 || "",
     luxembourg: translations?.country6 || "",
     usa: translations?.country7 || "",
+    estonia: translations?.country8 || "",
+    sweden: translations?.country9 || "",
+    belgium: translations?.country10 || "",
+    iceland: translations?.country11 || "",
+    italy: translations?.country12 || "",
   };
 
   return originLabels[side] || "";

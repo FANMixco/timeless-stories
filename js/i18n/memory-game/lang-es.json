@@ -108,6 +108,26 @@
       "resurrectionMary": {
         "name": "Mary Resucitada",
         "desc": "Una joven fantasmal aparece en caminos solitarios antes de desvanecerse sin dejar rastro."
+      },
+      "nakk": {
+        "name": "Näkk",
+        "desc": "Un espíritu acuático que cambia de forma y atrae a personas desprevenidas a lagos o ríos."
+      },
+      "huldra": {
+        "name": "Huldra",
+        "desc": "Un seductor espíritu del bosque que oculta rasgos sobrenaturales y atrae a viajeros entre los árboles."
+      },
+      "kludde": {
+        "name": "Kludde",
+        "desc": "Una criatura sobrenatural con forma de perro negro gigante y ojos ardientes que asusta a viajeros nocturnos."
+      },
+      "jolasveinar": {
+        "name": "Jólasveinar",
+        "desc": "Trece visitantes navideños de hogares islandeses que roban comida, dan portazos y hacen travesuras."
+      },
+      "monacello": {
+        "name": "Monacello",
+        "desc": "Un pequeño espíritu doméstico de Nápoles cuyas travesuras pueden traer buena o mala fortuna."
       }
     },
     "country1": "El Salvador 🇸🇻",
@@ -203,7 +223,7 @@
       "footer": "Construyendo puentes entre culturas. Derechos de autor {author}.",
       "rarePairs": [
         {
-          "chance": 0.025,
+          "chance": 0.011111111111111112,
           "replaceSource": "goodAndBadCadejo",
           "pair": {
             "source": "goodAndBadCadejo",
@@ -216,7 +236,7 @@
           }
         },
         {
-          "chance": 0.025,
+          "chance": 0.011111111111111112,
           "replaceSource": "fleshlessWoman",
           "pair": {
             "source": "fleshlessWoman",
@@ -229,7 +249,7 @@
           }
         },
         {
-          "chance": 0.025,
+          "chance": 0.011111111111111112,
           "replaceSource": "goodAndBadCadejo",
           "pair": {
             "source": "goodAndBadCadejo",
@@ -242,7 +262,7 @@
           }
         },
         {
-          "chance": 0.025,
+          "chance": 0.011111111111111112,
           "replaceSource": "funeralCortegeOfChalchuapa",
           "pair": {
             "source": "funeralCortegeOfChalchuapa",
@@ -276,6 +296,71 @@
             "insight": "Seres cuyas canciones desvían a los vivos de la razón, del camino o de sí mismos.",
             "icon": "music",
             "rarity": "rare"
+          }
+        },
+        {
+          "chance": 0.011111111111111112,
+          "replaceSource": "siguanaba",
+          "pair": {
+            "source": "siguanaba",
+            "mirror": "nakk",
+            "insightTitle": "Seducciones fatales",
+            "insight": "Tentaciones que arrastran a los vivos hacia finales irreversibles.",
+            "mirrorOrigin": "estonia",
+            "icon": "masks",
+            "rarity": "ultra-rare"
+          }
+        },
+        {
+          "chance": 0.011111111111111112,
+          "replaceSource": "siguanaba",
+          "pair": {
+            "source": "siguanaba",
+            "mirror": "huldra",
+            "insightTitle": "Seducciones fatales",
+            "insight": "Tentaciones que arrastran a los vivos hacia finales irreversibles.",
+            "mirrorOrigin": "sweden",
+            "icon": "masks",
+            "rarity": "ultra-rare"
+          }
+        },
+        {
+          "chance": 0.011111111111111112,
+          "replaceSource": "goodAndBadCadejo",
+          "pair": {
+            "source": "goodAndBadCadejo",
+            "mirror": "kludde",
+            "insightTitle": "Guardianes y bestias",
+            "insight": "Protectores o criaturas que hacen cumplir los límites de la noche.",
+            "mirrorOrigin": "belgium",
+            "icon": "paw",
+            "rarity": "ultra-rare"
+          }
+        },
+        {
+          "chance": 0.011111111111111112,
+          "replaceSource": "dwarf",
+          "pair": {
+            "source": "dwarf",
+            "mirror": "jolasveinar",
+            "insightTitle": "Embaucadores domésticos",
+            "insight": "Espíritus del hogar que recompensan el respeto y castigan el descuido.",
+            "mirrorOrigin": "iceland",
+            "icon": "wizard",
+            "rarity": "ultra-rare"
+          }
+        },
+        {
+          "chance": 0.011111111111111112,
+          "replaceSource": "dwarf",
+          "pair": {
+            "source": "dwarf",
+            "mirror": "monacello",
+            "insightTitle": "Embaucadores domésticos",
+            "insight": "Espíritus del hogar que recompensan el respeto y castigan el descuido.",
+            "mirrorOrigin": "italy",
+            "icon": "wizard",
+            "rarity": "ultra-rare"
           }
         }
       ],
@@ -321,6 +406,11 @@
     "country4": "Polonia 🇵🇱",
     "country5": "Ecuador 🇪🇨",
     "country6": "Luxemburgo 🇱🇺",
-    "country7": "Estados Unidos 🇺🇸"
+    "country7": "Estados Unidos 🇺🇸",
+    "country8": "Estonia 🇪🇪",
+    "country9": "Suecia 🇸🇪",
+    "country10": "Bélgica 🇧🇪",
+    "country11": "Islandia 🇮🇸",
+    "country12": "Italia 🇮🇹"
   }
 }
