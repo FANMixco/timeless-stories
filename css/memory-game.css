@@ -490,6 +490,11 @@ html[data-theme="dark"] .card[data-rarity="tutorial"] .character-icon {
   opacity: 0.5;
 }
 
+.card.is-matched .character-name,
+.card.is-matched .character-origin-text {
+  opacity: 1;
+}
+
 .character-desc {
   display: none !important;
 }
