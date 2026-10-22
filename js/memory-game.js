@@ -6,7 +6,7 @@ const collectionStorageKey = "timelessMemoryCollection";
 const supportedThemes = ["system", "light", "dark"];
 const previewRewardThresholdSeconds = 30;
 const mismatchFlipBackDelayMs = 1200;
-const i18nCacheVersion = "20261023-confirm-restart";
+const i18nCacheVersion = "20261023-restart-modal";
 let linkRegistry = null;
 let localizedLinks = null;
 const board = document.getElementById("board");
@@ -34,6 +34,8 @@ const gameFooter = document.getElementById("gameFooter");
 const gameLayout = document.querySelector(".game-layout");
 const aboutPanel = document.getElementById("aboutPanel");
 const closeAboutButton = document.getElementById("closeAboutButton");
+const restartPanel = document.getElementById("restartPanel");
+const cancelRestartButton = document.getElementById("cancelRestartButton");
 let aboutReturnFocus = null;
 const newGameButton = document.getElementById("newGameButton");
 const languageControl = document.getElementById("languageControl");
@@ -84,7 +86,7 @@ let restoringModalHistory = false;
 let pendingModalNavigation = false;
 const modalHistorySession = `${Date.now()}-${Math.random()}`;
 const modalHistoryKey = "timelessMemoryModals";
-const modalPanels = [winPanel, collectionPanel, legendsPanel, rarityPanel, aboutPanel];
+const modalPanels = [winPanel, collectionPanel, legendsPanel, rarityPanel, aboutPanel, restartPanel];
 const modalHistory = !isEmbedded ? window.history : null;
 
 function getModalSnapshot() {
@@ -125,12 +127,14 @@ function restoreModalSnapshot(snapshot) {
     const visible = new Set(snapshot.panels.filter(id => {
       // Forward must not resurrect a previous round's completion dialogs.
       if (id === "winPanel" || (id === "legendsPanel" && !snapshot.detail)) return gameCompleted;
+      if (id === "restartPanel") return hasGameInProgress();
       return true;
     }));
     if (!visible.has("rarityPanel")) closeRarityPanel();
     if (!visible.has("legendsPanel")) closeLegendsPanel();
     if (!visible.has("collectionPanel") && collectionPanel.classList.contains("is-visible")) closeCollection();
     if (!visible.has("aboutPanel") && aboutPanel.classList.contains("is-visible")) closeAboutPanel();
+    if (!visible.has("restartPanel") && restartPanel.classList.contains("is-visible")) closeRestartPanel();
     modalPanels.forEach(panel => panel?.classList.toggle("is-visible", visible.has(panel.id)));
     modalDetailPair = snapshot.detail;
     modalRarity = snapshot.rarity;
@@ -147,7 +151,8 @@ function restoreModalSnapshot(snapshot) {
     collectionPanel.inert = coveredCollection;
     collectionPanel.setAttribute("aria-modal", String(!coveredCollection));
     // Move focus into the newly active layer (including after Forward).
-    if (visible.has("aboutPanel")) closeAboutButton.focus();
+    if (visible.has("restartPanel")) cancelRestartButton.focus();
+    else if (visible.has("aboutPanel")) closeAboutButton.focus();
     else if (visible.has("rarityPanel")) closeRarityButton.focus();
     else if (visible.has("legendsPanel")) closeLegendsButton.focus();
     else if (visible.has("collectionPanel")) closeCollectionButton.focus();
@@ -489,9 +494,9 @@ function syncModalScrollLock() {
 
 function refreshModalScrollLock() {
   const hasOpenPanel = modalPanels.some(panel => panel?.classList.contains("is-visible"));
-  const aboutOpen = aboutPanel.classList.contains("is-visible");
-  if (gameLayout) gameLayout.inert = aboutOpen;
-  if (gameFooter) gameFooter.inert = aboutOpen;
+  const backgroundCovered = aboutPanel.classList.contains("is-visible") || restartPanel.classList.contains("is-visible");
+  if (gameLayout) gameLayout.inert = backgroundCovered;
+  if (gameFooter) gameFooter.inert = backgroundCovered;
 
   if (hasOpenPanel) {
     lockPageScroll();
@@ -650,6 +655,10 @@ function closeAboutPanel() {
 
 function applyUiCopy() {
   renderAbout();
+  setElementText(document.getElementById("restartTitle"), memoryGame.newGame || "New game");
+  setElementText(document.getElementById("restartMessage"), memoryGame.confirmRestart || "Start a new game? Your progress in this round will be lost.");
+  setElementText(cancelRestartButton, memoryGame.keepPlaying || "Keep playing");
+  setElementText(document.getElementById("confirmRestartButton"), memoryGame.newGame || "New game");
   const seoTitle = memoryGame.seoTitle || memoryGame.title || document.title;
   const seoDescription = memoryGame.seoDescription || memoryGame.subtitle || "";
   document.title = seoTitle;
@@ -1236,9 +1245,22 @@ function wait(ms) {
 }
 
 function restartGame() {
-  if (hasGameInProgress() && !window.confirm(memoryGame.confirmRestart || "Start a new game? Your progress in this round will be lost.")) {
+  if (hasGameInProgress()) {
+    restartPanel.classList.add("is-visible");
+    cancelRestartButton.focus({ preventScroll: true });
+    syncModalScrollLock();
     return;
   }
+  startFreshGame();
+}
+
+function closeRestartPanel() {
+  restartPanel.classList.remove("is-visible");
+  syncModalScrollLock();
+  newGameButton.focus({ preventScroll: true });
+}
+
+function startFreshGame() {
   newGame();
   // Reset an already-scrolled board after its previous match description and
   // dialogs disappear. Preserve the user's scroll position on ordinary resume.
@@ -1397,8 +1419,9 @@ document.addEventListener("click", (event) => {
   }
 });
 document.addEventListener("keydown", (event) => {
-  if (event.key === "Tab" && (aboutPanel.classList.contains("is-visible") || collectionPanel.classList.contains("is-visible"))) {
-    const panel = aboutPanel.classList.contains("is-visible") ? aboutPanel
+  if (event.key === "Tab" && (restartPanel.classList.contains("is-visible") || aboutPanel.classList.contains("is-visible") || collectionPanel.classList.contains("is-visible"))) {
+    const panel = restartPanel.classList.contains("is-visible") ? restartPanel
+      : aboutPanel.classList.contains("is-visible") ? aboutPanel
       : rarityPanel.classList.contains("is-visible") ? rarityPanel
       : collectionDetailTrigger ? legendsPanel : collectionPanel;
     const controls = [...panel.querySelectorAll("button:not(:disabled), a[href]")]
@@ -1415,7 +1438,9 @@ document.addEventListener("keydown", (event) => {
   }
   if (event.key === "Escape") {
     closeLanguageMenu();
-    if (aboutPanel.classList.contains("is-visible")) {
+    if (restartPanel.classList.contains("is-visible")) {
+      closeRestartPanel();
+    } else if (aboutPanel.classList.contains("is-visible")) {
       closeAboutPanel();
     } else if (rarityPanel?.classList.contains("is-visible")) {
       closeRarityPanel();
@@ -1470,6 +1495,11 @@ viewLegendsButton?.addEventListener("click", openLegendsPanel);
 topViewLegendsButton?.addEventListener("click", openLegendsPanel);
 closeLegendsButton?.addEventListener("click", closeLegendsPanel);
 closeAboutButton.addEventListener("click", closeAboutPanel);
+cancelRestartButton.addEventListener("click", closeRestartPanel);
+document.getElementById("confirmRestartButton").addEventListener("click", startFreshGame);
+restartPanel.addEventListener("click", event => {
+  if (event.target === restartPanel) closeRestartPanel();
+});
 aboutPanel.addEventListener("click", event => {
   if (event.target === aboutPanel) closeAboutPanel();
 });

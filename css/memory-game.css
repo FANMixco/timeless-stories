@@ -1030,6 +1030,7 @@ html[data-theme="dark"] .card[data-rarity="tutorial"] .character-icon {
 }
 
 .about-panel { z-index: 26; }
+.restart-panel { z-index: 31; }
 .about-card { line-height: 1.6; }
 .about-card h2 { line-height: 1.2; }
 .about-eyebrow {

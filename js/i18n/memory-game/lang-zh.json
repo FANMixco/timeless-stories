@@ -167,6 +167,7 @@
       "subtitle": "从《西班牙镜子》中找出每一对镜子。",
       "newGame": "新游戏",
       "confirmRestart": "要开始新游戏吗？本局游戏进度将会丢失。",
+      "keepPlaying": "继续游戏",
       "statusLabel": "游戏状态",
       "moves": "步数",
       "matches": "配对",

@@ -56,7 +56,7 @@
       }
     </script>
     <link rel="stylesheet" href="css/icon-moon-memory.min.css?v=20261021-collection" />
-    <link rel="stylesheet" href="css/memory-game.min.css?v=20261022-slower-match-effects" />
+    <link rel="stylesheet" href="css/memory-game.min.css?v=20261023-restart-actions" />
   </head>
   <body>
     <main class="game-shell" aria-label="">
@@ -185,10 +185,20 @@
           </nav>
         </div>
       </aside>
+      <aside class="win-panel restart-panel" id="restartPanel" role="dialog" aria-modal="true" aria-labelledby="restartTitle" aria-describedby="restartMessage">
+        <div class="win-card restart-card">
+          <h2 id="restartTitle"></h2>
+          <p id="restartMessage"></p>
+          <div class="win-actions">
+            <button class="game-button" id="cancelRestartButton" type="button"></button>
+            <button class="game-button secondary" id="confirmRestartButton" type="button"></button>
+          </div>
+        </div>
+      </aside>
       <footer class="game-footer standalone-only" id="gameFooter"></footer>
     </main>
 
-    <script src="js/memory-game.min.js?v=20261023-confirm-restart"></script>
+    <script src="js/memory-game.min.js?v=20261023-restart-actions"></script>
     <script src="js/gAnalyticsIdleLoad.min.js" defer></script>
     <script src="js/pwa.min.js?v=20261021-pwa-registration" defer></script>
   </body>
