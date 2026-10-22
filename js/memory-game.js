@@ -6,7 +6,7 @@ const collectionStorageKey = "timelessMemoryCollection";
 const supportedThemes = ["system", "light", "dark"];
 const previewRewardThresholdSeconds = 30;
 const mismatchFlipBackDelayMs = 1200;
-const i18nCacheVersion = "20261022-seo";
+const i18nCacheVersion = "20261022-clearer-hint";
 let linkRegistry = null;
 let localizedLinks = null;
 const board = document.getElementById("board");
@@ -1103,7 +1103,7 @@ function hideLegendToast() {
   }
 }
 
-function showToast(title, text) {
+function showToast(title, text, emphasis = "") {
   if (!text) {
     hideLegendToast();
     return;
@@ -1111,6 +1111,11 @@ function showToast(title, text) {
 
   legendToastTitle.textContent = title || "";
   legendToastText.textContent = text;
+  if (emphasis && text.startsWith(emphasis)) {
+    const opening = document.createElement("b");
+    opening.textContent = emphasis;
+    legendToastText.replaceChildren(opening, document.createTextNode(text.slice(emphasis.length)));
+  }
   legendToast.hidden = false;
   legendToast.dataset.tutorial = String(introRunning);
   legendToastClose.hidden = introRunning;
@@ -1277,7 +1282,7 @@ async function runIntroTutorial() {
 
   board.replaceChildren(...tutorialCards.map(createCard));
   const cards = [...board.querySelectorAll(".card")];
-  showToast(memoryGame.hint || "Hint", memoryGame.hintText || "Pay attention to the icons.");
+  showToast(memoryGame.hint || "Hint", memoryGame.hintText || "Pay attention to the icons.", memoryGame.hintEmphasis);
 
   await wait(520);
   if (runId !== tutorialRunId) return;
@@ -1310,7 +1315,7 @@ function handleHint() {
     if (!isEmbedded) window.scrollTo({ top: 0, left: 0, behavior: "auto" });
     return;
   }
-  showToast(memoryGame.hint || "Hint", memoryGame.hintText || "Pay attention to the icons.");
+  showToast(memoryGame.hint || "Hint", memoryGame.hintText || "Pay attention to the icons.", memoryGame.hintEmphasis);
 }
 
 function startGame() {
