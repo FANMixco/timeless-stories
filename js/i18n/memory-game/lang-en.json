@@ -467,6 +467,20 @@
         "other": "Online exclusive mirrors",
         "contribute": "Know another mirror? Share a new comparison through our contact form.",
         "submit": "Submit a comparison"
+      },
+      "about": {
+        "open": "About Federico Navarrete",
+        "label": "About the author",
+        "biography": [
+          "Federico Navarrete is a Spanish–Salvadoran technology strategist and cultural researcher who builds bridges between cultures through folklore. His experience living in Poland, Spain, and Luxembourg inspired him to bring Salvadoran legends to international readers.",
+          "His Spanish Mirrors project connects the legends of El Salvador, Spain, and North Africa through their shared symbols and human experiences. He has presented his work at embassies and Instituto Cervantes centers across three continents, including the 2026 SIEL International Book Fair in Rabat."
+        ],
+        "edition": "English edition",
+        "bookTitle": "Spanish Mirrors",
+        "bookDescription": "Discover the stories behind the game and the legends that connect cultures.",
+        "previewAlt": "Spanish Mirrors in English, shown as a printed book and on digital readers",
+        "amazon": "View on Amazon",
+        "websites": "Official websites"
       }
     },
     "country3": "Morocco 🇲🇦",

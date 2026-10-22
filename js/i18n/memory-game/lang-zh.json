@@ -467,6 +467,20 @@
         "other": "线上独家镜像",
         "contribute": "知道其他镜像故事吗？通过联系表单分享新的故事比较。",
         "submit": "提交故事比较"
+      },
+      "about": {
+        "open": "关于 Federico Navarrete",
+        "label": "关于作者",
+        "biography": [
+          "Federico Navarrete 是一位西班牙裔萨尔瓦多科技战略家和文化研究者，致力于通过民间传说连接不同文化。在波兰、西班牙和卢森堡生活的经历，启发他将萨尔瓦多传说介绍给世界各地的读者。",
+          "他的《西班牙镜像》项目通过共同的象征与人类经验，将萨尔瓦多、西班牙和北非的传说联系起来。他曾在横跨三大洲的使馆和塞万提斯学院中心介绍自己的作品，包括2026年在拉巴特举办的 SIEL 国际书展。"
+        ],
+        "edition": "英文版",
+        "bookTitle": "Spanish Mirrors",
+        "bookDescription": "探索游戏背后的故事，以及连接不同文化的传说。此处展示英文版图书。",
+        "previewAlt": "英文版 Spanish Mirrors 的纸质书与电子阅读器预览",
+        "amazon": "在 Amazon 查看",
+        "websites": "官方网站"
       }
     },
     "country3": "摩洛哥 🇲🇦",

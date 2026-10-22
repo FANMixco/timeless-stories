@@ -6,7 +6,7 @@ const collectionStorageKey = "timelessMemoryCollection";
 const supportedThemes = ["system", "light", "dark"];
 const previewRewardThresholdSeconds = 30;
 const mismatchFlipBackDelayMs = 1200;
-const i18nCacheVersion = "20261021-rarity-balance";
+const i18nCacheVersion = "20261022-about-author";
 let linkRegistry = null;
 let localizedLinks = null;
 const board = document.getElementById("board");
@@ -31,6 +31,10 @@ const rarityPanel = document.getElementById("rarityPanel");
 const rarityPanelTitle = document.getElementById("rarityPanelTitle");
 const rarityPreviewList = document.getElementById("rarityPreviewList");
 const gameFooter = document.getElementById("gameFooter");
+const gameLayout = document.querySelector(".game-layout");
+const aboutPanel = document.getElementById("aboutPanel");
+const closeAboutButton = document.getElementById("closeAboutButton");
+let aboutReturnFocus = null;
 const newGameButton = document.getElementById("newGameButton");
 const languageControl = document.getElementById("languageControl");
 const languageButton = document.getElementById("languageButton");
@@ -80,7 +84,7 @@ let restoringModalHistory = false;
 let pendingModalNavigation = false;
 const modalHistorySession = `${Date.now()}-${Math.random()}`;
 const modalHistoryKey = "timelessMemoryModals";
-const modalPanels = [winPanel, collectionPanel, legendsPanel, rarityPanel];
+const modalPanels = [winPanel, collectionPanel, legendsPanel, rarityPanel, aboutPanel];
 const modalHistory = !isEmbedded ? window.history : null;
 
 function getModalSnapshot() {
@@ -126,6 +130,7 @@ function restoreModalSnapshot(snapshot) {
     if (!visible.has("rarityPanel")) closeRarityPanel();
     if (!visible.has("legendsPanel")) closeLegendsPanel();
     if (!visible.has("collectionPanel") && collectionPanel.classList.contains("is-visible")) closeCollection();
+    if (!visible.has("aboutPanel") && aboutPanel.classList.contains("is-visible")) closeAboutPanel();
     modalPanels.forEach(panel => panel?.classList.toggle("is-visible", visible.has(panel.id)));
     modalDetailPair = snapshot.detail;
     modalRarity = snapshot.rarity;
@@ -142,7 +147,8 @@ function restoreModalSnapshot(snapshot) {
     collectionPanel.inert = coveredCollection;
     collectionPanel.setAttribute("aria-modal", String(!coveredCollection));
     // Move focus into the newly active layer (including after Forward).
-    if (visible.has("rarityPanel")) closeRarityButton.focus();
+    if (visible.has("aboutPanel")) closeAboutButton.focus();
+    else if (visible.has("rarityPanel")) closeRarityButton.focus();
     else if (visible.has("legendsPanel")) closeLegendsButton.focus();
     else if (visible.has("collectionPanel")) closeCollectionButton.focus();
     else if (visible.has("winPanel")) closeWinButton.focus();
@@ -482,11 +488,10 @@ function syncModalScrollLock() {
 }
 
 function refreshModalScrollLock() {
-  const hasOpenPanel =
-    winPanel.classList.contains("is-visible") ||
-    legendsPanel?.classList.contains("is-visible") ||
-    rarityPanel?.classList.contains("is-visible") ||
-    collectionPanel?.classList.contains("is-visible");
+  const hasOpenPanel = modalPanels.some(panel => panel?.classList.contains("is-visible"));
+  const aboutOpen = aboutPanel.classList.contains("is-visible");
+  if (gameLayout) gameLayout.inert = aboutOpen;
+  if (gameFooter) gameFooter.inert = aboutOpen;
 
   if (hasOpenPanel) {
     lockPageScroll();
@@ -579,10 +584,13 @@ function renderFooter() {
   }
 
   const text = memoryGame.footer || "";
-  const link = document.createElement("a");
-  link.href = "https://federiconavarrete.com";
-  link.target = "_blank";
-  link.rel = "noopener noreferrer";
+  const link = document.createElement("button");
+  link.type = "button";
+  link.id = "aboutAuthorButton";
+  link.setAttribute("aria-haspopup", "dialog");
+  link.setAttribute("aria-controls", "aboutPanel");
+  link.setAttribute("aria-label", memoryGame.about?.open || "About Federico Navarrete");
+  link.addEventListener("click", openAboutPanel);
   link.textContent = "Federico Navarrete";
 
   gameFooter.replaceChildren();
@@ -594,7 +602,50 @@ function renderFooter() {
   }
 }
 
+function renderAbout() {
+  const copy = memoryGame.about || {};
+  setElementText(document.getElementById("aboutLabel"), copy.label || "About the author");
+  closeAboutButton.setAttribute("aria-label", memoryGame.close || "Close");
+  const paragraphs = (copy.biography || []).map(text => {
+    const paragraph = document.createElement("p");
+    paragraph.textContent = text;
+    return paragraph;
+  });
+  document.getElementById("aboutBiography").replaceChildren(...paragraphs);
+  const previews = {
+    en: "img/previews/mirrors_medium.webp",
+    es: "img/previews/mirrors_es_medium.webp",
+    fr: "img/previews/mirrors_fr_medium.webp"
+  };
+  const preview = document.getElementById("aboutBookImage");
+  preview.src = previews[currentLanguage] || previews.en;
+  preview.alt = copy.previewAlt || "Spanish Mirrors book preview";
+  setElementText(document.getElementById("aboutEdition"), copy.edition || "English edition");
+  setElementText(document.getElementById("aboutBookTitle"), copy.bookTitle || "Spanish Mirrors");
+  setElementText(document.getElementById("aboutBookDescription"), copy.bookDescription || "");
+  const bookUrl = resolveGameHref(memoryGame.getCopyHref);
+  document.getElementById("aboutPreviewLink").href = bookUrl;
+  document.getElementById("aboutBookLink").href = bookUrl;
+  setElementText(document.getElementById("aboutBookLink"), copy.amazon || "View on Amazon");
+  document.getElementById("aboutWebsites").setAttribute("aria-label", copy.websites || "Official websites");
+}
+
+function openAboutPanel() {
+  aboutReturnFocus = document.getElementById("aboutAuthorButton");
+  renderAbout();
+  aboutPanel.classList.add("is-visible");
+  closeAboutButton.focus({ preventScroll: true });
+  syncModalScrollLock();
+}
+
+function closeAboutPanel() {
+  aboutPanel.classList.remove("is-visible");
+  syncModalScrollLock();
+  aboutReturnFocus?.focus({ preventScroll: true });
+}
+
 function applyUiCopy() {
+  renderAbout();
   document.title = memoryGame.title || document.title;
   document.querySelector("meta[name='description']").content = memoryGame.subtitle || "";
   document.querySelector("meta[property='og:title']").content = memoryGame.title || "";
@@ -1314,8 +1365,9 @@ document.addEventListener("click", (event) => {
   }
 });
 document.addEventListener("keydown", (event) => {
-  if (event.key === "Tab" && collectionPanel.classList.contains("is-visible")) {
-    const panel = rarityPanel.classList.contains("is-visible") ? rarityPanel
+  if (event.key === "Tab" && (aboutPanel.classList.contains("is-visible") || collectionPanel.classList.contains("is-visible"))) {
+    const panel = aboutPanel.classList.contains("is-visible") ? aboutPanel
+      : rarityPanel.classList.contains("is-visible") ? rarityPanel
       : collectionDetailTrigger ? legendsPanel : collectionPanel;
     const controls = [...panel.querySelectorAll("button:not(:disabled), a[href]")]
       .filter((element) => !element.hidden && element.getClientRects().length);
@@ -1331,7 +1383,9 @@ document.addEventListener("keydown", (event) => {
   }
   if (event.key === "Escape") {
     closeLanguageMenu();
-    if (rarityPanel?.classList.contains("is-visible")) {
+    if (aboutPanel.classList.contains("is-visible")) {
+      closeAboutPanel();
+    } else if (rarityPanel?.classList.contains("is-visible")) {
       closeRarityPanel();
     } else if (legendsPanel.classList.contains("is-visible") && collectionDetailTrigger) {
       closeLegendsPanel();
@@ -1383,6 +1437,10 @@ closeWinButton.addEventListener("click", () => {
 viewLegendsButton?.addEventListener("click", openLegendsPanel);
 topViewLegendsButton?.addEventListener("click", openLegendsPanel);
 closeLegendsButton?.addEventListener("click", closeLegendsPanel);
+closeAboutButton.addEventListener("click", closeAboutPanel);
+aboutPanel.addEventListener("click", event => {
+  if (event.target === aboutPanel) closeAboutPanel();
+});
 collectionButton.addEventListener("click", openCollection);
 closeCollectionButton.addEventListener("click", closeCollection);
 collectionPanel.addEventListener("click", (event) => {

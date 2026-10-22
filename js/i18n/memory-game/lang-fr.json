@@ -467,6 +467,20 @@
         "other": "Miroirs exclusifs en ligne",
         "contribute": "Vous connaissez un autre miroir ? Partagez une nouvelle comparaison via notre formulaire de contact.",
         "submit": "Proposer une comparaison"
+      },
+      "about": {
+        "open": "À propos de Federico Navarrete",
+        "label": "À propos de l’auteur",
+        "biography": [
+          "Federico Navarrete est un stratège technologique et chercheur culturel hispano-salvadorien qui crée des ponts entre les cultures grâce au folklore. Ses années en Pologne, en Espagne et au Luxembourg l’ont inspiré à faire découvrir les légendes salvadoriennes aux lecteurs du monde entier.",
+          "Son projet Miroirs Espagnols rapproche les légendes du Salvador, d’Espagne et d’Afrique du Nord à travers leurs symboles et leurs expériences humaines communes. Il a présenté son œuvre dans des ambassades et des centres de l’Institut Cervantes sur trois continents, notamment au Salon international du livre SIEL de 2026 à Rabat."
+        ],
+        "edition": "Édition française",
+        "bookTitle": "Miroirs Espagnols",
+        "bookDescription": "Découvrez les récits derrière le jeu et les légendes qui relient les cultures.",
+        "previewAlt": "Miroirs Espagnols en français, en livre imprimé et sur des liseuses",
+        "amazon": "Voir sur Amazon",
+        "websites": "Sites officiels"
       }
     },
     "country3": "Maroc 🇲🇦",

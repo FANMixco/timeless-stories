@@ -1,17 +1,20 @@
 const CACHE_PREFIX = "memory-game-pwa-";
-const CACHE_VERSION = `${CACHE_PREFIX}20261022-unstarted-tutorial`;
+const CACHE_VERSION = `${CACHE_PREFIX}20261022-about-author`;
 const APP_SHELL = [
   "/memory-game.html",
   "/memory-game.webmanifest",
   "/css/icon-moon-memory.min.css?v=20261021-collection",
-  "/css/memory-game.min.css?v=20261021-scroll-resume",
-  "/js/memory-game.min.js?v=20261022-unstarted-tutorial",
+  "/css/memory-game.min.css?v=20261022-about-author",
+  "/js/memory-game.min.js?v=20261022-about-author",
   "/js/pwa.min.js?v=20261021-pwa-registration",
   "/js/data/links.min.json",
-  "/js/i18n/memory-game/lang-en.min.json?v=20261021-rarity-balance",
-  "/js/i18n/memory-game/lang-es.min.json?v=20261021-rarity-balance",
-  "/js/i18n/memory-game/lang-fr.min.json?v=20261021-rarity-balance",
-  "/js/i18n/memory-game/lang-zh.min.json?v=20261021-rarity-balance",
+  "/js/i18n/memory-game/lang-en.min.json?v=20261022-about-author",
+  "/js/i18n/memory-game/lang-es.min.json?v=20261022-about-author",
+  "/js/i18n/memory-game/lang-fr.min.json?v=20261022-about-author",
+  "/js/i18n/memory-game/lang-zh.min.json?v=20261022-about-author",
+  "/img/previews/mirrors_medium.webp",
+  "/img/previews/mirrors_es_medium.webp",
+  "/img/previews/mirrors_fr_medium.webp",
   "/img/preview_memory.jpg",
   "/img/favicons/maskable_icon_x192.png",
   "/img/favicons/maskable_icon_x512.png",

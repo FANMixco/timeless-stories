@@ -56,7 +56,7 @@
       }
     </script>
     <link rel="stylesheet" href="css/icon-moon-memory.min.css?v=20261021-collection" />
-    <link rel="stylesheet" href="css/memory-game.min.css?v=20261021-scroll-resume" />
+    <link rel="stylesheet" href="css/memory-game.min.css?v=20261022-about-author" />
   </head>
   <body>
     <main class="game-shell" aria-label="">
@@ -160,10 +160,33 @@
           </footer>
         </div>
       </aside>
+      <aside class="legends-panel about-panel" id="aboutPanel" aria-labelledby="aboutTitle" aria-modal="true" role="dialog">
+        <div class="legends-card about-card">
+          <button class="win-close" type="button" id="closeAboutButton"></button>
+          <p class="about-eyebrow" id="aboutLabel"></p>
+          <h2 id="aboutTitle">Federico Navarrete</h2>
+          <div class="about-biography" id="aboutBiography"></div>
+          <section class="about-book" aria-labelledby="aboutBookTitle">
+            <a id="aboutPreviewLink" target="_blank" rel="noopener noreferrer">
+              <img id="aboutBookImage" width="888" height="696" decoding="async" alt="" />
+            </a>
+            <div class="about-book-copy">
+              <p class="about-eyebrow" id="aboutEdition"></p>
+              <h3 id="aboutBookTitle"></h3>
+              <p id="aboutBookDescription"></p>
+              <a class="game-button" id="aboutBookLink" target="_blank" rel="noopener noreferrer"></a>
+            </div>
+          </section>
+          <nav class="about-websites" id="aboutWebsites">
+            <a href="https://tstories.federiconavarrete.com" target="_blank" rel="noopener noreferrer">Timeless Stories <span aria-hidden="true">↗</span></a>
+            <a href="https://federiconavarrete.com" target="_blank" rel="noopener noreferrer">Federico Navarrete <span aria-hidden="true">↗</span></a>
+          </nav>
+        </div>
+      </aside>
       <footer class="game-footer standalone-only" id="gameFooter"></footer>
     </main>
 
-    <script src="js/memory-game.min.js?v=20261022-unstarted-tutorial"></script>
+    <script src="js/memory-game.min.js?v=20261022-about-author"></script>
     <script src="js/gAnalyticsIdleLoad.min.js" defer></script>
     <script src="js/pwa.min.js?v=20261021-pwa-registration" defer></script>
   </body>

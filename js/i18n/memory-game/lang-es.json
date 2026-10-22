@@ -467,6 +467,20 @@
         "other": "Espejos exclusivos en línea",
         "contribute": "¿Conoces otro espejo? Comparte una nueva comparación a través de nuestro formulario de contacto.",
         "submit": "Enviar una comparación"
+      },
+      "about": {
+        "open": "Acerca de Federico Navarrete",
+        "label": "Acerca del autor",
+        "biography": [
+          "Federico Navarrete es un estratega tecnológico e investigador cultural hispano-salvadoreño que tiende puentes entre culturas a través del folclore. Su experiencia viviendo en Polonia, España y Luxemburgo lo inspiró a acercar las leyendas salvadoreñas a lectores de todo el mundo.",
+          "Su proyecto Espejos Españoles conecta las leyendas de El Salvador, España y el norte de África mediante sus símbolos y experiencias humanas compartidas. Ha presentado su obra en embajadas y centros del Instituto Cervantes de tres continentes, incluida la Feria Internacional del Libro SIEL de 2026 en Rabat."
+        ],
+        "edition": "Edición en español",
+        "bookTitle": "Espejos Españoles",
+        "bookDescription": "Descubre las historias detrás del juego y las leyendas que conectan culturas.",
+        "previewAlt": "Espejos Españoles en español, en libro impreso y lectores digitales",
+        "amazon": "Ver en Amazon",
+        "websites": "Sitios web oficiales"
       }
     },
     "country3": "Marruecos 🇲🇦",

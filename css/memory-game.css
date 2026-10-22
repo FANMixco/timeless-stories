@@ -941,12 +941,67 @@ html[data-theme="dark"] .card[data-rarity="tutorial"] .character-icon {
   text-align: center;
 }
 
-.game-footer a {
+.game-footer a,
+.game-footer button {
   color: var(--accent-dark);
   font-weight: 800;
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 3px;
+}
+
+.game-footer button {
+  min-height: 44px;
+  padding: 4px 2px;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.game-footer button:focus-visible,
+.about-websites a:focus-visible,
+.about-book a:focus-visible {
+  outline: 3px solid var(--accent-dark);
+  outline-offset: 4px;
+}
+
+.about-panel { z-index: 26; }
+.about-card { line-height: 1.6; }
+.about-card h2 { line-height: 1.2; }
+.about-eyebrow {
+  margin: 0 44px 8px 0;
+  color: var(--accent-dark);
+  font-size: 0.9375rem;
+  font-weight: 700;
+}
+.about-biography { font-size: 1rem; }
+.about-biography p { margin: 0 0 16px; }
+.about-book {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 20px;
+  margin-top: 24px;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+.about-book > a { display: block; }
+.about-book img { display: block; width: 100%; height: auto; }
+.about-book-copy { min-width: 0; overflow-wrap: anywhere; }
+.about-book h3 { margin: 0 0 10px; font-size: 1.35rem; line-height: 1.3; color: var(--found); }
+.about-book-copy > p:not(.about-eyebrow) { margin: 0 0 18px; font-size: 1rem; }
+.about-book .game-button { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; text-decoration: none; }
+.about-websites { display: flex; flex-wrap: wrap; gap: 8px 24px; margin-top: 22px; }
+.about-websites a { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; color: var(--accent-dark); font-size: 1rem; font-weight: 600; }
+
+@media (max-width: 640px) {
+  .about-book { grid-template-columns: 1fr; gap: 18px; padding: 16px; }
+  .about-book > a { width: min(100%, 280px); margin: auto; }
+  .about-book .game-button { width: 100%; }
+  .about-websites { flex-direction: column; gap: 4px; }
 }
 
 .game-footer a:hover,
