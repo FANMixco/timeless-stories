@@ -1,0 +1,13 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.federiconavarrete.tstories.twa",
+      "sha256_cert_fingerprints": [
+        "4E:E3:C5:40:B0:9E:35:7F:0F:1B:EC:9A:36:60:6B:A7:1D:DF:23:7C:50:90:B2:96:5B:3B:7E:51:16:28:DF:98",
+        "81:CC:C4:9B:12:AA:E0:0A:BA:7A:CC:94:82:44:97:1C:8B:F4:9D:4B:2C:6A:D0:35:D8:1B:A7:AC:C9:8F:A6:8D"
+      ]
+    }
+  }
+]

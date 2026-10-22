@@ -1,0 +1,3 @@
+# Publish Android Digital Asset Links when GitHub Pages builds with Jekyll.
+include:
+  - .well-known
