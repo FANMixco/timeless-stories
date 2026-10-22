@@ -1394,6 +1394,11 @@ html[data-theme="dark"] .collection-mirror:not(:disabled) strong { color: #fffff
     font-size: clamp(2.4rem, 10.8vw, 3.24rem);
   }
 
+  .card[data-rarity="tutorial"] .character-name {
+    font-size: clamp(0.875rem, 3.7vw, 1rem);
+    line-height: 1.2;
+  }
+
   .character-flag {
     display: block;
     font-size: clamp(0.72rem, 2.8vw, 0.9rem);

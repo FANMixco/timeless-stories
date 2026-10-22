@@ -1284,18 +1284,19 @@ async function runIntroTutorial() {
   const cards = [...board.querySelectorAll(".card")];
   showToast(memoryGame.hint || "Hint", memoryGame.hintText || "Pay attention to the icons.", memoryGame.hintEmphasis);
 
-  await wait(520);
+  await wait(1000);
   if (runId !== tutorialRunId) return;
   cards[0]?.classList.add("is-flipped");
   cards[0]?.setAttribute("aria-label", tutorialCards[0].name);
-  await wait(780);
+  await wait(1200);
   if (runId !== tutorialRunId) return;
   cards[1]?.classList.add("is-flipped");
   cards[1]?.setAttribute("aria-label", tutorialCards[1].name);
-  await wait(520);
+  await wait(800);
   if (runId !== tutorialRunId) return;
   cards.forEach((card) => card.classList.add("is-matched"));
-  await wait(1500);
+  // Leave the matched cards visible while the player finishes reading.
+  await wait(4500);
   if (runId !== tutorialRunId) return;
 
   setIntroSeen();
