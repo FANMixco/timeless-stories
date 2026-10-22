@@ -595,11 +595,14 @@ function renderFooter() {
 
   gameFooter.replaceChildren();
   const parts = text.split("{author}");
-  gameFooter.append(document.createTextNode(parts[0] || ""), link);
+  const author = document.createElement("span");
+  author.className = "footer-author";
+  author.append(link);
 
   if (parts.length > 1) {
-    gameFooter.append(document.createTextNode(parts.slice(1).join("{author}")));
+    author.append(document.createTextNode(parts.slice(1).join("{author}")));
   }
+  gameFooter.append(document.createTextNode(parts[0] || ""), author);
 }
 
 function renderAbout() {

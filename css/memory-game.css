@@ -951,13 +951,28 @@ html[data-theme="dark"] .card[data-rarity="tutorial"] .character-icon {
 }
 
 .game-footer button {
-  min-height: 44px;
-  padding: 4px 2px;
+  position: relative;
+  padding: 0;
   border: 0;
   background: transparent;
   font: inherit;
   font-weight: 800;
   cursor: pointer;
+}
+
+.footer-author {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.game-footer button::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 0;
+  left: 0;
+  height: max(100%, 44px);
+  transform: translateY(-50%);
 }
 
 .game-footer button:focus-visible,
