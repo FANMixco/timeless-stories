@@ -1021,6 +1021,7 @@ function renderLegendsList(pairs = activePairs.length ? activePairs : chooseActi
     const row = document.createElement("section");
     const icon = pair.icon || getPairIcon(source, mirror);
     row.className = "legend-row";
+    row.dataset.rarity = pair.rarity || "";
     const category = document.createElement("header");
     category.className = "legend-category";
     category.innerHTML = `

@@ -403,21 +403,25 @@ html[data-theme="dark"] .language-option[aria-checked="true"] {
   font-size: clamp(1.35rem, 4.4vw, 1.95rem);
 }
 
-.card[data-rarity="rare"] .character-mark {
+.card[data-rarity="rare"] .character-mark,
+.legend-row[data-rarity="rare"] .legend-mark {
   background: rgba(0, 119, 182, 0.16);
   color: #0b6f8f;
 }
 
-.card[data-rarity="rare"] .character-icon {
+.card[data-rarity="rare"] .character-icon,
+.legend-row[data-rarity="rare"] .character-icon {
   color: #0b6f8f;
 }
 
-.card[data-rarity="ultra-rare"] .character-mark {
+.card[data-rarity="ultra-rare"] .character-mark,
+.legend-row[data-rarity="ultra-rare"] .legend-mark {
   background: rgba(216, 155, 33, 0.28);
   color: #9a5b00;
 }
 
-.card[data-rarity="ultra-rare"] .character-icon {
+.card[data-rarity="ultra-rare"] .character-icon,
+.legend-row[data-rarity="ultra-rare"] .character-icon {
   color: #9a5b00;
 }
 
@@ -430,21 +434,25 @@ html[data-theme="dark"] .language-option[aria-checked="true"] {
   color: #c92a2a;
 }
 
-html[data-theme="dark"] .card[data-rarity="rare"] .character-mark {
+html[data-theme="dark"] .card[data-rarity="rare"] .character-mark,
+html[data-theme="dark"] .legend-row[data-rarity="rare"] .legend-mark {
   background: rgba(139, 224, 197, 0.16);
   color: #8be0c5;
 }
 
-html[data-theme="dark"] .card[data-rarity="rare"] .character-icon {
+html[data-theme="dark"] .card[data-rarity="rare"] .character-icon,
+html[data-theme="dark"] .legend-row[data-rarity="rare"] .character-icon {
   color: #8be0c5;
 }
 
-html[data-theme="dark"] .card[data-rarity="ultra-rare"] .character-mark {
+html[data-theme="dark"] .card[data-rarity="ultra-rare"] .character-mark,
+html[data-theme="dark"] .legend-row[data-rarity="ultra-rare"] .legend-mark {
   background: rgba(242, 189, 74, 0.2);
   color: #f2bd4a;
 }
 
-html[data-theme="dark"] .card[data-rarity="ultra-rare"] .character-icon {
+html[data-theme="dark"] .card[data-rarity="ultra-rare"] .character-icon,
+html[data-theme="dark"] .legend-row[data-rarity="ultra-rare"] .character-icon {
   color: #f2bd4a;
 }
 
