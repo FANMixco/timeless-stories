@@ -1386,8 +1386,15 @@ html[data-theme="dark"] .collection-mirror:not(:disabled) strong { color: #fffff
   }
 
   .card[data-rarity="tutorial"] .character-mark {
-    width: clamp(56px, 18vw, 72px);
-    height: clamp(56px, 18vw, 72px);
+    --tutorial-mark-size: clamp(56px, 18vw, 72px);
+    width: var(--tutorial-mark-size);
+    height: var(--tutorial-mark-size);
+  }
+
+  .card[data-rarity="tutorial"] .character-flag {
+    font-size: calc(var(--tutorial-mark-size) * 0.23);
+    right: -3px;
+    bottom: 0;
   }
 
   .card[data-rarity="tutorial"] .character-icon {
