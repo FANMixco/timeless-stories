@@ -6,7 +6,7 @@ const collectionStorageKey = "timelessMemoryCollection";
 const supportedThemes = ["system", "light", "dark"];
 const previewRewardThresholdSeconds = 30;
 const mismatchFlipBackDelayMs = 1200;
-const i18nCacheVersion = "20261022-about-author";
+const i18nCacheVersion = "20261022-seo";
 let linkRegistry = null;
 let localizedLinks = null;
 const board = document.getElementById("board");
@@ -649,13 +649,15 @@ function closeAboutPanel() {
 
 function applyUiCopy() {
   renderAbout();
-  document.title = memoryGame.title || document.title;
-  document.querySelector("meta[name='description']").content = memoryGame.subtitle || "";
-  document.querySelector("meta[property='og:title']").content = memoryGame.title || "";
-  document.querySelector("meta[property='og:description']").content = memoryGame.subtitle || "";
+  const seoTitle = memoryGame.seoTitle || memoryGame.title || document.title;
+  const seoDescription = memoryGame.seoDescription || memoryGame.subtitle || "";
+  document.title = seoTitle;
+  document.querySelector("meta[name='description']").content = seoDescription;
+  document.querySelector("meta[property='og:title']").content = seoTitle;
+  document.querySelector("meta[property='og:description']").content = seoDescription;
   document.querySelector("meta[property='og:url']").content = getShareUrl();
-  document.querySelector("meta[property='twitter:title']").content = memoryGame.title || "";
-  document.querySelector("meta[property='twitter:description']").content = memoryGame.subtitle || "";
+  document.querySelector("meta[property='twitter:title']").content = seoTitle;
+  document.querySelector("meta[property='twitter:description']").content = seoDescription;
   document.querySelector("link[rel='canonical']").href = getShareUrl();
   document.getElementById("gameTitle").textContent = memoryGame.title || "";
   document.querySelector(".game-shell").setAttribute("aria-label", memoryGame.title || "");
