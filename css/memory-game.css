@@ -870,6 +870,14 @@ html[data-theme="dark"] .card[data-rarity="tutorial"] .character-icon {
   display: none !important;
 }
 
+.legend-toast[data-tutorial="true"] {
+  grid-template-columns: 1fr;
+}
+
+.legend-toast button[hidden] {
+  display: none;
+}
+
 .legend-toast strong {
   display: block;
   margin-bottom: 3px;
@@ -1411,6 +1419,15 @@ html[data-theme="dark"] .collection-mirror:not(:disabled) strong { color: #fffff
     margin: 0 auto 16px;
     transform: none;
     animation: board-toast-in 180ms ease both;
+  }
+
+  .legend-toast[data-tutorial="true"] strong {
+    font-size: 1.1rem;
+  }
+
+  .legend-toast[data-tutorial="true"] p {
+    font-size: 1rem;
+    line-height: 1.5;
   }
 
   .legends-panel {

@@ -1095,6 +1095,8 @@ function closeRarityPanel() {
 
 function hideLegendToast() {
   legendToast.hidden = true;
+  legendToast.dataset.tutorial = "false";
+  legendToastClose.hidden = false;
   if (toastTimer) {
     window.clearTimeout(toastTimer);
     toastTimer = null;
@@ -1110,12 +1112,15 @@ function showToast(title, text) {
   legendToastTitle.textContent = title || "";
   legendToastText.textContent = text;
   legendToast.hidden = false;
+  legendToast.dataset.tutorial = String(introRunning);
+  legendToastClose.hidden = introRunning;
 
   if (toastTimer) {
     window.clearTimeout(toastTimer);
   }
 
-  toastTimer = window.setTimeout(hideLegendToast, 5200);
+  // The tutorial owns its hint until the demonstration finishes or is reset.
+  toastTimer = introRunning ? null : window.setTimeout(hideLegendToast, 5200);
 }
 
 function showLegendToast(card) {
@@ -1458,7 +1463,9 @@ rarityPanel?.addEventListener("click", (event) => {
     closeRarityPanel();
   }
 });
-legendToastClose.addEventListener("click", hideLegendToast);
+legendToastClose.addEventListener("click", () => {
+  if (!introRunning) hideLegendToast();
+});
 playAgainButton.addEventListener("click", restartGame);
 applyTheme();
 document.documentElement.dataset.embed = String(isEmbedded);
