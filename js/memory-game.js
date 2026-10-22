@@ -6,7 +6,7 @@ const collectionStorageKey = "timelessMemoryCollection";
 const supportedThemes = ["system", "light", "dark"];
 const previewRewardThresholdSeconds = 30;
 const mismatchFlipBackDelayMs = 1200;
-const i18nCacheVersion = "20261022-clearer-hint";
+const i18nCacheVersion = "20261022-underlined-hint";
 let linkRegistry = null;
 let localizedLinks = null;
 const board = document.getElementById("board");
@@ -1103,19 +1103,30 @@ function hideLegendToast() {
   }
 }
 
-function showToast(title, text, emphasis = "") {
+function showToast(title, text, emphasis = "", underline = "") {
   if (!text) {
     hideLegendToast();
     return;
   }
 
   legendToastTitle.textContent = title || "";
-  legendToastText.textContent = text;
-  if (emphasis && text.startsWith(emphasis)) {
+  const content = [];
+  let remaining = text;
+  if (emphasis && remaining.startsWith(emphasis)) {
     const opening = document.createElement("b");
     opening.textContent = emphasis;
-    legendToastText.replaceChildren(opening, document.createTextNode(text.slice(emphasis.length)));
+    content.push(opening);
+    remaining = remaining.slice(emphasis.length);
   }
+  if (underline && remaining.endsWith(underline)) {
+    content.push(document.createTextNode(remaining.slice(0, -underline.length)));
+    const ending = document.createElement("u");
+    ending.textContent = underline;
+    content.push(ending);
+  } else {
+    content.push(document.createTextNode(remaining));
+  }
+  legendToastText.replaceChildren(...content);
   legendToast.hidden = false;
   legendToast.dataset.tutorial = String(introRunning);
   legendToastClose.hidden = introRunning;
@@ -1282,7 +1293,7 @@ async function runIntroTutorial() {
 
   board.replaceChildren(...tutorialCards.map(createCard));
   const cards = [...board.querySelectorAll(".card")];
-  showToast(memoryGame.hint || "Hint", memoryGame.hintText || "Pay attention to the icons.", memoryGame.hintEmphasis);
+  showToast(memoryGame.hint || "Hint", memoryGame.hintText || "Pay attention to the icons.", memoryGame.hintEmphasis, memoryGame.hintUnderline);
 
   await wait(1000);
   if (runId !== tutorialRunId) return;
@@ -1316,7 +1327,7 @@ function handleHint() {
     if (!isEmbedded) window.scrollTo({ top: 0, left: 0, behavior: "auto" });
     return;
   }
-  showToast(memoryGame.hint || "Hint", memoryGame.hintText || "Pay attention to the icons.", memoryGame.hintEmphasis);
+  showToast(memoryGame.hint || "Hint", memoryGame.hintText || "Pay attention to the icons.", memoryGame.hintEmphasis, memoryGame.hintUnderline);
 }
 
 function startGame() {
