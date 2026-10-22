@@ -276,6 +276,10 @@ html[data-theme="dark"] .language-option[aria-checked="true"] {
   line-height: 1.4;
 }
 
+.board-area {
+  min-width: 0;
+}
+
 .board {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -1218,6 +1222,31 @@ html[data-theme="dark"] .card.is-matched .card-front {
     gap: clamp(16px, 2vw, 28px);
   }
 
+  .board-area {
+    position: relative;
+    display: grid;
+    gap: 16px;
+  }
+
+  .board-area .legend-toast {
+    position: relative;
+    inset: auto;
+    width: min(100%, 420px);
+    justify-self: center;
+    transform: none;
+    animation: board-toast-in 180ms ease both;
+  }
+
+  /* Keep the tutorial hint above its two cards, but overlay notifications on
+     a full board so opening one cannot push the bottom row off-screen. */
+  .board-area:not(:has(.board.is-intro)) .legend-toast {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: toast-in 180ms ease both;
+  }
+
   .game-top {
     align-items: start;
     margin-bottom: 12px;
@@ -1574,6 +1603,11 @@ html[data-theme="dark"] .collection-mirror:not(:disabled) strong { color: #fffff
     opacity: 1;
     transform: translate(-50%, 0);
   }
+}
+
+@keyframes board-toast-in {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @media (max-width: 640px) {

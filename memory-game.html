@@ -56,7 +56,7 @@
       }
     </script>
     <link rel="stylesheet" href="css/icon-moon-memory.min.css?v=20261021-collection" />
-    <link rel="stylesheet" href="css/memory-game.min.css?v=20261022-footer-spacing" />
+    <link rel="stylesheet" href="css/memory-game.min.css?v=20261022-board-toast-overlay" />
   </head>
   <body>
     <main class="game-shell" aria-label="">
@@ -102,15 +102,17 @@
           </section>
         </div>
 
-        <section class="board" id="board" aria-label=""></section>
-      </div>
-      <aside class="legend-toast" id="legendToast" aria-live="polite" hidden>
-        <div>
-          <strong id="legendToastTitle"></strong>
-          <p id="legendToastText"></p>
+        <div class="board-area">
+          <aside class="legend-toast" id="legendToast" aria-live="polite" hidden>
+            <div>
+              <strong id="legendToastTitle"></strong>
+              <p id="legendToastText"></p>
+            </div>
+            <button type="button" id="legendToastClose"></button>
+          </aside>
+          <section class="board" id="board" aria-label=""></section>
         </div>
-        <button type="button" id="legendToastClose"></button>
-      </aside>
+      </div>
       <aside class="win-panel" id="winPanel" role="status" aria-live="polite">
         <span class="firework" aria-hidden="true"></span>
         <span class="firework" aria-hidden="true"></span>

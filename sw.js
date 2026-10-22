@@ -1,10 +1,10 @@
 const CACHE_PREFIX = "memory-game-pwa-";
-const CACHE_VERSION = `${CACHE_PREFIX}20261022-footer-spacing`;
+const CACHE_VERSION = `${CACHE_PREFIX}20261022-board-toast-overlay`;
 const APP_SHELL = [
   "/memory-game.html",
   "/memory-game.webmanifest",
   "/css/icon-moon-memory.min.css?v=20261021-collection",
-  "/css/memory-game.min.css?v=20261022-footer-spacing",
+  "/css/memory-game.min.css?v=20261022-board-toast-overlay",
   "/js/memory-game.min.js?v=20261022-footer-spacing",
   "/js/pwa.min.js?v=20261021-pwa-registration",
   "/js/data/links.min.json",
