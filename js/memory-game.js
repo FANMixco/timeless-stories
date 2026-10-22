@@ -6,7 +6,7 @@ const collectionStorageKey = "timelessMemoryCollection";
 const supportedThemes = ["system", "light", "dark"];
 const previewRewardThresholdSeconds = 30;
 const mismatchFlipBackDelayMs = 1200;
-const i18nCacheVersion = "20261022-underlined-hint";
+const i18nCacheVersion = "20261022-about-website-label";
 let linkRegistry = null;
 let localizedLinks = null;
 const board = document.getElementById("board");
@@ -631,6 +631,7 @@ function renderAbout() {
   document.getElementById("aboutBookLink").href = bookUrl;
   setElementText(document.getElementById("aboutBookLink"), copy.amazon || "View on Amazon");
   document.getElementById("aboutWebsites").setAttribute("aria-label", copy.websites || "Official websites");
+  setElementText(document.getElementById("aboutStoriesWebsite"), copy.storiesWebsite || "Timeless Stories");
 }
 
 function openAboutPanel() {
@@ -1307,7 +1308,7 @@ async function runIntroTutorial() {
   if (runId !== tutorialRunId) return;
   cards.forEach((card) => card.classList.add("is-matched"));
   // Leave the matched cards visible while the player finishes reading.
-  await wait(4500);
+  await wait(3500);
   if (runId !== tutorialRunId) return;
 
   setIntroSeen();

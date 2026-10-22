@@ -326,6 +326,33 @@ html[data-theme="dark"] .language-option[aria-checked="true"] {
   transform: rotateY(180deg);
 }
 
+/* Effects exist only on the revealed face after a successful match. The delay
+   lets the second card finish flipping before the brief highlight begins. */
+.card.is-matched[data-rarity="ultra-rare"] .card-front::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(110deg, transparent 25%, rgba(242, 189, 74, 0.1) 40%, rgba(255, 225, 145, 0.55) 50%, rgba(242, 189, 74, 0.1) 60%, transparent 75%);
+  opacity: 0;
+  animation: golden-match-shimmer 225ms ease-out 180ms;
+}
+
+.card[data-rarity="rare"] { --match-glow-color: #0b6f8f; }
+html[data-theme="dark"] .card[data-rarity="rare"] { --match-glow-color: #8be0c5; }
+
+.card.is-matched[data-rarity="rare"] .card-front::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  box-shadow: inset 0 0 18px var(--match-glow-color);
+  opacity: 0;
+  animation: directors-match-glow 175ms ease-out 180ms;
+}
+
 .card-face {
   position: absolute;
   inset: 0;
@@ -1588,6 +1615,10 @@ html[data-theme="dark"] .collection-mirror:not(:disabled) strong { color: #fffff
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .card.is-matched[data-rarity] .card-front::after {
+    animation: none;
+  }
+
   .card .character-flag,
   .card .character-origin-flag,
   .card-inner,
@@ -1613,6 +1644,19 @@ html[data-theme="dark"] .collection-mirror:not(:disabled) strong { color: #fffff
     opacity: 0;
     transform: scale(1.55);
   }
+}
+
+@keyframes golden-match-shimmer {
+  0% { transform: translateX(-100%); opacity: 0; }
+  25% { opacity: 0.75; }
+  75% { opacity: 0.75; }
+  100% { transform: translateX(100%); opacity: 0; }
+}
+
+@keyframes directors-match-glow {
+  0% { opacity: 0; }
+  35% { opacity: 0.45; }
+  100% { opacity: 0; }
 }
 
 @keyframes win-pop {
