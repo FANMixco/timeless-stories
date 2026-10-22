@@ -68,6 +68,8 @@ let timer = null;
 let toastTimer = null;
 let gameCompleted = false;
 let introRunning = false;
+let hintPressCount = 0;
+let tutorialRunId = 0;
 let translations = null;
 let deck = [];
 let activePairs = [];
@@ -1113,6 +1115,8 @@ function flipCard(card) {
 }
 
 function newGame() {
+  tutorialRunId += 1;
+  hintPressCount = 0;
   stopTimer();
   introRunning = false;
   firstCard = null;
@@ -1161,6 +1165,9 @@ function restartGame() {
 }
 
 async function runIntroTutorial() {
+  if (introRunning) return;
+  const runId = ++tutorialRunId;
+  hintPressCount = 0;
   stopTimer();
   introRunning = true;
   firstCard = null;
@@ -1211,19 +1218,37 @@ async function runIntroTutorial() {
   showToast(memoryGame.hint || "Hint", memoryGame.hintText || "Pay attention to the icons.");
 
   await wait(520);
+  if (runId !== tutorialRunId) return;
   cards[0]?.classList.add("is-flipped");
   cards[0]?.setAttribute("aria-label", tutorialCards[0].name);
   await wait(780);
+  if (runId !== tutorialRunId) return;
   cards[1]?.classList.add("is-flipped");
   cards[1]?.setAttribute("aria-label", tutorialCards[1].name);
   await wait(520);
+  if (runId !== tutorialRunId) return;
   cards.forEach((card) => card.classList.add("is-matched"));
   await wait(1500);
+  if (runId !== tutorialRunId) return;
 
   setIntroSeen();
   introRunning = false;
   lockBoard = false;
   newGame();
+}
+
+function handleHint() {
+  if (introRunning) return;
+  // The first flip starts play before either the move count or timer ticks.
+  const canReplayTutorial = !gameCompleted && !firstCard &&
+    moves === 0 && matches === 0 && elapsedSeconds === 0;
+  hintPressCount = canReplayTutorial ? hintPressCount + 1 : 0;
+  if (hintPressCount === 3) {
+    runIntroTutorial();
+    if (!isEmbedded) window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    return;
+  }
+  showToast(memoryGame.hint || "Hint", memoryGame.hintText || "Pay attention to the icons.");
 }
 
 function startGame() {
@@ -1347,9 +1372,7 @@ document.addEventListener("visibilitychange", () => {
 shareButton.addEventListener("click", () => {
   shareGame(shareButton).catch(() => {});
 });
-hintButton.addEventListener("click", () => {
-  showToast(memoryGame.hint || "Hint", memoryGame.hintText || "Pay attention to the icons.");
-});
+hintButton.addEventListener("click", handleHint);
 winShareButton.addEventListener("click", () => {
   shareGame(winShareButton).catch(() => {});
 });
