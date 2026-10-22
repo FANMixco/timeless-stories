@@ -166,6 +166,7 @@
       "title": "Juego de memoria",
       "subtitle": "Encuentra cada pareja espejo de Espejos Españoles.",
       "newGame": "Nuevo juego",
+      "confirmRestart": "¿Quieres empezar un nuevo juego? Se perderá tu progreso en esta partida.",
       "statusLabel": "Estado del juego",
       "moves": "Movimientos",
       "matches": "Parejas",

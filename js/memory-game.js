@@ -6,7 +6,7 @@ const collectionStorageKey = "timelessMemoryCollection";
 const supportedThemes = ["system", "light", "dark"];
 const previewRewardThresholdSeconds = 30;
 const mismatchFlipBackDelayMs = 1200;
-const i18nCacheVersion = "20261022-about-website-label";
+const i18nCacheVersion = "20261023-confirm-restart";
 let linkRegistry = null;
 let localizedLinks = null;
 const board = document.getElementById("board");
@@ -897,7 +897,7 @@ function stopTimer() {
 }
 
 function hasGameInProgress() {
-  return !introRunning && !gameCompleted && (elapsedSeconds > 0 || moves > 0 || matches > 0);
+  return !introRunning && !gameCompleted && (Boolean(firstCard) || elapsedSeconds > 0 || moves > 0 || matches > 0);
 }
 
 function warnBeforeLeaving(event) {
@@ -1236,6 +1236,9 @@ function wait(ms) {
 }
 
 function restartGame() {
+  if (hasGameInProgress() && !window.confirm(memoryGame.confirmRestart || "Start a new game? Your progress in this round will be lost.")) {
+    return;
+  }
   newGame();
   // Reset an already-scrolled board after its previous match description and
   // dialogs disappear. Preserve the user's scroll position on ordinary resume.
