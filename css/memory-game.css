@@ -1396,6 +1396,15 @@ html[data-theme="dark"] .collection-mirror:not(:disabled) strong { color: #fffff
     transform: none;
   }
 
+  .board-area:has(.board.is-intro) .legend-toast {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    margin: 0 auto 16px;
+    transform: none;
+    animation: board-toast-in 180ms ease both;
+  }
+
   .legends-panel {
     padding: 0;
   }
