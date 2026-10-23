@@ -19,7 +19,7 @@ const defaultAchievementCopy = {
   "locked": "Locked",
   "notification": "Achievement Unlocked!",
   "legendaryTitle": "Legendary Collector!",
-  "legendaryDescription": "You've discovered every currently available Original Mirror!",
+  "legendaryDescription": "You've discovered all currently available Original Mirrors!",
   "celebration": "From forgotten myths to extraordinary mysteries, your Original Mirrors collection is complete... for now.",
   "completion": "Original Mirrors 100%",
   "motto": "Every legend has a story beyond the cards.",
@@ -27,7 +27,7 @@ const defaultAchievementCopy = {
   "items": {
     "legendary": {
       "name": "Legendary Collector",
-      "description": "Discover every currently available Original Mirror."
+      "description": "Discover all currently available Original Mirrors."
     },
     "victory": {
       "name": "First Victory",
@@ -47,14 +47,14 @@ const defaultAchievementCopy = {
     },
     "master": {
       "name": "Master Collector",
-      "description": "Discover every currently available Original Mirror, Director’s Cut card, and Online exclusive mirror."
+      "description": "Discover all currently available Original Mirrors, Director’s Cut cards, and Online exclusive mirrors."
     }
   }
 };
 const supportedThemes = ["system", "light", "dark"];
 const previewRewardThresholdSeconds = 30;
 const mismatchFlipBackDelayMs = 1200;
-const i18nCacheVersion = "20261023-mirror-terminology";
+const i18nCacheVersion = "20261023-mirrors-plural";
 let linkRegistry = null;
 let localizedLinks = null;
 const board = document.getElementById("board");

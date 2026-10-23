@@ -1,17 +1,17 @@
 const CACHE_PREFIX = "memory-game-pwa-";
-const CACHE_VERSION = `${CACHE_PREFIX}20261023-mirror-terminology`;
+const CACHE_VERSION = `${CACHE_PREFIX}20261023-mirrors-plural`;
 const APP_SHELL = [
   "/memory-game.html",
   "/memory-game.webmanifest",
   "/css/icon-moon-memory.min.css?v=20261023-achievements",
   "/css/memory-game.min.css?v=20261023-achievements",
-  "/js/memory-game.min.js?v=20261023-mirror-terminology",
+  "/js/memory-game.min.js?v=20261023-mirrors-plural",
   "/js/pwa.min.js?v=20261021-pwa-registration",
   "/js/data/links.min.json",
-  "/js/i18n/memory-game/lang-en.min.json?v=20261023-mirror-terminology",
-  "/js/i18n/memory-game/lang-es.min.json?v=20261023-mirror-terminology",
-  "/js/i18n/memory-game/lang-fr.min.json?v=20261023-mirror-terminology",
-  "/js/i18n/memory-game/lang-zh.min.json?v=20261023-mirror-terminology",
+  "/js/i18n/memory-game/lang-en.min.json?v=20261023-mirrors-plural",
+  "/js/i18n/memory-game/lang-es.min.json?v=20261023-mirrors-plural",
+  "/js/i18n/memory-game/lang-fr.min.json?v=20261023-mirrors-plural",
+  "/js/i18n/memory-game/lang-zh.min.json?v=20261023-mirrors-plural",
   "/img/previews/mirrors_medium.webp",
   "/img/previews/mirrors_es_medium.webp",
   "/img/previews/mirrors_fr_medium.webp",
