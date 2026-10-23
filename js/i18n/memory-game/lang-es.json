@@ -168,15 +168,15 @@
         "locked": "Bloqueado",
         "notification": "¡Logro desbloqueado!",
         "legendaryTitle": "¡Coleccionista legendario!",
-        "legendaryDescription": "¡Has descubierto todas las leyendas disponibles actualmente!",
-        "celebration": "Desde mitos olvidados hasta misterios extraordinarios, tu colección está completa... por ahora.",
-        "completion": "Colección 100%",
+        "legendaryDescription": "¡Has descubierto todos los Espejos originales disponibles actualmente!",
+        "celebration": "Desde mitos olvidados hasta misterios extraordinarios, tu colección de Espejos originales está completa... por ahora.",
+        "completion": "Espejos originales 100%",
         "motto": "Cada leyenda tiene una historia más allá de las cartas.",
         "explore": "Explora Timeless Stories",
         "items": {
           "legendary": {
             "name": "Coleccionista legendario",
-            "description": "Descubre todas las historias disponibles actualmente."
+            "description": "Descubre todos los Espejos originales disponibles actualmente."
           },
           "victory": {
             "name": "Primera victoria",
@@ -188,15 +188,15 @@
           },
           "golden": {
             "name": "Descubrimiento dorado",
-            "description": "Descubre tu primer Espejo Dorado."
+            "description": "Descubre tu primer Espejo exclusivo en línea."
           },
           "scenes": {
             "name": "Detrás de cámaras",
-            "description": "Descubre tu primera versión del director."
+            "description": "Descubre tu primera carta de la Versión del director."
           },
           "master": {
             "name": "Maestro coleccionista",
-            "description": "Descubre todas las cartas normales y especiales disponibles."
+            "description": "Descubre todos los Espejos originales, las cartas de la Versión del director y los Espejos exclusivos en línea disponibles actualmente."
           }
         }
       },

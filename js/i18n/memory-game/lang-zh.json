@@ -168,15 +168,15 @@
         "locked": "未解锁",
         "notification": "成就已解锁！",
         "legendaryTitle": "传奇收藏家！",
-        "legendaryDescription": "你已发现目前所有可用的传说！",
-        "celebration": "从被遗忘的神话到非凡的谜团，你的收藏已经完整……暂时如此。",
-        "completion": "收藏 100%",
+        "legendaryDescription": "你已发现目前所有可用的原版镜像！",
+        "celebration": "从被遗忘的神话到非凡的谜团，你的原版镜像收藏已经完整……暂时如此。",
+        "completion": "原版镜像 100%",
         "motto": "每个传说都有卡牌之外的故事。",
         "explore": "探索 Timeless Stories",
         "items": {
           "legendary": {
             "name": "传奇收藏家",
-            "description": "发现目前所有可用的故事。"
+            "description": "发现目前所有可用的原版镜像。"
           },
           "victory": {
             "name": "首场胜利",
@@ -188,15 +188,15 @@
           },
           "golden": {
             "name": "黄金发现",
-            "description": "发现你的第一面黄金镜像。"
+            "description": "发现你的第一个线上独家镜像。"
           },
           "scenes": {
             "name": "幕后故事",
-            "description": "发现你的第一个导演剪辑版。"
+            "description": "发现你的第一张导演剪辑版卡牌。"
           },
           "master": {
             "name": "收藏大师",
-            "description": "发现所有可用的普通卡牌和特殊卡牌。"
+            "description": "发现目前所有可用的原版镜像、导演剪辑版卡牌和线上独家镜像。"
           }
         }
       },

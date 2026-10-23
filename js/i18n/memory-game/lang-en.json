@@ -168,15 +168,15 @@
         "locked": "Locked",
         "notification": "Achievement Unlocked!",
         "legendaryTitle": "Legendary Collector!",
-        "legendaryDescription": "You've discovered every currently available legend!",
-        "celebration": "From forgotten myths to extraordinary mysteries, your collection is complete... for now.",
-        "completion": "Collection 100%",
+        "legendaryDescription": "You've discovered every currently available Original Mirror!",
+        "celebration": "From forgotten myths to extraordinary mysteries, your Original Mirrors collection is complete... for now.",
+        "completion": "Original Mirrors 100%",
         "motto": "Every legend has a story beyond the cards.",
         "explore": "Explore Timeless Stories",
         "items": {
           "legendary": {
             "name": "Legendary Collector",
-            "description": "Discover every currently available story."
+            "description": "Discover every currently available Original Mirror."
           },
           "victory": {
             "name": "First Victory",
@@ -188,15 +188,15 @@
           },
           "golden": {
             "name": "Golden Discovery",
-            "description": "Discover your first Golden Mirror."
+            "description": "Discover your first Online exclusive mirror."
           },
           "scenes": {
             "name": "Behind the Scenes",
-            "description": "Discover your first Director’s Cut."
+            "description": "Discover your first Director’s Cut card."
           },
           "master": {
             "name": "Master Collector",
-            "description": "Discover all available regular and special cards."
+            "description": "Discover every currently available Original Mirror, Director’s Cut card, and Online exclusive mirror."
           }
         }
       },

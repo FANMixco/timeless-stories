@@ -19,15 +19,15 @@ const defaultAchievementCopy = {
   "locked": "Locked",
   "notification": "Achievement Unlocked!",
   "legendaryTitle": "Legendary Collector!",
-  "legendaryDescription": "You've discovered every currently available legend!",
-  "celebration": "From forgotten myths to extraordinary mysteries, your collection is complete... for now.",
-  "completion": "Collection 100%",
+  "legendaryDescription": "You've discovered every currently available Original Mirror!",
+  "celebration": "From forgotten myths to extraordinary mysteries, your Original Mirrors collection is complete... for now.",
+  "completion": "Original Mirrors 100%",
   "motto": "Every legend has a story beyond the cards.",
   "explore": "Explore Timeless Stories",
   "items": {
     "legendary": {
       "name": "Legendary Collector",
-      "description": "Discover every currently available story."
+      "description": "Discover every currently available Original Mirror."
     },
     "victory": {
       "name": "First Victory",
@@ -39,22 +39,22 @@ const defaultAchievementCopy = {
     },
     "golden": {
       "name": "Golden Discovery",
-      "description": "Discover your first Golden Mirror."
+      "description": "Discover your first Online exclusive mirror."
     },
     "scenes": {
       "name": "Behind the Scenes",
-      "description": "Discover your first Director’s Cut."
+      "description": "Discover your first Director’s Cut card."
     },
     "master": {
       "name": "Master Collector",
-      "description": "Discover all available regular and special cards."
+      "description": "Discover every currently available Original Mirror, Director’s Cut card, and Online exclusive mirror."
     }
   }
 };
 const supportedThemes = ["system", "light", "dark"];
 const previewRewardThresholdSeconds = 30;
 const mismatchFlipBackDelayMs = 1200;
-const i18nCacheVersion = "20261023-achievements";
+const i18nCacheVersion = "20261023-mirror-terminology";
 let linkRegistry = null;
 let localizedLinks = null;
 const board = document.getElementById("board");
@@ -289,10 +289,9 @@ function evaluateAchievements(completed = false) {
   achievements = { ...readAchievements(), ...achievements };
   const catalogue = getMirrorCatalogue();
   const found = catalogue.filter(pair => discoveries.has(getMirrorId(pair)));
-  const stories = new Set(catalogue.flatMap(pair => [pair.source, pair.mirror]));
-  const discoveredStories = new Set(found.flatMap(pair => [pair.source, pair.mirror]));
+  const regularLegends = catalogue.filter(pair => !pair.rarity);
   const conditions = {
-    legendary: stories.size > 0 && [...stories].every(id => discoveredStories.has(id)),
+    legendary: regularLegends.length > 0 && regularLegends.every(pair => discoveries.has(getMirrorId(pair))),
     victory: completed || found.length > 0,
     lightning: completed && elapsedSeconds < 30,
     golden: found.some(pair => pair.rarity === "ultra-rare"),

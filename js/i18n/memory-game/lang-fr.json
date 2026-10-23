@@ -168,15 +168,15 @@
         "locked": "Verrouillé",
         "notification": "Succès débloqué !",
         "legendaryTitle": "Collectionneur légendaire !",
-        "legendaryDescription": "Vous avez découvert toutes les légendes actuellement disponibles !",
-        "celebration": "Des mythes oubliés aux mystères extraordinaires, votre collection est complète... pour le moment.",
-        "completion": "Collection 100 %",
+        "legendaryDescription": "Vous avez découvert tous les Miroirs originaux actuellement disponibles !",
+        "celebration": "Des mythes oubliés aux mystères extraordinaires, votre collection de Miroirs originaux est complète... pour le moment.",
+        "completion": "Miroirs originaux 100 %",
         "motto": "Chaque légende a une histoire au-delà des cartes.",
         "explore": "Explorer Timeless Stories",
         "items": {
           "legendary": {
             "name": "Collectionneur légendaire",
-            "description": "Découvrez toutes les histoires actuellement disponibles."
+            "description": "Découvrez tous les Miroirs originaux actuellement disponibles."
           },
           "victory": {
             "name": "Première victoire",
@@ -188,15 +188,15 @@
           },
           "golden": {
             "name": "Découverte dorée",
-            "description": "Découvrez votre premier Miroir Doré."
+            "description": "Découvrez votre premier Miroir exclusif en ligne."
           },
           "scenes": {
             "name": "Dans les coulisses",
-            "description": "Découvrez votre première version du réalisateur."
+            "description": "Découvrez votre première carte de la Version du réalisateur."
           },
           "master": {
             "name": "Maître collectionneur",
-            "description": "Découvrez toutes les cartes normales et spéciales disponibles."
+            "description": "Découvrez tous les Miroirs originaux, les cartes de la Version du réalisateur et les Miroirs exclusifs en ligne actuellement disponibles."
           }
         }
       },
