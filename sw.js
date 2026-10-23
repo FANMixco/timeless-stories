@@ -1,17 +1,17 @@
 const CACHE_PREFIX = "memory-game-pwa-";
-const CACHE_VERSION = `${CACHE_PREFIX}20261023-unlock-bonus`;
+const CACHE_VERSION = `${CACHE_PREFIX}20261023-six-golden-mirrors`;
 const APP_SHELL = [
   "/memory-game.html",
   "/memory-game.webmanifest",
-  "/css/icon-moon-memory.min.css?v=20261023-unlock-bonus",
+  "/css/icon-moon-memory.min.css?v=20261023-six-golden-mirrors",
   "/css/memory-game.min.css?v=20261023-achievements",
-  "/js/memory-game.min.js?v=20261023-unlock-bonus",
+  "/js/memory-game.min.js?v=20261023-six-golden-mirrors",
   "/js/pwa.min.js?v=20261021-pwa-registration",
   "/js/data/links.min.json",
-  "/js/i18n/memory-game/lang-en.min.json?v=20261023-unlock-bonus",
-  "/js/i18n/memory-game/lang-es.min.json?v=20261023-unlock-bonus",
-  "/js/i18n/memory-game/lang-fr.min.json?v=20261023-unlock-bonus",
-  "/js/i18n/memory-game/lang-zh.min.json?v=20261023-unlock-bonus",
+  "/js/i18n/memory-game/lang-en.min.json?v=20261023-six-golden-mirrors",
+  "/js/i18n/memory-game/lang-es.min.json?v=20261023-six-golden-mirrors",
+  "/js/i18n/memory-game/lang-fr.min.json?v=20261023-six-golden-mirrors",
+  "/js/i18n/memory-game/lang-zh.min.json?v=20261023-six-golden-mirrors",
   "/img/previews/mirrors_medium.webp",
   "/img/previews/mirrors_es_medium.webp",
   "/img/previews/mirrors_fr_medium.webp",

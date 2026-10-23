@@ -156,6 +156,30 @@
       "churel": {
         "name": "Churel",
         "desc": "A female spirit who lures men in a beautiful disguise, hiding a terrifying form and backward feet."
+      },
+      "poincianaWoman": {
+        "name": "The Poinciana Woman",
+        "desc": "Vengeful female ghost haunting Darwin."
+      },
+      "wildHunt": {
+        "name": "The Wild Hunt",
+        "desc": "Ghostly hunters whose procession brings misfortune."
+      },
+      "blackShuck": {
+        "name": "Black Shuck",
+        "desc": "Supernatural black dog that haunts lonely roads."
+      },
+      "huliJing": {
+        "name": "Huli Jing",
+        "desc": "Shapeshifting fox spirit that can deceive humans."
+      },
+      "dameBlanche": {
+        "name": "La Dame Blanche",
+        "desc": "Bride’s ghost mourning her lost fiancé."
+      },
+      "yukiOnna": {
+        "name": "Yuki-onna",
+        "desc": "Beautiful snow spirit who can freeze travellers."
       }
     },
     "country1": "El Salvador 🇸🇻",
@@ -305,7 +329,7 @@
       "footer": "Building bridges across cultures. Copyrights {author}.",
       "rarePairs": [
         {
-          "chance": 0.0125,
+          "chance": 0.008333333333333333,
           "replaceSource": "goodAndBadCadejo",
           "pair": {
             "source": "goodAndBadCadejo",
@@ -318,7 +342,7 @@
           }
         },
         {
-          "chance": 0.0125,
+          "chance": 0.008333333333333333,
           "replaceSource": "fleshlessWoman",
           "pair": {
             "source": "fleshlessWoman",
@@ -331,7 +355,7 @@
           }
         },
         {
-          "chance": 0.0125,
+          "chance": 0.008333333333333333,
           "replaceSource": "goodAndBadCadejo",
           "pair": {
             "source": "goodAndBadCadejo",
@@ -344,7 +368,7 @@
           }
         },
         {
-          "chance": 0.0125,
+          "chance": 0.008333333333333333,
           "replaceSource": "funeralCortegeOfChalchuapa",
           "pair": {
             "source": "funeralCortegeOfChalchuapa",
@@ -381,7 +405,7 @@
           }
         },
         {
-          "chance": 0.0125,
+          "chance": 0.008333333333333333,
           "replaceSource": "siguanaba",
           "pair": {
             "source": "siguanaba",
@@ -394,7 +418,7 @@
           }
         },
         {
-          "chance": 0.0125,
+          "chance": 0.008333333333333333,
           "replaceSource": "siguanaba",
           "pair": {
             "source": "siguanaba",
@@ -407,7 +431,7 @@
           }
         },
         {
-          "chance": 0.0125,
+          "chance": 0.008333333333333333,
           "replaceSource": "goodAndBadCadejo",
           "pair": {
             "source": "goodAndBadCadejo",
@@ -420,7 +444,7 @@
           }
         },
         {
-          "chance": 0.0125,
+          "chance": 0.008333333333333333,
           "replaceSource": "dwarf",
           "pair": {
             "source": "dwarf",
@@ -433,7 +457,7 @@
           }
         },
         {
-          "chance": 0.0125,
+          "chance": 0.008333333333333333,
           "replaceSource": "dwarf",
           "pair": {
             "source": "dwarf",
@@ -446,7 +470,7 @@
           }
         },
         {
-          "chance": 0.0125,
+          "chance": 0.008333333333333333,
           "replaceSource": "fairJudgeOfTheNight",
           "pair": {
             "source": "fairJudgeOfTheNight",
@@ -459,7 +483,7 @@
           }
         },
         {
-          "chance": 0.0125,
+          "chance": 0.008333333333333333,
           "replaceSource": "fairJudgeOfTheNight",
           "pair": {
             "source": "fairJudgeOfTheNight",
@@ -472,7 +496,7 @@
           }
         },
         {
-          "chance": 0.0125,
+          "chance": 0.008333333333333333,
           "replaceSource": "siguanaba",
           "pair": {
             "source": "siguanaba",
@@ -480,6 +504,84 @@
             "insightTitle": "Fatal Lures",
             "insight": "Temptations that draw the living toward irreversible ends.",
             "mirrorOrigin": "india",
+            "icon": "masks",
+            "rarity": "ultra-rare"
+          }
+        },
+        {
+          "chance": 0.008333333333333333,
+          "replaceSource": "siguanaba",
+          "pair": {
+            "source": "siguanaba",
+            "mirror": "poincianaWoman",
+            "insightTitle": "Fatal Lures",
+            "insight": "Temptations that draw the living toward irreversible ends.",
+            "mirrorOrigin": "australia",
+            "icon": "masks",
+            "rarity": "ultra-rare"
+          }
+        },
+        {
+          "chance": 0.008333333333333333,
+          "replaceSource": "funeralCortegeOfChalchuapa",
+          "pair": {
+            "source": "funeralCortegeOfChalchuapa",
+            "mirror": "wildHunt",
+            "insightTitle": "Processions of the Dead",
+            "insight": "Collective apparitions that blur the line between the living and the dead.",
+            "mirrorOrigin": "germany",
+            "icon": "candle",
+            "rarity": "ultra-rare"
+          }
+        },
+        {
+          "chance": 0.008333333333333333,
+          "replaceSource": "goodAndBadCadejo",
+          "pair": {
+            "source": "goodAndBadCadejo",
+            "mirror": "blackShuck",
+            "insightTitle": "Guardians & Beasts",
+            "insight": "Protectors or creatures that enforce the boundaries of the night.",
+            "mirrorOrigin": "uk",
+            "icon": "paw",
+            "rarity": "ultra-rare"
+          }
+        },
+        {
+          "chance": 0.008333333333333333,
+          "replaceSource": "siguanaba",
+          "pair": {
+            "source": "siguanaba",
+            "mirror": "huliJing",
+            "insightTitle": "Fatal Lures",
+            "insight": "Temptations that draw the living toward irreversible ends.",
+            "mirrorOrigin": "china",
+            "icon": "masks",
+            "rarity": "ultra-rare"
+          }
+        },
+        {
+          "chance": 0.008333333333333333,
+          "replaceSource": "weepingWoman",
+          "pair": {
+            "source": "weepingWoman",
+            "mirror": "dameBlanche",
+            "insightTitle": "Echoes of the Dead",
+            "insight": "Voices that return when the past refuses to rest.",
+            "mirrorOrigin": "canada",
+            "icon": "cry",
+            "rarity": "ultra-rare"
+          }
+        },
+        {
+          "chance": 0.008333333333333333,
+          "replaceSource": "siguanaba",
+          "pair": {
+            "source": "siguanaba",
+            "mirror": "yukiOnna",
+            "insightTitle": "Fatal Lures",
+            "insight": "Temptations that draw the living toward irreversible ends.",
+            "mirrorOrigin": "japan",
             "icon": "masks",
             "rarity": "ultra-rare"
           }
@@ -550,6 +652,12 @@
     "country12": "Italy 🇮🇹",
     "country13": "Austria 🇦🇹",
     "country14": "Turkey 🇹🇷",
-    "country15": "India 🇮🇳"
+    "country15": "India 🇮🇳",
+    "country16": "Australia 🇦🇺",
+    "country17": "Germany 🇩🇪",
+    "country18": "United Kingdom 🇬🇧",
+    "country19": "China 🇨🇳",
+    "country20": "Canada 🇨🇦",
+    "country21": "Japan 🇯🇵"
   }
 }

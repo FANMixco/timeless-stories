@@ -156,6 +156,30 @@
       "churel": {
         "name": "丘雷尔",
         "desc": "伪装成美女引诱男子的女性幽灵，隐藏着可怕的真容和反向的双脚。"
+      },
+      "poincianaWoman": {
+        "name": "凤凰木女鬼",
+        "desc": "游荡在达尔文的复仇女鬼。"
+      },
+      "wildHunt": {
+        "name": "狂猎",
+        "desc": "所经之处带来厄运的幽灵猎人队伍。"
+      },
+      "blackShuck": {
+        "name": "布莱克·舒克",
+        "desc": "出没在偏僻道路上的超自然黑犬。"
+      },
+      "huliJing": {
+        "name": "狐狸精",
+        "desc": "能变换形态并迷惑人类的狐狸精灵。"
+      },
+      "dameBlanche": {
+        "name": "白衣新娘",
+        "desc": "哀悼逝去未婚夫的新娘幽灵。"
+      },
+      "yukiOnna": {
+        "name": "雪女",
+        "desc": "能将旅人冻僵的美丽雪之精灵。"
       }
     },
     "country1": "萨尔瓦多 🇸🇻",
@@ -305,7 +329,7 @@
       "footer": "在文化之间架起桥梁。版权所有 {author}。",
       "rarePairs": [
         {
-          "chance": 0.0125,
+          "chance": 0.008333333333333333,
           "replaceSource": "goodAndBadCadejo",
           "pair": {
             "source": "goodAndBadCadejo",
@@ -318,7 +342,7 @@
           }
         },
         {
-          "chance": 0.0125,
+          "chance": 0.008333333333333333,
           "replaceSource": "fleshlessWoman",
           "pair": {
             "source": "fleshlessWoman",
@@ -331,7 +355,7 @@
           }
         },
         {
-          "chance": 0.0125,
+          "chance": 0.008333333333333333,
           "replaceSource": "goodAndBadCadejo",
           "pair": {
             "source": "goodAndBadCadejo",
@@ -344,7 +368,7 @@
           }
         },
         {
-          "chance": 0.0125,
+          "chance": 0.008333333333333333,
           "replaceSource": "funeralCortegeOfChalchuapa",
           "pair": {
             "source": "funeralCortegeOfChalchuapa",
@@ -381,7 +405,7 @@
           }
         },
         {
-          "chance": 0.0125,
+          "chance": 0.008333333333333333,
           "replaceSource": "siguanaba",
           "pair": {
             "source": "siguanaba",
@@ -394,7 +418,7 @@
           }
         },
         {
-          "chance": 0.0125,
+          "chance": 0.008333333333333333,
           "replaceSource": "siguanaba",
           "pair": {
             "source": "siguanaba",
@@ -407,7 +431,7 @@
           }
         },
         {
-          "chance": 0.0125,
+          "chance": 0.008333333333333333,
           "replaceSource": "goodAndBadCadejo",
           "pair": {
             "source": "goodAndBadCadejo",
@@ -420,7 +444,7 @@
           }
         },
         {
-          "chance": 0.0125,
+          "chance": 0.008333333333333333,
           "replaceSource": "dwarf",
           "pair": {
             "source": "dwarf",
@@ -433,7 +457,7 @@
           }
         },
         {
-          "chance": 0.0125,
+          "chance": 0.008333333333333333,
           "replaceSource": "dwarf",
           "pair": {
             "source": "dwarf",
@@ -446,7 +470,7 @@
           }
         },
         {
-          "chance": 0.0125,
+          "chance": 0.008333333333333333,
           "replaceSource": "fairJudgeOfTheNight",
           "pair": {
             "source": "fairJudgeOfTheNight",
@@ -459,7 +483,7 @@
           }
         },
         {
-          "chance": 0.0125,
+          "chance": 0.008333333333333333,
           "replaceSource": "fairJudgeOfTheNight",
           "pair": {
             "source": "fairJudgeOfTheNight",
@@ -472,7 +496,7 @@
           }
         },
         {
-          "chance": 0.0125,
+          "chance": 0.008333333333333333,
           "replaceSource": "siguanaba",
           "pair": {
             "source": "siguanaba",
@@ -480,6 +504,84 @@
             "insightTitle": "致命诱惑",
             "insight": "把生者引向无法回头结局的诱惑。",
             "mirrorOrigin": "india",
+            "icon": "masks",
+            "rarity": "ultra-rare"
+          }
+        },
+        {
+          "chance": 0.008333333333333333,
+          "replaceSource": "siguanaba",
+          "pair": {
+            "source": "siguanaba",
+            "mirror": "poincianaWoman",
+            "insightTitle": "致命诱惑",
+            "insight": "把生者引向无法回头结局的诱惑。",
+            "mirrorOrigin": "australia",
+            "icon": "masks",
+            "rarity": "ultra-rare"
+          }
+        },
+        {
+          "chance": 0.008333333333333333,
+          "replaceSource": "funeralCortegeOfChalchuapa",
+          "pair": {
+            "source": "funeralCortegeOfChalchuapa",
+            "mirror": "wildHunt",
+            "insightTitle": "亡者的队列",
+            "insight": "模糊生者与死者界线的集体幽灵显现。",
+            "mirrorOrigin": "germany",
+            "icon": "candle",
+            "rarity": "ultra-rare"
+          }
+        },
+        {
+          "chance": 0.008333333333333333,
+          "replaceSource": "goodAndBadCadejo",
+          "pair": {
+            "source": "goodAndBadCadejo",
+            "mirror": "blackShuck",
+            "insightTitle": "守护者与怪兽",
+            "insight": "守护者或生物，维护夜晚的边界。",
+            "mirrorOrigin": "uk",
+            "icon": "paw",
+            "rarity": "ultra-rare"
+          }
+        },
+        {
+          "chance": 0.008333333333333333,
+          "replaceSource": "siguanaba",
+          "pair": {
+            "source": "siguanaba",
+            "mirror": "huliJing",
+            "insightTitle": "致命诱惑",
+            "insight": "把生者引向无法回头结局的诱惑。",
+            "mirrorOrigin": "china",
+            "icon": "masks",
+            "rarity": "ultra-rare"
+          }
+        },
+        {
+          "chance": 0.008333333333333333,
+          "replaceSource": "weepingWoman",
+          "pair": {
+            "source": "weepingWoman",
+            "mirror": "dameBlanche",
+            "insightTitle": "亡者的回声",
+            "insight": "当过去拒绝安息时再次归来的声音。",
+            "mirrorOrigin": "canada",
+            "icon": "cry",
+            "rarity": "ultra-rare"
+          }
+        },
+        {
+          "chance": 0.008333333333333333,
+          "replaceSource": "siguanaba",
+          "pair": {
+            "source": "siguanaba",
+            "mirror": "yukiOnna",
+            "insightTitle": "致命诱惑",
+            "insight": "把生者引向无法回头结局的诱惑。",
+            "mirrorOrigin": "japan",
             "icon": "masks",
             "rarity": "ultra-rare"
           }
@@ -550,6 +652,12 @@
     "country12": "意大利 🇮🇹",
     "country13": "奥地利 🇦🇹",
     "country14": "土耳其 🇹🇷",
-    "country15": "印度 🇮🇳"
+    "country15": "印度 🇮🇳",
+    "country16": "澳大利亚 🇦🇺",
+    "country17": "德国 🇩🇪",
+    "country18": "英国 🇬🇧",
+    "country19": "中国 🇨🇳",
+    "country20": "加拿大 🇨🇦",
+    "country21": "日本 🇯🇵"
   }
 }

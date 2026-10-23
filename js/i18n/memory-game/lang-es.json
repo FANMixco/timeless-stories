@@ -156,6 +156,30 @@
       "churel": {
         "name": "Churel",
         "desc": "Un espíritu femenino que atrae a hombres con un hermoso disfraz, ocultando una forma aterradora y pies al revés."
+      },
+      "poincianaWoman": {
+        "name": "La mujer de la poinciana",
+        "desc": "Fantasma femenino vengativo que acecha en Darwin."
+      },
+      "wildHunt": {
+        "name": "La Cacería Salvaje",
+        "desc": "Cazadores fantasmales cuya procesión trae desgracias."
+      },
+      "blackShuck": {
+        "name": "Black Shuck",
+        "desc": "Perro negro sobrenatural que ronda caminos solitarios."
+      },
+      "huliJing": {
+        "name": "Huli Jing",
+        "desc": "Espíritu de zorro que cambia de forma y puede engañar a los humanos."
+      },
+      "dameBlanche": {
+        "name": "La Dama Blanca",
+        "desc": "Fantasma de una novia que llora a su prometido perdido."
+      },
+      "yukiOnna": {
+        "name": "Yuki-onna",
+        "desc": "Hermoso espíritu de la nieve que puede congelar a los viajeros."
       }
     },
     "country1": "El Salvador 🇸🇻",
@@ -305,7 +329,7 @@
       "footer": "Construyendo puentes entre culturas. Derechos de autor {author}.",
       "rarePairs": [
         {
-          "chance": 0.0125,
+          "chance": 0.008333333333333333,
           "replaceSource": "goodAndBadCadejo",
           "pair": {
             "source": "goodAndBadCadejo",
@@ -318,7 +342,7 @@
           }
         },
         {
-          "chance": 0.0125,
+          "chance": 0.008333333333333333,
           "replaceSource": "fleshlessWoman",
           "pair": {
             "source": "fleshlessWoman",
@@ -331,7 +355,7 @@
           }
         },
         {
-          "chance": 0.0125,
+          "chance": 0.008333333333333333,
           "replaceSource": "goodAndBadCadejo",
           "pair": {
             "source": "goodAndBadCadejo",
@@ -344,7 +368,7 @@
           }
         },
         {
-          "chance": 0.0125,
+          "chance": 0.008333333333333333,
           "replaceSource": "funeralCortegeOfChalchuapa",
           "pair": {
             "source": "funeralCortegeOfChalchuapa",
@@ -381,7 +405,7 @@
           }
         },
         {
-          "chance": 0.0125,
+          "chance": 0.008333333333333333,
           "replaceSource": "siguanaba",
           "pair": {
             "source": "siguanaba",
@@ -394,7 +418,7 @@
           }
         },
         {
-          "chance": 0.0125,
+          "chance": 0.008333333333333333,
           "replaceSource": "siguanaba",
           "pair": {
             "source": "siguanaba",
@@ -407,7 +431,7 @@
           }
         },
         {
-          "chance": 0.0125,
+          "chance": 0.008333333333333333,
           "replaceSource": "goodAndBadCadejo",
           "pair": {
             "source": "goodAndBadCadejo",
@@ -420,7 +444,7 @@
           }
         },
         {
-          "chance": 0.0125,
+          "chance": 0.008333333333333333,
           "replaceSource": "dwarf",
           "pair": {
             "source": "dwarf",
@@ -433,7 +457,7 @@
           }
         },
         {
-          "chance": 0.0125,
+          "chance": 0.008333333333333333,
           "replaceSource": "dwarf",
           "pair": {
             "source": "dwarf",
@@ -446,7 +470,7 @@
           }
         },
         {
-          "chance": 0.0125,
+          "chance": 0.008333333333333333,
           "replaceSource": "fairJudgeOfTheNight",
           "pair": {
             "source": "fairJudgeOfTheNight",
@@ -459,7 +483,7 @@
           }
         },
         {
-          "chance": 0.0125,
+          "chance": 0.008333333333333333,
           "replaceSource": "fairJudgeOfTheNight",
           "pair": {
             "source": "fairJudgeOfTheNight",
@@ -472,7 +496,7 @@
           }
         },
         {
-          "chance": 0.0125,
+          "chance": 0.008333333333333333,
           "replaceSource": "siguanaba",
           "pair": {
             "source": "siguanaba",
@@ -480,6 +504,84 @@
             "insightTitle": "Seducciones fatales",
             "insight": "Tentaciones que arrastran a los vivos hacia finales irreversibles.",
             "mirrorOrigin": "india",
+            "icon": "masks",
+            "rarity": "ultra-rare"
+          }
+        },
+        {
+          "chance": 0.008333333333333333,
+          "replaceSource": "siguanaba",
+          "pair": {
+            "source": "siguanaba",
+            "mirror": "poincianaWoman",
+            "insightTitle": "Seducciones fatales",
+            "insight": "Tentaciones que arrastran a los vivos hacia finales irreversibles.",
+            "mirrorOrigin": "australia",
+            "icon": "masks",
+            "rarity": "ultra-rare"
+          }
+        },
+        {
+          "chance": 0.008333333333333333,
+          "replaceSource": "funeralCortegeOfChalchuapa",
+          "pair": {
+            "source": "funeralCortegeOfChalchuapa",
+            "mirror": "wildHunt",
+            "insightTitle": "Procesiones de los muertos",
+            "insight": "Apariciones colectivas que difuminan la línea entre vivos y muertos.",
+            "mirrorOrigin": "germany",
+            "icon": "candle",
+            "rarity": "ultra-rare"
+          }
+        },
+        {
+          "chance": 0.008333333333333333,
+          "replaceSource": "goodAndBadCadejo",
+          "pair": {
+            "source": "goodAndBadCadejo",
+            "mirror": "blackShuck",
+            "insightTitle": "Guardianes y bestias",
+            "insight": "Protectores o criaturas que hacen cumplir los límites de la noche.",
+            "mirrorOrigin": "uk",
+            "icon": "paw",
+            "rarity": "ultra-rare"
+          }
+        },
+        {
+          "chance": 0.008333333333333333,
+          "replaceSource": "siguanaba",
+          "pair": {
+            "source": "siguanaba",
+            "mirror": "huliJing",
+            "insightTitle": "Seducciones fatales",
+            "insight": "Tentaciones que arrastran a los vivos hacia finales irreversibles.",
+            "mirrorOrigin": "china",
+            "icon": "masks",
+            "rarity": "ultra-rare"
+          }
+        },
+        {
+          "chance": 0.008333333333333333,
+          "replaceSource": "weepingWoman",
+          "pair": {
+            "source": "weepingWoman",
+            "mirror": "dameBlanche",
+            "insightTitle": "Ecos de los muertos",
+            "insight": "Voces que regresan cuando el pasado se niega a descansar.",
+            "mirrorOrigin": "canada",
+            "icon": "cry",
+            "rarity": "ultra-rare"
+          }
+        },
+        {
+          "chance": 0.008333333333333333,
+          "replaceSource": "siguanaba",
+          "pair": {
+            "source": "siguanaba",
+            "mirror": "yukiOnna",
+            "insightTitle": "Seducciones fatales",
+            "insight": "Tentaciones que arrastran a los vivos hacia finales irreversibles.",
+            "mirrorOrigin": "japan",
             "icon": "masks",
             "rarity": "ultra-rare"
           }
@@ -550,6 +652,12 @@
     "country12": "Italia 🇮🇹",
     "country13": "Austria 🇦🇹",
     "country14": "Turquía 🇹🇷",
-    "country15": "India 🇮🇳"
+    "country15": "India 🇮🇳",
+    "country16": "Australia 🇦🇺",
+    "country17": "Alemania 🇩🇪",
+    "country18": "Reino Unido 🇬🇧",
+    "country19": "China 🇨🇳",
+    "country20": "Canadá 🇨🇦",
+    "country21": "Japón 🇯🇵"
   }
 }

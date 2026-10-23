@@ -17,7 +17,7 @@ const achievementDefinitions = [
 const supportedThemes = ["system", "light", "dark"];
 const previewRewardThresholdSeconds = 30;
 const mismatchFlipBackDelayMs = 1200;
-const i18nCacheVersion = "20261023-unlock-bonus";
+const i18nCacheVersion = "20261023-six-golden-mirrors";
 let linkRegistry = null;
 let localizedLinks = null;
 const board = document.getElementById("board");
@@ -906,6 +906,12 @@ function getOriginLabel(side) {
     austria: translations?.country13 || "",
     turkey: translations?.country14 || "",
     india: translations?.country15 || "",
+    australia: translations?.country16 || "",
+    germany: translations?.country17 || "",
+    uk: translations?.country18 || "",
+    china: translations?.country19 || "",
+    canada: translations?.country20 || "",
+    japan: translations?.country21 || "",
   };
 
   return originLabels[side] || "";
