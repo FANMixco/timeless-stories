@@ -247,66 +247,102 @@
       "boardLabel": "记忆卡片",
       "hiddenCard": "隐藏的记忆卡片",
       "win": "你用 {moves} 步和 {time} 找到了全部 {pairs} 组配对。",
+      "comparisons": {
+        "theDevil": {
+          "title": "魔鬼",
+          "description": "象征诱惑、契约与道德越界的形象。"
+        },
+        "fatalLures": {
+          "title": "致命诱惑",
+          "description": "把生者引向无法回头结局的诱惑。"
+        },
+        "guardiansAndBeasts": {
+          "title": "守护者与怪兽",
+          "description": "守护者或生物，维护夜晚的边界。"
+        },
+        "heraldsOfDeath": {
+          "title": "死亡的预告者与执行者",
+          "description": "在命运降临前发出预兆的存在。"
+        },
+        "processionsOfTheDead": {
+          "title": "亡者的队列",
+          "description": "模糊生者与死者界线的集体幽灵显现。"
+        },
+        "rulersOfTheNight": {
+          "title": "夜晚的统治者",
+          "description": "掌管黑暗与正义的审判者和主宰。"
+        },
+        "echoesOfTheDead": {
+          "title": "亡者的回声",
+          "description": "当过去拒绝安息时再次归来的声音。"
+        },
+        "restlessSpirits": {
+          "title": "不得安息的灵魂",
+          "description": "因罪责、职责或未竟之事困在两界之间的灵魂。"
+        },
+        "fatalApparitions": {
+          "title": "致命显灵",
+          "description": "好奇、欲望或分心最终引向毁灭的遭遇。"
+        },
+        "domesticTricksters": {
+          "title": "家宅捣蛋精灵",
+          "description": "奖赏尊重、惩罚疏忽的家宅精灵。"
+        },
+        "enchantedVoices": {
+          "title": "迷魅之声",
+          "description": "歌声使生者偏离理智、道路或自我的存在。"
+        }
+      },
       "pairs": [
         {
           "source": "blackKnight",
           "mirror": "caveOfSalamanca",
-          "insightTitle": "魔鬼",
-          "insight": "象征诱惑、契约与道德越界的形象。"
+          "comparison": "theDevil"
         },
         {
           "source": "siguanaba",
           "mirror": "midnightWasherwomen",
-          "insightTitle": "致命诱惑",
-          "insight": "把生者引向无法回头结局的诱惑。"
+          "comparison": "fatalLures"
         },
         {
           "source": "goodAndBadCadejo",
           "mirror": "dip",
-          "insightTitle": "守护者与怪兽",
-          "insight": "守护者或生物，维护夜晚的边界。"
+          "comparison": "guardiansAndBeasts"
         },
         {
           "source": "mulus",
           "mirror": "urco",
-          "insightTitle": "死亡的预告者与执行者",
-          "insight": "在命运降临前发出预兆的存在。"
+          "comparison": "heraldsOfDeath"
         },
         {
           "source": "funeralCortegeOfChalchuapa",
           "mirror": "holyCompany",
-          "insightTitle": "亡者的队列",
-          "insight": "模糊生者与死者界线的集体幽灵显现。"
+          "comparison": "processionsOfTheDead"
         },
         {
           "source": "fairJudgeOfTheNight",
           "mirror": "gaueko",
-          "insightTitle": "夜晚的统治者",
-          "insight": "掌管黑暗与正义的审判者和主宰。"
+          "comparison": "rulersOfTheNight"
         },
         {
           "source": "weepingWoman",
           "mirror": "ploranera",
-          "insightTitle": "亡者的回声",
-          "insight": "当过去拒绝安息时再次归来的声音。"
+          "comparison": "echoesOfTheDead"
         },
         {
           "source": "headlessPriest",
           "mirror": "ghostOfSanGines",
-          "insightTitle": "不得安息的灵魂",
-          "insight": "因罪责、职责或未竟之事困在两界之间的灵魂。"
+          "comparison": "restlessSpirits"
         },
         {
           "source": "fleshlessWoman",
           "mirror": "girlOnTheCurve",
-          "insightTitle": "致命显灵",
-          "insight": "好奇、欲望或分心最终引向毁灭的遭遇。"
+          "comparison": "fatalApparitions"
         },
         {
           "source": "dwarf",
           "mirror": "trasgu",
-          "insightTitle": "家宅捣蛋精灵",
-          "insight": "奖赏尊重、惩罚疏忽的家宅精灵。"
+          "comparison": "domesticTricksters"
         }
       ],
       "winTitle": "恭喜！",
@@ -335,10 +371,9 @@
             "source": "goodAndBadCadejo",
             "mirror": "cursedBeastOfWolfGorge",
             "mirrorOrigin": "luxembourg",
-            "insightTitle": "守护者与怪兽",
-            "insight": "守护者或生物，维护夜晚的边界。",
             "icon": "paw",
-            "rarity": "ultra-rare"
+            "rarity": "ultra-rare",
+            "comparison": "guardiansAndBeasts"
           }
         },
         {
@@ -348,10 +383,9 @@
             "source": "fleshlessWoman",
             "mirror": "resurrectionMary",
             "mirrorOrigin": "usa",
-            "insightTitle": "致命显灵",
-            "insight": "好奇、欲望或分心最终引向毁灭的遭遇。",
             "icon": "routes",
-            "rarity": "ultra-rare"
+            "rarity": "ultra-rare",
+            "comparison": "fatalApparitions"
           }
         },
         {
@@ -361,10 +395,9 @@
             "source": "goodAndBadCadejo",
             "mirror": "ghostOfTheWhiteWolf",
             "mirrorOrigin": "poland",
-            "insightTitle": "守护者与怪兽",
-            "insight": "守护者或生物，维护夜晚的边界。",
             "icon": "paw",
-            "rarity": "ultra-rare"
+            "rarity": "ultra-rare",
+            "comparison": "guardiansAndBeasts"
           }
         },
         {
@@ -374,10 +407,9 @@
             "source": "funeralCortegeOfChalchuapa",
             "mirror": "creakingCoffin",
             "mirrorOrigin": "ecuador",
-            "insightTitle": "亡者的队列",
-            "insight": "模糊生者与死者界线的集体幽灵显现。",
             "icon": "candle",
-            "rarity": "ultra-rare"
+            "rarity": "ultra-rare",
+            "comparison": "processionsOfTheDead"
           }
         },
         {
@@ -387,10 +419,9 @@
             "source": "siguanaba",
             "mirror": "aishaKandisha",
             "mirrorOrigin": "morocco",
-            "insightTitle": "致命诱惑",
-            "insight": "把生者引向无法回头结局的诱惑。",
             "icon": "masks",
-            "rarity": "rare"
+            "rarity": "rare",
+            "comparison": "fatalLures"
           }
         },
         {
@@ -398,10 +429,9 @@
           "pair": {
             "source": "olomegaLagoonSiren",
             "mirror": "xana",
-            "insightTitle": "迷魅之声",
-            "insight": "歌声使生者偏离理智、道路或自我的存在。",
             "icon": "music",
-            "rarity": "rare"
+            "rarity": "rare",
+            "comparison": "enchantedVoices"
           }
         },
         {
@@ -410,11 +440,10 @@
           "pair": {
             "source": "siguanaba",
             "mirror": "nakk",
-            "insightTitle": "致命诱惑",
-            "insight": "把生者引向无法回头结局的诱惑。",
             "mirrorOrigin": "estonia",
             "icon": "masks",
-            "rarity": "ultra-rare"
+            "rarity": "ultra-rare",
+            "comparison": "fatalLures"
           }
         },
         {
@@ -423,11 +452,10 @@
           "pair": {
             "source": "siguanaba",
             "mirror": "huldra",
-            "insightTitle": "致命诱惑",
-            "insight": "把生者引向无法回头结局的诱惑。",
             "mirrorOrigin": "sweden",
             "icon": "masks",
-            "rarity": "ultra-rare"
+            "rarity": "ultra-rare",
+            "comparison": "fatalLures"
           }
         },
         {
@@ -436,11 +464,10 @@
           "pair": {
             "source": "goodAndBadCadejo",
             "mirror": "kludde",
-            "insightTitle": "守护者与怪兽",
-            "insight": "守护者或生物，维护夜晚的边界。",
             "mirrorOrigin": "belgium",
             "icon": "paw",
-            "rarity": "ultra-rare"
+            "rarity": "ultra-rare",
+            "comparison": "guardiansAndBeasts"
           }
         },
         {
@@ -449,11 +476,10 @@
           "pair": {
             "source": "dwarf",
             "mirror": "jolasveinar",
-            "insightTitle": "家宅捣蛋精灵",
-            "insight": "奖赏尊重、惩罚疏忽的家宅精灵。",
             "mirrorOrigin": "iceland",
             "icon": "wizard",
-            "rarity": "ultra-rare"
+            "rarity": "ultra-rare",
+            "comparison": "domesticTricksters"
           }
         },
         {
@@ -462,11 +488,10 @@
           "pair": {
             "source": "dwarf",
             "mirror": "monacello",
-            "insightTitle": "家宅捣蛋精灵",
-            "insight": "奖赏尊重、惩罚疏忽的家宅精灵。",
             "mirrorOrigin": "italy",
             "icon": "wizard",
-            "rarity": "ultra-rare"
+            "rarity": "ultra-rare",
+            "comparison": "domesticTricksters"
           }
         },
         {
@@ -475,11 +500,10 @@
           "pair": {
             "source": "fairJudgeOfTheNight",
             "mirror": "perchta",
-            "insightTitle": "夜晚的统治者",
-            "insight": "掌管黑暗与正义的审判者和主宰。",
             "mirrorOrigin": "austria",
             "icon": "night",
-            "rarity": "ultra-rare"
+            "rarity": "ultra-rare",
+            "comparison": "rulersOfTheNight"
           }
         },
         {
@@ -488,11 +512,10 @@
           "pair": {
             "source": "fairJudgeOfTheNight",
             "mirror": "karakoncolos",
-            "insightTitle": "夜晚的统治者",
-            "insight": "掌管黑暗与正义的审判者和主宰。",
             "mirrorOrigin": "turkey",
             "icon": "night",
-            "rarity": "ultra-rare"
+            "rarity": "ultra-rare",
+            "comparison": "rulersOfTheNight"
           }
         },
         {
@@ -501,11 +524,10 @@
           "pair": {
             "source": "siguanaba",
             "mirror": "churel",
-            "insightTitle": "致命诱惑",
-            "insight": "把生者引向无法回头结局的诱惑。",
             "mirrorOrigin": "india",
             "icon": "masks",
-            "rarity": "ultra-rare"
+            "rarity": "ultra-rare",
+            "comparison": "fatalLures"
           }
         },
         {
@@ -514,11 +536,10 @@
           "pair": {
             "source": "siguanaba",
             "mirror": "poincianaWoman",
-            "insightTitle": "致命诱惑",
-            "insight": "把生者引向无法回头结局的诱惑。",
             "mirrorOrigin": "australia",
             "icon": "masks",
-            "rarity": "ultra-rare"
+            "rarity": "ultra-rare",
+            "comparison": "fatalLures"
           }
         },
         {
@@ -527,11 +548,10 @@
           "pair": {
             "source": "funeralCortegeOfChalchuapa",
             "mirror": "wildHunt",
-            "insightTitle": "亡者的队列",
-            "insight": "模糊生者与死者界线的集体幽灵显现。",
             "mirrorOrigin": "germany",
             "icon": "candle",
-            "rarity": "ultra-rare"
+            "rarity": "ultra-rare",
+            "comparison": "processionsOfTheDead"
           }
         },
         {
@@ -540,11 +560,10 @@
           "pair": {
             "source": "goodAndBadCadejo",
             "mirror": "blackShuck",
-            "insightTitle": "守护者与怪兽",
-            "insight": "守护者或生物，维护夜晚的边界。",
             "mirrorOrigin": "uk",
             "icon": "paw",
-            "rarity": "ultra-rare"
+            "rarity": "ultra-rare",
+            "comparison": "guardiansAndBeasts"
           }
         },
         {
@@ -553,11 +572,10 @@
           "pair": {
             "source": "siguanaba",
             "mirror": "huliJing",
-            "insightTitle": "致命诱惑",
-            "insight": "把生者引向无法回头结局的诱惑。",
             "mirrorOrigin": "china",
             "icon": "masks",
-            "rarity": "ultra-rare"
+            "rarity": "ultra-rare",
+            "comparison": "fatalLures"
           }
         },
         {
@@ -566,11 +584,10 @@
           "pair": {
             "source": "weepingWoman",
             "mirror": "dameBlanche",
-            "insightTitle": "亡者的回声",
-            "insight": "当过去拒绝安息时再次归来的声音。",
             "mirrorOrigin": "canada",
             "icon": "cry",
-            "rarity": "ultra-rare"
+            "rarity": "ultra-rare",
+            "comparison": "echoesOfTheDead"
           }
         },
         {
@@ -579,11 +596,10 @@
           "pair": {
             "source": "siguanaba",
             "mirror": "yukiOnna",
-            "insightTitle": "致命诱惑",
-            "insight": "把生者引向无法回头结局的诱惑。",
             "mirrorOrigin": "japan",
             "icon": "masks",
-            "rarity": "ultra-rare"
+            "rarity": "ultra-rare",
+            "comparison": "fatalLures"
           }
         }
       ],

@@ -714,7 +714,8 @@ function summaryLabel(key, value) {
       const source = legendName(value.source);
       const mirror = legendName(value.mirror);
       const pair = source && mirror ? `${source} / ${mirror}` : [value.source, value.mirror].filter(Boolean).join(" / ");
-      return [value.insightTitle, pair].filter(Boolean).join(" - ");
+      const comparison = state.json?.translations?.memoryGame?.comparisons?.[value.comparison];
+      return [comparison?.title || value.insightTitle, pair].filter(Boolean).join(" - ");
     }
     return value.name || value.title || value.institution || `${typeOf(value)} - ${itemCount(value)} items`;
   }
