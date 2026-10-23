@@ -17,7 +17,7 @@ const achievementDefinitions = [
 const supportedThemes = ["system", "light", "dark"];
 const previewRewardThresholdSeconds = 30;
 const mismatchFlipBackDelayMs = 1200;
-const i18nCacheVersion = "20261023-unlock-bonus";
+const i18nCacheVersion = "20261023-shared-comparisons";
 let linkRegistry = null;
 let localizedLinks = null;
 const board = document.getElementById("board");
@@ -366,6 +366,10 @@ function getMirrorCatalogue() {
   return [...new Map(pairs.filter(Boolean).map((pair) => [getMirrorId(pair), pair])).values()];
 }
 
+function getPairComparison(pair) {
+  return memoryGame.comparisons?.[pair.comparison] || {};
+}
+
 function saveCompletedDiscoveries() {
   // Merge other tabs' progress; only the completed game's results grant discoveries.
   discoveries = new Set([...readDiscoveries(), ...discoveries, ...activePairs.map(getMirrorId)]);
@@ -426,7 +430,7 @@ function renderCollection() {
         mark.textContent = "?";
       }
       const name = document.createElement("strong");
-      name.textContent = discovered ? pair.insightTitle || "" : "???";
+      name.textContent = discovered ? getPairComparison(pair).title || "" : "???";
       const flags = document.createElement("span");
       flags.textContent = discovered
         ? `${getOriginFlag(pair.sourceOrigin || "source")} · ${getOriginFlag(pair.mirrorOrigin || "mirror")}`
@@ -593,6 +597,10 @@ async function loadGameLanguage(language) {
   const game = data.translations?.memoryGame;
   if (!game || !achievementDefinitions.every(({ id }) => game.achievements?.items?.[id])) {
     throw new Error(`Incomplete game language: ${language}`);
+  }
+  const pairs = [...(game.pairs || []), ...(game.rarePairs || []).map(variant => variant.pair)];
+  if (!pairs.every(pair => game.comparisons?.[pair.comparison]?.title && game.comparisons[pair.comparison].description)) {
+    throw new Error(`Missing comparison translation: ${language}`);
   }
   return { language, translations: data.translations };
 }
@@ -906,6 +914,12 @@ function getOriginLabel(side) {
     austria: translations?.country13 || "",
     turkey: translations?.country14 || "",
     india: translations?.country15 || "",
+    australia: translations?.country16 || "",
+    germany: translations?.country17 || "",
+    uk: translations?.country18 || "",
+    china: translations?.country19 || "",
+    canada: translations?.country20 || "",
+    japan: translations?.country21 || "",
   };
 
   return originLabels[side] || "";
@@ -1011,7 +1025,8 @@ function buildDeck() {
   const pairs = activePairs.length ? activePairs : chooseActivePairs();
 
   return pairs.flatMap((pair, pairIndex) => {
-    const { source, mirror, insightTitle, insight } = pair;
+    const { source, mirror } = pair;
+    const { title: insightTitle, description: insight } = getPairComparison(pair);
     const icon = pair.icon || getPairIcon(source, mirror);
 
     return [
@@ -1218,7 +1233,8 @@ function renderLegendsList(pairs = activePairs.length ? activePairs : chooseActi
   setElementHidden(document.getElementById("legendsFooter"), false);
   setElementHidden(legendsRarityNote, Boolean(detailPair));
   const rows = pairs.map((pair) => {
-    const { source, mirror, insightTitle, insight } = pair;
+    const { source, mirror } = pair;
+    const { title: insightTitle, description: insight } = getPairComparison(pair);
     const row = document.createElement("section");
     const icon = pair.icon || getPairIcon(source, mirror);
     row.className = "legend-row";

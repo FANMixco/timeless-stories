@@ -156,6 +156,30 @@
       "churel": {
         "name": "Churel",
         "desc": "Un espíritu femenino que atrae a hombres con un hermoso disfraz, ocultando una forma aterradora y pies al revés."
+      },
+      "poincianaWoman": {
+        "name": "La mujer de la poinciana",
+        "desc": "Fantasma femenino vengativo que acecha en Darwin."
+      },
+      "wildHunt": {
+        "name": "La Cacería Salvaje",
+        "desc": "Cazadores fantasmales cuya procesión trae desgracias."
+      },
+      "blackShuck": {
+        "name": "Black Shuck",
+        "desc": "Perro negro sobrenatural que ronda caminos solitarios."
+      },
+      "huliJing": {
+        "name": "Huli Jing",
+        "desc": "Espíritu de zorro que cambia de forma y puede engañar a los humanos."
+      },
+      "dameBlanche": {
+        "name": "La Dama Blanca",
+        "desc": "Fantasma de una novia que llora a su prometido perdido."
+      },
+      "yukiOnna": {
+        "name": "Yuki-onna",
+        "desc": "Hermoso espíritu de la nieve que puede congelar a los viajeros."
       }
     },
     "country1": "El Salvador 🇸🇻",
@@ -223,66 +247,102 @@
       "boardLabel": "Cartas de memoria",
       "hiddenCard": "Carta de memoria oculta",
       "win": "Encontraste las {pairs} parejas en {moves} movimientos y {time}.",
+      "comparisons": {
+        "theDevil": {
+          "title": "El diablo",
+          "description": "Figuras de tentación, pactos y transgresión moral."
+        },
+        "fatalLures": {
+          "title": "Seducciones fatales",
+          "description": "Tentaciones que arrastran a los vivos hacia finales irreversibles."
+        },
+        "guardiansAndBeasts": {
+          "title": "Guardianes y bestias",
+          "description": "Protectores o criaturas que hacen cumplir los límites de la noche."
+        },
+        "heraldsOfDeath": {
+          "title": "Heraldos y ejecutores de la muerte",
+          "description": "Presagios y seres que anuncian el destino antes de que llegue."
+        },
+        "processionsOfTheDead": {
+          "title": "Procesiones de los muertos",
+          "description": "Apariciones colectivas que difuminan la línea entre vivos y muertos."
+        },
+        "rulersOfTheNight": {
+          "title": "Señoles de la noche",
+          "description": "Jueces y soberanos que gobiernan la oscuridad y la justicia."
+        },
+        "echoesOfTheDead": {
+          "title": "Ecos de los muertos",
+          "description": "Voces que regresan cuando el pasado se niega a descansar."
+        },
+        "restlessSpirits": {
+          "title": "Espíritus errantes",
+          "description": "Almas atrapadas entre mundos por culpa, deber o actos inconclusos."
+        },
+        "fatalApparitions": {
+          "title": "Apariciones fatales",
+          "description": "Encuentros donde la curiosidad, el deseo o la distracción conducen a la ruina."
+        },
+        "domesticTricksters": {
+          "title": "Embaucadores domésticos",
+          "description": "Espíritus del hogar que recompensan el respeto y castigan el descuido."
+        },
+        "enchantedVoices": {
+          "title": "Voces encantadas",
+          "description": "Seres cuyas canciones desvían a los vivos de la razón, del camino o de sí mismos."
+        }
+      },
       "pairs": [
         {
           "source": "blackKnight",
           "mirror": "caveOfSalamanca",
-          "insightTitle": "El diablo",
-          "insight": "Figuras de tentación, pactos y transgresión moral."
+          "comparison": "theDevil"
         },
         {
           "source": "siguanaba",
           "mirror": "midnightWasherwomen",
-          "insightTitle": "Seducciones fatales",
-          "insight": "Tentaciones que arrastran a los vivos hacia finales irreversibles."
+          "comparison": "fatalLures"
         },
         {
           "source": "goodAndBadCadejo",
           "mirror": "dip",
-          "insightTitle": "Guardianes y bestias",
-          "insight": "Protectores o criaturas que hacen cumplir los límites de la noche."
+          "comparison": "guardiansAndBeasts"
         },
         {
           "source": "mulus",
           "mirror": "urco",
-          "insightTitle": "Heraldos y ejecutores de la muerte",
-          "insight": "Presagios y seres que anuncian el destino antes de que llegue."
+          "comparison": "heraldsOfDeath"
         },
         {
           "source": "funeralCortegeOfChalchuapa",
           "mirror": "holyCompany",
-          "insightTitle": "Procesiones de los muertos",
-          "insight": "Apariciones colectivas que difuminan la línea entre vivos y muertos."
+          "comparison": "processionsOfTheDead"
         },
         {
           "source": "fairJudgeOfTheNight",
           "mirror": "gaueko",
-          "insightTitle": "Señoles de la noche",
-          "insight": "Jueces y soberanos que gobiernan la oscuridad y la justicia."
+          "comparison": "rulersOfTheNight"
         },
         {
           "source": "weepingWoman",
           "mirror": "ploranera",
-          "insightTitle": "Ecos de los muertos",
-          "insight": "Voces que regresan cuando el pasado se niega a descansar."
+          "comparison": "echoesOfTheDead"
         },
         {
           "source": "headlessPriest",
           "mirror": "ghostOfSanGines",
-          "insightTitle": "Espíritus errantes",
-          "insight": "Almas atrapadas entre mundos por culpa, deber o actos inconclusos."
+          "comparison": "restlessSpirits"
         },
         {
           "source": "fleshlessWoman",
           "mirror": "girlOnTheCurve",
-          "insightTitle": "Apariciones fatales",
-          "insight": "Encuentros donde la curiosidad, el deseo o la distracción conducen a la ruina."
+          "comparison": "fatalApparitions"
         },
         {
           "source": "dwarf",
           "mirror": "trasgu",
-          "insightTitle": "Embaucadores domésticos",
-          "insight": "Espíritus del hogar que recompensan el respeto y castigan el descuido."
+          "comparison": "domesticTricksters"
         }
       ],
       "winTitle": "¡Felicidades!",
@@ -305,55 +365,51 @@
       "footer": "Construyendo puentes entre culturas. Derechos de autor {author}.",
       "rarePairs": [
         {
-          "chance": 0.0125,
+          "chance": 0.008333333333333333,
           "replaceSource": "goodAndBadCadejo",
           "pair": {
             "source": "goodAndBadCadejo",
             "mirror": "cursedBeastOfWolfGorge",
             "mirrorOrigin": "luxembourg",
-            "insightTitle": "Guardianes y bestias",
-            "insight": "Protectores o criaturas que hacen cumplir los límites de la noche.",
             "icon": "paw",
-            "rarity": "ultra-rare"
+            "rarity": "ultra-rare",
+            "comparison": "guardiansAndBeasts"
           }
         },
         {
-          "chance": 0.0125,
+          "chance": 0.008333333333333333,
           "replaceSource": "fleshlessWoman",
           "pair": {
             "source": "fleshlessWoman",
             "mirror": "resurrectionMary",
             "mirrorOrigin": "usa",
-            "insightTitle": "Apariciones fatales",
-            "insight": "Encuentros donde la curiosidad, el deseo o la distracción conducen a la ruina.",
             "icon": "routes",
-            "rarity": "ultra-rare"
+            "rarity": "ultra-rare",
+            "comparison": "fatalApparitions"
           }
         },
         {
-          "chance": 0.0125,
+          "chance": 0.008333333333333333,
           "replaceSource": "goodAndBadCadejo",
           "pair": {
             "source": "goodAndBadCadejo",
             "mirror": "ghostOfTheWhiteWolf",
             "mirrorOrigin": "poland",
-            "insightTitle": "Guardianes y bestias",
-            "insight": "Protectores o criaturas que hacen cumplir los límites de la noche.",
             "icon": "paw",
-            "rarity": "ultra-rare"
+            "rarity": "ultra-rare",
+            "comparison": "guardiansAndBeasts"
           }
         },
         {
-          "chance": 0.0125,
+          "chance": 0.008333333333333333,
           "replaceSource": "funeralCortegeOfChalchuapa",
           "pair": {
             "source": "funeralCortegeOfChalchuapa",
             "mirror": "creakingCoffin",
             "mirrorOrigin": "ecuador",
-            "insightTitle": "Procesiones de los muertos",
-            "insight": "Apariciones colectivas que difuminan la línea entre vivos y muertos.",
             "icon": "candle",
-            "rarity": "ultra-rare"
+            "rarity": "ultra-rare",
+            "comparison": "processionsOfTheDead"
           }
         },
         {
@@ -363,10 +419,9 @@
             "source": "siguanaba",
             "mirror": "aishaKandisha",
             "mirrorOrigin": "morocco",
-            "insightTitle": "Seducciones fatales",
-            "insight": "Tentaciones que arrastran a los vivos hacia finales irreversibles.",
             "icon": "masks",
-            "rarity": "rare"
+            "rarity": "rare",
+            "comparison": "fatalLures"
           }
         },
         {
@@ -374,114 +429,177 @@
           "pair": {
             "source": "olomegaLagoonSiren",
             "mirror": "xana",
-            "insightTitle": "Voces encantadas",
-            "insight": "Seres cuyas canciones desvían a los vivos de la razón, del camino o de sí mismos.",
             "icon": "music",
-            "rarity": "rare"
+            "rarity": "rare",
+            "comparison": "enchantedVoices"
           }
         },
         {
-          "chance": 0.0125,
+          "chance": 0.008333333333333333,
           "replaceSource": "siguanaba",
           "pair": {
             "source": "siguanaba",
             "mirror": "nakk",
-            "insightTitle": "Seducciones fatales",
-            "insight": "Tentaciones que arrastran a los vivos hacia finales irreversibles.",
             "mirrorOrigin": "estonia",
             "icon": "masks",
-            "rarity": "ultra-rare"
+            "rarity": "ultra-rare",
+            "comparison": "fatalLures"
           }
         },
         {
-          "chance": 0.0125,
+          "chance": 0.008333333333333333,
           "replaceSource": "siguanaba",
           "pair": {
             "source": "siguanaba",
             "mirror": "huldra",
-            "insightTitle": "Seducciones fatales",
-            "insight": "Tentaciones que arrastran a los vivos hacia finales irreversibles.",
             "mirrorOrigin": "sweden",
             "icon": "masks",
-            "rarity": "ultra-rare"
+            "rarity": "ultra-rare",
+            "comparison": "fatalLures"
           }
         },
         {
-          "chance": 0.0125,
+          "chance": 0.008333333333333333,
           "replaceSource": "goodAndBadCadejo",
           "pair": {
             "source": "goodAndBadCadejo",
             "mirror": "kludde",
-            "insightTitle": "Guardianes y bestias",
-            "insight": "Protectores o criaturas que hacen cumplir los límites de la noche.",
             "mirrorOrigin": "belgium",
             "icon": "paw",
-            "rarity": "ultra-rare"
+            "rarity": "ultra-rare",
+            "comparison": "guardiansAndBeasts"
           }
         },
         {
-          "chance": 0.0125,
+          "chance": 0.008333333333333333,
           "replaceSource": "dwarf",
           "pair": {
             "source": "dwarf",
             "mirror": "jolasveinar",
-            "insightTitle": "Embaucadores domésticos",
-            "insight": "Espíritus del hogar que recompensan el respeto y castigan el descuido.",
             "mirrorOrigin": "iceland",
             "icon": "wizard",
-            "rarity": "ultra-rare"
+            "rarity": "ultra-rare",
+            "comparison": "domesticTricksters"
           }
         },
         {
-          "chance": 0.0125,
+          "chance": 0.008333333333333333,
           "replaceSource": "dwarf",
           "pair": {
             "source": "dwarf",
             "mirror": "monacello",
-            "insightTitle": "Embaucadores domésticos",
-            "insight": "Espíritus del hogar que recompensan el respeto y castigan el descuido.",
             "mirrorOrigin": "italy",
             "icon": "wizard",
-            "rarity": "ultra-rare"
+            "rarity": "ultra-rare",
+            "comparison": "domesticTricksters"
           }
         },
         {
-          "chance": 0.0125,
+          "chance": 0.008333333333333333,
           "replaceSource": "fairJudgeOfTheNight",
           "pair": {
             "source": "fairJudgeOfTheNight",
             "mirror": "perchta",
-            "insightTitle": "Señoles de la noche",
-            "insight": "Jueces y soberanos que gobiernan la oscuridad y la justicia.",
             "mirrorOrigin": "austria",
             "icon": "night",
-            "rarity": "ultra-rare"
+            "rarity": "ultra-rare",
+            "comparison": "rulersOfTheNight"
           }
         },
         {
-          "chance": 0.0125,
+          "chance": 0.008333333333333333,
           "replaceSource": "fairJudgeOfTheNight",
           "pair": {
             "source": "fairJudgeOfTheNight",
             "mirror": "karakoncolos",
-            "insightTitle": "Señoles de la noche",
-            "insight": "Jueces y soberanos que gobiernan la oscuridad y la justicia.",
             "mirrorOrigin": "turkey",
             "icon": "night",
-            "rarity": "ultra-rare"
+            "rarity": "ultra-rare",
+            "comparison": "rulersOfTheNight"
           }
         },
         {
-          "chance": 0.0125,
+          "chance": 0.008333333333333333,
           "replaceSource": "siguanaba",
           "pair": {
             "source": "siguanaba",
             "mirror": "churel",
-            "insightTitle": "Seducciones fatales",
-            "insight": "Tentaciones que arrastran a los vivos hacia finales irreversibles.",
             "mirrorOrigin": "india",
             "icon": "masks",
-            "rarity": "ultra-rare"
+            "rarity": "ultra-rare",
+            "comparison": "fatalLures"
+          }
+        },
+        {
+          "chance": 0.008333333333333333,
+          "replaceSource": "siguanaba",
+          "pair": {
+            "source": "siguanaba",
+            "mirror": "poincianaWoman",
+            "mirrorOrigin": "australia",
+            "icon": "masks",
+            "rarity": "ultra-rare",
+            "comparison": "fatalLures"
+          }
+        },
+        {
+          "chance": 0.008333333333333333,
+          "replaceSource": "funeralCortegeOfChalchuapa",
+          "pair": {
+            "source": "funeralCortegeOfChalchuapa",
+            "mirror": "wildHunt",
+            "mirrorOrigin": "germany",
+            "icon": "candle",
+            "rarity": "ultra-rare",
+            "comparison": "processionsOfTheDead"
+          }
+        },
+        {
+          "chance": 0.008333333333333333,
+          "replaceSource": "goodAndBadCadejo",
+          "pair": {
+            "source": "goodAndBadCadejo",
+            "mirror": "blackShuck",
+            "mirrorOrigin": "uk",
+            "icon": "paw",
+            "rarity": "ultra-rare",
+            "comparison": "guardiansAndBeasts"
+          }
+        },
+        {
+          "chance": 0.008333333333333333,
+          "replaceSource": "siguanaba",
+          "pair": {
+            "source": "siguanaba",
+            "mirror": "huliJing",
+            "mirrorOrigin": "china",
+            "icon": "masks",
+            "rarity": "ultra-rare",
+            "comparison": "fatalLures"
+          }
+        },
+        {
+          "chance": 0.008333333333333333,
+          "replaceSource": "weepingWoman",
+          "pair": {
+            "source": "weepingWoman",
+            "mirror": "dameBlanche",
+            "mirrorOrigin": "canada",
+            "icon": "cry",
+            "rarity": "ultra-rare",
+            "comparison": "echoesOfTheDead"
+          }
+        },
+        {
+          "chance": 0.008333333333333333,
+          "replaceSource": "siguanaba",
+          "pair": {
+            "source": "siguanaba",
+            "mirror": "yukiOnna",
+            "mirrorOrigin": "japan",
+            "icon": "masks",
+            "rarity": "ultra-rare",
+            "comparison": "fatalLures"
           }
         }
       ],
@@ -550,6 +668,12 @@
     "country12": "Italia 🇮🇹",
     "country13": "Austria 🇦🇹",
     "country14": "Turquía 🇹🇷",
-    "country15": "India 🇮🇳"
+    "country15": "India 🇮🇳",
+    "country16": "Australia 🇦🇺",
+    "country17": "Alemania 🇩🇪",
+    "country18": "Reino Unido 🇬🇧",
+    "country19": "China 🇨🇳",
+    "country20": "Canadá 🇨🇦",
+    "country21": "Japón 🇯🇵"
   }
 }
