@@ -4,9 +4,9 @@
   "id": "/memory-game.html",
   "scope": "/memory-game.html",
   "start_url": "/memory-game.html?source=pwa",
-  "orientation": "portrait-primary",
+  "orientation": "any",
   "lang": "en",
-  "description": "Match Salvadoran legends with their Spanish mirror legends in this multilingual memory game.",
+  "description": "Discover legendary characters from around the world in a cultural memory game. Match icons, collect rare mirrors, unlock hidden stories, and earn eight awards.",
   "icons": [
     {
       "src": "img/favicons/maskable_icon_x192.png",
@@ -39,61 +39,64 @@
       "sizes": "1082x2402",
       "type": "image/png",
       "form_factor": "narrow",
-      "label": "Phone view of a new memory game with 20 face-down cards."
+      "label": "Match mysterious legends from around the world"
     },
     {
       "src": "img/memory-previews/phone-2.png",
       "sizes": "1082x2402",
       "type": "image/png",
       "form_factor": "narrow",
-      "label": "Phone view of a game in progress with matched Salvadoran and Spanish legends."
+      "label": "Discover legendary characters and their cultural mirrors"
     },
     {
       "src": "img/memory-previews/phone-3.png",
       "sizes": "1082x2402",
       "type": "image/png",
       "form_factor": "narrow",
-      "label": "Phone view of the congratulations dialog after matching all 10 pairs."
+      "label": "Complete challenges and celebrate your victories"
     },
     {
       "src": "img/memory-previews/phone-4.png",
       "sizes": "1082x2402",
       "type": "image/png",
       "form_factor": "narrow",
-      "label": "Phone view of mirrored legends and their cultural comparisons."
+      "label": "Explore your collection of legendary stories"
     },
     {
       "src": "img/memory-previews/tablet-1.png",
       "sizes": "2732x2048",
       "type": "image/png",
       "form_factor": "wide",
-      "label": "Tablet view of a new memory game with controls beside the card grid."
+      "label": "Play the memory game on a larger screen"
     },
     {
       "src": "img/memory-previews/tablet-2.png",
       "sizes": "2732x2048",
       "type": "image/png",
       "form_factor": "wide",
-      "label": "Tablet view of a game in progress with revealed legends and match statistics."
+      "label": "Match icons and track your progress"
     },
     {
       "src": "img/memory-previews/tablet-3.png",
       "sizes": "2732x2048",
       "type": "image/png",
       "form_factor": "wide",
-      "label": "Tablet view of the congratulations dialog after matching all 10 pairs."
+      "label": "Complete matches and unlock new discoveries"
     },
     {
       "src": "img/memory-previews/tablet-4.png",
       "sizes": "2732x2048",
       "type": "image/png",
       "form_factor": "wide",
-      "label": "Tablet view of Salvadoran and Spanish legends compared side by side."
+      "label": "Compare legends and explore their cultural connections"
     }
   ],
   "theme_color": "#111820",
   "background_color": "#111820",
   "display": "standalone",
+  "launch_handler": {
+    "client_mode": "focus-existing"
+  },
   "prefer_related_applications": false,
   "related_applications": [
     {
