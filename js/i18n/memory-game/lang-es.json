@@ -161,6 +161,45 @@
     "country1": "El Salvador 🇸🇻",
     "country2": "España 🇪🇸",
     "memoryGame": {
+      "achievements": {
+        "title": "Logros",
+        "progress": "{found} / {total} logros desbloqueados",
+        "unlocked": "Desbloqueado",
+        "locked": "Bloqueado",
+        "notification": "¡Logro desbloqueado!",
+        "legendaryTitle": "¡Coleccionista legendario!",
+        "legendaryDescription": "¡Has descubierto todas las leyendas disponibles actualmente!",
+        "celebration": "Desde mitos olvidados hasta misterios extraordinarios, tu colección está completa... por ahora.",
+        "completion": "Colección 100%",
+        "motto": "Cada leyenda tiene una historia más allá de las cartas.",
+        "explore": "Explora Timeless Stories",
+        "items": {
+          "legendary": {
+            "name": "Coleccionista legendario",
+            "description": "Descubre todas las historias disponibles actualmente."
+          },
+          "victory": {
+            "name": "Primera victoria",
+            "description": "Completa tu primera partida de memoria."
+          },
+          "lightning": {
+            "name": "Memoria relámpago",
+            "description": "Completa una partida en menos de 30 segundos."
+          },
+          "golden": {
+            "name": "Descubrimiento dorado",
+            "description": "Descubre tu primer Espejo Dorado."
+          },
+          "scenes": {
+            "name": "Detrás de cámaras",
+            "description": "Descubre tu primera versión del director."
+          },
+          "master": {
+            "name": "Maestro coleccionista",
+            "description": "Descubre todas las cartas normales y especiales disponibles."
+          }
+        }
+      },
       "seoTitle": "Juego de memoria de leyendas | Timeless Stories",
       "seoDescription": "Juega gratis y empareja leyendas salvadoreñas con sus equivalentes españolas. Descubre el folclore en español, inglés, francés y chino.",
       "title": "Juego de memoria",

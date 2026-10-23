@@ -1,17 +1,17 @@
 const CACHE_PREFIX = "memory-game-pwa-";
-const CACHE_VERSION = `${CACHE_PREFIX}20261023-restart-actions`;
+const CACHE_VERSION = `${CACHE_PREFIX}20261023-achievements-live`;
 const APP_SHELL = [
   "/memory-game.html",
   "/memory-game.webmanifest",
-  "/css/icon-moon-memory.min.css?v=20261021-collection",
-  "/css/memory-game.min.css?v=20261023-restart-actions",
-  "/js/memory-game.min.js?v=20261023-restart-actions",
+  "/css/icon-moon-memory.min.css?v=20261023-achievements",
+  "/css/memory-game.min.css?v=20261023-achievements",
+  "/js/memory-game.min.js?v=20261023-achievements-live",
   "/js/pwa.min.js?v=20261021-pwa-registration",
   "/js/data/links.min.json",
-  "/js/i18n/memory-game/lang-en.min.json?v=20261023-restart-modal",
-  "/js/i18n/memory-game/lang-es.min.json?v=20261023-restart-modal",
-  "/js/i18n/memory-game/lang-fr.min.json?v=20261023-restart-modal",
-  "/js/i18n/memory-game/lang-zh.min.json?v=20261023-restart-modal",
+  "/js/i18n/memory-game/lang-en.min.json?v=20261023-achievements",
+  "/js/i18n/memory-game/lang-es.min.json?v=20261023-achievements",
+  "/js/i18n/memory-game/lang-fr.min.json?v=20261023-achievements",
+  "/js/i18n/memory-game/lang-zh.min.json?v=20261023-achievements",
   "/img/previews/mirrors_medium.webp",
   "/img/previews/mirrors_es_medium.webp",
   "/img/previews/mirrors_fr_medium.webp",
@@ -23,8 +23,8 @@ const APP_SHELL = [
   "/img/favicons/apple-touch-icon.png",
   "/img/favicons/favicon-32x32.png",
   "/img/favicons/favicon-16x16.png",
-  "/css/fonts/icon-moon-memory.woff?1fgial",
-  "/css/fonts/icon-moon-memory.ttf?1fgial"
+  "/css/fonts/icon-moon-memory.woff?20261023-achievements",
+  "/css/fonts/icon-moon-memory.ttf?20261023-achievements"
 ];
 
 self.addEventListener("install", (event) => {

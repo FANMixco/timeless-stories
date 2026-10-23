@@ -161,6 +161,45 @@
     "country1": "El Salvador 🇸🇻",
     "country2": "Espagne 🇪🇸",
     "memoryGame": {
+      "achievements": {
+        "title": "Succès",
+        "progress": "{found} / {total} succès débloqués",
+        "unlocked": "Débloqué",
+        "locked": "Verrouillé",
+        "notification": "Succès débloqué !",
+        "legendaryTitle": "Collectionneur légendaire !",
+        "legendaryDescription": "Vous avez découvert toutes les légendes actuellement disponibles !",
+        "celebration": "Des mythes oubliés aux mystères extraordinaires, votre collection est complète... pour le moment.",
+        "completion": "Collection 100 %",
+        "motto": "Chaque légende a une histoire au-delà des cartes.",
+        "explore": "Explorer Timeless Stories",
+        "items": {
+          "legendary": {
+            "name": "Collectionneur légendaire",
+            "description": "Découvrez toutes les histoires actuellement disponibles."
+          },
+          "victory": {
+            "name": "Première victoire",
+            "description": "Terminez votre première partie de mémoire."
+          },
+          "lightning": {
+            "name": "Mémoire éclair",
+            "description": "Terminez une partie en moins de 30 secondes."
+          },
+          "golden": {
+            "name": "Découverte dorée",
+            "description": "Découvrez votre premier Miroir Doré."
+          },
+          "scenes": {
+            "name": "Dans les coulisses",
+            "description": "Découvrez votre première version du réalisateur."
+          },
+          "master": {
+            "name": "Maître collectionneur",
+            "description": "Découvrez toutes les cartes normales et spéciales disponibles."
+          }
+        }
+      },
       "seoTitle": "Jeu de mémoire et de légendes | Timeless Stories",
       "seoDescription": "Jouez gratuitement et associez les légendes salvadoriennes à leurs équivalents espagnols. Découvrez le folklore en français, anglais, espagnol et chinois.",
       "title": "Jeu de mémoire",

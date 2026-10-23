@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('fonts/icon-moon-memory.eot?1fgial');
-  src:  url('fonts/icon-moon-memory.eot?1fgial#iefix') format('embedded-opentype'),
-    url('fonts/icon-moon-memory.ttf?1fgial') format('truetype'),
-    url('fonts/icon-moon-memory.woff?1fgial') format('woff'),
-    url('fonts/icon-moon-memory.svg?1fgial#icomoon') format('svg');
+  src:  url('fonts/icon-moon-memory.eot?20261023-achievements');
+  src:  url('fonts/icon-moon-memory.eot?20261023-achievements#iefix') format('embedded-opentype'),
+    url('fonts/icon-moon-memory.ttf?20261023-achievements') format('truetype'),
+    url('fonts/icon-moon-memory.woff?20261023-achievements') format('woff'),
+    url('fonts/icon-moon-memory.svg?20261023-achievements#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -25,56 +25,62 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-book-open:before {
+.icon-mirror:before {
   content: "\e900";
 }
-.icon-table-eye:before {
+.icon-crown:before {
   content: "\e901";
 }
-.icon-candle:before {
+.icon-book-open:before {
   content: "\e902";
 }
-.icon-night:before {
+.icon-table-eye:before {
   content: "\e903";
 }
-.icon-cry:before {
+.icon-candle:before {
   content: "\e904";
 }
-.icon-routes:before {
+.icon-night:before {
   content: "\e905";
 }
-.icon-paw:before {
+.icon-cry:before {
   content: "\e906";
 }
-.icon-masks:before {
+.icon-routes:before {
   content: "\e907";
 }
-.icon-wizard:before {
+.icon-paw:before {
   content: "\e908";
 }
-.icon-tomb:before {
+.icon-masks:before {
   content: "\e909";
 }
-.icon-music:before {
+.icon-wizard:before {
   content: "\e90a";
 }
-.icon-cross:before {
+.icon-tomb:before {
   content: "\e90b";
 }
-.icon-devil:before {
+.icon-music:before {
   content: "\e90c";
 }
-.icon-share-apple:before {
+.icon-cross:before {
   content: "\e90d";
 }
-.icon-bulb:before {
+.icon-devil:before {
   content: "\e90e";
 }
-.icon-translate:before {
+.icon-share-apple:before {
   content: "\e90f";
 }
-.icon-yin-yang:before {
+.icon-bulb:before {
   content: "\e910";
+}
+.icon-translate:before {
+  content: "\e911";
+}
+.icon-yin-yang:before {
+  content: "\e912";
 }
 .icon-book:before {
   content: "\e91f";
@@ -84,4 +90,16 @@
 }
 .icon-share-generic:before {
   content: "\ea82";
+}
+.icon-video-camera:before {
+  content: "\e914";
+}
+.icon-trophy:before {
+  content: "\e99e";
+}
+.icon-power:before {
+  content: "\e9b5";
+}
+.icon-star-full:before {
+  content: "\e9d9";
 }

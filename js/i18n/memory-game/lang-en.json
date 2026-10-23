@@ -161,6 +161,45 @@
     "country1": "El Salvador 🇸🇻",
     "country2": "Spain 🇪🇸",
     "memoryGame": {
+      "achievements": {
+        "title": "Achievements",
+        "progress": "{found} / {total} Achievements Unlocked",
+        "unlocked": "Unlocked",
+        "locked": "Locked",
+        "notification": "Achievement Unlocked!",
+        "legendaryTitle": "Legendary Collector!",
+        "legendaryDescription": "You've discovered every currently available legend!",
+        "celebration": "From forgotten myths to extraordinary mysteries, your collection is complete... for now.",
+        "completion": "Collection 100%",
+        "motto": "Every legend has a story beyond the cards.",
+        "explore": "Explore Timeless Stories",
+        "items": {
+          "legendary": {
+            "name": "Legendary Collector",
+            "description": "Discover every currently available story."
+          },
+          "victory": {
+            "name": "First Victory",
+            "description": "Complete your first memory game."
+          },
+          "lightning": {
+            "name": "Lightning Memory",
+            "description": "Complete a game in under 30 seconds."
+          },
+          "golden": {
+            "name": "Golden Discovery",
+            "description": "Discover your first Golden Mirror."
+          },
+          "scenes": {
+            "name": "Behind the Scenes",
+            "description": "Discover your first Director’s Cut."
+          },
+          "master": {
+            "name": "Master Collector",
+            "description": "Discover all available regular and special cards."
+          }
+        }
+      },
       "seoTitle": "Folklore Memory Game | Timeless Stories",
       "seoDescription": "Play a free memory game matching Salvadoran legends with their Spanish counterparts. Discover folklore in English, Spanish, French, and Chinese.",
       "title": "Memory game",

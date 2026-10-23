@@ -3,10 +3,58 @@ const languageStorageKey = "timelessStoriesOfficialLanguage";
 const themeStorageKey = "timelessStoriesColorMode";
 const introStorageKey = "timelessMemoryIntroSeen";
 const collectionStorageKey = "timelessMemoryCollection";
+const achievementsStorageKey = "timelessMemoryAchievements";
+const achievementDefinitions = [
+  { id: "legendary", icon: "trophy", color: "#c49118" },
+  { id: "victory", icon: "star-full", color: "#a57a10" },
+  { id: "lightning", icon: "power", color: "#1484bd" },
+  { id: "golden", icon: "mirror", color: "#c49118" },
+  { id: "scenes", icon: "video-camera", color: "#9c64cf" },
+  { id: "master", icon: "crown", color: "#c45f87" },
+];
+const defaultAchievementCopy = {
+  "title": "Achievements",
+  "progress": "{found} / {total} Achievements Unlocked",
+  "unlocked": "Unlocked",
+  "locked": "Locked",
+  "notification": "Achievement Unlocked!",
+  "legendaryTitle": "Legendary Collector!",
+  "legendaryDescription": "You've discovered every currently available legend!",
+  "celebration": "From forgotten myths to extraordinary mysteries, your collection is complete... for now.",
+  "completion": "Collection 100%",
+  "motto": "Every legend has a story beyond the cards.",
+  "explore": "Explore Timeless Stories",
+  "items": {
+    "legendary": {
+      "name": "Legendary Collector",
+      "description": "Discover every currently available story."
+    },
+    "victory": {
+      "name": "First Victory",
+      "description": "Complete your first memory game."
+    },
+    "lightning": {
+      "name": "Lightning Memory",
+      "description": "Complete a game in under 30 seconds."
+    },
+    "golden": {
+      "name": "Golden Discovery",
+      "description": "Discover your first Golden Mirror."
+    },
+    "scenes": {
+      "name": "Behind the Scenes",
+      "description": "Discover your first Director’s Cut."
+    },
+    "master": {
+      "name": "Master Collector",
+      "description": "Discover all available regular and special cards."
+    }
+  }
+};
 const supportedThemes = ["system", "light", "dark"];
 const previewRewardThresholdSeconds = 30;
 const mismatchFlipBackDelayMs = 1200;
-const i18nCacheVersion = "20261023-restart-modal";
+const i18nCacheVersion = "20261023-achievements";
 let linkRegistry = null;
 let localizedLinks = null;
 const board = document.getElementById("board");
@@ -48,6 +96,15 @@ const topViewLegendsButton = document.getElementById("topViewLegendsButton");
 const collectionButton = document.getElementById("collectionButton");
 const collectionPanel = document.getElementById("collectionPanel");
 const closeCollectionButton = document.getElementById("closeCollectionButton");
+const achievementsButton = document.getElementById("achievementsButton");
+const achievementsPanel = document.getElementById("achievementsPanel");
+const achievementPanel = document.getElementById("achievementPanel");
+const closeAchievementsButton = document.getElementById("closeAchievementsButton");
+const closeAchievementButton = document.getElementById("closeAchievementButton");
+let achievements = readAchievements();
+let achievementQueue = [];
+let currentAchievement = null;
+let achievementReturnFocus = null;
 let discoveries = readDiscoveries();
 let collectionDetailTrigger = null;
 let collectionRarityTrigger = null;
@@ -86,14 +143,15 @@ let restoringModalHistory = false;
 let pendingModalNavigation = false;
 const modalHistorySession = `${Date.now()}-${Math.random()}`;
 const modalHistoryKey = "timelessMemoryModals";
-const modalPanels = [winPanel, collectionPanel, legendsPanel, rarityPanel, aboutPanel, restartPanel];
+const modalPanels = [winPanel, collectionPanel, legendsPanel, rarityPanel, aboutPanel, restartPanel, achievementsPanel, achievementPanel];
 const modalHistory = !isEmbedded ? window.history : null;
 
 function getModalSnapshot() {
   return {
     panels: modalPanels.filter(panel => panel?.classList.contains("is-visible")).map(panel => panel.id),
     detail: modalDetailPair,
-    rarity: modalRarity
+    rarity: modalRarity,
+    achievement: currentAchievement
   };
 }
 
@@ -128,6 +186,7 @@ function restoreModalSnapshot(snapshot) {
       // Forward must not resurrect a previous round's completion dialogs.
       if (id === "winPanel" || (id === "legendsPanel" && !snapshot.detail)) return gameCompleted;
       if (id === "restartPanel") return hasGameInProgress();
+      if (id === "achievementPanel") return Boolean(currentAchievement && snapshot.achievement === currentAchievement);
       return true;
     }));
     if (!visible.has("rarityPanel")) closeRarityPanel();
@@ -135,7 +194,13 @@ function restoreModalSnapshot(snapshot) {
     if (!visible.has("collectionPanel") && collectionPanel.classList.contains("is-visible")) closeCollection();
     if (!visible.has("aboutPanel") && aboutPanel.classList.contains("is-visible")) closeAboutPanel();
     if (!visible.has("restartPanel") && restartPanel.classList.contains("is-visible")) closeRestartPanel();
+    if (!visible.has("achievementsPanel") && achievementsPanel.classList.contains("is-visible")) closeAchievements();
     modalPanels.forEach(panel => panel?.classList.toggle("is-visible", visible.has(panel.id)));
+    if (currentAchievement && !visible.has("achievementPanel")) {
+      currentAchievement = null;
+      showNextAchievement();
+    }
+    if (visible.has("achievementsPanel")) renderAchievements();
     modalDetailPair = snapshot.detail;
     modalRarity = snapshot.rarity;
     if (visible.has("legendsPanel")) {
@@ -151,7 +216,9 @@ function restoreModalSnapshot(snapshot) {
     collectionPanel.inert = coveredCollection;
     collectionPanel.setAttribute("aria-modal", String(!coveredCollection));
     // Move focus into the newly active layer (including after Forward).
-    if (visible.has("restartPanel")) cancelRestartButton.focus();
+    if (achievementPanel.classList.contains("is-visible")) closeAchievementButton.focus();
+    else if (visible.has("achievementsPanel")) closeAchievementsButton.focus();
+    else if (visible.has("restartPanel")) cancelRestartButton.focus();
     else if (visible.has("aboutPanel")) closeAboutButton.focus();
     else if (visible.has("rarityPanel")) closeRarityButton.focus();
     else if (visible.has("legendsPanel")) closeLegendsButton.focus();
@@ -160,6 +227,12 @@ function restoreModalSnapshot(snapshot) {
     syncModalScrollLock();
   } finally {
     restoringModalHistory = false;
+  }
+  // Back can advance the notification queue; record the newly active award.
+  syncModalScrollLock();
+  if (!currentAchievement && achievementReturnFocus) {
+    if (!modalPanels.some(panel => panel.classList.contains("is-visible"))) achievementReturnFocus.focus?.({ preventScroll: true });
+    achievementReturnFocus = null;
   }
 }
 
@@ -201,6 +274,125 @@ function readDiscoveries() {
 
 function getMirrorId(pair) {
   return `${pair.source}|${pair.mirror}`;
+}
+
+function readAchievements() {
+  try {
+    const saved = JSON.parse(window.localStorage.getItem(achievementsStorageKey));
+    return Object.fromEntries(achievementDefinitions
+      .filter(({ id }) => typeof saved?.[id] === "string" && Number.isFinite(Date.parse(saved[id])))
+      .map(({ id }) => [id, saved[id]]));
+  } catch { return {}; }
+}
+
+function evaluateAchievements(completed = false) {
+  achievements = { ...readAchievements(), ...achievements };
+  const catalogue = getMirrorCatalogue();
+  const found = catalogue.filter(pair => discoveries.has(getMirrorId(pair)));
+  const stories = new Set(catalogue.flatMap(pair => [pair.source, pair.mirror]));
+  const discoveredStories = new Set(found.flatMap(pair => [pair.source, pair.mirror]));
+  const conditions = {
+    legendary: stories.size > 0 && [...stories].every(id => discoveredStories.has(id)),
+    victory: completed || found.length > 0,
+    lightning: completed && elapsedSeconds < 30,
+    golden: found.some(pair => pair.rarity === "ultra-rare"),
+    scenes: found.some(pair => pair.rarity === "rare"),
+    master: catalogue.length > 0 && found.length === catalogue.length,
+  };
+  for (const { id } of achievementDefinitions) {
+    if (!conditions[id] || achievements[id]) continue;
+    achievements[id] = new Date().toISOString();
+    achievementQueue.push(id);
+  }
+  try { window.localStorage.setItem(achievementsStorageKey, JSON.stringify(achievements)); } catch {}
+  setElementHidden(achievementsButton, !achievementDefinitions.some(({ id }) => achievements[id]));
+}
+
+function renderAchievements() {
+  const copy = memoryGame.achievements || defaultAchievementCopy;
+  setElementText(document.getElementById("achievementsTitle"), copy.title);
+  setElementText(document.getElementById("achievementsProgress"), copy.progress
+    .replace("{found}", achievementDefinitions.filter(({ id }) => achievements[id]).length)
+    .replace("{total}", achievementDefinitions.length));
+  const rows = achievementDefinitions.map(({ id, icon, color }) => {
+    const row = document.createElement("article");
+    row.className = `achievement-row${achievements[id] ? " is-unlocked" : ""}`;
+    row.style.setProperty("--achievement-color", color);
+    const mark = document.createElement("i");
+    mark.className = `achievement-icon icon-${icon}`;
+    mark.setAttribute("aria-hidden", "true");
+    const body = document.createElement("div");
+    const name = document.createElement("h3");
+    name.textContent = copy.items[id].name;
+    const description = document.createElement("p");
+    description.textContent = copy.items[id].description;
+    const status = document.createElement("p");
+    status.className = "achievement-status";
+    status.textContent = achievements[id] ? copy.unlocked : copy.locked;
+    if (achievements[id]) {
+      const date = document.createElement("time");
+      date.setAttribute("datetime", achievements[id]);
+      date.textContent = new Date(achievements[id]).toLocaleDateString(currentLanguage, { year: "numeric", month: "short", day: "numeric" });
+      status.append(document.createTextNode(" · "), date);
+    }
+    body.append(name, description, status);
+    row.append(mark, body);
+    return row;
+  });
+  document.getElementById("achievementsList").replaceChildren(...rows);
+}
+
+function openAchievements() {
+  renderAchievements();
+  achievementsPanel.classList.add("is-visible");
+  closeAchievementsButton.focus();
+  syncModalScrollLock();
+}
+
+function closeAchievements() {
+  achievementsPanel.classList.remove("is-visible");
+  syncModalScrollLock();
+  achievementsButton.focus({ preventScroll: true });
+}
+
+function showNextAchievement() {
+  if (currentAchievement || !achievementQueue.length || introRunning) return;
+  if (!achievementReturnFocus) achievementReturnFocus = document.activeElement;
+  currentAchievement = achievementQueue.shift();
+  const definition = achievementDefinitions.find(item => item.id === currentAchievement);
+  const copy = memoryGame.achievements || defaultAchievementCopy;
+  const legendary = currentAchievement === "legendary";
+  achievementPanel.style.setProperty("--achievement-color", definition.color);
+  achievementPanel.classList.toggle("is-legendary", legendary);
+  document.getElementById("achievementIcon").className = `achievement-icon icon-${definition.icon}`;
+  setElementText(document.getElementById("achievementTitle"), legendary ? copy.legendaryTitle : copy.notification);
+  setElementText(document.getElementById("achievementName"), copy.items[currentAchievement].name);
+  setElementHidden(document.getElementById("achievementName"), legendary);
+  setElementText(document.getElementById("achievementDescription"), legendary ? copy.legendaryDescription : copy.items[currentAchievement].description);
+  setElementText(document.getElementById("achievementCelebration"), legendary ? copy.celebration : "");
+  setElementText(document.getElementById("achievementCompletion"), legendary ? copy.completion : "");
+  setElementText(document.getElementById("achievementMotto"), legendary ? copy.motto : "");
+  const explore = document.getElementById("achievementExplore");
+  explore.textContent = copy.explore;
+  setElementHidden(explore, !legendary);
+  achievementPanel.classList.add("is-visible");
+  // Restart the brief celebration for each queued achievement.
+  const card = achievementPanel.querySelector?.(".achievement-card");
+  card?.getAnimations?.().forEach(animation => { animation.cancel(); animation.play(); });
+  closeAchievementButton.focus();
+  syncModalScrollLock();
+}
+
+function closeAchievement() {
+  achievementPanel.classList.remove("is-visible");
+  currentAchievement = null;
+  if (achievementQueue.length) showNextAchievement();
+  else {
+    syncModalScrollLock();
+    if (winPanel.classList.contains("is-visible")) closeWinButton.focus();
+    else achievementReturnFocus?.focus({ preventScroll: true });
+    achievementReturnFocus = null;
+  }
 }
 
 function getMirrorCatalogue() {
@@ -494,7 +686,12 @@ function syncModalScrollLock() {
 
 function refreshModalScrollLock() {
   const hasOpenPanel = modalPanels.some(panel => panel?.classList.contains("is-visible"));
-  const backgroundCovered = aboutPanel.classList.contains("is-visible") || restartPanel.classList.contains("is-visible");
+  const achievementVisible = achievementPanel.classList.contains("is-visible");
+  for (const panel of modalPanels) {
+    if (panel !== achievementPanel && panel !== collectionPanel) panel.inert = achievementVisible;
+  }
+  if (!collectionDetailTrigger && !collectionRarityTrigger) collectionPanel.inert = achievementVisible;
+  const backgroundCovered = achievementVisible || achievementsPanel.classList.contains("is-visible") || aboutPanel.classList.contains("is-visible") || restartPanel.classList.contains("is-visible");
   if (gameLayout) gameLayout.inert = backgroundCovered;
   if (gameFooter) gameFooter.inert = backgroundCovered;
 
@@ -654,6 +851,9 @@ function closeAboutPanel() {
 }
 
 function applyUiCopy() {
+  setActionButtonContent(achievementsButton, (memoryGame.achievements || defaultAchievementCopy).title, "icon-trophy");
+  closeAchievementsButton.setAttribute("aria-label", memoryGame.close || "Close");
+  closeAchievementButton.setAttribute("aria-label", memoryGame.close || "Close");
   renderAbout();
   setElementText(document.getElementById("restartTitle"), memoryGame.newGame || "New game");
   setElementText(document.getElementById("restartMessage"), memoryGame.confirmRestart || "Start a new game? Your progress in this round will be lost.");
@@ -989,6 +1189,8 @@ function markMatch() {
       .replace("{moves}", moves)
       .replace("{time}", formatTime(elapsedSeconds));
     winPanel.classList.add("is-visible");
+    evaluateAchievements(true);
+    showNextAchievement();
     syncModalScrollLock();
   }
 
@@ -1219,7 +1421,7 @@ function newGame() {
   matchInsight.classList.remove("is-visible");
   matchInsightTitle.textContent = "";
   matchInsightText.textContent = "";
-  modalPanels.forEach(panel => panel?.classList.remove("is-visible", "is-collection-detail"));
+  modalPanels.filter(panel => panel !== achievementPanel).forEach(panel => panel?.classList.remove("is-visible", "is-collection-detail"));
   collectionPanel.inert = false;
   collectionPanel.setAttribute("aria-modal", "true");
   collectionDetailTrigger = null;
@@ -1236,6 +1438,7 @@ function newGame() {
   deck = shuffle(buildDeck());
   renderLegendsList();
   board.replaceChildren(...deck.map(createCard));
+  showNextAchievement();
 }
 
 function wait(ms) {
@@ -1419,8 +1622,10 @@ document.addEventListener("click", (event) => {
   }
 });
 document.addEventListener("keydown", (event) => {
-  if (event.key === "Tab" && (restartPanel.classList.contains("is-visible") || aboutPanel.classList.contains("is-visible") || collectionPanel.classList.contains("is-visible"))) {
-    const panel = restartPanel.classList.contains("is-visible") ? restartPanel
+  if (event.key === "Tab" && (achievementPanel.classList.contains("is-visible") || achievementsPanel.classList.contains("is-visible") || restartPanel.classList.contains("is-visible") || aboutPanel.classList.contains("is-visible") || collectionPanel.classList.contains("is-visible"))) {
+    const panel = achievementPanel.classList.contains("is-visible") ? achievementPanel
+      : achievementsPanel.classList.contains("is-visible") ? achievementsPanel
+      : restartPanel.classList.contains("is-visible") ? restartPanel
       : aboutPanel.classList.contains("is-visible") ? aboutPanel
       : rarityPanel.classList.contains("is-visible") ? rarityPanel
       : collectionDetailTrigger ? legendsPanel : collectionPanel;
@@ -1438,7 +1643,11 @@ document.addEventListener("keydown", (event) => {
   }
   if (event.key === "Escape") {
     closeLanguageMenu();
-    if (restartPanel.classList.contains("is-visible")) {
+    if (achievementPanel.classList.contains("is-visible")) {
+      closeAchievement();
+    } else if (achievementsPanel.classList.contains("is-visible")) {
+      closeAchievements();
+    } else if (restartPanel.classList.contains("is-visible")) {
       closeRestartPanel();
     } else if (aboutPanel.classList.contains("is-visible")) {
       closeAboutPanel();
@@ -1504,6 +1713,15 @@ aboutPanel.addEventListener("click", event => {
   if (event.target === aboutPanel) closeAboutPanel();
 });
 collectionButton.addEventListener("click", openCollection);
+achievementsButton.addEventListener("click", openAchievements);
+closeAchievementsButton.addEventListener("click", closeAchievements);
+closeAchievementButton.addEventListener("click", closeAchievement);
+achievementsPanel.addEventListener("click", event => {
+  if (event.target === achievementsPanel) closeAchievements();
+});
+achievementPanel.addEventListener("click", event => {
+  if (event.target === achievementPanel) closeAchievement();
+});
 closeCollectionButton.addEventListener("click", closeCollection);
 collectionPanel.addEventListener("click", (event) => {
   if (event.target === collectionPanel) closeCollection();
@@ -1523,5 +1741,6 @@ document.documentElement.dataset.embed = String(isEmbedded);
 window.matchMedia?.("(prefers-color-scheme: dark)")?.addEventListener("change", applyTheme);
 loadTranslations().finally(() => {
   applyUiCopy();
+  evaluateAchievements();
   startGame();
 });

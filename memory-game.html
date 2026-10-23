@@ -55,8 +55,8 @@
         }
       }
     </script>
-    <link rel="stylesheet" href="css/icon-moon-memory.min.css?v=20261021-collection" />
-    <link rel="stylesheet" href="css/memory-game.min.css?v=20261023-restart-actions" />
+    <link rel="stylesheet" href="css/icon-moon-memory.min.css?v=20261023-achievements" />
+    <link rel="stylesheet" href="css/memory-game.min.css?v=20261023-achievements" />
   </head>
   <body>
     <main class="game-shell" aria-label="">
@@ -71,6 +71,7 @@
               <button class="game-button" type="button" id="newGameButton"></button>
               <button class="game-button secondary" type="button" id="topViewLegendsButton" hidden></button>
               <button class="game-button secondary" type="button" id="collectionButton" hidden></button>
+              <button class="game-button secondary" type="button" id="achievementsButton" aria-haspopup="dialog" hidden></button>
               <button class="game-button secondary" type="button" id="hintButton"></button>
               <div class="language-control" id="languageControl">
                 <button class="game-button secondary" type="button" id="languageButton" aria-haspopup="menu" aria-expanded="false"></button>
@@ -195,10 +196,31 @@
           </div>
         </div>
       </aside>
+      <aside class="legends-panel" id="achievementsPanel" aria-labelledby="achievementsTitle" aria-modal="true" role="dialog">
+        <div class="legends-card">
+          <button class="win-close" type="button" id="closeAchievementsButton"></button>
+          <h2 id="achievementsTitle"></h2>
+          <p id="achievementsProgress"></p>
+          <div class="achievements-list" id="achievementsList"></div>
+        </div>
+      </aside>
+      <aside class="win-panel achievement-panel" id="achievementPanel" aria-labelledby="achievementTitle" aria-describedby="achievementDescription" aria-modal="true" role="dialog">
+        <div class="win-card achievement-card">
+          <button class="win-close" type="button" id="closeAchievementButton"></button>
+          <i class="achievement-icon" id="achievementIcon" aria-hidden="true"></i>
+          <h2 id="achievementTitle"></h2>
+          <h3 id="achievementName"></h3>
+          <p id="achievementDescription"></p>
+          <p id="achievementCelebration"></p>
+          <strong id="achievementCompletion"></strong>
+          <p id="achievementMotto"></p>
+          <a class="game-button" id="achievementExplore" href="https://tstories.federiconavarrete.com" target="_blank" rel="noopener noreferrer" hidden></a>
+        </div>
+      </aside>
       <footer class="game-footer standalone-only" id="gameFooter"></footer>
     </main>
 
-    <script src="js/memory-game.min.js?v=20261023-restart-actions"></script>
+    <script src="js/memory-game.min.js?v=20261023-achievements-live"></script>
     <script src="js/gAnalyticsIdleLoad.min.js" defer></script>
     <script src="js/pwa.min.js?v=20261021-pwa-registration" defer></script>
   </body>

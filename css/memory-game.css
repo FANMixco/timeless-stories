@@ -1345,6 +1345,40 @@ html[data-theme="dark"] .card.is-matched .card-front {
 
 .legends-footer[hidden],
 .legends-rarity-note[hidden] { display: none; }
+.achievements-list { display: grid; gap: 12px; }
+.achievement-row { display: flex; align-items: center; gap: 18px; padding: 16px; border: 1px solid var(--muted); border-radius: 8px; }
+.achievement-row h3 { margin: 0 0 6px; }
+.achievement-row p { margin: 4px 0; line-height: 1.5; }
+.achievement-icon { display: block; flex: 0 0 48px; font-size: 2.5rem; color: var(--achievement-color); }
+.achievement-row:not(.is-unlocked) .achievement-icon { filter: grayscale(1); opacity: 0.4; }
+.achievement-row:not(.is-unlocked) { filter: grayscale(1); }
+.achievement-status { color: var(--muted); font-size: 0.875rem; }
+#achievementsPanel { z-index: 24; }
+.achievement-panel { z-index: 25; }
+.achievement-card { border-color: var(--achievement-color); animation: achievement-glow 650ms ease-out both; }
+.achievement-card > .achievement-icon { margin: 0 auto 16px; font-size: 3.5rem; }
+.achievement-card h2 { font-size: clamp(1.4rem, 5vw, 1.8rem); }
+.achievement-card h3 { color: var(--achievement-color); }
+#achievementName[hidden] { display: none; }
+.achievement-card p:empty { display: none; }
+#achievementMotto { font-style: italic; }
+#achievementExplore { display: inline-flex; margin-top: 8px; text-decoration: none; }
+#achievementExplore[hidden] { display: none; }
+.is-legendary .achievement-card { animation: achievement-glow 1100ms ease-out both; }
+.is-legendary .achievement-card::before { content: ""; position: absolute; inset: 12px; border: 2px solid #e5b74b; border-radius: inherit; pointer-events: none; animation: achievement-gold 1100ms ease-out both; }
+@keyframes achievement-glow {
+  from { box-shadow: 0 0 0 8px transparent; transform: scale(0.97); }
+  45% { box-shadow: 0 0 26px 3px var(--achievement-color); }
+  to { box-shadow: var(--shadow); transform: scale(1); }
+}
+@keyframes achievement-gold {
+  from { opacity: 0.8; transform: scale(0.92); }
+  to { opacity: 0; transform: scale(1.04); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .achievement-panel .achievement-card, .achievement-panel .achievement-card::before { animation: none; }
+  .achievement-panel .achievement-card::before { display: none; }
+}
 .collection-panel { z-index: 21; }
 .legends-panel.is-collection-detail { z-index: 22; }
 #collectionProgress { width: 100%; height: 18px; accent-color: var(--found); }
