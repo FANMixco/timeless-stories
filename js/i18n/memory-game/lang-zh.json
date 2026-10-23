@@ -176,27 +176,35 @@
         "items": {
           "legendary": {
             "name": "传奇收藏家",
-            "description": "发现目前所有可用的原版镜像。"
+            "description": "你已发现目前所有可用的原版镜像。"
           },
           "victory": {
             "name": "首场胜利",
-            "description": "完成你的第一场记忆游戏。"
+            "description": "你已完成你的第一场记忆游戏。"
           },
           "lightning": {
             "name": "闪电记忆",
-            "description": "在30秒内完成一场游戏。"
+            "description": "你已在30秒内完成一场游戏。"
           },
           "golden": {
             "name": "黄金发现",
-            "description": "发现你的第一个线上独家镜像。"
+            "description": "你已发现你的第一个线上独家镜像。"
           },
           "scenes": {
             "name": "幕后故事",
-            "description": "发现你的第一张导演剪辑版卡牌。"
+            "description": "你已发现你的第一张导演剪辑版卡牌。"
+          },
+          "directorsMaster": {
+            "name": "导演剪辑版大师",
+            "description": "你已发现两则导演剪辑版故事。找到黄金镜像的几率已提高。祝你好运 🍀！"
+          },
+          "goldenCollector": {
+            "name": "黄金收藏家",
+            "description": "你已发现所有黄金镜像。"
           },
           "master": {
             "name": "收藏大师",
-            "description": "发现目前所有可用的原版镜像、导演剪辑版卡牌和线上独家镜像。"
+            "description": "你已发现目前所有可用的原版镜像、导演剪辑版卡牌和线上独家镜像。"
           }
         }
       },

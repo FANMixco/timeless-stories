@@ -176,27 +176,35 @@
         "items": {
           "legendary": {
             "name": "Legendary Collector",
-            "description": "Discover all currently available Original Mirrors."
+            "description": "Discovered all currently available Original Mirrors."
           },
           "victory": {
             "name": "First Victory",
-            "description": "Complete your first memory game."
+            "description": "Completed your first memory game."
           },
           "lightning": {
             "name": "Lightning Memory",
-            "description": "Complete a game in under 30 seconds."
+            "description": "Completed a game in under 30 seconds."
           },
           "golden": {
             "name": "Golden Discovery",
-            "description": "Discover your first Online exclusive mirror."
+            "description": "Discovered your first Online exclusive mirror."
           },
           "scenes": {
             "name": "Behind the Scenes",
-            "description": "Discover your first Director’s Cut card."
+            "description": "Discovered your first Director’s Cut card."
+          },
+          "directorsMaster": {
+            "name": "Director’s Cut Master",
+            "description": "Discovered both Director’s Cut stories. Your chances of finding a Golden Mirror have increased. Good luck 🍀!"
+          },
+          "goldenCollector": {
+            "name": "Golden Collector",
+            "description": "Discovered every Golden Mirror."
           },
           "master": {
             "name": "Master Collector",
-            "description": "Discover all currently available Original Mirrors, Director’s Cut cards, and Online exclusive mirrors."
+            "description": "Discovered all currently available Original Mirrors, Director’s Cut cards, and Online exclusive mirrors."
           }
         }
       },

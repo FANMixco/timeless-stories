@@ -10,51 +10,14 @@ const achievementDefinitions = [
   { id: "lightning", icon: "power", color: "#1484bd" },
   { id: "golden", icon: "mirror", color: "#c49118" },
   { id: "scenes", icon: "video-camera", color: "#9c64cf" },
+  { id: "directorsMaster", icon: "movie-filter", color: "#9c64cf" },
+  { id: "goldenCollector", icon: "gold", color: "#c49118" },
   { id: "master", icon: "crown", color: "#c45f87" },
 ];
-const defaultAchievementCopy = {
-  "title": "Achievements",
-  "progress": "{found} / {total} Achievements Unlocked",
-  "unlocked": "Unlocked",
-  "locked": "Locked",
-  "notification": "Achievement Unlocked!",
-  "legendaryTitle": "Legendary Collector!",
-  "legendaryDescription": "You've discovered all currently available Original Mirrors!",
-  "celebration": "From forgotten myths to extraordinary mysteries, your Original Mirrors collection is complete... for now.",
-  "completion": "Original Mirrors 100%",
-  "motto": "Every legend has a story beyond the cards.",
-  "explore": "Explore Timeless Stories",
-  "items": {
-    "legendary": {
-      "name": "Legendary Collector",
-      "description": "Discover all currently available Original Mirrors."
-    },
-    "victory": {
-      "name": "First Victory",
-      "description": "Complete your first memory game."
-    },
-    "lightning": {
-      "name": "Lightning Memory",
-      "description": "Complete a game in under 30 seconds."
-    },
-    "golden": {
-      "name": "Golden Discovery",
-      "description": "Discover your first Online exclusive mirror."
-    },
-    "scenes": {
-      "name": "Behind the Scenes",
-      "description": "Discover your first Director’s Cut card."
-    },
-    "master": {
-      "name": "Master Collector",
-      "description": "Discover all currently available Original Mirrors, Director’s Cut cards, and Online exclusive mirrors."
-    }
-  }
-};
 const supportedThemes = ["system", "light", "dark"];
 const previewRewardThresholdSeconds = 30;
 const mismatchFlipBackDelayMs = 1200;
-const i18nCacheVersion = "20261023-mirrors-plural";
+const i18nCacheVersion = "20261023-achievement-tense";
 let linkRegistry = null;
 let localizedLinks = null;
 const board = document.getElementById("board");
@@ -290,12 +253,16 @@ function evaluateAchievements(completed = false) {
   const catalogue = getMirrorCatalogue();
   const found = catalogue.filter(pair => discoveries.has(getMirrorId(pair)));
   const regularLegends = catalogue.filter(pair => !pair.rarity);
+  const directorsCut = catalogue.filter(pair => pair.rarity === "rare");
+  const goldenMirrors = catalogue.filter(pair => pair.rarity === "ultra-rare");
   const conditions = {
     legendary: regularLegends.length > 0 && regularLegends.every(pair => discoveries.has(getMirrorId(pair))),
     victory: completed || found.length > 0,
     lightning: completed && elapsedSeconds < 30,
     golden: found.some(pair => pair.rarity === "ultra-rare"),
     scenes: found.some(pair => pair.rarity === "rare"),
+    directorsMaster: directorsCut.length > 0 && directorsCut.every(pair => discoveries.has(getMirrorId(pair))),
+    goldenCollector: goldenMirrors.length > 0 && goldenMirrors.every(pair => discoveries.has(getMirrorId(pair))),
     master: catalogue.length > 0 && found.length === catalogue.length,
   };
   for (const { id } of achievementDefinitions) {
@@ -308,7 +275,7 @@ function evaluateAchievements(completed = false) {
 }
 
 function renderAchievements() {
-  const copy = memoryGame.achievements || defaultAchievementCopy;
+  const copy = memoryGame.achievements;
   setElementText(document.getElementById("achievementsTitle"), copy.title);
   setElementText(document.getElementById("achievementsProgress"), copy.progress
     .replace("{found}", achievementDefinitions.filter(({ id }) => achievements[id]).length)
@@ -359,7 +326,7 @@ function showNextAchievement() {
   if (!achievementReturnFocus) achievementReturnFocus = document.activeElement;
   currentAchievement = achievementQueue.shift();
   const definition = achievementDefinitions.find(item => item.id === currentAchievement);
-  const copy = memoryGame.achievements || defaultAchievementCopy;
+  const copy = memoryGame.achievements;
   const legendary = currentAchievement === "legendary";
   achievementPanel.style.setProperty("--achievement-color", definition.color);
   achievementPanel.classList.toggle("is-legendary", legendary);
@@ -619,29 +586,35 @@ function resolveGameHref(href) {
   return getTranslationValue(localizedLinks, href) || "";
 }
 
+async function loadGameLanguage(language) {
+  const response = await fetch(`js/i18n/memory-game/lang-${language}.min.json?v=${i18nCacheVersion}`);
+  if (response.ok === false) throw new Error(`Unable to load game language: ${language}`);
+  const data = await response.json();
+  const game = data.translations?.memoryGame;
+  if (!game || !achievementDefinitions.every(({ id }) => game.achievements?.items?.[id])) {
+    throw new Error(`Incomplete game language: ${language}`);
+  }
+  return { language, translations: data.translations };
+}
+
 async function loadTranslations() {
   const language = getLanguage();
-  currentLanguage = language;
-  document.documentElement.lang = language;
-
-  try {
-    const [gameResponse, linksResponse] = await Promise.all([
-      fetch(`js/i18n/memory-game/lang-${language}.min.json?v=${i18nCacheVersion}`),
-      fetch("js/data/links.min.json"),
-    ]);
-    const gameData = await gameResponse.json();
-    linkRegistry = await linksResponse.json();
-    localizedLinks = mergeLinkConfig(
-      linkRegistry.localized.default,
-      linkRegistry.localized[language],
-    );
-    translations = gameData.translations;
-    memoryGame = translations.memoryGame || { pairs: [] };
-  } catch (error) {
-    translations = { mapLegends: {}, memoryGame: { pairs: [] } };
-    memoryGame = translations.memoryGame;
-    localizedLinks = {};
-  }
+  const [gameData, links] = await Promise.all([
+    loadGameLanguage(language).catch(error => {
+      if (language === "en") throw error;
+      return loadGameLanguage("en");
+    }),
+    fetch("js/data/links.min.json").then(response => response.json()).catch(() => null),
+  ]);
+  currentLanguage = gameData.language;
+  document.documentElement.lang = currentLanguage;
+  translations = gameData.translations;
+  memoryGame = translations.memoryGame;
+  linkRegistry = links;
+  localizedLinks = mergeLinkConfig(
+    links?.localized?.default || {},
+    links?.localized?.[currentLanguage],
+  );
 }
 
 function setText(selector, value) {
@@ -850,7 +823,7 @@ function closeAboutPanel() {
 }
 
 function applyUiCopy() {
-  setActionButtonContent(achievementsButton, (memoryGame.achievements || defaultAchievementCopy).title, "icon-trophy");
+  setActionButtonContent(achievementsButton, memoryGame.achievements.title, "icon-trophy");
   closeAchievementsButton.setAttribute("aria-label", memoryGame.close || "Close");
   closeAchievementButton.setAttribute("aria-label", memoryGame.close || "Close");
   renderAbout();
@@ -980,6 +953,11 @@ function chooseWeightedVariant(variants) {
 function chooseActivePairs() {
   const pairs = Array.isArray(memoryGame.pairs) ? memoryGame.pairs.map((pair) => ({ ...pair })) : [];
   const variants = Array.isArray(memoryGame.rarePairs) ? memoryGame.rarePairs : [];
+  // Only saved discoveries qualify, including progress completed in another tab.
+  discoveries = new Set([...readDiscoveries(), ...discoveries]);
+  const directorsCut = variants.filter(variant => variant.pair?.rarity === "rare");
+  const goldenMirrors = variants.filter(variant => variant.pair?.rarity === "ultra-rare");
+  const directorsComplete = directorsCut.length > 0 && directorsCut.every(variant => discoveries.has(getMirrorId(variant.pair)));
   let selectedVariants;
   // One percent of rounds have two specials. The remaining rounds use the
   // configured 65/20/15 distribution, with at most one special pair.
@@ -1001,6 +979,18 @@ function chooseActivePairs() {
       return roll < threshold;
     });
     selectedVariants = selected?.pair ? [selected] : [];
+  }
+
+  // After completing Director's Cut, each selected Director's Cut gets its own
+  // 50/50 chance to become a Golden Mirror, in normal and bonus rounds alike.
+  if (directorsComplete) {
+    selectedVariants = selectedVariants.map((variant, index) => {
+      if (variant.pair.rarity !== "rare" || Math.random() >= 0.5) return variant;
+      const others = selectedVariants.filter((_, otherIndex) => otherIndex !== index);
+      const compatible = goldenMirrors.filter(candidate => others.every(other =>
+        candidate.pair.source !== other.pair.source && candidate.pair.mirror !== other.pair.mirror));
+      return chooseWeightedVariant(compatible) || variant;
+    });
   }
 
   const replaced = new Set();
@@ -1738,8 +1728,10 @@ playAgainButton.addEventListener("click", restartGame);
 applyTheme();
 document.documentElement.dataset.embed = String(isEmbedded);
 window.matchMedia?.("(prefers-color-scheme: dark)")?.addEventListener("change", applyTheme);
-loadTranslations().finally(() => {
+loadTranslations().then(() => {
   applyUiCopy();
   evaluateAchievements();
   startGame();
+}).catch(error => {
+  console.error("Unable to initialize the memory game:", error);
 });

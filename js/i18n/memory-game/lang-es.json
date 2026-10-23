@@ -176,27 +176,35 @@
         "items": {
           "legendary": {
             "name": "Coleccionista legendario",
-            "description": "Descubre todos los Espejos originales disponibles actualmente."
+            "description": "Has descubierto todos los Espejos originales disponibles actualmente."
           },
           "victory": {
             "name": "Primera victoria",
-            "description": "Completa tu primera partida de memoria."
+            "description": "Has completado tu primera partida de memoria."
           },
           "lightning": {
             "name": "Memoria relámpago",
-            "description": "Completa una partida en menos de 30 segundos."
+            "description": "Has completado una partida en menos de 30 segundos."
           },
           "golden": {
             "name": "Descubrimiento dorado",
-            "description": "Descubre tu primer Espejo exclusivo en línea."
+            "description": "Has descubierto tu primer Espejo exclusivo en línea."
           },
           "scenes": {
             "name": "Detrás de cámaras",
-            "description": "Descubre tu primera carta de la Versión del director."
+            "description": "Has descubierto tu primera carta de la Versión del director."
+          },
+          "directorsMaster": {
+            "name": "Maestro de la Versión del director",
+            "description": "Has descubierto ambas historias de la Versión del director. Tus posibilidades de encontrar un Espejo Dorado han aumentado. ¡Buena suerte 🍀!"
+          },
+          "goldenCollector": {
+            "name": "Coleccionista dorado",
+            "description": "Has descubierto todos los Espejos Dorados."
           },
           "master": {
             "name": "Maestro coleccionista",
-            "description": "Descubre todos los Espejos originales, las cartas de la Versión del director y los Espejos exclusivos en línea disponibles actualmente."
+            "description": "Has descubierto todos los Espejos originales, las cartas de la Versión del director y los Espejos exclusivos en línea disponibles actualmente."
           }
         }
       },

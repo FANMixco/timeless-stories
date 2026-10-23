@@ -176,27 +176,35 @@
         "items": {
           "legendary": {
             "name": "Collectionneur légendaire",
-            "description": "Découvrez tous les Miroirs originaux actuellement disponibles."
+            "description": "Vous avez découvert tous les Miroirs originaux actuellement disponibles."
           },
           "victory": {
             "name": "Première victoire",
-            "description": "Terminez votre première partie de mémoire."
+            "description": "Vous avez terminé votre première partie de mémoire."
           },
           "lightning": {
             "name": "Mémoire éclair",
-            "description": "Terminez une partie en moins de 30 secondes."
+            "description": "Vous avez terminé une partie en moins de 30 secondes."
           },
           "golden": {
             "name": "Découverte dorée",
-            "description": "Découvrez votre premier Miroir exclusif en ligne."
+            "description": "Vous avez découvert votre premier Miroir exclusif en ligne."
           },
           "scenes": {
             "name": "Dans les coulisses",
-            "description": "Découvrez votre première carte de la Version du réalisateur."
+            "description": "Vous avez découvert votre première carte de la Version du réalisateur."
+          },
+          "directorsMaster": {
+            "name": "Maître de la Version du réalisateur",
+            "description": "Vous avez découvert les deux histoires de la Version du réalisateur. Vos chances de trouver un Miroir Doré ont augmenté. Bonne chance 🍀 !"
+          },
+          "goldenCollector": {
+            "name": "Collectionneur doré",
+            "description": "Vous avez découvert tous les Miroirs Dorés."
           },
           "master": {
             "name": "Maître collectionneur",
-            "description": "Découvrez tous les Miroirs originaux, les cartes de la Version du réalisateur et les Miroirs exclusifs en ligne actuellement disponibles."
+            "description": "Vous avez découvert tous les Miroirs originaux, les cartes de la Version du réalisateur et les Miroirs exclusifs en ligne actuellement disponibles."
           }
         }
       },
