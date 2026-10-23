@@ -17,7 +17,7 @@ const achievementDefinitions = [
 const supportedThemes = ["system", "light", "dark"];
 const previewRewardThresholdSeconds = 30;
 const mismatchFlipBackDelayMs = 1200;
-const i18nCacheVersion = "20261023-achievement-tense";
+const i18nCacheVersion = "20261023-unlock-bonus";
 let linkRegistry = null;
 let localizedLinks = null;
 const board = document.getElementById("board");
@@ -335,7 +335,7 @@ function showNextAchievement() {
   setElementText(document.getElementById("achievementName"), copy.items[currentAchievement].name);
   setElementHidden(document.getElementById("achievementName"), legendary);
   setElementText(document.getElementById("achievementDescription"), legendary ? copy.legendaryDescription : copy.items[currentAchievement].description);
-  setElementText(document.getElementById("achievementCelebration"), legendary ? copy.celebration : "");
+  setElementText(document.getElementById("achievementCelebration"), legendary ? copy.celebration : copy.items[currentAchievement].bonus || "");
   setElementText(document.getElementById("achievementCompletion"), legendary ? copy.completion : "");
   setElementText(document.getElementById("achievementMotto"), legendary ? copy.motto : "");
   const explore = document.getElementById("achievementExplore");

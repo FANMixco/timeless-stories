@@ -196,7 +196,8 @@
           },
           "directorsMaster": {
             "name": "Maestro de la Versión del director",
-            "description": "Has descubierto ambas historias de la Versión del director. Tus posibilidades de encontrar un Espejo Dorado han aumentado. ¡Buena suerte 🍀!"
+            "description": "Has descubierto ambas historias de la Versión del director.",
+            "bonus": "Tus posibilidades de encontrar un Espejo Dorado han aumentado. ¡Buena suerte 🍀!"
           },
           "goldenCollector": {
             "name": "Coleccionista dorado",

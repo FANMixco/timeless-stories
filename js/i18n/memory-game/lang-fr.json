@@ -196,7 +196,8 @@
           },
           "directorsMaster": {
             "name": "Maître de la Version du réalisateur",
-            "description": "Vous avez découvert les deux histoires de la Version du réalisateur. Vos chances de trouver un Miroir Doré ont augmenté. Bonne chance 🍀 !"
+            "description": "Vous avez découvert les deux histoires de la Version du réalisateur.",
+            "bonus": "Vos chances de trouver un Miroir Doré ont augmenté. Bonne chance 🍀 !"
           },
           "goldenCollector": {
             "name": "Collectionneur doré",

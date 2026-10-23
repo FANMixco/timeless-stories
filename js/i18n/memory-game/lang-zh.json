@@ -196,7 +196,8 @@
           },
           "directorsMaster": {
             "name": "导演剪辑版大师",
-            "description": "你已发现两则导演剪辑版故事。找到黄金镜像的几率已提高。祝你好运 🍀！"
+            "description": "你已发现两则导演剪辑版故事。",
+            "bonus": "找到黄金镜像的几率已提高。祝你好运 🍀！"
           },
           "goldenCollector": {
             "name": "黄金收藏家",

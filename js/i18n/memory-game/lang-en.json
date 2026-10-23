@@ -196,7 +196,8 @@
           },
           "directorsMaster": {
             "name": "Director’s Cut Master",
-            "description": "Discovered both Director’s Cut stories. Your chances of finding a Golden Mirror have increased. Good luck 🍀!"
+            "description": "Discovered both Director’s Cut stories.",
+            "bonus": "Your chances of finding a Golden Mirror have increased. Good luck 🍀!"
           },
           "goldenCollector": {
             "name": "Golden Collector",
