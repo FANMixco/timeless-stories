@@ -33,6 +33,64 @@
       "purpose": "any"
     }
   ],
+  "screenshots": [
+    {
+      "src": "img/memory-previews/phone-1.png",
+      "sizes": "1082x2402",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Phone view of a new memory game with 20 face-down cards."
+    },
+    {
+      "src": "img/memory-previews/phone-2.png",
+      "sizes": "1082x2402",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Phone view of a game in progress with matched Salvadoran and Spanish legends."
+    },
+    {
+      "src": "img/memory-previews/phone-3.png",
+      "sizes": "1082x2402",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Phone view of the congratulations dialog after matching all 10 pairs."
+    },
+    {
+      "src": "img/memory-previews/phone-4.png",
+      "sizes": "1082x2402",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Phone view of mirrored legends and their cultural comparisons."
+    },
+    {
+      "src": "img/memory-previews/tablet-1.png",
+      "sizes": "2732x2048",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Tablet view of a new memory game with controls beside the card grid."
+    },
+    {
+      "src": "img/memory-previews/tablet-2.png",
+      "sizes": "2732x2048",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Tablet view of a game in progress with revealed legends and match statistics."
+    },
+    {
+      "src": "img/memory-previews/tablet-3.png",
+      "sizes": "2732x2048",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Tablet view of the congratulations dialog after matching all 10 pairs."
+    },
+    {
+      "src": "img/memory-previews/tablet-4.png",
+      "sizes": "2732x2048",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Tablet view of Salvadoran and Spanish legends compared side by side."
+    }
+  ],
   "theme_color": "#111820",
   "background_color": "#111820",
   "display": "standalone",
