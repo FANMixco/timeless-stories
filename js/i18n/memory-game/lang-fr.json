@@ -188,6 +188,7 @@
       "settings": {
         "title": "Paramètres",
         "sounds": "Effets sonores",
+        "tips": "Afficher le bouton d’aide",
         "system": "Système",
         "light": "Clair",
         "dark": "Sombre"

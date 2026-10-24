@@ -130,8 +130,8 @@ html[data-embed="true"] .standalone-only {
 .settings-row .language-control { flex-shrink: 0; }
 .settings-row .language-menu { max-height: min(240px, 40dvh); overflow-y: auto; }
 .settings-row #languageButton { display: inline-flex; align-items: center; gap: 10px; }
-#soundToggle { flex-shrink: 0; width: 24px; height: 24px; accent-color: var(--found); cursor: pointer; }
-#soundToggle:focus-visible { outline: 2px solid var(--found); outline-offset: 4px; }
+#soundToggle, #tipsToggle { flex-shrink: 0; width: 24px; height: 24px; accent-color: var(--found); cursor: pointer; }
+#soundToggle:focus-visible, #tipsToggle:focus-visible { outline: 2px solid var(--found); outline-offset: 4px; }
 .settings-theme { margin: 24px 0 0; padding: 0; min-width: 0; border: 0; }
 .settings-theme legend { margin-bottom: 10px; padding: 0; line-height: 1.5; }
 .theme-options { display: flex; gap: 4px; padding: 4px; border: 1px solid var(--muted); border-radius: 8px; }

@@ -188,6 +188,7 @@
       "settings": {
         "title": "设置",
         "sounds": "音效",
+        "tips": "显示提示按钮",
         "system": "跟随系统",
         "light": "浅色",
         "dark": "深色"

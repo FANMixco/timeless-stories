@@ -188,6 +188,7 @@
       "settings": {
         "title": "Ajustes",
         "sounds": "Efectos de sonido",
+        "tips": "Mostrar botón de pistas",
         "system": "Sistema",
         "light": "Claro",
         "dark": "Oscuro"

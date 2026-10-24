@@ -4,6 +4,8 @@ const themeStorageKey = "timelessStoriesColorMode";
 const introStorageKey = "timelessMemoryIntroSeen";
 const collectionStorageKey = "timelessMemoryCollection";
 const soundStorageKey = "timelessMemorySoundEnabled";
+const tipsStorageKey = "timelessMemoryTipsEnabled";
+let tipsEnabled = readTipsEnabled();
 const soundFiles = { match: "music/match.mp3", discovery: "music/shiny.mp3", achievement: "music/award.mp3", victory: "music/complete.mp3" };
 const soundEffectCreators = ["ALEXIS_GAMING_CAM", "freesound_community", "Yodguard", "Game Studio"];
 let soundEnabled = readSoundEnabled();
@@ -30,7 +32,7 @@ const achievementDefinitions = [
 const supportedThemes = ["system", "light", "dark"];
 const previewRewardThresholdSeconds = 30;
 const mismatchFlipBackDelayMs = 1200;
-const i18nCacheVersion = "20261024-settings-credits";
+const i18nCacheVersion = "20261024-tips-setting";
 let linkRegistry = null;
 let localizedLinks = null;
 const board = document.getElementById("board");
@@ -69,6 +71,7 @@ const settingsButton = document.getElementById("settingsButton");
 const settingsPanel = document.getElementById("settingsPanel");
 const closeSettingsButton = document.getElementById("closeSettingsButton");
 const soundToggle = document.getElementById("soundToggle");
+const tipsToggle = document.getElementById("tipsToggle");
 const shareButton = document.getElementById("shareButton");
 const hintButton = document.getElementById("hintButton");
 const topViewLegendsButton = document.getElementById("topViewLegendsButton");
@@ -743,6 +746,19 @@ function readSoundEnabled() {
   catch { return true; }
 }
 
+function readTipsEnabled() {
+  try { return window.localStorage.getItem(tipsStorageKey) !== "false"; }
+  catch { return true; }
+}
+
+function setTipsEnabled(enabled) {
+  tipsEnabled = enabled;
+  tipsToggle.checked = enabled;
+  hintPressCount = 0;
+  try { window.localStorage.setItem(tipsStorageKey, String(enabled)); } catch {}
+  setElementHidden(hintButton, gameCompleted || !enabled);
+}
+
 function getSoundBuffer(name) {
   if (!soundBuffers.has(name)) {
     const buffer = fetch(soundFiles[name])
@@ -879,6 +895,7 @@ function openSettings() {
   closeLanguageMenu();
   settingsPanel.classList.add("is-visible");
   soundToggle.checked = soundEnabled;
+  tipsToggle.checked = tipsEnabled;
   closeSettingsButton.focus();
   syncModalScrollLock();
 }
@@ -1014,12 +1031,15 @@ function applyUiCopy() {
   setElementText(document.getElementById("settingsTitle"), settingsCopy.title);
   setElementText(document.getElementById("settingsLanguageLabel"), memoryGame.language);
   setElementText(document.getElementById("settingsSoundLabel"), settingsCopy.sounds);
+  setElementText(document.getElementById("settingsTipsLabel"), settingsCopy.tips);
   setElementText(document.getElementById("settingsThemeLabel"), memoryGame.theme);
   setElementText(document.getElementById("themeSystemLabel"), settingsCopy.system);
   setElementText(document.getElementById("themeLightLabel"), settingsCopy.light);
   setElementText(document.getElementById("themeDarkLabel"), settingsCopy.dark);
   closeSettingsButton.setAttribute("aria-label", memoryGame.close || "Close");
   soundToggle.checked = soundEnabled;
+  tipsToggle.checked = tipsEnabled;
+  setElementHidden(hintButton, gameCompleted || !tipsEnabled);
   setActionButtonContent(achievementsButton, memoryGame.achievements.title, "icon-trophy");
   closeAchievementsButton.setAttribute("aria-label", memoryGame.close || "Close");
   closeAchievementButton.setAttribute("aria-label", memoryGame.close || "Close");
@@ -1572,7 +1592,7 @@ function setPreviewRewardVisibility(shouldShow) {
 }
 
 function setTopLegendActionVisibility(shouldShow) {
-  setElementHidden(hintButton, shouldShow);
+  setElementHidden(hintButton, shouldShow || !tipsEnabled);
   setElementHidden(topViewLegendsButton, !shouldShow);
 }
 
@@ -1759,7 +1779,7 @@ async function runIntroTutorial() {
 }
 
 function handleHint() {
-  if (introRunning) return;
+  if (introRunning || !tipsEnabled) return;
   // The first flip starts play before either the move count or timer ticks.
   const canReplayTutorial = !gameCompleted && !firstCard &&
     moves === 0 && matches === 0 && elapsedSeconds === 0;
@@ -1909,6 +1929,12 @@ window.addEventListener("storage", (event) => {
     soundToggle.checked = soundEnabled;
     if (!soundEnabled) stopGameSounds();
   }
+  if (event.key === tipsStorageKey) {
+    tipsEnabled = readTipsEnabled();
+    tipsToggle.checked = tipsEnabled;
+    hintPressCount = 0;
+    setElementHidden(hintButton, gameCompleted || !tipsEnabled);
+  }
 });
 window.addEventListener("beforeunload", warnBeforeLeaving);
 // Android may resume the existing page after an external link, or restore it
@@ -1950,6 +1976,7 @@ settingsPanel.addEventListener("click", event => {
   if (event.target === settingsPanel) closeSettings();
 });
 soundToggle.addEventListener("change", () => setSoundEnabled(soundToggle.checked));
+tipsToggle.addEventListener("change", () => setTipsEnabled(tipsToggle.checked));
 achievementsButton.addEventListener("click", openAchievements);
 closeAchievementsButton.addEventListener("click", closeAchievements);
 closeAchievementButton.addEventListener("click", closeAchievement);

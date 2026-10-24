@@ -188,6 +188,7 @@
       "settings": {
         "title": "Settings",
         "sounds": "Sound effects",
+        "tips": "Show tips button",
         "system": "System",
         "light": "Light",
         "dark": "Dark"
