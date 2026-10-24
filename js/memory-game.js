@@ -1178,12 +1178,12 @@ function markMatch() {
   firstCard.classList.add("is-matched");
   secondCard.classList.add("is-matched");
   matches += 1;
-  showMatchInsight(firstCard);
   updateStatus();
 
   if (matches === getPairCount()) {
     stopTimer();
     gameCompleted = true;
+    if (window.matchMedia?.("(max-width: 640px)")?.matches) hideLegendToast();
     saveCompletedDiscoveries();
     board.classList.add("is-complete");
     setTopLegendActionVisibility(true);
@@ -1198,16 +1198,21 @@ function markMatch() {
     syncModalScrollLock();
   }
 
+  showMatchInsight(firstCard);
   resetTurn();
 }
 
 function showMatchInsight(card) {
+  matchInsight.classList.toggle("is-in-progress", !gameCompleted);
   matchInsightTitle.textContent = card.dataset.insightTitle || "";
   matchInsightText.textContent = card.dataset.insight || "";
   matchInsight.classList.toggle(
     "is-visible",
     Boolean(card.dataset.insightTitle || card.dataset.insight),
   );
+  if (!gameCompleted && window.matchMedia?.("(max-width: 640px)")?.matches) {
+    showToast(card.dataset.insightTitle || "", card.dataset.insight || "");
+  }
 }
 
 function createLegendCell(characterKey, side) {

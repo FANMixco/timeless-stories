@@ -1477,6 +1477,10 @@ html[data-theme="dark"] .collection-mirror:not(:disabled) strong { color: #fffff
     display: none;
   }
 
+  .match-insight.is-in-progress {
+    display: none;
+  }
+
   .legend-toast {
     top: auto;
     right: 14px;
