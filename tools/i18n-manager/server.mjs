@@ -2,6 +2,7 @@ import { createServer } from "node:http";
 import { readFile, readdir, stat, writeFile } from "node:fs/promises";
 import { extname, join, normalize, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { assertMemoryGame, assertSelectionRules, setMissingPath } from "./public/memory-schema.mjs";
 
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
 const rootDir = resolve(__dirname, "../..");
@@ -18,6 +19,7 @@ const mimeTypes = new Map([
   [".html", "text/html; charset=utf-8"],
   [".css", "text/css; charset=utf-8"],
   [".js", "text/javascript; charset=utf-8"],
+  [".mjs", "text/javascript; charset=utf-8"],
   [".json", "application/json; charset=utf-8"],
 ]);
 
@@ -101,45 +103,13 @@ function cloneTargetDirectory(type) {
   throw new Error("Field cloning is only available for language files.");
 }
 
-function hasPath(root, path) {
-  let cursor = root;
-  for (const part of path) {
-    if (!cursor || typeof cursor !== "object" || !Object.prototype.hasOwnProperty.call(cursor, part)) {
-      return false;
-    }
-    cursor = cursor[part];
-  }
-  return true;
-}
-
-function setMissingPath(root, path, value) {
-  if (!Array.isArray(path) || !path.length) {
-    throw new Error("Clone path is required.");
-  }
-
-  if (path.some((part) => !/^[\w.-]+$/.test(String(part)) || ["__proto__", "prototype", "constructor"].includes(String(part)))) {
-    throw new Error("Clone path contains an invalid key.");
-  }
-
-  if (hasPath(root, path)) return false;
-
-  let cursor = root;
-  for (const part of path.slice(0, -1)) {
-    if (!cursor[part] || typeof cursor[part] !== "object" || Array.isArray(cursor[part])) {
-      cursor[part] = {};
-    }
-    cursor = cursor[part];
-  }
-  cursor[path[path.length - 1]] = value;
-  return true;
-}
-
 async function cloneField({ type, lang, path, value }) {
   const sourceLang = ensureLanguage(lang);
   const dir = cloneTargetDirectory(type);
   const files = await listJsonFiles(dir);
   const cloned = [];
   const skipped = [];
+  const pending = [];
 
   for (const file of files) {
     const targetLang = file.replace(/^lang-/, "").replace(/\.json$/, "");
@@ -148,18 +118,23 @@ async function cloneField({ type, lang, path, value }) {
     const targetFile = resolve(dir, file);
     const json = await readJsonFile(targetFile);
     if (setMissingPath(json, path, value)) {
-      await writeJsonPair(targetFile, json, true);
+      if (type === "memory") assertMemoryGame(json);
+      pending.push({ targetFile, json });
       cloned.push({ lang: targetLang, file: relative(rootDir, targetFile).replaceAll("\\", "/") });
     } else {
       skipped.push({ lang: targetLang, reason: "exists" });
     }
   }
 
+  // Validate every target before writing any of the cloned files.
+  for (const { targetFile, json } of pending) await writeJsonPair(targetFile, json, true);
   return { cloned, skipped };
 }
 
 async function minifyFile(file) {
   const json = await readJsonFile(file);
+  if (isInside(memoryI18nDir, file)) assertMemoryGame(json);
+  if (file === resolve(dataDir, "memory-game.json")) assertSelectionRules(json);
   const minFile = minFileFor(file);
   await writeFile(minFile, JSON.stringify(json), "utf8");
   return {
@@ -340,6 +315,8 @@ async function handleApi(request, response, url) {
       const body = await readBody(request);
       const sourceFile = sourceFileFor(body);
       const json = typeof body.json === "string" ? JSON.parse(body.json) : body.json;
+      if (body.type === "memory") assertMemoryGame(json);
+      if (body.type === "data" && body.file === "memory-game.json") assertSelectionRules(json);
       await writeJsonPair(sourceFile, json, Boolean(body.minify));
       return sendJson(response, 200, { ok: true, minified: Boolean(body.minify) });
     }

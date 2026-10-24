@@ -30,6 +30,30 @@ The 65/20/15 figures apply to normal rounds, not all rounds combined.
 
 ### Which special pair is chosen
 
+The overall probabilities are stored once in `js/data/memory-game.json`, shared
+by all languages and editable in the i18n manager under **Data → memory-game.json**:
+
+```json
+{
+  "normalChances": { "rare": 0.2, "ultra-rare": 0.15 },
+  "bonusRoundChance": 0.01,
+  "bonusDirectorChance": 0.5,
+  "directorUpgradeChance": 0.5
+}
+```
+
+Each entry in a language file’s `rarePairs` uses a relative `weight`. New entries
+default to weight 1, including when that field is omitted. The selector
+automatically calculates each entry’s share of its category:
+
+`entry probability in a normal round = category chance × weight / category weight total`
+
+Adding a mirror or changing a weight redistributes only that category’s share;
+it does not change the category’s total probability. For example, adding a 19th
+equally weighted Golden Mirror gives each one 1/19 of the same 15% normal-round
+Golden chance. To change the overall category chances deliberately, edit the
+shared data file. Keep individual mirror weights consistent across languages.
+
 - Selection is random and weighted. Undiscovered cards receive **no preference**.
   A player can encounter the same special many times before collecting the rest.
 - All 18 Golden Mirrors have equal configured weights, sharing the normal-round
@@ -163,11 +187,14 @@ The Achievements button remains hidden until at least one achievement is earned.
   `saveCompletedDiscoveries`, `evaluateAchievements`, `markMatch`,
   `playGameSound`, `setTipsEnabled`, and `showMatchInsight`.
 - `js/i18n/memory-game/lang-*.json`: localized names/descriptions, shared
-  `comparisons`, original `pairs`, special `rarePairs`, and selection weights.
+  `comparisons`, original `pairs`, special `rarePairs`, and relative mirror weights.
+- `js/data/memory-game.json`: shared rarity probabilities, bonus-round settings,
+  and Director’s Cut completion upgrade probability.
 - `css/memory-game.css`: responsive message and modal presentation.
 - `sw.js` and versioned asset URLs in `memory-game.html`: offline assets and
   cache refreshes.
 
 When adding content, keep catalogue IDs and shared comparison references
-consistent across all four languages, preserve the intended total selection
-weights, regenerate minified assets, and refresh affected cache versions.
+consistent across all four languages, assign a relative weight (or accept the
+default of 1), regenerate minified assets, and refresh affected cache versions.
+No manual rebalancing of existing mirror percentages is needed.

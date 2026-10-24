@@ -32,9 +32,10 @@ const achievementDefinitions = [
 const supportedThemes = ["system", "light", "dark"];
 const previewRewardThresholdSeconds = 30;
 const mismatchFlipBackDelayMs = 1200;
-const i18nCacheVersion = "20261024-tips-setting";
+const i18nCacheVersion = "20261024-relative-weights";
 let linkRegistry = null;
 let localizedLinks = null;
+let selectionRules = null;
 const board = document.getElementById("board");
 const movesValue = document.getElementById("movesValue");
 const matchesValue = document.getElementById("matchesValue");
@@ -628,17 +629,19 @@ async function loadGameLanguage(language) {
 
 async function loadTranslations() {
   const language = getLanguage();
-  const [gameData, links] = await Promise.all([
+  const [gameData, links, rules] = await Promise.all([
     loadGameLanguage(language).catch(error => {
       if (language === "en") throw error;
       return loadGameLanguage("en");
     }),
     fetch("js/data/links.min.json").then(response => response.json()).catch(() => null),
+    loadSelectionRules(),
   ]);
   currentLanguage = gameData.language;
   document.documentElement.lang = currentLanguage;
   translations = gameData.translations;
   memoryGame = translations.memoryGame;
+  selectionRules = rules;
   linkRegistry = links;
   localizedLinks = mergeLinkConfig(
     links?.localized?.default || {},
@@ -1165,12 +1168,29 @@ function getPairCount() {
   return activePairs.length || (Array.isArray(memoryGame.pairs) ? memoryGame.pairs.length : 0);
 }
 
+async function loadSelectionRules() {
+  const response = await fetch(`js/data/memory-game.min.json?v=${i18nCacheVersion}`);
+  if (response.ok === false) throw new Error("Unable to load Memory Game selection rules");
+  const rules = await response.json();
+  const chances = [rules.normalChances?.rare, rules.normalChances?.["ultra-rare"], rules.bonusRoundChance, rules.bonusDirectorChance, rules.directorUpgradeChance];
+  if (!chances.every(value => typeof value === "number" && Number.isFinite(value) && value >= 0 && value <= 1) || chances[0] + chances[1] > 1) {
+    throw new Error("Invalid Memory Game selection probabilities");
+  }
+  return rules;
+}
+
+function getVariantWeight(variant) {
+  if (variant.weight === undefined) return 1;
+  return typeof variant.weight === "number" && Number.isFinite(variant.weight) && variant.weight > 0 ? variant.weight : 0;
+}
+
 function chooseWeightedVariant(variants) {
-  const total = variants.reduce((sum, variant) => sum + (Number(variant.chance) || 0), 0);
+  const total = variants.reduce((sum, variant) => sum + getVariantWeight(variant), 0);
+  if (!total) return undefined;
   const roll = Math.random() * total;
   let threshold = 0;
   return variants.find(variant => {
-    threshold += Number(variant.chance) || 0;
+    threshold += getVariantWeight(variant);
     return roll < threshold;
   });
 }
@@ -1184,12 +1204,12 @@ function chooseActivePairs() {
   const goldenMirrors = variants.filter(variant => variant.pair?.rarity === "ultra-rare");
   const directorsComplete = directorsCut.length > 0 && directorsCut.every(variant => discoveries.has(getMirrorId(variant.pair)));
   let selectedVariants;
-  // One percent of rounds have two specials. The remaining rounds use the
-  // configured 65/20/15 distribution, with at most one special pair.
-  if (Math.random() < 0.01 && pairs.length >= 2) {
+  // Bonus rounds have two specials. Normal rounds share fixed category rates
+  // from the common configuration, with at most one special pair.
+  if (Math.random() < selectionRules.bonusRoundChance && pairs.length >= 2) {
     const superRare = variants.filter(variant => variant.pair?.rarity === "ultra-rare");
     const directorsCut = variants.filter(variant => variant.pair?.rarity === "rare");
-    const first = chooseWeightedVariant(Math.random() < 0.5 ? directorsCut : superRare);
+    const first = chooseWeightedVariant(Math.random() < selectionRules.bonusDirectorChance ? directorsCut : superRare);
     // A source legend must occur only once on the board. Two variants of the
     // same original would otherwise overwrite each other or duplicate a source.
     const compatible = superRare.filter(variant => first &&
@@ -1198,19 +1218,26 @@ function chooseActivePairs() {
     selectedVariants = [first, chooseWeightedVariant(compatible)].filter(Boolean);
   } else {
     const roll = Math.random();
+    const totals = variants.reduce((groups, variant) => {
+      const rarity = variant.pair?.rarity;
+      groups[rarity] = (groups[rarity] || 0) + getVariantWeight(variant);
+      return groups;
+    }, {});
     let threshold = 0;
     const selected = variants.find(variant => {
-      threshold += Number(variant.chance) || 0;
+      const rarity = variant.pair?.rarity;
+      // Each rarity keeps its fixed probability regardless of catalogue size.
+      threshold += totals[rarity] ? (selectionRules.normalChances[rarity] || 0) * getVariantWeight(variant) / totals[rarity] : 0;
       return roll < threshold;
     });
     selectedVariants = selected?.pair ? [selected] : [];
   }
 
-  // After completing Director's Cut, each selected Director's Cut gets its own
-  // 50/50 chance to become a Golden Mirror, in normal and bonus rounds alike.
+  // After completing Director's Cut, its selected pairs get the configured
+  // upgrade chance (50% by default), in normal and bonus rounds alike.
   if (directorsComplete) {
     selectedVariants = selectedVariants.map((variant, index) => {
-      if (variant.pair.rarity !== "rare" || Math.random() >= 0.5) return variant;
+      if (variant.pair.rarity !== "rare" || Math.random() >= selectionRules.directorUpgradeChance) return variant;
       const others = selectedVariants.filter((_, otherIndex) => otherIndex !== index);
       const compatible = goldenMirrors.filter(candidate => others.every(other =>
         candidate.pair.source !== other.pair.source && candidate.pair.mirror !== other.pair.mirror));
