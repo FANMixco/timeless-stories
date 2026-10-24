@@ -8,10 +8,13 @@ const soundFiles = { match: "music/match.mp3", discovery: "music/shiny.mp3", ach
 const soundEffectCreators = ["ALEXIS_GAMING_CAM", "freesound_community", "Yodguard", "Game Studio"];
 let soundEnabled = readSoundEnabled();
 let audioContext = null;
-let activeSound = null;
-let soundQueue = [];
-let soundGeneration = 0;
-let soundPending = false;
+const soundChannels = {
+  effect: { version: 0, active: null, pending: null },
+  victory: { version: 0, active: null, pending: null },
+  achievement: { version: 0, active: null, pending: null },
+};
+const playingSounds = new Set();
+const soundFadeSeconds = 0.075;
 const soundBuffers = new Map();
 const achievementsStorageKey = "timelessMemoryAchievements";
 const achievementDefinitions = [
@@ -357,7 +360,7 @@ function showNextAchievement() {
   explore.textContent = copy.explore;
   setElementHidden(explore, !legendary);
   achievementPanel.classList.add("is-visible");
-  queueGameSound("achievement");
+  playGameSound("achievement");
   // Restart the brief celebration for each queued achievement.
   const card = achievementPanel.querySelector?.(".achievement-card");
   card?.getAnimations?.().forEach(animation => { animation.cancel(); animation.play(); });
@@ -766,53 +769,102 @@ function prepareGameAudio() {
   } catch { /* Audio support must never interrupt a game. */ }
 }
 
-function queueGameSound(name, rate = 1) {
-  if (!soundEnabled || !audioContext || document.visibilityState === "hidden") return;
-  // Rapid matches should not leave a backlog of old effects behind the win.
-  if (name === "match" || name === "discovery") {
-    soundQueue = soundQueue.filter(sound => sound.name !== "match" && sound.name !== "discovery");
+function setSoundVolume(sound, volume) {
+  const now = audioContext.currentTime;
+  const gain = sound.gain.gain;
+  if (gain.cancelAndHoldAtTime) gain.cancelAndHoldAtTime(now);
+  else {
+    gain.cancelScheduledValues(now);
+    gain.setValueAtTime(gain.value, now);
   }
-  soundQueue.push({ name, rate });
-  playNextGameSound();
+  gain.linearRampToValueAtTime(volume, now + soundFadeSeconds);
 }
 
-async function playNextGameSound() {
-  if (activeSound || soundPending || !soundEnabled || !soundQueue.length) return;
-  const sound = soundQueue.shift();
-  const generation = soundGeneration;
-  soundPending = true;
+function updateVictoryVolume() {
+  if (soundChannels.victory.active) {
+    setSoundVolume(soundChannels.victory.active, soundChannels.achievement.active ? 0.25 : 1);
+  }
+}
+
+function releaseSound(sound) {
+  playingSounds.delete(sound);
+  sound.source.disconnect();
+  sound.gain.disconnect();
+}
+
+function stopSound(sound, fade) {
+  if (fade) {
+    setSoundVolume(sound, 0);
+    try { sound.source.stop(audioContext.currentTime + soundFadeSeconds); } catch {}
+  } else {
+    sound.source.onended = null;
+    try { sound.source.stop(); } catch {}
+    releaseSound(sound);
+  }
+}
+
+function stopSoundChannel(channel, fade = true) {
+  channel.version += 1;
+  channel.pending = null;
+  const sound = channel.active;
+  channel.active = null;
+  if (sound) stopSound(sound, fade);
+}
+
+async function playGameSound(name, rate = 1) {
+  if (!soundEnabled || !audioContext || document.visibilityState === "hidden") return;
+  const gameplay = name === "match" || name === "discovery";
+  const channel = gameplay ? soundChannels.effect : soundChannels[name];
+  if (!channel) return;
+  if (gameplay) {
+    // Match feedback never interrupts a special discovery or a reward melody.
+    if (soundChannels.victory.active || soundChannels.victory.pending ||
+        soundChannels.achievement.active || soundChannels.achievement.pending) return;
+    if (name === "match" && (channel.active?.name === "discovery" || channel.pending?.name === "discovery")) return;
+  } else {
+    // Rewards immediately supersede gameplay, including effects still loading.
+    stopSoundChannel(soundChannels.effect);
+  }
+  stopSoundChannel(channel);
+  if (name === "achievement") updateVictoryVolume();
+  const version = channel.version;
+  channel.pending = { name };
   try {
-    const buffer = await getSoundBuffer(sound.name);
-    if (generation !== soundGeneration || !soundEnabled) return;
+    const buffer = await getSoundBuffer(name);
+    if (version !== channel.version || !soundEnabled || document.visibilityState === "hidden") return;
     const source = audioContext.createBufferSource();
+    const gain = audioContext.createGain();
+    const sound = { name, source, gain };
     source.buffer = buffer;
-    source.playbackRate.value = sound.rate;
-    source.connect(audioContext.destination);
+    source.playbackRate.value = rate;
+    source.connect(gain);
+    gain.connect(audioContext.destination);
+    gain.gain.setValueAtTime(0, audioContext.currentTime);
+    channel.active = sound;
+    channel.pending = null;
+    playingSounds.add(sound);
+    setSoundVolume(sound, name === "victory" && soundChannels.achievement.active ? 0.25 : 1);
     source.onended = () => {
-      if (generation !== soundGeneration) return;
-      activeSound = null;
-      playNextGameSound();
+      releaseSound(sound);
+      // A faded-out predecessor must not clear or unduck its replacement.
+      if (channel.active !== sound) return;
+      channel.active = null;
+      if (name === "achievement") updateVictoryVolume();
     };
-    activeSound = source;
-    soundPending = false;
     source.start();
+    if (name === "achievement") updateVictoryVolume();
   } catch {
-    if (generation !== soundGeneration) return;
-    activeSound = null;
-    soundPending = false;
-    playNextGameSound();
+    if (version !== channel.version) return;
+    channel.pending = null;
+    if (channel.active) stopSoundChannel(channel, false);
+    if (name === "achievement") updateVictoryVolume();
   }
 }
 
 function stopGameSounds() {
-  soundGeneration += 1;
-  soundQueue = [];
-  soundPending = false;
-  if (activeSound) {
-    activeSound.onended = null;
-    try { activeSound.stop(); } catch {}
-    activeSound = null;
-  }
+  for (const channel of Object.values(soundChannels)) stopSoundChannel(channel, false);
+  // Include predecessors still in their short fade-out period.
+  for (const sound of playingSounds) stopSound(sound, false);
 }
 
 function setSoundEnabled(enabled) {
@@ -1318,8 +1370,11 @@ function hideOpenCards() {
 
 function markMatch() {
   const specialDiscovery = firstCard.dataset.discoveryId && firstCard.dataset.rarity && !discoveries.has(firstCard.dataset.discoveryId);
-  if (specialDiscovery) queueGameSound("discovery", firstCard.dataset.rarity === "ultra-rare" ? 1.25 : 1);
-  else queueGameSound("match");
+  // The final pair gets immediate victory feedback instead of another effect.
+  if (matches + 1 < getPairCount()) {
+    if (specialDiscovery) playGameSound("discovery", firstCard.dataset.rarity === "ultra-rare" ? 1.25 : 1);
+    else playGameSound("match");
+  }
   firstCard.classList.add("is-matched");
   secondCard.classList.add("is-matched");
   matches += 1;
@@ -1328,7 +1383,7 @@ function markMatch() {
   if (matches === getPairCount()) {
     stopTimer();
     gameCompleted = true;
-    queueGameSound("victory");
+    playGameSound("victory");
     if (window.matchMedia?.("(max-width: 640px)")?.matches) hideLegendToast();
     saveCompletedDiscoveries();
     board.classList.add("is-complete");
