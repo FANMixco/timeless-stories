@@ -12,6 +12,11 @@
   --shadow: 0 14px 36px rgba(31, 41, 55, 0.13);
 }
 
+html,
+body {
+  overscroll-behavior-y: none;
+}
+
 html[data-theme="dark"] {
   color-scheme: dark;
   --ink: #f2f6f9;
