@@ -185,6 +185,13 @@
     "country1": "El Salvador 🇸🇻",
     "country2": "España 🇪🇸",
     "memoryGame": {
+      "settings": {
+        "title": "Ajustes",
+        "sounds": "Efectos de sonido",
+        "system": "Sistema",
+        "light": "Claro",
+        "dark": "Oscuro"
+      },
       "achievements": {
         "title": "Logros",
         "progress": "{found} / {total} logros desbloqueados",
@@ -653,7 +660,9 @@
         "previewAlt": "Historias Eternas: Espejos Españoles, en libro impreso y lectores digitales",
         "amazon": "Ver en Amazon",
         "websites": "Sitios web oficiales",
-        "storiesWebsite": "Historias Eternas"
+        "storiesWebsite": "Historias Eternas",
+        "soundCreditsTitle": "Créditos de los efectos de sonido",
+        "soundCredit": "Efecto de sonido de {author} en Pixabay."
       }
     },
     "country3": "Marruecos 🇲🇦",

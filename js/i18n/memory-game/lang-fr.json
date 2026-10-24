@@ -185,6 +185,13 @@
     "country1": "El Salvador 🇸🇻",
     "country2": "Espagne 🇪🇸",
     "memoryGame": {
+      "settings": {
+        "title": "Paramètres",
+        "sounds": "Effets sonores",
+        "system": "Système",
+        "light": "Clair",
+        "dark": "Sombre"
+      },
       "achievements": {
         "title": "Succès",
         "progress": "{found} / {total} succès débloqués",
@@ -653,7 +660,9 @@
         "previewAlt": "Légendes Éternelles : Miroirs Espagnols, en livre imprimé et sur des liseuses",
         "amazon": "Voir sur Amazon",
         "websites": "Sites officiels",
-        "storiesWebsite": "Légendes Éternelles"
+        "storiesWebsite": "Légendes Éternelles",
+        "soundCreditsTitle": "Crédits des effets sonores",
+        "soundCredit": "Effet sonore de {author} sur Pixabay."
       }
     },
     "country3": "Maroc 🇲🇦",

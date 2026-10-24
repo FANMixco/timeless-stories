@@ -123,6 +123,24 @@ html[data-embed="true"] .standalone-only {
   display: inline-flex;
 }
 
+.settings-gear { width: 1.3em; height: 1.3em; }
+.settings-panel.legends-panel { z-index: 24; align-items: center; padding: calc(16px + env(safe-area-inset-top, 0px)) 16px calc(16px + env(safe-area-inset-bottom, 0px)); }
+.settings-panel .settings-card { width: min(100%, 460px); min-height: 0; max-height: calc(100dvh - 32px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px)); overflow-y: auto; border: 1px solid var(--line); border-radius: 8px; padding: 28px 20px 22px; }
+.settings-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin: 20px 0 0; min-height: 44px; line-height: 1.5; }
+.settings-row .language-control { flex-shrink: 0; flex-direction: column; }
+.settings-row .language-menu { position: static; margin-top: 6px; max-height: min(240px, 40dvh); overflow-y: auto; }
+.settings-row #languageButton { display: inline-flex; align-items: center; gap: 10px; }
+#soundToggle { flex-shrink: 0; width: 24px; height: 24px; accent-color: var(--found); cursor: pointer; }
+#soundToggle:focus-visible { outline: 2px solid var(--found); outline-offset: 4px; }
+.settings-theme { margin: 24px 0 0; padding: 0; min-width: 0; border: 0; }
+.settings-theme legend { margin-bottom: 10px; padding: 0; line-height: 1.5; }
+.theme-options { display: flex; gap: 4px; padding: 4px; border: 1px solid var(--muted); border-radius: 8px; }
+.theme-option { position: relative; flex: 1; min-width: 0; cursor: pointer; }
+.theme-option input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.theme-option span { display: block; padding: 10px 4px; border-radius: 5px; text-align: center; overflow-wrap: anywhere; }
+.theme-option input:checked + span { background: var(--accent); color: #fff; }
+.theme-option input:focus-visible + span { outline: 2px solid var(--found); outline-offset: 2px; }
+
 .action-icon {
   flex: 0 0 auto;
   font-size: 1.18em;
@@ -1058,6 +1076,10 @@ html[data-theme="dark"] .card[data-rarity="tutorial"] .character-icon {
 .about-book-copy > p:not(.about-eyebrow) { margin: 0 0 18px; font-size: 1rem; }
 .about-book .game-button { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; text-decoration: none; }
 .about-websites { display: flex; flex-wrap: wrap; gap: 8px 24px; margin-top: 22px; }
+.about-sound-credits { margin-top: 24px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--muted); font-size: 0.875rem; }
+.about-sound-credits h3 { margin: 0 0 10px; color: var(--ink); font-size: 1rem; }
+.about-sound-credits ul { margin: 0; padding-left: 20px; }
+.about-sound-credits li { margin: 6px 0; overflow-wrap: anywhere; }
 .about-websites a { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; color: var(--accent-dark); font-size: 1rem; font-weight: 600; }
 
 @media (max-width: 640px) {

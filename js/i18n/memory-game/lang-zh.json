@@ -185,6 +185,13 @@
     "country1": "萨尔瓦多 🇸🇻",
     "country2": "西班牙 🇪🇸",
     "memoryGame": {
+      "settings": {
+        "title": "设置",
+        "sounds": "音效",
+        "system": "跟随系统",
+        "light": "浅色",
+        "dark": "深色"
+      },
       "achievements": {
         "title": "成就",
         "progress": "已解锁 {found} / {total} 项成就",
@@ -653,7 +660,9 @@
         "previewAlt": "英文版 Spanish Mirrors 的纸质书与电子阅读器预览",
         "amazon": "在 Amazon 查看",
         "websites": "官方网站",
-        "storiesWebsite": "永恒的故事"
+        "storiesWebsite": "永恒的故事",
+        "soundCreditsTitle": "音效鸣谢",
+        "soundCredit": "音效由 {author} 提供，来自 Pixabay。"
       }
     },
     "country3": "摩洛哥 🇲🇦",

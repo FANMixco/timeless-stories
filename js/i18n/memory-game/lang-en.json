@@ -185,6 +185,13 @@
     "country1": "El Salvador 🇸🇻",
     "country2": "Spain 🇪🇸",
     "memoryGame": {
+      "settings": {
+        "title": "Settings",
+        "sounds": "Sound effects",
+        "system": "System",
+        "light": "Light",
+        "dark": "Dark"
+      },
       "achievements": {
         "title": "Achievements",
         "progress": "{found} / {total} Achievements Unlocked",
@@ -653,7 +660,9 @@
         "previewAlt": "Spanish Mirrors in English, shown as a printed book and on digital readers",
         "amazon": "View on Amazon",
         "websites": "Official websites",
-        "storiesWebsite": "Timeless Stories"
+        "storiesWebsite": "Timeless Stories",
+        "soundCreditsTitle": "Sound effect credits",
+        "soundCredit": "Sound effect by {author} from Pixabay."
       }
     },
     "country3": "Morocco 🇲🇦",
