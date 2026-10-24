@@ -127,8 +127,8 @@ html[data-embed="true"] .standalone-only {
 .settings-panel.legends-panel { z-index: 24; align-items: center; padding: calc(16px + env(safe-area-inset-top, 0px)) 16px calc(16px + env(safe-area-inset-bottom, 0px)); }
 .settings-panel .settings-card { width: min(100%, 460px); min-height: 0; max-height: calc(100dvh - 32px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px)); overflow-y: auto; border: 1px solid var(--line); border-radius: 8px; padding: 28px 20px 22px; }
 .settings-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin: 20px 0 0; min-height: 44px; line-height: 1.5; }
-.settings-row .language-control { flex-shrink: 0; flex-direction: column; }
-.settings-row .language-menu { position: static; margin-top: 6px; max-height: min(240px, 40dvh); overflow-y: auto; }
+.settings-row .language-control { flex-shrink: 0; }
+.settings-row .language-menu { max-height: min(240px, 40dvh); overflow-y: auto; }
 .settings-row #languageButton { display: inline-flex; align-items: center; gap: 10px; }
 #soundToggle { flex-shrink: 0; width: 24px; height: 24px; accent-color: var(--found); cursor: pointer; }
 #soundToggle:focus-visible { outline: 2px solid var(--found); outline-offset: 4px; }
