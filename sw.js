@@ -1,5 +1,5 @@
 const CACHE_PREFIX = "memory-game-pwa-";
-const CACHE_VERSION = `${CACHE_PREFIX}20261024-settings-credits`;
+const CACHE_VERSION = `${CACHE_PREFIX}20261024-settings-icon-size`;
 const APP_SHELL = [
   "/memory-game.html",
   "/memory-game.webmanifest",
@@ -8,7 +8,7 @@ const APP_SHELL = [
   "/music/award.mp3",
   "/music/complete.mp3",
   "/css/icon-moon-memory.min.css?v=20261023-shared-comparisons",
-  "/css/memory-game.min.css?v=20261024-settings-credits",
+  "/css/memory-game.min.css?v=20261024-settings-icon-size",
   "/js/memory-game.min.js?v=20261024-settings-credits",
   "/js/pwa.min.js?v=20261021-pwa-registration",
   "/js/data/links.min.json",
