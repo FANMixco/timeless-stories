@@ -247,6 +247,8 @@
       "subtitle": "Encuentra cada pareja espejo de Espejos Españoles.",
       "newGame": "Nuevo juego",
       "confirmRestart": "¿Quieres empezar un nuevo juego? Se perderá tu progreso en esta partida.",
+      "confirmLanguageChange": "¿Quieres cambiar el idioma? Se perderá tu progreso en esta partida.",
+      "changeLanguage": "Cambiar idioma",
       "keepPlaying": "Seguir jugando",
       "statusLabel": "Estado del juego",
       "moves": "Movimientos",
