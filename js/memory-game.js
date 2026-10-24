@@ -32,7 +32,7 @@ const achievementDefinitions = [
 const supportedThemes = ["system", "light", "dark"];
 const previewRewardThresholdSeconds = 30;
 const mismatchFlipBackDelayMs = 1200;
-const i18nCacheVersion = "20261024-relative-weights";
+const i18nCacheVersion = "20261024-language-confirmation";
 let linkRegistry = null;
 let localizedLinks = null;
 let selectionRules = null;
@@ -120,6 +120,8 @@ let translations = null;
 let deck = [];
 let activePairs = [];
 let currentLanguage = "en";
+let pendingLanguage = null;
+let confirmedLanguageReload = false;
 let modalDetailPair = null;
 let modalRarity = null;
 let restoringModalHistory = false;
@@ -134,7 +136,8 @@ function getModalSnapshot() {
     panels: modalPanels.filter(panel => panel?.classList.contains("is-visible")).map(panel => panel.id),
     detail: modalDetailPair,
     rarity: modalRarity,
-    achievement: currentAchievement
+    achievement: currentAchievement,
+    language: pendingLanguage
   };
 }
 
@@ -180,6 +183,8 @@ function restoreModalSnapshot(snapshot) {
     if (!visible.has("achievementsPanel") && achievementsPanel.classList.contains("is-visible")) closeAchievements();
     if (!visible.has("settingsPanel") && settingsPanel.classList.contains("is-visible")) closeSettings();
     modalPanels.forEach(panel => panel?.classList.toggle("is-visible", visible.has(panel.id)));
+    pendingLanguage = visible.has("restartPanel") && supportedLanguages.includes(snapshot.language) ? snapshot.language : null;
+    renderRestartConfirmation();
     if (currentAchievement && !visible.has("achievementPanel")) {
       currentAchievement = null;
       showNextAchievement();
@@ -201,9 +206,9 @@ function restoreModalSnapshot(snapshot) {
     collectionPanel.setAttribute("aria-modal", String(!coveredCollection));
     // Move focus into the newly active layer (including after Forward).
     if (achievementPanel.classList.contains("is-visible")) closeAchievementButton.focus();
+    else if (visible.has("restartPanel")) cancelRestartButton.focus();
     else if (visible.has("settingsPanel")) closeSettingsButton.focus();
     else if (visible.has("achievementsPanel")) closeAchievementsButton.focus();
-    else if (visible.has("restartPanel")) cancelRestartButton.focus();
     else if (visible.has("aboutPanel")) closeAboutButton.focus();
     else if (visible.has("rarityPanel")) closeRarityButton.focus();
     else if (visible.has("legendsPanel")) closeLegendsButton.focus();
@@ -695,6 +700,9 @@ function refreshModalScrollLock() {
     if (panel !== achievementPanel && panel !== collectionPanel) panel.inert = achievementVisible;
   }
   if (!collectionDetailTrigger && !collectionRarityTrigger) collectionPanel.inert = achievementVisible;
+  const restartVisible = restartPanel.classList.contains("is-visible");
+  settingsPanel.inert = achievementVisible || restartVisible;
+  settingsPanel.setAttribute("aria-modal", String(!restartVisible));
   const backgroundCovered = achievementVisible || settingsPanel.classList.contains("is-visible") || achievementsPanel.classList.contains("is-visible") || aboutPanel.classList.contains("is-visible") || restartPanel.classList.contains("is-visible");
   if (gameLayout) gameLayout.inert = backgroundCovered;
   if (gameFooter) gameFooter.inert = backgroundCovered;
@@ -927,6 +935,22 @@ function setLanguage(language) {
     return;
   }
 
+  closeLanguageMenu();
+  if (hasGameInProgress()) {
+    pendingLanguage = language;
+    renderRestartConfirmation();
+    restartPanel.classList.add("is-visible");
+    cancelRestartButton.focus({ preventScroll: true });
+    syncModalScrollLock();
+    return;
+  }
+  applyLanguageChange(language);
+}
+
+function applyLanguageChange(language) {
+  // Persist only after explicit confirmation, and avoid asking again in the
+  // browser's beforeunload prompt for this already-approved reload.
+  confirmedLanguageReload = true;
   try {
     window.localStorage.setItem(languageStorageKey, language);
   } catch (error) {}
@@ -1047,10 +1071,7 @@ function applyUiCopy() {
   closeAchievementsButton.setAttribute("aria-label", memoryGame.close || "Close");
   closeAchievementButton.setAttribute("aria-label", memoryGame.close || "Close");
   renderAbout();
-  setElementText(document.getElementById("restartTitle"), memoryGame.newGame || "New game");
-  setElementText(document.getElementById("restartMessage"), memoryGame.confirmRestart || "Start a new game? Your progress in this round will be lost.");
-  setElementText(cancelRestartButton, memoryGame.keepPlaying || "Keep playing");
-  setElementText(document.getElementById("confirmRestartButton"), memoryGame.newGame || "New game");
+  renderRestartConfirmation();
   const seoTitle = memoryGame.seoTitle || memoryGame.title || document.title;
   const seoDescription = memoryGame.seoDescription || memoryGame.subtitle || "";
   document.title = seoTitle;
@@ -1354,7 +1375,7 @@ function hasGameInProgress() {
 }
 
 function warnBeforeLeaving(event) {
-  if (!hasGameInProgress()) {
+  if (confirmedLanguageReload || !hasGameInProgress()) {
     return;
   }
 
@@ -1708,6 +1729,8 @@ function wait(ms) {
 }
 
 function restartGame() {
+  pendingLanguage = null;
+  renderRestartConfirmation();
   if (hasGameInProgress()) {
     restartPanel.classList.add("is-visible");
     cancelRestartButton.focus({ preventScroll: true });
@@ -1718,12 +1741,29 @@ function restartGame() {
 }
 
 function closeRestartPanel() {
+  const returnToLanguage = pendingLanguage !== null && settingsPanel.classList.contains("is-visible");
+  pendingLanguage = null;
   restartPanel.classList.remove("is-visible");
   syncModalScrollLock();
-  newGameButton.focus({ preventScroll: true });
+  (returnToLanguage ? languageButton : newGameButton).focus({ preventScroll: true });
+}
+
+function renderRestartConfirmation() {
+  setElementText(document.getElementById("restartTitle"), pendingLanguage ? memoryGame.language || "Language" : memoryGame.newGame || "New game");
+  setElementText(document.getElementById("restartMessage"), pendingLanguage
+    ? memoryGame.confirmLanguageChange || "Change language? Your progress in this round will be lost."
+    : memoryGame.confirmRestart || "Start a new game? Your progress in this round will be lost.");
+  setElementText(cancelRestartButton, memoryGame.keepPlaying || "Keep playing");
+  setElementText(document.getElementById("confirmRestartButton"), pendingLanguage ? memoryGame.changeLanguage || "Change language" : memoryGame.newGame || "New game");
+}
+
+function confirmRestartAction() {
+  if (pendingLanguage) applyLanguageChange(pendingLanguage);
+  else startFreshGame();
 }
 
 function startFreshGame() {
+  pendingLanguage = null;
   newGame();
   // Reset an already-scrolled board after its previous match description and
   // dialogs disappear. Preserve the user's scroll position on ordinary resume.
@@ -1888,9 +1928,9 @@ document.addEventListener("click", (event) => {
 document.addEventListener("keydown", (event) => {
   if (event.key === "Tab" && (settingsPanel.classList.contains("is-visible") || achievementPanel.classList.contains("is-visible") || achievementsPanel.classList.contains("is-visible") || restartPanel.classList.contains("is-visible") || aboutPanel.classList.contains("is-visible") || collectionPanel.classList.contains("is-visible"))) {
     const panel = achievementPanel.classList.contains("is-visible") ? achievementPanel
+      : restartPanel.classList.contains("is-visible") ? restartPanel
       : settingsPanel.classList.contains("is-visible") ? settingsPanel
       : achievementsPanel.classList.contains("is-visible") ? achievementsPanel
-      : restartPanel.classList.contains("is-visible") ? restartPanel
       : aboutPanel.classList.contains("is-visible") ? aboutPanel
       : rarityPanel.classList.contains("is-visible") ? rarityPanel
       : collectionDetailTrigger ? legendsPanel : collectionPanel;
@@ -1907,7 +1947,7 @@ document.addEventListener("keydown", (event) => {
     }
   }
   if (event.key === "Escape") {
-    if (settingsPanel.classList.contains("is-visible") && !languageMenu.hidden) {
+    if (!restartPanel.classList.contains("is-visible") && settingsPanel.classList.contains("is-visible") && !languageMenu.hidden) {
       closeLanguageMenu();
       languageButton.focus();
       return;
@@ -1915,12 +1955,12 @@ document.addEventListener("keydown", (event) => {
     closeLanguageMenu();
     if (achievementPanel.classList.contains("is-visible")) {
       closeAchievement();
+    } else if (restartPanel.classList.contains("is-visible")) {
+      closeRestartPanel();
     } else if (settingsPanel.classList.contains("is-visible")) {
       closeSettings();
     } else if (achievementsPanel.classList.contains("is-visible")) {
       closeAchievements();
-    } else if (restartPanel.classList.contains("is-visible")) {
-      closeRestartPanel();
     } else if (aboutPanel.classList.contains("is-visible")) {
       closeAboutPanel();
     } else if (rarityPanel?.classList.contains("is-visible")) {
@@ -1989,7 +2029,7 @@ topViewLegendsButton?.addEventListener("click", openLegendsPanel);
 closeLegendsButton?.addEventListener("click", closeLegendsPanel);
 closeAboutButton.addEventListener("click", closeAboutPanel);
 cancelRestartButton.addEventListener("click", closeRestartPanel);
-document.getElementById("confirmRestartButton").addEventListener("click", startFreshGame);
+document.getElementById("confirmRestartButton").addEventListener("click", confirmRestartAction);
 restartPanel.addEventListener("click", event => {
   if (event.target === restartPanel) closeRestartPanel();
 });
