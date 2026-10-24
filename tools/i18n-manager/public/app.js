@@ -1,3 +1,5 @@
+import { assertMemoryGame, assertSelectionRules } from "./memory-schema.mjs";
+
 const state = {
   files: { languages: [], memoryLanguages: [], data: [] },
   current: null,
@@ -119,7 +121,8 @@ function isCollectionObject(value) {
 function isCollectionViewNode(path, value) {
   const key = path[path.length - 1];
   if (key === "mapLegends") return isObject(value);
-  if (key === "pairs") return Array.isArray(value);
+  if (key === "pairs" || key === "rarePairs") return Array.isArray(value);
+  if (key === "comparisons") return isObject(value);
   if (Array.isArray(value)) {
     return value.length > 1 && value.every((child) => child && typeof child === "object");
   }
@@ -198,14 +201,20 @@ function shouldOpenTranslations(target, json) {
 async function cloneToOtherLanguages(path, value, label = "field") {
   if (!canCloneToLanguages()) return;
 
-  const result = await api("/api/clone-field", {
+  let result;
+  try {
+    result = await api("/api/clone-field", {
     method: "POST",
     body: JSON.stringify({
       ...state.current,
       path,
       value,
     }),
-  });
+    });
+  } catch (error) {
+    toast(error.message, true);
+    return;
+  }
 
   if (result.cloned.length) {
     toast(`Cloned ${label} to ${result.cloned.map((item) => item.lang).join(", ")}.`);
@@ -228,6 +237,8 @@ function canAddEvent(value) {
 }
 
 function readableCollectionName(key) {
+  if (key === "comparisons") return "comparison";
+  if (key === "rarePairs") return "special pair";
   const spaced = String(key)
     .replace(/([a-z0-9])([A-Z])/g, "$1 $2")
     .replace(/[_-]+/g, " ")
@@ -341,13 +352,18 @@ function parseScalar(value) {
   if (trimmed === "true") return true;
   if (trimmed === "false") return false;
   if (trimmed === "null") return null;
-  if (/^-?\d+(\.\d+)?$/.test(trimmed)) return Number(trimmed);
+  if (/^[+-]?(?:\d+\.?\d*|\.\d+)(?:e[+-]?\d+)?$/i.test(trimmed)) return Number(trimmed);
   return value;
 }
 
 function createScalarControl(parent, key, value) {
   const wrapper = document.createElement("div");
   wrapper.className = "field-value";
+  const reference = createMemoryReferenceControl(parent, key, value);
+  if (reference) {
+    wrapper.append(reference);
+    return wrapper;
+  }
 
   const control = typeof value === "string" && value.length > 48
     ? document.createElement("textarea")
@@ -362,6 +378,8 @@ function createScalarControl(parent, key, value) {
 }
 
 function createInlineScalar(parent, key, value) {
+  const reference = createMemoryReferenceControl(parent, key, value);
+  if (reference) return reference;
   const control = typeof value === "string" && value.length > 48
     ? document.createElement("textarea")
     : document.createElement("input");
@@ -371,6 +389,36 @@ function createInlineScalar(parent, key, value) {
     setDirty(true);
   });
   return control;
+}
+
+function createMemoryReferenceControl(parent, key, value) {
+  if (state.current?.type !== "memory") return null;
+  const game = state.json?.translations?.memoryGame;
+  const legends = state.json?.translations?.mapLegends || {};
+  const pair = Object.hasOwn(parent, "source") && Object.hasOwn(parent, "mirror");
+  let choices;
+  if (pair && (key === "source" || key === "mirror")) {
+    choices = Object.entries(legends).map(([id, legend]) => [id, `${legend.name || id} (${id})`]);
+  } else if (pair && key === "comparison") {
+    choices = Object.entries(game?.comparisons || {}).map(([id, comparison]) => [id, `${comparison.title || id} (${id})`]);
+  } else if (pair && key === "rarity") {
+    choices = [["", "Original Mirror"], ["rare", "Director’s Cut"], ["ultra-rare", "Golden Mirror"]];
+  } else if (key === "replaceSource" && parent.pair) {
+    choices = [...new Set((game?.pairs || []).map(item => item.source))].map(id => [id, `${legends[id]?.name || id} (${id})`]);
+    choices.unshift(["", "Automatic replacement"]);
+  } else return null;
+  const select = document.createElement("select");
+  select.ariaLabel = key;
+  if (!choices.some(([id]) => id === value)) choices.unshift([value || "", value ? `Unknown: ${value}` : "Select an item"]);
+  for (const [id, label] of choices) {
+    const option = document.createElement("option");
+    option.value = id;
+    option.textContent = label;
+    option.selected = id === value;
+    select.append(option);
+  }
+  select.addEventListener("change", () => { parent[key] = select.value; setDirty(true); });
+  return select;
 }
 
 function addNestedValue(collection, path, mode) {
@@ -397,12 +445,16 @@ function emptyClone(value) {
   if (isObject(value)) {
     return Object.fromEntries(Object.entries(value).map(([key, child]) => [key, emptyClone(child)]));
   }
+  if (typeof value === "number") return 0;
+  if (typeof value === "boolean") return false;
+  if (value === null) return null;
   return "";
 }
 
 function addCollectionItem(collection, path, selected) {
   const selectedValue = selected === null ? null : collection[selected];
   const nextValue = emptyClone(selectedValue);
+  if (path[path.length - 1] === "rarePairs" && isObject(nextValue)) nextValue.weight = 1;
 
   if (Array.isArray(collection)) {
     collection.push(nextValue);
@@ -710,6 +762,7 @@ function createNestedControl(parent, key, value, basePath = state.path) {
 function summaryLabel(key, value) {
   if (typeof value === "string") return value.slice(0, 80);
   if (value && typeof value === "object") {
+    if (value.pair) return `${summaryLabel(key, value.pair)} · weight ${value.weight ?? 1}`;
     if (value.insightTitle || (value.source && value.mirror)) {
       const source = legendName(value.source);
       const mirror = legendName(value.mirror);
@@ -919,6 +972,8 @@ function currentPayload(extra = {}) {
 
 async function saveCurrent({ minify = false } = {}) {
   if (!state.current) return;
+  if (state.current.type === "memory") assertMemoryGame(state.json);
+  if (state.current.type === "data" && state.current.file === "memory-game.json") assertSelectionRules(state.json);
   await api("/api/file", { method: "POST", body: currentPayload({ minify }) });
   setDirty(false);
   await refreshFiles();
@@ -927,7 +982,9 @@ async function saveCurrent({ minify = false } = {}) {
 
 function validateCurrent() {
   JSON.stringify(state.json);
-  toast("JSON is valid.");
+  if (state.current?.type === "memory") assertMemoryGame(state.json);
+  if (state.current?.type === "data" && state.current.file === "memory-game.json") assertSelectionRules(state.json);
+  toast(state.current?.type === "memory" ? "Memory Game references and weights are valid." : "JSON is valid.");
 }
 
 function addField() {
@@ -1020,22 +1077,28 @@ els.applyRawButton.addEventListener("click", (event) => {
   }
 });
 
-els.validateButton.addEventListener("click", validateCurrent);
+els.validateButton.addEventListener("click", () => {
+  try { validateCurrent(); } catch (error) { toast(error.message, true); }
+});
 els.addFieldButton.addEventListener("click", addField);
 els.addEventButton.addEventListener("click", addEvent);
-els.saveButton.addEventListener("click", () => saveCurrent());
+els.saveButton.addEventListener("click", () => saveCurrent().catch(error => toast(error.message, true)));
 els.minifyButton.addEventListener("click", async () => {
+  try {
   if (!state.current) return;
   if (state.dirty) await saveCurrent({ minify: true });
   else {
     await api("/api/minify", { method: "POST", body: JSON.stringify(state.current) });
     toast("Current minified file generated.");
   }
+  } catch (error) { toast(error.message, true); }
 });
 els.minifyAllButton.addEventListener("click", async () => {
+  try {
   if (state.dirty) await saveCurrent();
   const result = await api("/api/minify", { method: "POST", body: JSON.stringify({ all: true }) });
   toast(`Generated ${result.minified.length} minified files.`);
+  } catch (error) { toast(error.message, true); }
 });
 
 window.addEventListener("beforeunload", (event) => {

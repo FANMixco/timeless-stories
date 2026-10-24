@@ -6,4 +6,11 @@ css/main-new.css.bk.txt
 img/loading.svg
 img/logo.min.svg
 img/favicons/hourglass-animated.svg
-tools/*.mjs
+tools/test-memory-about.mjs
+tools/test-memory-achievements.mjs
+tools/test-memory-collection.mjs
+tools/test-memory-probabilities.mjs
+tools/test-memory-settings.mjs
+tools/test-memory-tutorial.mjs
+tools/test-pwa.mjs
+tools/test-i18n-manager.mjs

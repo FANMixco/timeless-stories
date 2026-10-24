@@ -12,6 +12,9 @@ Thanks for downloading this theme!
 
 ## Asset minification
 
+Memory Game behavior is documented in [Memory Game rules](docs/memory-game-rules.md),
+including card probabilities, collection requirements, achievements, and sound priority.
+
 Run the asset minifier after editing files in `css/` or `js/`:
 
 ```sh
