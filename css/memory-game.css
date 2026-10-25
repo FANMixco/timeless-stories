@@ -284,6 +284,10 @@ html[data-theme="dark"] .language-option[aria-checked="true"] {
   display: block;
 }
 
+.selected-story.is-visible {
+  display: none;
+}
+
 .match-insight h2 {
   margin: 0 0 4px;
   color: var(--found);
@@ -1280,6 +1284,10 @@ html[data-theme="dark"] .card.is-matched .card-front {
 }
 
 @media (min-width: 1024px) and (min-height: 600px) and (orientation: landscape) {
+  .selected-story.is-visible {
+    display: block;
+  }
+
   .game-shell {
     width: min(100%, 1280px);
     min-height: 100dvh;
@@ -1359,6 +1367,10 @@ html[data-theme="dark"] .card.is-matched .card-front {
 
   .match-insight {
     margin: 0;
+  }
+
+  .match-insight + .selected-story.is-visible {
+    margin-top: 16px;
   }
 
   .board {
@@ -1524,6 +1536,14 @@ html[data-theme="dark"] .collection-mirror:not(:disabled) strong { color: #fffff
     margin: 0 auto 16px;
     transform: none;
     animation: board-toast-in 180ms ease both;
+  }
+
+  .legend-toast[data-comparison="true"] {
+    background: rgba(255, 255, 255, 0.85);
+  }
+
+  html[data-theme="dark"] .legend-toast[data-comparison="true"] {
+    background: rgba(23, 33, 43, 0.85);
   }
 
   .legend-toast[data-tutorial="true"] strong {

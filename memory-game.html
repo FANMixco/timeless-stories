@@ -57,7 +57,7 @@
       }
     </script>
     <link rel="stylesheet" href="css/icon-moon-memory.min.css?v=20261023-shared-comparisons" />
-    <link rel="stylesheet" href="css/memory-game.min.css?v=20261025-about-image" />
+    <link rel="stylesheet" href="css/memory-game.min.css?v=20261025-story-spacing" />
   </head>
   <body>
     <main class="game-shell" aria-label="">
@@ -99,6 +99,10 @@
           <section class="match-insight" id="matchInsight" aria-live="polite">
             <h2 id="matchInsightTitle"></h2>
             <p id="matchInsightText"></p>
+          </section>
+          <section class="match-insight selected-story" id="selectedStory" aria-live="polite">
+            <h2 id="selectedStoryTitle"></h2>
+            <p id="selectedStoryText"></p>
           </section>
         </div>
 
@@ -252,7 +256,7 @@
       <footer class="game-footer standalone-only" id="gameFooter"></footer>
     </main>
 
-    <script src="js/memory-game.min.js?v=20261025-about-image"></script>
+    <script src="js/memory-game.min.js?v=20261025-story-spacing"></script>
     <script src="js/gAnalyticsIdleLoad.min.js" defer></script>
     <script src="js/pwa.min.js?v=20261021-pwa-registration" defer></script>
   </body>

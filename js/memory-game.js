@@ -43,6 +43,9 @@ const timeValue = document.getElementById("timeValue");
 const matchInsight = document.getElementById("matchInsight");
 const matchInsightTitle = document.getElementById("matchInsightTitle");
 const matchInsightText = document.getElementById("matchInsightText");
+const selectedStory = document.getElementById("selectedStory");
+const selectedStoryTitle = document.getElementById("selectedStoryTitle");
+const selectedStoryText = document.getElementById("selectedStoryText");
 const legendToast = document.getElementById("legendToast");
 const legendToastTitle = document.getElementById("legendToastTitle");
 const legendToastText = document.getElementById("legendToastText");
@@ -1480,6 +1483,7 @@ function showMatchInsight(card) {
   );
   if (!gameCompleted && window.matchMedia?.("(max-width: 640px)")?.matches) {
     showToast(card.dataset.insightTitle || "", card.dataset.insight || "");
+    legendToast.dataset.comparison = "true";
   }
 }
 
@@ -1584,6 +1588,7 @@ function closeRarityPanel() {
 }
 
 function hideLegendToast() {
+  selectedStory.classList.remove("is-visible");
   legendToast.hidden = true;
   legendToast.dataset.tutorial = "false";
   legendToastClose.hidden = false;
@@ -1600,6 +1605,7 @@ function showToast(title, text, emphasis = "", underline = "") {
   }
 
   legendToastTitle.textContent = title || "";
+  legendToast.dataset.comparison = "false";
   const content = [];
   let remaining = text;
   if (emphasis && remaining.startsWith(emphasis)) {
@@ -1630,6 +1636,13 @@ function showToast(title, text, emphasis = "", underline = "") {
 }
 
 function showLegendToast(card) {
+  if (window.matchMedia?.("(min-width: 1024px) and (min-height: 600px) and (orientation: landscape)")?.matches) {
+    hideLegendToast();
+    selectedStoryTitle.textContent = card.dataset.character || "";
+    selectedStoryText.textContent = card.dataset.description || "";
+    selectedStory.classList.toggle("is-visible", Boolean(card.dataset.description));
+    return;
+  }
   showToast(card.dataset.character || "", card.dataset.description || "");
 }
 
