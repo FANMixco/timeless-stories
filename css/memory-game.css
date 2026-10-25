@@ -1004,6 +1004,10 @@ html[data-theme="dark"] .card[data-rarity="tutorial"] .character-icon {
   display: none !important;
 }
 
+.game-shell:has(.board.is-intro) .game-footer {
+  display: none;
+}
+
 .game-footer {
   width: min(100%, 760px);
   margin: clamp(24px, 4vw, 36px) auto 0;
