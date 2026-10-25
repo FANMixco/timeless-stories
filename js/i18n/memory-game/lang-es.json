@@ -193,8 +193,8 @@
         "light": "Claro",
         "dark": "Oscuro",
         "reset": "Borrar todos los datos del juego",
-        "resetWarning": "Elimina permanentemente todos los datos guardados de este sitio web en este dispositivo, incluidas las colecciones, los logros, los récords personales y los ajustes. La partida actual terminará. Esta acción no se puede deshacer.",
-        "resetConfirmation": "¿Borrar todo? Se eliminarán permanentemente todas las colecciones, los logros, los récords personales y los ajustes guardados del sitio web en este dispositivo. La partida actual terminará y el tutorial volverá a empezar. Esta acción no se puede deshacer.",
+        "resetWarning": "Elimina permanentemente todos los datos guardados de este juego en este dispositivo, incluidas las colecciones, los logros, los récords personales y los ajustes. La partida actual terminará. Esta acción no se puede deshacer.",
+        "resetConfirmation": "¿Borrar todo? Se eliminarán permanentemente todas las colecciones, los logros, los récords personales y los ajustes guardados del juego en este dispositivo. La partida actual terminará y el tutorial volverá a empezar. Esta acción no se puede deshacer.",
         "resetError": "No se han podido borrar los datos guardados. Revisa los permisos de almacenamiento del navegador e inténtalo de nuevo.",
         "resetCancel": "Cancelar"
       },
@@ -229,20 +229,20 @@
           },
           "scenes": {
             "name": "Detrás de cámaras",
-            "description": "Has descubierto tu primera carta de la Versión del director."
+            "description": "Has descubierto tu primer Espejo de la Versión del director."
           },
           "directorsMaster": {
             "name": "Maestro de la Versión del director",
-            "description": "Has descubierto ambas historias de la Versión del director.",
+            "description": "Has descubierto ambos Espejos de la Versión del director.",
             "bonus": "Tus posibilidades de encontrar un Espejo Dorado han aumentado. ¡Buena suerte 🍀!"
           },
           "goldenCollector": {
             "name": "Coleccionista dorado",
-            "description": "Has descubierto todos los Espejos Dorados."
+            "description": "Has descubierto todos los Espejos exclusivos en línea."
           },
           "master": {
             "name": "Maestro coleccionista",
-            "description": "Has descubierto todos los Espejos originales, las cartas de la Versión del director y los Espejos exclusivos en línea disponibles actualmente."
+            "description": "Has descubierto todos los Espejos originales, de la Versión del director y exclusivos en línea disponibles actualmente."
           }
         }
       },
@@ -650,7 +650,7 @@
         "title": "Mi colección",
         "progress": "Espejos descubiertos: {found} / {total}",
         "original": "Espejos originales",
-        "directorsCut": "Versión del director",
+        "directorsCut": "Espejos de la Versión del director",
         "other": "Espejos exclusivos en línea",
         "contribute": "¿Conoces otro espejo? Comparte una nueva comparación a través de nuestro formulario de contacto.",
         "submit": "Enviar una comparación"

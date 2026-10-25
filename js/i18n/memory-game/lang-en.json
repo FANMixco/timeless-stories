@@ -193,8 +193,8 @@
         "light": "Light",
         "dark": "Dark",
         "reset": "Reset all game data",
-        "resetWarning": "Permanently delete all saved data for this website on this device, including collections, achievements, personal records, and settings. Your current game will end. This cannot be undone.",
-        "resetConfirmation": "Reset everything? All collections, achievements, personal records, and saved website settings on this device will be permanently deleted. Your current game will end and the tutorial will restart. This cannot be undone.",
+        "resetWarning": "Permanently delete all saved data for this game on this device, including collections, achievements, personal records, and settings. Your current game will end. This cannot be undone.",
+        "resetConfirmation": "Reset everything? All collections, achievements, personal records, and saved game settings on this device will be permanently deleted. Your current game will end and the tutorial will restart. This cannot be undone.",
         "resetError": "Unable to clear saved data. Check your browser storage permissions and try again.",
         "resetCancel": "Cancel"
       },
@@ -225,24 +225,24 @@
           },
           "golden": {
             "name": "Golden Discovery",
-            "description": "Discovered your first Online exclusive mirror."
+            "description": "Discovered your first Online Exclusive Mirror."
           },
           "scenes": {
             "name": "Behind the Scenes",
-            "description": "Discovered your first Director’s Cut card."
+            "description": "Discovered your first Director’s Cut mirror."
           },
           "directorsMaster": {
             "name": "Director’s Cut Master",
-            "description": "Discovered both Director’s Cut stories.",
+            "description": "Discovered both Director’s Cut mirrors.",
             "bonus": "Your chances of finding a Golden Mirror have increased. Good luck 🍀!"
           },
           "goldenCollector": {
             "name": "Golden Collector",
-            "description": "Discovered every Golden Mirror."
+            "description": "Discovered every Online Exclusive Mirror."
           },
           "master": {
             "name": "Master Collector",
-            "description": "Discovered all currently available Original Mirrors, Director’s Cut cards, and Online exclusive mirrors."
+            "description": "Discovered all currently available Original, Director’s Cut, and Online Exclusive Mirrors."
           }
         }
       },
@@ -650,10 +650,10 @@
         "title": "My Collection",
         "progress": "Discovered mirrors: {found} / {total}",
         "original": "Original Mirrors",
-        "directorsCut": "Director’s Cut",
-        "other": "Online exclusive mirrors",
+        "directorsCut": "Director’s Cut Mirrors",
+        "other": "Online Exclusive Mirrors",
         "contribute": "Know another mirror? Share a new comparison through our contact form.",
-        "submit": "Submit a comparison"
+        "submit": "Submit a Mirror"
       },
       "about": {
         "open": "About Federico Navarrete",

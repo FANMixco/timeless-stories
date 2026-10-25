@@ -35,7 +35,7 @@ const achievementDefinitions = [
 const supportedThemes = ["system", "light", "dark"];
 const previewRewardThresholdSeconds = 30;
 const mismatchFlipBackDelayMs = 1200;
-const i18nCacheVersion = "20261025-reset-modal";
+const i18nCacheVersion = "20261025-submit-mirror";
 let linkRegistry = null;
 let localizedLinks = null;
 let selectionRules = null;
@@ -564,7 +564,7 @@ function renderCollection() {
   const groups = [
     { rarity: "", title: copy.original || "Original Mirrors" },
     { rarity: "rare", title: copy.directorsCut || "Director's Cut" },
-    { rarity: "ultra-rare", title: copy.other || "Online exclusive mirrors" },
+    { rarity: "ultra-rare", title: copy.other || "Online Exclusive Mirrors" },
   ].map(({ rarity, title }) => {
     const section = document.createElement("section");
     section.className = "collection-group";
@@ -628,7 +628,7 @@ function renderCollection() {
   document.getElementById("collectionGroups").replaceChildren(...groups);
   setElementText(document.getElementById("collectionContribution"), copy.contribute || "Know another mirror? Share a new comparison through our contact form.");
   const submit = document.getElementById("collectionSubmit");
-  submit.textContent = copy.submit || "Submit a comparison";
+  submit.textContent = copy.submit || "Submit a Mirror";
   const formKey = currentLanguage === "es" ? "spanishContactForm" : "englishContactForm";
   submit.href = linkRegistry?.shared?.contact?.[formKey] || "";
   setElementHidden(submit, !submit.getAttribute("href"));

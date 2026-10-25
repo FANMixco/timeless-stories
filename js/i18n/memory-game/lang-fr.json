@@ -193,8 +193,8 @@
         "light": "Clair",
         "dark": "Sombre",
         "reset": "Effacer toutes les données du jeu",
-        "resetWarning": "Supprime définitivement toutes les données enregistrées pour ce site sur cet appareil, y compris les collections, les succès, les records personnels et les paramètres. La partie en cours se terminera. Cette action est irréversible.",
-        "resetConfirmation": "Tout effacer ? Les collections, les succès, les records personnels et les paramètres enregistrés du site sur cet appareil seront définitivement supprimés. La partie en cours se terminera et le tutoriel recommencera. Cette action est irréversible.",
+        "resetWarning": "Supprime définitivement toutes les données enregistrées pour ce jeu sur cet appareil, y compris les collections, les succès, les records personnels et les paramètres. La partie en cours se terminera. Cette action est irréversible.",
+        "resetConfirmation": "Tout effacer ? Les collections, les succès, les records personnels et les paramètres enregistrés du jeu sur cet appareil seront définitivement supprimés. La partie en cours se terminera et le tutoriel recommencera. Cette action est irréversible.",
         "resetError": "Impossible d’effacer les données enregistrées. Vérifiez les autorisations de stockage du navigateur et réessayez.",
         "resetCancel": "Annuler"
       },
@@ -229,20 +229,20 @@
           },
           "scenes": {
             "name": "Dans les coulisses",
-            "description": "Vous avez découvert votre première carte de la Version du réalisateur."
+            "description": "Vous avez découvert votre premier Miroir de la Version du réalisateur."
           },
           "directorsMaster": {
             "name": "Maître de la Version du réalisateur",
-            "description": "Vous avez découvert les deux histoires de la Version du réalisateur.",
+            "description": "Vous avez découvert les deux Miroirs de la Version du réalisateur.",
             "bonus": "Vos chances de trouver un Miroir Doré ont augmenté. Bonne chance 🍀 !"
           },
           "goldenCollector": {
             "name": "Collectionneur doré",
-            "description": "Vous avez découvert tous les Miroirs Dorés."
+            "description": "Vous avez découvert tous les Miroirs exclusifs en ligne."
           },
           "master": {
             "name": "Maître collectionneur",
-            "description": "Vous avez découvert tous les Miroirs originaux, les cartes de la Version du réalisateur et les Miroirs exclusifs en ligne actuellement disponibles."
+            "description": "Vous avez découvert tous les Miroirs originaux, de la Version du réalisateur et exclusifs en ligne actuellement disponibles."
           }
         }
       },
@@ -650,7 +650,7 @@
         "title": "Ma collection",
         "progress": "Miroirs découverts : {found} / {total}",
         "original": "Miroirs originaux",
-        "directorsCut": "Version du réalisateur",
+        "directorsCut": "Miroirs de la Version du réalisateur",
         "other": "Miroirs exclusifs en ligne",
         "contribute": "Vous connaissez un autre miroir ? Partagez une nouvelle comparaison via notre formulaire de contact.",
         "submit": "Proposer une comparaison"
