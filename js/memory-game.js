@@ -1023,7 +1023,6 @@ function renderAbout() {
   setElementText(document.getElementById("aboutBookTitle"), copy.bookTitle || "Spanish Mirrors");
   setElementText(document.getElementById("aboutBookDescription"), copy.bookDescription || "");
   const bookUrl = resolveGameHref(memoryGame.getCopyHref);
-  document.getElementById("aboutPreviewLink").href = bookUrl;
   document.getElementById("aboutBookLink").href = bookUrl;
   setElementText(document.getElementById("aboutBookLink"), copy.amazon || "View on Amazon");
   document.getElementById("aboutWebsites").setAttribute("aria-label", copy.websites || "Official websites");
@@ -1504,7 +1503,7 @@ function createLegendCell(characterKey, side) {
 function renderLegendsList(pairs = activePairs.length ? activePairs : chooseActivePairs(), detailPair = null) {
   setElementText(legendsPanelTitle, detailPair ? getLegendName(detailPair.mirror) : memoryGame.legendsTitle || "");
   setElementHidden(legendsPanelTitle, Boolean(detailPair));
-  setElementHidden(document.getElementById("legendsFooter"), false);
+  setElementHidden(document.getElementById("legendsFooter"), detailPair?.rarity === "ultra-rare");
   setElementHidden(legendsRarityNote, Boolean(detailPair));
   const rows = pairs.map((pair) => {
     const { source, mirror } = pair;

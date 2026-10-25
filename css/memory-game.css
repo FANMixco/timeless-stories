@@ -1074,7 +1074,7 @@ html[data-theme="dark"] .card[data-rarity="tutorial"] .character-icon {
   border: 1px solid var(--line);
   border-radius: 8px;
 }
-.about-book > a { display: block; }
+.about-book-preview { display: block; }
 .about-book img { display: block; width: 100%; height: auto; }
 .about-book-copy { min-width: 0; overflow-wrap: anywhere; }
 .about-book h3 { margin: 0 0 10px; font-size: 1.35rem; line-height: 1.3; color: var(--found); }
@@ -1089,7 +1089,7 @@ html[data-theme="dark"] .card[data-rarity="tutorial"] .character-icon {
 
 @media (max-width: 640px) {
   .about-book { grid-template-columns: 1fr; gap: 18px; padding: 16px; }
-  .about-book > a { width: min(100%, 280px); margin: auto; }
+  .about-book-preview { width: min(100%, 280px); margin: auto; }
   .about-book .game-button { width: 100%; }
   .about-websites { flex-direction: column; gap: 4px; }
 }
