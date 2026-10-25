@@ -191,7 +191,12 @@
         "tips": "Show tips button",
         "system": "System",
         "light": "Light",
-        "dark": "Dark"
+        "dark": "Dark",
+        "reset": "Reset all game data",
+        "resetWarning": "Permanently delete all saved data for this website on this device, including collections, achievements, personal records, and settings. Your current game will end. This cannot be undone.",
+        "resetConfirmation": "Reset everything? All collections, achievements, personal records, and saved website settings on this device will be permanently deleted. Your current game will end and the tutorial will restart. This cannot be undone.",
+        "resetError": "Unable to clear saved data. Check your browser storage permissions and try again.",
+        "resetCancel": "Cancel"
       },
       "achievements": {
         "title": "Achievements",

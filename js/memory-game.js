@@ -35,7 +35,7 @@ const achievementDefinitions = [
 const supportedThemes = ["system", "light", "dark"];
 const previewRewardThresholdSeconds = 30;
 const mismatchFlipBackDelayMs = 1200;
-const i18nCacheVersion = "20261025-records-layout";
+const i18nCacheVersion = "20261025-reset-modal";
 let linkRegistry = null;
 let localizedLinks = null;
 let selectionRules = null;
@@ -127,6 +127,7 @@ let deck = [];
 let activePairs = [];
 let currentLanguage = "en";
 let pendingLanguage = null;
+let pendingDataReset = false;
 let confirmedLanguageReload = false;
 let modalDetailPair = null;
 let modalRarity = null;
@@ -143,7 +144,8 @@ function getModalSnapshot() {
     detail: modalDetailPair,
     rarity: modalRarity,
     achievement: currentAchievement,
-    language: pendingLanguage
+    language: pendingLanguage,
+    reset: pendingDataReset
   };
 }
 
@@ -177,7 +179,7 @@ function restoreModalSnapshot(snapshot) {
     const visible = new Set(snapshot.panels.filter(id => {
       // Forward must not resurrect a previous round's completion dialogs.
       if (id === "winPanel" || (id === "legendsPanel" && !snapshot.detail)) return gameCompleted;
-      if (id === "restartPanel") return hasGameInProgress();
+      if (id === "restartPanel") return snapshot.reset === true || hasGameInProgress();
       if (id === "achievementPanel") return Boolean(currentAchievement && snapshot.achievement === currentAchievement);
       return true;
     }));
@@ -190,6 +192,7 @@ function restoreModalSnapshot(snapshot) {
     if (!visible.has("settingsPanel") && settingsPanel.classList.contains("is-visible")) closeSettings();
     modalPanels.forEach(panel => panel?.classList.toggle("is-visible", visible.has(panel.id)));
     pendingLanguage = visible.has("restartPanel") && supportedLanguages.includes(snapshot.language) ? snapshot.language : null;
+    pendingDataReset = visible.has("restartPanel") && snapshot.reset === true;
     renderRestartConfirmation();
     if (currentAchievement && !visible.has("achievementPanel")) {
       currentAchievement = null;
@@ -763,7 +766,7 @@ async function loadGameLanguage(language) {
   if (response.ok === false) throw new Error(`Unable to load game language: ${language}`);
   const data = await response.json();
   const game = data.translations?.memoryGame;
-  if (!game?.settings?.title || !game.settings.sounds || !game.records?.title || !achievementDefinitions.every(({ id }) => game.achievements?.items?.[id])) {
+  if (!game?.settings?.title || !game.settings.sounds || !game.settings.resetConfirmation || !game.records?.title || !achievementDefinitions.every(({ id }) => game.achievements?.items?.[id])) {
     throw new Error(`Incomplete game language: ${language}`);
   }
   const pairs = [...(game.pairs || []), ...(game.rarePairs || []).map(variant => variant.pair)];
@@ -1045,11 +1048,44 @@ function setSoundEnabled(enabled) {
 
 function openSettings() {
   closeLanguageMenu();
+  setElementHidden(document.getElementById("resetGameError"), true);
   settingsPanel.classList.add("is-visible");
   soundToggle.checked = soundEnabled;
   tipsToggle.checked = tipsEnabled;
   closeSettingsButton.focus();
   syncModalScrollLock();
+}
+
+function reloadAfterDataReset() {
+  // Other open game tabs must discard in-memory progress too, or a later win
+  // could restore achievements and discoveries that the player just erased.
+  stopTimer();
+  stopGameSounds();
+  window.removeEventListener("beforeunload", warnBeforeLeaving);
+  window.location.reload();
+}
+
+function openDataResetConfirmation() {
+  pendingLanguage = null;
+  pendingDataReset = true;
+  renderRestartConfirmation();
+  restartPanel.classList.add("is-visible");
+  cancelRestartButton.focus({ preventScroll: true });
+  syncModalScrollLock();
+}
+
+function resetGameData() {
+  if (!pendingDataReset || !restartPanel.classList.contains("is-visible")) return;
+  try {
+    window.sessionStorage.clear();
+    window.localStorage.clear();
+  } catch {
+    closeRestartPanel();
+    setElementText(document.getElementById("resetGameError"), memoryGame.settings.resetError);
+    setElementHidden(document.getElementById("resetGameError"), false);
+    return;
+  }
+  reloadAfterDataReset();
 }
 
 function closeSettings() {
@@ -1078,6 +1114,7 @@ function setLanguage(language) {
 
   closeLanguageMenu();
   if (hasGameInProgress()) {
+    pendingDataReset = false;
     pendingLanguage = language;
     renderRestartConfirmation();
     restartPanel.classList.add("is-visible");
@@ -1199,6 +1236,8 @@ function applyUiCopy() {
   setElementText(document.getElementById("settingsLanguageLabel"), memoryGame.language);
   setElementText(document.getElementById("settingsSoundLabel"), settingsCopy.sounds);
   setElementText(document.getElementById("settingsTipsLabel"), settingsCopy.tips);
+  setElementText(document.getElementById("resetGameButton"), settingsCopy.reset);
+  setElementText(document.getElementById("resetGameWarning"), settingsCopy.resetWarning);
   setElementText(document.getElementById("settingsThemeLabel"), memoryGame.theme);
   setElementText(document.getElementById("themeSystemLabel"), settingsCopy.system);
   setElementText(document.getElementById("themeLightLabel"), settingsCopy.light);
@@ -1836,6 +1875,7 @@ function flipCard(card) {
 }
 
 function newGame() {
+  pendingDataReset = false;
   stopGameSounds();
   tutorialRunId += 1;
   hintPressCount = 0;
@@ -1883,6 +1923,7 @@ function wait(ms) {
 
 function restartGame() {
   pendingLanguage = null;
+  pendingDataReset = false;
   renderRestartConfirmation();
   if (hasGameInProgress()) {
     restartPanel.classList.add("is-visible");
@@ -1895,13 +1936,22 @@ function restartGame() {
 
 function closeRestartPanel() {
   const returnToLanguage = pendingLanguage !== null && settingsPanel.classList.contains("is-visible");
+  const returnToReset = pendingDataReset && settingsPanel.classList.contains("is-visible");
   pendingLanguage = null;
+  pendingDataReset = false;
   restartPanel.classList.remove("is-visible");
   syncModalScrollLock();
-  (returnToLanguage ? languageButton : newGameButton).focus({ preventScroll: true });
+  (returnToReset ? document.getElementById("resetGameButton") : returnToLanguage ? languageButton : newGameButton).focus({ preventScroll: true });
 }
 
 function renderRestartConfirmation() {
+  if (pendingDataReset) {
+    setElementText(document.getElementById("restartTitle"), memoryGame.settings.reset);
+    setElementText(document.getElementById("restartMessage"), memoryGame.settings.resetConfirmation);
+    setElementText(cancelRestartButton, memoryGame.settings.resetCancel);
+    setElementText(document.getElementById("confirmRestartButton"), memoryGame.settings.reset);
+    return;
+  }
   setElementText(document.getElementById("restartTitle"), pendingLanguage ? memoryGame.language || "Language" : memoryGame.newGame || "New game");
   setElementText(document.getElementById("restartMessage"), pendingLanguage
     ? memoryGame.confirmLanguageChange || "Change language? Your progress in this round will be lost."
@@ -1911,7 +1961,8 @@ function renderRestartConfirmation() {
 }
 
 function confirmRestartAction() {
-  if (pendingLanguage) applyLanguageChange(pendingLanguage);
+  if (pendingDataReset) resetGameData();
+  else if (pendingLanguage) applyLanguageChange(pendingLanguage);
   else startFreshGame();
 }
 
@@ -2141,7 +2192,12 @@ window.addEventListener("message", (event) => {
   }
 });
 window.addEventListener("storage", (event) => {
-  if ((event.key === recordsStorageKey || event.key === null) && achievementsPanel.classList.contains("is-visible")) {
+  if (event.key === null && event.storageArea === window.localStorage) {
+    try { window.sessionStorage.clear(); } catch {}
+    reloadAfterDataReset();
+    return;
+  }
+  if (event.key === recordsStorageKey && achievementsPanel.classList.contains("is-visible")) {
     renderPersonalRecords();
   }
   if (event.key === themeStorageKey) {
@@ -2194,6 +2250,7 @@ aboutPanel.addEventListener("click", event => {
 });
 collectionButton.addEventListener("click", openCollection);
 settingsButton.addEventListener("click", openSettings);
+document.getElementById("resetGameButton").addEventListener("click", openDataResetConfirmation);
 closeSettingsButton.addEventListener("click", closeSettings);
 settingsPanel.addEventListener("click", event => {
   if (event.target === settingsPanel) closeSettings();

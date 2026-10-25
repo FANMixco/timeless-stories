@@ -191,7 +191,12 @@
         "tips": "Afficher le bouton d’aide",
         "system": "Système",
         "light": "Clair",
-        "dark": "Sombre"
+        "dark": "Sombre",
+        "reset": "Effacer toutes les données du jeu",
+        "resetWarning": "Supprime définitivement toutes les données enregistrées pour ce site sur cet appareil, y compris les collections, les succès, les records personnels et les paramètres. La partie en cours se terminera. Cette action est irréversible.",
+        "resetConfirmation": "Tout effacer ? Les collections, les succès, les records personnels et les paramètres enregistrés du site sur cet appareil seront définitivement supprimés. La partie en cours se terminera et le tutoriel recommencera. Cette action est irréversible.",
+        "resetError": "Impossible d’effacer les données enregistrées. Vérifiez les autorisations de stockage du navigateur et réessayez.",
+        "resetCancel": "Annuler"
       },
       "achievements": {
         "title": "Succès",

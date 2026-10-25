@@ -139,6 +139,10 @@ html[data-embed="true"] .standalone-only {
 #soundToggle:focus-visible, #tipsToggle:focus-visible { outline: 2px solid var(--found); outline-offset: 4px; }
 .settings-theme { margin: 24px 0 0; padding: 0; min-width: 0; border: 0; }
 .settings-theme legend { margin-bottom: 10px; padding: 0; line-height: 1.5; }
+.settings-reset { margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--line); }
+.settings-reset p { margin: 0 0 12px; color: var(--muted); font-size: 0.875rem; line-height: 1.5; }
+.settings-reset .game-button { width: 100%; white-space: normal; }
+.settings-reset #resetGameError { margin: 12px 0 0; color: var(--ink); }
 .theme-options { display: flex; gap: 4px; padding: 4px; border: 1px solid var(--muted); border-radius: 8px; }
 .theme-option { position: relative; flex: 1; min-width: 0; cursor: pointer; }
 .theme-option input { position: absolute; opacity: 0; width: 1px; height: 1px; }

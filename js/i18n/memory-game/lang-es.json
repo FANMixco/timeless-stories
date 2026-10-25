@@ -191,7 +191,12 @@
         "tips": "Mostrar botón de pistas",
         "system": "Sistema",
         "light": "Claro",
-        "dark": "Oscuro"
+        "dark": "Oscuro",
+        "reset": "Borrar todos los datos del juego",
+        "resetWarning": "Elimina permanentemente todos los datos guardados de este sitio web en este dispositivo, incluidas las colecciones, los logros, los récords personales y los ajustes. La partida actual terminará. Esta acción no se puede deshacer.",
+        "resetConfirmation": "¿Borrar todo? Se eliminarán permanentemente todas las colecciones, los logros, los récords personales y los ajustes guardados del sitio web en este dispositivo. La partida actual terminará y el tutorial volverá a empezar. Esta acción no se puede deshacer.",
+        "resetError": "No se han podido borrar los datos guardados. Revisa los permisos de almacenamiento del navegador e inténtalo de nuevo.",
+        "resetCancel": "Cancelar"
       },
       "achievements": {
         "title": "Logros",

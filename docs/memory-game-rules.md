@@ -184,6 +184,14 @@ while notifications identify improvements to all-time personal bests. The first
 completed game establishes initial records without showing comparison indicators.
 Records persist across refreshes and PWA reopenings when local storage is available.
 
+Settings includes **Reset all game data**, with a visible warning and a separate
+confirmation. Confirming clears all local storage for this website and this tab's
+session storage, including collections, achievements, records, language, theme,
+sound/tip preferences and tutorial progress, then reloads into a fresh game.
+Other open game tabs discard their in-memory progress and reload when they receive
+the storage-clear event. Canceling changes nothing. Offline application assets
+remain cached so the installed PWA can still open offline.
+
 ## Tips and mobile messages
 
 - The saved **Show tips button** setting controls only the Tips button.

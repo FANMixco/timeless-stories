@@ -57,7 +57,7 @@
       }
     </script>
     <link rel="stylesheet" href="css/icon-moon-memory.min.css?v=20261023-shared-comparisons" />
-    <link rel="stylesheet" href="css/memory-game.min.css?v=20261025-records-layout" />
+    <link rel="stylesheet" href="css/memory-game.min.css?v=20261025-reset-modal" />
   </head>
   <body>
     <main class="game-shell" aria-label="">
@@ -258,12 +258,17 @@
               <label class="theme-option"><input type="radio" name="memoryTheme" id="theme-dark" value="dark" /><span id="themeDarkLabel"></span></label>
             </div>
           </fieldset>
+          <section class="settings-reset" aria-labelledby="resetGameButton">
+            <p id="resetGameWarning"></p>
+            <button class="game-button secondary" type="button" id="resetGameButton" aria-describedby="resetGameWarning"></button>
+            <p id="resetGameError" role="alert" hidden></p>
+          </section>
         </div>
       </aside>
       <footer class="game-footer standalone-only" id="gameFooter"></footer>
     </main>
 
-    <script src="js/memory-game.min.js?v=20261025-records-layout"></script>
+    <script src="js/memory-game.min.js?v=20261025-reset-modal"></script>
     <script src="js/gAnalyticsIdleLoad.min.js" defer></script>
     <script src="js/pwa.min.js?v=20261021-pwa-registration" defer></script>
   </body>
