@@ -26,16 +26,16 @@ const achievementDefinitions = [
   { id: "legendary", icon: "trophy", color: "#c49118" },
   { id: "victory", icon: "star-full", color: "#a57a10" },
   { id: "lightning", icon: "power", color: "#1484bd" },
-  { id: "golden", icon: "mirror", color: "#c49118" },
   { id: "scenes", icon: "video-camera", color: "#9c64cf" },
   { id: "directorsMaster", icon: "movie-filter", color: "#9c64cf" },
+  { id: "golden", icon: "mirror", color: "#c49118" },
   { id: "goldenCollector", icon: "gold", color: "#c49118" },
   { id: "master", icon: "crown", color: "#c45f87" },
 ];
 const supportedThemes = ["system", "light", "dark"];
 const previewRewardThresholdSeconds = 30;
 const mismatchFlipBackDelayMs = 1200;
-const i18nCacheVersion = "20261025-submit-mirror";
+const i18nCacheVersion = "20261025-achievement-order";
 let linkRegistry = null;
 let localizedLinks = null;
 let selectionRules = null;
