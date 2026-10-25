@@ -1472,46 +1472,46 @@ html[data-theme="dark"] .collection-mirror:not(:disabled) strong { color: #fffff
 .collection-contribution { margin-top: 24px; text-align: center; line-height: 1.5; }
 .collection-contribution .game-button { display: inline-block; text-decoration: none; }
 
+/* Give ordinary symbols the same visual weight as special mirrors, and
+   teach that same blue treatment in the tutorial. Keep card dimensions. */
+.card[data-rarity=""],
+.card[data-rarity="tutorial"],
+.rarity-preview-card[data-rarity=""],
+.legend-row[data-rarity=""] {
+  --original-mark-background: #d9eaff;
+  --original-mark-ink: #145a9c;
+}
+
+html[data-theme="dark"] .card[data-rarity=""],
+html[data-theme="dark"] .card[data-rarity="tutorial"],
+html[data-theme="dark"] .rarity-preview-card[data-rarity=""],
+html[data-theme="dark"] .legend-row[data-rarity=""] {
+  --original-mark-background: #173b66;
+  --original-mark-ink: #90c2ff;
+}
+
+.card[data-rarity=""] .character-mark,
+.card[data-rarity="tutorial"] .character-mark,
+.rarity-preview-card[data-rarity=""] .character-mark,
+.legend-row[data-rarity=""] .legend-mark,
+html[data-theme="dark"] .card[data-rarity=""] .character-mark,
+html[data-theme="dark"] .card[data-rarity="tutorial"] .character-mark {
+  background: var(--original-mark-background);
+  color: var(--original-mark-ink);
+}
+
+.card[data-rarity=""] .character-icon,
+.card[data-rarity="tutorial"] .character-icon,
+.rarity-preview-card[data-rarity=""] .character-icon,
+.legend-row[data-rarity=""] .character-icon,
+html[data-theme="dark"] .card[data-rarity=""] .character-icon,
+html[data-theme="dark"] .card[data-rarity="tutorial"] .character-icon {
+  color: var(--original-mark-ink);
+}
+
 @media (max-width: 640px) {
   .board {
     grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-
-  /* Give ordinary symbols the same visual weight as special mirrors, and
-     teach that same blue treatment in the tutorial. Keep card dimensions. */
-  .card[data-rarity=""],
-  .card[data-rarity="tutorial"],
-  .rarity-preview-card[data-rarity=""],
-  .legend-row[data-rarity=""] {
-    --mobile-mark-background: #d9eaff;
-    --mobile-mark-ink: #145a9c;
-  }
-
-  html[data-theme="dark"] .card[data-rarity=""],
-  html[data-theme="dark"] .card[data-rarity="tutorial"],
-  html[data-theme="dark"] .rarity-preview-card[data-rarity=""],
-  html[data-theme="dark"] .legend-row[data-rarity=""] {
-    --mobile-mark-background: #173b66;
-    --mobile-mark-ink: #90c2ff;
-  }
-
-  .card[data-rarity=""] .character-mark,
-  .card[data-rarity="tutorial"] .character-mark,
-  .rarity-preview-card[data-rarity=""] .character-mark,
-  .legend-row[data-rarity=""] .legend-mark,
-  html[data-theme="dark"] .card[data-rarity=""] .character-mark,
-  html[data-theme="dark"] .card[data-rarity="tutorial"] .character-mark {
-    background: var(--mobile-mark-background);
-    color: var(--mobile-mark-ink);
-  }
-
-  .card[data-rarity=""] .character-icon,
-  .card[data-rarity="tutorial"] .character-icon,
-  .rarity-preview-card[data-rarity=""] .character-icon,
-  .legend-row[data-rarity=""] .character-icon,
-  html[data-theme="dark"] .card[data-rarity=""] .character-icon,
-  html[data-theme="dark"] .card[data-rarity="tutorial"] .character-icon {
-    color: var(--mobile-mark-ink);
   }
 
   .card-face {
