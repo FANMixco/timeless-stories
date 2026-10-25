@@ -213,7 +213,7 @@
         "items": {
           "legendary": {
             "name": "Legendary Collector",
-            "description": "Discovered all currently available Original Mirrors."
+            "description": "Discovered the Ten Original Mirrors."
           },
           "victory": {
             "name": "First Victory",
@@ -229,11 +229,11 @@
           },
           "scenes": {
             "name": "Behind the Scenes",
-            "description": "Discovered your first Director’s Cut mirror."
+            "description": "Discovered your first Director’s Cut Mirror."
           },
           "directorsMaster": {
             "name": "Director’s Cut Master",
-            "description": "Discovered both Director’s Cut mirrors.",
+            "description": "Discovered both Director’s Cut Mirrors.",
             "bonus": "Your chances of finding a Golden Mirror have increased. Good luck 🍀!"
           },
           "goldenCollector": {
