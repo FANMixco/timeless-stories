@@ -35,7 +35,7 @@ const achievementDefinitions = [
 const supportedThemes = ["system", "light", "dark"];
 const previewRewardThresholdSeconds = 30;
 const mismatchFlipBackDelayMs = 1200;
-const i18nCacheVersion = "20261025-achievement-order";
+const i18nCacheVersion = "20261025-first-victory-order";
 let linkRegistry = null;
 let localizedLinks = null;
 let selectionRules = null;
@@ -451,7 +451,12 @@ function renderAchievements() {
   setElementText(document.getElementById("achievementsProgress"), copy.progress
     .replace("{found}", achievementDefinitions.filter(({ id }) => achievements[id]).length)
     .replace("{total}", achievementDefinitions.length));
-  const rows = achievementDefinitions.map(({ id, icon, color }) => {
+  // Show the first win before collection milestones without changing reward priority.
+  const displayDefinitions = [
+    achievementDefinitions.find(({ id }) => id === "victory"),
+    ...achievementDefinitions.filter(({ id }) => id !== "victory"),
+  ];
+  const rows = displayDefinitions.map(({ id, icon, color }) => {
     const row = document.createElement("article");
     row.className = `achievement-row${achievements[id] ? " is-unlocked" : ""}`;
     row.style.setProperty("--achievement-color", color);
