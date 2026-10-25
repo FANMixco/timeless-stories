@@ -27,28 +27,6 @@ This regenerates matching `.min.css`, `.min.js`, and `.min.json` files. To verif
 npm run check:minified
 ```
 
-## Android Trusted Web Activity verification
-
-The Android package is `com.federiconavarrete.tstories.twa`. Its website
-association is declared in `.well-known/assetlinks.json`, which must be published
-at `https://tstories.federiconavarrete.com/.well-known/assetlinks.json`.
-The `_config.yml` include ensures GitHub Pages retains this folder during Jekyll builds.
-
-The fingerprint array includes the PWABuilder certificate (`4E:E3:C5:40:…`)
-for directly installed APKs and the supplied Google Play app-signing certificate
-(`81:CC:C4:9B:…`) for Play Store installations. If the signing certificates
-change, update the array using **App signing key certificate → SHA-256** in
-Google Play Console's App signing / App integrity page. These are public
-certificate fingerprints; private keystores and signing passwords do not belong
-in this repository.
-
-After deployment, confirm the verification URL returns HTTP 200 with
-`Content-Type: application/json`, without authentication or redirects. Then
-relaunch the Play-installed app and check that the game opens without browser
-controls. External websites can still open with browser controls.
-
-See [Android's website association documentation](https://developer.android.com/training/app-links/configure-assetlinks).
-
 ## Other Useful Links
 
 **ThemeWagon** is a great source for downloading free HTML templates built with the latest technology.
