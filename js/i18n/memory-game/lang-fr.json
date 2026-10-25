@@ -256,7 +256,7 @@
       "time": "Temps",
       "boardLabel": "Cartes mémoire",
       "hiddenCard": "Carte mémoire cachée",
-      "win": "Vous avez retrouvé les {pairs} paires en {moves} coups et {time}.",
+      "win": "Vous avez trouvé les {pairs} paires !",
       "comparisons": {
         "theDevil": {
           "title": "Le diable",
@@ -666,6 +666,26 @@
         "storiesWebsite": "Légendes Éternelles",
         "soundCreditsTitle": "Crédits des effets sonores",
         "soundCredit": "Effet sonore de {author} sur Pixabay."
+      },
+      "records": {
+        "title": "Records personnels",
+        "configuration": "Meilleurs résultats · {pairs} paires",
+        "empty": "Terminez une partie pour établir vos premiers records !",
+        "bestTime": "Meilleur temps",
+        "fewestMoves": "Moins de coups",
+        "gamesCompleted": "Parties terminées",
+        "totalPairsMatched": "Total de paires trouvées",
+        "time": "Temps",
+        "moves": "Coups",
+        "same": "Comme à la partie précédente",
+        "faster": "{count} secondes de moins",
+        "slower": "{count} secondes de plus",
+        "fewer": "{count} coups de moins",
+        "more": "{count} coups de plus",
+        "initial": "Vos premiers records personnels sont établis !",
+        "newBestTime": "Nouveau meilleur temps !",
+        "newFewestMoves": "Nouveau minimum de coups !",
+        "twoRecords": "Deux nouveaux records personnels !"
       }
     },
     "country3": "Maroc 🇲🇦",

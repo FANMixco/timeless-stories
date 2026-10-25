@@ -256,7 +256,7 @@
       "time": "时间",
       "boardLabel": "记忆卡片",
       "hiddenCard": "隐藏的记忆卡片",
-      "win": "你用 {moves} 步和 {time} 找到了全部 {pairs} 组配对。",
+      "win": "你已找到全部 {pairs} 对卡牌！",
       "comparisons": {
         "theDevil": {
           "title": "魔鬼",
@@ -666,6 +666,26 @@
         "storiesWebsite": "永恒的故事",
         "soundCreditsTitle": "音效鸣谢",
         "soundCredit": "音效由 {author} 提供，来自 Pixabay。"
+      },
+      "records": {
+        "title": "个人纪录",
+        "configuration": "最佳成绩 · {pairs} 对",
+        "empty": "完成一局游戏，创下你的首个纪录！",
+        "bestTime": "最快用时",
+        "fewestMoves": "最少步数",
+        "gamesCompleted": "完成局数",
+        "totalPairsMatched": "累计配对数",
+        "time": "用时",
+        "moves": "步数",
+        "same": "与上一局相同",
+        "faster": "快了 {count} 秒",
+        "slower": "慢了 {count} 秒",
+        "fewer": "少了 {count} 步",
+        "more": "多了 {count} 步",
+        "initial": "你已创下首个个人纪录！",
+        "newBestTime": "新的最快用时纪录！",
+        "newFewestMoves": "新的最少步数纪录！",
+        "twoRecords": "两项新的个人纪录！"
       }
     },
     "country3": "摩洛哥 🇲🇦",

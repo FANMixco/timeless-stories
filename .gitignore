@@ -14,3 +14,4 @@ tools/test-memory-settings.mjs
 tools/test-memory-tutorial.mjs
 tools/test-pwa.mjs
 tools/test-i18n-manager.mjs
+tools/test-personal-records.mjs

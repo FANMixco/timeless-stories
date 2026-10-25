@@ -19,6 +19,9 @@ const playingSounds = new Set();
 const soundFadeSeconds = 0.075;
 const soundBuffers = new Map();
 const achievementsStorageKey = "timelessMemoryAchievements";
+const recordsStorageKey = "timelessMemoryRecords:v1";
+let personalRecords = readPersonalRecords();
+let completedPerformance = null;
 const achievementDefinitions = [
   { id: "legendary", icon: "trophy", color: "#c49118" },
   { id: "victory", icon: "star-full", color: "#a57a10" },
@@ -32,7 +35,7 @@ const achievementDefinitions = [
 const supportedThemes = ["system", "light", "dark"];
 const previewRewardThresholdSeconds = 30;
 const mismatchFlipBackDelayMs = 1200;
-const i18nCacheVersion = "20261024-language-confirmation";
+const i18nCacheVersion = "20261025-records-layout";
 let linkRegistry = null;
 let localizedLinks = null;
 let selectionRules = null;
@@ -304,7 +307,142 @@ function evaluateAchievements(completed = false) {
   setElementHidden(achievementsButton, !achievementDefinitions.some(({ id }) => achievements[id]));
 }
 
+// Records are independent of achievements and discoveries. Only completed boards
+// enter this store; previous results and all-time bests serve different comparisons.
+function emptyPersonalRecords() {
+  return { version: 1, gamesCompleted: 0, totalPairsMatched: 0, configurations: {} };
+}
+
+function validRecordNumber(value) {
+  return Number.isSafeInteger(value) && value >= 0;
+}
+
+function readPersonalRecords() {
+  const records = emptyPersonalRecords();
+  try {
+    const saved = JSON.parse(window.localStorage.getItem(recordsStorageKey));
+    if (saved?.version !== 1) return records;
+    for (const field of ["gamesCompleted", "totalPairsMatched"]) {
+      if (validRecordNumber(saved[field])) records[field] = saved[field];
+    }
+    for (const [key, value] of Object.entries(saved.configurations || {})) {
+      if (!/^standard:[1-9]\d*$/.test(key) || !value || typeof value !== "object") continue;
+      const entry = {};
+      for (const field of ["bestTime", "fewestMoves"]) {
+        if (validRecordNumber(value[field])) entry[field] = value[field];
+      }
+      if (validRecordNumber(value.last?.time) && validRecordNumber(value.last?.moves)) {
+        entry.last = { time: value.last.time, moves: value.last.moves };
+      }
+      records.configurations[key] = entry;
+    }
+  } catch {}
+  return records;
+}
+
+function getRecordConfiguration(pairCount = getPairCount()) {
+  // Rarity substitutions keep the same rules. Add mode/difficulty here if
+  // gameplay settings are introduced in future, so only equivalent rounds compete.
+  return `standard:${pairCount}`;
+}
+
+function saveCompletedPerformance() {
+  if (completedPerformance || !gameCompleted || matches !== getPairCount()) return completedPerformance;
+  // Read again to include completed activity from other tabs.
+  personalRecords = readPersonalRecords();
+  const key = getRecordConfiguration();
+  const previous = personalRecords.configurations[key] || {};
+  const current = { time: elapsedSeconds, moves };
+  completedPerformance = {
+    ...current,
+    previous: previous.last || null,
+    newBestTime: validRecordNumber(previous.bestTime) && current.time < previous.bestTime,
+    newFewestMoves: validRecordNumber(previous.fewestMoves) && current.moves < previous.fewestMoves,
+  };
+  personalRecords.gamesCompleted += 1;
+  personalRecords.totalPairsMatched += getPairCount();
+  personalRecords.configurations[key] = {
+    bestTime: Math.min(previous.bestTime ?? current.time, current.time),
+    fewestMoves: Math.min(previous.fewestMoves ?? current.moves, current.moves),
+    last: current,
+  };
+  try { window.localStorage.setItem(recordsStorageKey, JSON.stringify(personalRecords)); } catch {}
+  return completedPerformance;
+}
+
+function renderPersonalRecords() {
+  personalRecords = readPersonalRecords();
+  const copy = memoryGame.records;
+  const entry = personalRecords.configurations[getRecordConfiguration()] || {};
+  setElementText(document.getElementById("personalRecordsTitle"), copy.title);
+  setElementText(document.getElementById("personalRecordsConfiguration"), copy.configuration.replace("{pairs}", getPairCount()));
+  setElementText(document.getElementById("personalRecordsEmpty"), copy.empty);
+  setElementHidden(document.getElementById("personalRecordsEmpty"), validRecordNumber(entry.bestTime) || validRecordNumber(entry.fewestMoves));
+  const stats = [
+    [copy.bestTime, validRecordNumber(entry.bestTime) ? formatTime(entry.bestTime) : "—", "power"],
+    [copy.fewestMoves, entry.fewestMoves ?? "—", "table-eye"],
+    [copy.gamesCompleted, personalRecords.gamesCompleted, "trophy"],
+    [copy.totalPairsMatched, personalRecords.totalPairsMatched, "mirror"],
+  ];
+  const cards = stats.map(([label, value, icon]) => {
+    const card = document.createElement("div");
+    card.className = "record-stat";
+    const mark = document.createElement("i");
+    mark.className = `icon-${icon}`;
+    mark.setAttribute("aria-hidden", "true");
+    const name = document.createElement("dt");
+    name.append(mark, document.createTextNode(label));
+    const number = document.createElement("dd");
+    number.textContent = typeof value === "number" ? value.toLocaleString(currentLanguage) : value;
+    card.append(name, number);
+    return card;
+  });
+  document.getElementById("personalRecordsStats").replaceChildren(...cards);
+}
+
+function performanceDifference(current, previous, metric) {
+  const copy = memoryGame.records;
+  if (current === previous) return copy.same;
+  const key = metric === "time" ? (current < previous ? "faster" : "slower") : (current < previous ? "fewer" : "more");
+  return copy[key].replace("{count}", Math.abs(current - previous).toLocaleString(currentLanguage));
+}
+
+function renderCompletedPerformance() {
+  const result = completedPerformance;
+  const panel = document.getElementById("winPerformance");
+  panel.replaceChildren();
+  if (!result) return;
+  const copy = memoryGame.records;
+  const metrics = document.createElement("dl");
+  metrics.className = "performance-metrics";
+  for (const [metric, label, value] of [["time", copy.time, formatTime(result.time)], ["moves", copy.moves, result.moves.toLocaleString(currentLanguage)]]) {
+    const row = document.createElement("div");
+    const name = document.createElement("dt");
+    name.textContent = label;
+    const number = document.createElement("dd");
+    number.textContent = value;
+    if (result.previous) {
+      const difference = document.createElement("small");
+      difference.textContent = performanceDifference(result[metric], result.previous[metric], metric);
+      number.append(difference);
+    }
+    row.append(name, number);
+    metrics.append(row);
+  }
+  panel.append(metrics);
+  const notification = result.newBestTime && result.newFewestMoves ? copy.twoRecords
+    : result.newBestTime ? copy.newBestTime : result.newFewestMoves ? copy.newFewestMoves
+      : !result.previous ? copy.initial : "";
+  if (notification) {
+    const message = document.createElement("p");
+    message.className = "performance-notification";
+    message.textContent = notification;
+    panel.append(message);
+  }
+}
+
 function renderAchievements() {
+  renderPersonalRecords();
   const copy = memoryGame.achievements;
   setElementText(document.getElementById("achievementsTitle"), copy.title);
   setElementText(document.getElementById("achievementsProgress"), copy.progress
@@ -625,7 +763,7 @@ async function loadGameLanguage(language) {
   if (response.ok === false) throw new Error(`Unable to load game language: ${language}`);
   const data = await response.json();
   const game = data.translations?.memoryGame;
-  if (!game?.settings?.title || !game.settings.sounds || !achievementDefinitions.every(({ id }) => game.achievements?.items?.[id])) {
+  if (!game?.settings?.title || !game.settings.sounds || !game.records?.title || !achievementDefinitions.every(({ id }) => game.achievements?.items?.[id])) {
     throw new Error(`Incomplete game language: ${language}`);
   }
   const pairs = [...(game.pairs || []), ...(game.rarePairs || []).map(variant => variant.pair)];
@@ -1439,6 +1577,7 @@ function hideOpenCards() {
 }
 
 function markMatch() {
+  if (gameCompleted) return;
   const specialDiscovery = firstCard.dataset.discoveryId && firstCard.dataset.rarity && !discoveries.has(firstCard.dataset.discoveryId);
   // The final pair gets immediate victory feedback instead of another effect.
   if (matches + 1 < getPairCount()) {
@@ -1453,6 +1592,8 @@ function markMatch() {
   if (matches === getPairCount()) {
     stopTimer();
     gameCompleted = true;
+    saveCompletedPerformance();
+    renderCompletedPerformance();
     playGameSound("victory");
     if (window.matchMedia?.("(max-width: 640px)")?.matches) hideLegendToast();
     saveCompletedDiscoveries();
@@ -1460,9 +1601,7 @@ function markMatch() {
     setTopLegendActionVisibility(true);
     setPreviewRewardVisibility(elapsedSeconds < previewRewardThresholdSeconds);
     winMessage.textContent = (memoryGame.win || "")
-      .replace("{pairs}", getPairCount())
-      .replace("{moves}", moves)
-      .replace("{time}", formatTime(elapsedSeconds));
+      .replace("{pairs}", getPairCount());
     winPanel.classList.add("is-visible");
     evaluateAchievements(true);
     showNextAchievement();
@@ -1709,6 +1848,8 @@ function newGame() {
   matches = 0;
   elapsedSeconds = 0;
   gameCompleted = false;
+  completedPerformance = null;
+  renderCompletedPerformance();
   activePairs = chooseActivePairs();
   board.classList.remove("is-complete", "is-intro");
   matchInsight.classList.remove("is-visible");
@@ -2000,6 +2141,9 @@ window.addEventListener("message", (event) => {
   }
 });
 window.addEventListener("storage", (event) => {
+  if ((event.key === recordsStorageKey || event.key === null) && achievementsPanel.classList.contains("is-visible")) {
+    renderPersonalRecords();
+  }
   if (event.key === themeStorageKey) {
     applyTheme();
   }

@@ -256,7 +256,7 @@
       "time": "Time",
       "boardLabel": "Memory cards",
       "hiddenCard": "Hidden memory card",
-      "win": "You matched all {pairs} pairs in {moves} moves and {time}.",
+      "win": "You matched all {pairs} pairs!",
       "comparisons": {
         "theDevil": {
           "title": "The Devil",
@@ -666,6 +666,26 @@
         "storiesWebsite": "Timeless Stories",
         "soundCreditsTitle": "Sound effect credits",
         "soundCredit": "Sound effect by {author} from Pixabay."
+      },
+      "records": {
+        "title": "Personal Records",
+        "configuration": "Best results · {pairs} pairs",
+        "empty": "Complete a game to set your first records!",
+        "bestTime": "Best Time",
+        "fewestMoves": "Fewest Moves",
+        "gamesCompleted": "Games Completed",
+        "totalPairsMatched": "Total Pairs Matched",
+        "time": "Time",
+        "moves": "Moves",
+        "same": "Same as previous game",
+        "faster": "{count} seconds faster",
+        "slower": "{count} seconds slower",
+        "fewer": "{count} fewer moves",
+        "more": "{count} more moves",
+        "initial": "Your first personal records are established!",
+        "newBestTime": "New Best Time!",
+        "newFewestMoves": "New Fewest Moves!",
+        "twoRecords": "Two New Personal Records!"
       }
     },
     "country3": "Morocco 🇲🇦",

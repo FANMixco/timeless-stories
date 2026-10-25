@@ -256,7 +256,7 @@
       "time": "Tiempo",
       "boardLabel": "Cartas de memoria",
       "hiddenCard": "Carta de memoria oculta",
-      "win": "Encontraste las {pairs} parejas en {moves} movimientos y {time}.",
+      "win": "¡Encontraste las {pairs} parejas!",
       "comparisons": {
         "theDevil": {
           "title": "El diablo",
@@ -666,6 +666,26 @@
         "storiesWebsite": "Historias Eternas",
         "soundCreditsTitle": "Créditos de los efectos de sonido",
         "soundCredit": "Efecto de sonido de {author} en Pixabay."
+      },
+      "records": {
+        "title": "Récords personales",
+        "configuration": "Mejores resultados · {pairs} parejas",
+        "empty": "¡Completa una partida para establecer tus primeros récords!",
+        "bestTime": "Mejor tiempo",
+        "fewestMoves": "Menos movimientos",
+        "gamesCompleted": "Partidas completadas",
+        "totalPairsMatched": "Total de parejas encontradas",
+        "time": "Tiempo",
+        "moves": "Movimientos",
+        "same": "Igual que la partida anterior",
+        "faster": "{count} segundos más rápido",
+        "slower": "{count} segundos más lento",
+        "fewer": "{count} movimientos menos",
+        "more": "{count} movimientos más",
+        "initial": "¡Has establecido tus primeros récords personales!",
+        "newBestTime": "¡Nuevo mejor tiempo!",
+        "newFewestMoves": "¡Nuevo mínimo de movimientos!",
+        "twoRecords": "¡Dos nuevos récords personales!"
       }
     },
     "country3": "Marruecos 🇲🇦",

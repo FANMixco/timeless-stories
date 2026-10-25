@@ -57,7 +57,7 @@
       }
     </script>
     <link rel="stylesheet" href="css/icon-moon-memory.min.css?v=20261023-shared-comparisons" />
-    <link rel="stylesheet" href="css/memory-game.min.css?v=20261025-tutorial-footer" />
+    <link rel="stylesheet" href="css/memory-game.min.css?v=20261025-records-layout" />
   </head>
   <body>
     <main class="game-shell" aria-label="">
@@ -126,6 +126,7 @@
           <button class="win-close" type="button" id="closeWinButton"></button>
           <h2 id="winTitle"></h2>
           <p id="winMessage"></p>
+          <div class="win-performance" id="winPerformance"></div>
           <div class="win-actions">
             <a class="game-button reward" id="previewRewardButton" target="_blank" rel="noopener noreferrer" hidden></a>
             <button class="game-button" type="button" id="playAgainButton"></button>
@@ -207,6 +208,12 @@
         <div class="legends-card">
           <button class="win-close" type="button" id="closeAchievementsButton"></button>
           <h2 id="achievementsTitle"></h2>
+          <section class="personal-records" aria-labelledby="personalRecordsTitle">
+            <h3 id="personalRecordsTitle"></h3>
+            <p id="personalRecordsConfiguration"></p>
+            <p id="personalRecordsEmpty"></p>
+            <dl class="records-grid" id="personalRecordsStats"></dl>
+          </section>
           <p id="achievementsProgress"></p>
           <div class="achievements-list" id="achievementsList"></div>
         </div>
@@ -256,7 +263,7 @@
       <footer class="game-footer standalone-only" id="gameFooter"></footer>
     </main>
 
-    <script src="js/memory-game.min.js?v=20261025-tutorial-footer"></script>
+    <script src="js/memory-game.min.js?v=20261025-records-layout"></script>
     <script src="js/gAnalyticsIdleLoad.min.js" defer></script>
     <script src="js/pwa.min.js?v=20261021-pwa-registration" defer></script>
   </body>

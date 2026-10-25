@@ -166,6 +166,24 @@ cannot establish a historical completion time for Lightning Memory.
 
 The Achievements button remains hidden until at least one achievement is earned.
 
+## Personal records and performance
+
+The Achievements modal shows best time and fewest moves for the current pair
+count, plus overall completed games and pairs matched. Records are separate from
+the eight achievements and use the versioned `timelessMemoryRecords:v1` local
+storage key. Existing discoveries cannot establish historical performance.
+
+Only successful completion updates records, once per round. Restarting or
+abandoning a game adds nothing. Time and move records update independently;
+equal results do not earn record notifications. Rarity substitutions follow the
+same gameplay rules and share records for the same pair count.
+
+Congratulations shows time and moves separately from its completion message.
+Each metric compares with the previous completed game of the same configuration,
+while notifications identify improvements to all-time personal bests. The first
+completed game establishes initial records without showing comparison indicators.
+Records persist across refreshes and PWA reopenings when local storage is available.
+
 ## Tips and mobile messages
 
 - The saved **Show tips button** setting controls only the Tips button.
