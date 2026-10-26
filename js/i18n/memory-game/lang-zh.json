@@ -679,7 +679,7 @@
         "bestTime": "最快用时",
         "fewestMoves": "最少步数",
         "gamesCompleted": "完成局数",
-        "totalPairsMatched": "累计配对数",
+        "totalPairsMatched": "找到的镜子总数",
         "time": "用时",
         "moves": "步数",
         "same": "与上一局相同",
