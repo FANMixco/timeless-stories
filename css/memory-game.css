@@ -566,7 +566,8 @@ html[data-theme="dark"] .card[data-rarity="tutorial"] .character-icon {
 }
 
 .character-flag {
-  display: none;
+  display: block;
+  font-size: clamp(0.72rem, 1.4vw, 1rem);
   position: absolute;
   right: -3px;
   bottom: 0;
@@ -574,10 +575,7 @@ html[data-theme="dark"] .card[data-rarity="tutorial"] .character-icon {
 }
 
 .character-origin {
-  color: var(--muted);
-  font-size: clamp(0.56rem, 1.75vw, 0.76rem);
-  font-weight: 550;
-  line-height: 1;
+  display: none;
 }
 
 .card .character-origin-text {
@@ -1288,6 +1286,15 @@ html[data-theme="dark"] .card.is-matched .card-front {
 
   .character-icon {
     font-size: clamp(2rem, 3vw, 2.55rem);
+  }
+
+  .card .character-mark {
+    width: clamp(63.8px, 5.72vw, 77px);
+    height: clamp(63.8px, 5.72vw, 77px);
+  }
+
+  .card .character-icon {
+    font-size: clamp(2.2rem, 3.3vw, 2.805rem);
   }
 
   html[data-embed="true"] .game-subtitle {

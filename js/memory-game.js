@@ -1612,6 +1612,7 @@ function createCard(character, index) {
   card.dataset.pairId = character.pairId;
   card.dataset.discoveryId = character.discoveryId || "";
   card.dataset.character = character.name;
+  card.dataset.revealedLabel = [character.name, getOriginLabel(character.side)].filter(Boolean).join(". ");
   card.dataset.description = character.desc || "";
   card.dataset.insightTitle = character.insightTitle || "";
   card.dataset.insight = character.insight || "";
@@ -1899,7 +1900,7 @@ function flipCard(card) {
   prepareGameAudio();
   startTimer();
   card.classList.add("is-flipped");
-  card.setAttribute("aria-label", card.dataset.character);
+  card.setAttribute("aria-label", card.dataset.revealedLabel);
 
   if (!firstCard) {
     firstCard = card;
@@ -2076,11 +2077,11 @@ async function runIntroTutorial() {
   await wait(1000);
   if (runId !== tutorialRunId) return;
   cards[0]?.classList.add("is-flipped");
-  cards[0]?.setAttribute("aria-label", tutorialCards[0].name);
+  cards[0]?.setAttribute("aria-label", cards[0].dataset.revealedLabel);
   await wait(1200);
   if (runId !== tutorialRunId) return;
   cards[1]?.classList.add("is-flipped");
-  cards[1]?.setAttribute("aria-label", tutorialCards[1].name);
+  cards[1]?.setAttribute("aria-label", cards[1].dataset.revealedLabel);
   await wait(800);
   if (runId !== tutorialRunId) return;
   cards.forEach((card) => card.classList.add("is-matched"));
