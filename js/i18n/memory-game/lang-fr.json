@@ -197,6 +197,7 @@
         "resetConfirmation": "Tout effacer ? Les collections, les succès, les records personnels et les paramètres enregistrés du jeu sur cet appareil seront définitivement supprimés. La partie en cours se terminera et le tutoriel recommencera. Cette action est irréversible.",
         "resetError": "Impossible d’effacer les données enregistrées. Vérifiez les autorisations de stockage du navigateur et réessayez.",
         "resetCancel": "Annuler",
+        "matchToasts": "Afficher les messages quand les cartes correspondent",
         "shortNames": "Utiliser les noms courts sur les cartes"
       },
       "achievements": {

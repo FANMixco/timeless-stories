@@ -15,3 +15,4 @@ tools/test-memory-tutorial.mjs
 tools/test-pwa.mjs
 tools/test-i18n-manager.mjs
 tools/test-personal-records.mjs
+tools/test-match-toasts.mjs

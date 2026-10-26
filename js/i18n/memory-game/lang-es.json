@@ -197,6 +197,7 @@
         "resetConfirmation": "¿Borrar todo? Se eliminarán permanentemente todas las colecciones, los logros, los récords personales y los ajustes guardados del juego en este dispositivo. La partida actual terminará y el tutorial volverá a empezar. Esta acción no se puede deshacer.",
         "resetError": "No se han podido borrar los datos guardados. Revisa los permisos de almacenamiento del navegador e inténtalo de nuevo.",
         "resetCancel": "Cancelar",
+        "matchToasts": "Mostrar mensajes al emparejar cartas",
         "shortNames": "Usar nombres cortos en las cartas"
       },
       "achievements": {

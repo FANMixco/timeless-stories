@@ -197,6 +197,7 @@
         "resetConfirmation": "Reset everything? All collections, achievements, personal records, and saved game settings on this device will be permanently deleted. Your current game will end and the tutorial will restart. This cannot be undone.",
         "resetError": "Unable to clear saved data. Check your browser storage permissions and try again.",
         "resetCancel": "Cancel",
+        "matchToasts": "Show messages when cards match",
         "shortNames": "Use short card names"
       },
       "achievements": {

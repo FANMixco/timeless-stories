@@ -4,8 +4,10 @@ const themeStorageKey = "timelessStoriesColorMode";
 const introStorageKey = "timelessMemoryIntroSeen";
 const collectionStorageKey = "timelessMemoryCollection";
 const soundStorageKey = "timelessMemorySoundEnabled";
+const matchToastsStorageKey = "timelessMemoryMatchToastsEnabled";
 const tipsStorageKey = "timelessMemoryTipsEnabled";
 const shortNamesStorageKey = "timelessMemoryShortNamesEnabled";
+let matchToastsEnabled = readMatchToastsEnabled();
 let tipsEnabled = readTipsEnabled();
 let shortNamesEnabled = readShortNamesEnabled();
 const soundFiles = { match: "music/match.mp3", discovery: "music/shiny.mp3", achievement: "music/award.mp3", victory: "music/complete.mp3" };
@@ -37,7 +39,7 @@ const achievementDefinitions = [
 const supportedThemes = ["system", "light", "dark"];
 const previewRewardThresholdSeconds = 30;
 const mismatchFlipBackDelayMs = 1200;
-const i18nCacheVersion = "20261026-short-card-names";
+const i18nCacheVersion = "20261026-mobile-match-toasts";
 let linkRegistry = null;
 let localizedLinks = null;
 let selectionRules = null;
@@ -80,6 +82,7 @@ const settingsButton = document.getElementById("settingsButton");
 const settingsPanel = document.getElementById("settingsPanel");
 const closeSettingsButton = document.getElementById("closeSettingsButton");
 const soundToggle = document.getElementById("soundToggle");
+const matchToastsToggle = document.getElementById("matchToastsToggle");
 const tipsToggle = document.getElementById("tipsToggle");
 const shortNamesToggle = document.getElementById("shortNamesToggle");
 const shareButton = document.getElementById("shareButton");
@@ -922,6 +925,26 @@ function readSoundEnabled() {
   catch { return true; }
 }
 
+function readMatchToastsEnabled() {
+  try { return window.localStorage.getItem(matchToastsStorageKey) !== "false"; }
+  catch { return true; }
+}
+
+function applyMatchToastsPreference() {
+  matchToastsToggle.checked = matchToastsEnabled;
+  if (!matchToastsEnabled && !gameCompleted &&
+      window.matchMedia?.("(max-width: 640px)")?.matches &&
+      legendToast.dataset.comparison === "true") {
+    hideLegendToast();
+  }
+}
+
+function setMatchToastsEnabled(enabled) {
+  matchToastsEnabled = enabled;
+  applyMatchToastsPreference();
+  try { window.localStorage.setItem(matchToastsStorageKey, String(enabled)); } catch {}
+}
+
 function readTipsEnabled() {
   try { return window.localStorage.getItem(tipsStorageKey) !== "false"; }
   catch { return true; }
@@ -1084,6 +1107,7 @@ function setSoundEnabled(enabled) {
 }
 
 function openSettings() {
+  applyMatchToastsPreference();
   applyShortNamesPreference();
   closeLanguageMenu();
   setElementHidden(document.getElementById("resetGameError"), true);
@@ -1276,6 +1300,8 @@ function applyUiCopy() {
   setElementText(document.getElementById("settingsLanguageLabel"), memoryGame.language);
   setElementText(document.getElementById("settingsSoundLabel"), settingsCopy.sounds);
   setElementText(document.getElementById("settingsTipsLabel"), settingsCopy.tips);
+  setElementText(document.getElementById("settingsMatchToastsLabel"), settingsCopy.matchToasts);
+  applyMatchToastsPreference();
   setElementText(document.getElementById("settingsShortNamesLabel"), settingsCopy.shortNames);
   setElementText(document.getElementById("resetGameButton"), settingsCopy.reset);
   setElementText(document.getElementById("resetGameWarning"), settingsCopy.resetWarning);
@@ -1704,7 +1730,7 @@ function showMatchInsight(card) {
     "is-visible",
     Boolean(card.dataset.insightTitle || card.dataset.insight),
   );
-  if (!gameCompleted && window.matchMedia?.("(max-width: 640px)")?.matches) {
+  if (!gameCompleted && matchToastsEnabled && window.matchMedia?.("(max-width: 640px)")?.matches) {
     showToast(card.dataset.insightTitle || "", card.dataset.insight || "");
     legendToast.dataset.comparison = "true";
   }
@@ -2246,6 +2272,10 @@ window.addEventListener("storage", (event) => {
   if (event.key === recordsStorageKey && achievementsPanel.classList.contains("is-visible")) {
     renderPersonalRecords();
   }
+  if (event.key === matchToastsStorageKey) {
+    matchToastsEnabled = readMatchToastsEnabled();
+    applyMatchToastsPreference();
+  }
   if (event.key === shortNamesStorageKey) {
     shortNamesEnabled = readShortNamesEnabled();
     applyShortNamesPreference();
@@ -2306,6 +2336,7 @@ settingsPanel.addEventListener("click", event => {
   if (event.target === settingsPanel) closeSettings();
 });
 soundToggle.addEventListener("change", () => setSoundEnabled(soundToggle.checked));
+matchToastsToggle.addEventListener("change", () => setMatchToastsEnabled(matchToastsToggle.checked));
 tipsToggle.addEventListener("change", () => setTipsEnabled(tipsToggle.checked));
 shortNamesToggle.addEventListener("change", () => setShortNamesEnabled(shortNamesToggle.checked));
 achievementsButton.addEventListener("click", openAchievements);

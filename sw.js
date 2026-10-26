@@ -1,5 +1,5 @@
 const CACHE_PREFIX = "memory-game-pwa-";
-const CACHE_VERSION = `${CACHE_PREFIX}20261026-mint-directors-cut`;
+const CACHE_VERSION = `${CACHE_PREFIX}20261026-mobile-match-toasts`;
 const APP_SHELL = [
   "/memory-game.html",
   "/memory-game.webmanifest",
@@ -8,15 +8,15 @@ const APP_SHELL = [
   "/music/award.mp3",
   "/music/complete.mp3",
   "/css/icon-moon-memory.min.css?v=20261023-shared-comparisons",
-  "/css/memory-game.min.css?v=20261026-mint-directors-cut",
-  "/js/memory-game.min.js?v=20261026-flag-only-cards",
+  "/css/memory-game.min.css?v=20261026-mobile-match-toasts",
+  "/js/memory-game.min.js?v=20261026-mobile-match-toasts",
   "/js/pwa.min.js?v=20261021-pwa-registration",
   "/js/data/links.min.json",
-  "/js/data/memory-game.min.json?v=20261026-short-card-names",
-  "/js/i18n/memory-game/lang-en.min.json?v=20261026-short-card-names",
-  "/js/i18n/memory-game/lang-es.min.json?v=20261026-short-card-names",
-  "/js/i18n/memory-game/lang-fr.min.json?v=20261026-short-card-names",
-  "/js/i18n/memory-game/lang-zh.min.json?v=20261026-short-card-names",
+  "/js/data/memory-game.min.json?v=20261026-mobile-match-toasts",
+  "/js/i18n/memory-game/lang-en.min.json?v=20261026-mobile-match-toasts",
+  "/js/i18n/memory-game/lang-es.min.json?v=20261026-mobile-match-toasts",
+  "/js/i18n/memory-game/lang-fr.min.json?v=20261026-mobile-match-toasts",
+  "/js/i18n/memory-game/lang-zh.min.json?v=20261026-mobile-match-toasts",
   "/img/previews/mirrors_medium.webp",
   "/img/previews/mirrors_es_medium.webp",
   "/img/previews/mirrors_fr_medium.webp",
