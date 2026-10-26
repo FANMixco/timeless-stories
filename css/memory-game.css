@@ -463,7 +463,7 @@ html[data-theme="dark"] .card[data-rarity="rare"] { --match-glow-color: #8be0c5;
 
 .card[data-rarity="rare"] .character-mark,
 .legend-row[data-rarity="rare"] .legend-mark {
-  background: rgba(0, 119, 182, 0.16);
+  background: #c5eedd;
   color: #0b6f8f;
 }
 
@@ -494,7 +494,7 @@ html[data-theme="dark"] .card[data-rarity="rare"] { --match-glow-color: #8be0c5;
 
 html[data-theme="dark"] .card[data-rarity="rare"] .character-mark,
 html[data-theme="dark"] .legend-row[data-rarity="rare"] .legend-mark {
-  background: rgba(139, 224, 197, 0.16);
+  background: #234d40;
   color: #8be0c5;
 }
 
@@ -843,7 +843,7 @@ html[data-theme="dark"] .card[data-rarity="tutorial"] .character-icon {
 }
 
 .rarity-preview-card[data-rarity="rare"] .character-mark {
-  background: rgba(0, 119, 182, 0.16);
+  background: #c5eedd;
   color: #0b6f8f;
 }
 
@@ -1245,7 +1245,7 @@ html[data-theme="dark"] .rarity-preview-card {
 }
 
 html[data-theme="dark"] .rarity-preview-card[data-rarity="rare"] .character-mark {
-  background: rgba(139, 224, 197, 0.16);
+  background: #234d40;
   color: #8be0c5;
 }
 
