@@ -1405,6 +1405,12 @@ html[data-theme="dark"] .card.is-matched .card-front {
 .performance-metrics dd { margin: 3px 0 0; font-weight: 700; font-variant-numeric: tabular-nums; }
 .performance-metrics small { display: block; margin-top: 3px; font-size: 0.75rem; font-weight: 400; }
 .win-card .performance-notification { margin: 0 0 12px; color: var(--found); font-size: 0.85rem; }
+.win-records-link { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 36px; margin: 0 0 12px; padding: 4px 8px; border: 0; background: transparent; color: var(--found); font: inherit; font-size: 0.85rem; cursor: pointer; }
+.win-records-link span { text-decoration: underline; text-underline-offset: 3px; }
+.win-records-link:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+@media (pointer: coarse) {
+  .win-records-link { min-height: 44px; }
+}
 .achievements-list { display: grid; gap: 12px; }
 .achievement-row { display: flex; align-items: center; gap: 18px; padding: 16px; border: 1px solid var(--muted); border-radius: 8px; }
 .achievement-row h3 { margin: 0 0 6px; }

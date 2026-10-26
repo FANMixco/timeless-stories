@@ -57,7 +57,7 @@
       }
     </script>
     <link rel="stylesheet" href="css/icon-moon-memory.min.css?v=20261023-shared-comparisons" />
-    <link rel="stylesheet" href="css/memory-game.min.css?v=20261026-readable-category-icons" />
+    <link rel="stylesheet" href="css/memory-game.min.css?v=20261026-view-records" />
   </head>
   <body>
     <main class="game-shell" aria-label="">
@@ -127,6 +127,9 @@
           <h2 id="winTitle"></h2>
           <p id="winMessage"></p>
           <div class="win-performance" id="winPerformance"></div>
+          <button class="win-records-link" id="winRecordsButton" type="button" aria-haspopup="dialog" aria-controls="achievementsPanel">
+            <i class="icon-trophy" aria-hidden="true"></i><span id="winRecordsLabel"></span>
+          </button>
           <div class="win-actions">
             <a class="game-button reward" id="previewRewardButton" target="_blank" rel="noopener noreferrer" hidden></a>
             <button class="game-button" type="button" id="playAgainButton"></button>
@@ -268,7 +271,7 @@
       <footer class="game-footer standalone-only" id="gameFooter"></footer>
     </main>
 
-    <script src="js/memory-game.min.js?v=20261026-readable-category-icons"></script>
+    <script src="js/memory-game.min.js?v=20261026-view-records"></script>
     <script src="js/gAnalyticsIdleLoad.min.js" defer></script>
     <script src="js/pwa.min.js?v=20261021-pwa-registration" defer></script>
   </body>

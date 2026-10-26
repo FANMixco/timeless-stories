@@ -690,7 +690,8 @@
         "initial": "Vos premiers records personnels sont établis !",
         "newBestTime": "Nouveau meilleur temps !",
         "newFewestMoves": "Nouveau minimum de coups !",
-        "twoRecords": "Deux nouveaux records personnels !"
+        "twoRecords": "Deux nouveaux records personnels !",
+        "viewRecords": "Voir les records"
       }
     },
     "country3": "Maroc 🇲🇦",

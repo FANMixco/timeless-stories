@@ -183,6 +183,8 @@ Each metric compares with the previous completed game of the same configuration,
 while notifications identify improvements to all-time personal bests. The first
 completed game establishes initial records without showing comparison indicators.
 Records persist across refreshes and PWA reopenings when local storage is available.
+The Congratulations modal's **View Records** link opens Achievements at the top
+of Personal Records. Closing it returns to the completion result and its link.
 
 Settings includes **Reset all game data**, with a visible warning and a separate
 confirmation. Confirming clears all local storage for this website and this tab's

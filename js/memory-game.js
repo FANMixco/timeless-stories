@@ -35,7 +35,7 @@ const achievementDefinitions = [
 const supportedThemes = ["system", "light", "dark"];
 const previewRewardThresholdSeconds = 30;
 const mismatchFlipBackDelayMs = 1200;
-const i18nCacheVersion = "20261025-first-victory-order-v2";
+const i18nCacheVersion = "20261026-view-records";
 let linkRegistry = null;
 let localizedLinks = null;
 let selectionRules = null;
@@ -98,6 +98,7 @@ let discoveries = readDiscoveries();
 let collectionDetailTrigger = null;
 let collectionRarityTrigger = null;
 const playAgainButton = document.getElementById("playAgainButton");
+const winRecordsButton = document.getElementById("winRecordsButton");
 const viewLegendsButton = document.getElementById("viewLegendsButton");
 const winShareButton = document.getElementById("winShareButton");
 const closeWinButton = document.getElementById("closeWinButton");
@@ -487,6 +488,8 @@ function renderAchievements() {
 function openAchievements() {
   renderAchievements();
   achievementsPanel.classList.add("is-visible");
+  achievementsPanel.scrollTop = 0;
+  achievementsPanel.querySelector(".legends-card").scrollTop = 0;
   closeAchievementsButton.focus();
   syncModalScrollLock();
 }
@@ -494,7 +497,7 @@ function openAchievements() {
 function closeAchievements() {
   achievementsPanel.classList.remove("is-visible");
   syncModalScrollLock();
-  achievementsButton.focus({ preventScroll: true });
+  (winPanel.classList.contains("is-visible") ? winRecordsButton : achievementsButton).focus({ preventScroll: true });
 }
 
 function showNextAchievement() {
@@ -849,6 +852,7 @@ function refreshModalScrollLock() {
   for (const panel of modalPanels) {
     if (panel !== achievementPanel && panel !== collectionPanel) panel.inert = achievementVisible;
   }
+  winPanel.inert = achievementVisible || achievementsPanel.classList.contains("is-visible");
   if (!collectionDetailTrigger && !collectionRarityTrigger) collectionPanel.inert = achievementVisible;
   const restartVisible = restartPanel.classList.contains("is-visible");
   settingsPanel.inert = achievementVisible || restartVisible;
@@ -1235,6 +1239,7 @@ function closeAboutPanel() {
 }
 
 function applyUiCopy() {
+  setElementText(document.getElementById("winRecordsLabel"), memoryGame.records.viewRecords);
   const settingsCopy = memoryGame.settings;
   settingsButton.setAttribute("aria-label", settingsCopy.title);
   settingsButton.title = settingsCopy.title;
@@ -2268,6 +2273,7 @@ settingsPanel.addEventListener("click", event => {
 soundToggle.addEventListener("change", () => setSoundEnabled(soundToggle.checked));
 tipsToggle.addEventListener("change", () => setTipsEnabled(tipsToggle.checked));
 achievementsButton.addEventListener("click", openAchievements);
+winRecordsButton.addEventListener("click", openAchievements);
 closeAchievementsButton.addEventListener("click", closeAchievements);
 closeAchievementButton.addEventListener("click", closeAchievement);
 achievementsPanel.addEventListener("click", event => {
