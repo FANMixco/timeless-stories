@@ -57,7 +57,7 @@
       }
     </script>
     <link rel="stylesheet" href="css/icon-moon-memory.min.css?v=20261023-shared-comparisons" />
-    <link rel="stylesheet" href="css/memory-game.min.css?v=20261026-best-comparisons" />
+    <link rel="stylesheet" href="css/memory-game.min.css?v=20261026-short-card-names" />
   </head>
   <body>
     <main class="game-shell" aria-label="">
@@ -253,6 +253,10 @@
             <span id="settingsTipsLabel"></span>
             <input type="checkbox" id="tipsToggle" role="switch" />
           </label>
+          <label class="settings-row settings-short-names" for="shortNamesToggle">
+            <span id="settingsShortNamesLabel"></span>
+            <input type="checkbox" id="shortNamesToggle" role="switch" />
+          </label>
           <fieldset class="settings-theme">
             <legend id="settingsThemeLabel"></legend>
             <div class="theme-options">
@@ -271,7 +275,7 @@
       <footer class="game-footer standalone-only" id="gameFooter"></footer>
     </main>
 
-    <script src="js/memory-game.min.js?v=20261026-best-comparisons"></script>
+    <script src="js/memory-game.min.js?v=20261026-short-card-names"></script>
     <script src="js/gAnalyticsIdleLoad.min.js" defer></script>
     <script src="js/pwa.min.js?v=20261021-pwa-registration" defer></script>
   </body>

@@ -5,7 +5,9 @@ const introStorageKey = "timelessMemoryIntroSeen";
 const collectionStorageKey = "timelessMemoryCollection";
 const soundStorageKey = "timelessMemorySoundEnabled";
 const tipsStorageKey = "timelessMemoryTipsEnabled";
+const shortNamesStorageKey = "timelessMemoryShortNamesEnabled";
 let tipsEnabled = readTipsEnabled();
+let shortNamesEnabled = readShortNamesEnabled();
 const soundFiles = { match: "music/match.mp3", discovery: "music/shiny.mp3", achievement: "music/award.mp3", victory: "music/complete.mp3" };
 const soundEffectCreators = ["ALEXIS_GAMING_CAM", "freesound_community", "Yodguard", "Game Studio"];
 let soundEnabled = readSoundEnabled();
@@ -35,7 +37,7 @@ const achievementDefinitions = [
 const supportedThemes = ["system", "light", "dark"];
 const previewRewardThresholdSeconds = 30;
 const mismatchFlipBackDelayMs = 1200;
-const i18nCacheVersion = "20261026-best-comparisons";
+const i18nCacheVersion = "20261026-short-card-names";
 let linkRegistry = null;
 let localizedLinks = null;
 let selectionRules = null;
@@ -79,6 +81,7 @@ const settingsPanel = document.getElementById("settingsPanel");
 const closeSettingsButton = document.getElementById("closeSettingsButton");
 const soundToggle = document.getElementById("soundToggle");
 const tipsToggle = document.getElementById("tipsToggle");
+const shortNamesToggle = document.getElementById("shortNamesToggle");
 const shareButton = document.getElementById("shareButton");
 const hintButton = document.getElementById("hintButton");
 const topViewLegendsButton = document.getElementById("topViewLegendsButton");
@@ -932,6 +935,22 @@ function setTipsEnabled(enabled) {
   setElementHidden(hintButton, gameCompleted || !enabled);
 }
 
+function readShortNamesEnabled() {
+  try { return window.localStorage.getItem(shortNamesStorageKey) === "true"; }
+  catch { return false; }
+}
+
+function applyShortNamesPreference() {
+  document.documentElement.classList.toggle("use-short-card-names", shortNamesEnabled);
+  shortNamesToggle.checked = shortNamesEnabled;
+}
+
+function setShortNamesEnabled(enabled) {
+  shortNamesEnabled = enabled;
+  applyShortNamesPreference();
+  try { window.localStorage.setItem(shortNamesStorageKey, String(enabled)); } catch {}
+}
+
 function getSoundBuffer(name) {
   if (!soundBuffers.has(name)) {
     const buffer = fetch(soundFiles[name])
@@ -1065,6 +1084,7 @@ function setSoundEnabled(enabled) {
 }
 
 function openSettings() {
+  applyShortNamesPreference();
   closeLanguageMenu();
   setElementHidden(document.getElementById("resetGameError"), true);
   settingsPanel.classList.add("is-visible");
@@ -1247,6 +1267,7 @@ function closeAboutPanel() {
 }
 
 function applyUiCopy() {
+  applyShortNamesPreference();
   setElementText(document.getElementById("winRecordsLabel"), memoryGame.records.viewRecords);
   const settingsCopy = memoryGame.settings;
   settingsButton.setAttribute("aria-label", settingsCopy.title);
@@ -1255,6 +1276,7 @@ function applyUiCopy() {
   setElementText(document.getElementById("settingsLanguageLabel"), memoryGame.language);
   setElementText(document.getElementById("settingsSoundLabel"), settingsCopy.sounds);
   setElementText(document.getElementById("settingsTipsLabel"), settingsCopy.tips);
+  setElementText(document.getElementById("settingsShortNamesLabel"), settingsCopy.shortNames);
   setElementText(document.getElementById("resetGameButton"), settingsCopy.reset);
   setElementText(document.getElementById("resetGameWarning"), settingsCopy.resetWarning);
   setElementText(document.getElementById("settingsThemeLabel"), memoryGame.theme);
@@ -2223,6 +2245,10 @@ window.addEventListener("storage", (event) => {
   if (event.key === recordsStorageKey && achievementsPanel.classList.contains("is-visible")) {
     renderPersonalRecords();
   }
+  if (event.key === shortNamesStorageKey) {
+    shortNamesEnabled = readShortNamesEnabled();
+    applyShortNamesPreference();
+  }
   if (event.key === themeStorageKey) {
     applyTheme();
   }
@@ -2280,6 +2306,7 @@ settingsPanel.addEventListener("click", event => {
 });
 soundToggle.addEventListener("change", () => setSoundEnabled(soundToggle.checked));
 tipsToggle.addEventListener("change", () => setTipsEnabled(tipsToggle.checked));
+shortNamesToggle.addEventListener("change", () => setShortNamesEnabled(shortNamesToggle.checked));
 achievementsButton.addEventListener("click", openAchievements);
 winRecordsButton.addEventListener("click", openAchievements);
 closeAchievementsButton.addEventListener("click", closeAchievements);

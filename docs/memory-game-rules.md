@@ -199,6 +199,13 @@ remain cached so the installed PWA can still open offline.
 
 ## Tips and mobile messages
 
+- On screens wider than 640 px, **Use short card names** in Settings switches
+  card labels immediately without restarting the round. Full names remain the
+  default. The preference persists and synchronizes across open game tabs.
+  Cards without a translated short name keep their full name. Mobile always
+  uses the existing short labels and does not show this setting. Full names in
+  card accessibility labels, story descriptions, and collection details remain.
+
 - The saved **Show tips button** setting controls only the Tips button.
 - When enabled, the button is visible in new/in-progress games and hidden after
   completion. When disabled, it stays hidden across visits and new games.

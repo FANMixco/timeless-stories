@@ -135,8 +135,8 @@ html[data-embed="true"] .standalone-only {
 .settings-row .language-control { flex-shrink: 0; }
 .settings-row .language-menu { max-height: min(240px, 40dvh); overflow-y: auto; }
 .settings-row #languageButton { display: inline-flex; align-items: center; gap: 10px; }
-#soundToggle, #tipsToggle { flex-shrink: 0; width: 24px; height: 24px; accent-color: var(--found); cursor: pointer; }
-#soundToggle:focus-visible, #tipsToggle:focus-visible { outline: 2px solid var(--found); outline-offset: 4px; }
+#soundToggle, #tipsToggle, #shortNamesToggle { flex-shrink: 0; width: 24px; height: 24px; accent-color: var(--found); cursor: pointer; }
+#soundToggle:focus-visible, #tipsToggle:focus-visible, #shortNamesToggle:focus-visible { outline: 2px solid var(--found); outline-offset: 4px; }
 .settings-theme { margin: 24px 0 0; padding: 0; min-width: 0; border: 0; }
 .settings-theme legend { margin-bottom: 10px; padding: 0; line-height: 1.5; }
 .settings-reset { margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--line); }
@@ -534,6 +534,15 @@ html[data-theme="dark"] .card[data-rarity="tutorial"] .character-icon {
 
 .character-name-short {
   display: none;
+}
+
+@media (min-width: 641px) {
+  .use-short-card-names .card .character-name-full { display: none; }
+  .use-short-card-names .card .character-name-short { display: inline; }
+}
+
+@media (max-width: 640px) {
+  .settings-short-names { display: none; }
 }
 
 .card .character-flag,
