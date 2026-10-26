@@ -682,7 +682,7 @@
         "totalPairsMatched": "Total de miroirs trouvés",
         "time": "Temps",
         "moves": "Coups",
-        "same": "Comme à la partie précédente",
+        "same": "Record personnel égalé",
         "faster": "{count} secondes de moins",
         "slower": "{count} secondes de plus",
         "fewer": "{count} coups de moins",
@@ -691,7 +691,9 @@
         "newBestTime": "Nouveau meilleur temps !",
         "newFewestMoves": "Nouveau minimum de coups !",
         "twoRecords": "Deux nouveaux records personnels !",
-        "viewRecords": "Voir les records"
+        "viewRecords": "Voir les records",
+        "personalBest": "Record personnel : {value}",
+        "previousBest": "Ancien record : {value}"
       }
     },
     "country3": "Maroc 🇲🇦",

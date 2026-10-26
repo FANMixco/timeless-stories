@@ -179,8 +179,11 @@ equal results do not earn record notifications. Rarity substitutions follow the
 same gameplay rules and share records for the same pair count.
 
 Congratulations shows time and moves separately from its completion message.
-Each metric compares with the previous completed game of the same configuration,
-while notifications identify improvements to all-time personal bests. The first
+Each metric compares with the personal best for the same configuration before
+that game, with the best value explicitly labeled. A new record labels that
+reference as the previous best. Reopening the result keeps the same comparison;
+the last completed game is still saved but is not the comparison baseline.
+Notifications identify improvements to all-time personal bests. The first
 completed game establishes initial records without showing comparison indicators.
 Records persist across refreshes and PWA reopenings when local storage is available.
 The Congratulations modal's **View Records** link opens Achievements at the top

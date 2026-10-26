@@ -682,7 +682,7 @@
         "totalPairsMatched": "Total Mirrors Matched",
         "time": "Time",
         "moves": "Moves",
-        "same": "Same as previous game",
+        "same": "Matched your personal best",
         "faster": "{count} seconds faster",
         "slower": "{count} seconds slower",
         "fewer": "{count} fewer moves",
@@ -691,7 +691,9 @@
         "newBestTime": "New Best Time!",
         "newFewestMoves": "New Fewest Moves!",
         "twoRecords": "Two New Personal Records!",
-        "viewRecords": "View Records"
+        "viewRecords": "View Records",
+        "personalBest": "Personal best: {value}",
+        "previousBest": "Previous best: {value}"
       }
     },
     "country3": "Morocco 🇲🇦",

@@ -1404,6 +1404,7 @@ html[data-theme="dark"] .card.is-matched .card-front {
 .performance-metrics dt { color: var(--muted); font-size: 0.8rem; }
 .performance-metrics dd { margin: 3px 0 0; font-weight: 700; font-variant-numeric: tabular-nums; }
 .performance-metrics small { display: block; margin-top: 3px; font-size: 0.75rem; font-weight: 400; }
+.performance-metrics .performance-delta { display: block; }
 .win-card .performance-notification { margin: 0 0 12px; color: var(--found); font-size: 0.85rem; }
 .win-records-link { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 36px; margin: 0 0 12px; padding: 4px 8px; border: 0; background: transparent; color: var(--found); font: inherit; font-size: 0.85rem; cursor: pointer; }
 .win-records-link span { text-decoration: underline; text-underline-offset: 3px; }

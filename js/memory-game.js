@@ -35,7 +35,7 @@ const achievementDefinitions = [
 const supportedThemes = ["system", "light", "dark"];
 const previewRewardThresholdSeconds = 30;
 const mismatchFlipBackDelayMs = 1200;
-const i18nCacheVersion = "20261026-view-records";
+const i18nCacheVersion = "20261026-best-comparisons";
 let linkRegistry = null;
 let localizedLinks = null;
 let selectionRules = null;
@@ -360,6 +360,8 @@ function saveCompletedPerformance() {
   completedPerformance = {
     ...current,
     previous: previous.last || null,
+    // Keep the pre-game records as this result's stable comparison reference.
+    bestBefore: { time: previous.bestTime ?? null, moves: previous.fewestMoves ?? null },
     newBestTime: validRecordNumber(previous.bestTime) && current.time < previous.bestTime,
     newFewestMoves: validRecordNumber(previous.fewestMoves) && current.moves < previous.fewestMoves,
   };
@@ -404,11 +406,11 @@ function renderPersonalRecords() {
   document.getElementById("personalRecordsStats").replaceChildren(...cards);
 }
 
-function performanceDifference(current, previous, metric) {
+function performanceDifference(current, best, metric) {
   const copy = memoryGame.records;
-  if (current === previous) return copy.same;
-  const key = metric === "time" ? (current < previous ? "faster" : "slower") : (current < previous ? "fewer" : "more");
-  return copy[key].replace("{count}", Math.abs(current - previous).toLocaleString(currentLanguage));
+  if (current === best) return copy.same;
+  const key = metric === "time" ? (current < best ? "faster" : "slower") : (current < best ? "fewer" : "more");
+  return copy[key].replace("{count}", Math.abs(current - best).toLocaleString(currentLanguage));
 }
 
 function renderCompletedPerformance() {
@@ -425,9 +427,15 @@ function renderCompletedPerformance() {
     name.textContent = label;
     const number = document.createElement("dd");
     number.textContent = value;
-    if (result.previous) {
+    const best = result.bestBefore[metric];
+    if (validRecordNumber(best)) {
       const difference = document.createElement("small");
-      difference.textContent = performanceDifference(result[metric], result.previous[metric], metric);
+      const bestValue = metric === "time" ? formatTime(best) : best.toLocaleString(currentLanguage);
+      difference.textContent = (result[metric] < best ? copy.previousBest : copy.personalBest).replace("{value}", bestValue);
+      const delta = document.createElement("span");
+      delta.className = "performance-delta";
+      delta.textContent = performanceDifference(result[metric], best, metric);
+      difference.append(delta);
       number.append(difference);
     }
     row.append(name, number);
@@ -436,7 +444,7 @@ function renderCompletedPerformance() {
   panel.append(metrics);
   const notification = result.newBestTime && result.newFewestMoves ? copy.twoRecords
     : result.newBestTime ? copy.newBestTime : result.newFewestMoves ? copy.newFewestMoves
-      : !result.previous ? copy.initial : "";
+      : !validRecordNumber(result.bestBefore.time) && !validRecordNumber(result.bestBefore.moves) ? copy.initial : "";
   if (notification) {
     const message = document.createElement("p");
     message.className = "performance-notification";

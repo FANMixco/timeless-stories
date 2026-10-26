@@ -682,7 +682,7 @@
         "totalPairsMatched": "Total de espejos encontrados",
         "time": "Tiempo",
         "moves": "Movimientos",
-        "same": "Igual que la partida anterior",
+        "same": "Has igualado tu récord personal",
         "faster": "{count} segundos más rápido",
         "slower": "{count} segundos más lento",
         "fewer": "{count} movimientos menos",
@@ -691,7 +691,9 @@
         "newBestTime": "¡Nuevo mejor tiempo!",
         "newFewestMoves": "¡Nuevo mínimo de movimientos!",
         "twoRecords": "¡Dos nuevos récords personales!",
-        "viewRecords": "Ver récords"
+        "viewRecords": "Ver récords",
+        "personalBest": "Récord personal: {value}",
+        "previousBest": "Récord anterior: {value}"
       }
     },
     "country3": "Marruecos 🇲🇦",

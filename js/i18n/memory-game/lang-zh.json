@@ -682,7 +682,7 @@
         "totalPairsMatched": "找到的镜子总数",
         "time": "用时",
         "moves": "步数",
-        "same": "与上一局相同",
+        "same": "追平个人最佳",
         "faster": "快了 {count} 秒",
         "slower": "慢了 {count} 秒",
         "fewer": "少了 {count} 步",
@@ -691,7 +691,9 @@
         "newBestTime": "新的最快用时纪录！",
         "newFewestMoves": "新的最少步数纪录！",
         "twoRecords": "两项新的个人纪录！",
-        "viewRecords": "查看纪录"
+        "viewRecords": "查看纪录",
+        "personalBest": "个人最佳：{value}",
+        "previousBest": "此前最佳：{value}"
       }
     },
     "country3": "摩洛哥 🇲🇦",
