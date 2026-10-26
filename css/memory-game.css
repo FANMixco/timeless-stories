@@ -1509,6 +1509,27 @@ html[data-theme="dark"] .card[data-rarity="tutorial"] .character-icon {
   color: var(--original-mark-ink);
 }
 
+/* Category identity follows the symbol everywhere, independently of rarity. */
+[data-category="theDevil"] { --category-icon-light: #9C2442; --category-icon-dark: #FF9BAD; }
+[data-category="fatalLures"] { --category-icon-light: #743A97; --category-icon-dark: #E1AEFF; }
+[data-category="guardiansAndBeasts"] { --category-icon-light: #1B6640; --category-icon-dark: #80E0AA; }
+[data-category="heraldsOfDeath"] { --category-icon-light: #405B94; --category-icon-dark: #B7C7F0; }
+[data-category="processionsOfTheDead"] { --category-icon-light: #825223; --category-icon-dark: #E9BD8E; }
+[data-category="rulersOfTheNight"] { --category-icon-light: #3B49A3; --category-icon-dark: #A7B8FF; }
+[data-category="echoesOfTheDead"] { --category-icon-light: #216878; --category-icon-dark: #83DAE8; }
+[data-category="restlessSpirits"] { --category-icon-light: #634195; --category-icon-dark: #C3B0F4; }
+[data-category="fatalApparitions"] { --category-icon-light: #983E2C; --category-icon-dark: #F6AF9C; }
+[data-category="domesticTricksters"] { --category-icon-light: #526B20; --category-icon-dark: #C9DF88; }
+[data-category="enchantedVoices"] { --category-icon-light: #1B5D99; --category-icon-dark: #83C5FF; }
+
+html[data-theme] .game-shell [data-category] .character-icon {
+  color: var(--category-icon-light);
+}
+
+html[data-theme="dark"] .game-shell [data-category] .character-icon {
+  color: var(--category-icon-dark);
+}
+
 @media (max-width: 640px) {
   .board {
     grid-template-columns: repeat(4, minmax(0, 1fr));

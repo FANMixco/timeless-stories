@@ -595,6 +595,7 @@ function renderCollection() {
       card.type = "button";
       card.className = "collection-mirror rarity-preview-card";
       card.dataset.rarity = rarity;
+      if (discovered) card.dataset.category = pair.comparison;
       card.disabled = !discovered;
       const mark = document.createElement("span");
       mark.className = "character-mark";
@@ -1479,6 +1480,7 @@ function buildDeck() {
         discoveryId: getMirrorId(pair),
         side: pair.sourceOrigin || "source",
         rarity: pair.rarity || "",
+        category: pair.comparison,
         name: getLegendName(source),
         shortName: translations?.mapLegends?.[source]?.shortName,
         desc: getLegendDescription(source),
@@ -1492,6 +1494,7 @@ function buildDeck() {
         discoveryId: getMirrorId(pair),
         side: pair.mirrorOrigin || "mirror",
         rarity: pair.rarity || "",
+        category: pair.comparison,
         name: getLegendName(mirror),
         shortName: translations?.mapLegends?.[mirror]?.shortName,
         desc: getLegendDescription(mirror),
@@ -1578,6 +1581,7 @@ function createCard(character, index) {
   card.dataset.insightTitle = character.insightTitle || "";
   card.dataset.insight = character.insight || "";
   card.dataset.rarity = character.rarity || "";
+  if (character.category) card.dataset.category = character.category;
   card.setAttribute("aria-label", memoryGame.hiddenCard || "");
   const nameContent = character.shortName
     ? `<span class="character-name-full">${character.name}</span><span class="character-name-short">${character.shortName}</span>`
@@ -1699,6 +1703,7 @@ function renderLegendsList(pairs = activePairs.length ? activePairs : chooseActi
     const icon = pair.icon || getPairIcon(source, mirror);
     row.className = "legend-row";
     row.dataset.rarity = pair.rarity || "";
+    row.dataset.category = pair.comparison;
     const category = document.createElement("header");
     category.className = "legend-category";
     category.innerHTML = `
