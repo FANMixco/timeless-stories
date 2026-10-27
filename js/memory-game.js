@@ -156,6 +156,7 @@ let modalRarity = null;
 const modalPanels = [winPanel, gameOverPanel, collectionPanel, legendsPanel, rarityPanel, aboutPanel, restartPanel, achievementsPanel, achievementPanel, settingsPanel];
 
 const homeScreen = createHomeScreen({ document, modes: gameModes,
+  reduceMotion: () => Boolean(window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches),
   onChoose: applyGameMode,
   onSettings: openSettings, onRecords: openAchievements, onReturn: requestHome
 });

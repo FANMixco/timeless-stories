@@ -1,17 +1,57 @@
 // The start screen owns presentation; the application owns round transitions.
-export function createHomeScreen({ document, modes, onChoose, onSettings, onRecords, onReturn }) {
+export function createHomeScreen({ document, modes, onChoose, onSettings, onRecords, onReturn, reduceMotion = () => false }) {
   const shell = document.querySelector(".game-shell");
   const home = document.getElementById("gameHome");
   let visible = true;
+  let selection = 0;
+  let choosing = false;
+  let pressAnimation = null;
   const text = (id, value) => { document.getElementById(id).textContent = value; };
+
+  function animateEntrance(element) {
+    if (reduceMotion()) return;
+    element.animate?.([
+      { opacity: 0, transform: "translateY(10px)" },
+      { opacity: 1, transform: "translateY(0)" }
+    ], { duration: 240, easing: "ease-out" });
+  }
+
+  function choose(mode) {
+    if (choosing || !visible) return;
+    const card = document.getElementById(`home-${mode}`);
+    if (reduceMotion() || !card.animate) { onChoose(mode); return; }
+    const currentSelection = ++selection;
+    choosing = true;
+    home.inert = true;
+    const enterGame = () => {
+      if (currentSelection !== selection || !visible) return;
+      choosing = false;
+      pressAnimation = null;
+      home.inert = false;
+      onChoose(mode);
+      animateEntrance(document.querySelector(".game-layout"));
+    };
+    pressAnimation = card.animate([
+      { transform: "scale(1)", opacity: 1 },
+      { transform: "scale(0.97)", opacity: 0.8 }
+    ], { duration: 160, easing: "ease-in" });
+    pressAnimation.finished.then(enterGame, enterGame);
+  }
   return {
     get visible() { return visible; },
     show(mode) {
+      const returning = !visible;
+      selection++;
+      choosing = false;
+      pressAnimation?.cancel();
+      pressAnimation = null;
+      home.inert = false;
       visible = true;
       shell.classList.add("is-home");
       home.hidden = false;
       document.querySelector(".game-layout").hidden = true;
       document.getElementById(`home-${mode}`).focus({ preventScroll: true });
+      if (returning) animateEntrance(home);
     },
     hide() {
       visible = false;
@@ -33,7 +73,7 @@ export function createHomeScreen({ document, modes, onChoose, onSettings, onReco
     },
     bind() {
       for (const mode of Object.keys(modes)) {
-        document.getElementById(`home-${mode}`).addEventListener("click", () => onChoose(mode));
+        document.getElementById(`home-${mode}`).addEventListener("click", () => choose(mode));
       }
       document.getElementById("homeSettings").addEventListener("click", onSettings);
       document.getElementById("homeRecords").addEventListener("click", onRecords);

@@ -1502,6 +1502,8 @@ html[data-theme="dark"] .card.is-matched .card-front {
   to { opacity: 0; transform: scale(1.04); }
 }
 @media (prefers-reduced-motion: reduce) {
+  .home-card { transition: none; }
+  .home-card:hover { transform: none; }
   .achievement-panel .achievement-card, .achievement-panel .achievement-card::before { animation: none; }
   .achievement-panel .achievement-card::before { display: none; }
 }
