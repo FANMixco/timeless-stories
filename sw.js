@@ -1,5 +1,5 @@
 const CACHE_PREFIX = "memory-game-pwa-";
-const CACHE_VERSION = `${CACHE_PREFIX}20261027-defeat-records`;
+const CACHE_VERSION = `${CACHE_PREFIX}memory-ca0eb09e7cff`;
 const APP_SHELL = [
   "/memory-game.html",
   "/memory-game.webmanifest",
@@ -8,16 +8,26 @@ const APP_SHELL = [
   "/music/award.mp3",
   "/music/complete.mp3",
   "/music/gameover.mp3",
-  "/css/icon-moon-memory.min.css?v=20261023-shared-comparisons",
-  "/css/memory-game.min.css?v=20261027-defeat-records",
-  "/js/memory-game.min.js?v=20261027-defeat-records",
+  "/css/icon-moon-memory.min.css?v=memory-ca0eb09e7cff",
+  "/css/memory-game.min.css?v=memory-ca0eb09e7cff",
+  "/js/memory-game.min.js?v=memory-ca0eb09e7cff",
   "/js/pwa.min.js?v=20261021-pwa-registration",
   "/js/data/links.min.json",
-  "/js/data/memory-game.min.json?v=20261027-defeat-records",
-  "/js/i18n/memory-game/lang-en.min.json?v=20261027-defeat-records",
-  "/js/i18n/memory-game/lang-es.min.json?v=20261027-defeat-records",
-  "/js/i18n/memory-game/lang-fr.min.json?v=20261027-defeat-records",
-  "/js/i18n/memory-game/lang-zh.min.json?v=20261027-defeat-records",
+  "/js/data/memory-game.min.json?v=memory-ca0eb09e7cff",
+  "/js/i18n/memory-game/lang-en.min.json?v=memory-ca0eb09e7cff",
+  "/js/i18n/memory-game/lang-es.min.json?v=memory-ca0eb09e7cff",
+  "/js/i18n/memory-game/lang-fr.min.json?v=memory-ca0eb09e7cff",
+  "/js/i18n/memory-game/lang-zh.min.json?v=memory-ca0eb09e7cff",
+  // BEGIN MEMORY MODULES
+  "/js/memory-game/audio.min.js?v=memory-ca0eb09e7cff",
+  "/js/memory-game/dialogs.min.js?v=memory-ca0eb09e7cff",
+  "/js/memory-game/modes/classic.min.js?v=memory-ca0eb09e7cff",
+  "/js/memory-game/modes/limited-moves.min.js?v=memory-ca0eb09e7cff",
+  "/js/memory-game/modes/time-attack.min.js?v=memory-ca0eb09e7cff",
+  "/js/memory-game/progress.min.js?v=memory-ca0eb09e7cff",
+  "/js/memory-game/rules.min.js?v=memory-ca0eb09e7cff",
+  "/js/memory-game/storage.min.js?v=memory-ca0eb09e7cff",
+  // END MEMORY MODULES
   "/img/previews/mirrors_medium.webp",
   "/img/previews/mirrors_es_medium.webp",
   "/img/previews/mirrors_fr_medium.webp",

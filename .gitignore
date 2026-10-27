@@ -17,3 +17,10 @@ tools/test-i18n-manager.mjs
 tools/test-personal-records.mjs
 tools/test-match-toasts.mjs
 tools/test-memory-modes.mjs
+tests/build.test.mjs
+tests/controllers.test.mjs
+tests/memory-game.integration.mjs
+tests/offline.test.mjs
+tests/selection.test.mjs
+tools/memory-game-assets.mjs
+tools/minify-assets.mjs

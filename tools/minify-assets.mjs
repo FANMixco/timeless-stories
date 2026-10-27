@@ -3,9 +3,10 @@ import path from "node:path";
 import process from "node:process";
 import CleanCSS from "clean-css";
 import { minify as minifyJs } from "terser";
+import { getMemoryAssetVersion, compileMemoryImports, updateMemoryAssetReferences } from "./memory-game-assets.mjs";
 
 const ROOTS = ["css", "js"];
-const EXTENSIONS = new Set([".css", ".js", ".json"]);
+const EXTENSIONS = new Set([".css", ".js", ".mjs", ".json"]);
 const CHECK_MODE = process.argv.includes("--check");
 
 async function pathExists(filePath) {
@@ -24,7 +25,7 @@ function isMinifiedAsset(filePath) {
 
 function minifiedPath(sourcePath) {
   const extension = path.extname(sourcePath);
-  return sourcePath.slice(0, -extension.length) + `.min${extension}`;
+  return sourcePath.slice(0, -extension.length) + `.min${extension === ".mjs" ? ".js" : extension}`;
 }
 
 async function collectSourceFiles(directory) {
@@ -36,6 +37,7 @@ async function collectSourceFiles(directory) {
       const entryPath = path.join(directory, entry.name);
       if (entry.isDirectory()) return collectSourceFiles(entryPath);
       if (!entry.isFile()) return [];
+      if (entry.name === "package.json") return [];
 
       const extension = path.extname(entry.name);
       if (!EXTENSIONS.has(extension) || isMinifiedAsset(entry.name)) return [];
@@ -59,13 +61,16 @@ function minifyCss(source, filePath) {
   return result.styles;
 }
 
-async function minifyFile(sourcePath) {
+async function minifyFile(sourcePath, memoryVersion) {
   const extension = path.extname(sourcePath);
-  const source = await fs.readFile(sourcePath, "utf8");
+  let source = await fs.readFile(sourcePath, "utf8");
+  if (extension === ".mjs" || path.relative(process.cwd(), sourcePath).replaceAll("\\", "/") === "js/memory-game.js") {
+    source = compileMemoryImports(source, memoryVersion);
+  }
 
   if (extension === ".css") return minifyCss(source, sourcePath);
 
-  if (extension === ".js") {
+  if (extension === ".js" || extension === ".mjs") {
     const result = await minifyJs(source, {
       compress: true,
       ecma: 2017,
@@ -88,9 +93,9 @@ function normalize(content) {
   return content.replace(/\r\n/g, "\n").trim();
 }
 
-async function processFile(sourcePath) {
+async function processFile(sourcePath, memoryVersion) {
   const outputPath = minifiedPath(sourcePath);
-  const minified = await minifyFile(sourcePath);
+  const minified = await minifyFile(sourcePath, memoryVersion);
   const relativeOutput = path.relative(process.cwd(), outputPath);
 
   if (CHECK_MODE) {
@@ -106,14 +111,23 @@ async function processFile(sourcePath) {
 }
 
 async function main() {
+  const memoryVersion = await getMemoryAssetVersion();
   const sourceFiles = (
     await Promise.all(ROOTS.map((root) => collectSourceFiles(path.join(process.cwd(), root))))
   ).flat();
 
   const results = [];
-  for (const file of sourceFiles.sort()) {
-    results.push(await processFile(file));
+  // Modules and data must exist before the entrypoint can reference their new version.
+  const entrypoint = path.join(process.cwd(), "js", "memory-game.js");
+  const ordered = sourceFiles.sort().filter(file => file !== entrypoint);
+  if (sourceFiles.includes(entrypoint)) ordered.push(entrypoint);
+  for (const file of ordered) {
+    results.push(await processFile(file, memoryVersion));
   }
+
+  // Publish references only after all compiled assets exist. Check mode never writes.
+  const references = await updateMemoryAssetReferences(memoryVersion, { check: CHECK_MODE });
+  if (CHECK_MODE) results.push(...references.map(output => ({ status: "outdated", output })));
 
   const outdated = results.filter((result) => result.status === "outdated");
   if (outdated.length) {

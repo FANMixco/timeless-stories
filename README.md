@@ -15,13 +15,17 @@ Thanks for downloading this theme!
 Memory Game behavior is documented in [Memory Game rules](docs/memory-game-rules.md),
 including card probabilities, collection requirements, achievements, and sound priority.
 
-Run the asset minifier after editing files in `css/` or `js/`:
+The module boundaries and workflow are documented in [Memory Game maintenance](docs/memory-game-architecture.md).
+
+Build after editing game code, CSS, markup or translations:
 
 ```sh
-npm run minify
+npm run build
 ```
 
-This regenerates matching `.min.css`, `.min.js`, and `.min.json` files. To verify that minified files are current without changing files, run:
+This regenerates matching `.min.css`, `.min.js`, and `.min.json` files,
+then updates game asset versions and the offline precache. `npm run minify` remains
+available for the same build. To verify generated files without changing them, run:
 
 ```sh
 npm run check:minified
