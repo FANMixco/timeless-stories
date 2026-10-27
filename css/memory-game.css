@@ -101,7 +101,6 @@ html.is-modal-open body {
 .home-tool > i, .home-tool > svg { width: 26px; height: 26px; font-size: 26px; }
 .is-home .game-footer { margin-top: 24px; text-align: center; font-weight: 700; }
 /* Modes and records have a permanent home; playing keeps only round controls. */
-.game-actions #settingsButton { display: none; }
 #homeButton svg { display: block; width: 1em; height: 1em; flex-shrink: 0; }
 .game-top .game-subtitle, .game-shell:not(.is-home) .game-footer { display: none; }
 .game-top { align-items: start; }
@@ -149,18 +148,23 @@ html[data-embed="true"] .standalone-only {
 .game-actions {
   --action-icon-size: 44px;
   display: flex;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   align-items: center;
-  justify-content: safe center;
+  justify-content: space-between;
   gap: 6px;
   width: 100%;
-  overflow-x: auto;
 }
-.game-actions #newGameButton { flex: 0 0 136px; width: 136px; white-space: nowrap; min-height: 44px; margin-right: auto; }
+.game-primary-actions, .game-secondary-actions { display: flex; align-items: center; gap: 6px; }
+.game-primary-actions { flex: 0 0 auto; margin-right: auto; }
+.game-secondary-actions { flex: 1 0 auto; flex-wrap: wrap; justify-content: flex-end; max-width: 100%; }
+.game-actions #newGameButton { flex: 0 0 auto; width: auto; white-space: nowrap; min-height: 44px; }
 .game-actions .game-button { display: inline-flex; align-items: center; justify-content: center; }
 .game-actions .game-button.secondary { flex: 0 0 var(--action-icon-size); width: var(--action-icon-size); min-width: var(--action-icon-size); height: 44px; padding: 0; }
-@media (max-width: 380px) {
-  .game-actions #newGameButton { font-size: 0.85rem; padding-inline: 8px; }
+.new-game-icon { display: none; width: 1.35em; height: 1.35em; }
+@media (max-width: 640px) {
+  .game-actions #newGameButton { flex: 0 0 var(--action-icon-size); width: var(--action-icon-size); height: 44px; padding: 0; }
+  #newGameButton .new-game-icon { display: block; }
+  #newGameLabel { display: none; }
 }
 
 .large-screen-only {
@@ -1703,39 +1707,13 @@ html[data-theme="dark"] .game-shell [data-category] .character-icon {
   }
 
   .legends-panel {
-    padding: 0;
-  }
-
-  .legends-card {
-    width: 100%;
-    min-height: 100dvh;
-    max-height: none;
-    overflow: visible;
-    border-radius: 0;
-    border-right: 0;
-    border-left: 0;
-    padding: calc(28px + env(safe-area-inset-top, 0px)) 14px calc(18px + env(safe-area-inset-bottom, 0px));
-  }
-
-  .legends-panel.is-collection-detail {
-    align-items: center;
     padding: calc(12px + env(safe-area-inset-top, 0px)) 12px calc(12px + env(safe-area-inset-bottom, 0px));
   }
 
-  .settings-panel.legends-panel {
-    align-items: stretch;
-    padding: 0;
-  }
-
-  .settings-panel .settings-card {
-    width: 100%;
-    min-height: 100dvh;
-    max-height: none;
-    margin: auto;
-    padding: calc(28px + env(safe-area-inset-top, 0px)) 20px calc(24px + env(safe-area-inset-bottom, 0px));
-    overflow: visible;
-    border: 0;
-    border-radius: 0;
+  .legends-card {
+    min-height: 0;
+    max-height: calc(100dvh - 24px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));
+    padding: 28px 14px 18px;
   }
 
   .legends-panel.is-collection-detail .legends-card {

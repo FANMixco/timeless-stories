@@ -42,8 +42,8 @@ can improve Time Attack's best completion time or 25-Move Challenge’s fewest m
 New games clear the interval and pending mismatch callback. Time Attack checks
 the deadline on timer ticks, card selections, visibility changes and page resume.
 The last five remaining seconds or moves highlight their counter in red with an
-exclamation mark. Classic has no extra mode label on the board. Mobile Settings
-uses the full screen, while the defeat dialog remains compact and centered.
+exclamation mark. Classic has no extra mode label on the board. Mobile dialogs use bordered panels with space around them and scroll long content
+inside the panel.
 No board is restored across reloads; saved mode, statistics and collections persist.
 
 ## Card categories and matching

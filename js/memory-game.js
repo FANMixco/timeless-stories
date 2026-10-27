@@ -131,6 +131,7 @@ const getCopyButton = document.getElementById("getCopyButton");
 const legendsGetCopyButton = document.getElementById("legendsGetCopyButton");
 const searchParams = new URLSearchParams(window.location.search);
 const isEmbedded = searchParams.get("embed") === "1";
+if (isEmbedded) gameMode = "classic";
 let memoryGame = { pairs: [] };
 
 let firstCard = null;
@@ -171,6 +172,7 @@ function showHome() {
 }
 
 function requestHome() {
+  if (isEmbedded) return;
   if (!hasGameInProgress()) { showHome(); return; }
   pendingLanguage = null;
   pendingDataReset = false;
@@ -1122,6 +1124,7 @@ function closeAboutPanel() {
 }
 
 function applyUiCopy() {
+  setElementHidden(document.getElementById("homeButton"), isEmbedded);
   homeScreen.render(memoryGame);
   renderGameModes();
   setElementText(document.getElementById("tryAgainButton"), memoryGame.modes.tryAgain);
@@ -1168,7 +1171,9 @@ function applyUiCopy() {
   document.querySelector(".game-shell").setAttribute("aria-label", memoryGame.title || "");
   setText(".game-subtitle", memoryGame.subtitle);
   renderFooter();
-  newGameButton.textContent = memoryGame.newGame || "";
+  setElementText(document.getElementById("newGameLabel"), memoryGame.newGame || "");
+  newGameButton.setAttribute("aria-label", memoryGame.newGame || "");
+  newGameButton.title = memoryGame.newGame || "";
   setActionButtonContent(languageButton, memoryGame.language || "Language", "icon-translate");
   const selectedLanguage = document.createElement("span");
   selectedLanguage.textContent = languageLabels[currentLanguage];
@@ -2174,7 +2179,10 @@ window.matchMedia?.("(prefers-color-scheme: dark)")?.addEventListener("change", 
 loadTranslations().then(() => {
   applyUiCopy();
   evaluateAchievements();
-  showHome();
+  if (isEmbedded) {
+    homeScreen.hide();
+    startGame();
+  } else showHome();
 }).catch(error => {
   console.error("Unable to initialize the memory game:", error);
 });
