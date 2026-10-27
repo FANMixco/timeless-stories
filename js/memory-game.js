@@ -1,3 +1,9 @@
+import { createGameAudio } from "./memory-game/audio.mjs";
+import { createProgressStore } from "./memory-game/storage.mjs";
+import { createProgressView } from "./memory-game/progress.mjs";
+import { gameModes, createRoundClock, selectActivePairs, getDefeatReason, getModeStatus, normalizeElapsedSeconds } from "./memory-game/rules.mjs";
+import { createModalNavigation } from "./memory-game/dialogs.mjs";
+
 const supportedLanguages = ["en", "es", "fr", "zh"];
 const languageStorageKey = "timelessStoriesOfficialLanguage";
 const themeStorageKey = "timelessStoriesColorMode";
@@ -9,39 +15,30 @@ const tipsStorageKey = "timelessMemoryTipsEnabled";
 const shortNamesStorageKey = "timelessMemoryShortNamesEnabled";
 const modeStorageKey = "timelessMemoryMode";
 const challengeStatsStorageKey = "timelessMemoryChallenges:v1";
-const gameModes = Object.freeze({
-  classic: Object.freeze({}),
-  timeAttack: Object.freeze({ seconds: 45 }),
-  limitedMoves: Object.freeze({ moves: 25 }),
-});
-const challengeWarningThreshold = 5;
+const recordsStorageKey = "timelessMemoryRecords:v1";
+const progressStore = createProgressStore({ getStorage: () => window.localStorage,
+  recordsStorageKey, challengeStatsStorageKey, modeStorageKey, gameModes });
 let gameMode = readGameMode();
 let pendingMode = null;
 let gameDefeated = false;
 let attemptStarted = false;
 let attemptFinished = false;
-let startedAt = null;
 let mismatchTimer = null;
-let progressTab = "records";
 let matchToastsEnabled = readMatchToastsEnabled();
 let tipsEnabled = readTipsEnabled();
 let shortNamesEnabled = readShortNamesEnabled();
-const soundFiles = { match: "music/match.mp3", discovery: "music/shiny.mp3", achievement: "music/award.mp3", victory: "music/complete.mp3", gameover: "music/gameover.mp3" };
 const soundEffectCreators = ["ALEXIS_GAMING_CAM", "freesound_community", "Yodguard", "Game Studio"];
 let soundEnabled = readSoundEnabled();
-let audioContext = null;
-const soundChannels = {
-  effect: { version: 0, active: null, pending: null },
-  victory: { version: 0, active: null, pending: null },
-  gameover: { version: 0, active: null, pending: null },
-  achievement: { version: 0, active: null, pending: null },
-};
-const playingSounds = new Set();
-const soundFadeSeconds = 0.075;
-const soundBuffers = new Map();
+const audio = createGameAudio({
+  getAudioContext: () => window.AudioContext || window.webkitAudioContext,
+  fetch: (...args) => fetch(...args),
+  isEnabled: () => soundEnabled,
+  isHidden: () => document.visibilityState === "hidden",
+});
+function prepareGameAudio() { audio.prepare(); }
+function playGameSound(name, rate) { return audio.play(name, rate); }
+function stopGameSounds() { audio.stopAll(); }
 const achievementsStorageKey = "timelessMemoryAchievements";
-const recordsStorageKey = "timelessMemoryRecords:v1";
-let personalRecords = readPersonalRecords();
 let completedPerformance = null;
 const achievementDefinitions = [
   { id: "legendary", icon: "trophy", color: "#c49118" },
@@ -56,7 +53,7 @@ const achievementDefinitions = [
 const supportedThemes = ["system", "light", "dark"];
 const previewRewardThresholdSeconds = 30;
 const mismatchFlipBackDelayMs = 1200;
-const i18nCacheVersion = "20261027-defeat-records";
+const i18nCacheVersion = "__MEMORY_ASSET_VERSION__";
 let linkRegistry = null;
 let localizedLinks = null;
 let selectionRules = null;
@@ -141,7 +138,6 @@ let lockBoard = false;
 let moves = 0;
 let matches = 0;
 let elapsedSeconds = 0;
-let timer = null;
 let toastTimer = null;
 let gameCompleted = false;
 let introRunning = false;
@@ -156,12 +152,25 @@ let pendingDataReset = false;
 let confirmedLanguageReload = false;
 let modalDetailPair = null;
 let modalRarity = null;
-let restoringModalHistory = false;
-let pendingModalNavigation = false;
-const modalHistorySession = `${Date.now()}-${Math.random()}`;
-const modalHistoryKey = "timelessMemoryModals";
 const modalPanels = [winPanel, gameOverPanel, collectionPanel, legendsPanel, rarityPanel, aboutPanel, restartPanel, achievementsPanel, achievementPanel, settingsPanel];
-const modalHistory = !isEmbedded ? window.history : null;
+
+const progressView = createProgressView({ document,
+  getState: () => ({ memoryGame, achievements, completedPerformance, currentLanguage }),
+  readPersonalRecords, readChallengeStats, getPairCount, getRecordConfiguration, formatTime,
+  setElementText, setElementHidden, achievementDefinitions, onTabChange: syncModalHistory,
+});
+const roundClock = createRoundClock({ now: () => Date.now(),
+  schedule: (callback, delay) => window.setInterval(callback, delay),
+  cancel: id => window.clearInterval(id),
+  onTick(seconds) {
+    elapsedSeconds = normalizeElapsedSeconds(gameMode, seconds);
+    updateStatus();
+    endChallengeIfNeeded(false);
+  },
+});
+const modalNavigation = createModalNavigation({ history: !isEmbedded ? window.history : null,
+  getSnapshot: getModalSnapshot, restoreSnapshot: restoreModalSnapshot,
+});
 
 function getModalSnapshot() {
   return {
@@ -172,94 +181,67 @@ function getModalSnapshot() {
     language: pendingLanguage,
     reset: pendingDataReset,
     mode: pendingMode,
-    progressTab
+    progressTab: progressView.tab
   };
 }
 
-function writeModalHistory(snapshot, push = false) {
-  const state = { ...modalHistory.state, [modalHistoryKey]: { session: modalHistorySession, ...snapshot } };
-  modalHistory[push ? "pushState" : "replaceState"](state, "");
-}
 
-function syncModalHistory() {
-  if (!modalHistory || restoringModalHistory || pendingModalNavigation) return;
-  const snapshot = getModalSnapshot();
-  const previous = modalHistory.state?.[modalHistoryKey];
-  if (previous?.session !== modalHistorySession) {
-    writeModalHistory({ panels: [], detail: null, rarity: null });
-  }
-  const depth = previous?.session === modalHistorySession ? previous.panels.length : 0;
-  if (snapshot.panels.length < depth) {
-    // Keep close buttons immediate; consume their history entries asynchronously.
-    pendingModalNavigation = true;
-    modalHistory.go(snapshot.panels.length - depth);
-  } else if (snapshot.panels.length > depth) {
-    writeModalHistory(snapshot, true);
-  } else {
-    writeModalHistory(snapshot);
-  }
-}
-
+function syncModalHistory() { modalNavigation.sync(); }
 function restoreModalSnapshot(snapshot) {
-  restoringModalHistory = true;
-  try {
-    const visible = new Set(snapshot.panels.filter(id => {
-      // Forward must not resurrect a previous round's completion dialogs.
-      if (id === "winPanel" || (id === "legendsPanel" && !snapshot.detail)) return gameCompleted;
-      if (id === "gameOverPanel") return gameDefeated;
-      if (id === "restartPanel") return snapshot.reset === true || hasGameInProgress();
-      if (id === "achievementPanel") return Boolean(currentAchievement && snapshot.achievement === currentAchievement);
-      return true;
-    }));
-    if (!visible.has("rarityPanel")) closeRarityPanel();
-    if (!visible.has("legendsPanel")) closeLegendsPanel();
-    if (!visible.has("collectionPanel") && collectionPanel.classList.contains("is-visible")) closeCollection();
-    if (!visible.has("aboutPanel") && aboutPanel.classList.contains("is-visible")) closeAboutPanel();
-    if (!visible.has("restartPanel") && restartPanel.classList.contains("is-visible")) closeRestartPanel();
-    if (!visible.has("achievementsPanel") && achievementsPanel.classList.contains("is-visible")) closeAchievements();
-    if (!visible.has("settingsPanel") && settingsPanel.classList.contains("is-visible")) closeSettings();
-    modalPanels.forEach(panel => panel?.classList.toggle("is-visible", visible.has(panel.id)));
-    pendingLanguage = visible.has("restartPanel") && supportedLanguages.includes(snapshot.language) ? snapshot.language : null;
-    pendingDataReset = visible.has("restartPanel") && snapshot.reset === true;
-    pendingMode = visible.has("restartPanel") && Object.hasOwn(gameModes, snapshot.mode) ? snapshot.mode : null;
-    renderRestartConfirmation();
-    if (currentAchievement && !visible.has("achievementPanel")) {
-      currentAchievement = null;
-      showNextAchievement();
-    }
-    if (visible.has("achievementsPanel")) {
-      renderAchievements();
-      selectProgressTab(snapshot.progressTab);
-    }
-    modalDetailPair = snapshot.detail;
-    modalRarity = snapshot.rarity;
-    if (visible.has("legendsPanel")) {
-      renderLegendsList(snapshot.detail ? [snapshot.detail] : undefined, snapshot.detail);
-      legendsPanel.classList.toggle("is-collection-detail", Boolean(snapshot.detail));
-      if (snapshot.detail && !collectionDetailTrigger) collectionDetailTrigger = collectionButton;
-    }
-    if (visible.has("rarityPanel")) {
-      renderRarityPreviewList(snapshot.rarity);
-      if (visible.has("collectionPanel") && !collectionRarityTrigger) collectionRarityTrigger = collectionButton;
-    }
-    const coveredCollection = visible.has("collectionPanel") && (visible.has("rarityPanel") || Boolean(snapshot.detail));
-    collectionPanel.inert = coveredCollection;
-    collectionPanel.setAttribute("aria-modal", String(!coveredCollection));
-    // Move focus into the newly active layer (including after Forward).
-    if (achievementPanel.classList.contains("is-visible")) closeAchievementButton.focus();
-    else if (visible.has("restartPanel")) cancelRestartButton.focus();
-    else if (visible.has("settingsPanel")) closeSettingsButton.focus();
-    else if (visible.has("achievementsPanel")) closeAchievementsButton.focus();
-    else if (visible.has("aboutPanel")) closeAboutButton.focus();
-    else if (visible.has("rarityPanel")) closeRarityButton.focus();
-    else if (visible.has("legendsPanel")) closeLegendsButton.focus();
-    else if (visible.has("collectionPanel")) closeCollectionButton.focus();
-    else if (visible.has("winPanel")) closeWinButton.focus();
-    else if (visible.has("gameOverPanel")) document.getElementById("tryAgainButton").focus();
-    syncModalScrollLock();
-  } finally {
-    restoringModalHistory = false;
+  const visible = new Set(snapshot.panels.filter(id => {
+    // Forward must not resurrect a previous round's completion dialogs.
+    if (id === "winPanel" || (id === "legendsPanel" && !snapshot.detail)) return gameCompleted;
+    if (id === "gameOverPanel") return gameDefeated;
+    if (id === "restartPanel") return snapshot.reset === true || hasGameInProgress();
+    if (id === "achievementPanel") return Boolean(currentAchievement && snapshot.achievement === currentAchievement);
+    return true;
+  }));
+  if (!visible.has("rarityPanel")) closeRarityPanel();
+  if (!visible.has("legendsPanel")) closeLegendsPanel();
+  if (!visible.has("collectionPanel") && collectionPanel.classList.contains("is-visible")) closeCollection();
+  if (!visible.has("aboutPanel") && aboutPanel.classList.contains("is-visible")) closeAboutPanel();
+  if (!visible.has("restartPanel") && restartPanel.classList.contains("is-visible")) closeRestartPanel();
+  if (!visible.has("achievementsPanel") && achievementsPanel.classList.contains("is-visible")) closeAchievements();
+  if (!visible.has("settingsPanel") && settingsPanel.classList.contains("is-visible")) closeSettings();
+  modalPanels.forEach(panel => panel?.classList.toggle("is-visible", visible.has(panel.id)));
+  pendingLanguage = visible.has("restartPanel") && supportedLanguages.includes(snapshot.language) ? snapshot.language : null;
+  pendingDataReset = visible.has("restartPanel") && snapshot.reset === true;
+  pendingMode = visible.has("restartPanel") && Object.hasOwn(gameModes, snapshot.mode) ? snapshot.mode : null;
+  renderRestartConfirmation();
+  if (currentAchievement && !visible.has("achievementPanel")) {
+    currentAchievement = null;
+    showNextAchievement();
   }
+  if (visible.has("achievementsPanel")) {
+    renderAchievements();
+    selectProgressTab(snapshot.progressTab);
+  }
+  modalDetailPair = snapshot.detail;
+  modalRarity = snapshot.rarity;
+  if (visible.has("legendsPanel")) {
+    renderLegendsList(snapshot.detail ? [snapshot.detail] : undefined, snapshot.detail);
+    legendsPanel.classList.toggle("is-collection-detail", Boolean(snapshot.detail));
+    if (snapshot.detail && !collectionDetailTrigger) collectionDetailTrigger = collectionButton;
+  }
+  if (visible.has("rarityPanel")) {
+    renderRarityPreviewList(snapshot.rarity);
+    if (visible.has("collectionPanel") && !collectionRarityTrigger) collectionRarityTrigger = collectionButton;
+  }
+  const coveredCollection = visible.has("collectionPanel") && (visible.has("rarityPanel") || Boolean(snapshot.detail));
+  collectionPanel.inert = coveredCollection;
+  collectionPanel.setAttribute("aria-modal", String(!coveredCollection));
+  // Move focus into the newly active layer (including after Forward).
+  if (achievementPanel.classList.contains("is-visible")) closeAchievementButton.focus();
+  else if (visible.has("restartPanel")) cancelRestartButton.focus();
+  else if (visible.has("settingsPanel")) closeSettingsButton.focus();
+  else if (visible.has("achievementsPanel")) closeAchievementsButton.focus();
+  else if (visible.has("aboutPanel")) closeAboutButton.focus();
+  else if (visible.has("rarityPanel")) closeRarityButton.focus();
+  else if (visible.has("legendsPanel")) closeLegendsButton.focus();
+  else if (visible.has("collectionPanel")) closeCollectionButton.focus();
+  else if (visible.has("winPanel")) closeWinButton.focus();
+  else if (visible.has("gameOverPanel")) document.getElementById("tryAgainButton").focus();
+  syncModalScrollLock();
   // Back can advance the notification queue; record the newly active award.
   syncModalScrollLock();
   if (!currentAchievement && achievementReturnFocus) {
@@ -268,17 +250,8 @@ function restoreModalSnapshot(snapshot) {
   }
 }
 
-window.addEventListener("popstate", event => {
-  if (!modalHistory) return;
-  if (pendingModalNavigation) {
-    pendingModalNavigation = false;
-    // A user may have opened or closed another layer while history was moving.
-    syncModalHistory();
-    return;
-  }
-  const snapshot = event.state?.[modalHistoryKey];
-  restoreModalSnapshot(snapshot?.session === modalHistorySession ? snapshot : { panels: [], detail: null, rarity: null });
-});
+window.addEventListener("popstate", event => modalNavigation.handlePopState(event));
+
 const languageLabels = {
   en: "English",
   es: "Español",
@@ -345,159 +318,43 @@ function evaluateAchievements(completed = false) {
 
 // Records are independent of achievements and discoveries. Only completed boards
 // enter this store; previous results and all-time bests serve different comparisons.
-function emptyPersonalRecords() {
-  return { version: 1, gamesCompleted: 0, totalPairsMatched: 0, configurations: {} };
-}
 
-function validRecordNumber(value) {
-  return Number.isSafeInteger(value) && value >= 0;
-}
 
-function readPersonalRecords() {
-  const records = emptyPersonalRecords();
-  try {
-    const saved = JSON.parse(window.localStorage.getItem(recordsStorageKey));
-    if (saved?.version !== 1) return records;
-    for (const field of ["gamesCompleted", "totalPairsMatched"]) {
-      if (validRecordNumber(saved[field])) records[field] = saved[field];
-    }
-    for (const [key, value] of Object.entries(saved.configurations || {})) {
-      if (!/^standard:[1-9]\d*$/.test(key) || !value || typeof value !== "object") continue;
-      const entry = {};
-      for (const field of ["bestTime", "fewestMoves"]) {
-        if (validRecordNumber(value[field])) entry[field] = value[field];
-      }
-      if (validRecordNumber(value.last?.time) && validRecordNumber(value.last?.moves)) {
-        entry.last = { time: value.last.time, moves: value.last.moves };
-      }
-      records.configurations[key] = entry;
-    }
-  } catch {}
-  return records;
-}
-
+function readPersonalRecords() { return progressStore.readPersonalRecords(); }
 function getRecordConfiguration(pairCount = getPairCount()) {
   // This legacy store remains exclusively Classic; challenges have their own store.
   return `standard:${pairCount}`;
 }
 
-function readGameMode() {
-  try {
-    const saved = window.localStorage.getItem(modeStorageKey);
-    return Object.hasOwn(gameModes, saved) ? saved : "classic";
-  } catch { return "classic"; }
-}
-
-function readChallengeStats() {
-  let saved;
-  try { saved = JSON.parse(window.localStorage.getItem(challengeStatsStorageKey)); } catch {}
-  const stats = {};
-  for (const mode of ["timeAttack", "limitedMoves"]) {
-    const entry = saved?.version === 1 ? saved[mode] : null;
-    stats[mode] = { attempts: 0, victories: 0, defeats: 0 };
-    for (const field of ["attempts", "victories", "defeats", "bestTime", "fewestMoves"]) {
-      if (validRecordNumber(entry?.[field])) stats[mode][field] = entry[field];
-    }
-  }
-  return { version: 1, ...stats };
-}
-
-function writeChallengeStats(stats) {
-  try { window.localStorage.setItem(challengeStatsStorageKey, JSON.stringify(stats)); } catch {}
-}
+function readGameMode() { return progressStore.readGameMode(); }
+function readChallengeStats() { return progressStore.readChallengeStats(); }
 
 function beginAttempt() {
   if (attemptStarted) return;
   attemptStarted = true;
-  if (gameMode === "classic") return;
-  const stats = readChallengeStats();
-  stats[gameMode].attempts += 1;
-  writeChallengeStats(stats);
+  if (!gameModes[gameMode].record) return;
+  progressStore.beginChallenge(gameMode);
   updateAchievementsVisibility();
 }
-
 function finishChallenge(won) {
-  if (gameMode === "classic" || !attemptStarted || attemptFinished) return;
+  if (!gameModes[gameMode].record || !attemptStarted || attemptFinished) return;
   attemptFinished = true;
-  const stats = readChallengeStats();
-  const entry = stats[gameMode];
-  if (won) {
-    const metric = gameMode === "timeAttack" ? "bestTime" : "fewestMoves";
-    completedPerformance = {
-      time: elapsedSeconds, moves,
-      bestBefore: { time: entry.bestTime ?? null, moves: entry.fewestMoves ?? null },
-      newBestTime: gameMode === "timeAttack" && validRecordNumber(entry.bestTime) && elapsedSeconds < entry.bestTime,
-      newFewestMoves: gameMode === "limitedMoves" && validRecordNumber(entry.fewestMoves) && moves < entry.fewestMoves,
-    };
-    entry[metric] = Math.min(entry[metric] ?? Infinity, gameMode === "timeAttack" ? elapsedSeconds : moves);
-  }
-  entry[won ? "victories" : "defeats"] += 1;
-  writeChallengeStats(stats);
+  completedPerformance = progressStore.completeChallenge(gameMode, won, { time: elapsedSeconds, moves });
 }
-
 function updateAchievementsVisibility() {
   const stats = readChallengeStats();
   const hasProgress = achievementDefinitions.some(({ id }) => achievements[id]) ||
-    stats.timeAttack.attempts > 0 || stats.limitedMoves.attempts > 0;
+    Object.keys(gameModes).some(mode => gameModes[mode].record && stats[mode].attempts > 0);
   setElementHidden(achievementsButton, !hasProgress);
 }
 
-function createRecordCards(stats) {
-  return stats.map(([label, value, icon]) => {
-    const card = document.createElement("div");
-    card.className = "record-stat";
-    const mark = document.createElement("i");
-    mark.className = `icon-${icon}`;
-    mark.setAttribute("aria-hidden", "true");
-    if (icon === "target") {
-      mark.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" focusable="false"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1" fill="currentColor"/></svg>';
-    }
-    if (icon === "defeat") {
-      mark.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" focusable="false"><path d="m6 6 12 12M18 6 6 18"/></svg>';
-    }
-    const name = document.createElement("dt");
-    name.append(mark, document.createTextNode(label));
-    const number = document.createElement("dd");
-    number.textContent = typeof value === "number" ? value.toLocaleString(currentLanguage) : value;
-    card.append(name, number);
-    return card;
-  });
-}
 
-function renderChallengeStats() {
-  const stats = readChallengeStats();
-  const copy = memoryGame.modes;
-  const sections = ["timeAttack", "limitedMoves"].map(mode => {
-    const section = document.createElement("section");
-    section.className = "mode-records";
-    const heading = document.createElement("h4");
-    heading.id = `records-${mode}-title`;
-    section.setAttribute("aria-labelledby", heading.id);
-    heading.textContent = copy[mode].name;
-    const list = document.createElement("dl");
-    list.className = "records-grid";
-    const entry = stats[mode];
-    const best = mode === "timeAttack" ? entry.bestTime : entry.fewestMoves;
-    list.append(...createRecordCards([
-      [mode === "timeAttack" ? memoryGame.records.bestTime : memoryGame.records.fewestMoves,
-        best == null ? "—" : mode === "timeAttack" ? formatTime(best) : best, "power"],
-      [copy.attempts, entry.attempts, "target"],
-      [copy.victories, entry.victories, "trophy"],
-      [copy.defeats, entry.defeats, "defeat"],
-      [copy.winPercentage, `${entry.attempts ? Math.round(entry.victories / entry.attempts * 100) : 0}%`, "star-full"],
-    ]));
-    section.append(heading, list);
-    return section;
-  });
-  document.getElementById("challengeRecordsStats").replaceChildren(...sections);
-  setElementText(document.getElementById("challengeAttemptPolicy"), copy.attemptPolicy);
-}
-
+function renderChallengeStats() { progressView.renderChallenges(); }
 function renderGameModes() {
   const copy = memoryGame.modes;
   setElementText(document.getElementById("settingsModeLabel"), copy.title);
   setElementText(document.getElementById("activeGameMode"), copy[gameMode].name);
-  setElementHidden(document.getElementById("activeGameMode"), gameMode === "classic");
+  setElementHidden(document.getElementById("activeGameMode"), !gameModes[gameMode].record);
   for (const mode of Object.keys(gameModes)) {
     document.getElementById(`mode-${mode}`).checked = mode === gameMode;
     setElementText(document.getElementById(`mode-${mode}-name`), copy[mode].name);
@@ -526,6 +383,13 @@ function requestGameMode(mode) {
   syncModalScrollLock();
 }
 
+function endChallengeIfNeeded(attemptResolved) {
+  if (gameCompleted || gameDefeated) return;
+  const reason = getDefeatReason({ mode: gameMode, seconds: elapsedSeconds, moves, matches,
+    pairCount: getPairCount(), attemptResolved });
+  if (reason) endGame(reason);
+}
+
 function endGame(reason) {
   if (gameCompleted || gameDefeated || introRunning) return;
   gameDefeated = true;
@@ -550,160 +414,16 @@ function endGame(reason) {
 }
 
 function saveCompletedPerformance() {
-  if (gameMode !== "classic") return completedPerformance;
+  if (gameModes[gameMode].record) return completedPerformance;
   if (completedPerformance || !gameCompleted || matches !== getPairCount()) return completedPerformance;
-  // Read again to include completed activity from other tabs.
-  personalRecords = readPersonalRecords();
-  const key = getRecordConfiguration();
-  const previous = personalRecords.configurations[key] || {};
-  const current = { time: elapsedSeconds, moves };
-  completedPerformance = {
-    ...current,
-    previous: previous.last || null,
-    // Keep the pre-game records as this result's stable comparison reference.
-    bestBefore: { time: previous.bestTime ?? null, moves: previous.fewestMoves ?? null },
-    newBestTime: validRecordNumber(previous.bestTime) && current.time < previous.bestTime,
-    newFewestMoves: validRecordNumber(previous.fewestMoves) && current.moves < previous.fewestMoves,
-  };
-  personalRecords.gamesCompleted += 1;
-  personalRecords.totalPairsMatched += getPairCount();
-  personalRecords.configurations[key] = {
-    bestTime: Math.min(previous.bestTime ?? current.time, current.time),
-    fewestMoves: Math.min(previous.fewestMoves ?? current.moves, current.moves),
-    last: current,
-  };
-  try { window.localStorage.setItem(recordsStorageKey, JSON.stringify(personalRecords)); } catch {}
+  completedPerformance = progressStore.completeClassic({ pairCount: getPairCount(), time: elapsedSeconds, moves });
   return completedPerformance;
 }
+function renderPersonalRecords() { progressView.renderRecords(); }
 
-function renderPersonalRecords() {
-  renderChallengeStats();
-  setElementText(document.getElementById("personalRecordsMode"), memoryGame.modes.classic.name);
-  personalRecords = readPersonalRecords();
-  const copy = memoryGame.records;
-  const entry = personalRecords.configurations[getRecordConfiguration()] || {};
-  setElementText(document.getElementById("personalRecordsTitle"), copy.title);
-  setElementText(document.getElementById("personalRecordsConfiguration"), copy.configuration.replace("{pairs}", getPairCount()));
-  setElementText(document.getElementById("personalRecordsEmpty"), copy.empty);
-  setElementHidden(document.getElementById("personalRecordsEmpty"), validRecordNumber(entry.bestTime) || validRecordNumber(entry.fewestMoves));
-  const stats = [
-    [copy.bestTime, validRecordNumber(entry.bestTime) ? formatTime(entry.bestTime) : "—", "power"],
-    [copy.fewestMoves, entry.fewestMoves ?? "—", "power"],
-    [copy.gamesCompleted, personalRecords.gamesCompleted, "trophy"],
-    [copy.totalPairsMatched, personalRecords.totalPairsMatched, "mirror"],
-  ];
-  document.getElementById("personalRecordsStats").replaceChildren(...createRecordCards(stats));
-}
-
-function performanceDifference(current, best, metric) {
-  const copy = memoryGame.records;
-  if (current === best) return copy.same;
-  const key = metric === "time" ? (current < best ? "faster" : "slower") : (current < best ? "fewer" : "more");
-  return copy[key].replace("{count}", Math.abs(current - best).toLocaleString(currentLanguage));
-}
-
-function renderCompletedPerformance() {
-  const result = completedPerformance;
-  const panel = document.getElementById("winPerformance");
-  panel.replaceChildren();
-  if (!result) return;
-  const copy = memoryGame.records;
-  const metrics = document.createElement("dl");
-  metrics.className = "performance-metrics";
-  for (const [metric, label, value] of [["time", copy.time, formatTime(result.time)], ["moves", copy.moves, result.moves.toLocaleString(currentLanguage)]]) {
-    const row = document.createElement("div");
-    const name = document.createElement("dt");
-    name.textContent = label;
-    const number = document.createElement("dd");
-    number.textContent = value;
-    const best = result.bestBefore[metric];
-    if (validRecordNumber(best)) {
-      const difference = document.createElement("small");
-      const bestValue = metric === "time" ? formatTime(best) : best.toLocaleString(currentLanguage);
-      difference.textContent = (result[metric] < best ? copy.previousBest : copy.personalBest).replace("{value}", bestValue);
-      const delta = document.createElement("span");
-      delta.className = "performance-delta";
-      delta.textContent = performanceDifference(result[metric], best, metric);
-      difference.append(delta);
-      number.append(difference);
-    }
-    row.append(name, number);
-    metrics.append(row);
-  }
-  panel.append(metrics);
-  const notification = result.newBestTime && result.newFewestMoves ? copy.twoRecords
-    : result.newBestTime ? copy.newBestTime : result.newFewestMoves ? copy.newFewestMoves
-      : !validRecordNumber(result.bestBefore.time) && !validRecordNumber(result.bestBefore.moves) ? copy.initial : "";
-  if (notification) {
-    const message = document.createElement("p");
-    message.className = "performance-notification";
-    message.textContent = notification;
-    panel.append(message);
-  }
-}
-
-function renderAchievements() {
-  renderPersonalRecords();
-  const copy = memoryGame.achievements;
-  setElementText(document.getElementById("achievementsTitle"), memoryGame.progress.title);
-  setElementText(document.getElementById("progressRecordsTab"), memoryGame.progress.records);
-  setElementText(document.getElementById("progressAchievementsTab"), copy.title);
-  const count = document.createElement("span");
-  count.className = "progress-tab-count";
-  count.textContent = `${achievementDefinitions.filter(({ id }) => achievements[id]).length}/${achievementDefinitions.length}`;
-  count.setAttribute("aria-hidden", "true");
-  document.getElementById("progressAchievementsTab").append(count);
-  setElementText(document.getElementById("achievementsProgress"), copy.progress
-    .replace("{found}", achievementDefinitions.filter(({ id }) => achievements[id]).length)
-    .replace("{total}", achievementDefinitions.length));
-  // Show the first win before collection milestones without changing reward priority.
-  const displayDefinitions = [
-    achievementDefinitions.find(({ id }) => id === "victory"),
-    ...achievementDefinitions.filter(({ id }) => id !== "victory"),
-  ];
-  const rows = displayDefinitions.map(({ id, icon, color }) => {
-    const row = document.createElement("article");
-    row.className = `achievement-row${achievements[id] ? " is-unlocked" : ""}`;
-    row.style.setProperty("--achievement-color", color);
-    const mark = document.createElement("i");
-    mark.className = `achievement-icon icon-${icon}`;
-    mark.setAttribute("aria-hidden", "true");
-    const body = document.createElement("div");
-    const name = document.createElement("h3");
-    name.textContent = copy.items[id].name;
-    const description = document.createElement("p");
-    description.textContent = copy.items[id].description;
-    const status = document.createElement("p");
-    status.className = "achievement-status";
-    status.textContent = achievements[id] ? copy.unlocked : copy.locked;
-    if (achievements[id]) {
-      const date = document.createElement("time");
-      date.setAttribute("datetime", achievements[id]);
-      date.textContent = new Date(achievements[id]).toLocaleDateString(currentLanguage, { year: "numeric", month: "short", day: "numeric" });
-      status.append(document.createTextNode(" · "), date);
-    }
-    body.append(name, description, status);
-    row.append(mark, body);
-    return row;
-  });
-  document.getElementById("achievementsList").replaceChildren(...rows);
-}
-
-function selectProgressTab(tab = "records", focus = false) {
-  progressTab = tab === "achievements" ? "achievements" : "records";
-  for (const [name, id] of [["records", "Records"], ["achievements", "Achievements"]]) {
-    const selected = progressTab === name;
-    const button = document.getElementById(`progress${id}Tab`);
-    button.setAttribute("aria-selected", String(selected));
-    button.tabIndex = selected ? 0 : -1;
-    setElementHidden(document.getElementById(`progress${id}Panel`), !selected);
-    if (selected && focus) button.focus({ preventScroll: true });
-  }
-  achievementsPanel.scrollTop = 0;
-  achievementsPanel.querySelector(".legends-card").scrollTop = 0;
-  if (achievementsPanel.classList.contains("is-visible")) syncModalHistory();
-}
-
+function renderCompletedPerformance() { progressView.renderCompleted(); }
+function renderAchievements() { progressView.render(); }
+function selectProgressTab(tab, focus) { progressView.selectTab(tab, focus); }
 function openAchievements() {
   renderAchievements();
   selectProgressTab("records");
@@ -1183,130 +903,6 @@ function setShortNamesEnabled(enabled) {
   try { window.localStorage.setItem(shortNamesStorageKey, String(enabled)); } catch {}
 }
 
-function getSoundBuffer(name) {
-  if (!soundBuffers.has(name)) {
-    const buffer = fetch(soundFiles[name])
-      .then(response => {
-        if (!response.ok) throw new Error("Sound unavailable");
-        return response.arrayBuffer();
-      })
-      .then(data => audioContext.decodeAudioData(data))
-      .catch(error => { soundBuffers.delete(name); throw error; });
-    soundBuffers.set(name, buffer);
-  }
-  return soundBuffers.get(name);
-}
-
-function prepareGameAudio() {
-  if (!soundEnabled) return;
-  try {
-    const AudioContext = window.AudioContext || window.webkitAudioContext;
-    if (!AudioContext) return;
-    if (!audioContext) audioContext = new AudioContext();
-    if (audioContext.state === "suspended") audioContext.resume().catch(() => {});
-    // Load once after a player gesture so the first match is ready to sound.
-    for (const name of Object.keys(soundFiles)) getSoundBuffer(name).catch(() => {});
-  } catch { /* Audio support must never interrupt a game. */ }
-}
-
-function setSoundVolume(sound, volume) {
-  const now = audioContext.currentTime;
-  const gain = sound.gain.gain;
-  if (gain.cancelAndHoldAtTime) gain.cancelAndHoldAtTime(now);
-  else {
-    gain.cancelScheduledValues(now);
-    gain.setValueAtTime(gain.value, now);
-  }
-  gain.linearRampToValueAtTime(volume, now + soundFadeSeconds);
-}
-
-function updateVictoryVolume() {
-  if (soundChannels.victory.active) {
-    setSoundVolume(soundChannels.victory.active, soundChannels.achievement.active ? 0.25 : 1);
-  }
-}
-
-function releaseSound(sound) {
-  playingSounds.delete(sound);
-  sound.source.disconnect();
-  sound.gain.disconnect();
-}
-
-function stopSound(sound, fade) {
-  if (fade) {
-    setSoundVolume(sound, 0);
-    try { sound.source.stop(audioContext.currentTime + soundFadeSeconds); } catch {}
-  } else {
-    sound.source.onended = null;
-    try { sound.source.stop(); } catch {}
-    releaseSound(sound);
-  }
-}
-
-function stopSoundChannel(channel, fade = true) {
-  channel.version += 1;
-  channel.pending = null;
-  const sound = channel.active;
-  channel.active = null;
-  if (sound) stopSound(sound, fade);
-}
-
-async function playGameSound(name, rate = 1) {
-  if (!soundEnabled || !audioContext || document.visibilityState === "hidden") return;
-  const gameplay = name === "match" || name === "discovery";
-  const channel = gameplay ? soundChannels.effect : soundChannels[name];
-  if (!channel) return;
-  if (gameplay) {
-    // Match feedback never interrupts a special discovery or a reward melody.
-    if (soundChannels.gameover.active || soundChannels.gameover.pending || soundChannels.victory.active || soundChannels.victory.pending ||
-        soundChannels.achievement.active || soundChannels.achievement.pending) return;
-    if (name === "match" && (channel.active?.name === "discovery" || channel.pending?.name === "discovery")) return;
-  } else {
-    // Rewards immediately supersede gameplay, including effects still loading.
-    stopSoundChannel(soundChannels.effect);
-  }
-  stopSoundChannel(channel);
-  if (name === "achievement") updateVictoryVolume();
-  const version = channel.version;
-  channel.pending = { name };
-  try {
-    const buffer = await getSoundBuffer(name);
-    if (version !== channel.version || !soundEnabled || document.visibilityState === "hidden") return;
-    const source = audioContext.createBufferSource();
-    const gain = audioContext.createGain();
-    const sound = { name, source, gain };
-    source.buffer = buffer;
-    source.playbackRate.value = rate;
-    source.connect(gain);
-    gain.connect(audioContext.destination);
-    gain.gain.setValueAtTime(0, audioContext.currentTime);
-    channel.active = sound;
-    channel.pending = null;
-    playingSounds.add(sound);
-    setSoundVolume(sound, name === "victory" && soundChannels.achievement.active ? 0.25 : 1);
-    source.onended = () => {
-      releaseSound(sound);
-      // A faded-out predecessor must not clear or unduck its replacement.
-      if (channel.active !== sound) return;
-      channel.active = null;
-      if (name === "achievement") updateVictoryVolume();
-    };
-    source.start();
-    if (name === "achievement") updateVictoryVolume();
-  } catch {
-    if (version !== channel.version) return;
-    channel.pending = null;
-    if (channel.active) stopSoundChannel(channel, false);
-    if (name === "achievement") updateVictoryVolume();
-  }
-}
-
-function stopGameSounds() {
-  for (const channel of Object.values(soundChannels)) stopSoundChannel(channel, false);
-  // Include predecessors still in their short fade-out period.
-  for (const sound of playingSounds) stopSound(sound, false);
-}
-
 function setSoundEnabled(enabled) {
   soundEnabled = enabled;
   soundToggle.checked = enabled;
@@ -1674,84 +1270,10 @@ async function loadSelectionRules() {
   return rules;
 }
 
-function getVariantWeight(variant) {
-  if (variant.weight === undefined) return 1;
-  return typeof variant.weight === "number" && Number.isFinite(variant.weight) && variant.weight > 0 ? variant.weight : 0;
-}
-
-function chooseWeightedVariant(variants) {
-  const total = variants.reduce((sum, variant) => sum + getVariantWeight(variant), 0);
-  if (!total) return undefined;
-  const roll = Math.random() * total;
-  let threshold = 0;
-  return variants.find(variant => {
-    threshold += getVariantWeight(variant);
-    return roll < threshold;
-  });
-}
-
 function chooseActivePairs() {
-  const pairs = Array.isArray(memoryGame.pairs) ? memoryGame.pairs.map((pair) => ({ ...pair })) : [];
-  const variants = Array.isArray(memoryGame.rarePairs) ? memoryGame.rarePairs : [];
-  // Only saved discoveries qualify, including progress completed in another tab.
+  // Saved progress from other tabs also qualifies for Director's Cut upgrades.
   discoveries = new Set([...readDiscoveries(), ...discoveries]);
-  const directorsCut = variants.filter(variant => variant.pair?.rarity === "rare");
-  const goldenMirrors = variants.filter(variant => variant.pair?.rarity === "ultra-rare");
-  const directorsComplete = directorsCut.length > 0 && directorsCut.every(variant => discoveries.has(getMirrorId(variant.pair)));
-  let selectedVariants;
-  // Bonus rounds have two specials. Normal rounds share fixed category rates
-  // from the common configuration, with at most one special pair.
-  if (Math.random() < selectionRules.bonusRoundChance && pairs.length >= 2) {
-    const superRare = variants.filter(variant => variant.pair?.rarity === "ultra-rare");
-    const directorsCut = variants.filter(variant => variant.pair?.rarity === "rare");
-    const first = chooseWeightedVariant(Math.random() < selectionRules.bonusDirectorChance ? directorsCut : superRare);
-    // A source legend must occur only once on the board. Two variants of the
-    // same original would otherwise overwrite each other or duplicate a source.
-    const compatible = superRare.filter(variant => first &&
-      variant.pair.source !== first.pair.source &&
-      variant.pair.mirror !== first.pair.mirror);
-    selectedVariants = [first, chooseWeightedVariant(compatible)].filter(Boolean);
-  } else {
-    const roll = Math.random();
-    const totals = variants.reduce((groups, variant) => {
-      const rarity = variant.pair?.rarity;
-      groups[rarity] = (groups[rarity] || 0) + getVariantWeight(variant);
-      return groups;
-    }, {});
-    let threshold = 0;
-    const selected = variants.find(variant => {
-      const rarity = variant.pair?.rarity;
-      // Each rarity keeps its fixed probability regardless of catalogue size.
-      threshold += totals[rarity] ? (selectionRules.normalChances[rarity] || 0) * getVariantWeight(variant) / totals[rarity] : 0;
-      return roll < threshold;
-    });
-    selectedVariants = selected?.pair ? [selected] : [];
-  }
-
-  // After completing Director's Cut, its selected pairs get the configured
-  // upgrade chance (50% by default), in normal and bonus rounds alike.
-  if (directorsComplete) {
-    selectedVariants = selectedVariants.map((variant, index) => {
-      if (variant.pair.rarity !== "rare" || Math.random() >= selectionRules.directorUpgradeChance) return variant;
-      const others = selectedVariants.filter((_, otherIndex) => otherIndex !== index);
-      const compatible = goldenMirrors.filter(candidate => others.every(other =>
-        candidate.pair.source !== other.pair.source && candidate.pair.mirror !== other.pair.mirror));
-      return chooseWeightedVariant(compatible) || variant;
-    });
-  }
-
-  const replaced = new Set();
-  for (const variant of selectedVariants) {
-    const available = pairs.map((_, index) => index).filter(index => !replaced.has(index));
-    if (!available.length) break;
-    const target = variant.replaceSource
-      ? pairs.findIndex(pair => pair.source === variant.replaceSource) : -1;
-    const index = target >= 0 && !replaced.has(target)
-      ? target : available[Math.floor(Math.random() * available.length)];
-    pairs[index] = { ...variant.pair };
-    replaced.add(index);
-  }
-  return pairs;
+  return selectActivePairs({ memoryGame, selectionRules, discoveries, random: () => Math.random() });
 }
 
 function buildDeck() {
@@ -1821,40 +1343,23 @@ function formatTime(totalSeconds) {
 }
 
 function updateStatus() {
-  movesValue.textContent = gameMode === "limitedMoves" ? `${moves}/${gameModes.limitedMoves.moves}` : moves;
+  const status = getModeStatus(gameMode, { seconds: elapsedSeconds, moves, completed: gameCompleted });
+  movesValue.textContent = status.moves;
   matchesValue.textContent = `${matches}/${getPairCount()}`;
-  timeValue.textContent = formatTime(gameMode === "timeAttack" ? Math.max(0, gameModes.timeAttack.seconds - elapsedSeconds) : elapsedSeconds);
-  timeValue.classList.toggle("is-running-low", gameMode === "timeAttack" && !gameCompleted && gameModes.timeAttack.seconds - elapsedSeconds <= challengeWarningThreshold);
-  movesValue.classList.toggle("is-running-low", gameMode === "limitedMoves" && !gameCompleted && gameModes.limitedMoves.moves - moves <= challengeWarningThreshold);
+  timeValue.textContent = formatTime(status.seconds);
+  timeValue.classList.toggle("is-running-low", status.timeLow);
+  movesValue.classList.toggle("is-running-low", status.movesLow);
 }
 
 function refreshGameTime() {
-  if (startedAt === null || gameCompleted || gameDefeated || introRunning) return;
-  elapsedSeconds = Math.floor(Math.max(0, Date.now() - startedAt) / 1000);
-  if (gameMode === "timeAttack") elapsedSeconds = Math.min(elapsedSeconds, gameModes.timeAttack.seconds);
-  updateStatus();
-  if (gameMode === "timeAttack" && elapsedSeconds >= gameModes.timeAttack.seconds) endGame("timeExpired");
+  if (!gameCompleted && !gameDefeated && !introRunning) roundClock.refresh();
 }
-
 function startTimer() {
-  if (timer !== null) {
-    return;
-  }
-
+  if (roundClock.running) return;
   beginAttempt();
-  startedAt = Date.now();
-  timer = window.setInterval(refreshGameTime, 100);
+  roundClock.start();
 }
-
-function stopTimer() {
-  if (timer === null) {
-    return;
-  }
-
-  window.clearInterval(timer);
-  timer = null;
-}
-
+function stopTimer() { roundClock.stop(); }
 function hasGameInProgress() {
   return !introRunning && !gameCompleted && !gameDefeated && (Boolean(firstCard) || elapsedSeconds > 0 || moves > 0 || matches > 0);
 }
@@ -1925,7 +1430,7 @@ function hideOpenCards() {
   firstCard.setAttribute("aria-label", memoryGame.hiddenCard || "");
   secondCard.setAttribute("aria-label", memoryGame.hiddenCard || "");
   resetTurn();
-  if (gameMode === "limitedMoves" && moves >= gameModes.limitedMoves.moves) endGame("moveLimit");
+  endChallengeIfNeeded(true);
 }
 
 function markMatch() {
@@ -1964,7 +1469,7 @@ function markMatch() {
 
   showMatchInsight(firstCard);
   resetTurn();
-  if (!gameCompleted && gameMode === "limitedMoves" && moves >= gameModes.limitedMoves.moves) endGame("moveLimit");
+  endChallengeIfNeeded(true);
 }
 
 function showMatchInsight(card, userSelected = false) {
@@ -2202,7 +1707,7 @@ function newGame() {
   gameDefeated = false;
   attemptStarted = false;
   attemptFinished = false;
-  startedAt = null;
+  roundClock.reset();
   pendingDataReset = false;
   stopGameSounds();
   tutorialRunId += 1;
@@ -2630,15 +2135,7 @@ matchToastsToggle.addEventListener("change", () => setMatchToastsEnabled(matchTo
 tipsToggle.addEventListener("change", () => setTipsEnabled(tipsToggle.checked));
 shortNamesToggle.addEventListener("change", () => setShortNamesEnabled(shortNamesToggle.checked));
 achievementsButton.addEventListener("click", openAchievements);
-for (const [tab, id] of [["records", "Records"], ["achievements", "Achievements"]]) {
-  document.getElementById(`progress${id}Tab`).addEventListener("click", () => selectProgressTab(tab));
-  document.getElementById(`progress${id}Tab`).addEventListener("keydown", event => {
-    if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
-    event.preventDefault();
-    selectProgressTab(event.key === "Home" ? "records" : event.key === "End" ? "achievements"
-      : progressTab === "records" ? "achievements" : "records", true);
-  });
-}
+progressView.bind();
 winRecordsButton.addEventListener("click", openAchievements);
 closeAchievementsButton.addEventListener("click", closeAchievements);
 closeAchievementButton.addEventListener("click", closeAchievement);

@@ -140,9 +140,12 @@ html[data-embed="true"] .standalone-only {
 .settings-theme { margin: 24px 0 0; padding: 0; min-width: 0; border: 0; }
 .settings-theme legend { margin-bottom: 10px; padding: 0; line-height: 1.5; }
 .active-game-mode { margin: 6px 0 0; font-size: 0.8rem; font-weight: 700; color: var(--accent); }
-.mode-option { display: flex; align-items: center; gap: 10px; padding: 10px 0; cursor: pointer; text-align: start; }
-.mode-option input { flex-shrink: 0; accent-color: var(--accent); }
-.mode-option span { min-width: 0; }
+.mode-option { position: relative; display: block; margin-top: 8px; cursor: pointer; text-align: start; }
+.mode-option input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.mode-option > span { display: block; min-width: 0; padding: 12px 14px; border: 1px solid var(--line); border-radius: 8px; }
+.mode-option input:checked + span { background: var(--accent); border-color: var(--accent); color: #fff; }
+.mode-option input:focus-visible + span { outline: 2px solid var(--found); outline-offset: 2px; }
+.mode-option:hover > span { border-color: var(--accent); }
 .mode-option strong, .mode-option small { display: block; overflow-wrap: anywhere; }
 .mode-option small { margin-top: 3px; line-height: 1.5; }
 .settings-reset { margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--line); }

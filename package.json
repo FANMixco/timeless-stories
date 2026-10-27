@@ -2,7 +2,9 @@
   "name": "timeless-stories",
   "private": true,
   "scripts": {
-    "test": "node tools/test-memory-modes.mjs",
+    "test": "node --test tests/*.test.mjs && node tests/memory-game.integration.mjs",
+    "test:built": "node tests/memory-game.integration.mjs --minified",
+    "build": "node tools/minify-assets.mjs",
     "minify": "node tools/minify-assets.mjs",
     "check:minified": "node tools/minify-assets.mjs --check",
     "i18n:manager": "node tools/i18n-manager/server.mjs"
