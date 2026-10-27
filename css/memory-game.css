@@ -1713,8 +1713,8 @@ html[data-theme="dark"] .game-shell [data-category] .character-icon {
     padding: 28px 14px 18px;
   }
 
-  #collectionPanel, #achievementsPanel { padding: 0; align-items: stretch; overflow: hidden; }
-  #collectionPanel > .legends-card, #achievementsPanel > .legends-card {
+  #collectionPanel, #achievementsPanel, #aboutPanel, #legendsPanel:not(.is-collection-detail) { padding: 0; align-items: stretch; overflow: hidden; }
+  #collectionPanel > .legends-card, #achievementsPanel > .legends-card, #aboutPanel > .legends-card, #legendsPanel:not(.is-collection-detail) > .legends-card {
     width: 100%;
     height: 100dvh;
     max-height: 100dvh;
