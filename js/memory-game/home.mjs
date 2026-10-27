@@ -1,5 +1,5 @@
 // The start screen owns presentation; the application owns round transitions.
-export function createHomeScreen({ document, modes, onChoose, onSettings, onRecords, onReturn, reduceMotion = () => false }) {
+export function createHomeScreen({ document, modes, onChoose, onSettings, onRecords, onCollection, onReturn, reduceMotion = () => false }) {
   const shell = document.querySelector(".game-shell");
   const home = document.getElementById("gameHome");
   let visible = true;
@@ -64,6 +64,7 @@ export function createHomeScreen({ document, modes, onChoose, onSettings, onReco
       text("homeSubtitle", copy.subtitle);
       text("homeSettingsLabel", copy.settings.title);
       text("homeRecordsLabel", copy.progress.records);
+      text("homeCollectionLabel", copy.collection.title);
       document.getElementById("homeButton").setAttribute("aria-label", copy.home.chooseMode);
       document.getElementById("homeButton").title = copy.home.chooseMode;
       for (const mode of Object.keys(modes)) {
@@ -77,6 +78,7 @@ export function createHomeScreen({ document, modes, onChoose, onSettings, onReco
       }
       document.getElementById("homeSettings").addEventListener("click", onSettings);
       document.getElementById("homeRecords").addEventListener("click", onRecords);
+      document.getElementById("homeCollection").addEventListener("click", onCollection);
       document.getElementById("homeButton").addEventListener("click", onReturn);
     }
   };

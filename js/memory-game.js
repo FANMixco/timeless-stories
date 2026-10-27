@@ -159,7 +159,7 @@ const modalPanels = [winPanel, gameOverPanel, collectionPanel, legendsPanel, rar
 const homeScreen = createHomeScreen({ document, modes: gameModes,
   reduceMotion: () => Boolean(window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches),
   onChoose: applyGameMode,
-  onSettings: openSettings, onRecords: openAchievements, onReturn: requestHome
+  onSettings: openSettings, onRecords: openAchievements, onCollection: openCollection, onReturn: requestHome
 });
 homeScreen.bind();
 
@@ -600,7 +600,6 @@ function renderCollection() {
 }
 
 function openCollection() {
-  if (!discoveries.size) return;
   renderCollection();
   collectionPanel.classList.add("is-visible");
   closeCollectionButton.focus();
@@ -609,7 +608,7 @@ function openCollection() {
 
 function closeCollection() {
   collectionPanel.classList.remove("is-visible");
-  collectionButton.focus();
+  (homeScreen.visible ? document.getElementById("homeCollection") : collectionButton).focus({ preventScroll: true });
   syncModalScrollLock();
 }
 

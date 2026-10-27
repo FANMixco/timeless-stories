@@ -56,8 +56,8 @@
         }
       }
     </script>
-    <link rel="stylesheet" href="css/icon-moon-memory.min.css?v=memory-0fba450265f8" />
-    <link rel="stylesheet" href="css/memory-game.min.css?v=memory-0fba450265f8" />
+    <link rel="stylesheet" href="css/icon-moon-memory.min.css?v=memory-915efc234f0a" />
+    <link rel="stylesheet" href="css/memory-game.min.css?v=memory-915efc234f0a" />
   </head>
   <body>
     <main class="game-shell is-home" aria-label="">
@@ -67,11 +67,12 @@
           <p id="homeSubtitle">Find each mirror pair from Spanish Mirrors.</p>
         </header>
         <div class="home-modes">
-          <button class="home-card" id="home-classic" type="button"><i class="icon-book-open" aria-hidden="true"></i><strong id="home-classic-name"></strong><span id="home-classic-description"></span></button>
+          <button class="home-card" id="home-classic" type="button"><i class="icon-book" aria-hidden="true"></i><strong id="home-classic-name"></strong><span id="home-classic-description"></span></button>
           <button class="home-card" id="home-timeAttack" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6M12 2v3"/></svg><strong id="home-timeAttack-name"></strong><span id="home-timeAttack-description"></span></button>
           <button class="home-card" id="home-limitedMoves" type="button"><span class="home-move-icon" aria-hidden="true">25</span><strong id="home-limitedMoves-name"></strong><span id="home-limitedMoves-description"></span></button>
         </div>
         <div class="home-tools">
+          <button class="home-card home-tool" id="homeCollection" type="button" aria-haspopup="dialog"><i class="icon-book-open" aria-hidden="true"></i><strong id="homeCollectionLabel"></strong></button>
           <button class="home-card home-tool" id="homeRecords" type="button" aria-haspopup="dialog"><i class="icon-trophy" aria-hidden="true"></i><strong id="homeRecordsLabel"></strong></button>
           <button class="home-card home-tool" id="homeSettings" type="button" aria-haspopup="dialog"><svg class="settings-gear" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m9 3-.5 2-2 1.2-2-.6L2 10l1.5 1.4v2L2 15l2.5 4.3 2-.6L8.5 20 9 22h5l.5-2 2-1.3 2 .6L21 15l-1.5-1.6v-2L21 10l-2.5-4.4-2 .6-2-1.2-.5-2Z"/><circle cx="11.5" cy="12.5" r="3.5"/></svg><strong id="homeSettingsLabel"></strong></button>
         </div>
@@ -325,7 +326,7 @@
       <footer class="game-footer standalone-only" id="gameFooter"></footer>
     </main>
 
-    <script type="module" src="js/memory-game.min.js?v=memory-0fba450265f8"></script>
+    <script type="module" src="js/memory-game.min.js?v=memory-915efc234f0a"></script>
     <script src="js/gAnalyticsIdleLoad.min.js" defer></script>
     <script src="js/pwa.min.js?v=20261021-pwa-registration" defer></script>
   </body>
