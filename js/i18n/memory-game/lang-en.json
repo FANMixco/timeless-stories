@@ -672,7 +672,8 @@
         "websites": "Official websites",
         "storiesWebsite": "Timeless Stories",
         "soundCreditsTitle": "Sound effect credits",
-        "soundCredit": "Sound effect by {author} from Pixabay."
+        "soundCredit": "Sound effect by {author} from Pixabay.",
+        "musicCredit": "Music by {author} from {source}"
       },
       "records": {
         "title": "Personal Records",
@@ -696,6 +697,38 @@
         "viewRecords": "View Records",
         "personalBest": "Personal best: {value}",
         "previousBest": "Previous best: {value}"
+      },
+      "modes": {
+        "title": "Game mode",
+        "classic": {
+          "name": "Classic",
+          "description": "Play without limits."
+        },
+        "timeAttack": {
+          "name": "Time Attack",
+          "description": "Match all pairs in 45 seconds."
+        },
+        "limitedMoves": {
+          "name": "25-Move Challenge",
+          "description": "Match all pairs within 25 moves."
+        },
+        "statistics": "Challenge statistics",
+        "attempts": "Total Attempts",
+        "victories": "Victories",
+        "defeats": "Defeats",
+        "winPercentage": "Win Percentage",
+        "attemptPolicy": "An attempt starts with your first card. Restarting or leaving an unfinished game counts only as an attempt, with no victory or defeat.",
+        "gameOver": "Game Over",
+        "timeExpired": "Time is up! The challenge was not completed.",
+        "moveLimit": "Move limit reached! The challenge was not completed.",
+        "summary": "Matches: {matches}/{pairs} · Moves: {moves}",
+        "tryAgain": "Try Again",
+        "confirmChange": "Change game mode and start a new game? Your progress in this round will be lost.",
+        "changeMode": "Change mode"
+      },
+      "progress": {
+        "title": "Progress",
+        "records": "Records"
       }
     },
     "country3": "Morocco 🇲🇦",

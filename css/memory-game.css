@@ -139,6 +139,12 @@ html[data-embed="true"] .standalone-only {
 #soundToggle:focus-visible, #tipsToggle:focus-visible, #shortNamesToggle:focus-visible, #matchToastsToggle:focus-visible { outline: 2px solid var(--found); outline-offset: 4px; }
 .settings-theme { margin: 24px 0 0; padding: 0; min-width: 0; border: 0; }
 .settings-theme legend { margin-bottom: 10px; padding: 0; line-height: 1.5; }
+.active-game-mode { margin: 6px 0 0; font-size: 0.8rem; font-weight: 700; color: var(--accent); }
+.mode-option { display: flex; align-items: center; gap: 10px; padding: 10px 0; cursor: pointer; text-align: start; }
+.mode-option input { flex-shrink: 0; accent-color: var(--accent); }
+.mode-option span { min-width: 0; }
+.mode-option strong, .mode-option small { display: block; overflow-wrap: anywhere; }
+.mode-option small { margin-top: 3px; line-height: 1.5; }
 .settings-reset { margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--line); }
 .settings-reset p { margin: 0 0 12px; color: var(--muted); font-size: 0.875rem; line-height: 1.5; }
 .settings-reset .game-button { width: 100%; white-space: normal; }
@@ -271,6 +277,10 @@ html[data-theme="dark"] .language-option[aria-checked="true"] {
   font-size: 1.08rem;
   font-weight: 800;
 }
+
+.status-value.is-running-low { color: #b42318; }
+.status-value.is-running-low::after { content: " !"; }
+html[data-theme="dark"] .status-value.is-running-low { color: #ff9d93; }
 
 .match-insight {
   display: none;
@@ -1410,12 +1420,21 @@ html[data-theme="dark"] .card.is-matched .card-front {
 .legends-footer[hidden],
 .legends-rarity-note[hidden] { display: none; }
 .personal-records { margin-bottom: 20px; text-align: left; }
+.progress-tabs { display: flex; gap: 4px; margin: 18px 0 24px; padding: 4px; border: 1px solid var(--line); border-radius: 8px; }
+.progress-tabs [role="tab"] { flex: 1; min-width: 0; min-height: 44px; padding: 10px 6px; border: 0; border-radius: 5px; background: transparent; color: var(--muted); font: inherit; font-weight: 700; cursor: pointer; }
+.progress-tabs [aria-selected="true"] { background: var(--accent); color: #fff; }
+.progress-tabs [role="tab"]:focus-visible { outline: 2px solid var(--found); outline-offset: 2px; }
+.progress-tab-count { display: inline-block; margin-left: 6px; padding: 2px 6px; border-radius: 12px; background: var(--panel); color: var(--ink); font-size: 0.75em; white-space: nowrap; }
+.mode-records { margin: 24px 0; }
+.mode-records h4 { margin: 0 0 8px; color: var(--ink); font-size: 1.05rem; }
+.records-grid .record-stat:last-child:nth-child(odd) { grid-column: 1 / -1; }
 .personal-records h3 { margin: 0 0 4px; color: var(--found); }
 .personal-records p { margin: 4px 0 8px; color: var(--muted); font-size: 0.85rem; }
 .records-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin: 10px 0 0; }
 .record-stat { padding: 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); }
 .record-stat dt { display: flex; align-items: center; gap: 6px; color: var(--muted); font-size: 0.8rem; }
 .record-stat dt i { color: var(--found); }
+.record-stat .icon-target svg, .record-stat .icon-defeat svg { display: block; width: 1em; height: 1em; }
 .record-stat dd { margin: 4px 0 0; font-weight: 700; font-variant-numeric: tabular-nums; }
 .performance-metrics { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin: 0 0 12px; }
 .performance-metrics dt { color: var(--muted); font-size: 0.8rem; }
@@ -1684,6 +1703,22 @@ html[data-theme="dark"] .game-shell [data-category] .character-icon {
   .legends-panel.is-collection-detail {
     align-items: center;
     padding: calc(12px + env(safe-area-inset-top, 0px)) 12px calc(12px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .settings-panel.legends-panel {
+    align-items: stretch;
+    padding: 0;
+  }
+
+  .settings-panel .settings-card {
+    width: 100%;
+    min-height: 100dvh;
+    max-height: none;
+    margin: auto;
+    padding: calc(28px + env(safe-area-inset-top, 0px)) 20px calc(24px + env(safe-area-inset-bottom, 0px));
+    overflow: visible;
+    border: 0;
+    border-radius: 0;
   }
 
   .legends-panel.is-collection-detail .legends-card {

@@ -1,7 +1,45 @@
 # Memory Game rules
 
-Reference for the implemented behavior as of October 24, 2026. This document
+Reference for the implemented behavior as of October 27, 2026. This document
 describes the game; it does not change its behavior.
+
+## Game modes and attempts
+
+Settings offers three modes, with Classic as the default for new and existing
+players. The selection persists in `timelessMemoryMode`. Changing modes starts a
+fresh round and asks for confirmation when a round is in progress.
+
+- **Classic:** the original unlimited game. Moves and time count upwards.
+- **Time Attack:** match all ten pairs before 45 seconds expire. The existing
+  Time counter starts at `0:45`; the first card selection starts the countdown.
+  It uses elapsed wall-clock time, including time spent in dialogs, other tabs
+  or backgrounded applications. Resuming checks the deadline before accepting
+  another selection.
+- **25-Move Challenge:** match all ten pairs within 25 attempts involving two cards.
+  Matching and mismatching attempts each consume one move. The existing Moves
+  counter shows `used/25`. The final allowed attempt is resolved before deciding
+  the outcome: completing the board on move 25 wins; any other result loses.
+
+Defeats stop gameplay and show the reason, matches and moves. Try Again restarts
+the same mode; Settings allows changing modes. Previously saved discoveries and
+achievements remain intact. Unfinished boards, including defeats, add no new
+discoveries or victory achievements. Successful challenge boards use the usual
+discovery and achievement logic, but never update Classic personal records.
+
+All three modes share the record-card layout in Progress → Records.
+Challenge statistics appear separately for each challenge, using `timelessMemoryChallenges:v1`. Each first card selection
+counts exactly one attempt. Restarting, changing mode, reloading or leaving an
+unfinished round keeps that attempt without adding a victory or defeat. Therefore
+attempts can exceed victories plus defeats. Win percentage is victories divided
+by attempts, rounded to a whole percent, or 0% without attempts. Only victories
+can improve Time Attack's best completion time or 25-Move Challenge’s fewest moves.
+
+New games clear the interval and pending mismatch callback. Time Attack checks
+the deadline on timer ticks, card selections, visibility changes and page resume.
+The last five remaining seconds or moves highlight their counter in red with an
+exclamation mark. Classic has no extra mode label on the board. Mobile Settings
+uses the full screen, while the defeat dialog remains compact and centered.
+No board is restored across reloads; saved mode, statistics and collections persist.
 
 ## Card categories and matching
 
@@ -114,6 +152,7 @@ The special chime marks a **new discovery**, not simply a match with rare cards.
 | Match a Director’s Cut pair not yet saved in the collection | `music/shiny.mp3` at normal pitch |
 | Match a Golden Mirror pair not yet saved in the collection | `music/shiny.mp3` at 1.25× playback rate, producing a brighter pitch |
 | Match the final pair, regardless of rarity or discovery status | `music/complete.mp3`, replacing the pair’s usual sound |
+| Lose a Time Attack or 25-Move Challenge challenge | `music/gameover.mp3` by ejah_music from Pixabay |
 | Display a newly unlocked achievement | `music/award.mp3` |
 
 Consequences worth remembering:
@@ -164,7 +203,8 @@ players must meet completion requirements against the expanded catalogue.
 Existing saved discoveries can establish collection achievements, but they
 cannot establish a historical completion time for Lightning Memory.
 
-The Achievements button remains hidden until at least one achievement is earned.
+The Progress button becomes available after an achievement is earned or a
+challenge attempt is started, so statistics remain accessible before the first win.
 
 ## Personal records and performance
 
@@ -236,3 +276,10 @@ When adding content, keep catalogue IDs and shared comparison references
 consistent across all four languages, assign a relative weight (or accept the
 default of 1), regenerate minified assets, and refresh affected cache versions.
 No manual rebalancing of existing mirror percentages is needed.
+
+## Progress navigation
+
+Progress opens on the Records tab, with separate cards for all three modes.
+The Achievements tab contains the unlock list and shows the unlocked count on
+its tab. Both tabs support arrow keys, Home and End. View Records after a win
+opens the Records tab directly. Preferences and mode selection stay in Settings.

@@ -672,7 +672,8 @@
         "websites": "官方网站",
         "storiesWebsite": "永恒的故事",
         "soundCreditsTitle": "音效鸣谢",
-        "soundCredit": "音效由 {author} 提供，来自 Pixabay。"
+        "soundCredit": "音效由 {author} 提供，来自 Pixabay。",
+        "musicCredit": "音乐由 {author} 创作，来自 {source}"
       },
       "records": {
         "title": "个人纪录",
@@ -696,6 +697,38 @@
         "viewRecords": "查看纪录",
         "personalBest": "个人最佳：{value}",
         "previousBest": "此前最佳：{value}"
+      },
+      "modes": {
+        "title": "游戏模式",
+        "classic": {
+          "name": "经典模式",
+          "description": "不限时间和步数。"
+        },
+        "timeAttack": {
+          "name": "限时挑战",
+          "description": "在45秒内找出所有配对。"
+        },
+        "limitedMoves": {
+          "name": "25步挑战",
+          "description": "在25步内找出所有配对。"
+        },
+        "statistics": "挑战统计",
+        "attempts": "总尝试次数",
+        "victories": "获胜次数",
+        "defeats": "失败次数",
+        "winPercentage": "胜率",
+        "attemptPolicy": "选择第一张卡牌即计为一次尝试。重新开始或离开未完成的游戏只计入尝试次数，不计为获胜或失败。",
+        "gameOver": "游戏结束",
+        "timeExpired": "时间已到！未能完成挑战。",
+        "moveLimit": "已达到步数上限！未能完成挑战。",
+        "summary": "已配对：{matches}/{pairs} · 步数：{moves}",
+        "tryAgain": "再试一次",
+        "confirmChange": "更改游戏模式并开始新游戏？本局进度将丢失。",
+        "changeMode": "更改模式"
+      },
+      "progress": {
+        "title": "游戏进度",
+        "records": "纪录"
       }
     },
     "country3": "摩洛哥 🇲🇦",
