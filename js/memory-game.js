@@ -7,16 +7,33 @@ const soundStorageKey = "timelessMemorySoundEnabled";
 const matchToastsStorageKey = "timelessMemoryMatchToastsEnabled";
 const tipsStorageKey = "timelessMemoryTipsEnabled";
 const shortNamesStorageKey = "timelessMemoryShortNamesEnabled";
+const modeStorageKey = "timelessMemoryMode";
+const challengeStatsStorageKey = "timelessMemoryChallenges:v1";
+const gameModes = Object.freeze({
+  classic: Object.freeze({}),
+  timeAttack: Object.freeze({ seconds: 45 }),
+  limitedMoves: Object.freeze({ moves: 25 }),
+});
+const challengeWarningThreshold = 5;
+let gameMode = readGameMode();
+let pendingMode = null;
+let gameDefeated = false;
+let attemptStarted = false;
+let attemptFinished = false;
+let startedAt = null;
+let mismatchTimer = null;
+let progressTab = "records";
 let matchToastsEnabled = readMatchToastsEnabled();
 let tipsEnabled = readTipsEnabled();
 let shortNamesEnabled = readShortNamesEnabled();
-const soundFiles = { match: "music/match.mp3", discovery: "music/shiny.mp3", achievement: "music/award.mp3", victory: "music/complete.mp3" };
+const soundFiles = { match: "music/match.mp3", discovery: "music/shiny.mp3", achievement: "music/award.mp3", victory: "music/complete.mp3", gameover: "music/gameover.mp3" };
 const soundEffectCreators = ["ALEXIS_GAMING_CAM", "freesound_community", "Yodguard", "Game Studio"];
 let soundEnabled = readSoundEnabled();
 let audioContext = null;
 const soundChannels = {
   effect: { version: 0, active: null, pending: null },
   victory: { version: 0, active: null, pending: null },
+  gameover: { version: 0, active: null, pending: null },
   achievement: { version: 0, active: null, pending: null },
 };
 const playingSounds = new Set();
@@ -39,7 +56,7 @@ const achievementDefinitions = [
 const supportedThemes = ["system", "light", "dark"];
 const previewRewardThresholdSeconds = 30;
 const mismatchFlipBackDelayMs = 1200;
-const i18nCacheVersion = "20261026-mobile-match-toasts";
+const i18nCacheVersion = "20261027-progress-icon-only";
 let linkRegistry = null;
 let localizedLinks = null;
 let selectionRules = null;
@@ -58,6 +75,7 @@ const legendToastTitle = document.getElementById("legendToastTitle");
 const legendToastText = document.getElementById("legendToastText");
 const legendToastClose = document.getElementById("legendToastClose");
 const winPanel = document.getElementById("winPanel");
+const gameOverPanel = document.getElementById("gameOverPanel");
 const winTitle = document.getElementById("winTitle");
 const winMessage = document.getElementById("winMessage");
 const legendsPanel = document.getElementById("legendsPanel");
@@ -142,7 +160,7 @@ let restoringModalHistory = false;
 let pendingModalNavigation = false;
 const modalHistorySession = `${Date.now()}-${Math.random()}`;
 const modalHistoryKey = "timelessMemoryModals";
-const modalPanels = [winPanel, collectionPanel, legendsPanel, rarityPanel, aboutPanel, restartPanel, achievementsPanel, achievementPanel, settingsPanel];
+const modalPanels = [winPanel, gameOverPanel, collectionPanel, legendsPanel, rarityPanel, aboutPanel, restartPanel, achievementsPanel, achievementPanel, settingsPanel];
 const modalHistory = !isEmbedded ? window.history : null;
 
 function getModalSnapshot() {
@@ -152,7 +170,9 @@ function getModalSnapshot() {
     rarity: modalRarity,
     achievement: currentAchievement,
     language: pendingLanguage,
-    reset: pendingDataReset
+    reset: pendingDataReset,
+    mode: pendingMode,
+    progressTab
   };
 }
 
@@ -186,6 +206,7 @@ function restoreModalSnapshot(snapshot) {
     const visible = new Set(snapshot.panels.filter(id => {
       // Forward must not resurrect a previous round's completion dialogs.
       if (id === "winPanel" || (id === "legendsPanel" && !snapshot.detail)) return gameCompleted;
+      if (id === "gameOverPanel") return gameDefeated;
       if (id === "restartPanel") return snapshot.reset === true || hasGameInProgress();
       if (id === "achievementPanel") return Boolean(currentAchievement && snapshot.achievement === currentAchievement);
       return true;
@@ -200,12 +221,16 @@ function restoreModalSnapshot(snapshot) {
     modalPanels.forEach(panel => panel?.classList.toggle("is-visible", visible.has(panel.id)));
     pendingLanguage = visible.has("restartPanel") && supportedLanguages.includes(snapshot.language) ? snapshot.language : null;
     pendingDataReset = visible.has("restartPanel") && snapshot.reset === true;
+    pendingMode = visible.has("restartPanel") && Object.hasOwn(gameModes, snapshot.mode) ? snapshot.mode : null;
     renderRestartConfirmation();
     if (currentAchievement && !visible.has("achievementPanel")) {
       currentAchievement = null;
       showNextAchievement();
     }
-    if (visible.has("achievementsPanel")) renderAchievements();
+    if (visible.has("achievementsPanel")) {
+      renderAchievements();
+      selectProgressTab(snapshot.progressTab);
+    }
     modalDetailPair = snapshot.detail;
     modalRarity = snapshot.rarity;
     if (visible.has("legendsPanel")) {
@@ -230,6 +255,7 @@ function restoreModalSnapshot(snapshot) {
     else if (visible.has("legendsPanel")) closeLegendsButton.focus();
     else if (visible.has("collectionPanel")) closeCollectionButton.focus();
     else if (visible.has("winPanel")) closeWinButton.focus();
+    else if (visible.has("gameOverPanel")) document.getElementById("tryAgainButton").focus();
     syncModalScrollLock();
   } finally {
     restoringModalHistory = false;
@@ -314,7 +340,7 @@ function evaluateAchievements(completed = false) {
     achievementQueue.push(id);
   }
   try { window.localStorage.setItem(achievementsStorageKey, JSON.stringify(achievements)); } catch {}
-  setElementHidden(achievementsButton, !achievementDefinitions.some(({ id }) => achievements[id]));
+  updateAchievementsVisibility();
 }
 
 // Records are independent of achievements and discoveries. Only completed boards
@@ -351,12 +377,180 @@ function readPersonalRecords() {
 }
 
 function getRecordConfiguration(pairCount = getPairCount()) {
-  // Rarity substitutions keep the same rules. Add mode/difficulty here if
-  // gameplay settings are introduced in future, so only equivalent rounds compete.
+  // This legacy store remains exclusively Classic; challenges have their own store.
   return `standard:${pairCount}`;
 }
 
+function readGameMode() {
+  try {
+    const saved = window.localStorage.getItem(modeStorageKey);
+    return Object.hasOwn(gameModes, saved) ? saved : "classic";
+  } catch { return "classic"; }
+}
+
+function readChallengeStats() {
+  let saved;
+  try { saved = JSON.parse(window.localStorage.getItem(challengeStatsStorageKey)); } catch {}
+  const stats = {};
+  for (const mode of ["timeAttack", "limitedMoves"]) {
+    const entry = saved?.version === 1 ? saved[mode] : null;
+    stats[mode] = { attempts: 0, victories: 0, defeats: 0 };
+    for (const field of ["attempts", "victories", "defeats", "bestTime", "fewestMoves"]) {
+      if (validRecordNumber(entry?.[field])) stats[mode][field] = entry[field];
+    }
+  }
+  return { version: 1, ...stats };
+}
+
+function writeChallengeStats(stats) {
+  try { window.localStorage.setItem(challengeStatsStorageKey, JSON.stringify(stats)); } catch {}
+}
+
+function beginAttempt() {
+  if (attemptStarted) return;
+  attemptStarted = true;
+  if (gameMode === "classic") return;
+  const stats = readChallengeStats();
+  stats[gameMode].attempts += 1;
+  writeChallengeStats(stats);
+  updateAchievementsVisibility();
+}
+
+function finishChallenge(won) {
+  if (gameMode === "classic" || !attemptStarted || attemptFinished) return;
+  attemptFinished = true;
+  const stats = readChallengeStats();
+  const entry = stats[gameMode];
+  if (won) {
+    const metric = gameMode === "timeAttack" ? "bestTime" : "fewestMoves";
+    completedPerformance = {
+      time: elapsedSeconds, moves,
+      bestBefore: { time: entry.bestTime ?? null, moves: entry.fewestMoves ?? null },
+      newBestTime: gameMode === "timeAttack" && validRecordNumber(entry.bestTime) && elapsedSeconds < entry.bestTime,
+      newFewestMoves: gameMode === "limitedMoves" && validRecordNumber(entry.fewestMoves) && moves < entry.fewestMoves,
+    };
+    entry[metric] = Math.min(entry[metric] ?? Infinity, gameMode === "timeAttack" ? elapsedSeconds : moves);
+  }
+  entry[won ? "victories" : "defeats"] += 1;
+  writeChallengeStats(stats);
+}
+
+function updateAchievementsVisibility() {
+  const stats = readChallengeStats();
+  const hasProgress = achievementDefinitions.some(({ id }) => achievements[id]) ||
+    stats.timeAttack.attempts > 0 || stats.limitedMoves.attempts > 0;
+  setElementHidden(achievementsButton, !hasProgress);
+}
+
+function createRecordCards(stats) {
+  return stats.map(([label, value, icon]) => {
+    const card = document.createElement("div");
+    card.className = "record-stat";
+    const mark = document.createElement("i");
+    mark.className = `icon-${icon}`;
+    mark.setAttribute("aria-hidden", "true");
+    if (icon === "target") {
+      mark.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" focusable="false"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1" fill="currentColor"/></svg>';
+    }
+    if (icon === "defeat") {
+      mark.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" focusable="false"><path d="m6 6 12 12M18 6 6 18"/></svg>';
+    }
+    const name = document.createElement("dt");
+    name.append(mark, document.createTextNode(label));
+    const number = document.createElement("dd");
+    number.textContent = typeof value === "number" ? value.toLocaleString(currentLanguage) : value;
+    card.append(name, number);
+    return card;
+  });
+}
+
+function renderChallengeStats() {
+  const stats = readChallengeStats();
+  const copy = memoryGame.modes;
+  const sections = ["timeAttack", "limitedMoves"].map(mode => {
+    const section = document.createElement("section");
+    section.className = "mode-records";
+    const heading = document.createElement("h4");
+    heading.id = `records-${mode}-title`;
+    section.setAttribute("aria-labelledby", heading.id);
+    heading.textContent = copy[mode].name;
+    const list = document.createElement("dl");
+    list.className = "records-grid";
+    const entry = stats[mode];
+    const best = mode === "timeAttack" ? entry.bestTime : entry.fewestMoves;
+    list.append(...createRecordCards([
+      [mode === "timeAttack" ? memoryGame.records.bestTime : memoryGame.records.fewestMoves,
+        best == null ? "—" : mode === "timeAttack" ? formatTime(best) : best, "power"],
+      [copy.attempts, entry.attempts, "target"],
+      [copy.victories, entry.victories, "trophy"],
+      [copy.defeats, entry.defeats, "defeat"],
+      [copy.winPercentage, `${entry.attempts ? Math.round(entry.victories / entry.attempts * 100) : 0}%`, "star-full"],
+    ]));
+    section.append(heading, list);
+    return section;
+  });
+  document.getElementById("challengeRecordsStats").replaceChildren(...sections);
+  setElementText(document.getElementById("challengeAttemptPolicy"), copy.attemptPolicy);
+}
+
+function renderGameModes() {
+  const copy = memoryGame.modes;
+  setElementText(document.getElementById("settingsModeLabel"), copy.title);
+  setElementText(document.getElementById("activeGameMode"), copy[gameMode].name);
+  setElementHidden(document.getElementById("activeGameMode"), gameMode === "classic");
+  for (const mode of Object.keys(gameModes)) {
+    document.getElementById(`mode-${mode}`).checked = mode === gameMode;
+    setElementText(document.getElementById(`mode-${mode}-name`), copy[mode].name);
+    setElementText(document.getElementById(`mode-${mode}-description`), copy[mode].description);
+  }
+}
+
+function applyGameMode(mode) {
+  gameMode = mode;
+  try { window.localStorage.setItem(modeStorageKey, mode); } catch {}
+  pendingMode = null;
+  startFreshGame();
+  renderGameModes();
+}
+
+function requestGameMode(mode) {
+  renderGameModes(); // Keep the current radio selected until confirmation.
+  if (!Object.hasOwn(gameModes, mode) || mode === gameMode) return;
+  if (!hasGameInProgress()) { applyGameMode(mode); return; }
+  pendingMode = mode;
+  pendingLanguage = null;
+  pendingDataReset = false;
+  renderRestartConfirmation();
+  restartPanel.classList.add("is-visible");
+  cancelRestartButton.focus({ preventScroll: true });
+  syncModalScrollLock();
+}
+
+function endGame(reason) {
+  if (gameCompleted || gameDefeated || introRunning) return;
+  gameDefeated = true;
+  lockBoard = true;
+  stopTimer();
+  window.clearTimeout(mismatchTimer);
+  mismatchTimer = null;
+  finishChallenge(false);
+  stopGameSounds();
+  playGameSound("gameover");
+  hideLegendToast();
+  setElementHidden(hintButton, true);
+  const copy = memoryGame.modes;
+  setElementText(document.getElementById("gameOverTitle"), copy.gameOver);
+  setElementText(document.getElementById("gameOverReason"), copy[reason]);
+  setElementText(document.getElementById("gameOverSummary"), copy.summary
+    .replace("{matches}", matches).replace("{pairs}", getPairCount()).replace("{moves}", moves));
+  gameOverPanel.classList.add("is-visible");
+  syncModalScrollLock();
+  if (!gameOverPanel.inert) document.getElementById("tryAgainButton").focus({ preventScroll: true });
+  if (achievementsPanel.classList.contains("is-visible")) renderChallengeStats();
+}
+
 function saveCompletedPerformance() {
+  if (gameMode !== "classic") return completedPerformance;
   if (completedPerformance || !gameCompleted || matches !== getPairCount()) return completedPerformance;
   // Read again to include completed activity from other tabs.
   personalRecords = readPersonalRecords();
@@ -383,6 +577,8 @@ function saveCompletedPerformance() {
 }
 
 function renderPersonalRecords() {
+  renderChallengeStats();
+  setElementText(document.getElementById("personalRecordsMode"), memoryGame.modes.classic.name);
   personalRecords = readPersonalRecords();
   const copy = memoryGame.records;
   const entry = personalRecords.configurations[getRecordConfiguration()] || {};
@@ -392,24 +588,11 @@ function renderPersonalRecords() {
   setElementHidden(document.getElementById("personalRecordsEmpty"), validRecordNumber(entry.bestTime) || validRecordNumber(entry.fewestMoves));
   const stats = [
     [copy.bestTime, validRecordNumber(entry.bestTime) ? formatTime(entry.bestTime) : "—", "power"],
-    [copy.fewestMoves, entry.fewestMoves ?? "—", "table-eye"],
+    [copy.fewestMoves, entry.fewestMoves ?? "—", "power"],
     [copy.gamesCompleted, personalRecords.gamesCompleted, "trophy"],
     [copy.totalPairsMatched, personalRecords.totalPairsMatched, "mirror"],
   ];
-  const cards = stats.map(([label, value, icon]) => {
-    const card = document.createElement("div");
-    card.className = "record-stat";
-    const mark = document.createElement("i");
-    mark.className = `icon-${icon}`;
-    mark.setAttribute("aria-hidden", "true");
-    const name = document.createElement("dt");
-    name.append(mark, document.createTextNode(label));
-    const number = document.createElement("dd");
-    number.textContent = typeof value === "number" ? value.toLocaleString(currentLanguage) : value;
-    card.append(name, number);
-    return card;
-  });
-  document.getElementById("personalRecordsStats").replaceChildren(...cards);
+  document.getElementById("personalRecordsStats").replaceChildren(...createRecordCards(stats));
 }
 
 function performanceDifference(current, best, metric) {
@@ -462,7 +645,14 @@ function renderCompletedPerformance() {
 function renderAchievements() {
   renderPersonalRecords();
   const copy = memoryGame.achievements;
-  setElementText(document.getElementById("achievementsTitle"), copy.title);
+  setElementText(document.getElementById("achievementsTitle"), memoryGame.progress.title);
+  setElementText(document.getElementById("progressRecordsTab"), memoryGame.progress.records);
+  setElementText(document.getElementById("progressAchievementsTab"), copy.title);
+  const count = document.createElement("span");
+  count.className = "progress-tab-count";
+  count.textContent = `${achievementDefinitions.filter(({ id }) => achievements[id]).length}/${achievementDefinitions.length}`;
+  count.setAttribute("aria-hidden", "true");
+  document.getElementById("progressAchievementsTab").append(count);
   setElementText(document.getElementById("achievementsProgress"), copy.progress
     .replace("{found}", achievementDefinitions.filter(({ id }) => achievements[id]).length)
     .replace("{total}", achievementDefinitions.length));
@@ -499,8 +689,24 @@ function renderAchievements() {
   document.getElementById("achievementsList").replaceChildren(...rows);
 }
 
+function selectProgressTab(tab = "records", focus = false) {
+  progressTab = tab === "achievements" ? "achievements" : "records";
+  for (const [name, id] of [["records", "Records"], ["achievements", "Achievements"]]) {
+    const selected = progressTab === name;
+    const button = document.getElementById(`progress${id}Tab`);
+    button.setAttribute("aria-selected", String(selected));
+    button.tabIndex = selected ? 0 : -1;
+    setElementHidden(document.getElementById(`progress${id}Panel`), !selected);
+    if (selected && focus) button.focus({ preventScroll: true });
+  }
+  achievementsPanel.scrollTop = 0;
+  achievementsPanel.querySelector(".legends-card").scrollTop = 0;
+  if (achievementsPanel.classList.contains("is-visible")) syncModalHistory();
+}
+
 function openAchievements() {
   renderAchievements();
+  selectProgressTab("records");
   achievementsPanel.classList.add("is-visible");
   achievementsPanel.scrollTop = 0;
   achievementsPanel.querySelector(".legends-card").scrollTop = 0;
@@ -789,7 +995,7 @@ async function loadGameLanguage(language) {
   if (response.ok === false) throw new Error(`Unable to load game language: ${language}`);
   const data = await response.json();
   const game = data.translations?.memoryGame;
-  if (!game?.settings?.title || !game.settings.sounds || !game.settings.resetConfirmation || !game.records?.title || !achievementDefinitions.every(({ id }) => game.achievements?.items?.[id])) {
+  if (!game?.settings?.title || !game.settings.sounds || !game.settings.resetConfirmation || !game.records?.title || !game.modes?.title || !game.progress?.title || !game.progress.records || !game.about?.musicCredit || !achievementDefinitions.every(({ id }) => game.achievements?.items?.[id])) {
     throw new Error(`Incomplete game language: ${language}`);
   }
   const pairs = [...(game.pairs || []), ...(game.rarePairs || []).map(variant => variant.pair)];
@@ -867,11 +1073,13 @@ function refreshModalScrollLock() {
     if (panel !== achievementPanel && panel !== collectionPanel) panel.inert = achievementVisible;
   }
   winPanel.inert = achievementVisible || achievementsPanel.classList.contains("is-visible");
+  gameOverPanel.inert = achievementVisible || [settingsPanel, restartPanel, achievementsPanel, aboutPanel, collectionPanel, legendsPanel, rarityPanel]
+    .some(panel => panel.classList.contains("is-visible"));
   if (!collectionDetailTrigger && !collectionRarityTrigger) collectionPanel.inert = achievementVisible;
   const restartVisible = restartPanel.classList.contains("is-visible");
   settingsPanel.inert = achievementVisible || restartVisible;
   settingsPanel.setAttribute("aria-modal", String(!restartVisible));
-  const backgroundCovered = achievementVisible || settingsPanel.classList.contains("is-visible") || achievementsPanel.classList.contains("is-visible") || aboutPanel.classList.contains("is-visible") || restartPanel.classList.contains("is-visible");
+  const backgroundCovered = achievementVisible || gameOverPanel.classList.contains("is-visible") || settingsPanel.classList.contains("is-visible") || achievementsPanel.classList.contains("is-visible") || aboutPanel.classList.contains("is-visible") || restartPanel.classList.contains("is-visible");
   if (gameLayout) gameLayout.inert = backgroundCovered;
   if (gameFooter) gameFooter.inert = backgroundCovered;
 
@@ -1049,7 +1257,7 @@ async function playGameSound(name, rate = 1) {
   if (!channel) return;
   if (gameplay) {
     // Match feedback never interrupts a special discovery or a reward melody.
-    if (soundChannels.victory.active || soundChannels.victory.pending ||
+    if (soundChannels.gameover.active || soundChannels.gameover.pending || soundChannels.victory.active || soundChannels.victory.pending ||
         soundChannels.achievement.active || soundChannels.achievement.pending) return;
     if (name === "match" && (channel.active?.name === "discovery" || channel.pending?.name === "discovery")) return;
   } else {
@@ -1107,6 +1315,7 @@ function setSoundEnabled(enabled) {
 }
 
 function openSettings() {
+  renderGameModes();
   applyMatchToastsPreference();
   applyShortNamesPreference();
   closeLanguageMenu();
@@ -1128,6 +1337,7 @@ function reloadAfterDataReset() {
 }
 
 function openDataResetConfirmation() {
+  pendingMode = null;
   pendingLanguage = null;
   pendingDataReset = true;
   renderRestartConfirmation();
@@ -1154,7 +1364,7 @@ function closeSettings() {
   closeLanguageMenu();
   settingsPanel.classList.remove("is-visible");
   syncModalScrollLock();
-  settingsButton.focus({ preventScroll: true });
+  (gameOverPanel.classList.contains("is-visible") ? document.getElementById("gameOverSettingsButton") : settingsButton).focus({ preventScroll: true });
 }
 
 function closeLanguageMenu() {
@@ -1169,6 +1379,7 @@ function toggleLanguageMenu() {
 }
 
 function setLanguage(language) {
+  pendingMode = null;
   if (!supportedLanguages.includes(language) || language === currentLanguage) {
     closeLanguageMenu();
     return;
@@ -1274,6 +1485,18 @@ function renderAbout() {
     return item;
   });
   document.getElementById("aboutSoundCreditsList").replaceChildren(...credits);
+  const musicCredit = document.createElement("li");
+  const authorLink = document.createElement("a");
+  authorLink.textContent = "ejah_music";
+  authorLink.href = "https://pixabay.com/users/ejah_music-32986949/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=422478";
+  const pixabayLink = document.createElement("a");
+  pixabayLink.textContent = "Pixabay";
+  pixabayLink.href = "https://pixabay.com/music//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=422478";
+  for (const link of [authorLink, pixabayLink]) { link.target = "_blank"; link.rel = "noopener noreferrer"; }
+  for (const part of copy.musicCredit.split(/(\{author\}|\{source\})/)) {
+    musicCredit.append(part === "{author}" ? authorLink : part === "{source}" ? pixabayLink : document.createTextNode(part));
+  }
+  document.getElementById("aboutSoundCreditsList").append(musicCredit);
 }
 
 function openAboutPanel() {
@@ -1291,6 +1514,10 @@ function closeAboutPanel() {
 }
 
 function applyUiCopy() {
+  renderGameModes();
+  setElementText(document.getElementById("tryAgainButton"), memoryGame.modes.tryAgain);
+  setElementText(document.getElementById("gameOverSettingsButton"), memoryGame.settings.title);
+  document.getElementById("closeGameOverButton").setAttribute("aria-label", memoryGame.close);
   applyShortNamesPreference();
   setElementText(document.getElementById("winRecordsLabel"), memoryGame.records.viewRecords);
   const settingsCopy = memoryGame.settings;
@@ -1313,7 +1540,7 @@ function applyUiCopy() {
   soundToggle.checked = soundEnabled;
   tipsToggle.checked = tipsEnabled;
   setElementHidden(hintButton, gameCompleted || !tipsEnabled);
-  setActionButtonContent(achievementsButton, memoryGame.achievements.title, "icon-trophy");
+  setActionButtonContent(achievementsButton, memoryGame.progress.title, "icon-trophy");
   closeAchievementsButton.setAttribute("aria-label", memoryGame.close || "Close");
   closeAchievementButton.setAttribute("aria-label", memoryGame.close || "Close");
   renderAbout();
@@ -1593,24 +1820,33 @@ function formatTime(totalSeconds) {
 }
 
 function updateStatus() {
-  movesValue.textContent = moves;
+  movesValue.textContent = gameMode === "limitedMoves" ? `${moves}/${gameModes.limitedMoves.moves}` : moves;
   matchesValue.textContent = `${matches}/${getPairCount()}`;
-  timeValue.textContent = formatTime(elapsedSeconds);
+  timeValue.textContent = formatTime(gameMode === "timeAttack" ? Math.max(0, gameModes.timeAttack.seconds - elapsedSeconds) : elapsedSeconds);
+  timeValue.classList.toggle("is-running-low", gameMode === "timeAttack" && !gameCompleted && gameModes.timeAttack.seconds - elapsedSeconds <= challengeWarningThreshold);
+  movesValue.classList.toggle("is-running-low", gameMode === "limitedMoves" && !gameCompleted && gameModes.limitedMoves.moves - moves <= challengeWarningThreshold);
+}
+
+function refreshGameTime() {
+  if (startedAt === null || gameCompleted || gameDefeated || introRunning) return;
+  elapsedSeconds = Math.floor(Math.max(0, Date.now() - startedAt) / 1000);
+  if (gameMode === "timeAttack") elapsedSeconds = Math.min(elapsedSeconds, gameModes.timeAttack.seconds);
+  updateStatus();
+  if (gameMode === "timeAttack" && elapsedSeconds >= gameModes.timeAttack.seconds) endGame("timeExpired");
 }
 
 function startTimer() {
-  if (timer) {
+  if (timer !== null) {
     return;
   }
 
-  timer = window.setInterval(() => {
-    elapsedSeconds += 1;
-    updateStatus();
-  }, 1000);
+  beginAttempt();
+  startedAt = Date.now();
+  timer = window.setInterval(refreshGameTime, 100);
 }
 
 function stopTimer() {
-  if (!timer) {
+  if (timer === null) {
     return;
   }
 
@@ -1619,7 +1855,7 @@ function stopTimer() {
 }
 
 function hasGameInProgress() {
-  return !introRunning && !gameCompleted && (Boolean(firstCard) || elapsedSeconds > 0 || moves > 0 || matches > 0);
+  return !introRunning && !gameCompleted && !gameDefeated && (Boolean(firstCard) || elapsedSeconds > 0 || moves > 0 || matches > 0);
 }
 
 function warnBeforeLeaving(event) {
@@ -1679,15 +1915,20 @@ function resetTurn() {
 }
 
 function hideOpenCards() {
+  mismatchTimer = null;
+  if (gameCompleted || gameDefeated || !firstCard || !secondCard) return;
+  refreshGameTime();
+  if (gameDefeated) return;
   firstCard.classList.remove("is-flipped");
   secondCard.classList.remove("is-flipped");
   firstCard.setAttribute("aria-label", memoryGame.hiddenCard || "");
   secondCard.setAttribute("aria-label", memoryGame.hiddenCard || "");
   resetTurn();
+  if (gameMode === "limitedMoves" && moves >= gameModes.limitedMoves.moves) endGame("moveLimit");
 }
 
 function markMatch() {
-  if (gameCompleted) return;
+  if (gameCompleted || gameDefeated) return;
   const specialDiscovery = firstCard.dataset.discoveryId && firstCard.dataset.rarity && !discoveries.has(firstCard.dataset.discoveryId);
   // The final pair gets immediate victory feedback instead of another effect.
   if (matches + 1 < getPairCount()) {
@@ -1702,6 +1943,8 @@ function markMatch() {
   if (matches === getPairCount()) {
     stopTimer();
     gameCompleted = true;
+    updateStatus();
+    finishChallenge(true);
     saveCompletedPerformance();
     renderCompletedPerformance();
     playGameSound("victory");
@@ -1720,6 +1963,7 @@ function markMatch() {
 
   showMatchInsight(firstCard);
   resetTurn();
+  if (!gameCompleted && gameMode === "limitedMoves" && moves >= gameModes.limitedMoves.moves) endGame("moveLimit");
 }
 
 function showMatchInsight(card, userSelected = false) {
@@ -1909,6 +2153,8 @@ function setTopLegendActionVisibility(shouldShow) {
 }
 
 function flipCard(card) {
+  refreshGameTime();
+  if (gameDefeated) return;
   if (introRunning) {
     return;
   }
@@ -1921,7 +2167,7 @@ function flipCard(card) {
     return;
   }
 
-  if (lockBoard || card === firstCard) {
+  if (gameCompleted || lockBoard || card === firstCard) {
     return;
   }
 
@@ -1945,10 +2191,17 @@ function flipCard(card) {
     return;
   }
 
-  window.setTimeout(hideOpenCards, mismatchFlipBackDelayMs);
+  mismatchTimer = window.setTimeout(hideOpenCards, mismatchFlipBackDelayMs);
 }
 
 function newGame() {
+  pendingMode = null;
+  window.clearTimeout(mismatchTimer);
+  mismatchTimer = null;
+  gameDefeated = false;
+  attemptStarted = false;
+  attemptFinished = false;
+  startedAt = null;
   pendingDataReset = false;
   stopGameSounds();
   tutorialRunId += 1;
@@ -1996,6 +2249,7 @@ function wait(ms) {
 }
 
 function restartGame() {
+  pendingMode = null;
   pendingLanguage = null;
   pendingDataReset = false;
   renderRestartConfirmation();
@@ -2009,16 +2263,25 @@ function restartGame() {
 }
 
 function closeRestartPanel() {
+  const returnToMode = pendingMode !== null && settingsPanel.classList.contains("is-visible");
+  pendingMode = null;
   const returnToLanguage = pendingLanguage !== null && settingsPanel.classList.contains("is-visible");
   const returnToReset = pendingDataReset && settingsPanel.classList.contains("is-visible");
   pendingLanguage = null;
   pendingDataReset = false;
   restartPanel.classList.remove("is-visible");
   syncModalScrollLock();
-  (returnToReset ? document.getElementById("resetGameButton") : returnToLanguage ? languageButton : newGameButton).focus({ preventScroll: true });
+  (returnToMode ? document.getElementById(`mode-${gameMode}`) : returnToReset ? document.getElementById("resetGameButton") : returnToLanguage ? languageButton : newGameButton).focus({ preventScroll: true });
 }
 
 function renderRestartConfirmation() {
+  if (pendingMode) {
+    setElementText(document.getElementById("restartTitle"), memoryGame.modes.title);
+    setElementText(document.getElementById("restartMessage"), memoryGame.modes.confirmChange);
+    setElementText(cancelRestartButton, memoryGame.keepPlaying);
+    setElementText(document.getElementById("confirmRestartButton"), memoryGame.modes.changeMode);
+    return;
+  }
   if (pendingDataReset) {
     setElementText(document.getElementById("restartTitle"), memoryGame.settings.reset);
     setElementText(document.getElementById("restartMessage"), memoryGame.settings.resetConfirmation);
@@ -2036,6 +2299,7 @@ function renderRestartConfirmation() {
 
 function confirmRestartAction() {
   if (pendingDataReset) resetGameData();
+  else if (pendingMode) applyGameMode(pendingMode);
   else if (pendingLanguage) applyLanguageChange(pendingLanguage);
   else startFreshGame();
 }
@@ -2204,14 +2468,14 @@ document.addEventListener("click", (event) => {
   }
 });
 document.addEventListener("keydown", (event) => {
-  if (event.key === "Tab" && (settingsPanel.classList.contains("is-visible") || achievementPanel.classList.contains("is-visible") || achievementsPanel.classList.contains("is-visible") || restartPanel.classList.contains("is-visible") || aboutPanel.classList.contains("is-visible") || collectionPanel.classList.contains("is-visible"))) {
+  if (event.key === "Tab" && (gameOverPanel.classList.contains("is-visible") || settingsPanel.classList.contains("is-visible") || achievementPanel.classList.contains("is-visible") || achievementsPanel.classList.contains("is-visible") || restartPanel.classList.contains("is-visible") || aboutPanel.classList.contains("is-visible") || collectionPanel.classList.contains("is-visible"))) {
     const panel = achievementPanel.classList.contains("is-visible") ? achievementPanel
       : restartPanel.classList.contains("is-visible") ? restartPanel
       : settingsPanel.classList.contains("is-visible") ? settingsPanel
       : achievementsPanel.classList.contains("is-visible") ? achievementsPanel
       : aboutPanel.classList.contains("is-visible") ? aboutPanel
       : rarityPanel.classList.contains("is-visible") ? rarityPanel
-      : collectionDetailTrigger ? legendsPanel : collectionPanel;
+      : collectionDetailTrigger ? legendsPanel : collectionPanel.classList.contains("is-visible") ? collectionPanel : gameOverPanel;
     const controls = [...panel.querySelectorAll("button:not(:disabled), input:not(:disabled), a[href]")]
       .filter((element) => !element.hidden && element.getClientRects().length && (element.type !== "radio" || element.checked));
     const first = controls[0];
@@ -2249,6 +2513,8 @@ document.addEventListener("keydown", (event) => {
       closeCollection();
     } else if (legendsPanel.classList.contains("is-visible")) {
       closeLegendsPanel();
+    } else if (gameOverPanel.classList.contains("is-visible")) {
+      closeGameOver();
     } else if (winPanel.classList.contains("is-visible")) {
       winPanel.classList.remove("is-visible");
       syncModalScrollLock();
@@ -2270,6 +2536,10 @@ window.addEventListener("storage", (event) => {
     try { window.sessionStorage.clear(); } catch {}
     reloadAfterDataReset();
     return;
+  }
+  if (event.key === challengeStatsStorageKey) {
+    updateAchievementsVisibility();
+    if (achievementsPanel.classList.contains("is-visible")) renderChallengeStats();
   }
   if (event.key === recordsStorageKey && achievementsPanel.classList.contains("is-visible")) {
     renderPersonalRecords();
@@ -2301,9 +2571,14 @@ window.addEventListener("beforeunload", warnBeforeLeaving);
 // Android may resume the existing page after an external link, or restore it
 // from the back/forward cache. Derive the lock from the visible dialogs without
 // creating or traversing history entries during those lifecycle events.
-window.addEventListener("pageshow", refreshModalScrollLock);
-window.addEventListener("focus", refreshModalScrollLock);
+function resumeGamePage() {
+  refreshGameTime();
+  refreshModalScrollLock();
+}
+window.addEventListener("pageshow", resumeGamePage);
+window.addEventListener("focus", resumeGamePage);
 document.addEventListener("visibilitychange", () => {
+  refreshGameTime();
   if (document.visibilityState === "visible") refreshModalScrollLock();
   else stopGameSounds();
 });
@@ -2332,6 +2607,18 @@ aboutPanel.addEventListener("click", event => {
 });
 collectionButton.addEventListener("click", openCollection);
 settingsButton.addEventListener("click", openSettings);
+function closeGameOver() {
+  gameOverPanel.classList.remove("is-visible");
+  syncModalScrollLock();
+  newGameButton.focus({ preventScroll: true });
+}
+document.getElementById("closeGameOverButton").addEventListener("click", closeGameOver);
+document.getElementById("tryAgainButton").addEventListener("click", restartGame);
+document.getElementById("gameOverSettingsButton").addEventListener("click", openSettings);
+gameOverPanel.addEventListener("click", event => { if (event.target === gameOverPanel) closeGameOver(); });
+Object.keys(gameModes).forEach(mode => {
+  document.getElementById(`mode-${mode}`).addEventListener("change", () => requestGameMode(mode));
+});
 document.getElementById("resetGameButton").addEventListener("click", openDataResetConfirmation);
 closeSettingsButton.addEventListener("click", closeSettings);
 settingsPanel.addEventListener("click", event => {
@@ -2342,6 +2629,15 @@ matchToastsToggle.addEventListener("change", () => setMatchToastsEnabled(matchTo
 tipsToggle.addEventListener("change", () => setTipsEnabled(tipsToggle.checked));
 shortNamesToggle.addEventListener("change", () => setShortNamesEnabled(shortNamesToggle.checked));
 achievementsButton.addEventListener("click", openAchievements);
+for (const [tab, id] of [["records", "Records"], ["achievements", "Achievements"]]) {
+  document.getElementById(`progress${id}Tab`).addEventListener("click", () => selectProgressTab(tab));
+  document.getElementById(`progress${id}Tab`).addEventListener("keydown", event => {
+    if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+    event.preventDefault();
+    selectProgressTab(event.key === "Home" ? "records" : event.key === "End" ? "achievements"
+      : progressTab === "records" ? "achievements" : "records", true);
+  });
+}
 winRecordsButton.addEventListener("click", openAchievements);
 closeAchievementsButton.addEventListener("click", closeAchievements);
 closeAchievementButton.addEventListener("click", closeAchievement);

@@ -57,7 +57,7 @@
       }
     </script>
     <link rel="stylesheet" href="css/icon-moon-memory.min.css?v=20261023-shared-comparisons" />
-    <link rel="stylesheet" href="css/memory-game.min.css?v=20261026-mobile-match-toasts" />
+    <link rel="stylesheet" href="css/memory-game.min.css?v=20261027-progress-icon-only" />
   </head>
   <body>
     <main class="game-shell" aria-label="">
@@ -67,6 +67,7 @@
             <div>
               <h1 class="game-title standalone-only" id="gameTitle">Memory game</h1>
               <p class="game-subtitle">Match Salvadoran legends with their Spanish counterparts from Spanish Mirrors.</p>
+              <p class="active-game-mode" id="activeGameMode"></p>
             </div>
             <div class="game-actions">
               <button class="game-button" type="button" id="newGameButton"></button>
@@ -136,6 +137,18 @@
             <button class="game-button secondary" type="button" id="viewLegendsButton"></button>
             <button class="game-button secondary" type="button" id="winShareButton"></button>
             <a class="game-button" id="getCopyButton" target="_blank" rel="noopener noreferrer"></a>
+          </div>
+        </div>
+      </aside>
+      <aside class="win-panel" id="gameOverPanel" aria-labelledby="gameOverTitle" aria-describedby="gameOverReason gameOverSummary" aria-modal="true" role="dialog">
+        <div class="win-card">
+          <button class="win-close" type="button" id="closeGameOverButton"></button>
+          <h2 id="gameOverTitle"></h2>
+          <p id="gameOverReason"></p>
+          <p id="gameOverSummary"></p>
+          <div class="win-actions">
+            <button class="game-button" type="button" id="tryAgainButton"></button>
+            <button class="game-button secondary" type="button" id="gameOverSettingsButton" aria-haspopup="dialog" aria-controls="settingsPanel"></button>
           </div>
         </div>
       </aside>
@@ -211,14 +224,27 @@
         <div class="legends-card">
           <button class="win-close" type="button" id="closeAchievementsButton"></button>
           <h2 id="achievementsTitle"></h2>
+          <div class="progress-tabs" id="progressTabs" role="tablist" aria-labelledby="achievementsTitle">
+            <button type="button" id="progressRecordsTab" role="tab" aria-selected="true" aria-controls="progressRecordsPanel" tabindex="0"></button>
+            <button type="button" id="progressAchievementsTab" role="tab" aria-selected="false" aria-controls="progressAchievementsPanel" tabindex="-1"></button>
+          </div>
+          <div id="progressRecordsPanel" role="tabpanel" aria-labelledby="progressRecordsTab">
           <section class="personal-records" aria-labelledby="personalRecordsTitle">
             <h3 id="personalRecordsTitle"></h3>
+            <section class="mode-records" aria-labelledby="personalRecordsMode">
+            <h4 id="personalRecordsMode"></h4>
             <p id="personalRecordsConfiguration"></p>
             <p id="personalRecordsEmpty"></p>
             <dl class="records-grid" id="personalRecordsStats"></dl>
+            </section>
+            <div id="challengeRecordsStats"></div>
+            <p id="challengeAttemptPolicy"></p>
           </section>
+          </div>
+          <div id="progressAchievementsPanel" role="tabpanel" aria-labelledby="progressAchievementsTab" hidden>
           <p id="achievementsProgress"></p>
           <div class="achievements-list" id="achievementsList"></div>
+          </div>
         </div>
       </aside>
       <aside class="win-panel achievement-panel" id="achievementPanel" aria-labelledby="achievementTitle" aria-describedby="achievementDescription achievementCelebration" aria-modal="true" role="dialog">
@@ -245,6 +271,12 @@
               <div class="language-menu" id="languageMenu" role="menu" hidden></div>
             </div>
           </div>
+          <fieldset class="settings-theme mode-options">
+            <legend id="settingsModeLabel"></legend>
+            <label class="mode-option"><input type="radio" name="memoryMode" id="mode-classic" value="classic" /><span><strong id="mode-classic-name"></strong><small id="mode-classic-description"></small></span></label>
+            <label class="mode-option"><input type="radio" name="memoryMode" id="mode-timeAttack" value="timeAttack" /><span><strong id="mode-timeAttack-name"></strong><small id="mode-timeAttack-description"></small></span></label>
+            <label class="mode-option"><input type="radio" name="memoryMode" id="mode-limitedMoves" value="limitedMoves" /><span><strong id="mode-limitedMoves-name"></strong><small id="mode-limitedMoves-description"></small></span></label>
+          </fieldset>
           <label class="settings-row" for="soundToggle">
             <span id="settingsSoundLabel"></span>
             <input type="checkbox" id="soundToggle" role="switch" />
@@ -279,7 +311,7 @@
       <footer class="game-footer standalone-only" id="gameFooter"></footer>
     </main>
 
-    <script src="js/memory-game.min.js?v=20261027-tap-comparisons"></script>
+    <script src="js/memory-game.min.js?v=20261027-progress-icon-only"></script>
     <script src="js/gAnalyticsIdleLoad.min.js" defer></script>
     <script src="js/pwa.min.js?v=20261021-pwa-registration" defer></script>
   </body>

@@ -672,7 +672,8 @@
         "websites": "Sitios web oficiales",
         "storiesWebsite": "Historias Eternas",
         "soundCreditsTitle": "Créditos de los efectos de sonido",
-        "soundCredit": "Efecto de sonido de {author} en Pixabay."
+        "soundCredit": "Efecto de sonido de {author} en Pixabay.",
+        "musicCredit": "Música de {author} en {source}"
       },
       "records": {
         "title": "Récords personales",
@@ -696,6 +697,38 @@
         "viewRecords": "Ver récords",
         "personalBest": "Récord personal: {value}",
         "previousBest": "Récord anterior: {value}"
+      },
+      "modes": {
+        "title": "Modo de juego",
+        "classic": {
+          "name": "Clásico",
+          "description": "Juega sin límites."
+        },
+        "timeAttack": {
+          "name": "Contrarreloj",
+          "description": "Encuentra todas las parejas en 45 segundos."
+        },
+        "limitedMoves": {
+          "name": "Desafío de 25 movimientos",
+          "description": "Encuentra todas las parejas en un máximo de 25 movimientos."
+        },
+        "statistics": "Estadísticas de los desafíos",
+        "attempts": "Intentos totales",
+        "victories": "Victorias",
+        "defeats": "Derrotas",
+        "winPercentage": "Porcentaje de victorias",
+        "attemptPolicy": "Un intento comienza al seleccionar la primera carta. Reiniciar o abandonar una partida sin terminar cuenta solo como intento, sin victoria ni derrota.",
+        "gameOver": "Fin del juego",
+        "timeExpired": "¡Se acabó el tiempo! No has completado el desafío.",
+        "moveLimit": "¡Has alcanzado el límite de movimientos! No has completado el desafío.",
+        "summary": "Parejas: {matches}/{pairs} · Movimientos: {moves}",
+        "tryAgain": "Intentar de nuevo",
+        "confirmChange": "¿Cambiar de modo y empezar una partida nueva? Perderás el progreso de esta partida.",
+        "changeMode": "Cambiar de modo"
+      },
+      "progress": {
+        "title": "Progreso",
+        "records": "Récords"
       }
     },
     "country3": "Marruecos 🇲🇦",

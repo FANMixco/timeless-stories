@@ -672,7 +672,8 @@
         "websites": "Sites officiels",
         "storiesWebsite": "Légendes Éternelles",
         "soundCreditsTitle": "Crédits des effets sonores",
-        "soundCredit": "Effet sonore de {author} sur Pixabay."
+        "soundCredit": "Effet sonore de {author} sur Pixabay.",
+        "musicCredit": "Musique de {author} sur {source}"
       },
       "records": {
         "title": "Records personnels",
@@ -696,6 +697,38 @@
         "viewRecords": "Voir les records",
         "personalBest": "Record personnel : {value}",
         "previousBest": "Ancien record : {value}"
+      },
+      "modes": {
+        "title": "Mode de jeu",
+        "classic": {
+          "name": "Classique",
+          "description": "Jouez sans limites."
+        },
+        "timeAttack": {
+          "name": "Contre-la-montre",
+          "description": "Trouvez toutes les paires en 45 secondes."
+        },
+        "limitedMoves": {
+          "name": "Défi en 25 coups",
+          "description": "Trouvez toutes les paires en 25 coups maximum."
+        },
+        "statistics": "Statistiques des défis",
+        "attempts": "Nombre de tentatives",
+        "victories": "Victoires",
+        "defeats": "Défaites",
+        "winPercentage": "Pourcentage de victoires",
+        "attemptPolicy": "Une tentative commence à la première carte sélectionnée. Recommencer ou quitter une partie inachevée compte uniquement comme une tentative, sans victoire ni défaite.",
+        "gameOver": "Partie terminée",
+        "timeExpired": "Le temps est écoulé ! Le défi n’a pas été réussi.",
+        "moveLimit": "La limite de coups est atteinte ! Le défi n’a pas été réussi.",
+        "summary": "Paires : {matches}/{pairs} · Coups : {moves}",
+        "tryAgain": "Réessayer",
+        "confirmChange": "Changer de mode et commencer une nouvelle partie ? Votre progression dans cette partie sera perdue.",
+        "changeMode": "Changer de mode"
+      },
+      "progress": {
+        "title": "Progression",
+        "records": "Records"
       }
     },
     "country3": "Maroc 🇲🇦",

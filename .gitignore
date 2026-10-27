@@ -16,3 +16,4 @@ tools/test-pwa.mjs
 tools/test-i18n-manager.mjs
 tools/test-personal-records.mjs
 tools/test-match-toasts.mjs
+tools/test-memory-modes.mjs
