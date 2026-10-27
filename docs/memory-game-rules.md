@@ -7,8 +7,10 @@ describes the game; it does not change its behavior.
 
 The start screen offers three mode cards, plus Settings and Records. Choosing a
 mode starts a fresh round and saves the selection in `timelessMemoryMode`.
-The return-arrow button opens the start screen, asking for confirmation when a
-round is in progress. Title and copyright appear only on the start screen;
+The return-arrow button and browser/PWA Back open the start screen, asking for
+confirmation when a round is in progress. Back closes an open dialog first;
+Back or Cancel on the return confirmation keeps the current round. The title
+and chosen challenge appear above the playing controls; copyright stays on the start screen.
 Settings contains preferences, with no mode selector.
 
 - **Classic:** the original unlimited game. Moves and time count upwards.

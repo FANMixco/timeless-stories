@@ -156,7 +156,7 @@ html[data-embed="true"] .standalone-only {
   width: 100%;
   overflow-x: auto;
 }
-.game-actions #newGameButton { flex: 0 0 136px; width: 136px; white-space: nowrap; min-height: 44px; }
+.game-actions #newGameButton { flex: 0 0 136px; width: 136px; white-space: nowrap; min-height: 44px; margin-right: auto; }
 .game-actions .game-button { display: inline-flex; align-items: center; justify-content: center; }
 .game-actions .game-button.secondary { flex: 0 0 var(--action-icon-size); width: var(--action-icon-size); min-width: var(--action-icon-size); height: 44px; padding: 0; }
 @media (max-width: 380px) {

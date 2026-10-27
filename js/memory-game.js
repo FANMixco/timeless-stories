@@ -166,6 +166,7 @@ function showHome() {
   pendingHome = false;
   newGame();
   homeScreen.show(gameMode);
+  syncModalHistory();
   window.scrollTo({ top: 0, left: 0, behavior: "auto" });
 }
 
@@ -196,10 +197,12 @@ const roundClock = createRoundClock({ now: () => Date.now(),
 });
 const modalNavigation = createModalNavigation({ history: !isEmbedded ? window.history : null,
   getSnapshot: getModalSnapshot, restoreSnapshot: restoreModalSnapshot,
+  onBackToHome: requestHome,
 });
 
 function getModalSnapshot() {
   return {
+    screen: homeScreen.visible ? "home" : "game",
     panels: modalPanels.filter(panel => panel?.classList.contains("is-visible")).map(panel => panel.id),
     detail: modalDetailPair,
     rarity: modalRarity,
@@ -214,6 +217,8 @@ function getModalSnapshot() {
 
 function syncModalHistory() { modalNavigation.sync(); }
 function restoreModalSnapshot(snapshot) {
+  if (snapshot.screen === "home" && !homeScreen.visible) showHome();
+  else if (snapshot.screen === "game" && homeScreen.visible) homeScreen.hide();
   const visible = new Set(snapshot.panels.filter(id => {
     // Forward must not resurrect a previous round's completion dialogs.
     if (id === "winPanel" || (id === "legendsPanel" && !snapshot.detail)) return gameCompleted;
