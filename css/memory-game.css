@@ -1394,7 +1394,7 @@ html[data-theme="dark"] .card.is-matched .card-front {
     min-width: var(--action-icon-size);
   }
 
-  .game-actions:has(#collectionButton:not([hidden])) #shareButton {
+  .game-actions #shareButton {
     margin-right: auto;
     margin-left: auto;
   }
