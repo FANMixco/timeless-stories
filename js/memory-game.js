@@ -1722,15 +1722,17 @@ function markMatch() {
   resetTurn();
 }
 
-function showMatchInsight(card) {
+function showMatchInsight(card, userSelected = false) {
+  const isMobile = window.matchMedia?.("(max-width: 640px)")?.matches;
+  const showComparison = !isMobile || matchToastsEnabled || userSelected;
   matchInsight.classList.toggle("is-in-progress", !gameCompleted);
   matchInsightTitle.textContent = card.dataset.insightTitle || "";
   matchInsightText.textContent = card.dataset.insight || "";
   matchInsight.classList.toggle(
     "is-visible",
-    Boolean(card.dataset.insightTitle || card.dataset.insight),
+    showComparison && Boolean(card.dataset.insightTitle || card.dataset.insight),
   );
-  if (!gameCompleted && matchToastsEnabled && window.matchMedia?.("(max-width: 640px)")?.matches) {
+  if (!gameCompleted && showComparison && isMobile) {
     showToast(card.dataset.insightTitle || "", card.dataset.insight || "");
     legendToast.dataset.comparison = "true";
   }
@@ -1912,7 +1914,7 @@ function flipCard(card) {
   }
 
   if (card.classList.contains("is-matched")) {
-    showMatchInsight(card);
+    showMatchInsight(card, true);
     if (gameCompleted) {
       showLegendToast(card);
     }
