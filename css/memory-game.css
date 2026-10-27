@@ -157,15 +157,11 @@ html[data-embed="true"] .standalone-only {
 .game-primary-actions, .game-secondary-actions { display: flex; align-items: center; gap: 6px; }
 .game-primary-actions { flex: 0 0 auto; margin-right: auto; }
 .game-secondary-actions { flex: 1 0 auto; flex-wrap: wrap; justify-content: flex-end; max-width: 100%; }
-.game-actions #newGameButton { flex: 0 0 auto; width: auto; white-space: nowrap; min-height: 44px; }
+.game-actions #newGameButton { flex: 0 0 var(--action-icon-size); width: var(--action-icon-size); height: 44px; padding: 0; }
 .game-actions .game-button { display: inline-flex; align-items: center; justify-content: center; }
 .game-actions .game-button.secondary { flex: 0 0 var(--action-icon-size); width: var(--action-icon-size); min-width: var(--action-icon-size); height: 44px; padding: 0; }
-.new-game-icon { display: none; width: 1.35em; height: 1.35em; }
-@media (max-width: 640px) {
-  .game-actions #newGameButton { flex: 0 0 var(--action-icon-size); width: var(--action-icon-size); height: 44px; padding: 0; }
-  #newGameButton .new-game-icon { display: block; }
-  #newGameLabel { display: none; }
-}
+.new-game-icon { display: block; width: 1.35em; height: 1.35em; }
+#newGameLabel { display: none; }
 
 .large-screen-only {
   display: none !important;
