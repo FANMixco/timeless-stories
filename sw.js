@@ -1,5 +1,5 @@
 const CACHE_PREFIX = "memory-game-pwa-";
-const CACHE_VERSION = `${CACHE_PREFIX}20261027-progress-icon-only`;
+const CACHE_VERSION = `${CACHE_PREFIX}20261027-defeat-records`;
 const APP_SHELL = [
   "/memory-game.html",
   "/memory-game.webmanifest",
@@ -9,15 +9,15 @@ const APP_SHELL = [
   "/music/complete.mp3",
   "/music/gameover.mp3",
   "/css/icon-moon-memory.min.css?v=20261023-shared-comparisons",
-  "/css/memory-game.min.css?v=20261027-progress-icon-only",
-  "/js/memory-game.min.js?v=20261027-progress-icon-only",
+  "/css/memory-game.min.css?v=20261027-defeat-records",
+  "/js/memory-game.min.js?v=20261027-defeat-records",
   "/js/pwa.min.js?v=20261021-pwa-registration",
   "/js/data/links.min.json",
-  "/js/data/memory-game.min.json?v=20261027-progress-icon-only",
-  "/js/i18n/memory-game/lang-en.min.json?v=20261027-progress-icon-only",
-  "/js/i18n/memory-game/lang-es.min.json?v=20261027-progress-icon-only",
-  "/js/i18n/memory-game/lang-fr.min.json?v=20261027-progress-icon-only",
-  "/js/i18n/memory-game/lang-zh.min.json?v=20261027-progress-icon-only",
+  "/js/data/memory-game.min.json?v=20261027-defeat-records",
+  "/js/i18n/memory-game/lang-en.min.json?v=20261027-defeat-records",
+  "/js/i18n/memory-game/lang-es.min.json?v=20261027-defeat-records",
+  "/js/i18n/memory-game/lang-fr.min.json?v=20261027-defeat-records",
+  "/js/i18n/memory-game/lang-zh.min.json?v=20261027-defeat-records",
   "/img/previews/mirrors_medium.webp",
   "/img/previews/mirrors_es_medium.webp",
   "/img/previews/mirrors_fr_medium.webp",

@@ -21,7 +21,8 @@ fresh round and asks for confirmation when a round is in progress.
   the outcome: completing the board on move 25 wins; any other result loses.
 
 Defeats stop gameplay and show the reason, matches and moves. Try Again restarts
-the same mode; Settings allows changing modes. Previously saved discoveries and
+the same mode; View Records opens the Records tab and closing it returns to the
+defeat result. Settings allows changing modes. Previously saved discoveries and
 achievements remain intact. Unfinished boards, including defeats, add no new
 discoveries or victory achievements. Successful challenge boards use the usual
 discovery and achievement logic, but never update Classic personal records.

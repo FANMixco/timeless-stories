@@ -56,7 +56,7 @@ const achievementDefinitions = [
 const supportedThemes = ["system", "light", "dark"];
 const previewRewardThresholdSeconds = 30;
 const mismatchFlipBackDelayMs = 1200;
-const i18nCacheVersion = "20261027-progress-icon-only";
+const i18nCacheVersion = "20261027-defeat-records";
 let linkRegistry = null;
 let localizedLinks = null;
 let selectionRules = null;
@@ -717,7 +717,8 @@ function openAchievements() {
 function closeAchievements() {
   achievementsPanel.classList.remove("is-visible");
   syncModalScrollLock();
-  (winPanel.classList.contains("is-visible") ? winRecordsButton : achievementsButton).focus({ preventScroll: true });
+  (gameOverPanel.classList.contains("is-visible") ? document.getElementById("gameOverRecordsButton")
+    : winPanel.classList.contains("is-visible") ? winRecordsButton : achievementsButton).focus({ preventScroll: true });
 }
 
 function showNextAchievement() {
@@ -1364,7 +1365,7 @@ function closeSettings() {
   closeLanguageMenu();
   settingsPanel.classList.remove("is-visible");
   syncModalScrollLock();
-  (gameOverPanel.classList.contains("is-visible") ? document.getElementById("gameOverSettingsButton") : settingsButton).focus({ preventScroll: true });
+  (gameOverPanel.classList.contains("is-visible") ? document.getElementById("tryAgainButton") : settingsButton).focus({ preventScroll: true });
 }
 
 function closeLanguageMenu() {
@@ -1516,7 +1517,7 @@ function closeAboutPanel() {
 function applyUiCopy() {
   renderGameModes();
   setElementText(document.getElementById("tryAgainButton"), memoryGame.modes.tryAgain);
-  setElementText(document.getElementById("gameOverSettingsButton"), memoryGame.settings.title);
+  setElementText(document.getElementById("gameOverRecordsButton"), memoryGame.records.viewRecords);
   document.getElementById("closeGameOverButton").setAttribute("aria-label", memoryGame.close);
   applyShortNamesPreference();
   setElementText(document.getElementById("winRecordsLabel"), memoryGame.records.viewRecords);
@@ -2614,7 +2615,7 @@ function closeGameOver() {
 }
 document.getElementById("closeGameOverButton").addEventListener("click", closeGameOver);
 document.getElementById("tryAgainButton").addEventListener("click", restartGame);
-document.getElementById("gameOverSettingsButton").addEventListener("click", openSettings);
+document.getElementById("gameOverRecordsButton").addEventListener("click", openAchievements);
 gameOverPanel.addEventListener("click", event => { if (event.target === gameOverPanel) closeGameOver(); });
 Object.keys(gameModes).forEach(mode => {
   document.getElementById(`mode-${mode}`).addEventListener("change", () => requestGameMode(mode));
