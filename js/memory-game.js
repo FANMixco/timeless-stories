@@ -3,6 +3,7 @@ import { createProgressStore } from "./memory-game/storage.mjs";
 import { createProgressView } from "./memory-game/progress.mjs";
 import { gameModes, createRoundClock, selectActivePairs, getDefeatReason, getModeStatus, normalizeElapsedSeconds } from "./memory-game/rules.mjs";
 import { createModalNavigation } from "./memory-game/dialogs.mjs";
+import { createHomeScreen } from "./memory-game/home.mjs";
 
 const supportedLanguages = ["en", "es", "fr", "zh"];
 const languageStorageKey = "timelessStoriesOfficialLanguage";
@@ -19,7 +20,7 @@ const recordsStorageKey = "timelessMemoryRecords:v1";
 const progressStore = createProgressStore({ getStorage: () => window.localStorage,
   recordsStorageKey, challengeStatsStorageKey, modeStorageKey, gameModes });
 let gameMode = readGameMode();
-let pendingMode = null;
+let pendingHome = false;
 let gameDefeated = false;
 let attemptStarted = false;
 let attemptFinished = false;
@@ -154,6 +155,30 @@ let modalDetailPair = null;
 let modalRarity = null;
 const modalPanels = [winPanel, gameOverPanel, collectionPanel, legendsPanel, rarityPanel, aboutPanel, restartPanel, achievementsPanel, achievementPanel, settingsPanel];
 
+const homeScreen = createHomeScreen({ document, modes: gameModes,
+  onChoose: applyGameMode,
+  onSettings: openSettings, onRecords: openAchievements, onReturn: requestHome
+});
+homeScreen.bind();
+
+function showHome() {
+  pendingHome = false;
+  newGame();
+  homeScreen.show(gameMode);
+  window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+}
+
+function requestHome() {
+  if (!hasGameInProgress()) { showHome(); return; }
+  pendingLanguage = null;
+  pendingDataReset = false;
+  pendingHome = true;
+  renderRestartConfirmation();
+  restartPanel.classList.add("is-visible");
+  cancelRestartButton.focus({ preventScroll: true });
+  syncModalScrollLock();
+}
+
 const progressView = createProgressView({ document,
   getState: () => ({ memoryGame, achievements, completedPerformance, currentLanguage }),
   readPersonalRecords, readChallengeStats, getPairCount, getRecordConfiguration, formatTime,
@@ -180,7 +205,7 @@ function getModalSnapshot() {
     achievement: currentAchievement,
     language: pendingLanguage,
     reset: pendingDataReset,
-    mode: pendingMode,
+    home: pendingHome,
     progressTab: progressView.tab
   };
 }
@@ -206,7 +231,7 @@ function restoreModalSnapshot(snapshot) {
   modalPanels.forEach(panel => panel?.classList.toggle("is-visible", visible.has(panel.id)));
   pendingLanguage = visible.has("restartPanel") && supportedLanguages.includes(snapshot.language) ? snapshot.language : null;
   pendingDataReset = visible.has("restartPanel") && snapshot.reset === true;
-  pendingMode = visible.has("restartPanel") && Object.hasOwn(gameModes, snapshot.mode) ? snapshot.mode : null;
+  pendingHome = visible.has("restartPanel") && snapshot.home === true;
   renderRestartConfirmation();
   if (currentAchievement && !visible.has("achievementPanel")) {
     currentAchievement = null;
@@ -351,36 +376,18 @@ function updateAchievementsVisibility() {
 
 function renderChallengeStats() { progressView.renderChallenges(); }
 function renderGameModes() {
-  const copy = memoryGame.modes;
-  setElementText(document.getElementById("settingsModeLabel"), copy.title);
-  setElementText(document.getElementById("activeGameMode"), copy[gameMode].name);
+  setElementText(document.getElementById("activeGameMode"), memoryGame.modes[gameMode].name);
   setElementHidden(document.getElementById("activeGameMode"), !gameModes[gameMode].record);
-  for (const mode of Object.keys(gameModes)) {
-    document.getElementById(`mode-${mode}`).checked = mode === gameMode;
-    setElementText(document.getElementById(`mode-${mode}-name`), copy[mode].name);
-    setElementText(document.getElementById(`mode-${mode}-description`), copy[mode].description);
-  }
 }
 
 function applyGameMode(mode) {
+  if (!Object.hasOwn(gameModes, mode)) return;
   gameMode = mode;
   try { window.localStorage.setItem(modeStorageKey, mode); } catch {}
-  pendingMode = null;
-  startFreshGame();
+  homeScreen.hide();
   renderGameModes();
-}
-
-function requestGameMode(mode) {
-  renderGameModes(); // Keep the current radio selected until confirmation.
-  if (!Object.hasOwn(gameModes, mode) || mode === gameMode) return;
-  if (!hasGameInProgress()) { applyGameMode(mode); return; }
-  pendingMode = mode;
-  pendingLanguage = null;
-  pendingDataReset = false;
-  renderRestartConfirmation();
-  restartPanel.classList.add("is-visible");
-  cancelRestartButton.focus({ preventScroll: true });
-  syncModalScrollLock();
+  startGame();
+  newGameButton.focus({ preventScroll: true });
 }
 
 function endChallengeIfNeeded(attemptResolved) {
@@ -438,7 +445,7 @@ function closeAchievements() {
   achievementsPanel.classList.remove("is-visible");
   syncModalScrollLock();
   (gameOverPanel.classList.contains("is-visible") ? document.getElementById("gameOverRecordsButton")
-    : winPanel.classList.contains("is-visible") ? winRecordsButton : achievementsButton).focus({ preventScroll: true });
+    : winPanel.classList.contains("is-visible") ? winRecordsButton : homeScreen.visible ? document.getElementById("homeRecords") : achievementsButton).focus({ preventScroll: true });
 }
 
 function showNextAchievement() {
@@ -716,7 +723,7 @@ async function loadGameLanguage(language) {
   if (response.ok === false) throw new Error(`Unable to load game language: ${language}`);
   const data = await response.json();
   const game = data.translations?.memoryGame;
-  if (!game?.settings?.title || !game.settings.sounds || !game.settings.resetConfirmation || !game.records?.title || !game.modes?.title || !game.progress?.title || !game.progress.records || !game.about?.musicCredit || !achievementDefinitions.every(({ id }) => game.achievements?.items?.[id])) {
+  if (!game?.settings?.title || !game.settings.sounds || !game.settings.resetConfirmation || !game.home?.chooseMode || !game.home.confirmReturn || !game.records?.title || !game.modes?.title || !game.progress?.title || !game.progress.records || !game.about?.musicCredit || !achievementDefinitions.every(({ id }) => game.achievements?.items?.[id])) {
     throw new Error(`Incomplete game language: ${language}`);
   }
   const pairs = [...(game.pairs || []), ...(game.rarePairs || []).map(variant => variant.pair)];
@@ -934,7 +941,6 @@ function reloadAfterDataReset() {
 }
 
 function openDataResetConfirmation() {
-  pendingMode = null;
   pendingLanguage = null;
   pendingDataReset = true;
   renderRestartConfirmation();
@@ -961,7 +967,7 @@ function closeSettings() {
   closeLanguageMenu();
   settingsPanel.classList.remove("is-visible");
   syncModalScrollLock();
-  (gameOverPanel.classList.contains("is-visible") ? document.getElementById("tryAgainButton") : settingsButton).focus({ preventScroll: true });
+  (gameOverPanel.classList.contains("is-visible") ? document.getElementById("tryAgainButton") : homeScreen.visible ? document.getElementById("homeSettings") : settingsButton).focus({ preventScroll: true });
 }
 
 function closeLanguageMenu() {
@@ -976,7 +982,6 @@ function toggleLanguageMenu() {
 }
 
 function setLanguage(language) {
-  pendingMode = null;
   if (!supportedLanguages.includes(language) || language === currentLanguage) {
     closeLanguageMenu();
     return;
@@ -1111,6 +1116,7 @@ function closeAboutPanel() {
 }
 
 function applyUiCopy() {
+  homeScreen.render(memoryGame);
   renderGameModes();
   setElementText(document.getElementById("tryAgainButton"), memoryGame.modes.tryAgain);
   setElementText(document.getElementById("gameOverRecordsButton"), memoryGame.records.viewRecords);
@@ -1701,7 +1707,6 @@ function flipCard(card) {
 }
 
 function newGame() {
-  pendingMode = null;
   window.clearTimeout(mismatchTimer);
   mismatchTimer = null;
   gameDefeated = false;
@@ -1755,7 +1760,7 @@ function wait(ms) {
 }
 
 function restartGame() {
-  pendingMode = null;
+  pendingHome = false;
   pendingLanguage = null;
   pendingDataReset = false;
   renderRestartConfirmation();
@@ -1769,23 +1774,23 @@ function restartGame() {
 }
 
 function closeRestartPanel() {
-  const returnToMode = pendingMode !== null && settingsPanel.classList.contains("is-visible");
-  pendingMode = null;
+  const returnToHomeButton = pendingHome;
+  pendingHome = false;
   const returnToLanguage = pendingLanguage !== null && settingsPanel.classList.contains("is-visible");
   const returnToReset = pendingDataReset && settingsPanel.classList.contains("is-visible");
   pendingLanguage = null;
   pendingDataReset = false;
   restartPanel.classList.remove("is-visible");
   syncModalScrollLock();
-  (returnToMode ? document.getElementById(`mode-${gameMode}`) : returnToReset ? document.getElementById("resetGameButton") : returnToLanguage ? languageButton : newGameButton).focus({ preventScroll: true });
+  (returnToHomeButton ? document.getElementById("homeButton") : returnToReset ? document.getElementById("resetGameButton") : returnToLanguage ? languageButton : newGameButton).focus({ preventScroll: true });
 }
 
 function renderRestartConfirmation() {
-  if (pendingMode) {
-    setElementText(document.getElementById("restartTitle"), memoryGame.modes.title);
-    setElementText(document.getElementById("restartMessage"), memoryGame.modes.confirmChange);
+  if (pendingHome) {
+    setElementText(document.getElementById("restartTitle"), memoryGame.home.chooseMode);
+    setElementText(document.getElementById("restartMessage"), memoryGame.home.confirmReturn);
     setElementText(cancelRestartButton, memoryGame.keepPlaying);
-    setElementText(document.getElementById("confirmRestartButton"), memoryGame.modes.changeMode);
+    setElementText(document.getElementById("confirmRestartButton"), memoryGame.home.chooseMode);
     return;
   }
   if (pendingDataReset) {
@@ -1804,13 +1809,14 @@ function renderRestartConfirmation() {
 }
 
 function confirmRestartAction() {
-  if (pendingDataReset) resetGameData();
-  else if (pendingMode) applyGameMode(pendingMode);
+  if (pendingHome) showHome();
+  else if (pendingDataReset) resetGameData();
   else if (pendingLanguage) applyLanguageChange(pendingLanguage);
   else startFreshGame();
 }
 
 function startFreshGame() {
+  homeScreen.hide();
   pendingLanguage = null;
   newGame();
   // Reset an already-scrolled board after its previous match description and
@@ -2122,9 +2128,6 @@ document.getElementById("closeGameOverButton").addEventListener("click", closeGa
 document.getElementById("tryAgainButton").addEventListener("click", restartGame);
 document.getElementById("gameOverRecordsButton").addEventListener("click", openAchievements);
 gameOverPanel.addEventListener("click", event => { if (event.target === gameOverPanel) closeGameOver(); });
-Object.keys(gameModes).forEach(mode => {
-  document.getElementById(`mode-${mode}`).addEventListener("change", () => requestGameMode(mode));
-});
 document.getElementById("resetGameButton").addEventListener("click", openDataResetConfirmation);
 closeSettingsButton.addEventListener("click", closeSettings);
 settingsPanel.addEventListener("click", event => {
@@ -2165,7 +2168,7 @@ window.matchMedia?.("(prefers-color-scheme: dark)")?.addEventListener("change", 
 loadTranslations().then(() => {
   applyUiCopy();
   evaluateAchievements();
-  startGame();
+  showHome();
 }).catch(error => {
   console.error("Unable to initialize the memory game:", error);
 });

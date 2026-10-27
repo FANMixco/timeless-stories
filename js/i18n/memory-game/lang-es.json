@@ -729,6 +729,10 @@
       "progress": {
         "title": "Progreso",
         "records": "Récords"
+      },
+      "home": {
+        "chooseMode": "Modos de juego",
+        "confirmReturn": "¿Volver a los modos de juego? Perderás el progreso de esta partida."
       }
     },
     "country3": "Marruecos 🇲🇦",

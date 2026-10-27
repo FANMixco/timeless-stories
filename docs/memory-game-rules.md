@@ -5,9 +5,11 @@ describes the game; it does not change its behavior.
 
 ## Game modes and attempts
 
-Settings offers three modes, with Classic as the default for new and existing
-players. The selection persists in `timelessMemoryMode`. Changing modes starts a
-fresh round and asks for confirmation when a round is in progress.
+The start screen offers three mode cards, plus Settings and Records. Choosing a
+mode starts a fresh round and saves the selection in `timelessMemoryMode`.
+The return-arrow button opens the start screen, asking for confirmation when a
+round is in progress. Title and copyright appear only on the start screen;
+Settings contains preferences, with no mode selector.
 
 - **Classic:** the original unlimited game. Moves and time count upwards.
 - **Time Attack:** match all ten pairs before 45 seconds expire. The existing
@@ -22,7 +24,7 @@ fresh round and asks for confirmation when a round is in progress.
 
 Defeats stop gameplay and show the reason, matches and moves. Try Again restarts
 the same mode; View Records opens the Records tab and closing it returns to the
-defeat result. Settings allows changing modes. Previously saved discoveries and
+defeat result. Returning to the start screen allows changing modes. Saved discoveries and
 achievements remain intact. Unfinished boards, including defeats, add no new
 discoveries or victory achievements. Successful challenge boards use the usual
 discovery and achievement logic, but never update Classic personal records.
