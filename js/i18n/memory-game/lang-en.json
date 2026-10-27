@@ -729,6 +729,10 @@
       "progress": {
         "title": "Progress",
         "records": "Records"
+      },
+      "home": {
+        "chooseMode": "Game modes",
+        "confirmReturn": "Return to game modes? Your progress in this round will be lost."
       }
     },
     "country3": "Morocco 🇲🇦",

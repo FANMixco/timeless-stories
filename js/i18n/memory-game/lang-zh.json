@@ -729,6 +729,10 @@
       "progress": {
         "title": "游戏进度",
         "records": "纪录"
+      },
+      "home": {
+        "chooseMode": "游戏模式",
+        "confirmReturn": "返回游戏模式选择？本局进度将丢失。"
       }
     },
     "country3": "摩洛哥 🇲🇦",
