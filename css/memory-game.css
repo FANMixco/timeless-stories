@@ -49,9 +49,18 @@ body {
   background:
     linear-gradient(135deg, rgba(0, 119, 182, 0.12), transparent 38%),
     linear-gradient(315deg, rgba(216, 155, 33, 0.14), transparent 42%),
+    url("../img/background-mg-warm.svg") bottom center / 100% auto fixed no-repeat,
     var(--paper);
   color: var(--ink);
   font-family: Poppins, Arial, Helvetica, sans-serif;
+}
+
+html[data-theme="dark"] body {
+  background:
+    linear-gradient(135deg, rgba(0, 119, 182, 0.12), transparent 38%),
+    linear-gradient(315deg, rgba(216, 155, 33, 0.14), transparent 42%),
+    url("../img/background-mg-dark.svg") bottom center / 100% auto fixed no-repeat,
+    var(--paper);
 }
 
 button {
@@ -84,7 +93,9 @@ html.is-modal-open body {
 /* The home screen is a separate view, using the game's existing palette. */
 .game-shell.is-home { width: min(100%, 980px); }
 .is-home .game-layout, .game-home[hidden], .game-layout[hidden] { display: none; }
-.game-home { padding: clamp(20px, 5vh, 56px) 0 20px; }
+.game-home {
+  padding: clamp(20px, 5vh, 56px) 0 20px;
+}
 .home-heading { text-align: center; margin-bottom: clamp(24px, 5vh, 44px); }
 .home-heading h1 { margin: 0; color: var(--accent-dark); font-size: clamp(2rem, 5vw, 3.5rem); line-height: 1.15; }
 .home-heading p { margin: 12px 0 0; color: var(--muted); line-height: 1.6; }
