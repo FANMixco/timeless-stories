@@ -198,7 +198,9 @@
         "resetError": "Unable to clear saved data. Check your browser storage permissions and try again.",
         "resetCancel": "Cancel",
         "matchToasts": "Show messages when cards match",
-        "shortNames": "Use short card names"
+        "shortNames": "Use short card names",
+        "hardMode": "Hard mode",
+        "hardModeUnlocked": "Hard Mode has been unlocked! Enjoy a new experience."
       },
       "achievements": {
         "title": "Achievements",
@@ -244,13 +246,13 @@
           },
           "master": {
             "name": "Master Collector",
-            "description": "Discovered all currently available Original, Director’s Cut, and Online Exclusive Mirrors."
+            "description": "Discovered all currently available Original, Director's Cut, and Online Exclusive Mirrors."
           }
         }
       },
-      "seoTitle": "Folklore Memory Game | Timeless Stories",
+      "seoTitle": "Timeless Stories: Mirrors 🪞 | Timeless Stories",
       "seoDescription": "Play a free memory game matching Salvadoran legends with their Spanish counterparts. Discover folklore in English, Spanish, French, and Chinese.",
-      "title": "Memory game",
+      "title": "Timeless Stories: Mirrors 🪞",
       "subtitle": "Find each mirror pair from Spanish Mirrors.",
       "newGame": "New game",
       "confirmRestart": "Start a new game? Your progress in this round will be lost.",

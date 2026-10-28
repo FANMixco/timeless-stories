@@ -1,7 +1,7 @@
 import { createGameAudio } from "./memory-game/audio.mjs";
 import { createProgressStore } from "./memory-game/storage.mjs";
 import { createProgressView } from "./memory-game/progress.mjs";
-import { gameModes, createRoundClock, selectActivePairs, getDefeatReason, getModeStatus, normalizeElapsedSeconds } from "./memory-game/rules.mjs";
+import { buildGameModes, createRoundClock, selectActivePairs, getDefeatReason, getModeStatus, normalizeElapsedSeconds } from "./memory-game/rules.mjs";
 import { createModalNavigation } from "./memory-game/dialogs.mjs";
 import { createHomeScreen } from "./memory-game/home.mjs";
 
@@ -15,8 +15,14 @@ const matchToastsStorageKey = "timelessMemoryMatchToastsEnabled";
 const tipsStorageKey = "timelessMemoryTipsEnabled";
 const shortNamesStorageKey = "timelessMemoryShortNamesEnabled";
 const modeStorageKey = "timelessMemoryMode";
+const hardModeStorageKey = "timelessMemoryHardMode";
 const challengeStatsStorageKey = "timelessMemoryChallenges:v1";
 const recordsStorageKey = "timelessMemoryRecords:v1";
+const searchParams = new URLSearchParams(window.location.search);
+const isEmbedded = searchParams.get("embed") === "1";
+let hardModeEnabled = readHardModeEnabled();
+if (searchParams.get("hard") === "true") hardModeEnabled = true;
+let gameModes = buildGameModes(hardModeEnabled);
 const progressStore = createProgressStore({ getStorage: () => window.localStorage,
   recordsStorageKey, challengeStatsStorageKey, modeStorageKey, gameModes });
 let gameMode = readGameMode();
@@ -101,6 +107,7 @@ const soundToggle = document.getElementById("soundToggle");
 const matchToastsToggle = document.getElementById("matchToastsToggle");
 const tipsToggle = document.getElementById("tipsToggle");
 const shortNamesToggle = document.getElementById("shortNamesToggle");
+const hardModeToggle = document.getElementById("hardModeToggle");
 const shareButton = document.getElementById("shareButton");
 const hintButton = document.getElementById("hintButton");
 const topViewLegendsButton = document.getElementById("topViewLegendsButton");
@@ -129,9 +136,8 @@ const closeRarityButton = document.getElementById("closeRarityButton");
 const previewRewardButton = document.getElementById("previewRewardButton");
 const getCopyButton = document.getElementById("getCopyButton");
 const legendsGetCopyButton = document.getElementById("legendsGetCopyButton");
-const searchParams = new URLSearchParams(window.location.search);
-const isEmbedded = searchParams.get("embed") === "1";
 if (isEmbedded) gameMode = "classic";
+if (searchParams.get("hard") === "true") hardModeEnabled = true;
 let memoryGame = { pairs: [] };
 
 let firstCard = null;
@@ -148,6 +154,7 @@ let tutorialRunId = 0;
 let translations = null;
 let deck = [];
 let activePairs = [];
+let hardModeUnlockedShown = false;
 let currentLanguage = "en";
 let pendingLanguage = null;
 let pendingDataReset = false;
@@ -186,13 +193,12 @@ function requestHome() {
 const progressView = createProgressView({ document,
   getState: () => ({ memoryGame, achievements, completedPerformance, currentLanguage }),
   readPersonalRecords, readChallengeStats, getPairCount, getRecordConfiguration, formatTime,
-  setElementText, setElementHidden, achievementDefinitions, onTabChange: syncModalHistory,
-});
+  setElementText, setElementHidden, achievementDefinitions, onTabChange: syncModalHistory, gameModes });
 const roundClock = createRoundClock({ now: () => Date.now(),
   schedule: (callback, delay) => window.setInterval(callback, delay),
   cancel: id => window.clearInterval(id),
   onTick(seconds) {
-    elapsedSeconds = normalizeElapsedSeconds(gameMode, seconds);
+    elapsedSeconds = normalizeElapsedSeconds(gameModes, gameMode, seconds);
     updateStatus();
     endChallengeIfNeeded(false);
   },
@@ -360,6 +366,27 @@ function getRecordConfiguration(pairCount = getPairCount()) {
 }
 
 function readGameMode() { return progressStore.readGameMode(); }
+function readHardModeEnabled() {
+  try { return window.localStorage.getItem(hardModeStorageKey) === "true"; }
+  catch { return false; }
+}
+function readAchievement(id) {
+  try { return typeof readAchievements()[id] === "string"; }
+  catch { return false; }
+}
+function setHardModeEnabled(enabled) {
+  if (enabled && !readAchievement("master") && searchParams.get("hard") !== "true") return;
+  hardModeEnabled = enabled;
+  try { window.localStorage.setItem(hardModeStorageKey, String(enabled)); } catch {}
+  gameModes = buildGameModes(enabled);
+  progressStore = createProgressStore({ getStorage: () => window.localStorage,
+    recordsStorageKey, challengeStatsStorageKey, modeStorageKey, gameModes });
+  renderGameModes();
+  applyUiCopy();
+  if (settingsPanel.classList.contains("is-visible")) {
+    document.getElementById("hardModeToggle").disabled = !readAchievement("master");
+  }
+}
 function readChallengeStats() { return progressStore.readChallengeStats(); }
 
 function beginAttempt() {
@@ -384,8 +411,21 @@ function updateAchievementsVisibility() {
 
 function renderChallengeStats() { progressView.renderChallenges(); }
 function renderGameModes() {
-  setElementText(document.getElementById("activeGameMode"), memoryGame.modes[gameMode].name);
-  setElementHidden(document.getElementById("activeGameMode"), !gameModes[gameMode].record);
+  const modeConfig = gameModes[gameMode];
+  let modeName = memoryGame.modes[gameMode].name;
+  if (hardModeEnabled && gameMode === "limitedMoves") {
+    modeName = `${modeConfig.moves}-Move Challenge`;
+  }
+  setElementText(document.getElementById("activeGameMode"), modeName);
+  setElementHidden(document.getElementById("activeGameMode"), true);
+  document.getElementById("gameTitle").textContent = modeName;
+  const subtitle = document.querySelector(".game-subtitle");
+  if (hardModeEnabled && !isEmbedded) {
+    subtitle.textContent = memoryGame.settings.hardMode || "Hard mode";
+    setElementHidden(subtitle, false);
+  } else {
+    setElementHidden(subtitle, true);
+  }
 }
 
 function applyGameMode(mode) {
@@ -400,7 +440,7 @@ function applyGameMode(mode) {
 
 function endChallengeIfNeeded(attemptResolved) {
   if (gameCompleted || gameDefeated) return;
-  const reason = getDefeatReason({ mode: gameMode, seconds: elapsedSeconds, moves, matches,
+  const reason = getDefeatReason(gameModes, { mode: gameMode, seconds: elapsedSeconds, moves, matches,
     pairCount: getPairCount(), attemptResolved });
   if (reason) endGame(reason);
 }
@@ -478,6 +518,12 @@ function showNextAchievement() {
   setElementHidden(explore, !legendary);
   achievementPanel.classList.add("is-visible");
   playGameSound("achievement");
+  if (currentAchievement === "master" && !hardModeUnlockedShown) {
+    hardModeUnlockedShown = true;
+    setTimeout(() => {
+      showToast("", memoryGame.settings.hardModeUnlocked || "Hard Mode has been unlocked! Enjoy a new experience.");
+    }, 300);
+  }
   // Restart the brief celebration for each queued achievement.
   const card = achievementPanel.querySelector?.(".achievement-card");
   card?.getAnimations?.().forEach(animation => { animation.cancel(); animation.play(); });
@@ -934,6 +980,9 @@ function openSettings() {
   settingsPanel.classList.add("is-visible");
   soundToggle.checked = soundEnabled;
   tipsToggle.checked = tipsEnabled;
+  const hardToggle = document.getElementById("hardModeToggle");
+  setElementHidden(hardToggle.closest(".settings-row"), !readAchievement("master"));
+  hardToggle.checked = hardModeEnabled;
   closeSettingsButton.focus();
   syncModalScrollLock();
 }
@@ -1124,7 +1173,7 @@ function closeAboutPanel() {
 
 function applyUiCopy() {
   setElementHidden(document.getElementById("homeButton"), isEmbedded);
-  homeScreen.render(memoryGame);
+  homeScreen.render(memoryGame, { hardMode: hardModeEnabled });
   renderGameModes();
   setElementText(document.getElementById("tryAgainButton"), memoryGame.modes.tryAgain);
   setElementText(document.getElementById("gameOverRecordsButton"), memoryGame.records.viewRecords);
@@ -1141,6 +1190,7 @@ function applyUiCopy() {
   setElementText(document.getElementById("settingsMatchToastsLabel"), settingsCopy.matchToasts);
   applyMatchToastsPreference();
   setElementText(document.getElementById("settingsShortNamesLabel"), settingsCopy.shortNames);
+  setElementText(document.getElementById("settingsHardModeLabel"), settingsCopy.hardMode);
   setElementText(document.getElementById("resetGameButton"), settingsCopy.reset);
   setElementText(document.getElementById("resetGameWarning"), settingsCopy.resetWarning);
   setElementText(document.getElementById("settingsThemeLabel"), memoryGame.theme);
@@ -1166,7 +1216,6 @@ function applyUiCopy() {
   document.querySelector("meta[property='twitter:title']").content = seoTitle;
   document.querySelector("meta[property='twitter:description']").content = seoDescription;
   document.querySelector("link[rel='canonical']").href = getShareUrl();
-  document.getElementById("gameTitle").textContent = memoryGame.title || "";
   document.querySelector(".game-shell").setAttribute("aria-label", memoryGame.title || "");
   setText(".game-subtitle", memoryGame.subtitle);
   renderFooter();
@@ -1359,7 +1408,7 @@ function formatTime(totalSeconds) {
 }
 
 function updateStatus() {
-  const status = getModeStatus(gameMode, { seconds: elapsedSeconds, moves, completed: gameCompleted });
+  const status = getModeStatus(gameModes, gameMode, { seconds: elapsedSeconds, moves, completed: gameCompleted });
   movesValue.textContent = status.moves;
   matchesValue.textContent = `${matches}/${getPairCount()}`;
   timeValue.textContent = formatTime(status.seconds);
@@ -2147,6 +2196,11 @@ soundToggle.addEventListener("change", () => setSoundEnabled(soundToggle.checked
 matchToastsToggle.addEventListener("change", () => setMatchToastsEnabled(matchToastsToggle.checked));
 tipsToggle.addEventListener("change", () => setTipsEnabled(tipsToggle.checked));
 shortNamesToggle.addEventListener("change", () => setShortNamesEnabled(shortNamesToggle.checked));
+hardModeToggle.addEventListener("change", () => {
+  const enabled = hardModeToggle.checked;
+  setHardModeEnabled(enabled);
+  if (enabled && readAchievement("master")) window.location.reload();
+});
 achievementsButton.addEventListener("click", openAchievements);
 progressView.bind();
 winRecordsButton.addEventListener("click", openAchievements);

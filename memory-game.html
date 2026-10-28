@@ -7,33 +7,33 @@
     <meta name="theme-color" content="#111820" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-title" content="Memory Game" />
+    <meta name="apple-mobile-web-app-title" content="Timeless Stories: Mirrors 🪞" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <title>Folklore Memory Game | Timeless Stories</title>
+    <title>Timeless Stories: Mirrors 🪞 | Timeless Stories</title>
     <meta name="description" content="Play a free memory game matching Salvadoran legends with their Spanish counterparts. Discover folklore in English, Spanish, French, and Chinese." />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Folklore Memory Game | Timeless Stories" />
+    <meta property="og:title" content="Timeless Stories: Mirrors 🪞 | Timeless Stories" />
     <meta property="og:description" content="Play a free memory game matching Salvadoran legends with their Spanish counterparts. Discover folklore in English, Spanish, French, and Chinese." />
     <meta property="og:image" content="https://tstories.federiconavarrete.com/img/preview_memory.jpg" />
-    <meta property="og:url" content="https://tstories.federiconavarrete.com/memory-game.html" />
+    <meta property="og:url" content="https://tstories.federiconavarrete.com/memory-mvs51rcg.html" />
     <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:title" content="Folklore Memory Game | Timeless Stories" />
+    <meta property="twitter:title" content="Timeless Stories: Mirrors 🪞 | Timeless Stories" />
     <meta property="twitter:description" content="Play a free memory game matching Salvadoran legends with their Spanish counterparts. Discover folklore in English, Spanish, French, and Chinese." />
     <meta property="twitter:image" content="https://tstories.federiconavarrete.com/img/preview_memory.jpg" />
-    <link rel="canonical" href="https://tstories.federiconavarrete.com/memory-game.html" />
+    <link rel="canonical" href="https://tstories.federiconavarrete.com/memory-mvs51rcg.html" />
     <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
     <link rel="apple-touch-icon" sizes="180x180" href="img/favicons/apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="192x192" href="img/favicons/maskable_icon_x192.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="img/favicons/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="img/favicons/favicon-16x16.png" />
-    <link rel="manifest" href="memory-game.webmanifest" />
+    <link rel="manifest" href="memory-mvs51rcg.webmanifest" />
     <script type="application/ld+json" id="memoryGameSchema">
       {
         "@context": "https://schema.org",
         "@type": "Game",
         "name": "Timeless Stories - Memory Game",
         "description": "Match Salvadoran legends with their Spanish mirror legends in this multilingual memory game.",
-        "url": "https://tstories.federiconavarrete.com/memory-game.html",
+        "url": "https://tstories.federiconavarrete.com/memory-mvs51rcg.html",
         "image": "https://tstories.federiconavarrete.com/img/preview_memory.jpg",
         "inLanguage": ["en", "es", "fr", "zh"],
         "isAccessibleForFree": true,
@@ -56,8 +56,8 @@
         }
       }
     </script>
-    <link rel="stylesheet" href="css/icon-moon-memory.min.css?v=memory-0f777e9463dc" />
-    <link rel="stylesheet" href="css/memory-game.min.css?v=memory-0f777e9463dc" />
+    <link rel="stylesheet" href="css/icon-moon-memory.min.css?v=memory-mvs51rcg" />
+    <link rel="stylesheet" href="css/memory-game.min.css?v=memory-mvs51rcg" />
   </head>
   <body>
     <main class="game-shell is-home" aria-label="">
@@ -69,7 +69,7 @@
         <div class="home-modes">
           <button class="home-card" id="home-classic" type="button"><i class="icon-book" aria-hidden="true"></i><strong id="home-classic-name"></strong><span id="home-classic-description"></span></button>
           <button class="home-card" id="home-timeAttack" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6M12 2v3"/></svg><strong id="home-timeAttack-name"></strong><span id="home-timeAttack-description"></span></button>
-          <button class="home-card" id="home-limitedMoves" type="button"><span class="home-move-icon" aria-hidden="true">25</span><strong id="home-limitedMoves-name"></strong><span id="home-limitedMoves-description"></span></button>
+          <button class="home-card" id="home-limitedMoves" type="button"><span class="home-move-icon" id="home-limitedMoves-icon" aria-hidden="true">25</span><strong id="home-limitedMoves-name"></strong><span id="home-limitedMoves-description"></span></button>
         </div>
         <div class="home-tools">
           <button class="home-card home-tool" id="homeCollection" type="button" aria-haspopup="dialog"><i class="icon-book-open" aria-hidden="true"></i><strong id="homeCollectionLabel"></strong></button>
@@ -308,6 +308,10 @@
             <span id="settingsShortNamesLabel"></span>
             <input type="checkbox" id="shortNamesToggle" role="switch" />
           </label>
+          <label class="settings-row settings-hard-mode" for="hardModeToggle" hidden>
+            <span id="settingsHardModeLabel"></span>
+            <input type="checkbox" id="hardModeToggle" role="switch" />
+          </label>
           <fieldset class="settings-theme">
             <legend id="settingsThemeLabel"></legend>
             <div class="theme-options">
@@ -326,7 +330,7 @@
       <footer class="game-footer standalone-only" id="gameFooter"></footer>
     </main>
 
-    <script type="module" src="js/memory-game.min.js?v=memory-0f777e9463dc"></script>
+    <script type="module" src="js/memory-game.min.js?v=memory-mvs51rcg"></script>
     <script src="js/gAnalyticsIdleLoad.min.js" defer></script>
     <script src="js/pwa.min.js?v=20261021-pwa-registration" defer></script>
   </body>
