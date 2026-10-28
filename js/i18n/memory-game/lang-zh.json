@@ -198,7 +198,9 @@
         "resetError": "无法清除保存的数据。请检查浏览器的存储权限后重试。",
         "resetCancel": "取消",
         "matchToasts": "配对成功时显示消息",
-        "shortNames": "使用简短卡牌名称"
+        "shortNames": "使用简短卡牌名称",
+        "hardMode": "困难模式",
+        "hardModeUnlocked": "已解锁困难模式！享受全新体验。"
       },
       "achievements": {
         "title": "成就",
@@ -248,9 +250,9 @@
           }
         }
       },
-      "seoTitle": "民间传说记忆游戏 | Timeless Stories",
+      "seoTitle": "永恒的故事：镜子 🪞 | Timeless Stories",
       "seoDescription": "免费畅玩记忆游戏，将萨尔瓦多传说与对应的西班牙传说配对。支持中文、英语、西班牙语和法语，探索丰富的民间故事。",
-      "title": "记忆游戏",
+      "title": "永恒的故事：镜子 🪞",
       "subtitle": "从《西班牙镜子》中找出每一对镜子。",
       "newGame": "新游戏",
       "confirmRestart": "要开始新游戏吗？本局游戏进度将会丢失。",

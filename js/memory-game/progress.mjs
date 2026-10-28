@@ -1,9 +1,8 @@
-import { gameModes } from "./rules.mjs";
 import { validRecordNumber } from "./storage.mjs";
 
 // Render records and unlocks without owning gameplay or persistence.
 export function createProgressView({ document, getState, readPersonalRecords, readChallengeStats,
-  getPairCount, getRecordConfiguration, formatTime, setElementText, setElementHidden, achievementDefinitions, onTabChange }) {
+  getPairCount, getRecordConfiguration, formatTime, setElementText, setElementHidden, achievementDefinitions, onTabChange, gameModes }) {
   const achievementsPanel = document.getElementById("achievementsPanel");
   let progressTab = "records";
   let memoryGame, achievements, completedPerformance, currentLanguage, personalRecords;

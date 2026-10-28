@@ -1,19 +1,26 @@
 import { classicMode } from "./modes/classic.mjs";
-import { timeAttackMode } from "./modes/time-attack.mjs";
-import { limitedMovesMode } from "./modes/limited-moves.mjs";
+import { createTimeAttackMode } from "./modes/time-attack.mjs";
+import { createLimitedMovesMode } from "./modes/limited-moves.mjs";
 
-export const gameModes = Object.freeze({ classic: classicMode, timeAttack: timeAttackMode, limitedMoves: limitedMovesMode });
+export function buildGameModes(hard = false) {
+  return Object.freeze({
+    classic: classicMode,
+    timeAttack: createTimeAttackMode({ hard }),
+    limitedMoves: createLimitedMovesMode({ hard }),
+  });
+}
+
 export const challengeWarningThreshold = 5;
 
-export function getDefeatReason({ mode, ...round }) {
+export function getDefeatReason(gameModes, { mode, ...round }) {
   return gameModes[mode].getDefeatReason(round);
 }
 
-export function getModeStatus(mode, round) {
+export function getModeStatus(gameModes, mode, round) {
   return gameModes[mode].getStatus(round, challengeWarningThreshold);
 }
 
-export function normalizeElapsedSeconds(mode, seconds) {
+export function normalizeElapsedSeconds(gameModes, mode, seconds) {
   return Math.min(seconds, gameModes[mode].seconds ?? Infinity);
 }
 
