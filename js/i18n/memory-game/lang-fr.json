@@ -198,7 +198,9 @@
         "resetError": "Impossible d’effacer les données enregistrées. Vérifiez les autorisations de stockage du navigateur et réessayez.",
         "resetCancel": "Annuler",
         "matchToasts": "Afficher les messages quand les cartes correspondent",
-        "shortNames": "Utiliser les noms courts sur les cartes"
+        "shortNames": "Utiliser les noms courts sur les cartes",
+        "hardMode": "Mode difficile",
+        "hardModeUnlocked": "Le Mode difficile a été débloqué ! Profitez d'une nouvelle expérience."
       },
       "achievements": {
         "title": "Succès",
@@ -248,9 +250,9 @@
           }
         }
       },
-      "seoTitle": "Jeu de mémoire et de légendes | Timeless Stories",
+      "seoTitle": "Légendes Éternelles : Miroirs 🪞 | Timeless Stories",
       "seoDescription": "Jouez gratuitement et associez les légendes salvadoriennes à leurs équivalents espagnols. Découvrez le folklore en français, anglais, espagnol et chinois.",
-      "title": "Jeu de mémoire",
+      "title": "Légendes Éternelles : Miroirs 🪞",
       "subtitle": "Retrouvez chaque paire miroir de Miroirs Espagnols.",
       "newGame": "Nouvelle partie",
       "confirmRestart": "Commencer une nouvelle partie ? Votre progression dans cette partie sera perdue.",

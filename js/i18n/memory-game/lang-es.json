@@ -198,7 +198,9 @@
         "resetError": "No se han podido borrar los datos guardados. Revisa los permisos de almacenamiento del navegador e inténtalo de nuevo.",
         "resetCancel": "Cancelar",
         "matchToasts": "Mostrar mensajes al emparejar cartas",
-        "shortNames": "Usar nombres cortos en las cartas"
+        "shortNames": "Usar nombres cortos en las cartas",
+        "hardMode": "Modo Difícil",
+        "hardModeUnlocked": "¡Se ha desbloqueado el Modo Difícil! Disfruta de una nueva experiencia."
       },
       "achievements": {
         "title": "Logros",
@@ -248,9 +250,9 @@
           }
         }
       },
-      "seoTitle": "Juego de memoria de leyendas | Timeless Stories",
+      "seoTitle": "Historias Eternas: Espejos 🪞 | Timeless Stories",
       "seoDescription": "Juega gratis y empareja leyendas salvadoreñas con sus equivalentes españolas. Descubre el folclore en español, inglés, francés y chino.",
-      "title": "Juego de memoria",
+      "title": "Historias Eternas: Espejos 🪞",
       "subtitle": "Encuentra cada pareja espejo de Espejos Españoles.",
       "newGame": "Nuevo juego",
       "confirmRestart": "¿Quieres empezar un nuevo juego? Se perderá tu progreso en esta partida.",

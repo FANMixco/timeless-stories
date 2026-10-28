@@ -59,17 +59,31 @@ export function createHomeScreen({ document, modes, onChoose, onSettings, onReco
       home.hidden = true;
       document.querySelector(".game-layout").hidden = false;
     },
-    render(copy) {
+    render(copy, options = {}) {
+      const hardMode = Boolean(options.hardMode);
       text("homeTitle", copy.title);
-      text("homeSubtitle", copy.subtitle);
+      text("homeSubtitle", hardMode ? copy.settings.hardMode : copy.subtitle);
       text("homeSettingsLabel", copy.settings.title);
       text("homeRecordsLabel", copy.progress.records);
       text("homeCollectionLabel", copy.collection.title);
       document.getElementById("homeButton").setAttribute("aria-label", copy.home.chooseMode);
       document.getElementById("homeButton").title = copy.home.chooseMode;
       for (const mode of Object.keys(modes)) {
-        text(`home-${mode}-name`, copy.modes[mode].name);
-        text(`home-${mode}-description`, copy.modes[mode].description);
+        const modeConfig = modes[mode];
+        let name = copy.modes[mode].name;
+        let description = copy.modes[mode].description;
+        if (hardMode) {
+          if (mode === "timeAttack") description = `Match all pairs in ${modeConfig.seconds} seconds.`;
+          else if (mode === "limitedMoves") {
+            name = `${modeConfig.moves}-Move Challenge`;
+            description = `Match all pairs within ${modeConfig.moves} moves.`;
+          }
+        }
+        text(`home-${mode}-name`, name);
+        text(`home-${mode}-description`, description);
+      }
+      if (hardMode && modes.limitedMoves) {
+        document.getElementById("home-limitedMoves-icon").textContent = modes.limitedMoves.moves;
       }
     },
     bind() {
