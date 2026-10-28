@@ -61,7 +61,7 @@ export function createHomeScreen({ document, modes, onChoose, onSettings, onReco
     },
     render(copy, options = {}) {
       const hardMode = Boolean(options.hardMode);
-      text("homeTitle", copy.title);
+      document.getElementById("homeTitle").innerHTML = copy.title.replace(": ", ": <br>");
       text("homeSubtitle", hardMode ? copy.settings.hardMode : copy.subtitle);
       text("homeSettingsLabel", copy.settings.title);
       text("homeRecordsLabel", copy.progress.records);
