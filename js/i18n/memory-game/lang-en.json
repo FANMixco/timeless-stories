@@ -180,6 +180,16 @@
       "yukiOnna": {
         "name": "Yuki-onna",
         "desc": "Beautiful snow spirit who can freeze travellers."
+      },
+      "whiteLadyOfLevice": {
+        "name": "The White Lady of Levice",
+        "shortName": "White Lady",
+        "desc": "Wrongly executed, a woman haunts Levice Castle searching for her husband and children."
+      },
+      "headlessPremonstratensianMonk": {
+        "name": "The Headless Premonstratensian Monk",
+        "shortName": "Headless Monk",
+        "desc": "A monk who neglected a dying man’s last rites rides headless through Prague at night."
       }
     },
     "country1": "El Salvador 🇸🇻",
@@ -200,7 +210,8 @@
         "matchToasts": "Show messages when cards match",
         "shortNames": "Use short card names",
         "hardMode": "Hard mode",
-        "hardModeUnlocked": "Hard Mode has been unlocked! Enjoy a new experience."
+        "hardModeUnlocked": "Hard Mode has been unlocked! Enjoy a new experience.",
+        "music": "Background music"
       },
       "achievements": {
         "title": "Achievements",
@@ -620,6 +631,30 @@
             "rarity": "ultra-rare",
             "comparison": "fatalLures"
           }
+        },
+        {
+          "weight": 1,
+          "replaceSource": "weepingWoman",
+          "pair": {
+            "source": "weepingWoman",
+            "mirror": "whiteLadyOfLevice",
+            "mirrorOrigin": "slovakia",
+            "icon": "cry",
+            "rarity": "ultra-rare",
+            "comparison": "echoesOfTheDead"
+          }
+        },
+        {
+          "weight": 1,
+          "replaceSource": "headlessPriest",
+          "pair": {
+            "source": "headlessPriest",
+            "mirror": "headlessPremonstratensianMonk",
+            "mirrorOrigin": "czechia",
+            "icon": "cross",
+            "rarity": "ultra-rare",
+            "comparison": "restlessSpirits"
+          }
         }
       ],
       "theme": "Color mode",
@@ -675,7 +710,8 @@
         "storiesWebsite": "Timeless Stories",
         "soundCreditsTitle": "Sound effect credits",
         "soundCredit": "Sound effect by {author} from Pixabay.",
-        "musicCredit": "Music by {author} from {source}"
+        "musicCredit": "Music by {author} from {source}",
+        "backgroundMusicCredit": "“Over Ancient Waters” by Eric Matyas — "
       },
       "records": {
         "title": "Personal Records",
@@ -755,6 +791,8 @@
     "country18": "United Kingdom 🇬🇧",
     "country19": "China 🇨🇳",
     "country20": "Canada 🇨🇦",
-    "country21": "Japan 🇯🇵"
+    "country21": "Japan 🇯🇵",
+    "country22": "Slovakia 🇸🇰",
+    "country23": "Czechia 🇨🇿"
   }
 }

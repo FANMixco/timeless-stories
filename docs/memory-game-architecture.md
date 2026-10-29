@@ -14,6 +14,7 @@ no framework, runtime dependency or custom JavaScript bundler.
 | `js/memory-game/modes/limited-moves.mjs` | The move limit, move-counter/warning presentation, resolved-attempt defeat and fewest-moves metric. |
 | `js/memory-game/storage.mjs` | Validates saved Classic/challenge statistics and records attempts/results. Preserves existing local-storage keys and reads fresh data before updates. |
 | `js/memory-game/audio.mjs` | Owns AudioContext, buffers, playback channels, fades, priorities and cancellation of pending sounds. |
+| `js/memory-game/background-music.mjs` | Streams the looping soundtrack after interaction, independently of effects, and pauses it when disabled or hidden. |
 | `js/memory-game/progress.mjs` | Renders records, completion comparisons and achievements; owns Records/Achievements tab state and keyboard navigation. Reads application state through a supplied snapshot. |
 | `js/memory-game/home.mjs` | Renders the mode selection screen and binds its five cards. Receives callbacks for starting a mode, Settings, Records and returning home; the entrypoint owns round cleanup and confirmation. |
 | `js/memory-game/dialogs.mjs` | Owns browser-history synchronization, pending traversal and restoration suppression. The entrypoint supplies the game-specific dialog snapshot and restore behavior. |

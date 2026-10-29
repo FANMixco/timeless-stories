@@ -180,6 +180,16 @@
       "yukiOnna": {
         "name": "雪女",
         "desc": "能将旅人冻僵的美丽雪之精灵。"
+      },
+      "whiteLadyOfLevice": {
+        "name": "莱维采的白衣女士",
+        "shortName": "白衣女士",
+        "desc": "一位被冤枉处决的女子化为幽灵，在莱维采城堡寻找丈夫和孩子。"
+      },
+      "headlessPremonstratensianMonk": {
+        "name": "无头的普雷蒙特雷会修士",
+        "shortName": "无头修士",
+        "desc": "一位忽略临终者最后圣礼的修士，被诅咒每晚无头骑行于布拉格。"
       }
     },
     "country1": "萨尔瓦多 🇸🇻",
@@ -200,7 +210,8 @@
         "matchToasts": "配对成功时显示消息",
         "shortNames": "使用简短卡牌名称",
         "hardMode": "困难模式",
-        "hardModeUnlocked": "已解锁困难模式！享受全新体验。"
+        "hardModeUnlocked": "已解锁困难模式！享受全新体验。",
+        "music": "背景音乐"
       },
       "achievements": {
         "title": "成就",
@@ -620,6 +631,30 @@
             "rarity": "ultra-rare",
             "comparison": "fatalLures"
           }
+        },
+        {
+          "weight": 1,
+          "replaceSource": "weepingWoman",
+          "pair": {
+            "source": "weepingWoman",
+            "mirror": "whiteLadyOfLevice",
+            "mirrorOrigin": "slovakia",
+            "icon": "cry",
+            "rarity": "ultra-rare",
+            "comparison": "echoesOfTheDead"
+          }
+        },
+        {
+          "weight": 1,
+          "replaceSource": "headlessPriest",
+          "pair": {
+            "source": "headlessPriest",
+            "mirror": "headlessPremonstratensianMonk",
+            "mirrorOrigin": "czechia",
+            "icon": "cross",
+            "rarity": "ultra-rare",
+            "comparison": "restlessSpirits"
+          }
         }
       ],
       "theme": "颜色模式",
@@ -675,7 +710,8 @@
         "storiesWebsite": "永恒的故事",
         "soundCreditsTitle": "音效鸣谢",
         "soundCredit": "音效由 {author} 提供，来自 Pixabay。",
-        "musicCredit": "音乐由 {author} 创作，来自 {source}"
+        "musicCredit": "音乐由 {author} 创作，来自 {source}",
+        "backgroundMusicCredit": "《Over Ancient Waters》，Eric Matyas 作曲 — "
       },
       "records": {
         "title": "个人纪录",
@@ -755,6 +791,8 @@
     "country18": "英国 🇬🇧",
     "country19": "中国 🇨🇳",
     "country20": "加拿大 🇨🇦",
-    "country21": "日本 🇯🇵"
+    "country21": "日本 🇯🇵",
+    "country22": "斯洛伐克 🇸🇰",
+    "country23": "捷克 🇨🇿"
   }
 }

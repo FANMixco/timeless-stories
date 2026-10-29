@@ -1,4 +1,5 @@
 import { createGameAudio } from "./memory-game/audio.mjs";
+import { createBackgroundMusic } from "./memory-game/background-music.mjs";
 import { createProgressStore } from "./memory-game/storage.mjs";
 import { createProgressView } from "./memory-game/progress.mjs";
 import { buildGameModes, createRoundClock, selectActivePairs, getDefeatReason, getModeStatus, normalizeElapsedSeconds } from "./memory-game/rules.mjs";
@@ -11,6 +12,7 @@ const themeStorageKey = "timelessStoriesColorMode";
 const introStorageKey = "timelessMemoryIntroSeen";
 const collectionStorageKey = "timelessMemoryCollection";
 const soundStorageKey = "timelessMemorySoundEnabled";
+const musicStorageKey = "timelessMemoryMusicEnabled";
 const matchToastsStorageKey = "timelessMemoryMatchToastsEnabled";
 const tipsStorageKey = "timelessMemoryTipsEnabled";
 const shortNamesStorageKey = "timelessMemoryShortNamesEnabled";
@@ -36,6 +38,12 @@ let tipsEnabled = readTipsEnabled();
 let shortNamesEnabled = readShortNamesEnabled();
 const soundEffectCreators = ["ALEXIS_GAMING_CAM", "freesound_community", "Yodguard", "Game Studio"];
 let soundEnabled = readSoundEnabled();
+let musicEnabled = readMusicEnabled();
+const backgroundMusic = createBackgroundMusic({
+  createAudio: source => typeof window.Audio === "function" ? new window.Audio(source) : null,
+  isEnabled: () => musicEnabled,
+  isHidden: () => document.visibilityState === "hidden",
+});
 const audio = createGameAudio({
   getAudioContext: () => window.AudioContext || window.webkitAudioContext,
   fetch: (...args) => fetch(...args),
@@ -104,6 +112,7 @@ const settingsButton = document.getElementById("settingsButton");
 const settingsPanel = document.getElementById("settingsPanel");
 const closeSettingsButton = document.getElementById("closeSettingsButton");
 const soundToggle = document.getElementById("soundToggle");
+const musicToggle = document.getElementById("musicToggle");
 const matchToastsToggle = document.getElementById("matchToastsToggle");
 const tipsToggle = document.getElementById("tipsToggle");
 const shortNamesToggle = document.getElementById("shortNamesToggle");
@@ -952,8 +961,21 @@ function setTipsEnabled(enabled) {
 }
 
 function readShortNamesEnabled() {
-  try { return window.localStorage.getItem(shortNamesStorageKey) === "true"; }
-  catch { return false; }
+  try { return window.localStorage.getItem(shortNamesStorageKey) !== "false"; }
+  catch { return true; }
+}
+
+function readMusicEnabled() {
+  try { return window.localStorage.getItem(musicStorageKey) !== "false"; }
+  catch { return true; }
+}
+
+function setMusicEnabled(enabled) {
+  musicEnabled = enabled;
+  musicToggle.checked = enabled;
+  try { window.localStorage.setItem(musicStorageKey, String(enabled)); } catch {}
+  if (enabled) backgroundMusic.prepare();
+  else backgroundMusic.pause();
 }
 
 function applyShortNamesPreference() {
@@ -984,6 +1006,7 @@ function openSettings() {
   settingsPanel.classList.add("is-visible");
   soundToggle.checked = soundEnabled;
   tipsToggle.checked = tipsEnabled;
+  musicToggle.checked = musicEnabled;
   const hardToggle = document.getElementById("hardModeToggle");
   setElementHidden(hardToggle.closest(".settings-row"), !readAchievement("master"));
   hardToggle.checked = hardModeEnabled;
@@ -1159,6 +1182,14 @@ function renderAbout() {
     musicCredit.append(part === "{author}" ? authorLink : part === "{source}" ? pixabayLink : document.createTextNode(part));
   }
   document.getElementById("aboutSoundCreditsList").append(musicCredit);
+  const backgroundCredit = document.createElement("li");
+  const soundimageLink = document.createElement("a");
+  soundimageLink.textContent = "www.soundimage.org";
+  soundimageLink.href = "https://soundimage.org/";
+  soundimageLink.target = "_blank";
+  soundimageLink.rel = "noopener noreferrer";
+  backgroundCredit.append(document.createTextNode(copy.backgroundMusicCredit || '“Over Ancient Waters” by Eric Matyas — '), soundimageLink);
+  document.getElementById("aboutSoundCreditsList").append(backgroundCredit);
 }
 
 function openAboutPanel() {
@@ -1190,6 +1221,8 @@ function applyUiCopy() {
   setElementText(document.getElementById("settingsTitle"), settingsCopy.title);
   setElementText(document.getElementById("settingsLanguageLabel"), memoryGame.language);
   setElementText(document.getElementById("settingsSoundLabel"), settingsCopy.sounds);
+  setElementText(document.getElementById("settingsMusicLabel"), settingsCopy.music || "Background music");
+  musicToggle.checked = musicEnabled;
   setElementText(document.getElementById("settingsTipsLabel"), settingsCopy.tips);
   setElementText(document.getElementById("settingsMatchToastsLabel"), settingsCopy.matchToasts);
   applyMatchToastsPreference();
@@ -1294,6 +1327,8 @@ function getOriginLabel(side) {
     china: translations?.country19 || "",
     canada: translations?.country20 || "",
     japan: translations?.country21 || "",
+    slovakia: translations?.country22 || "",
+    czechia: translations?.country23 || "",
   };
 
   return originLabels[side] || "";
@@ -2043,6 +2078,7 @@ document.addEventListener("click", (event) => {
   }
 });
 document.addEventListener("keydown", (event) => {
+  backgroundMusic.prepare();
   if (event.key === "Tab" && (gameOverPanel.classList.contains("is-visible") || settingsPanel.classList.contains("is-visible") || achievementPanel.classList.contains("is-visible") || achievementsPanel.classList.contains("is-visible") || restartPanel.classList.contains("is-visible") || aboutPanel.classList.contains("is-visible") || collectionPanel.classList.contains("is-visible"))) {
     const panel = achievementPanel.classList.contains("is-visible") ? achievementPanel
       : restartPanel.classList.contains("is-visible") ? restartPanel
@@ -2135,6 +2171,11 @@ window.addEventListener("storage", (event) => {
     soundToggle.checked = soundEnabled;
     if (!soundEnabled) stopGameSounds();
   }
+  if (event.key === musicStorageKey) {
+    musicEnabled = readMusicEnabled();
+    musicToggle.checked = musicEnabled;
+    backgroundMusic.sync();
+  }
   if (event.key === tipsStorageKey) {
     tipsEnabled = readTipsEnabled();
     tipsToggle.checked = tipsEnabled;
@@ -2149,11 +2190,13 @@ window.addEventListener("beforeunload", warnBeforeLeaving);
 function resumeGamePage() {
   refreshGameTime();
   refreshModalScrollLock();
+  backgroundMusic.sync();
 }
 window.addEventListener("pageshow", resumeGamePage);
 window.addEventListener("focus", resumeGamePage);
 document.addEventListener("visibilitychange", () => {
   refreshGameTime();
+  backgroundMusic.sync();
   if (document.visibilityState === "visible") refreshModalScrollLock();
   else stopGameSounds();
 });
@@ -2197,6 +2240,9 @@ settingsPanel.addEventListener("click", event => {
   if (event.target === settingsPanel) closeSettings();
 });
 soundToggle.addEventListener("change", () => setSoundEnabled(soundToggle.checked));
+musicToggle.addEventListener("change", () => setMusicEnabled(musicToggle.checked));
+document.addEventListener("pointerdown", () => backgroundMusic.prepare(), { passive: true });
+window.addEventListener("pagehide", () => backgroundMusic.pause());
 matchToastsToggle.addEventListener("change", () => setMatchToastsEnabled(matchToastsToggle.checked));
 tipsToggle.addEventListener("change", () => setTipsEnabled(tipsToggle.checked));
 shortNamesToggle.addEventListener("change", () => setShortNamesEnabled(shortNamesToggle.checked));

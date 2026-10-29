@@ -180,6 +180,16 @@
       "yukiOnna": {
         "name": "Yuki-onna",
         "desc": "Bel esprit des neiges qui peut geler les voyageurs."
+      },
+      "whiteLadyOfLevice": {
+        "name": "La Dame blanche de Levice",
+        "shortName": "Dame de Levice",
+        "desc": "Exécutée à tort, une femme hante le château de Levice à la recherche de son mari et de ses enfants."
+      },
+      "headlessPremonstratensianMonk": {
+        "name": "Le moine prémontré sans tête",
+        "shortName": "Moine sans tête",
+        "desc": "Un moine qui a négligé les derniers sacrements d’un mourant chevauche sans tête dans Prague la nuit."
       }
     },
     "country1": "El Salvador 🇸🇻",
@@ -200,7 +210,8 @@
         "matchToasts": "Afficher les messages quand les cartes correspondent",
         "shortNames": "Utiliser les noms courts sur les cartes",
         "hardMode": "Mode difficile",
-        "hardModeUnlocked": "Le Mode difficile a été débloqué ! Profitez d'une nouvelle expérience."
+        "hardModeUnlocked": "Le Mode difficile a été débloqué ! Profitez d'une nouvelle expérience.",
+        "music": "Musique de fond"
       },
       "achievements": {
         "title": "Succès",
@@ -620,6 +631,30 @@
             "rarity": "ultra-rare",
             "comparison": "fatalLures"
           }
+        },
+        {
+          "weight": 1,
+          "replaceSource": "weepingWoman",
+          "pair": {
+            "source": "weepingWoman",
+            "mirror": "whiteLadyOfLevice",
+            "mirrorOrigin": "slovakia",
+            "icon": "cry",
+            "rarity": "ultra-rare",
+            "comparison": "echoesOfTheDead"
+          }
+        },
+        {
+          "weight": 1,
+          "replaceSource": "headlessPriest",
+          "pair": {
+            "source": "headlessPriest",
+            "mirror": "headlessPremonstratensianMonk",
+            "mirrorOrigin": "czechia",
+            "icon": "cross",
+            "rarity": "ultra-rare",
+            "comparison": "restlessSpirits"
+          }
         }
       ],
       "theme": "Mode couleur",
@@ -675,7 +710,8 @@
         "storiesWebsite": "Légendes Éternelles",
         "soundCreditsTitle": "Crédits des effets sonores",
         "soundCredit": "Effet sonore de {author} sur Pixabay.",
-        "musicCredit": "Musique de {author} sur {source}"
+        "musicCredit": "Musique de {author} sur {source}",
+        "backgroundMusicCredit": "« Over Ancient Waters », par Eric Matyas — "
       },
       "records": {
         "title": "Records personnels",
@@ -755,6 +791,8 @@
     "country18": "Royaume-Uni 🇬🇧",
     "country19": "Chine 🇨🇳",
     "country20": "Canada 🇨🇦",
-    "country21": "Japon 🇯🇵"
+    "country21": "Japon 🇯🇵",
+    "country22": "Slovaquie 🇸🇰",
+    "country23": "Tchéquie 🇨🇿"
   }
 }
