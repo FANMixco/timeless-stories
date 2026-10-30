@@ -67,6 +67,35 @@ button {
   font: inherit;
 }
 
+/* Avoid accidental selection and double-tap delays on game controls while
+   preserving native scrolling and selectable reading content. */
+button,
+.game-button,
+.home-tool,
+.settings-row,
+.theme-option {
+  -webkit-user-select: none;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.home-heading,
+.game-top,
+.status-grid,
+.legend-toast,
+.game-footer,
+[role="dialog"] :is(h2, h3, h4),
+.settings-card,
+.rarity-card,
+.win-card,
+#collectionPanel,
+#achievementsPanel,
+.legends-footer,
+.about-eyebrow {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
 .game-shell {
   width: min(100%, 900px);
   margin: 0 auto;
