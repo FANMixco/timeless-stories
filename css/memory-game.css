@@ -110,6 +110,8 @@ html.is-modal-open body {
 .home-tools { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin: 20px auto 0; }
 .home-tool { flex-direction: row; align-items: center; justify-content: center; padding: 18px; }
 .home-tool > i, .home-tool > svg { width: 26px; height: 26px; font-size: 26px; }
+#homeRateApp { grid-column: 2; text-decoration: none; }
+#homeRateApp[hidden] { display: none; }
 .is-home .game-footer { margin-top: 24px; text-align: center; font-weight: 700; }
 /* Modes and records have a permanent home; playing keeps only round controls. */
 #homeButton svg { display: block; width: 1em; height: 1em; flex-shrink: 0; }
@@ -123,6 +125,7 @@ html.is-modal-open body {
   .home-card:not(.home-tool) > span:not(.home-move-icon) { grid-column: 2; }
   .home-tools { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 16px; }
   .home-tools #homeSettings { grid-column: 1 / -1; }
+  .home-tools:has(#homeRateApp:not([hidden])) #homeSettings { grid-column: 1; }
   .home-tool { gap: 10px; padding: 16px 10px; }
   .home-tool strong { font-size: 1rem; }
 }
@@ -1009,6 +1012,17 @@ html[data-theme="dark"] .card[data-rarity="tutorial"] .character-icon {
   grid-template-columns: 1fr;
 }
 
+/* Tutorial hints belong to the board at every viewport size, including
+   portrait tablets that do not use the desktop two-column layout. */
+.board-area:has(.board.is-intro) .legend-toast {
+  position: relative;
+  inset: auto;
+  width: min(100%, 420px);
+  margin: 0 auto 16px;
+  transform: none;
+  animation: board-toast-in 180ms ease both;
+}
+
 .legend-toast button[hidden] {
   display: none;
 }
@@ -1395,10 +1409,20 @@ html[data-theme="dark"] .card.is-matched .card-front {
     gap: clamp(16px, 2vw, 28px);
   }
 
+  /* Keep controls anchored when the tutorial becomes a full board. */
+  .game-shell:not(.is-home) {
+    align-items: start;
+  }
+
   .board-area {
     position: relative;
     display: grid;
     gap: 16px;
+  }
+
+  .board-area:has(.board.is-intro) {
+    min-height: calc(100dvh - 44px - env(safe-area-inset-bottom, 0px));
+    align-content: center;
   }
 
   .board-area .legend-toast {
@@ -1408,6 +1432,10 @@ html[data-theme="dark"] .card.is-matched .card-front {
     justify-self: center;
     transform: none;
     animation: board-toast-in 180ms ease both;
+  }
+
+  .board-area:has(.board.is-intro) .legend-toast {
+    margin: 0;
   }
 
   /* Keep the tutorial hint above its two cards, but overlay notifications on

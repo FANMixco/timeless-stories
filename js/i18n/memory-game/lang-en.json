@@ -770,6 +770,7 @@
       },
       "home": {
         "chooseMode": "Game modes",
+        "rateApp": "Rate the game",
         "confirmReturn": "Return to game modes? Your progress in this round will be lost."
       }
     },

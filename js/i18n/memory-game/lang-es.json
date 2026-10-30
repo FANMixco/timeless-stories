@@ -770,6 +770,7 @@
       },
       "home": {
         "chooseMode": "Modos de juego",
+        "rateApp": "Valora el juego",
         "confirmReturn": "¿Volver a los modos de juego? Perderás el progreso de esta partida."
       }
     },

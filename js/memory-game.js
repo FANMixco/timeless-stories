@@ -22,6 +22,10 @@ const challengeStatsStorageKey = "timelessMemoryChallenges:v1";
 const recordsStorageKey = "timelessMemoryRecords:v1";
 const searchParams = new URLSearchParams(window.location.search);
 const isEmbedded = searchParams.get("embed") === "1";
+const storeVersion = searchParams.get("version");
+const ratingUrl = storeVersion === "play"
+  ? "https://play.google.com/store/apps/details?id=com.federiconavarrete.tstories.twa"
+  : storeVersion === "microsoft" ? "https://apps.microsoft.com/detail/9PL6H4P9JHGX" : null;
 let hardModeEnabled = readHardModeEnabled();
 if (searchParams.get("hard") === "true") hardModeEnabled = true;
 let gameModes = buildGameModes(hardModeEnabled);
@@ -1208,7 +1212,7 @@ function closeAboutPanel() {
 
 function applyUiCopy() {
   setElementHidden(document.getElementById("homeButton"), isEmbedded);
-  homeScreen.render(memoryGame, { hardMode: hardModeEnabled });
+  homeScreen.render(memoryGame, { hardMode: hardModeEnabled, ratingUrl });
   renderGameModes();
   setElementText(document.getElementById("tryAgainButton"), memoryGame.modes.tryAgain);
   setElementText(document.getElementById("gameOverRecordsButton"), memoryGame.records.viewRecords);

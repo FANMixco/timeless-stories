@@ -770,6 +770,7 @@
       },
       "home": {
         "chooseMode": "游戏模式",
+        "rateApp": "为游戏评分",
         "confirmReturn": "返回游戏模式选择？本局进度将丢失。"
       }
     },

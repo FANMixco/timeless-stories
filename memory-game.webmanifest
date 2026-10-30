@@ -1,6 +1,6 @@
 {
-  "name": "Timeless Stories - Memory Game",
-  "short_name": "Memory Game",
+  "name": "Timeless Stories: Mirrors",
+  "short_name": "Mirrors",
   "id": "/memory-game.html",
   "scope": "/memory-game.html",
   "start_url": "/memory-game.html?source=pwa",
@@ -30,7 +30,7 @@
       "src": "img/favicons/android-chrome-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any"
+      "purpose": "any monochrome"
     }
   ],
   "screenshots": [

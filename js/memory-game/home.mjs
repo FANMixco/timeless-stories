@@ -66,6 +66,10 @@ export function createHomeScreen({ document, modes, onChoose, onSettings, onReco
       text("homeSettingsLabel", copy.settings.title);
       text("homeRecordsLabel", copy.progress.records);
       text("homeCollectionLabel", copy.collection.title);
+      const rateApp = document.getElementById("homeRateApp");
+      rateApp.hidden = !options.ratingUrl;
+      if (options.ratingUrl) rateApp.setAttribute("href", options.ratingUrl);
+      text("homeRateAppLabel", copy.home.rateApp);
       document.getElementById("homeButton").setAttribute("aria-label", copy.home.chooseMode);
       document.getElementById("homeButton").title = copy.home.chooseMode;
       for (const mode of Object.keys(modes)) {
