@@ -176,7 +176,16 @@ let modalDetailPair = null;
 let modalRarity = null;
 const modalPanels = [winPanel, gameOverPanel, collectionPanel, legendsPanel, rarityPanel, aboutPanel, restartPanel, achievementsPanel, achievementPanel, settingsPanel];
 
+// Move focus during screen navigation only after keyboard interaction. Dialogs
+// retain their own focus management regardless of the input method.
+let keyboardNavigation = false;
+function focusNavigationControl(element) {
+  if (keyboardNavigation) element.focus({ preventScroll: true });
+  else if (document.activeElement === element) element.blur();
+}
+
 const homeScreen = createHomeScreen({ document, modes: gameModes,
+  focusNavigationControl,
   reduceMotion: () => Boolean(window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches),
   onChoose: applyGameMode,
   onSettings: openSettings, onRecords: openAchievements, onCollection: openCollection, onReturn: requestHome
@@ -448,7 +457,7 @@ function applyGameMode(mode) {
   homeScreen.hide();
   renderGameModes();
   startGame();
-  newGameButton.focus({ preventScroll: true });
+  focusNavigationControl(newGameButton);
 }
 
 function endChallengeIfNeeded(attemptResolved) {
@@ -1923,7 +1932,7 @@ function startFreshGame() {
   newGame();
   // Reset an already-scrolled board after its previous match description and
   // dialogs disappear. Preserve the user's scroll position on ordinary resume.
-  newGameButton.focus({ preventScroll: true });
+  focusNavigationControl(newGameButton);
   window.scrollTo({ top: 0, left: 0, behavior: "auto" });
 }
 
@@ -2082,6 +2091,7 @@ document.addEventListener("click", (event) => {
   }
 });
 document.addEventListener("keydown", (event) => {
+  if (!["Shift", "Control", "Alt", "Meta"].includes(event.key)) keyboardNavigation = true;
   backgroundMusic.prepare();
   if (event.key === "Tab" && (gameOverPanel.classList.contains("is-visible") || settingsPanel.classList.contains("is-visible") || achievementPanel.classList.contains("is-visible") || achievementsPanel.classList.contains("is-visible") || restartPanel.classList.contains("is-visible") || aboutPanel.classList.contains("is-visible") || collectionPanel.classList.contains("is-visible"))) {
     const panel = achievementPanel.classList.contains("is-visible") ? achievementPanel
@@ -2245,7 +2255,10 @@ settingsPanel.addEventListener("click", event => {
 });
 soundToggle.addEventListener("change", () => setSoundEnabled(soundToggle.checked));
 musicToggle.addEventListener("change", () => setMusicEnabled(musicToggle.checked));
-document.addEventListener("pointerdown", () => backgroundMusic.prepare(), { passive: true });
+document.addEventListener("pointerdown", () => {
+  keyboardNavigation = false;
+  backgroundMusic.prepare();
+}, { passive: true });
 window.addEventListener("pagehide", () => backgroundMusic.pause());
 matchToastsToggle.addEventListener("change", () => setMatchToastsEnabled(matchToastsToggle.checked));
 tipsToggle.addEventListener("change", () => setTipsEnabled(tipsToggle.checked));

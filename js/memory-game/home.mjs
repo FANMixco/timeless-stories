@@ -1,5 +1,5 @@
 // The start screen owns presentation; the application owns round transitions.
-export function createHomeScreen({ document, modes, onChoose, onSettings, onRecords, onCollection, onReturn, reduceMotion = () => false }) {
+export function createHomeScreen({ document, modes, onChoose, onSettings, onRecords, onCollection, onReturn, reduceMotion = () => false, focusNavigationControl = element => element.focus({ preventScroll: true }) }) {
   const shell = document.querySelector(".game-shell");
   const home = document.getElementById("gameHome");
   let visible = true;
@@ -50,7 +50,7 @@ export function createHomeScreen({ document, modes, onChoose, onSettings, onReco
       shell.classList.add("is-home");
       home.hidden = false;
       document.querySelector(".game-layout").hidden = true;
-      document.getElementById(`home-${mode}`).focus({ preventScroll: true });
+      focusNavigationControl(document.getElementById(`home-${mode}`));
       if (returning) animateEntrance(home);
     },
     hide() {
