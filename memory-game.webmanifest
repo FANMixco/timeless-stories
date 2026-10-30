@@ -5,6 +5,27 @@
   "scope": "/memory-game.html",
   "start_url": "/memory-game.html?source=pwa",
   "orientation": "any",
+  "shortcuts": [
+    {
+      "name": "Classic",
+      "description": "Play without limits.",
+      "url": "/memory-game.html?source=shortcut&mode=classic",
+      "icons": [{ "src": "img/favicons/android-chrome-192x192.png", "sizes": "192x192", "type": "image/png" }]
+    },
+    {
+      "name": "Time Attack",
+      "description": "Race against the clock.",
+      "url": "/memory-game.html?source=shortcut&mode=timeAttack",
+      "icons": [{ "src": "img/favicons/android-chrome-192x192.png", "sizes": "192x192", "type": "image/png" }]
+    },
+    {
+      "name": "25-Move Challenge",
+      "short_name": "Move Challenge",
+      "description": "Match every pair within the move limit.",
+      "url": "/memory-game.html?source=shortcut&mode=limitedMoves",
+      "icons": [{ "src": "img/favicons/android-chrome-192x192.png", "sizes": "192x192", "type": "image/png" }]
+    }
+  ],
   "lang": "en",
   "description": "Discover legendary characters from around the world in a cultural memory game. Match icons, collect rare mirrors, unlock hidden stories, and earn eight awards.",
   "icons": [

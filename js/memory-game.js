@@ -2302,7 +2302,24 @@ loadTranslations().then(() => {
   if (isEmbedded) {
     homeScreen.hide();
     startGame();
+  } else if (Object.hasOwn(gameModes, searchParams.get("mode"))) {
+    applyGameMode(searchParams.get("mode"));
   } else showHome();
+
+  // focus-existing keeps normal app launches from resetting a round. Shortcut
+  // launches must still navigate to their target; beforeunload protects an
+  // unfinished round when the browser supports the confirmation prompt.
+  window.launchQueue?.setConsumer(({ targetURL }) => {
+    if (!targetURL) return;
+    const target = new URL(targetURL);
+    const current = new URL(window.location.href);
+    if (target.origin !== current.origin || target.pathname !== current.pathname
+      || !Object.hasOwn(gameModes, target.searchParams.get("mode"))) return;
+    if (current.searchParams.has("version") && !target.searchParams.has("version")) {
+      target.searchParams.set("version", current.searchParams.get("version"));
+    }
+    if (target.href !== current.href) window.location.assign(target.href);
+  });
 }).catch(error => {
   console.error("Unable to initialize the memory game:", error);
 });
