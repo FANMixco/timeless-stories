@@ -2268,6 +2268,14 @@ settingsPanel.addEventListener("click", event => {
 });
 soundToggle.addEventListener("change", () => setSoundEnabled(soundToggle.checked));
 musicToggle.addEventListener("change", () => setMusicEnabled(musicToggle.checked));
+document.addEventListener("contextmenu", event => {
+  const target = event.target;
+  if (target?.closest?.("a[href]")) return;
+  if (target?.closest?.('button, input[type="checkbox"], input[type="radio"], .settings-row, .theme-option')) {
+    event.preventDefault();
+  }
+});
+
 document.addEventListener("pointerdown", () => {
   keyboardNavigation = false;
   backgroundMusic.prepare();

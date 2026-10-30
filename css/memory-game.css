@@ -96,6 +96,15 @@ button,
   user-select: none;
 }
 
+/* Suppress touch callouts on controls without affecting external links. */
+button,
+input[type="checkbox"],
+input[type="radio"],
+.settings-row,
+.theme-option {
+  -webkit-touch-callout: none;
+}
+
 .game-shell {
   width: min(100%, 900px);
   margin: 0 auto;
