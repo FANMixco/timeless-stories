@@ -10,20 +10,20 @@
       "name": "Classic",
       "description": "Play without limits.",
       "url": "/memory-game.html?source=shortcut&mode=classic",
-      "icons": [{ "src": "img/favicons/android-chrome-192x192.png", "sizes": "192x192", "type": "image/png" }]
+      "icons": [{ "src": "img/favicons/shortcut-classic.png", "sizes": "192x192", "type": "image/png" }]
     },
     {
       "name": "Time Attack",
       "description": "Race against the clock.",
       "url": "/memory-game.html?source=shortcut&mode=timeAttack",
-      "icons": [{ "src": "img/favicons/android-chrome-192x192.png", "sizes": "192x192", "type": "image/png" }]
+      "icons": [{ "src": "img/favicons/shortcut-time-attack.png", "sizes": "192x192", "type": "image/png" }]
     },
     {
       "name": "25-Move Challenge",
       "short_name": "Move Challenge",
       "description": "Match every pair within the move limit.",
       "url": "/memory-game.html?source=shortcut&mode=limitedMoves",
-      "icons": [{ "src": "img/favicons/android-chrome-192x192.png", "sizes": "192x192", "type": "image/png" }]
+      "icons": [{ "src": "img/favicons/shortcut-limited-moves.png", "sizes": "192x192", "type": "image/png" }]
     }
   ],
   "lang": "en",
