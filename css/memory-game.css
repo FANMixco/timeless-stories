@@ -1545,6 +1545,25 @@ html[data-theme="dark"] .card.is-matched .card-front {
 .achievement-row h3 { margin: 0 0 6px; }
 .achievement-row p { margin: 4px 0; line-height: 1.5; }
 .achievement-icon { display: block; flex: 0 0 48px; font-size: 2.5rem; color: var(--achievement-color); }
+.achievement-icon.icon-secret::before {
+  content: "?";
+  display: block;
+  font-family: Poppins, Arial, Helvetica, sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  text-align: center;
+}
+.achievement-icon.icon-clock::before {
+  content: "";
+  display: block;
+  width: 1em;
+  height: 1em;
+  margin: 0 auto;
+  background: currentColor;
+  --clock-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M12 7v5l3 2'/%3E%3C/svg%3E");
+  -webkit-mask: var(--clock-mask) center / contain no-repeat;
+  mask: var(--clock-mask) center / contain no-repeat;
+}
 .achievement-row:not(.is-unlocked) .achievement-icon { filter: grayscale(1); opacity: 0.4; }
 .achievement-row:not(.is-unlocked) { filter: grayscale(1); }
 .achievement-status { color: var(--muted); font-size: 0.875rem; }

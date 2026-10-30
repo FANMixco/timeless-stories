@@ -45,7 +45,7 @@ export function createProgressStore({ getStorage, recordsStorageKey, challengeSt
     for (const mode of Object.keys(gameModes).filter(id => gameModes[id].record)) {
       const entry = saved?.version === 1 ? saved[mode] : null;
       stats[mode] = { attempts: 0, victories: 0, defeats: 0 };
-      for (const field of ["attempts", "victories", "defeats", "bestTime", "fewestMoves"]) {
+      for (const field of ["attempts", "victories", "defeats", "bestTime", "fewestMoves", "hardVictories"]) {
         if (validRecordNumber(entry?.[field])) stats[mode][field] = entry[field];
       }
     }
@@ -79,7 +79,7 @@ export function createProgressStore({ getStorage, recordsStorageKey, challengeSt
     try { storage.setItem(recordsStorageKey, JSON.stringify(personalRecords)); } catch {}
     return completedPerformance;
   }
-  function completeChallenge(mode, won, { time, moves }) {
+  function completeChallenge(mode, won, { time, moves, hardMode = false }) {
     let performance = null;
     const stats = readChallengeStats();
     const entry = stats[mode];
@@ -92,6 +92,7 @@ export function createProgressStore({ getStorage, recordsStorageKey, challengeSt
         newFewestMoves: metric === "fewestMoves" && validRecordNumber(entry.fewestMoves) && moves < entry.fewestMoves,
       };
       entry[metric] = Math.min(entry[metric] ?? Infinity, ({ time, moves })[field]);
+      if (hardMode) entry.hardVictories = (entry.hardVictories || 0) + 1;
     }
     entry[won ? "victories" : "defeats"] += 1;
     writeChallengeStats(stats);

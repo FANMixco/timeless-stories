@@ -218,6 +218,7 @@
         "progress": "{found} / {total} Achievements Unlocked",
         "unlocked": "Unlocked",
         "locked": "Locked",
+        "secret": "Secret achievement.",
         "notification": "Achievement Unlocked!",
         "legendaryTitle": "Legendary Collector!",
         "legendaryDescription": "You've discovered all currently available Original Mirrors!",
@@ -237,6 +238,22 @@
           "lightning": {
             "name": "Lightning Memory",
             "description": "Completed a game in under 30 seconds."
+          },
+          "timeVictor": {
+            "name": "Against the Clock",
+            "description": "Won Time Attack for the first time."
+          },
+          "moveVictor": {
+            "name": "Every Move Counts",
+            "description": "Won the Move Challenge for the first time."
+          },
+          "hardTimeVictor": {
+            "name": "Against All Odds",
+            "description": "Won Time Attack in Hard Mode."
+          },
+          "hardMoveVictor": {
+            "name": "Perfect Calculation",
+            "description": "Won the Move Challenge in Hard Mode."
           },
           "golden": {
             "name": "Golden Discovery",

@@ -218,6 +218,7 @@
         "progress": "{found} / {total} logros desbloqueados",
         "unlocked": "Desbloqueado",
         "locked": "Bloqueado",
+        "secret": "Logro secreto.",
         "notification": "¡Logro desbloqueado!",
         "legendaryTitle": "¡Coleccionista legendario!",
         "legendaryDescription": "¡Has descubierto todos los Espejos originales disponibles actualmente!",
@@ -237,6 +238,22 @@
           "lightning": {
             "name": "Memoria relámpago",
             "description": "Has completado una partida en menos de 30 segundos."
+          },
+          "timeVictor": {
+            "name": "Contra el reloj",
+            "description": "Ganaste Contrarreloj por primera vez."
+          },
+          "moveVictor": {
+            "name": "Cada movimiento cuenta",
+            "description": "Ganaste el desafío de movimientos por primera vez."
+          },
+          "hardTimeVictor": {
+            "name": "Contra todo pronóstico",
+            "description": "Ganaste Contrarreloj en modo difícil."
+          },
+          "hardMoveVictor": {
+            "name": "Cálculo perfecto",
+            "description": "Ganaste el desafío de movimientos en modo difícil."
           },
           "golden": {
             "name": "Descubrimiento dorado",

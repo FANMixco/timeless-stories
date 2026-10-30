@@ -218,6 +218,7 @@
         "progress": "已解锁 {found} / {total} 项成就",
         "unlocked": "已解锁",
         "locked": "未解锁",
+        "secret": "隐藏成就。",
         "notification": "成就已解锁！",
         "legendaryTitle": "传奇收藏家！",
         "legendaryDescription": "你已发现目前所有可用的原版镜像！",
@@ -237,6 +238,22 @@
           "lightning": {
             "name": "闪电记忆",
             "description": "你已在30秒内完成一场游戏。"
+          },
+          "timeVictor": {
+            "name": "争分夺秒",
+            "description": "首次赢得限时挑战。"
+          },
+          "moveVictor": {
+            "name": "步步为赢",
+            "description": "首次赢得步数挑战。"
+          },
+          "hardTimeVictor": {
+            "name": "逆境制胜",
+            "description": "在困难模式下赢得限时挑战。"
+          },
+          "hardMoveVictor": {
+            "name": "精确计算",
+            "description": "在困难模式下赢得步数挑战。"
           },
           "golden": {
             "name": "黄金发现",

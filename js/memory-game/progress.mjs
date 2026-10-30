@@ -144,18 +144,19 @@ export function createProgressView({ document, getState, readPersonalRecords, re
       achievementDefinitions.find(({ id }) => id === "victory"),
       ...achievementDefinitions.filter(({ id }) => id !== "victory"),
     ];
-    const rows = displayDefinitions.map(({ id, icon, color }) => {
+    const rows = displayDefinitions.map(({ id, icon, color, secret }) => {
+      const hidden = secret && !achievements[id];
       const row = document.createElement("article");
       row.className = `achievement-row${achievements[id] ? " is-unlocked" : ""}`;
       row.style.setProperty("--achievement-color", color);
       const mark = document.createElement("i");
-      mark.className = `achievement-icon icon-${icon}`;
+      mark.className = `achievement-icon icon-${hidden ? "secret" : icon}`;
       mark.setAttribute("aria-hidden", "true");
       const body = document.createElement("div");
       const name = document.createElement("h3");
-      name.textContent = copy.items[id].name;
+      name.textContent = hidden ? "???" : copy.items[id].name;
       const description = document.createElement("p");
-      description.textContent = copy.items[id].description;
+      description.textContent = hidden ? copy.secret : copy.items[id].description;
       const status = document.createElement("p");
       status.className = "achievement-status";
       status.textContent = achievements[id] ? copy.unlocked : copy.locked;

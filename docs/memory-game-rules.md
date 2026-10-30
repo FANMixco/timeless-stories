@@ -192,11 +192,20 @@ Consequences worth remembering:
 | Legendary Collector | Collect every currently available Original Mirror. |
 | First Victory | Complete a board. Existing valid discoveries also prove a previous win. |
 | Lightning Memory | Complete a board in strictly less than 30 seconds. Exactly 30 seconds does not qualify. |
+| Against the Clock | Win Time Attack once. Existing saved challenge victories qualify. |
+| Every Move Counts | Win the Move Challenge once. Existing saved challenge victories qualify. |
 | Golden Discovery | Collect the first Golden Mirror. |
 | Behind the Scenes | Collect the first Director’s Cut story. |
 | Director’s Cut Master | Collect every currently available Director’s Cut story, currently two. |
 | Golden Collector | Collect every currently available Golden Mirror. |
 | Master Collector | Collect every currently available original and special pair. |
+| Against All Odds (secret) | Win Time Attack with Hard Mode active throughout the attempt. |
+| Perfect Calculation (secret) | Win the Move Challenge with Hard Mode active throughout the attempt. |
+
+Secret achievements display `???`, a question-mark icon, and a localized
+"Secret achievement" description until earned, even after Hard Mode unlocks.
+Only newly recorded Hard Mode victories qualify; legacy wins have no difficulty
+information. Hard victories are stored alongside existing challenge statistics.
 
 Achievements and unlock dates persist. Each achievement unlocks and notifies
 only once. Simultaneous notifications are shown sequentially, with Legendary
@@ -215,7 +224,7 @@ challenge attempt is started, so statistics remain accessible before the first w
 
 The Achievements modal shows best time and fewest moves for the current pair
 count, plus overall completed games and pairs matched. Records are separate from
-the eight achievements and use the versioned `timelessMemoryRecords:v1` local
+the twelve achievements and use the versioned `timelessMemoryRecords:v1` local
 storage key. Existing discoveries cannot establish historical performance.
 
 Only successful completion updates records, once per round. Restarting or

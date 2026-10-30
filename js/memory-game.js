@@ -35,6 +35,7 @@ let gameMode = readGameMode();
 let pendingHome = false;
 let gameDefeated = false;
 let attemptStarted = false;
+let attemptHardMode = false;
 let attemptFinished = false;
 let mismatchTimer = null;
 let matchToastsEnabled = readMatchToastsEnabled();
@@ -63,11 +64,15 @@ const achievementDefinitions = [
   { id: "legendary", icon: "trophy", color: "#c49118" },
   { id: "victory", icon: "star-full", color: "#a57a10" },
   { id: "lightning", icon: "power", color: "#1484bd" },
+  { id: "timeVictor", icon: "clock", color: "#197d77" },
+  { id: "moveVictor", icon: "routes", color: "#b16a32" },
   { id: "scenes", icon: "video-camera", color: "#9c64cf" },
   { id: "directorsMaster", icon: "movie-filter", color: "#9c64cf" },
   { id: "golden", icon: "mirror", color: "#c49118" },
   { id: "goldenCollector", icon: "gold", color: "#c49118" },
   { id: "master", icon: "crown", color: "#c45f87" },
+  { id: "hardTimeVictor", icon: "clock", color: "#9862bd", secret: true },
+  { id: "hardMoveVictor", icon: "routes", color: "#9862bd", secret: true },
 ];
 const supportedThemes = ["system", "light", "dark"];
 const previewRewardThresholdSeconds = 30;
@@ -358,10 +363,15 @@ function evaluateAchievements(completed = false) {
   const regularLegends = catalogue.filter(pair => !pair.rarity);
   const directorsCut = catalogue.filter(pair => pair.rarity === "rare");
   const goldenMirrors = catalogue.filter(pair => pair.rarity === "ultra-rare");
+  const challengeStats = readChallengeStats();
   const conditions = {
     legendary: regularLegends.length > 0 && regularLegends.every(pair => discoveries.has(getMirrorId(pair))),
     victory: completed || found.length > 0,
     lightning: completed && elapsedSeconds < 30,
+    timeVictor: challengeStats.timeAttack.victories > 0,
+    moveVictor: challengeStats.limitedMoves.victories > 0,
+    hardTimeVictor: (challengeStats.timeAttack.hardVictories || 0) > 0,
+    hardMoveVictor: (challengeStats.limitedMoves.hardVictories || 0) > 0,
     golden: found.some(pair => pair.rarity === "ultra-rare"),
     scenes: found.some(pair => pair.rarity === "rare"),
     directorsMaster: directorsCut.length > 0 && directorsCut.every(pair => discoveries.has(getMirrorId(pair))),
@@ -399,6 +409,7 @@ function readAchievement(id) {
 function setHardModeEnabled(enabled) {
   if (enabled && !readAchievement("master") && searchParams.get("hard") !== "true") return;
   hardModeEnabled = enabled;
+  if (!enabled) attemptHardMode = false;
   try { window.localStorage.setItem(hardModeStorageKey, String(enabled)); } catch {}
   gameModes = buildGameModes(enabled);
   progressStore = createProgressStore({ getStorage: () => window.localStorage,
@@ -414,6 +425,7 @@ function readChallengeStats() { return progressStore.readChallengeStats(); }
 function beginAttempt() {
   if (attemptStarted) return;
   attemptStarted = true;
+  attemptHardMode = hardModeEnabled;
   if (!gameModes[gameMode].record) return;
   progressStore.beginChallenge(gameMode);
   updateAchievementsVisibility();
@@ -421,7 +433,7 @@ function beginAttempt() {
 function finishChallenge(won) {
   if (!gameModes[gameMode].record || !attemptStarted || attemptFinished) return;
   attemptFinished = true;
-  completedPerformance = progressStore.completeChallenge(gameMode, won, { time: elapsedSeconds, moves });
+  completedPerformance = progressStore.completeChallenge(gameMode, won, { time: elapsedSeconds, moves, hardMode: attemptHardMode });
 }
 function updateAchievementsVisibility() {
   const stats = readChallengeStats();
@@ -1822,6 +1834,7 @@ function newGame() {
   mismatchTimer = null;
   gameDefeated = false;
   attemptStarted = false;
+  attemptHardMode = false;
   attemptFinished = false;
   roundClock.reset();
   pendingDataReset = false;

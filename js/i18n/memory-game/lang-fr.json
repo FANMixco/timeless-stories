@@ -218,6 +218,7 @@
         "progress": "{found} / {total} succès débloqués",
         "unlocked": "Débloqué",
         "locked": "Verrouillé",
+        "secret": "Succès secret.",
         "notification": "Succès débloqué !",
         "legendaryTitle": "Collectionneur légendaire !",
         "legendaryDescription": "Vous avez découvert tous les Miroirs originaux actuellement disponibles !",
@@ -237,6 +238,22 @@
           "lightning": {
             "name": "Mémoire éclair",
             "description": "Vous avez terminé une partie en moins de 30 secondes."
+          },
+          "timeVictor": {
+            "name": "Contre la montre",
+            "description": "Vous avez remporté le contre-la-montre pour la première fois."
+          },
+          "moveVictor": {
+            "name": "Chaque coup compte",
+            "description": "Vous avez remporté le défi de coups pour la première fois."
+          },
+          "hardTimeVictor": {
+            "name": "Contre toute attente",
+            "description": "Vous avez remporté le contre-la-montre en mode difficile."
+          },
+          "hardMoveVictor": {
+            "name": "Calcul parfait",
+            "description": "Vous avez remporté le défi de coups en mode difficile."
           },
           "golden": {
             "name": "Découverte dorée",
