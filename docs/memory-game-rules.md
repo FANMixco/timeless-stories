@@ -5,7 +5,7 @@ describes the game; it does not change its behavior.
 
 ## Game modes and attempts
 
-The start screen offers Classic, Time Attack and 25-Move Challenge, plus Settings, Records and Collection. Crazy mirrors becomes visible once at least 75% of awards are earned (currently 9 of 12, including secret awards in the total). Choosing a
+The start screen offers Classic, Time Attack and 25-Move Challenge, plus Settings, Records and Collection. Crazy mirrors and its records become visible once at least 75% of non-secret awards are earned (currently 8 of 10). Secret (`???`) awards are excluded from both the earned count and the total, even after they are revealed. Choosing a
 mode starts a fresh round and saves the selection in `timelessMemoryMode`.
 The return-arrow button and browser/PWA Back open the start screen, asking for
 confirmation when a round is in progress. Back closes an open dialog first;

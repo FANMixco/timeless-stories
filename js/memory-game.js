@@ -470,7 +470,8 @@ function renderGameModes() {
 
 function isCrazyMirrorsUnlocked() {
   const earned = { ...achievements, ...readAchievements() };
-  return achievementDefinitions.filter(({ id }) => earned[id]).length / achievementDefinitions.length >= 0.75;
+  const eligibleAwards = achievementDefinitions.filter(({ secret }) => !secret);
+  return eligibleAwards.length > 0 && eligibleAwards.filter(({ id }) => earned[id]).length / eligibleAwards.length >= 0.75;
 }
 
 function renderHomeScreen() {
