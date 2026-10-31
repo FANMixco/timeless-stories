@@ -2,7 +2,7 @@ import { validRecordNumber } from "./storage.mjs";
 
 // Render records and unlocks without owning gameplay or persistence.
 export function createProgressView({ document, getState, readPersonalRecords, readChallengeStats,
-  getPairCount, getRecordConfiguration, formatTime, setElementText, setElementHidden, achievementDefinitions, onTabChange, gameModes }) {
+  getPairCount, getRecordConfiguration, formatTime, setElementText, setElementHidden, achievementDefinitions, onTabChange, gameModes, isModeUnlocked = () => true }) {
   const achievementsPanel = document.getElementById("achievementsPanel");
   let progressTab = "records";
   let memoryGame, achievements, completedPerformance, currentLanguage, personalRecords;
@@ -32,7 +32,7 @@ export function createProgressView({ document, getState, readPersonalRecords, re
   function renderChallengeStats() {
     const stats = readChallengeStats();
     const copy = memoryGame.modes;
-    const sections = Object.keys(gameModes).filter(id => gameModes[id].record).map(mode => {
+    const sections = Object.keys(gameModes).filter(id => gameModes[id].record && isModeUnlocked(id)).map(mode => {
       const section = document.createElement("section");
       section.className = "mode-records";
       const heading = document.createElement("h4");

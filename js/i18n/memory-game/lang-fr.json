@@ -779,7 +779,12 @@
         "summary": "Paires : {matches}/{pairs} · Coups : {moves}",
         "tryAgain": "Réessayer",
         "confirmChange": "Changer de mode et commencer une nouvelle partie ? Votre progression dans cette partie sera perdue.",
-        "changeMode": "Changer de mode"
+        "changeMode": "Changer de mode",
+        "crazyMirrors": {
+          "name": "Miroirs fous",
+          "description": "Après chaque paire trouvée, les cartes restantes changent de place.",
+          "tutorial": "Trouvez une paire et regardez les cartes restantes se déplacer ! Les paires trouvées restent en place. Il n’y a aucune limite de temps ni de coups."
+        }
       },
       "progress": {
         "title": "Progression",

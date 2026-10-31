@@ -779,7 +779,12 @@
         "summary": "Matches: {matches}/{pairs} · Moves: {moves}",
         "tryAgain": "Try Again",
         "confirmChange": "Change game mode and start a new game? Your progress in this round will be lost.",
-        "changeMode": "Change mode"
+        "changeMode": "Change mode",
+        "crazyMirrors": {
+          "name": "Crazy mirrors",
+          "description": "After every match, all unmatched cards change places.",
+          "tutorial": "Match a pair and watch the remaining cards move! Matched cards stay in place. There is no time or move limit."
+        }
       },
       "progress": {
         "title": "Progress",

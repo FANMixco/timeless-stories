@@ -779,7 +779,12 @@
         "summary": "Parejas: {matches}/{pairs} · Movimientos: {moves}",
         "tryAgain": "Intentar de nuevo",
         "confirmChange": "¿Cambiar de modo y empezar una partida nueva? Perderás el progreso de esta partida.",
-        "changeMode": "Cambiar de modo"
+        "changeMode": "Cambiar de modo",
+        "crazyMirrors": {
+          "name": "Espejos locos",
+          "description": "Después de cada acierto, las cartas sin emparejar cambian de lugar.",
+          "tutorial": "¡Encuentra una pareja y observa cómo se mueven las cartas restantes! Las parejas encontradas permanecen en su sitio. No hay límite de tiempo ni de movimientos."
+        }
       },
       "progress": {
         "title": "Progreso",

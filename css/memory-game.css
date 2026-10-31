@@ -138,6 +138,7 @@ html.is-modal-open body {
 .home-heading h1 { margin: 0; color: var(--accent-dark); font-size: clamp(2rem, 5vw, 3.5rem); line-height: 1.15; }
 .home-heading p { margin: 12px 0 0; color: var(--muted); line-height: 1.6; }
 .home-modes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+#home-crazyMirrors { grid-column: 2; }
 .home-card { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; padding: 26px 22px; min-width: 0; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); color: var(--ink); cursor: pointer; text-align: start; transition: border-color 150ms, transform 150ms; }
 .home-card:hover { border-color: var(--accent); transform: translateY(-2px); }
 .home-card:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
@@ -158,6 +159,7 @@ html.is-modal-open body {
 @media (max-width: 640px) {
   .game-home { padding-top: 20px; }
   .home-modes { grid-template-columns: 1fr; gap: 12px; }
+  #home-crazyMirrors { grid-column: 1; }
   .home-card:not(.home-tool) { display: grid; grid-template-columns: 38px 1fr; column-gap: 18px; row-gap: 6px; padding: 18px; }
   .home-card:not(.home-tool) > i, .home-card:not(.home-tool) > svg, .home-move-icon { grid-row: 1 / 3; align-self: center; }
   .home-card:not(.home-tool) > span:not(.home-move-icon) { grid-column: 2; }
@@ -2037,3 +2039,7 @@ html[data-theme="dark"] .game-shell [data-category] .character-icon {
     }
   }
 }
+
+/* Only unpaired cards participate in the Crazy mirrors shuffle. */
+.home-card[hidden] { display: none; }
+.card.is-shuffling { z-index: 2; outline: 2px solid var(--accent); outline-offset: 2px; pointer-events: none; }

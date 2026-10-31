@@ -2,7 +2,7 @@ import { createGameAudio } from "./memory-game/audio.mjs";
 import { createBackgroundMusic } from "./memory-game/background-music.mjs";
 import { createProgressStore } from "./memory-game/storage.mjs";
 import { createProgressView } from "./memory-game/progress.mjs";
-import { buildGameModes, createRoundClock, selectActivePairs, getDefeatReason, getModeStatus, normalizeElapsedSeconds } from "./memory-game/rules.mjs";
+import { buildGameModes, createRoundClock, selectActivePairs, getDefeatReason, getModeStatus, normalizeElapsedSeconds, shuffleRemainingCards } from "./memory-game/rules.mjs";
 import { createModalNavigation } from "./memory-game/dialogs.mjs";
 import { createHomeScreen } from "./memory-game/home.mjs";
 
@@ -10,6 +10,9 @@ const supportedLanguages = ["en", "es", "fr", "zh"];
 const languageStorageKey = "timelessStoriesOfficialLanguage";
 const themeStorageKey = "timelessStoriesColorMode";
 const introStorageKey = "timelessMemoryIntroSeen";
+const crazyIntroStorageKey = "timelessMemoryCrazyMirrorsIntroSeen";
+let shuffleTimer = null;
+let shuffleAnimations = [];
 const collectionStorageKey = "timelessMemoryCollection";
 const soundStorageKey = "timelessMemorySoundEnabled";
 const musicStorageKey = "timelessMemoryMusicEnabled";
@@ -29,7 +32,7 @@ const ratingUrl = storeVersion === "play"
 let hardModeEnabled = readHardModeEnabled();
 if (searchParams.get("hard") === "true") hardModeEnabled = true;
 let gameModes = buildGameModes(hardModeEnabled);
-const progressStore = createProgressStore({ getStorage: () => window.localStorage,
+let progressStore = createProgressStore({ getStorage: () => window.localStorage,
   recordsStorageKey, challengeStatsStorageKey, modeStorageKey, gameModes });
 let gameMode = readGameMode();
 let pendingHome = false;
@@ -200,6 +203,7 @@ homeScreen.bind();
 function showHome() {
   pendingHome = false;
   newGame();
+  renderHomeScreen();
   homeScreen.show(gameMode);
   syncModalHistory();
   window.scrollTo({ top: 0, left: 0, behavior: "auto" });
@@ -220,7 +224,8 @@ function requestHome() {
 const progressView = createProgressView({ document,
   getState: () => ({ memoryGame, achievements, completedPerformance, currentLanguage }),
   readPersonalRecords, readChallengeStats, getPairCount, getRecordConfiguration, formatTime,
-  setElementText, setElementHidden, achievementDefinitions, onTabChange: syncModalHistory, gameModes });
+  setElementText, setElementHidden, achievementDefinitions, onTabChange: syncModalHistory, gameModes,
+  isModeUnlocked: mode => mode !== "crazyMirrors" || isCrazyMirrorsUnlocked() });
 const roundClock = createRoundClock({ now: () => Date.now(),
   schedule: (callback, delay) => window.setInterval(callback, delay),
   cancel: id => window.clearInterval(id),
@@ -385,6 +390,7 @@ function evaluateAchievements(completed = false) {
   }
   try { window.localStorage.setItem(achievementsStorageKey, JSON.stringify(achievements)); } catch {}
   updateAchievementsVisibility();
+  renderHomeScreen();
 }
 
 // Records are independent of achievements and discoveries. Only completed boards
@@ -462,8 +468,17 @@ function renderGameModes() {
   }
 }
 
+function isCrazyMirrorsUnlocked() {
+  const earned = { ...achievements, ...readAchievements() };
+  return achievementDefinitions.filter(({ id }) => earned[id]).length / achievementDefinitions.length >= 0.75;
+}
+
+function renderHomeScreen() {
+  homeScreen.render(memoryGame, { hardMode: hardModeEnabled, ratingUrl, crazyMirrorsUnlocked: isCrazyMirrorsUnlocked() });
+}
+
 function applyGameMode(mode) {
-  if (!Object.hasOwn(gameModes, mode)) return;
+  if (!Object.hasOwn(gameModes, mode) || (mode === "crazyMirrors" && !isCrazyMirrorsUnlocked())) return;
   gameMode = mode;
   try { window.localStorage.setItem(modeStorageKey, mode); } catch {}
   homeScreen.hide();
@@ -1233,7 +1248,7 @@ function closeAboutPanel() {
 
 function applyUiCopy() {
   setElementHidden(document.getElementById("homeButton"), isEmbedded);
-  homeScreen.render(memoryGame, { hardMode: hardModeEnabled, ratingUrl });
+  renderHomeScreen();
   renderGameModes();
   setElementText(document.getElementById("tryAgainButton"), memoryGame.modes.tryAgain);
   setElementText(document.getElementById("gameOverRecordsButton"), memoryGame.records.viewRecords);
@@ -1599,6 +1614,37 @@ function markMatch() {
   showMatchInsight(firstCard);
   resetTurn();
   endChallengeIfNeeded(true);
+  if (!gameCompleted && gameModes[gameMode].shuffleAfterMatch) shuffleUnmatchedCards();
+}
+
+function shuffleUnmatchedCards() {
+  const cards = [...board.children];
+  const unmatched = cards.filter(card => !card.classList.contains("is-matched"));
+  if (unmatched.length < 2) return;
+  const reduced = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
+  const positions = new Map(unmatched.map(card => [card, card.getBoundingClientRect?.()]));
+  const focused = document.activeElement;
+  lockBoard = true;
+  board.replaceChildren(...shuffleRemainingCards(cards, card => card.classList.contains("is-matched")));
+  [...board.children].forEach((card, index) => { card.dataset.index = index; });
+  if (cards.includes(focused)) focused.focus({ preventScroll: true });
+  for (const card of unmatched) {
+    card.classList.add("is-shuffling");
+    const before = positions.get(card);
+    const after = card.getBoundingClientRect?.();
+    if (!reduced && before && after && card.animate) {
+      shuffleAnimations.push(card.animate([
+        { transform: `translate(${before.left - after.left}px, ${before.top - after.top}px)`, opacity: 0.55 },
+        { transform: "translate(0, 0)", opacity: 1 }
+      ], { duration: 650, easing: "ease-in-out" }));
+    }
+  }
+  shuffleTimer = window.setTimeout(() => {
+    shuffleTimer = null;
+    unmatched.forEach(card => card.classList.remove("is-shuffling"));
+    shuffleAnimations = [];
+    lockBoard = false;
+  }, reduced ? 180 : 650);
 }
 
 function showMatchInsight(card, userSelected = false) {
@@ -1830,6 +1876,10 @@ function flipCard(card) {
 }
 
 function newGame() {
+  window.clearTimeout(shuffleTimer);
+  shuffleTimer = null;
+  shuffleAnimations.forEach(animation => animation.cancel());
+  shuffleAnimations = [];
   window.clearTimeout(mismatchTimer);
   mismatchTimer = null;
   gameDefeated = false;
@@ -1950,6 +2000,7 @@ function startFreshGame() {
 }
 
 async function runIntroTutorial() {
+  const crazy = Boolean(gameModes[gameMode].shuffleAfterMatch);
   if (introRunning) return;
   const runId = ++tutorialRunId;
   hintPressCount = 0;
@@ -1998,9 +2049,14 @@ async function runIntroTutorial() {
     },
   ];
 
+  if (crazy) tutorialCards.push(
+    { ...tutorialCards[0], pairId: "intro-other" },
+    { ...tutorialCards[1], pairId: "intro-other" }
+  );
   board.replaceChildren(...tutorialCards.map(createCard));
   const cards = [...board.querySelectorAll(".card")];
-  showToast(memoryGame.hint || "Hint", memoryGame.hintText || "Pay attention to the icons.", memoryGame.hintEmphasis, memoryGame.hintUnderline);
+  if (crazy) showToast(memoryGame.modes.crazyMirrors.name, memoryGame.modes.crazyMirrors.tutorial);
+  else showToast(memoryGame.hint || "Hint", memoryGame.hintText || "Pay attention to the icons.", memoryGame.hintEmphasis, memoryGame.hintUnderline);
 
   await wait(1000);
   if (runId !== tutorialRunId) return;
@@ -2012,12 +2068,14 @@ async function runIntroTutorial() {
   cards[1]?.setAttribute("aria-label", cards[1].dataset.revealedLabel);
   await wait(800);
   if (runId !== tutorialRunId) return;
-  cards.forEach((card) => card.classList.add("is-matched"));
+  cards.slice(0, 2).forEach((card) => card.classList.add("is-matched"));
+  if (crazy) shuffleUnmatchedCards();
   // Leave the matched cards visible while the player finishes reading.
-  await wait(3500);
+  await wait(crazy ? 6000 : 3500);
   if (runId !== tutorialRunId) return;
 
   setIntroSeen();
+  if (crazy) { try { window.localStorage.setItem(crazyIntroStorageKey, "true"); } catch {} }
   introRunning = false;
   lockBoard = false;
   newGame();
@@ -2038,7 +2096,9 @@ function handleHint() {
 }
 
 function startGame() {
-  if (hasSeenIntro()) {
+  let needsCrazyIntro = false;
+  try { needsCrazyIntro = gameMode === "crazyMirrors" && !window.localStorage.getItem(crazyIntroStorageKey); } catch {}
+  if (hasSeenIntro() && !needsCrazyIntro) {
     newGame();
     return;
   }
@@ -2174,6 +2234,12 @@ window.addEventListener("storage", (event) => {
     try { window.sessionStorage.clear(); } catch {}
     reloadAfterDataReset();
     return;
+  }
+  if (event.key === achievementsStorageKey) {
+    achievements = readAchievements();
+    updateAchievementsVisibility();
+    renderHomeScreen();
+    if (achievementsPanel.classList.contains("is-visible")) renderChallengeStats();
   }
   if (event.key === challengeStatsStorageKey) {
     updateAchievementsVisibility();
@@ -2320,10 +2386,12 @@ window.matchMedia?.("(prefers-color-scheme: dark)")?.addEventListener("change", 
 loadTranslations().then(() => {
   applyUiCopy();
   evaluateAchievements();
+  if (gameMode === "crazyMirrors" && !isCrazyMirrorsUnlocked()) gameMode = "classic";
   if (isEmbedded) {
     homeScreen.hide();
     startGame();
-  } else if (Object.hasOwn(gameModes, searchParams.get("mode"))) {
+  } else if (Object.hasOwn(gameModes, searchParams.get("mode")) &&
+    (searchParams.get("mode") !== "crazyMirrors" || isCrazyMirrorsUnlocked())) {
     applyGameMode(searchParams.get("mode"));
   } else showHome();
 

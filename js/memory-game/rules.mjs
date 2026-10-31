@@ -1,4 +1,5 @@
 import { classicMode } from "./modes/classic.mjs";
+import { crazyMirrorsMode } from "./modes/crazy-mirrors.mjs";
 import { createTimeAttackMode } from "./modes/time-attack.mjs";
 import { createLimitedMovesMode } from "./modes/limited-moves.mjs";
 
@@ -7,6 +8,7 @@ export function buildGameModes(hard = false) {
     classic: classicMode,
     timeAttack: createTimeAttackMode({ hard }),
     limitedMoves: createLimitedMovesMode({ hard }),
+    crazyMirrors: crazyMirrorsMode,
   });
 }
 
@@ -118,3 +120,14 @@ export function selectActivePairs({ memoryGame, selectionRules, discoveries, ran
   return pairs;
 }
 
+
+// Sattolo's shuffle moves every remaining card, preserving matched slots.
+export function shuffleRemainingCards(cards, isMatched, random = Math.random) {
+  const remaining = cards.filter(card => !isMatched(card));
+  for (let i = remaining.length - 1; i > 0; i--) {
+    const j = Math.floor(random() * i);
+    [remaining[i], remaining[j]] = [remaining[j], remaining[i]];
+  }
+  let index = 0;
+  return cards.map(card => isMatched(card) ? card : remaining[index++]);
+}

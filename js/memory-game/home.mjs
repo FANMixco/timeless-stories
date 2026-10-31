@@ -61,6 +61,7 @@ export function createHomeScreen({ document, modes, onChoose, onSettings, onReco
     },
     render(copy, options = {}) {
       const hardMode = Boolean(options.hardMode);
+      document.getElementById("home-crazyMirrors").hidden = !options.crazyMirrorsUnlocked;
       document.getElementById("homeTitle").innerHTML = copy.title.replace(": ", ": <br>");
       text("homeSubtitle", hardMode ? copy.settings.hardMode : copy.subtitle);
       text("homeSettingsLabel", copy.settings.title);

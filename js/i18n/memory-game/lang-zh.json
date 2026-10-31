@@ -779,7 +779,12 @@
         "summary": "已配对：{matches}/{pairs} · 步数：{moves}",
         "tryAgain": "再试一次",
         "confirmChange": "更改游戏模式并开始新游戏？本局进度将丢失。",
-        "changeMode": "更改模式"
+        "changeMode": "更改模式",
+        "crazyMirrors": {
+          "name": "疯狂镜像",
+          "description": "每次配对成功后，所有未配对的卡牌都会交换位置。",
+          "tutorial": "找到一对卡牌，看看剩余卡牌如何移动！已配对的卡牌保持原位。没有时间或步数限制。"
+        }
       },
       "progress": {
         "title": "游戏进度",

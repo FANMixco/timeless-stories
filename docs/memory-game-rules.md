@@ -5,7 +5,7 @@ describes the game; it does not change its behavior.
 
 ## Game modes and attempts
 
-The start screen offers three mode cards, plus Settings and Records. Choosing a
+The start screen offers Classic, Time Attack and 25-Move Challenge, plus Settings, Records and Collection. Crazy mirrors becomes visible once at least 75% of awards are earned (currently 9 of 12, including secret awards in the total). Choosing a
 mode starts a fresh round and saves the selection in `timelessMemoryMode`.
 The return-arrow button and browser/PWA Back open the start screen, asking for
 confirmation when a round is in progress. Back closes an open dialog first;
@@ -14,6 +14,7 @@ and chosen challenge appear above the playing controls; copyright stays on the s
 Settings contains preferences, with no mode selector.
 
 - **Classic:** the original unlimited game. Moves and time count upwards.
+- **Crazy mirrors:** unlimited time and moves, like Classic. After each successful match, every unmatched card moves to a different remaining slot; matched cards stay fixed. A brief highlighted movement effect blocks new selections until it finishes. Reduced-motion preferences replace movement with a short highlight. Mismatches never shuffle. The first entry shows a localized demonstration, independently of the Classic tutorial. Victories save discoveries and achievements normally, with separate attempts, victories and best-time records.
 - **Time Attack:** match all ten pairs before 45 seconds expire. The existing
   Time counter starts at `0:45`; the first card selection starts the countdown.
   It uses elapsed wall-clock time, including time spent in dialogs, other tabs
