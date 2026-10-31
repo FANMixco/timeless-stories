@@ -134,7 +134,8 @@
   "display_override": [
     "standalone",
     "minimal-ui",
-    "window-controls-overlay value"
+    "window-controls-overlay",
+    "browser"
   ],
   "dir": "ltr",
   "categories": [
