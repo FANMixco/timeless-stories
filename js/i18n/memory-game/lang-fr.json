@@ -284,7 +284,8 @@
       "title": "Légendes Éternelles : Miroirs 🪞",
       "subtitle": "Retrouvez chaque paire miroir de Miroirs Espagnols.",
       "newGame": "Nouvelle partie",
-      "confirmRestart": "Commencer une nouvelle partie ? Votre progression dans cette partie sera perdue.",
+      "startOver": "Recommencer ?",
+      "confirmRestart": "Votre progression dans cette partie sera perdue.",
       "confirmLanguageChange": "Changer de langue ? Votre progression dans cette partie sera perdue.",
       "changeLanguage": "Changer de langue",
       "keepPlaying": "Continuer à jouer",
@@ -809,7 +810,9 @@
         "viewAwards": "Voir les récompenses →",
         "chooseMode": "Modes de jeu",
         "rateApp": "Évaluer le jeu",
-        "confirmReturn": "Revenir aux modes de jeu ? Votre progression dans cette partie sera perdue."
+        "leaveRound": "Quitter cette partie ?",
+        "returnToModes": "Revenir aux modes",
+        "confirmReturn": "Votre progression dans cette partie sera perdue."
       }
     },
     "country3": "Maroc 🇲🇦",

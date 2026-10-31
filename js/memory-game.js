@@ -43,9 +43,9 @@ const flashTestEnabled = searchParams.get("mode") === "ultimate";
 const requestedMode = flashTestEnabled ? "memoryFlash" : searchParams.get("mode");
 const isEmbedded = searchParams.get("embed") === "1";
 const storeVersion = searchParams.get("version");
-const ratingUrl = storeVersion === "play"
+const ratingUrl = ["play", "android"].includes(storeVersion)
   ? "https://play.google.com/store/apps/details?id=com.federiconavarrete.tstories.twa"
-  : storeVersion === "microsoft" ? "https://apps.microsoft.com/detail/9PL6H4P9JHGX" : null;
+  : ["microsoft", "windows"].includes(storeVersion) ? "https://apps.microsoft.com/detail/9PL6H4P9JHGX" : null;
 let hardModeEnabled = readHardModeEnabled();
 if (searchParams.get("hard") === "true") hardModeEnabled = true;
 let gameModes = buildGameModes(hardModeEnabled);
@@ -2140,10 +2140,10 @@ function closeRestartPanel() {
 
 function renderRestartConfirmation() {
   if (pendingHome) {
-    setElementText(document.getElementById("restartTitle"), memoryGame.home.chooseMode);
+    setElementText(document.getElementById("restartTitle"), memoryGame.home.leaveRound);
     setElementText(document.getElementById("restartMessage"), memoryGame.home.confirmReturn);
     setElementText(cancelRestartButton, memoryGame.keepPlaying);
-    setElementText(document.getElementById("confirmRestartButton"), memoryGame.home.chooseMode);
+    setElementText(document.getElementById("confirmRestartButton"), memoryGame.home.returnToModes);
     return;
   }
   if (pendingDataReset) {
@@ -2153,10 +2153,10 @@ function renderRestartConfirmation() {
     setElementText(document.getElementById("confirmRestartButton"), memoryGame.settings.reset);
     return;
   }
-  setElementText(document.getElementById("restartTitle"), pendingLanguage ? memoryGame.language || "Language" : memoryGame.newGame || "New game");
+  setElementText(document.getElementById("restartTitle"), pendingLanguage ? memoryGame.language || "Language" : memoryGame.startOver || "Start over?");
   setElementText(document.getElementById("restartMessage"), pendingLanguage
     ? memoryGame.confirmLanguageChange || "Change language? Your progress in this round will be lost."
-    : memoryGame.confirmRestart || "Start a new game? Your progress in this round will be lost.");
+    : memoryGame.confirmRestart || "Your progress in this round will be lost.");
   setElementText(cancelRestartButton, memoryGame.keepPlaying || "Keep playing");
   setElementText(document.getElementById("confirmRestartButton"), pendingLanguage ? memoryGame.changeLanguage || "Change language" : memoryGame.newGame || "New game");
 }

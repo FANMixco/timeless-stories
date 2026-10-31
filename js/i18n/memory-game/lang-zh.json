@@ -284,7 +284,8 @@
       "title": "永恒的故事：镜子 🪞",
       "subtitle": "从《西班牙镜子》中找出每一对镜子。",
       "newGame": "新游戏",
-      "confirmRestart": "要开始新游戏吗？本局游戏进度将会丢失。",
+      "startOver": "重新开始？",
+      "confirmRestart": "本局游戏进度将会丢失。",
       "confirmLanguageChange": "要更改语言吗？本局游戏进度将会丢失。",
       "changeLanguage": "更改语言",
       "keepPlaying": "继续游戏",
@@ -809,7 +810,9 @@
         "viewAwards": "查看奖项 →",
         "chooseMode": "游戏模式",
         "rateApp": "为游戏评分",
-        "confirmReturn": "返回游戏模式选择？本局进度将丢失。"
+        "leaveRound": "离开本局游戏？",
+        "returnToModes": "返回模式选择",
+        "confirmReturn": "本局游戏进度将会丢失。"
       }
     },
     "country3": "摩洛哥 🇲🇦",

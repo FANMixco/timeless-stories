@@ -284,7 +284,8 @@
       "title": "Timeless Stories: Mirrors 🪞",
       "subtitle": "Find each mirror pair from Spanish Mirrors.",
       "newGame": "New game",
-      "confirmRestart": "Start a new game? Your progress in this round will be lost.",
+      "startOver": "Start over?",
+      "confirmRestart": "Your progress in this round will be lost.",
       "confirmLanguageChange": "Change language? Your progress in this round will be lost.",
       "changeLanguage": "Change language",
       "keepPlaying": "Keep playing",
@@ -809,7 +810,9 @@
         "viewAwards": "View awards →",
         "chooseMode": "Game modes",
         "rateApp": "Rate the game",
-        "confirmReturn": "Return to game modes? Your progress in this round will be lost."
+        "leaveRound": "Leave this round?",
+        "returnToModes": "Return to modes",
+        "confirmReturn": "Your progress in this round will be lost."
       }
     },
     "country3": "Morocco 🇲🇦",
