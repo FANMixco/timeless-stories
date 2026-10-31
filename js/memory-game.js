@@ -397,7 +397,7 @@ function evaluateAchievements(completed = false) {
 // enter this store; previous results and all-time bests serve different comparisons.
 
 
-function readPersonalRecords() { return progressStore.readPersonalRecords(); }
+function readPersonalRecords(mode = "classic") { return progressStore.readPersonalRecords(mode); }
 function getRecordConfiguration(pairCount = getPairCount()) {
   // This legacy store remains exclusively Classic; challenges have their own store.
   return `standard:${pairCount}`;
@@ -521,7 +521,7 @@ function endGame(reason) {
 function saveCompletedPerformance() {
   if (gameModes[gameMode].record) return completedPerformance;
   if (completedPerformance || !gameCompleted || matches !== getPairCount()) return completedPerformance;
-  completedPerformance = progressStore.completeClassic({ pairCount: getPairCount(), time: elapsedSeconds, moves });
+  completedPerformance = progressStore.completePersonalRecords({ mode: gameMode, pairCount: getPairCount(), time: elapsedSeconds, moves });
   return completedPerformance;
 }
 function renderPersonalRecords() { progressView.renderRecords(); }
@@ -2246,7 +2246,7 @@ window.addEventListener("storage", (event) => {
     updateAchievementsVisibility();
     if (achievementsPanel.classList.contains("is-visible")) renderChallengeStats();
   }
-  if (event.key === recordsStorageKey && achievementsPanel.classList.contains("is-visible")) {
+  if ([recordsStorageKey, "timelessMemoryCrazyMirrorsRecords:v1"].includes(event.key) && achievementsPanel.classList.contains("is-visible")) {
     renderPersonalRecords();
   }
   if (event.key === matchToastsStorageKey) {

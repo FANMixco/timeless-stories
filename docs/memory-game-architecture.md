@@ -9,7 +9,7 @@ no framework, runtime dependency or custom JavaScript bundler.
 | --- | --- |
 | `js/memory-game.js` | Page entrypoint: wires controllers to the board, settings, collection, tutorial and dialog actions. Owns the current round and existing DOM interactions. |
 | `js/memory-game/rules.mjs` | Mode registry, shared wall-clock scheduling and weighted pair selection. Randomness and scheduling can be injected for tests. |
-| `js/memory-game/modes/crazy-mirrors.mjs` | Unlimited Classic counters, shuffle-after-match policy and independent best-time records. |
+| `js/memory-game/modes/crazy-mirrors.mjs` | Unlimited Classic counters, shuffle-after-match policy and independent Classic-style personal records. |
 | `js/memory-game/modes/classic.mjs` | Unlimited counters and no defeat condition; preserves Classic record storage. |
 | `js/memory-game/modes/time-attack.mjs` | The time limit, countdown/warning presentation, deadline defeat and best-time metric. |
 | `js/memory-game/modes/limited-moves.mjs` | The move limit, move-counter/warning presentation, resolved-attempt defeat and fewest-moves metric. |

@@ -8,10 +8,23 @@ export function createProgressStore({ getStorage, recordsStorageKey, challengeSt
     return { version: 1, gamesCompleted: 0, totalPairsMatched: 0, configurations: {} };
   }
 
-  function readPersonalRecords() {
+  const personalStorageKey = mode => mode === "crazyMirrors" ? "timelessMemoryCrazyMirrorsRecords:v1" : recordsStorageKey;
+  function readPersonalRecords(mode = "classic") {
     const records = emptyPersonalRecords();
     try {
-      const saved = JSON.parse(storage.getItem(recordsStorageKey));
+      let saved = JSON.parse(storage.getItem(personalStorageKey(mode)));
+      // Earlier Crazy mirrors builds used challenge statistics on ten-pair boards.
+      // Preserve only known results; historical move records cannot be inferred.
+      if (mode === "crazyMirrors" && !saved) {
+        const legacy = JSON.parse(storage.getItem(challengeStatsStorageKey));
+        const previous = legacy?.version === 1 ? legacy.crazyMirrors : null;
+        if (previous && validRecordNumber(previous.victories) && previous.victories > 0) {
+          saved = { ...emptyPersonalRecords(), gamesCompleted: previous.victories,
+            totalPairsMatched: previous.victories * 10 };
+          if (validRecordNumber(previous.bestTime)) saved.configurations['standard:10'] = { bestTime: previous.bestTime };
+          try { storage.setItem(personalStorageKey(mode), JSON.stringify(saved)); } catch {}
+        }
+      }
       if (saved?.version !== 1) return records;
       for (const field of ["gamesCompleted", "totalPairsMatched"]) {
         if (validRecordNumber(saved[field])) records[field] = saved[field];
@@ -53,11 +66,12 @@ export function createProgressStore({ getStorage, recordsStorageKey, challengeSt
   }
 
   function writeChallengeStats(stats) {
+    readPersonalRecords("crazyMirrors");
     try { storage.setItem(challengeStatsStorageKey, JSON.stringify(stats)); } catch {}
   }
-  function completeClassic({ pairCount, time, moves }) {
+  function completePersonalRecords({ pairCount, time, moves, mode = "classic" }) {
     // Read again to include completed activity from other tabs.
-    const personalRecords = readPersonalRecords();
+    const personalRecords = readPersonalRecords(mode);
     const key = `standard:${pairCount}`;
     const previous = personalRecords.configurations[key] || {};
     const current = { time, moves };
@@ -76,7 +90,7 @@ export function createProgressStore({ getStorage, recordsStorageKey, challengeSt
       fewestMoves: Math.min(previous.fewestMoves ?? current.moves, current.moves),
       last: current,
     };
-    try { storage.setItem(recordsStorageKey, JSON.stringify(personalRecords)); } catch {}
+    try { storage.setItem(personalStorageKey(mode), JSON.stringify(personalRecords)); } catch {}
     return completedPerformance;
   }
   function completeChallenge(mode, won, { time, moves, hardMode = false }) {
@@ -103,6 +117,6 @@ export function createProgressStore({ getStorage, recordsStorageKey, challengeSt
     stats[mode].attempts += 1;
     writeChallengeStats(stats);
   }
-  return { readPersonalRecords, readGameMode, readChallengeStats, completeClassic, completeChallenge, beginChallenge };
+  return { readPersonalRecords, readGameMode, readChallengeStats, completeClassic: completePersonalRecords, completePersonalRecords, completeChallenge, beginChallenge };
 }
 export function validRecordNumber(value) { return Number.isSafeInteger(value) && value >= 0; }

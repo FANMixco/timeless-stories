@@ -24,3 +24,5 @@ tests/offline.test.mjs
 tests/selection.test.mjs
 tools/memory-game-assets.mjs
 tests/background-music.test.mjs
+tests/crazy-mirrors.test.mjs
+tools/create-shortcut-icons.ps1

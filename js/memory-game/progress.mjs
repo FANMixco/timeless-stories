@@ -29,10 +29,21 @@ export function createProgressView({ document, getState, readPersonalRecords, re
     });
   }
 
+  function personalRecordMetrics(records) {
+    const copy = memoryGame.records;
+    const entry = records.configurations[getRecordConfiguration()] || {};
+    return [
+      [copy.bestTime, validRecordNumber(entry.bestTime) ? formatTime(entry.bestTime) : "—", "power"],
+      [copy.fewestMoves, entry.fewestMoves ?? "—", "power"],
+      [copy.gamesCompleted, records.gamesCompleted, "trophy"],
+      [copy.totalPairsMatched, records.totalPairsMatched, "mirror"],
+    ];
+  }
+
   function renderChallengeStats() {
     const stats = readChallengeStats();
     const copy = memoryGame.modes;
-    const sections = Object.keys(gameModes).filter(id => gameModes[id].record && isModeUnlocked(id)).map(mode => {
+    const sections = Object.keys(gameModes).filter(id => (gameModes[id].record || gameModes[id].personalRecords) && isModeUnlocked(id)).map(mode => {
       const section = document.createElement("section");
       section.className = "mode-records";
       const heading = document.createElement("h4");
@@ -41,6 +52,18 @@ export function createProgressView({ document, getState, readPersonalRecords, re
       heading.textContent = copy[mode].name;
       const list = document.createElement("dl");
       list.className = "records-grid";
+      if (gameModes[mode].personalRecords) {
+        const records = readPersonalRecords(mode);
+        const entry = records.configurations[getRecordConfiguration()] || {};
+        const configuration = document.createElement("p");
+        configuration.textContent = memoryGame.records.configuration.replace("{pairs}", getPairCount());
+        const empty = document.createElement("p");
+        empty.textContent = memoryGame.records.empty;
+        setElementHidden(empty, validRecordNumber(entry.bestTime) || validRecordNumber(entry.fewestMoves));
+        list.append(...createRecordCards(personalRecordMetrics(records)));
+        section.append(heading, configuration, empty, list);
+        return section;
+      }
       const entry = stats[mode];
       const record = gameModes[mode].record;
       const best = entry[record.key];
@@ -72,13 +95,7 @@ export function createProgressView({ document, getState, readPersonalRecords, re
     setElementText(document.getElementById("personalRecordsConfiguration"), copy.configuration.replace("{pairs}", getPairCount()));
     setElementText(document.getElementById("personalRecordsEmpty"), copy.empty);
     setElementHidden(document.getElementById("personalRecordsEmpty"), validRecordNumber(entry.bestTime) || validRecordNumber(entry.fewestMoves));
-    const stats = [
-      [copy.bestTime, validRecordNumber(entry.bestTime) ? formatTime(entry.bestTime) : "—", "power"],
-      [copy.fewestMoves, entry.fewestMoves ?? "—", "power"],
-      [copy.gamesCompleted, personalRecords.gamesCompleted, "trophy"],
-      [copy.totalPairsMatched, personalRecords.totalPairsMatched, "mirror"],
-    ];
-    document.getElementById("personalRecordsStats").replaceChildren(...createRecordCards(stats));
+    document.getElementById("personalRecordsStats").replaceChildren(...createRecordCards(personalRecordMetrics(personalRecords)));
   }
 
   function performanceDifference(current, best, metric) {
