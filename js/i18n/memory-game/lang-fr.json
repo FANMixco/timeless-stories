@@ -783,7 +783,8 @@
         "crazyMirrors": {
           "name": "Miroirs fous",
           "description": "Après chaque paire trouvée, les cartes restantes changent de place.",
-          "tutorial": "Trouvez une paire et regardez les cartes restantes se déplacer ! Les paires trouvées restent en place. Il n’y a aucune limite de temps ni de coups."
+          "tutorial": "Trouvez une paire et regardez les cartes restantes se déplacer ! Les paires trouvées restent en place. Il n’y a aucune limite de temps ni de coups.",
+          "unlocked": "Miroirs fous débloqué ! Vous avez obtenu au moins 75 % des succès non secrets. Après chaque paire trouvée, les cartes restantes changent de place. Essayez ce mode dans les modes de jeu !"
         },
         "mistakeLimit": "Quatrième erreur ! La partie de Mémoire flash est terminée.",
         "memoryFlash": {

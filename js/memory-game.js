@@ -14,12 +14,16 @@ const introStorageKey = "timelessMemoryIntroSeen";
 const crazyIntroStorageKey = "timelessMemoryCrazyMirrorsIntroSeen";
 const flashIntroStorageKey = "timelessMemoryFlashIntroSeen";
 const flashUnlockStorageKey = "timelessMemoryFlashUnlockNotified";
+const modeUnlockNotices = [
+  { id: "crazyMirrorsUnlocked", mode: "crazyMirrors", storageKey: "timelessMemoryCrazyMirrorsUnlockNotified", icon: "mirror", isUnlocked: isCrazyMirrorsUnlocked },
+  { id: "memoryFlashUnlocked", mode: "memoryFlash", storageKey: flashUnlockStorageKey, icon: "power", isUnlocked: isMemoryFlashUnlocked },
+];
 let previewPhase = null;
 let previewRemaining = null;
 let previewFlipTimer = null;
 let turnSettleTimer = null;
 let mistakes = 0;
-let flashUnlockQueued = false;
+const queuedModeUnlocks = new Set();
 let shuffleTimer = null;
 let shuffleAnimations = [];
 const collectionStorageKey = "timelessMemoryCollection";
@@ -407,7 +411,7 @@ function evaluateAchievements(completed = false) {
   }
   try { window.localStorage.setItem(achievementsStorageKey, JSON.stringify(achievements)); } catch {}
   updateAchievementsVisibility();
-  queueMemoryFlashUnlock();
+  queueModeUnlocks();
   renderHomeScreen();
 }
 
@@ -504,11 +508,13 @@ function isModeUnlocked(mode) {
   return true;
 }
 
-function queueMemoryFlashUnlock() {
-  if (!isMemoryFlashUnlocked() || flashUnlockQueued) return;
-  try { if (window.localStorage.getItem(flashUnlockStorageKey)) return; } catch {}
-  flashUnlockQueued = true;
-  achievementQueue.push("memoryFlashUnlocked");
+function queueModeUnlocks() {
+  for (const notice of modeUnlockNotices) {
+    if (!notice.isUnlocked() || queuedModeUnlocks.has(notice.id)) continue;
+    try { if (window.localStorage.getItem(notice.storageKey)) continue; } catch {}
+    queuedModeUnlocks.add(notice.id);
+    achievementQueue.push(notice.id);
+  }
 }
 
 function renderHomeScreen() {
@@ -588,11 +594,11 @@ function showNextAchievement() {
   if (currentAchievement || !achievementQueue.length || introRunning || previewPhase) return;
   if (!achievementReturnFocus) achievementReturnFocus = document.activeElement;
   currentAchievement = achievementQueue.shift();
-  const flashUnlock = currentAchievement === "memoryFlashUnlocked";
-  const definition = flashUnlock ? { icon: "power", color: "#1484bd" } : achievementDefinitions.find(item => item.id === currentAchievement);
+  const unlockNotice = modeUnlockNotices.find(notice => notice.id === currentAchievement);
+  const definition = unlockNotice ? { icon: unlockNotice.icon, color: "#1484bd" } : achievementDefinitions.find(item => item.id === currentAchievement);
   const copy = memoryGame.achievements;
-  const rewardCopy = flashUnlock ? { name: memoryGame.modes.memoryFlash.name, description: memoryGame.modes.memoryFlash.unlocked } : copy.items[currentAchievement];
-  if (flashUnlock) { try { window.localStorage.setItem(flashUnlockStorageKey, "true"); } catch {} }
+  const rewardCopy = unlockNotice ? { name: memoryGame.modes[unlockNotice.mode].name, description: memoryGame.modes[unlockNotice.mode].unlocked } : copy.items[currentAchievement];
+  if (unlockNotice) { try { window.localStorage.setItem(unlockNotice.storageKey, "true"); } catch {} }
   const legendary = currentAchievement === "legendary";
   achievementPanel.style.setProperty("--achievement-color", definition.color);
   achievementPanel.classList.toggle("is-legendary", legendary);
@@ -2366,7 +2372,7 @@ window.addEventListener("storage", (event) => {
     achievements = readAchievements();
     updateAchievementsVisibility();
     renderHomeScreen();
-    queueMemoryFlashUnlock();
+    queueModeUnlocks();
     showNextAchievement();
     if (achievementsPanel.classList.contains("is-visible")) renderChallengeStats();
   }

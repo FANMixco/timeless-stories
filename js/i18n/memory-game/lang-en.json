@@ -783,7 +783,8 @@
         "crazyMirrors": {
           "name": "Crazy mirrors",
           "description": "After every match, all unmatched cards change places.",
-          "tutorial": "Match a pair and watch the remaining cards move! Matched cards stay in place. There is no time or move limit."
+          "tutorial": "Match a pair and watch the remaining cards move! Matched cards stay in place. There is no time or move limit.",
+          "unlocked": "Crazy mirrors unlocked! You have earned at least 75% of the non-secret awards. After every match, all unmatched cards change places. Try it from Game modes!"
         },
         "mistakeLimit": "Fourth mistake! Flash Memory is over.",
         "memoryFlash": {

@@ -783,7 +783,8 @@
         "crazyMirrors": {
           "name": "Espejos locos",
           "description": "Después de cada acierto, las cartas sin emparejar cambian de lugar.",
-          "tutorial": "¡Encuentra una pareja y observa cómo se mueven las cartas restantes! Las parejas encontradas permanecen en su sitio. No hay límite de tiempo ni de movimientos."
+          "tutorial": "¡Encuentra una pareja y observa cómo se mueven las cartas restantes! Las parejas encontradas permanecen en su sitio. No hay límite de tiempo ni de movimientos.",
+          "unlocked": "¡Espejos locos desbloqueado! Has obtenido al menos el 75% de los logros no secretos. Después de cada acierto, las cartas sin emparejar cambian de lugar. ¡Pruébalo en Modos de juego!"
         },
         "mistakeLimit": "¡Cuarto error! La partida de Memoria relámpago ha terminado.",
         "memoryFlash": {
