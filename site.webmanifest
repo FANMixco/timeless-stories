@@ -59,7 +59,7 @@
       "name": "Memory Game",
       "short_name": "Game",
       "description": "Play the Spanish Mirrors memory game.",
-      "url": "/memory-game.html?source=pwa",
+      "url": "/memory-game.html?source=pwa&embed=1",
       "icons": [
         {
           "src": "img/favicons/android-chrome-192x192.png",
