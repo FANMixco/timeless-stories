@@ -85,28 +85,28 @@
     },
     {
       "src": "img/memory-previews/tablet-1.png",
-      "sizes": "2732x2048",
+      "sizes": "2360x1640",
       "type": "image/png",
       "form_factor": "wide",
       "label": "Play the memory game on a larger screen"
     },
     {
       "src": "img/memory-previews/tablet-2.png",
-      "sizes": "2732x2048",
+      "sizes": "2360x1640",
       "type": "image/png",
       "form_factor": "wide",
       "label": "Match icons and track your progress"
     },
     {
       "src": "img/memory-previews/tablet-3.png",
-      "sizes": "2732x2048",
+      "sizes": "2360x1640",
       "type": "image/png",
       "form_factor": "wide",
       "label": "Complete matches and unlock new discoveries"
     },
     {
       "src": "img/memory-previews/tablet-4.png",
-      "sizes": "2732x2048",
+      "sizes": "2360x1640",
       "type": "image/png",
       "form_factor": "wide",
       "label": "Compare legends and explore their cultural connections"
