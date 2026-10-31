@@ -6,6 +6,7 @@ import { buildGameModes, createRoundClock, selectActivePairs, getDefeatReason, g
 import { createModalNavigation } from "./memory-game/dialogs.mjs";
 import { createHomeScreen } from "./memory-game/home.mjs";
 import { createPreviewCountdown } from "./memory-game/preview.mjs";
+import { createSpokenCountdown } from "./memory-game/spoken-countdown.mjs";
 
 const supportedLanguages = ["en", "es", "fr", "zh"];
 const languageStorageKey = "timelessStoriesOfficialLanguage";
@@ -75,7 +76,14 @@ const audio = createGameAudio({
 });
 function prepareGameAudio() { audio.prepare(); }
 function playGameSound(name, rate) { return audio.play(name, rate); }
-function stopGameSounds() { audio.stopAll(); }
+function stopGameSounds() { audio.stopAll(); spokenCountdown.stop(); }
+const spokenCountdown = createSpokenCountdown({
+  getSynthesis: () => window.speechSynthesis,
+  createUtterance: text => typeof window.SpeechSynthesisUtterance === "function" ? new window.SpeechSynthesisUtterance(text) : null,
+  isEnabled: () => soundEnabled,
+  isHidden: () => document.visibilityState === "hidden" || modalPanels.some(panel => panel?.classList.contains("is-visible")),
+  getLanguage: () => currentLanguage,
+});
 const achievementsStorageKey = "timelessMemoryAchievements";
 let completedPerformance = null;
 const achievementDefinitions = [
@@ -248,12 +256,13 @@ const roundClock = createRoundClock({ now: () => Date.now(),
     elapsedSeconds = normalizeElapsedSeconds(gameModes, gameMode, seconds);
     updateStatus();
     endChallengeIfNeeded(false);
+    updateSpokenCountdown();
   },
 });
 const previewCountdown = createPreviewCountdown({ now: () => Date.now(),
   schedule: (callback, delay) => window.setInterval(callback, delay),
   cancel: id => window.clearInterval(id),
-  onTick(remaining) { previewRemaining = remaining; updateStatus(); },
+  onTick(remaining) { previewRemaining = remaining; updateStatus(); updateSpokenCountdown(); },
   onComplete: finishMemoryPreview,
 });
 const modalNavigation = createModalNavigation({ history: !isEmbedded ? window.history : null,
@@ -970,6 +979,7 @@ function refreshModalScrollLock() {
   if (gameFooter) gameFooter.inert = backgroundCovered;
 
   if (hasOpenPanel) {
+    spokenCountdown.stop();
     lockPageScroll();
     return;
   }
@@ -1564,7 +1574,16 @@ function startTimer() {
   if (gameModes[gameMode].tracksTime === false) return;
   roundClock.start();
 }
-function stopTimer() { roundClock.stop(); }
+function stopTimer() { roundClock.stop(); spokenCountdown.stop(); }
+function updateSpokenCountdown() {
+  if (gameMode === "limitedMoves" && lockBoard && !gameDefeated) return;
+  const config = gameModes[gameMode];
+  const remaining = previewPhase === "study" ? previewRemaining
+    : gameMode === "timeAttack" ? config.seconds - elapsedSeconds
+    : gameMode === "limitedMoves" ? config.moves - moves : null;
+  spokenCountdown.update({ key: previewPhase === "study" ? "preview" : gameMode, remaining,
+    playing: !homeScreen.visible && !introRunning && !gameCompleted && !gameDefeated && matches < getPairCount() });
+}
 function hasGameInProgress() {
   return !introRunning && !gameCompleted && !gameDefeated && (Boolean(previewPhase) || Boolean(firstCard) || elapsedSeconds > 0 || moves > 0 || matches > 0);
 }
@@ -1636,6 +1655,7 @@ function hideOpenCards() {
   secondCard.setAttribute("aria-label", memoryGame.hiddenCard || "");
   resetTurn();
   endChallengeIfNeeded(true);
+  updateSpokenCountdown();
 }
 
 function markMatch() {
@@ -1675,6 +1695,7 @@ function markMatch() {
   showMatchInsight(firstCard);
   resetTurn();
   endChallengeIfNeeded(true);
+  updateSpokenCountdown();
   if (!gameCompleted && gameModes[gameMode].shuffleAfterMatch) shuffleUnmatchedCards();
   if (!gameCompleted && gameModes[gameMode].matchSettleMs) {
     lockBoard = true;
@@ -1952,6 +1973,7 @@ function flipCard(card) {
 }
 
 function newGame({ startPreview = !homeScreen.visible } = {}) {
+  spokenCountdown.reset();
   previewCountdown.cancel();
   window.clearTimeout(previewFlipTimer);
   window.clearTimeout(turnSettleTimer);
@@ -2011,6 +2033,7 @@ function newGame({ startPreview = !homeScreen.visible } = {}) {
 }
 
 function startMemoryPreview() {
+  spokenCountdown.reset();
   previewPhase = "study";
   lockBoard = true;
   board.classList.add("is-flash-preview");
@@ -2484,6 +2507,7 @@ document.addEventListener("pointerdown", () => {
   backgroundMusic.prepare();
 }, { passive: true });
 window.addEventListener("pagehide", () => {
+  spokenCountdown.stop();
   backgroundMusic.pause();
   previewCountdown.pause();
   window.clearTimeout(previewFlipTimer);

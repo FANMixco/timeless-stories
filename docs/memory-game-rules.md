@@ -25,6 +25,8 @@ Settings contains preferences, with no mode selector.
   counter shows `used/25`. The final allowed attempt is resolved before deciding
   the outcome: completing the board on move 25 wins; any other result loses.
 
+Spoken countdown warnings announce the last five seconds in Time Attack, the last five moves remaining in the move challenge (after each attempt resolves), and the last five seconds of the Flash Memory preview. They follow the sound setting and selected language, use available browser speech voices, and never queue expired numbers. Restart, completion, defeat, dialogs, mute, backgrounding, and page exit cancel speech. Browsers without speech synthesis retain the visual counters.
+
 Defeats stop gameplay and show the reason, matches and moves. Try Again restarts
 the same mode; View Records opens the Records tab and closing it returns to the
 defeat result. Returning to the start screen allows changing modes. Saved discoveries and

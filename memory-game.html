@@ -15,12 +15,12 @@
     <meta property="og:title" content="Timeless Stories: Mirrors 🪞 | Timeless Stories" />
     <meta property="og:description" content="Play a free memory game matching Salvadoran legends with their Spanish counterparts. Discover folklore in English, Spanish, French, and Chinese." />
     <meta property="og:image" content="https://tstories.federiconavarrete.com/img/preview_memory.jpg" />
-    <meta property="og:url" content="https://tstories.federiconavarrete.com/memory-mvs52ggg.html" />
+    <meta property="og:url" content="https://tstories.federiconavarrete.com/memory-game.html" />
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:title" content="Timeless Stories: Mirrors 🪞 | Timeless Stories" />
     <meta property="twitter:description" content="Play a free memory game matching Salvadoran legends with their Spanish counterparts. Discover folklore in English, Spanish, French, and Chinese." />
     <meta property="twitter:image" content="https://tstories.federiconavarrete.com/img/preview_memory.jpg" />
-    <link rel="canonical" href="https://tstories.federiconavarrete.com/memory-mvs52ggg.html" />
+    <link rel="canonical" href="https://tstories.federiconavarrete.com/memory-game.html" />
     <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
     <link rel="apple-touch-icon" sizes="180x180" href="img/favicons/apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="192x192" href="img/favicons/maskable_icon_x192.png" />
@@ -33,7 +33,7 @@
         "@type": "Game",
         "name": "Timeless Stories - Memory Game",
         "description": "Match Salvadoran legends with their Spanish mirror legends in this multilingual memory game.",
-        "url": "https://tstories.federiconavarrete.com/memory-mvs52ggg.html",
+        "url": "https://tstories.federiconavarrete.com/memory-game.html",
         "image": "https://tstories.federiconavarrete.com/img/preview_memory.jpg",
         "inLanguage": ["en", "es", "fr", "zh"],
         "isAccessibleForFree": true,
@@ -56,8 +56,8 @@
         }
       }
     </script>
-    <link rel="stylesheet" href="css/icon-moon-memory.min.css?v=memory-b57bd792a9f7" />
-    <link rel="stylesheet" href="css/memory-game.min.css?v=memory-b57bd792a9f7" />
+    <link rel="stylesheet" href="css/icon-moon-memory.min.css?v=memory-1b13efc4c743" />
+    <link rel="stylesheet" href="css/memory-game.min.css?v=memory-1b13efc4c743" />
   </head>
   <body>
     <main class="game-shell is-home" aria-label="">
@@ -337,8 +337,19 @@
       <footer class="game-footer standalone-only" id="gameFooter"></footer>
     </main>
 
-    <script type="module" src="js/memory-game.min.js?v=memory-b57bd792a9f7"></script>
+    <script type="module" src="js/memory-game.min.js?v=memory-1b13efc4c743"></script>
     <script src="js/gAnalyticsIdleLoad.min.js" defer></script>
-    <script src="js/pwa.min.js?v=20261021-pwa-registration" defer></script>
+    <!-- Keep registration inline so PWA analyzers can discover it without running a browser. -->
+    <script>
+      if ("serviceWorker" in navigator) {
+        // Register without waiting for images, analytics, or other resources.
+        navigator.serviceWorker.register("/sw.js", {
+          scope: "/memory-game.html",
+          updateViaCache: "none"
+        }).catch((error) => {
+          console.error("Memory Game service worker registration failed:", error);
+        });
+      }
+    </script>
   </body>
 </html>

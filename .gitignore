@@ -27,3 +27,4 @@ tests/background-music.test.mjs
 tests/crazy-mirrors.test.mjs
 tools/create-shortcut-icons.ps1
 tests/memory-flash.test.mjs
+tests/spoken-countdown.test.mjs
