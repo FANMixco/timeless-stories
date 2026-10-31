@@ -5,5 +5,6 @@ export const crazyMirrorsMode = Object.freeze({
   ...classicMode,
   id: "crazyMirrors",
   shuffleAfterMatch: true,
+  canLose: false,
   record: Object.freeze({ key: "bestTime", field: "time" }),
 });

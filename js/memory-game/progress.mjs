@@ -44,14 +44,17 @@ export function createProgressView({ document, getState, readPersonalRecords, re
       const entry = stats[mode];
       const record = gameModes[mode].record;
       const best = entry[record.key];
-      list.append(...createRecordCards([
+      const metrics = [
         [memoryGame.records[record.key],
           best == null ? "—" : record.field === "time" ? formatTime(best) : best, "power"],
         [copy.attempts, entry.attempts, "target"],
         [copy.victories, entry.victories, "trophy"],
+      ];
+      if (gameModes[mode].canLose !== false) metrics.push(
         [copy.defeats, entry.defeats, "defeat"],
         [copy.winPercentage, `${entry.attempts ? Math.round(entry.victories / entry.attempts * 100) : 0}%`, "star-full"],
-      ]));
+      );
+      list.append(...createRecordCards(metrics));
       section.append(heading, list);
       return section;
     });
