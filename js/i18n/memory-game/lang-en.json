@@ -784,6 +784,15 @@
           "name": "Crazy mirrors",
           "description": "After every match, all unmatched cards change places.",
           "tutorial": "Match a pair and watch the remaining cards move! Matched cards stay in place. There is no time or move limit."
+        },
+        "mistakeLimit": "Fourth mistake! Flash Memory is over.",
+        "memoryFlash": {
+          "name": "Flash Memory",
+          "description": "Study 10 pairs for 7 seconds. Your fourth mistake ends the game.",
+          "tutorial": "Memorize the positions of all 10 pairs before the cards flip over. You have 7 seconds to study the board. Find every pair, but be careful: your fourth mistake ends the game!",
+          "mistakesRemaining": "Mistakes remaining",
+          "preview": "Memorize",
+          "unlocked": "Flash Memory unlocked! You have completed every achievement. Memorize 10 pairs in 7 seconds, then find them before making a fourth mistake."
         }
       },
       "progress": {

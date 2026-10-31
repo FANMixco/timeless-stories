@@ -114,6 +114,7 @@ export function createProgressView({ document, getState, readPersonalRecords, re
     const metrics = document.createElement("dl");
     metrics.className = "performance-metrics";
     for (const [metric, label, value] of [["time", copy.time, formatTime(result.time)], ["moves", copy.moves, result.moves.toLocaleString(currentLanguage)]]) {
+      if (metric === "time" && result.hideTime) continue;
       const row = document.createElement("div");
       const name = document.createElement("dt");
       name.textContent = label;

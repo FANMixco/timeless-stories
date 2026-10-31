@@ -2,6 +2,7 @@ import { classicMode } from "./modes/classic.mjs";
 import { crazyMirrorsMode } from "./modes/crazy-mirrors.mjs";
 import { createTimeAttackMode } from "./modes/time-attack.mjs";
 import { createLimitedMovesMode } from "./modes/limited-moves.mjs";
+import { memoryFlashMode } from "./modes/memory-flash.mjs";
 
 export function buildGameModes(hard = false) {
   return Object.freeze({
@@ -9,6 +10,7 @@ export function buildGameModes(hard = false) {
     timeAttack: createTimeAttackMode({ hard }),
     limitedMoves: createLimitedMovesMode({ hard }),
     crazyMirrors: crazyMirrorsMode,
+    memoryFlash: memoryFlashMode,
   });
 }
 

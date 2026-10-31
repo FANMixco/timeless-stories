@@ -5,12 +5,21 @@ import { createProgressView } from "./memory-game/progress.mjs";
 import { buildGameModes, createRoundClock, selectActivePairs, getDefeatReason, getModeStatus, normalizeElapsedSeconds, shuffleRemainingCards } from "./memory-game/rules.mjs";
 import { createModalNavigation } from "./memory-game/dialogs.mjs";
 import { createHomeScreen } from "./memory-game/home.mjs";
+import { createPreviewCountdown } from "./memory-game/preview.mjs";
 
 const supportedLanguages = ["en", "es", "fr", "zh"];
 const languageStorageKey = "timelessStoriesOfficialLanguage";
 const themeStorageKey = "timelessStoriesColorMode";
 const introStorageKey = "timelessMemoryIntroSeen";
 const crazyIntroStorageKey = "timelessMemoryCrazyMirrorsIntroSeen";
+const flashIntroStorageKey = "timelessMemoryFlashIntroSeen";
+const flashUnlockStorageKey = "timelessMemoryFlashUnlockNotified";
+let previewPhase = null;
+let previewRemaining = null;
+let previewFlipTimer = null;
+let turnSettleTimer = null;
+let mistakes = 0;
+let flashUnlockQueued = false;
 let shuffleTimer = null;
 let shuffleAnimations = [];
 const collectionStorageKey = "timelessMemoryCollection";
@@ -24,6 +33,8 @@ const hardModeStorageKey = "timelessMemoryHardMode";
 const challengeStatsStorageKey = "timelessMemoryChallenges:v1";
 const recordsStorageKey = "timelessMemoryRecords:v1";
 const searchParams = new URLSearchParams(window.location.search);
+const flashTestEnabled = searchParams.get("mode") === "ultimate";
+const requestedMode = flashTestEnabled ? "memoryFlash" : searchParams.get("mode");
 const isEmbedded = searchParams.get("embed") === "1";
 const storeVersion = searchParams.get("version");
 const ratingUrl = storeVersion === "play"
@@ -202,7 +213,7 @@ homeScreen.bind();
 
 function showHome() {
   pendingHome = false;
-  newGame();
+  newGame({ startPreview: false });
   renderHomeScreen();
   homeScreen.show(gameMode);
   syncModalHistory();
@@ -225,7 +236,7 @@ const progressView = createProgressView({ document,
   getState: () => ({ memoryGame, achievements, completedPerformance, currentLanguage }),
   readPersonalRecords, readChallengeStats, getPairCount, getRecordConfiguration, formatTime,
   setElementText, setElementHidden, achievementDefinitions, onTabChange: syncModalHistory, gameModes,
-  isModeUnlocked: mode => mode !== "crazyMirrors" || isCrazyMirrorsUnlocked() });
+  isModeUnlocked });
 const roundClock = createRoundClock({ now: () => Date.now(),
   schedule: (callback, delay) => window.setInterval(callback, delay),
   cancel: id => window.clearInterval(id),
@@ -234,6 +245,12 @@ const roundClock = createRoundClock({ now: () => Date.now(),
     updateStatus();
     endChallengeIfNeeded(false);
   },
+});
+const previewCountdown = createPreviewCountdown({ now: () => Date.now(),
+  schedule: (callback, delay) => window.setInterval(callback, delay),
+  cancel: id => window.clearInterval(id),
+  onTick(remaining) { previewRemaining = remaining; updateStatus(); },
+  onComplete: finishMemoryPreview,
 });
 const modalNavigation = createModalNavigation({ history: !isEmbedded ? window.history : null,
   getSnapshot: getModalSnapshot, restoreSnapshot: restoreModalSnapshot,
@@ -372,7 +389,7 @@ function evaluateAchievements(completed = false) {
   const conditions = {
     legendary: regularLegends.length > 0 && regularLegends.every(pair => discoveries.has(getMirrorId(pair))),
     victory: completed || found.length > 0,
-    lightning: completed && elapsedSeconds < 30,
+    lightning: completed && gameModes[gameMode].tracksTime !== false && elapsedSeconds < 30,
     timeVictor: challengeStats.timeAttack.victories > 0,
     moveVictor: challengeStats.limitedMoves.victories > 0,
     hardTimeVictor: (challengeStats.timeAttack.hardVictories || 0) > 0,
@@ -390,6 +407,7 @@ function evaluateAchievements(completed = false) {
   }
   try { window.localStorage.setItem(achievementsStorageKey, JSON.stringify(achievements)); } catch {}
   updateAchievementsVisibility();
+  queueMemoryFlashUnlock();
   renderHomeScreen();
 }
 
@@ -440,6 +458,7 @@ function finishChallenge(won) {
   if (!gameModes[gameMode].record || !attemptStarted || attemptFinished) return;
   attemptFinished = true;
   completedPerformance = progressStore.completeChallenge(gameMode, won, { time: elapsedSeconds, moves, hardMode: attemptHardMode });
+  if (completedPerformance) completedPerformance.hideTime = gameModes[gameMode].tracksTime === false;
 }
 function updateAchievementsVisibility() {
   const stats = readChallengeStats();
@@ -474,12 +493,31 @@ function isCrazyMirrorsUnlocked() {
   return eligibleAwards.length > 0 && eligibleAwards.filter(({ id }) => earned[id]).length / eligibleAwards.length >= 0.75;
 }
 
+function isMemoryFlashUnlocked() {
+  const earned = { ...achievements, ...readAchievements() };
+  return achievementDefinitions.every(({ id }) => earned[id]);
+}
+
+function isModeUnlocked(mode) {
+  if (mode === "crazyMirrors") return isCrazyMirrorsUnlocked();
+  if (mode === "memoryFlash") return flashTestEnabled || isMemoryFlashUnlocked();
+  return true;
+}
+
+function queueMemoryFlashUnlock() {
+  if (!isMemoryFlashUnlocked() || flashUnlockQueued) return;
+  try { if (window.localStorage.getItem(flashUnlockStorageKey)) return; } catch {}
+  flashUnlockQueued = true;
+  achievementQueue.push("memoryFlashUnlocked");
+}
+
 function renderHomeScreen() {
-  homeScreen.render(memoryGame, { hardMode: hardModeEnabled, ratingUrl, crazyMirrorsUnlocked: isCrazyMirrorsUnlocked() });
+  homeScreen.render(memoryGame, { hardMode: hardModeEnabled, ratingUrl,
+    crazyMirrorsUnlocked: isCrazyMirrorsUnlocked(), memoryFlashUnlocked: isModeUnlocked("memoryFlash") });
 }
 
 function applyGameMode(mode) {
-  if (!Object.hasOwn(gameModes, mode) || (mode === "crazyMirrors" && !isCrazyMirrorsUnlocked())) return;
+  if (!Object.hasOwn(gameModes, mode) || !isModeUnlocked(mode)) return;
   gameMode = mode;
   try { window.localStorage.setItem(modeStorageKey, mode); } catch {}
   homeScreen.hide();
@@ -490,7 +528,7 @@ function applyGameMode(mode) {
 
 function endChallengeIfNeeded(attemptResolved) {
   if (gameCompleted || gameDefeated) return;
-  const reason = getDefeatReason(gameModes, { mode: gameMode, seconds: elapsedSeconds, moves, matches,
+  const reason = getDefeatReason(gameModes, { mode: gameMode, seconds: elapsedSeconds, moves, matches, mistakes,
     pairCount: getPairCount(), attemptResolved });
   if (reason) endGame(reason);
 }
@@ -547,20 +585,23 @@ function closeAchievements() {
 }
 
 function showNextAchievement() {
-  if (currentAchievement || !achievementQueue.length || introRunning) return;
+  if (currentAchievement || !achievementQueue.length || introRunning || previewPhase) return;
   if (!achievementReturnFocus) achievementReturnFocus = document.activeElement;
   currentAchievement = achievementQueue.shift();
-  const definition = achievementDefinitions.find(item => item.id === currentAchievement);
+  const flashUnlock = currentAchievement === "memoryFlashUnlocked";
+  const definition = flashUnlock ? { icon: "power", color: "#1484bd" } : achievementDefinitions.find(item => item.id === currentAchievement);
   const copy = memoryGame.achievements;
+  const rewardCopy = flashUnlock ? { name: memoryGame.modes.memoryFlash.name, description: memoryGame.modes.memoryFlash.unlocked } : copy.items[currentAchievement];
+  if (flashUnlock) { try { window.localStorage.setItem(flashUnlockStorageKey, "true"); } catch {} }
   const legendary = currentAchievement === "legendary";
   achievementPanel.style.setProperty("--achievement-color", definition.color);
   achievementPanel.classList.toggle("is-legendary", legendary);
   document.getElementById("achievementIcon").className = `achievement-icon icon-${definition.icon}`;
   setElementText(document.getElementById("achievementTitle"), legendary ? copy.legendaryTitle : copy.notification);
-  setElementText(document.getElementById("achievementName"), copy.items[currentAchievement].name);
+  setElementText(document.getElementById("achievementName"), rewardCopy.name);
   setElementHidden(document.getElementById("achievementName"), legendary);
-  setElementText(document.getElementById("achievementDescription"), legendary ? copy.legendaryDescription : copy.items[currentAchievement].description);
-  setElementText(document.getElementById("achievementCelebration"), legendary ? copy.celebration : copy.items[currentAchievement].bonus || "");
+  setElementText(document.getElementById("achievementDescription"), legendary ? copy.legendaryDescription : rewardCopy.description);
+  setElementText(document.getElementById("achievementCelebration"), legendary ? copy.celebration : rewardCopy.bonus || "");
   setElementText(document.getElementById("achievementCompletion"), legendary ? copy.completion : "");
   setElementText(document.getElementById("achievementMotto"), legendary ? copy.motto : "");
   const explore = document.getElementById("achievementExplore");
@@ -832,6 +873,10 @@ async function loadGameLanguage(language) {
   const game = data.translations?.memoryGame;
   if (!game?.settings?.title || !game.settings.sounds || !game.settings.resetConfirmation || !game.home?.chooseMode || !game.home.confirmReturn || !game.records?.title || !game.modes?.title || !game.progress?.title || !game.progress.records || !game.about?.musicCredit || !achievementDefinitions.every(({ id }) => game.achievements?.items?.[id])) {
     throw new Error(`Incomplete game language: ${language}`);
+  }
+  if (!Object.keys(gameModes).every(mode => game.modes[mode]?.name && game.modes[mode]?.description) ||
+    !["tutorial", "mistakesRemaining", "preview", "unlocked"].every(key => game.modes.memoryFlash?.[key]) || !game.modes.mistakeLimit) {
+    throw new Error(`Incomplete game mode translations: ${language}`);
   }
   const pairs = [...(game.pairs || []), ...(game.rarePairs || []).map(variant => variant.pair)];
   if (!pairs.every(pair => game.comparisons?.[pair.comparison]?.title && game.comparisons[pair.comparison].description)) {
@@ -1488,7 +1533,14 @@ function formatTime(totalSeconds) {
 }
 
 function updateStatus() {
-  const status = getModeStatus(gameModes, gameMode, { seconds: elapsedSeconds, moves, completed: gameCompleted });
+  const config = gameModes[gameMode];
+  const status = getModeStatus(gameModes, gameMode, { seconds: elapsedSeconds, moves, mistakes, previewRemaining, completed: gameCompleted });
+  setText('[data-ui-label="moves"]', config.maxMistakes != null ? memoryGame.modes.memoryFlash.mistakesRemaining : memoryGame.moves);
+  setText('[data-ui-label="time"]', config.previewSeconds ? memoryGame.modes.memoryFlash.preview : memoryGame.time);
+  setElementHidden(document.getElementById("timeStatus"), Boolean(status.hideTime));
+  document.querySelector(".status-grid").classList.toggle("is-untimed", Boolean(status.hideTime));
+  movesValue.setAttribute("aria-live", config.maxMistakes != null ? "polite" : "off");
+  timeValue.setAttribute("aria-live", config.previewSeconds ? "polite" : "off");
   movesValue.textContent = status.moves;
   matchesValue.textContent = `${matches}/${getPairCount()}`;
   timeValue.textContent = formatTime(status.seconds);
@@ -1497,16 +1549,18 @@ function updateStatus() {
 }
 
 function refreshGameTime() {
+  if (previewPhase === "study") previewCountdown.refresh();
   if (!gameCompleted && !gameDefeated && !introRunning) roundClock.refresh();
 }
 function startTimer() {
   if (roundClock.running) return;
   beginAttempt();
+  if (gameModes[gameMode].tracksTime === false) return;
   roundClock.start();
 }
 function stopTimer() { roundClock.stop(); }
 function hasGameInProgress() {
-  return !introRunning && !gameCompleted && !gameDefeated && (Boolean(firstCard) || elapsedSeconds > 0 || moves > 0 || matches > 0);
+  return !introRunning && !gameCompleted && !gameDefeated && (Boolean(previewPhase) || Boolean(firstCard) || elapsedSeconds > 0 || moves > 0 || matches > 0);
 }
 
 function warnBeforeLeaving(event) {
@@ -1603,7 +1657,7 @@ function markMatch() {
     saveCompletedDiscoveries();
     board.classList.add("is-complete");
     setTopLegendActionVisibility(true);
-    setPreviewRewardVisibility(elapsedSeconds < previewRewardThresholdSeconds);
+    setPreviewRewardVisibility(gameModes[gameMode].tracksTime !== false && elapsedSeconds < previewRewardThresholdSeconds);
     winMessage.textContent = (memoryGame.win || "")
       .replace("{pairs}", getPairCount());
     winPanel.classList.add("is-visible");
@@ -1616,6 +1670,15 @@ function markMatch() {
   resetTurn();
   endChallengeIfNeeded(true);
   if (!gameCompleted && gameModes[gameMode].shuffleAfterMatch) shuffleUnmatchedCards();
+  if (!gameCompleted && gameModes[gameMode].matchSettleMs) {
+    lockBoard = true;
+    const runId = tutorialRunId;
+    turnSettleTimer = window.setTimeout(() => {
+      if (runId !== tutorialRunId) return;
+      turnSettleTimer = null; lockBoard = false;
+    },
+      window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ? 0 : gameModes[gameMode].matchSettleMs);
+  }
 }
 
 function shuffleUnmatchedCards() {
@@ -1837,7 +1900,7 @@ function setTopLegendActionVisibility(shouldShow) {
 function flipCard(card) {
   refreshGameTime();
   if (gameDefeated) return;
-  if (introRunning) {
+  if (introRunning || previewPhase) {
     return;
   }
 
@@ -1873,10 +1936,22 @@ function flipCard(card) {
     return;
   }
 
+  if (gameModes[gameMode].maxMistakes != null) {
+    mistakes += 1;
+    updateStatus();
+    endChallengeIfNeeded(false);
+    if (gameDefeated) return;
+  }
   mismatchTimer = window.setTimeout(hideOpenCards, mismatchFlipBackDelayMs);
 }
 
-function newGame() {
+function newGame({ startPreview = !homeScreen.visible } = {}) {
+  previewCountdown.cancel();
+  window.clearTimeout(previewFlipTimer);
+  window.clearTimeout(turnSettleTimer);
+  previewFlipTimer = turnSettleTimer = null;
+  previewPhase = previewRemaining = null;
+  mistakes = 0;
   window.clearTimeout(shuffleTimer);
   shuffleTimer = null;
   shuffleAnimations.forEach(animation => animation.cancel());
@@ -1904,7 +1979,7 @@ function newGame() {
   completedPerformance = null;
   renderCompletedPerformance();
   activePairs = chooseActivePairs();
-  board.classList.remove("is-complete", "is-intro");
+  board.classList.remove("is-complete", "is-intro", "is-flash-preview");
   matchInsight.classList.remove("is-visible");
   matchInsightTitle.textContent = "";
   matchInsightText.textContent = "";
@@ -1925,6 +2000,55 @@ function newGame() {
   deck = shuffle(buildDeck());
   renderLegendsList();
   board.replaceChildren(...deck.map(createCard));
+  if (startPreview && gameModes[gameMode].previewSeconds) startMemoryPreview();
+  showNextAchievement();
+}
+
+function startMemoryPreview() {
+  previewPhase = "study";
+  lockBoard = true;
+  board.classList.add("is-flash-preview");
+  for (const card of board.children) {
+    card.classList.add("is-flipped");
+    card.disabled = true;
+    card.setAttribute("aria-label", card.dataset.revealedLabel);
+  }
+  previewCountdown.start(gameModes[gameMode].previewSeconds);
+  let seen = false;
+  try { seen = Boolean(window.localStorage.getItem(flashIntroStorageKey)); } catch {}
+  if (!seen) showMemoryFlashTutorial();
+}
+
+function showMemoryFlashTutorial() {
+  matchInsightTitle.textContent = memoryGame.modes.memoryFlash.name;
+  matchInsightText.textContent = memoryGame.modes.memoryFlash.tutorial;
+  matchInsight.classList.remove("is-in-progress");
+  matchInsight.classList.add("is-visible");
+}
+
+function finishMemoryPreview() {
+  if (previewPhase !== "study") return;
+  previewPhase = "hiding";
+  board.classList.remove("is-flash-preview");
+  for (const card of board.children) {
+    card.classList.remove("is-flipped");
+    card.setAttribute("aria-label", memoryGame.hiddenCard);
+  }
+  hideLegendToast();
+  matchInsight.classList.remove("is-visible");
+  const runId = tutorialRunId;
+  previewFlipTimer = window.setTimeout(() => {
+    if (runId === tutorialRunId) releaseMemoryPreview();
+  }, window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ? 0 : gameModes[gameMode].matchSettleMs);
+}
+
+function releaseMemoryPreview() {
+  previewFlipTimer = null;
+  previewPhase = previewRemaining = null;
+  lockBoard = false;
+  for (const card of board.children) card.disabled = false;
+  try { window.localStorage.setItem(flashIntroStorageKey, "true"); } catch {}
+  updateStatus();
   showNextAchievement();
 }
 
@@ -2083,13 +2207,14 @@ async function runIntroTutorial() {
 }
 
 function handleHint() {
-  if (introRunning || !tipsEnabled) return;
+  if (introRunning || previewPhase || !tipsEnabled) return;
   // The first flip starts play before either the move count or timer ticks.
   const canReplayTutorial = !gameCompleted && !firstCard &&
     moves === 0 && matches === 0 && elapsedSeconds === 0;
   hintPressCount = canReplayTutorial ? hintPressCount + 1 : 0;
   if (hintPressCount === 3) {
-    runIntroTutorial();
+    if (gameModes[gameMode].previewSeconds) { newGame(); showMemoryFlashTutorial(); }
+    else runIntroTutorial();
     if (!isEmbedded) window.scrollTo({ top: 0, left: 0, behavior: "auto" });
     return;
   }
@@ -2097,6 +2222,7 @@ function handleHint() {
 }
 
 function startGame() {
+  if (gameModes[gameMode].previewSeconds) { newGame(); return; }
   let needsCrazyIntro = false;
   try { needsCrazyIntro = gameMode === "crazyMirrors" && !window.localStorage.getItem(crazyIntroStorageKey); } catch {}
   if (hasSeenIntro() && !needsCrazyIntro) {
@@ -2240,6 +2366,8 @@ window.addEventListener("storage", (event) => {
     achievements = readAchievements();
     updateAchievementsVisibility();
     renderHomeScreen();
+    queueMemoryFlashUnlock();
+    showNextAchievement();
     if (achievementsPanel.classList.contains("is-visible")) renderChallengeStats();
   }
   if (event.key === challengeStatsStorageKey) {
@@ -2282,6 +2410,8 @@ window.addEventListener("beforeunload", warnBeforeLeaving);
 // from the back/forward cache. Derive the lock from the visible dialogs without
 // creating or traversing history entries during those lifecycle events.
 function resumeGamePage() {
+  if (previewPhase === "study") previewCountdown.resume();
+  else if (previewPhase === "hiding" && previewFlipTimer === null) releaseMemoryPreview();
   refreshGameTime();
   refreshModalScrollLock();
   backgroundMusic.sync();
@@ -2347,7 +2477,12 @@ document.addEventListener("pointerdown", () => {
   keyboardNavigation = false;
   backgroundMusic.prepare();
 }, { passive: true });
-window.addEventListener("pagehide", () => backgroundMusic.pause());
+window.addEventListener("pagehide", () => {
+  backgroundMusic.pause();
+  previewCountdown.pause();
+  window.clearTimeout(previewFlipTimer);
+  previewFlipTimer = null;
+});
 matchToastsToggle.addEventListener("change", () => setMatchToastsEnabled(matchToastsToggle.checked));
 tipsToggle.addEventListener("change", () => setTipsEnabled(tipsToggle.checked));
 shortNamesToggle.addEventListener("change", () => setShortNamesEnabled(shortNamesToggle.checked));
@@ -2387,13 +2522,14 @@ window.matchMedia?.("(prefers-color-scheme: dark)")?.addEventListener("change", 
 loadTranslations().then(() => {
   applyUiCopy();
   evaluateAchievements();
-  if (gameMode === "crazyMirrors" && !isCrazyMirrorsUnlocked()) gameMode = "classic";
+  if (!isModeUnlocked(gameMode)) gameMode = "classic";
   if (isEmbedded) {
     homeScreen.hide();
     startGame();
-  } else if (Object.hasOwn(gameModes, searchParams.get("mode")) &&
-    (searchParams.get("mode") !== "crazyMirrors" || isCrazyMirrorsUnlocked())) {
-    applyGameMode(searchParams.get("mode"));
+  } else if (Object.hasOwn(gameModes, requestedMode) && isModeUnlocked(requestedMode)) {
+    // Keep a home entry beneath direct mode launches for safe in-app Back.
+    syncModalHistory();
+    applyGameMode(requestedMode);
   } else showHome();
 
   // focus-existing keeps normal app launches from resetting a round. Shortcut
@@ -2403,8 +2539,9 @@ loadTranslations().then(() => {
     if (!targetURL) return;
     const target = new URL(targetURL);
     const current = new URL(window.location.href);
+    const targetMode = target.searchParams.get("mode") === "ultimate" ? "memoryFlash" : target.searchParams.get("mode");
     if (target.origin !== current.origin || target.pathname !== current.pathname
-      || !Object.hasOwn(gameModes, target.searchParams.get("mode"))) return;
+      || !Object.hasOwn(gameModes, targetMode)) return;
     if (current.searchParams.has("version") && !target.searchParams.has("version")) {
       target.searchParams.set("version", current.searchParams.get("version"));
     }

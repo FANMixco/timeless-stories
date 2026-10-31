@@ -784,6 +784,15 @@
           "name": "Miroirs fous",
           "description": "Après chaque paire trouvée, les cartes restantes changent de place.",
           "tutorial": "Trouvez une paire et regardez les cartes restantes se déplacer ! Les paires trouvées restent en place. Il n’y a aucune limite de temps ni de coups."
+        },
+        "mistakeLimit": "Quatrième erreur ! La partie de Mémoire flash est terminée.",
+        "memoryFlash": {
+          "name": "Mémoire flash",
+          "description": "Mémorisez 10 paires en 7 secondes. La quatrième erreur met fin à la partie.",
+          "tutorial": "Mémorisez les positions des 10 paires avant que les cartes se retournent. Vous avez 7 secondes pour étudier le plateau. Retrouvez toutes les paires, mais attention : votre quatrième erreur met fin à la partie !",
+          "mistakesRemaining": "Erreurs restantes",
+          "preview": "Mémorisez",
+          "unlocked": "Mémoire flash débloqué ! Vous avez obtenu tous les succès. Mémorisez 10 paires en 7 secondes, puis retrouvez-les avant de faire une quatrième erreur."
         }
       },
       "progress": {

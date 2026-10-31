@@ -13,6 +13,8 @@ no framework, runtime dependency or custom JavaScript bundler.
 | `js/memory-game/modes/classic.mjs` | Unlimited counters and no defeat condition; preserves Classic record storage. |
 | `js/memory-game/modes/time-attack.mjs` | The time limit, countdown/warning presentation, deadline defeat and best-time metric. |
 | `js/memory-game/modes/limited-moves.mjs` | The move limit, move-counter/warning presentation, resolved-attempt defeat and fewest-moves metric. |
+| `js/memory-game/modes/memory-flash.mjs` | Seven-second preview, three-mistake allowance, untimed status and fourth-mistake defeat policy. |
+| `js/memory-game/preview.mjs` | Injected wall-clock preview countdown, cancellation tokens and page-hide/resume handling. |
 | `js/memory-game/storage.mjs` | Validates saved Classic/challenge statistics and records attempts/results. Preserves existing local-storage keys and reads fresh data before updates. |
 | `js/memory-game/audio.mjs` | Owns AudioContext, buffers, playback channels, fades, priorities and cancellation of pending sounds. |
 | `js/memory-game/background-music.mjs` | Streams the looping soundtrack after interaction, independently of effects, and pauses it when disabled or hidden. |

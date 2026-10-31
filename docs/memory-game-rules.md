@@ -47,6 +47,42 @@ exclamation mark. Classic has no extra mode label on the board. Mobile dialogs u
 inside the panel.
 No board is restored across reloads; saved mode, statistics and collections persist.
 
+## Flash Memory
+
+Flash Memory is the fifth mode, after Crazy mirrors. It unlocks when all twelve
+existing achievements, including secret achievements, have been earned. A localized
+unlock notification uses the existing achievement modal and is saved once under
+`timelessMemoryFlashUnlockNotified`. No extra achievement is required to unlock it.
+The mode card and records stay hidden until unlocked. `?mode=ultimate` selects
+Flash Memory directly and bypasses the unlock only for that preview session.
+
+The usual weighted card selection creates ten pairs / twenty cards. All cards are
+revealed and disabled for a seven-second wall-clock preview, with a visible
+countdown. The first preview includes localized instructions using the existing
+match-insight component, without covering the cards. Cards then flip down and
+remain locked until the flip animation ends. Later previews omit the tutorial;
+three Hint presses before play can replay it. The tutorial has its own saved key,
+`timelessMemoryFlashIntroSeen`.
+
+There is no overall timer or points system. The counter starts at **Mistakes
+remaining: 3 / 3**. Correct matches stay revealed and consume no allowance.
+Mismatches consume one mistake and flip back after the existing delay. Three
+mistakes leave **0 / 3** and the game playable. The fourth mismatch ends the game
+immediately using Game Over. Matching all ten pairs wins. Successful boards save
+collectibles and collection achievements normally. Untimed victories do not earn
+Lightning Memory or the time-based book-preview reward.
+
+Records use the existing separate challenge store: attempts, victories, defeats,
+win percentage and fewest moves. The victory result omits time. Neither Classic
+nor Crazy mirrors personal records are changed. Hard Mode does not change Memory
+Flash's seven-second preview or mistake allowance.
+
+Restarts and mode changes cancel countdown, flip, mismatch and match-settle
+callbacks. Page hide stops preview scheduling; page resume checks the original
+wall-clock deadline, so backgrounding cannot extend the study period. Callback
+generations prevent a canceled preview from mutating a subsequent round. Reduced
+motion removes the additional preview/match animation wait.
+
 ## Card categories and matching
 
 | Collection group | Internal rarity | Current number of pairs |

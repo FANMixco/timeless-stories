@@ -784,6 +784,15 @@
           "name": "Espejos locos",
           "description": "Después de cada acierto, las cartas sin emparejar cambian de lugar.",
           "tutorial": "¡Encuentra una pareja y observa cómo se mueven las cartas restantes! Las parejas encontradas permanecen en su sitio. No hay límite de tiempo ni de movimientos."
+        },
+        "mistakeLimit": "¡Cuarto error! La partida de Memoria relámpago ha terminado.",
+        "memoryFlash": {
+          "name": "Memoria relámpago",
+          "description": "Estudia 10 parejas durante 7 segundos. Tu cuarto error termina la partida.",
+          "tutorial": "Memoriza las posiciones de las 10 parejas antes de que se volteen las cartas. Tienes 7 segundos para estudiar el tablero. ¡Encuentra todas las parejas, pero ten cuidado: tu cuarto error termina la partida!",
+          "mistakesRemaining": "Errores restantes",
+          "preview": "Memoriza",
+          "unlocked": "¡Memoria relámpago desbloqueada! Has completado todos los logros. Memoriza 10 parejas en 7 segundos y encuéntralas antes de cometer un cuarto error."
         }
       },
       "progress": {
