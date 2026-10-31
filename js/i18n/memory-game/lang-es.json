@@ -211,6 +211,7 @@
         "shortNames": "Usar nombres cortos en las cartas",
         "hardMode": "Modo Difícil",
         "hardModeUnlocked": "¡Se ha desbloqueado el Modo Difícil! Disfruta de una nueva experiencia.",
+        "spokenCountdown": "Cuenta regresiva por voz",
         "music": "Música de fondo"
       },
       "achievements": {

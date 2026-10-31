@@ -29,6 +29,7 @@ let shuffleTimer = null;
 let shuffleAnimations = [];
 const collectionStorageKey = "timelessMemoryCollection";
 const soundStorageKey = "timelessMemorySoundEnabled";
+const spokenCountdownStorageKey = "timelessMemorySpokenCountdownEnabled";
 const musicStorageKey = "timelessMemoryMusicEnabled";
 const matchToastsStorageKey = "timelessMemoryMatchToastsEnabled";
 const tipsStorageKey = "timelessMemoryTipsEnabled";
@@ -62,6 +63,7 @@ let tipsEnabled = readTipsEnabled();
 let shortNamesEnabled = readShortNamesEnabled();
 const soundEffectCreators = ["ALEXIS_GAMING_CAM", "freesound_community", "Yodguard", "Game Studio"];
 let soundEnabled = readSoundEnabled();
+let spokenCountdownEnabled = readSpokenCountdownEnabled();
 let musicEnabled = readMusicEnabled();
 const backgroundMusic = createBackgroundMusic({
   createAudio: source => typeof window.Audio === "function" ? new window.Audio(source) : null,
@@ -80,7 +82,7 @@ function stopGameSounds() { audio.stopAll(); spokenCountdown.stop(); }
 const spokenCountdown = createSpokenCountdown({
   getSynthesis: () => window.speechSynthesis,
   createUtterance: text => typeof window.SpeechSynthesisUtterance === "function" ? new window.SpeechSynthesisUtterance(text) : null,
-  isEnabled: () => soundEnabled,
+  isEnabled: () => soundEnabled && spokenCountdownEnabled,
   isHidden: () => document.visibilityState === "hidden" || modalPanels.some(panel => panel?.classList.contains("is-visible")),
   getLanguage: () => currentLanguage,
 });
@@ -147,6 +149,7 @@ const settingsButton = document.getElementById("settingsButton");
 const settingsPanel = document.getElementById("settingsPanel");
 const closeSettingsButton = document.getElementById("closeSettingsButton");
 const soundToggle = document.getElementById("soundToggle");
+const spokenCountdownToggle = document.getElementById("spokenCountdownToggle");
 const musicToggle = document.getElementById("musicToggle");
 const matchToastsToggle = document.getElementById("matchToastsToggle");
 const tipsToggle = document.getElementById("tipsToggle");
@@ -886,7 +889,7 @@ async function loadGameLanguage(language) {
   if (response.ok === false) throw new Error(`Unable to load game language: ${language}`);
   const data = await response.json();
   const game = data.translations?.memoryGame;
-  if (!game?.settings?.title || !game.settings.sounds || !game.settings.resetConfirmation || !game.home?.chooseMode || !game.home.confirmReturn || !game.records?.title || !game.modes?.title || !game.progress?.title || !game.progress.records || !game.about?.musicCredit || !achievementDefinitions.every(({ id }) => game.achievements?.items?.[id])) {
+  if (!game?.settings?.title || !game.settings.sounds || !game.settings.spokenCountdown || !game.settings.resetConfirmation || !game.home?.chooseMode || !game.home.confirmReturn || !game.records?.title || !game.modes?.title || !game.progress?.title || !game.progress.records || !game.about?.musicCredit || !achievementDefinitions.every(({ id }) => game.achievements?.items?.[id])) {
     throw new Error(`Incomplete game language: ${language}`);
   }
   if (!Object.keys(gameModes).every(mode => game.modes[mode]?.name && game.modes[mode]?.description) ||
@@ -1029,6 +1032,18 @@ function readSoundEnabled() {
   catch { return true; }
 }
 
+function readSpokenCountdownEnabled() {
+  try { return window.localStorage.getItem(spokenCountdownStorageKey) !== "false"; }
+  catch { return true; }
+}
+
+function setSpokenCountdownEnabled(enabled) {
+  spokenCountdownEnabled = enabled;
+  spokenCountdownToggle.checked = enabled;
+  try { window.localStorage.setItem(spokenCountdownStorageKey, String(enabled)); } catch {}
+  if (!enabled) spokenCountdown.stop();
+}
+
 function readMatchToastsEnabled() {
   try { return window.localStorage.getItem(matchToastsStorageKey) !== "false"; }
   catch { return true; }
@@ -1106,6 +1121,7 @@ function openSettings() {
   closeLanguageMenu();
   setElementHidden(document.getElementById("resetGameError"), true);
   settingsPanel.classList.add("is-visible");
+  spokenCountdownToggle.checked = spokenCountdownEnabled;
   soundToggle.checked = soundEnabled;
   tipsToggle.checked = tipsEnabled;
   musicToggle.checked = musicEnabled;
@@ -1323,6 +1339,8 @@ function applyUiCopy() {
   setElementText(document.getElementById("settingsTitle"), settingsCopy.title);
   setElementText(document.getElementById("settingsLanguageLabel"), memoryGame.language);
   setElementText(document.getElementById("settingsSoundLabel"), settingsCopy.sounds);
+  setElementText(document.getElementById("settingsSpokenCountdownLabel"), settingsCopy.spokenCountdown);
+  spokenCountdownToggle.checked = spokenCountdownEnabled;
   setElementText(document.getElementById("settingsMusicLabel"), settingsCopy.music || "Background music");
   musicToggle.checked = musicEnabled;
   setElementText(document.getElementById("settingsTipsLabel"), settingsCopy.tips);
@@ -2422,6 +2440,11 @@ window.addEventListener("storage", (event) => {
     soundToggle.checked = soundEnabled;
     if (!soundEnabled) stopGameSounds();
   }
+  if (event.key === spokenCountdownStorageKey) {
+    spokenCountdownEnabled = readSpokenCountdownEnabled();
+    spokenCountdownToggle.checked = spokenCountdownEnabled;
+    if (!spokenCountdownEnabled) spokenCountdown.stop();
+  }
   if (event.key === musicStorageKey) {
     musicEnabled = readMusicEnabled();
     musicToggle.checked = musicEnabled;
@@ -2493,6 +2516,7 @@ settingsPanel.addEventListener("click", event => {
   if (event.target === settingsPanel) closeSettings();
 });
 soundToggle.addEventListener("change", () => setSoundEnabled(soundToggle.checked));
+spokenCountdownToggle.addEventListener("change", () => setSpokenCountdownEnabled(spokenCountdownToggle.checked));
 musicToggle.addEventListener("change", () => setMusicEnabled(musicToggle.checked));
 document.addEventListener("contextmenu", event => {
   const target = event.target;
