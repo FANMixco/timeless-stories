@@ -56,8 +56,8 @@
         }
       }
     </script>
-    <link rel="stylesheet" href="css/icon-moon-memory.min.css?v=memory-0c700f2bf438" />
-    <link rel="stylesheet" href="css/memory-game.min.css?v=memory-0c700f2bf438" />
+    <link rel="stylesheet" href="css/icon-moon-memory.min.css?v=memory-9116e77c9cb0" />
+    <link rel="stylesheet" href="css/memory-game.min.css?v=memory-9116e77c9cb0" />
   </head>
   <body>
     <main class="game-shell is-home" aria-label="">
@@ -70,8 +70,22 @@
           <button class="home-card" id="home-classic" type="button"><i class="icon-book" aria-hidden="true"></i><strong id="home-classic-name"></strong><span id="home-classic-description"></span></button>
           <button class="home-card" id="home-timeAttack" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6M12 2v3"/></svg><strong id="home-timeAttack-name"></strong><span id="home-timeAttack-description"></span></button>
           <button class="home-card" id="home-limitedMoves" type="button"><span class="home-move-icon" id="home-limitedMoves-icon" aria-hidden="true">25</span><strong id="home-limitedMoves-name"></strong><span id="home-limitedMoves-description"></span></button>
-          <button class="home-card" id="home-crazyMirrors" type="button" hidden><i class="icon-mirror" aria-hidden="true"></i><strong id="home-crazyMirrors-name"></strong><span id="home-crazyMirrors-description"></span></button>
-          <button class="home-card" id="home-memoryFlash" type="button" hidden><i class="icon-power" aria-hidden="true"></i><strong id="home-memoryFlash-name"></strong><span id="home-memoryFlash-description"></span></button>
+          <button class="home-card" id="home-crazyMirrors" type="button" hidden><i class="icon-mirror" aria-hidden="true"></i><strong id="home-crazyMirrors-name"></strong><span id="home-crazyMirrors-description"></span>
+            <span class="home-unlock" id="home-crazyMirrors-unlock" hidden>
+              <span class="home-lock-badge">🔒 <span id="home-crazyMirrors-locked"></span></span>
+              <span class="home-unlock-requirement" id="home-crazyMirrors-requirement"></span>
+              <progress id="home-crazyMirrors-meter" max="1" value="0"></progress>
+              <span class="home-unlock-progress" id="home-crazyMirrors-progress"></span>
+              <span class="home-unlock-action" id="home-crazyMirrors-awards"></span>
+            </span></button>
+          <button class="home-card" id="home-memoryFlash" type="button" hidden><i class="icon-power" aria-hidden="true"></i><strong id="home-memoryFlash-name"></strong><span id="home-memoryFlash-description"></span>
+            <span class="home-unlock" id="home-memoryFlash-unlock" hidden>
+              <span class="home-lock-badge">🔒 <span id="home-memoryFlash-locked"></span></span>
+              <span class="home-unlock-requirement" id="home-memoryFlash-requirement"></span>
+              <progress id="home-memoryFlash-meter" max="1" value="0"></progress>
+              <span class="home-unlock-progress" id="home-memoryFlash-progress"></span>
+              <span class="home-unlock-action" id="home-memoryFlash-awards"></span>
+            </span></button>
         </div>
         <div class="home-tools">
           <button class="home-card home-tool" id="homeCollection" type="button" aria-haspopup="dialog"><i class="icon-book-open" aria-hidden="true"></i><strong id="homeCollectionLabel"></strong></button>
@@ -341,7 +355,7 @@
       <footer class="game-footer standalone-only" id="gameFooter"></footer>
     </main>
 
-    <script type="module" src="js/memory-game.min.js?v=memory-0c700f2bf438"></script>
+    <script type="module" src="js/memory-game.min.js?v=memory-9116e77c9cb0"></script>
     <script src="js/gAnalyticsIdleLoad.min.js" defer></script>
     <!-- Keep registration inline so PWA analyzers can discover it without running a browser. -->
     <script>

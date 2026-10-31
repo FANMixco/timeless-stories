@@ -802,6 +802,11 @@
         "records": "Records"
       },
       "home": {
+        "locked": "Verrouillé",
+        "crazyMirrorsRequirement": "Obtenez 75 % des récompenses non secrètes",
+        "memoryFlashRequirement": "Obtenez toutes les récompenses",
+        "awardsProgress": "{earned} / {required} récompenses obtenues",
+        "viewAwards": "Voir les récompenses →",
         "chooseMode": "Modes de jeu",
         "rateApp": "Évaluer le jeu",
         "confirmReturn": "Revenir aux modes de jeu ? Votre progression dans cette partie sera perdue."

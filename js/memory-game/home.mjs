@@ -1,11 +1,12 @@
 // The start screen owns presentation; the application owns round transitions.
-export function createHomeScreen({ document, modes, onChoose, onSettings, onRecords, onCollection, onReturn, reduceMotion = () => false, focusNavigationControl = element => element.focus({ preventScroll: true }) }) {
+export function createHomeScreen({ document, modes, onChoose, onSettings, onRecords, onLocked = onRecords, onCollection, onReturn, reduceMotion = () => false, focusNavigationControl = element => element.focus({ preventScroll: true }) }) {
   const shell = document.querySelector(".game-shell");
   const home = document.getElementById("gameHome");
   let visible = true;
   let selection = 0;
   let choosing = false;
   let pressAnimation = null;
+  let lockedModes = new Set();
   const text = (id, value) => { document.getElementById(id).textContent = value; };
 
   function animateEntrance(element) {
@@ -19,6 +20,7 @@ export function createHomeScreen({ document, modes, onChoose, onSettings, onReco
   function choose(mode) {
     if (choosing || !visible) return;
     const card = document.getElementById(`home-${mode}`);
+    if (lockedModes.has(mode)) { onLocked(mode); return; }
     if (reduceMotion() || !card.animate) { onChoose(mode); return; }
     const currentSelection = ++selection;
     choosing = true;
@@ -61,8 +63,27 @@ export function createHomeScreen({ document, modes, onChoose, onSettings, onReco
     },
     render(copy, options = {}) {
       const hardMode = Boolean(options.hardMode);
-      document.getElementById("home-crazyMirrors").hidden = !options.crazyMirrorsUnlocked;
-      document.getElementById("home-memoryFlash").hidden = !options.memoryFlashUnlocked;
+      lockedModes = new Set();
+      for (const mode of ["crazyMirrors", "memoryFlash"]) {
+        const card = document.getElementById(`home-${mode}`);
+        const locked = !options[`${mode}Unlocked`];
+        card.hidden = false;
+        card.classList.toggle("is-locked", locked);
+        card.setAttribute("aria-haspopup", "dialog");
+        const details = document.getElementById(`home-${mode}-unlock`);
+        details.hidden = !locked;
+        if (!locked) continue;
+        lockedModes.add(mode);
+        const progress = options.unlockProgress?.[mode] || { earned: 0, required: 0 };
+        text(`home-${mode}-locked`, copy.home.locked);
+        text(`home-${mode}-requirement`, copy.home[mode === "crazyMirrors" ? "crazyMirrorsRequirement" : "memoryFlashRequirement"]);
+        text(`home-${mode}-progress`, copy.home.awardsProgress.replace("{earned}", progress.earned).replace("{required}", progress.required));
+        text(`home-${mode}-awards`, copy.home.viewAwards);
+        const meter = document.getElementById(`home-${mode}-meter`);
+        meter.max = progress.required || 1;
+        meter.value = Math.min(progress.earned, progress.required);
+        meter.setAttribute("aria-label", copy.home.awardsProgress.replace("{earned}", progress.earned).replace("{required}", progress.required));
+      }
       document.getElementById("homeTitle").innerHTML = copy.title.replace(": ", ": <br>");
       text("homeSubtitle", hardMode ? copy.settings.hardMode : copy.subtitle);
       text("homeSettingsLabel", copy.settings.title);

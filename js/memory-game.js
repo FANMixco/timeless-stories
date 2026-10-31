@@ -222,6 +222,7 @@ const homeScreen = createHomeScreen({ document, modes: gameModes,
   focusNavigationControl,
   reduceMotion: () => Boolean(window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches),
   onChoose: applyGameMode,
+  onLocked() { openAchievements(); selectProgressTab("achievements"); },
   onSettings: openSettings, onRecords: openAchievements, onCollection: openCollection, onReturn: requestHome
 });
 homeScreen.bind();
@@ -530,7 +531,13 @@ function queueModeUnlocks() {
 }
 
 function renderHomeScreen() {
+  const earned = { ...achievements, ...readAchievements() };
+  const eligible = achievementDefinitions.filter(({ secret }) => !secret);
   homeScreen.render(memoryGame, { hardMode: hardModeEnabled, ratingUrl,
+    unlockProgress: {
+      crazyMirrors: { earned: eligible.filter(({ id }) => earned[id]).length, required: Math.ceil(eligible.length * 0.75) },
+      memoryFlash: { earned: achievementDefinitions.filter(({ id }) => earned[id]).length, required: achievementDefinitions.length },
+    },
     crazyMirrorsUnlocked: isCrazyMirrorsUnlocked(), memoryFlashUnlocked: isModeUnlocked("memoryFlash") });
 }
 

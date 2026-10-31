@@ -153,6 +153,18 @@ html.is-modal-open body {
 .home-move-icon { font-size: 21px; font-weight: 700; border: 2px solid currentColor; border-radius: 8px; }
 .home-card strong { font-size: 1.15rem; line-height: 1.35; }
 .home-card > span:not(.home-move-icon) { color: var(--muted); line-height: 1.55; font-size: 0.95rem; }
+.home-card.is-locked { position: relative; border-style: dashed; }
+.home-card.is-locked > i { color: var(--muted); }
+.home-lock-badge { position: absolute; top: 20px; right: 16px; font-size: 0.75rem; font-weight: 700; color: var(--muted); }
+.home-card > .home-unlock { display: flex; flex-direction: column; gap: 8px; width: 100%; margin-top: auto; padding-top: 12px; border-top: 1px solid var(--line); }
+.home-card > .home-unlock[hidden] { display: none; }
+.home-unlock-requirement { font-size: 0.8rem; }
+.home-unlock progress { appearance: none; width: 100%; height: 5px; border: 0; border-radius: 5px; overflow: hidden; background: var(--line); accent-color: var(--accent); }
+.home-unlock progress::-webkit-progress-bar { background: var(--line); }
+.home-unlock progress::-webkit-progress-value { background: var(--accent); border-radius: 5px; }
+.home-unlock progress::-moz-progress-bar { background: var(--accent); border-radius: 5px; }
+.home-unlock-progress { font-size: 0.78rem; font-variant-numeric: tabular-nums; }
+.home-unlock-action { margin-top: 2px; color: var(--accent-dark); font-size: 0.85rem; font-weight: 700; }
 .home-tools { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin: 20px auto 0; }
 .home-tool { flex-direction: row; align-items: center; justify-content: center; padding: 18px; }
 .home-tool > i, .home-tool > svg { width: 26px; height: 26px; font-size: 26px; }
@@ -170,6 +182,8 @@ html.is-modal-open body {
   .home-card:not(.home-tool) { display: grid; grid-template-columns: 38px 1fr; column-gap: 18px; row-gap: 6px; padding: 18px; }
   .home-card:not(.home-tool) > i, .home-card:not(.home-tool) > svg, .home-move-icon { grid-row: 1 / 3; align-self: center; }
   .home-card:not(.home-tool) > span:not(.home-move-icon) { grid-column: 2; }
+  .home-card.is-locked strong { padding-right: 90px; }
+  .home-lock-badge { top: 18px; }
   .home-tools { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 16px; }
   .home-tools #homeSettings { grid-column: 1 / -1; }
   .home-tools:has(#homeRateApp:not([hidden])) #homeSettings { grid-column: 1; }

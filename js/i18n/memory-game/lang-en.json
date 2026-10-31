@@ -802,6 +802,11 @@
         "records": "Records"
       },
       "home": {
+        "locked": "Locked",
+        "crazyMirrorsRequirement": "Earn 75% of non-secret awards",
+        "memoryFlashRequirement": "Complete every award",
+        "awardsProgress": "{earned} / {required} awards earned",
+        "viewAwards": "View awards →",
         "chooseMode": "Game modes",
         "rateApp": "Rate the game",
         "confirmReturn": "Return to game modes? Your progress in this round will be lost."

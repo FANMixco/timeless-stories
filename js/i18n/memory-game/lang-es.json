@@ -802,6 +802,11 @@
         "records": "Récords"
       },
       "home": {
+        "locked": "Bloqueado",
+        "crazyMirrorsRequirement": "Consigue el 75% de los premios no secretos",
+        "memoryFlashRequirement": "Completa todos los premios",
+        "awardsProgress": "{earned} / {required} premios conseguidos",
+        "viewAwards": "Ver premios →",
         "chooseMode": "Modos de juego",
         "rateApp": "Valora el juego",
         "confirmReturn": "¿Volver a los modos de juego? Perderás el progreso de esta partida."

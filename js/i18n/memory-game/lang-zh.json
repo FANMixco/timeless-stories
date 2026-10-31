@@ -802,6 +802,11 @@
         "records": "纪录"
       },
       "home": {
+        "locked": "尚未解锁",
+        "crazyMirrorsRequirement": "获得 75% 的非隐藏奖项",
+        "memoryFlashRequirement": "获得全部奖项",
+        "awardsProgress": "已获得 {earned} / {required} 个奖项",
+        "viewAwards": "查看奖项 →",
         "chooseMode": "游戏模式",
         "rateApp": "为游戏评分",
         "confirmReturn": "返回游戏模式选择？本局进度将丢失。"
