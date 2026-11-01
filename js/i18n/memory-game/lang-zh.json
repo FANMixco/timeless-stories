@@ -728,7 +728,7 @@
         "websites": "官方网站",
         "storiesWebsite": "永恒的故事",
         "soundCreditsTitle": "音效鸣谢",
-        "soundCredit": "音效由 {author} 提供，来自 Pixabay。",
+        "soundCredit": "音效由 {author} 提供，来自 Pixabay",
         "musicCredit": "音乐由 {author} 创作，来自 {source}",
         "backgroundMusicCredit": "《Over Ancient Waters》，Eric Matyas 作曲 — "
       },
