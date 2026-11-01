@@ -1264,7 +1264,7 @@ function renderFooter() {
 
 function renderAbout() {
   const copy = memoryGame.about || {};
-  setElementText(document.getElementById("aboutLabel"), copy.label || "About the author");
+  setElementText(document.getElementById("aboutTitle"), copy.label || "About the author");
   closeAboutButton.setAttribute("aria-label", memoryGame.close || "Close");
   const paragraphs = (copy.biography || []).map(text => {
     const paragraph = document.createElement("p");

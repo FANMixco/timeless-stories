@@ -821,8 +821,7 @@ html[data-theme="dark"] .card[data-rarity="tutorial"] .character-icon {
   border-bottom: 1px solid var(--line);
 }
 
-.dialog-header h2,
-.dialog-heading { flex: 1; min-width: 0; }
+.dialog-header h2 { flex: 1; min-width: 0; }
 .dialog-card .dialog-header h2 {
   margin: 0;
   font-size: clamp(1.25rem, 3.5vw, 1.6rem);
@@ -841,7 +840,6 @@ html[data-theme="dark"] .card[data-rarity="tutorial"] .character-icon {
   line-height: 1;
 }
 .dialog-header .win-close::before { content: "×"; }
-.dialog-header .about-eyebrow { margin: 0 0 4px; }
 
 /* Compact result and confirmation cards keep their centered presentation and
    do not need a visible divider when all content fits. */
