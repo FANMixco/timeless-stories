@@ -806,9 +806,9 @@
         "sixthMirror": {
           "getBook": "Consigue el libro digital ↗",
           "title": "El sexto espejo",
-          "subtitle": "Exclusivo para compradores del libro digital · Próximamente",
-          "description": "Este modo extra estará disponible únicamente para quienes compren una copia digital de Espejos españoles. Actualmente está en desarrollo.",
-          "status": "Aún no disponible"
+          "subtitle": "Exclusivo del libro digital",
+          "description": "Desbloquea un desafío secreto con un código de una edición digital participante de Espejos españoles.",
+          "status": "Próximamente"
         },
         "locked": "Bloqueado",
         "crazyMirrorsRequirement": "Consigue el 75% de los premios no secretos",

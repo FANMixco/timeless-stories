@@ -806,9 +806,9 @@
         "sixthMirror": {
           "getBook": "购买数字版图书 ↗",
           "title": "第六面镜子",
-          "subtitle": "数字版图书购买者专属 · 即将推出",
-          "description": "此奖励模式将仅向购买《西班牙之镜》数字版图书的读者开放。目前正在开发中。",
-          "status": "尚未开放"
+          "subtitle": "数字版图书专属",
+          "description": "使用《西班牙之镜》指定数字版图书中的兑换码，解锁秘密挑战。",
+          "status": "即将推出"
         },
         "locked": "尚未解锁",
         "crazyMirrorsRequirement": "获得 75% 的非隐藏奖项",
