@@ -803,6 +803,12 @@
         "records": "Records"
       },
       "home": {
+        "sixthMirror": {
+          "title": "The Sixth Mirror",
+          "subtitle": "Exclusive bonus mode · Coming soon",
+          "description": "A special challenge inspired by the Spanish Mirrors books is in development. Once released, it will be unlockable through participating digital editions.",
+          "status": "Not yet available"
+        },
         "locked": "Locked",
         "crazyMirrorsRequirement": "Earn 75% of non-secret awards",
         "memoryFlashRequirement": "Complete every award",

@@ -803,6 +803,12 @@
         "records": "Records"
       },
       "home": {
+        "sixthMirror": {
+          "title": "Le sixième miroir",
+          "subtitle": "Mode bonus exclusif · Bientôt disponible",
+          "description": "Un défi spécial inspiré des livres de Miroirs espagnols est en cours de développement. À sa sortie, il pourra être débloqué grâce aux éditions numériques participantes.",
+          "status": "Pas encore disponible"
+        },
         "locked": "Verrouillé",
         "crazyMirrorsRequirement": "Obtenez 75 % des récompenses non secrètes",
         "memoryFlashRequirement": "Obtenez toutes les récompenses",

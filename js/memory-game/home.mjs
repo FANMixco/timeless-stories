@@ -89,6 +89,10 @@ export function createHomeScreen({ document, modes, onChoose, onSettings, onReco
       text("homeSettingsLabel", copy.settings.title);
       text("homeRecordsLabel", copy.progress.records);
       text("homeCollectionLabel", copy.collection.title);
+      text("homeSixthMirrorTitle", copy.home.sixthMirror.title);
+      text("homeSixthMirrorSubtitle", copy.home.sixthMirror.subtitle);
+      text("homeSixthMirrorDescription", copy.home.sixthMirror.description);
+      text("homeSixthMirrorStatus", copy.home.sixthMirror.status);
       const rateApp = document.getElementById("homeRateApp");
       rateApp.hidden = !options.ratingUrl;
       if (options.ratingUrl) rateApp.setAttribute("href", options.ratingUrl);

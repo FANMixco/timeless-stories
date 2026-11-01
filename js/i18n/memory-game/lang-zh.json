@@ -803,6 +803,12 @@
         "records": "纪录"
       },
       "home": {
+        "sixthMirror": {
+          "title": "第六面镜子",
+          "subtitle": "专属奖励模式 · 即将推出",
+          "description": "以《西班牙之镜》系列图书为灵感的特别挑战正在开发中。推出后，可通过参与活动的数字版图书解锁。",
+          "status": "尚未开放"
+        },
         "locked": "尚未解锁",
         "crazyMirrorsRequirement": "获得 75% 的非隐藏奖项",
         "memoryFlashRequirement": "获得全部奖项",

@@ -138,14 +138,6 @@ html.is-modal-open body {
 .home-heading h1 { margin: 0; color: var(--accent-dark); font-size: clamp(2rem, 5vw, 3.5rem); line-height: 1.15; }
 .home-heading p { margin: 12px 0 0; color: var(--muted); line-height: 1.6; }
 .home-modes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
-#home-crazyMirrors { grid-column: 2; }
-@media (min-width: 641px) {
-  .home-modes:has(#home-memoryFlash:not([hidden])) { grid-template-columns: repeat(6, minmax(0, 1fr)); }
-  .home-modes:has(#home-memoryFlash:not([hidden])) > .home-card { grid-column: span 2; }
-  .home-modes:has(#home-memoryFlash:not([hidden])) > #home-crazyMirrors { grid-column: 2 / span 2; }
-  .home-modes:has(#home-memoryFlash:not([hidden])) > #home-memoryFlash { grid-column: 4 / span 2; }
-  .home-modes:has(#home-crazyMirrors[hidden]):has(#home-memoryFlash:not([hidden])) > #home-memoryFlash { grid-column: 3 / span 2; }
-}
 .home-card { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; padding: 26px 22px; min-width: 0; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); color: var(--ink); cursor: pointer; text-align: start; transition: border-color 150ms, transform 150ms; }
 .home-card:hover { border-color: var(--accent); transform: translateY(-2px); }
 .home-card:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
@@ -165,6 +157,20 @@ html.is-modal-open body {
 .home-unlock progress::-moz-progress-bar { background: var(--accent); border-radius: 5px; }
 .home-unlock-progress { font-size: 0.78rem; font-variant-numeric: tabular-nums; }
 .home-unlock-action { margin-top: 2px; color: var(--accent-dark); font-size: 0.85rem; font-weight: 700; }
+.home-coming-soon { position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 14px; min-width: 0; padding: 26px 22px; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); color: var(--muted); }
+.home-coming-soon-icon { display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 38px; font-size: 32px; flex-shrink: 0; }
+.home-coming-soon-heading h2 { margin: 0; color: var(--ink); font-size: 1.15rem; line-height: 1.4; }
+.home-coming-soon-heading p { margin: 6px 0 0; font-size: 0.9rem; line-height: 1.5; }
+.home-coming-soon-lock { position: absolute; top: 22px; right: 18px; width: 20px; height: 20px; }
+.home-coming-soon-description { grid-column: 1 / -1; margin: 0; font-size: 0.95rem; line-height: 1.6; }
+.home-coming-soon-status { margin-top: auto; justify-self: start; padding: 4px 12px; border-radius: 20px; background: var(--line); color: var(--ink); font-size: 0.8rem; font-weight: 700; line-height: 1.5; }
+@media (max-width: 640px) {
+  .home-coming-soon { display: grid; padding: 18px; gap: 6px 18px; grid-template-columns: 38px minmax(0, 1fr); }
+  .home-coming-soon-icon { grid-column: 1; grid-row: 1 / 3; align-self: center; }
+  .home-coming-soon-heading { grid-column: 2; padding-right: 22px; }
+  .home-coming-soon-description, .home-coming-soon-status { grid-column: 2; }
+  .home-coming-soon-status { margin-top: 8px; }
+}
 .home-tools { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin: 20px auto 0; }
 .home-tool { flex-direction: row; align-items: center; justify-content: center; padding: 18px; }
 .home-tool > i, .home-tool > svg { width: 26px; height: 26px; font-size: 26px; }

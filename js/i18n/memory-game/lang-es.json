@@ -803,6 +803,12 @@
         "records": "Récords"
       },
       "home": {
+        "sixthMirror": {
+          "title": "El sexto espejo",
+          "subtitle": "Modo extra exclusivo · Próximamente",
+          "description": "Estamos desarrollando un desafío especial inspirado en los libros de Espejos españoles. Cuando se publique, se podrá desbloquear mediante las ediciones digitales participantes.",
+          "status": "Aún no disponible"
+        },
         "locked": "Bloqueado",
         "crazyMirrorsRequirement": "Consigue el 75% de los premios no secretos",
         "memoryFlashRequirement": "Completa todos los premios",
