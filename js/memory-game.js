@@ -597,8 +597,7 @@ function openAchievements() {
   renderAchievements();
   selectProgressTab("records");
   achievementsPanel.classList.add("is-visible");
-  achievementsPanel.scrollTop = 0;
-  achievementsPanel.querySelector(".legends-card").scrollTop = 0;
+  achievementsPanel.querySelector(".dialog-body").scrollTop = 0;
   closeAchievementsButton.focus();
   syncModalScrollLock();
 }
@@ -1798,8 +1797,8 @@ function createLegendCell(characterKey, side) {
 }
 
 function renderLegendsList(pairs = activePairs.length ? activePairs : chooseActivePairs(), detailPair = null) {
-  setElementText(legendsPanelTitle, detailPair ? getLegendName(detailPair.mirror) : memoryGame.legendsTitle || "");
-  setElementHidden(legendsPanelTitle, Boolean(detailPair));
+  setElementText(legendsPanelTitle, detailPair ? getPairComparison(detailPair).title : memoryGame.legendsTitle || "");
+  setElementHidden(legendsPanelTitle, false);
   setElementHidden(document.getElementById("legendsFooter"), detailPair?.rarity === "ultra-rare");
   setElementHidden(legendsRarityNote, Boolean(detailPair));
   const rows = pairs.map((pair) => {
@@ -1816,7 +1815,7 @@ function renderLegendsList(pairs = activePairs.length ? activePairs : chooseActi
       <span class="legend-mark">
         <i class="character-icon icon-${icon}" aria-hidden="true"></i>
       </span>
-      <strong>${insightTitle || ""}</strong>
+      ${detailPair ? "" : `<strong>${insightTitle || ""}</strong>`}
       <span>${insight || ""}</span>
     `;
     row.append(
@@ -2356,7 +2355,7 @@ document.addEventListener("keydown", (event) => {
       : aboutPanel.classList.contains("is-visible") ? aboutPanel
       : rarityPanel.classList.contains("is-visible") ? rarityPanel
       : collectionDetailTrigger ? legendsPanel : collectionPanel.classList.contains("is-visible") ? collectionPanel : gameOverPanel;
-    const controls = [...panel.querySelectorAll("button:not(:disabled), input:not(:disabled), a[href]")]
+    const controls = [...panel.querySelectorAll('button:not(:disabled), input:not(:disabled), a[href], .dialog-body[tabindex="0"]')]
       .filter((element) => !element.hidden && element.getClientRects().length && (element.type !== "radio" || element.checked));
     const first = controls[0];
     const last = controls[controls.length - 1];

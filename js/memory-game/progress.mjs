@@ -204,8 +204,7 @@ export function createProgressView({ document, getState, readPersonalRecords, re
       setElementHidden(document.getElementById(`progress${id}Panel`), !selected);
       if (selected && focus) button.focus({ preventScroll: true });
     }
-    achievementsPanel.scrollTop = 0;
-    achievementsPanel.querySelector(".legends-card").scrollTop = 0;
+    achievementsPanel.querySelector(".dialog-body").scrollTop = 0;
     if (achievementsPanel.classList.contains("is-visible")) onTabChange();
   }
   return {
