@@ -803,6 +803,13 @@
         "records": "Récords"
       },
       "home": {
+        "sixthMirror": {
+          "getBook": "Consigue el libro digital ↗",
+          "title": "El sexto espejo",
+          "subtitle": "Exclusivo para compradores del libro digital · Próximamente",
+          "description": "Este modo extra estará disponible únicamente para quienes compren una copia digital de Espejos españoles. Actualmente está en desarrollo.",
+          "status": "Aún no disponible"
+        },
         "locked": "Bloqueado",
         "crazyMirrorsRequirement": "Consigue el 75% de los premios no secretos",
         "memoryFlashRequirement": "Completa todos los premios",

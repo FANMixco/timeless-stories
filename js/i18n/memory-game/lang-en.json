@@ -803,6 +803,13 @@
         "records": "Records"
       },
       "home": {
+        "sixthMirror": {
+          "getBook": "Get the digital book ↗",
+          "title": "The Sixth Mirror",
+          "subtitle": "Exclusive to digital book purchasers · Coming soon",
+          "description": "This bonus mode will be available only to readers who purchase a digital copy of Spanish Mirrors. It is currently in development.",
+          "status": "Not yet available"
+        },
         "locked": "Locked",
         "crazyMirrorsRequirement": "Earn 75% of non-secret awards",
         "memoryFlashRequirement": "Complete every award",

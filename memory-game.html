@@ -56,8 +56,8 @@
         }
       }
     </script>
-    <link rel="stylesheet" href="css/icon-moon-memory.min.css?v=memory-19934bdbd795" />
-    <link rel="stylesheet" href="css/memory-game.min.css?v=memory-19934bdbd795" />
+    <link rel="stylesheet" href="css/icon-moon-memory.min.css?v=memory-b227912fd7a8" />
+    <link rel="stylesheet" href="css/memory-game.min.css?v=memory-b227912fd7a8" />
   </head>
   <body>
     <main class="game-shell is-home" aria-label="">
@@ -72,7 +72,7 @@
           <button class="home-card" id="home-limitedMoves" type="button"><span class="home-move-icon" id="home-limitedMoves-icon" aria-hidden="true">25</span><strong id="home-limitedMoves-name"></strong><span id="home-limitedMoves-description"></span></button>
           <button class="home-card" id="home-crazyMirrors" type="button" hidden><i class="icon-mirror" aria-hidden="true"></i><strong id="home-crazyMirrors-name"></strong><span id="home-crazyMirrors-description"></span>
             <span class="home-unlock" id="home-crazyMirrors-unlock" hidden>
-              <span class="home-lock-badge">🔒 <span id="home-crazyMirrors-locked"></span></span>
+              <span class="home-lock-badge"><svg class="home-lock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v3"/></svg> <span id="home-crazyMirrors-locked"></span></span>
               <span class="home-unlock-requirement" id="home-crazyMirrors-requirement"></span>
               <progress id="home-crazyMirrors-meter" max="1" value="0"></progress>
               <span class="home-unlock-progress" id="home-crazyMirrors-progress"></span>
@@ -80,12 +80,23 @@
             </span></button>
           <button class="home-card" id="home-memoryFlash" type="button" hidden><i class="icon-power" aria-hidden="true"></i><strong id="home-memoryFlash-name"></strong><span id="home-memoryFlash-description"></span>
             <span class="home-unlock" id="home-memoryFlash-unlock" hidden>
-              <span class="home-lock-badge">🔒 <span id="home-memoryFlash-locked"></span></span>
+              <span class="home-lock-badge"><svg class="home-lock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v3"/></svg> <span id="home-memoryFlash-locked"></span></span>
               <span class="home-unlock-requirement" id="home-memoryFlash-requirement"></span>
               <progress id="home-memoryFlash-meter" max="1" value="0"></progress>
               <span class="home-unlock-progress" id="home-memoryFlash-progress"></span>
               <span class="home-unlock-action" id="home-memoryFlash-awards"></span>
             </span></button>
+        <section class="home-coming-soon" aria-labelledby="homeSixthMirrorTitle">
+          <i class="icon-book-open home-coming-soon-icon" aria-hidden="true"></i>
+          <div class="home-coming-soon-heading">
+            <h2 id="homeSixthMirrorTitle"></h2>
+            <p id="homeSixthMirrorSubtitle"></p>
+          </div>
+          <svg class="home-lock-icon home-coming-soon-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v3"/></svg>
+          <p class="home-coming-soon-description" id="homeSixthMirrorDescription"></p>
+          <span class="home-coming-soon-status" id="homeSixthMirrorStatus"></span>
+          <a class="home-coming-soon-book" id="homeSixthMirrorBook" target="_blank" rel="noopener noreferrer" hidden></a>
+        </section>
         </div>
         <div class="home-tools">
           <button class="home-card home-tool" id="homeCollection" type="button" aria-haspopup="dialog"><i class="icon-book-open" aria-hidden="true"></i><strong id="homeCollectionLabel"></strong></button>
@@ -355,7 +366,7 @@
       <footer class="game-footer standalone-only" id="gameFooter"></footer>
     </main>
 
-    <script type="module" src="js/memory-game.min.js?v=memory-19934bdbd795"></script>
+    <script type="module" src="js/memory-game.min.js?v=memory-b227912fd7a8"></script>
     <script src="js/gAnalyticsIdleLoad.min.js" defer></script>
     <!-- Keep registration inline so PWA analyzers can discover it without running a browser. -->
     <script>
