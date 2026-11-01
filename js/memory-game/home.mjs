@@ -93,6 +93,10 @@ export function createHomeScreen({ document, modes, onChoose, onSettings, onReco
       text("homeSixthMirrorSubtitle", copy.home.sixthMirror.subtitle);
       text("homeSixthMirrorDescription", copy.home.sixthMirror.description);
       text("homeSixthMirrorStatus", copy.home.sixthMirror.status);
+      const digitalBookLink = document.getElementById("homeSixthMirrorBook");
+      digitalBookLink.hidden = !options.digitalBookUrl;
+      if (options.digitalBookUrl) digitalBookLink.setAttribute("href", options.digitalBookUrl);
+      digitalBookLink.textContent = copy.home.sixthMirror.getBook;
       const rateApp = document.getElementById("homeRateApp");
       rateApp.hidden = !options.ratingUrl;
       if (options.ratingUrl) rateApp.setAttribute("href", options.ratingUrl);

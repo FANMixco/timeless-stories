@@ -534,6 +534,7 @@ function renderHomeScreen() {
   const earned = { ...achievements, ...readAchievements() };
   const eligible = achievementDefinitions.filter(({ secret }) => !secret);
   homeScreen.render(memoryGame, { hardMode: hardModeEnabled, ratingUrl,
+    digitalBookUrl: resolveGameHref(memoryGame.getCopyHref),
     unlockProgress: {
       crazyMirrors: { earned: eligible.filter(({ id }) => earned[id]).length, required: Math.ceil(eligible.length * 0.75) },
       memoryFlash: { earned: achievementDefinitions.filter(({ id }) => earned[id]).length, required: achievementDefinitions.length },

@@ -804,9 +804,10 @@
       },
       "home": {
         "sixthMirror": {
+          "getBook": "Obtenir le livre numérique ↗",
           "title": "Le sixième miroir",
-          "subtitle": "Mode bonus exclusif · Bientôt disponible",
-          "description": "Un défi spécial inspiré des livres de Miroirs espagnols est en cours de développement. À sa sortie, il pourra être débloqué grâce aux éditions numériques participantes.",
+          "subtitle": "Réservé aux acheteurs du livre numérique · Bientôt disponible",
+          "description": "Ce mode bonus sera réservé aux lecteurs qui achètent un exemplaire numérique de Miroirs espagnols. Il est actuellement en cours de développement.",
           "status": "Pas encore disponible"
         },
         "locked": "Verrouillé",

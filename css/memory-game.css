@@ -147,7 +147,8 @@ html.is-modal-open body {
 .home-card > span:not(.home-move-icon) { color: var(--muted); line-height: 1.55; font-size: 0.95rem; }
 .home-card.is-locked { position: relative; border-style: dashed; }
 .home-card.is-locked > i { color: var(--muted); }
-.home-lock-badge { position: absolute; top: 20px; right: 16px; font-size: 0.75rem; font-weight: 700; color: var(--muted); }
+.home-lock-icon { width: 20px; height: 20px; flex-shrink: 0; }
+.home-lock-badge { display: inline-flex; align-items: center; gap: 6px; position: absolute; top: 20px; right: 16px; font-size: 0.75rem; font-weight: 700; color: var(--muted); }
 .home-card > .home-unlock { display: flex; flex-direction: column; gap: 8px; width: 100%; margin-top: auto; padding-top: 12px; border-top: 1px solid var(--line); }
 .home-card > .home-unlock[hidden] { display: none; }
 .home-unlock-requirement { font-size: 0.8rem; }
@@ -164,11 +165,14 @@ html.is-modal-open body {
 .home-coming-soon-lock { position: absolute; top: 22px; right: 18px; width: 20px; height: 20px; }
 .home-coming-soon-description { grid-column: 1 / -1; margin: 0; font-size: 0.95rem; line-height: 1.6; }
 .home-coming-soon-status { margin-top: auto; justify-self: start; padding: 4px 12px; border-radius: 20px; background: var(--line); color: var(--ink); font-size: 0.8rem; font-weight: 700; line-height: 1.5; }
+.home-coming-soon-book { color: var(--accent-dark); font-size: 0.9rem; font-weight: 700; line-height: 1.5; text-underline-offset: 3px; }
+.home-coming-soon-book[hidden] { display: none; }
+.home-coming-soon-book:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; border-radius: 2px; }
 @media (max-width: 640px) {
   .home-coming-soon { display: grid; padding: 18px; gap: 6px 18px; grid-template-columns: 38px minmax(0, 1fr); }
   .home-coming-soon-icon { grid-column: 1; grid-row: 1 / 3; align-self: center; }
   .home-coming-soon-heading { grid-column: 2; padding-right: 22px; }
-  .home-coming-soon-description, .home-coming-soon-status { grid-column: 2; }
+  .home-coming-soon-description, .home-coming-soon-status, .home-coming-soon-book { grid-column: 2; }
   .home-coming-soon-status { margin-top: 8px; }
 }
 .home-tools { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin: 20px auto 0; }

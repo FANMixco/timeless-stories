@@ -5,7 +5,7 @@ describes the game; it does not change its behavior.
 
 ## Game modes and attempts
 
-The home screen also shows a non-interactive “The Sixth Mirror” teaser beside Flash Memory as the sixth card in the mode grid. It announces a future exclusive bonus challenge, unlockable through participating digital editions when released. It is not a playable mode and has no unlock, award, or record logic yet.
+The home screen also shows a non-interactive “The Sixth Mirror” teaser beside Flash Memory as the sixth card in the mode grid. It announces a future exclusive bonus challenge, available only to readers who purchase a digital copy of Spanish Mirrors when released. It is not a playable mode and has no unlock, award, or record logic yet.
 
 The start screen offers Classic, Time Attack and 25-Move Challenge, plus Settings, Records and Collection. Crazy mirrors and Flash Memory are always visible on the start screen. Locked cards show their rules, unlock requirement, award progress, and a View awards action that opens the Awards tab without starting a game. Crazy mirrors unlocks once at least 75% of non-secret awards are earned (currently 8 of 10); its progress counts only eligible awards. Flash Memory requires all awards, including secret awards. Their records remain hidden until their modes are unlocked. Secret (`???`) awards are excluded from both the earned count and the total, even after they are revealed. A localized unlock message uses the existing achievement notification with the mirror icon, queues after earned awards, and appears once per saved profile (`timelessMemoryCrazyMirrorsUnlockNotified`). Returning players who already qualify also receive it once. Choosing a
 mode starts a fresh round and saves the selection in `timelessMemoryMode`.

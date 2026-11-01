@@ -804,9 +804,10 @@
       },
       "home": {
         "sixthMirror": {
+          "getBook": "Get the digital book ↗",
           "title": "The Sixth Mirror",
-          "subtitle": "Exclusive bonus mode · Coming soon",
-          "description": "A special challenge inspired by the Spanish Mirrors books is in development. Once released, it will be unlockable through participating digital editions.",
+          "subtitle": "Exclusive to digital book purchasers · Coming soon",
+          "description": "This bonus mode will be available only to readers who purchase a digital copy of Spanish Mirrors. It is currently in development.",
           "status": "Not yet available"
         },
         "locked": "Locked",

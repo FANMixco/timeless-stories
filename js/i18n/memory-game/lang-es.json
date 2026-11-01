@@ -804,9 +804,10 @@
       },
       "home": {
         "sixthMirror": {
+          "getBook": "Consigue el libro digital ↗",
           "title": "El sexto espejo",
-          "subtitle": "Modo extra exclusivo · Próximamente",
-          "description": "Estamos desarrollando un desafío especial inspirado en los libros de Espejos españoles. Cuando se publique, se podrá desbloquear mediante las ediciones digitales participantes.",
+          "subtitle": "Exclusivo para compradores del libro digital · Próximamente",
+          "description": "Este modo extra estará disponible únicamente para quienes compren una copia digital de Espejos españoles. Actualmente está en desarrollo.",
           "status": "Aún no disponible"
         },
         "locked": "Bloqueado",
