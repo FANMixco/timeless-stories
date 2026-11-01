@@ -6,6 +6,12 @@
 
 ***
 
+### Download the Official Mirrors game
+
+|Play Store|Microsoft Store|Amazon Appstore|
+|:------------:|:------------:|:------------:|
+|[![Mirrors](https://raw.githubusercontent.com/FANMixco/federiconavarrete/master/img/stores_badges/google_play_micro.png)](https://play.google.com/store/apps/details?id=com.federiconavarrete.tstories.twa)|[![Mirrors](https://raw.githubusercontent.com/FANMixco/federiconavarrete/master/img/stores_badges/microsoft_micro.png)](https://apps.microsoft.com/detail/9PL6H4P9JHGX)|[![ts-mirrors](https://raw.githubusercontent.com/FANMixco/federiconavarrete/master/img/stores_badges/amazon_micro.png)](https://www.amazon.com/dp/B0HPXLSCPW/)|
+
 ## Info from the theme provider
 
 Thanks for downloading this theme!
