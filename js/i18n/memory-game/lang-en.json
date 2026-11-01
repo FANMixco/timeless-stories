@@ -806,9 +806,9 @@
         "sixthMirror": {
           "getBook": "Get the digital book ↗",
           "title": "The Sixth Mirror",
-          "subtitle": "Exclusive to digital book purchasers · Coming soon",
-          "description": "This bonus mode will be available only to readers who purchase a digital copy of Spanish Mirrors. It is currently in development.",
-          "status": "Not yet available"
+          "subtitle": "Digital book exclusive",
+          "description": "Unlock a secret challenge with a code from an eligible digital edition of Spanish Mirrors.",
+          "status": "Coming soon"
         },
         "locked": "Locked",
         "crazyMirrorsRequirement": "Earn 75% of non-secret awards",
