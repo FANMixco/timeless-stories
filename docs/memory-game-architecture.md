@@ -72,3 +72,10 @@ For UI changes, also inspect the local page at mobile and desktop widths. Verify
 both Progress tabs, Settings scrolling, restart confirmation, and return from
 records to the victory/defeat result. Behavior is documented separately in
 `docs/memory-game-rules.md`.
+
+All ten dialog cards share `.dialog-card`, `.dialog-header`, and `.dialog-body`.
+The header owns the title and close control; only the focusable body scrolls.
+Card widths, mobile full-screen variants, theme colors, and bottom padding remain
+with their existing variants. Progress-tab scroll resets target `.dialog-body`.
+When adding a modal, use this structure so its header stays visible on short
+screens and its bottom actions remain reachable without a second scrollbar.
