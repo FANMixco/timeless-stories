@@ -1624,6 +1624,8 @@ function formatTime(totalSeconds) {
 
 function updateStatus() {
   const config = gameModes[gameMode];
+  document.getElementById("timeStatus").classList.toggle("is-priority", gameMode === "timeAttack");
+  document.getElementById("movesStatus").classList.toggle("is-priority", gameMode === "limitedMoves" || gameMode === "memoryFlash");
   const status = getModeStatus(gameModes, gameMode, { seconds: elapsedSeconds, moves, mistakes, previewRemaining, completed: gameCompleted });
   setText('[data-ui-label="moves"]', config.maxMistakes != null ? memoryGame.modes.memoryFlash.mistakesRemaining : memoryGame.moves);
   setText('[data-ui-label="time"]', config.previewSeconds ? memoryGame.modes.memoryFlash.preview : memoryGame.time);

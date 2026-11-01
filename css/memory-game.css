@@ -407,6 +407,21 @@ html[data-theme="dark"] .language-option[aria-checked="true"] {
   text-transform: uppercase;
 }
 
+.status-item.is-priority {
+  background: #e5f2fc;
+  border-color: var(--accent);
+  box-shadow: inset 4px 0 0 var(--accent);
+}
+
+.status-item.is-priority .status-label,
+.status-item.is-priority .status-value:not(.is-running-low) {
+  color: var(--accent-dark);
+}
+
+html[data-theme="dark"] .status-item.is-priority {
+  background: #1b344a;
+}
+
 .status-value {
   display: block;
   margin-top: 3px;
@@ -2131,6 +2146,9 @@ html[data-theme="dark"] .game-shell [data-category] .character-icon {
 .card.is-shuffling { z-index: 2; outline: 2px solid var(--accent); outline-offset: 2px; pointer-events: none; }
 
 .status-grid.is-untimed { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (min-width: 1024px) and (min-height: 600px) and (orientation: landscape) {
+  .status-grid.is-untimed { grid-template-columns: 1fr; }
+}
 #timeStatus[hidden] { display: none; }
 .board.is-flash-preview .character-name,
 .board.is-flash-preview .character-origin-text,
