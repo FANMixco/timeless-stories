@@ -1071,6 +1071,48 @@ function setMatchToastsEnabled(enabled) {
   try { window.localStorage.setItem(matchToastsStorageKey, String(enabled)); } catch {}
 }
 
+function initializeMatchToastsPreference() {
+  if (homeScreen.visible || introRunning ||
+      !window.matchMedia?.("(max-width: 640px)")?.matches) return;
+  try {
+    if (window.localStorage.getItem(matchToastsStorageKey) !== null) return;
+  } catch { return; }
+
+  const cards = [...board.querySelectorAll(".card")]
+    .map(card => card.getBoundingClientRect())
+    .filter(rect => rect.width > 0 && rect.height > 0);
+  if (!cards.length) return;
+
+  // Measure this round's messages before showing anything to the player.
+  // Use the final position, without the toast's entrance translation.
+  const hidden = legendToast.hidden;
+  const animation = legendToast.style.animation;
+  const visibility = legendToast.style.visibility;
+  const title = legendToastTitle.textContent;
+  const text = legendToastText.textContent;
+  legendToast.style.visibility = "hidden";
+  legendToast.style.animation = "none";
+  legendToast.hidden = false;
+  let overlaps = false;
+  try {
+    overlaps = deck.some(card => {
+      if (!card.insight) return false;
+      legendToastTitle.textContent = card.insightTitle || "";
+      legendToastText.textContent = card.insight;
+      const toastRect = legendToast.getBoundingClientRect();
+      return cards.some(rect => toastRect.left < rect.right && toastRect.right > rect.left &&
+        toastRect.top < rect.bottom && toastRect.bottom > rect.top);
+    });
+  } finally {
+    legendToast.hidden = hidden;
+    legendToast.style.animation = animation;
+    legendToast.style.visibility = visibility;
+    legendToastTitle.textContent = title;
+    legendToastText.textContent = text;
+  }
+  setMatchToastsEnabled(!overlaps);
+}
+
 function readTipsEnabled() {
   try { return window.localStorage.getItem(tipsStorageKey) !== "false"; }
   catch { return true; }
@@ -2053,6 +2095,7 @@ function newGame({ startPreview = !homeScreen.visible } = {}) {
   deck = shuffle(buildDeck());
   renderLegendsList();
   board.replaceChildren(...deck.map(createCard));
+  initializeMatchToastsPreference();
   if (startPreview && gameModes[gameMode].previewSeconds) startMemoryPreview();
   showNextAchievement();
 }
