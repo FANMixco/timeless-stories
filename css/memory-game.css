@@ -213,6 +213,10 @@ html.is-modal-open body {
   text-align: center;
 }
 
+.game-top.is-title-hidden > div:first-child {
+  display: none;
+}
+
 html[data-embed="true"] .standalone-only {
   display: none;
 }

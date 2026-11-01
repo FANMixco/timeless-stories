@@ -1078,10 +1078,15 @@ function initializeMatchToastsPreference() {
     if (window.localStorage.getItem(matchToastsStorageKey) !== null) return;
   } catch { return; }
 
+  const overlaps = matchToastOverlapsCards();
+  if (overlaps !== null) setMatchToastsEnabled(!overlaps);
+}
+
+function matchToastOverlapsCards() {
   const cards = [...board.querySelectorAll(".card")]
     .map(card => card.getBoundingClientRect())
     .filter(rect => rect.width > 0 && rect.height > 0);
-  if (!cards.length) return;
+  if (!cards.length) return null;
 
   // Measure this round's messages before showing anything to the player.
   // Use the final position, without the toast's entrance translation.
@@ -1090,6 +1095,7 @@ function initializeMatchToastsPreference() {
   const visibility = legendToast.style.visibility;
   const title = legendToastTitle.textContent;
   const text = legendToastText.textContent;
+  const textNodes = legendToastText.childNodes ? [...legendToastText.childNodes] : null;
   legendToast.style.visibility = "hidden";
   legendToast.style.animation = "none";
   legendToast.hidden = false;
@@ -1108,9 +1114,10 @@ function initializeMatchToastsPreference() {
     legendToast.style.animation = animation;
     legendToast.style.visibility = visibility;
     legendToastTitle.textContent = title;
-    legendToastText.textContent = text;
+    if (textNodes) legendToastText.replaceChildren(...textNodes);
+    else legendToastText.textContent = text;
   }
-  setMatchToastsEnabled(!overlaps);
+  return overlaps;
 }
 
 function readTipsEnabled() {
@@ -1922,6 +1929,16 @@ function closeRarityPanel() {
   syncModalScrollLock();
 }
 
+function updateGameTitleVisibility() {
+  if (homeScreen.visible) return;
+  const header = document.querySelector(".game-top");
+  // Measure with the title present, so resize checks remain stable.
+  header.classList.remove("is-title-hidden");
+  if (introRunning) return;
+  const overlaps = window.matchMedia?.("(max-width: 640px)")?.matches && matchToastOverlapsCards();
+  header.classList.toggle("is-title-hidden", Boolean(overlaps));
+}
+
 function hideLegendToast() {
   selectedStory.classList.remove("is-visible");
   legendToast.hidden = true;
@@ -2095,6 +2112,7 @@ function newGame({ startPreview = !homeScreen.visible } = {}) {
   deck = shuffle(buildDeck());
   renderLegendsList();
   board.replaceChildren(...deck.map(createCard));
+  updateGameTitleVisibility();
   initializeMatchToastsPreference();
   if (startPreview && gameModes[gameMode].previewSeconds) startMemoryPreview();
   showNextAchievement();
@@ -2228,6 +2246,7 @@ async function runIntroTutorial() {
   hintPressCount = 0;
   stopTimer();
   introRunning = true;
+  updateGameTitleVisibility();
   firstCard = null;
   secondCard = null;
   lockBoard = true;
@@ -2619,6 +2638,8 @@ rarityPanel?.addEventListener("click", (event) => {
 legendToastClose.addEventListener("click", () => {
   if (!introRunning) hideLegendToast();
 });
+window.addEventListener("resize", updateGameTitleVisibility);
+window.visualViewport?.addEventListener("resize", updateGameTitleVisibility);
 playAgainButton.addEventListener("click", restartGame);
 applyTheme();
 document.documentElement.dataset.embed = String(isEmbedded);
