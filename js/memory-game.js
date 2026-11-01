@@ -1372,6 +1372,7 @@ function openAboutPanel() {
   aboutReturnFocus = document.getElementById("aboutAuthorButton");
   renderAbout();
   aboutPanel.classList.add("is-visible");
+  aboutPanel.querySelector(".dialog-body").scrollTop = 0;
   closeAboutButton.focus({ preventScroll: true });
   syncModalScrollLock();
 }
