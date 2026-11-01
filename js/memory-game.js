@@ -745,6 +745,7 @@ function renderCollection() {
           modalDetailPair = pair;
           renderLegendsList([pair], pair);
           legendsPanel.classList.add("is-visible", "is-collection-detail");
+          legendsPanel.querySelector(".dialog-body").scrollTop = 0;
           collectionPanel.inert = true;
           collectionPanel.setAttribute("aria-modal", "false");
           closeLegendsButton.focus();
@@ -768,6 +769,7 @@ function renderCollection() {
 function openCollection() {
   renderCollection();
   collectionPanel.classList.add("is-visible");
+  collectionPanel.querySelector(".dialog-body").scrollTop = 0;
   closeCollectionButton.focus();
   syncModalScrollLock();
 }
@@ -2357,6 +2359,7 @@ function openLegendsPanel() {
   }
 
   legendsPanel?.classList.add("is-visible");
+  legendsPanel.querySelector(".dialog-body").scrollTop = 0;
   syncModalScrollLock();
 }
 
