@@ -209,6 +209,7 @@ let confirmedLanguageReload = false;
 let modalDetailPair = null;
 let modalRarity = null;
 const modalPanels = [winPanel, gameOverPanel, collectionPanel, legendsPanel, rarityPanel, aboutPanel, restartPanel, achievementsPanel, achievementPanel, settingsPanel];
+const openScrollPanels = new Set();
 
 // Move focus during screen navigation only after keyboard interaction. Dialogs
 // retain their own focus management regardless of the input method.
@@ -597,7 +598,7 @@ function openAchievements() {
   renderAchievements();
   selectProgressTab("records");
   achievementsPanel.classList.add("is-visible");
-  achievementsPanel.querySelector(".dialog-body").scrollTop = 0;
+
   closeAchievementsButton.focus();
   syncModalScrollLock();
 }
@@ -745,7 +746,7 @@ function renderCollection() {
           modalDetailPair = pair;
           renderLegendsList([pair], pair);
           legendsPanel.classList.add("is-visible", "is-collection-detail");
-          legendsPanel.querySelector(".dialog-body").scrollTop = 0;
+
           collectionPanel.inert = true;
           collectionPanel.setAttribute("aria-modal", "false");
           closeLegendsButton.focus();
@@ -769,7 +770,7 @@ function renderCollection() {
 function openCollection() {
   renderCollection();
   collectionPanel.classList.add("is-visible");
-  collectionPanel.querySelector(".dialog-body").scrollTop = 0;
+
   closeCollectionButton.focus();
   syncModalScrollLock();
 }
@@ -973,7 +974,23 @@ function syncModalScrollLock() {
   refreshModalScrollLock();
 }
 
+function resetNewDialogScrollPositions() {
+  for (const panel of modalPanels) {
+    if (!panel) continue;
+    if (panel.classList.contains("is-visible")) {
+      if (!openScrollPanels.has(panel)) {
+        const body = panel.querySelector(".dialog-body");
+        if (body) body.scrollTop = 0;
+        openScrollPanels.add(panel);
+      }
+    } else {
+      openScrollPanels.delete(panel);
+    }
+  }
+}
+
 function refreshModalScrollLock() {
+  resetNewDialogScrollPositions();
   const hasOpenPanel = modalPanels.some(panel => panel?.classList.contains("is-visible"));
   const achievementVisible = achievementPanel.classList.contains("is-visible");
   for (const panel of modalPanels) {
@@ -1372,7 +1389,7 @@ function openAboutPanel() {
   aboutReturnFocus = document.getElementById("aboutAuthorButton");
   renderAbout();
   aboutPanel.classList.add("is-visible");
-  aboutPanel.querySelector(".dialog-body").scrollTop = 0;
+
   closeAboutButton.focus({ preventScroll: true });
   syncModalScrollLock();
 }
@@ -2360,7 +2377,7 @@ function openLegendsPanel() {
   }
 
   legendsPanel?.classList.add("is-visible");
-  legendsPanel.querySelector(".dialog-body").scrollTop = 0;
+
   syncModalScrollLock();
 }
 
