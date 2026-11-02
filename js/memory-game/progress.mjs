@@ -1,7 +1,7 @@
 import { validRecordNumber } from "./storage.mjs";
 
 // Optional definitions remain separate from the core list and all unlock calculations.
-const optionalAchievementDefinitions = [
+export const optionalAchievementDefinitions = [
   { id: "originalMirrorMaster", kind: "optional", field: "originalMatches", icon: "book", color: "#a57a10", thresholds: [100, 500, 1000, 5000] },
   { id: "directorsCutHunter", kind: "optional", field: "directorsCutMatches", icon: "movie-filter", color: "#9c64cf", thresholds: [25, 100, 250, 1000] },
   { id: "goldenMirrorHunter", kind: "optional", field: "goldenMatches", icon: "gold", color: "#c49118", thresholds: [10, 25, 100, 250] }
