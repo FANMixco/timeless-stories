@@ -232,7 +232,21 @@
         "next": "Trouvez {target} paires {category} dans des parties terminées avec succès pour terminer le niveau {level}.",
         "progress": "Progression vers le niveau {level} : {count} / {target}",
         "complete": "Succès terminé : les quatre niveaux sont acquis.",
-        "total": "Total des paires réussies : {count}"
+        "total": "Total des paires réussies : {count}",
+        "comboItems": {
+          "firstCombo": {
+            "name": "Premier combo",
+            "description": "Réussissez 2 paires consécutives dans une partie remportée."
+          },
+          "superCombo": {
+            "name": "Super combo",
+            "description": "Réussissez 5 paires consécutives dans une partie remportée."
+          },
+          "perfectCombo": {
+            "name": "Combo parfait",
+            "description": "Réussissez 10 paires consécutives sans erreur dans une partie remportée."
+          }
+        }
       },
       "achievements": {
         "title": "Succès",
@@ -312,6 +326,7 @@
       "statusLabel": "Statut du jeu",
       "moves": "Coups",
       "matches": "Paires",
+      "comboMultiplier": "Combo ×{count}",
       "time": "Temps",
       "boardLabel": "Cartes mémoire",
       "hiddenCard": "Carte mémoire cachée",
@@ -748,6 +763,7 @@
         "websites": "Sites officiels",
         "storiesWebsite": "Légendes Éternelles",
         "soundCreditsTitle": "Crédits des effets sonores",
+        "comboSoundCredit": "Effets sonores des combos par {author}, sur {source}.",
         "soundCredit": "Effet sonore de {author} sur Pixabay",
         "musicCredit": "Musique de {author} sur {source}",
         "backgroundMusicCredit": "« Over Ancient Waters », par Eric Matyas — "

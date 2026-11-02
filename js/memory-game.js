@@ -1,7 +1,7 @@
 import { createGameAudio } from "./memory-game/audio.mjs";
 import { createBackgroundMusic } from "./memory-game/background-music.mjs";
 import { createProgressStore } from "./memory-game/storage.mjs";
-import { createProgressView, optionalAchievementDefinitions } from "./memory-game/progress.mjs";
+import { createProgressView, optionalAchievementDefinitions, optionalComboAchievementDefinitions } from "./memory-game/progress.mjs";
 import { buildGameModes, createRoundClock, selectActivePairs, getDefeatReason, getModeStatus, normalizeElapsedSeconds, shuffleRemainingCards } from "./memory-game/rules.mjs";
 import { createModalNavigation } from "./memory-game/dialogs.mjs";
 import { createHomeScreen } from "./memory-game/home.mjs";
@@ -110,6 +110,15 @@ let linkRegistry = null;
 let localizedLinks = null;
 let selectionRules = null;
 const board = document.getElementById("board");
+const comboToast = document.createElement("div");
+comboToast.id = "comboToast";
+comboToast.className = "combo-toast";
+comboToast.hidden = true;
+comboToast.setAttribute("aria-hidden", "true");
+document.querySelector(".board-area").append(comboToast);
+let activeCombo = 0;
+let bestCombo = 0;
+let comboToastTimer = null;
 const movesValue = document.getElementById("movesValue");
 const matchesValue = document.getElementById("matchesValue");
 const timeValue = document.getElementById("timeValue");
@@ -390,7 +399,7 @@ function getMirrorId(pair) {
 function readAchievements() {
   try {
     const saved = JSON.parse(window.localStorage.getItem(achievementsStorageKey));
-    return Object.fromEntries(achievementDefinitions
+    return Object.fromEntries([...achievementDefinitions, ...optionalComboAchievementDefinitions]
       .filter(({ id }) => typeof saved?.[id] === "string" && Number.isFinite(Date.parse(saved[id])))
       .map(({ id }) => [id, saved[id]]));
   } catch { return {}; }
@@ -563,6 +572,7 @@ function endChallengeIfNeeded(attemptResolved) {
 function endGame(reason) {
   if (gameCompleted || gameDefeated || introRunning) return;
   gameDefeated = true;
+  resetCombo();
   lockBoard = true;
   stopTimer();
   window.clearTimeout(mismatchTimer);
@@ -621,6 +631,17 @@ function queueOptionalAchievements(previousStats) {
   }
 }
 
+function saveComboAchievements() {
+  if (!gameCompleted || gameDefeated) return;
+  achievements = { ...readAchievements(), ...achievements };
+  for (const { id, target } of optionalComboAchievementDefinitions) {
+    if (bestCombo < target || achievements[id]) continue;
+    achievements[id] = new Date().toISOString();
+    achievementQueue.push(id);
+  }
+  try { window.localStorage.setItem(achievementsStorageKey, JSON.stringify(achievements)); } catch {}
+}
+
 function showNextAchievement() {
   if (currentAchievement || !achievementQueue.length || introRunning || previewPhase) return;
   if (!achievementReturnFocus) achievementReturnFocus = document.activeElement;
@@ -628,12 +649,14 @@ function showNextAchievement() {
   const unlockNotice = modeUnlockNotices.find(notice => notice.id === currentAchievement);
   const [noticeKind, category, level] = currentAchievement.split(":");
   const optionalDefinition = noticeKind === "optional" ? optionalAchievementDefinitions[Number(category)] : null;
-  const definition = optionalDefinition || (unlockNotice ? { icon: unlockNotice.icon, color: "#1484bd" } : achievementDefinitions.find(item => item.id === currentAchievement));
+  const comboDefinition = optionalComboAchievementDefinitions.find(item => item.id === currentAchievement);
+  const definition = optionalDefinition || comboDefinition || (unlockNotice ? { icon: unlockNotice.icon, color: "#1484bd" } : achievementDefinitions.find(item => item.id === currentAchievement));
   const copy = memoryGame.achievements;
   const rewardCopy = optionalDefinition ? {
     name: memoryGame.optionalAchievements.names[Number(category)],
     description: memoryGame.optionalAchievements.earned.replace("{level}", ["I", "II", "III", "IV"][Number(level)]),
-  } : unlockNotice ? { name: memoryGame.modes[unlockNotice.mode].name, description: memoryGame.modes[unlockNotice.mode].unlocked } : copy.items[currentAchievement];
+  } : comboDefinition ? memoryGame.optionalAchievements.comboItems[currentAchievement]
+    : unlockNotice ? { name: memoryGame.modes[unlockNotice.mode].name, description: memoryGame.modes[unlockNotice.mode].unlocked } : copy.items[currentAchievement];
   if (unlockNotice) { try { window.localStorage.setItem(unlockNotice.storageKey, "true"); } catch {} }
   const legendary = currentAchievement === "legendary";
   achievementPanel.style.setProperty("--achievement-color", definition.color);
@@ -1379,6 +1402,24 @@ function renderAbout() {
     return item;
   });
   document.getElementById("aboutSoundCreditsList").replaceChildren(...credits);
+  const comboCredits = [
+    ["Benjamin Adams", "https://pixabay.com/users/benkirb-8692052/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=268909", "https://pixabay.com/sound-effects//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=268909"],
+    ["Official Profile", "https://pixabay.com/users/universfield-28281460/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=141291", "https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=141291"],
+  ];
+  for (const [author, authorUrl, sourceUrl] of comboCredits) {
+    const item = document.createElement("li");
+    const authorLink = document.createElement("a");
+    authorLink.textContent = author;
+    authorLink.href = authorUrl;
+    const sourceLink = document.createElement("a");
+    sourceLink.textContent = "Pixabay";
+    sourceLink.href = sourceUrl;
+    for (const link of [authorLink, sourceLink]) { link.target = "_blank"; link.rel = "noopener noreferrer"; }
+    for (const part of copy.comboSoundCredit.split(/(\{author\}|\{source\})/)) {
+      item.append(part === "{author}" ? authorLink : part === "{source}" ? sourceLink : document.createTextNode(part));
+    }
+    document.getElementById("aboutSoundCreditsList").append(item);
+  }
   const musicCredit = document.createElement("li");
   const authorLink = document.createElement("a");
   authorLink.textContent = "ejah_music";
@@ -1750,6 +1791,26 @@ function createCard(character, index) {
   return card;
 }
 
+function hideComboToast() {
+  window.clearTimeout(comboToastTimer);
+  comboToastTimer = null;
+  comboToast.hidden = true;
+}
+
+function resetCombo(hideToast = true) {
+  activeCombo = bestCombo = 0;
+  if (hideToast) hideComboToast();
+}
+
+function showComboToast() {
+  hideComboToast();
+  comboToast.textContent = memoryGame.comboMultiplier.replace("{count}", activeCombo);
+  comboToast.dataset.tier = activeCombo >= 10 ? "perfect" : activeCombo >= 5 ? "super" : "normal";
+  comboToast.hidden = false;
+  comboToastTimer = window.setTimeout(hideComboToast, 700);
+  playGameSound(activeCombo >= 10 ? "combo10" : activeCombo >= 5 ? "combo5" : "combo");
+}
+
 function resetTurn() {
   firstCard = null;
   secondCard = null;
@@ -1783,6 +1844,9 @@ function markMatch() {
   firstCard.classList.add("is-matched");
   secondCard.classList.add("is-matched");
   matches += 1;
+  activeCombo += 1;
+  bestCombo = Math.max(bestCombo, activeCombo);
+  if (activeCombo >= 2) showComboToast();
   updateStatus();
 
   if (matches === getPairCount()) {
@@ -1804,6 +1868,8 @@ function markMatch() {
       .replace("{pairs}", getPairCount());
     winPanel.classList.add("is-visible");
     evaluateAchievements(true);
+    saveComboAchievements();
+    resetCombo(false);
     queueOptionalAchievements(previousMatchStats);
     showNextAchievement();
     syncModalScrollLock();
@@ -2090,6 +2156,8 @@ function flipCard(card) {
     return;
   }
 
+  activeCombo = 0;
+  hideComboToast();
   if (gameModes[gameMode].maxMistakes != null) {
     mistakes += 1;
     updateStatus();
@@ -2100,6 +2168,7 @@ function flipCard(card) {
 }
 
 function newGame({ startPreview = !homeScreen.visible } = {}) {
+  resetCombo();
   spokenCountdown.reset();
   previewCountdown.cancel();
   window.clearTimeout(previewFlipTimer);
@@ -2644,6 +2713,7 @@ document.addEventListener("pointerdown", () => {
   backgroundMusic.prepare();
 }, { passive: true });
 window.addEventListener("pagehide", () => {
+  hideComboToast();
   spokenCountdown.stop();
   backgroundMusic.pause();
   previewCountdown.pause();

@@ -1,12 +1,13 @@
 // Audio resources are private to one game. Inject browser access for tests.
 export function createGameAudio({ getAudioContext, fetch, isEnabled, isHidden }) {
-  const soundFiles = { match: "music/match.mp3", discovery: "music/shiny.mp3", achievement: "music/award.mp3", victory: "music/complete.mp3", gameover: "music/gameover.mp3" };
+  const soundFiles = { match: "music/match.mp3", discovery: "music/shiny.mp3", achievement: "music/award.mp3", victory: "music/complete.mp3", gameover: "music/gameover.mp3", combo: "music/combo1.mp3", combo5: "music/combo5.mp3", combo10: "music/combo10.mp3" };
   let audioContext = null;
   const soundChannels = {
     effect: { version: 0, active: null, pending: null },
     victory: { version: 0, active: null, pending: null },
     gameover: { version: 0, active: null, pending: null },
     achievement: { version: 0, active: null, pending: null },
+    combo: { version: 0, active: null, pending: null },
   };
   const playingSounds = new Set();
   const soundFadeSeconds = 0.075;
@@ -82,9 +83,12 @@ export function createGameAudio({ getAudioContext, fetch, isEnabled, isHidden })
   async function playGameSound(name, rate = 1) {
     if (!isEnabled() || !audioContext || isHidden()) return;
     const gameplay = name === "match" || name === "discovery";
-    const channel = gameplay ? soundChannels.effect : soundChannels[name];
+    const combo = name === "combo" || name === "combo5" || name === "combo10";
+    const channel = combo ? soundChannels.combo : gameplay ? soundChannels.effect : soundChannels[name];
     if (!channel) return;
-    if (gameplay) {
+    // One thunder at a time, including sounds still loading. Never restart it.
+    if (combo && (channel.active || channel.pending)) return;
+    if (gameplay || combo) {
       // Match feedback never interrupts a special discovery or a reward melody.
       if (soundChannels.gameover.active || soundChannels.gameover.pending || soundChannels.victory.active || soundChannels.victory.pending ||
           soundChannels.achievement.active || soundChannels.achievement.pending) return;

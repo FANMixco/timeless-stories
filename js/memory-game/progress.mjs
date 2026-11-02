@@ -6,6 +6,11 @@ export const optionalAchievementDefinitions = [
   { id: "directorsCutHunter", kind: "optional", field: "directorsCutMatches", icon: "movie-filter", color: "#9c64cf", thresholds: [25, 100, 250, 1000] },
   { id: "goldenMirrorHunter", kind: "optional", field: "goldenMatches", icon: "gold", color: "#c49118", thresholds: [10, 25, 100, 250] }
 ];
+export const optionalComboAchievementDefinitions = [
+  { id: "firstCombo", kind: "optional", target: 2, icon: "asteroid", color: "#1484bd" },
+  { id: "superCombo", kind: "optional", target: 5, icon: "asteroid", color: "#d97822" },
+  { id: "perfectCombo", kind: "optional", target: 10, icon: "asteroid", color: "#c49118" },
+];
 const levels = ["I", "II", "III", "IV"];
 const text = (template, values) => template.replace(/\{(\w+)\}/g, (_, key) => values[key]);
 
@@ -208,6 +213,26 @@ export function createProgressView({ document, getState, readPersonalRecords, re
       meter.setAttribute("aria-labelledby", `${name.id} ${progressLabel.id}`);
       body.append(name, status, description, progressLabel, meter);
       row.append(icon, body);
+      return row;
+    }));
+    optionalList.append(...optionalComboAchievementDefinitions.map(({ id, kind, icon, color }) => {
+      const row = document.createElement("article");
+      row.className = `achievement-row${achievements[id] ? " is-unlocked" : ""}`;
+      row.dataset.achievementKind = kind;
+      row.style.setProperty("--achievement-color", color);
+      const mark = document.createElement("i");
+      mark.className = `achievement-icon icon-${icon}`;
+      mark.setAttribute("aria-hidden", "true");
+      const body = document.createElement("div");
+      const name = document.createElement("h3");
+      name.textContent = copy.comboItems[id].name;
+      const description = document.createElement("p");
+      description.textContent = copy.comboItems[id].description;
+      const status = document.createElement("p");
+      status.className = "achievement-status";
+      status.textContent = achievements[id] ? memoryGame.achievements.unlocked : memoryGame.achievements.locked;
+      body.append(name, description, status);
+      row.append(mark, body);
       return row;
     }));
     optionalSection.hidden = false;
