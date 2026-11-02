@@ -214,6 +214,26 @@
         "spokenCountdown": "Compte à rebours vocal",
         "music": "Musique de fond"
       },
+      "optionalAchievements": {
+        "title": "Succès facultatifs",
+        "policy": "Seules les paires des parties terminées avec succès comptent. Ces succès ne modifient ni les succès principaux, ni les collections, ni le déblocage des modes.",
+        "names": [
+          "Maître des miroirs originaux",
+          "Chasseur de versions du réalisateur",
+          "Chasseur de miroirs dorés"
+        ],
+        "categories": [
+          "de miroirs originaux",
+          "de la version du réalisateur",
+          "de miroirs dorés"
+        ],
+        "current": "Niveau {level} en cours",
+        "earned": "Niveau {level} terminé",
+        "next": "Trouvez {target} paires {category} dans des parties terminées avec succès pour terminer le niveau {level}.",
+        "progress": "Progression vers le niveau {level} : {count} / {target}",
+        "complete": "Succès terminé : les quatre niveaux sont acquis.",
+        "total": "Total des paires réussies : {count}"
+      },
       "achievements": {
         "title": "Succès",
         "progress": "{found} / {total} succès débloqués",

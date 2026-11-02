@@ -214,6 +214,26 @@
         "spokenCountdown": "Spoken countdown",
         "music": "Background music"
       },
+      "optionalAchievements": {
+        "title": "Optional Achievements",
+        "policy": "Only pairs from successfully completed games count. These achievements do not affect core achievements, collections or mode unlocks.",
+        "names": [
+          "Original Mirror Master",
+          "Director's Cut Hunter",
+          "Golden Mirror Hunter"
+        ],
+        "categories": [
+          "Original",
+          "Director's Cut",
+          "Golden Mirror"
+        ],
+        "current": "Level {level} in progress",
+        "earned": "Level {level} completed",
+        "next": "Match {target} {category} pairs across successfully completed games to complete Level {level}.",
+        "progress": "Progress toward Level {level}: {count} / {target}",
+        "complete": "Fully completed — all four levels earned.",
+        "total": "Total successful matches: {count}"
+      },
       "achievements": {
         "title": "Achievements",
         "progress": "{found} / {total} Achievements Unlocked",

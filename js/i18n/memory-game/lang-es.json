@@ -214,6 +214,26 @@
         "spokenCountdown": "Cuenta regresiva por voz",
         "music": "Música de fondo"
       },
+      "optionalAchievements": {
+        "title": "Logros opcionales",
+        "policy": "Solo cuentan las parejas de partidas completadas con éxito. Estos logros no afectan a los logros principales, las colecciones ni el desbloqueo de modos.",
+        "names": [
+          "Maestro de espejos originales",
+          "Cazador de ediciones del director",
+          "Cazador de espejos dorados"
+        ],
+        "categories": [
+          "de espejos originales",
+          "de la edición del director",
+          "de espejos dorados"
+        ],
+        "current": "Nivel {level} en curso",
+        "earned": "Nivel {level} completado",
+        "next": "Encuentra {target} parejas {category} en partidas completadas con éxito para completar el nivel {level}.",
+        "progress": "Progreso hacia el nivel {level}: {count} / {target}",
+        "complete": "Completado: has conseguido los cuatro niveles.",
+        "total": "Total de parejas acertadas: {count}"
+      },
       "achievements": {
         "title": "Logros",
         "progress": "{found} / {total} logros desbloqueados",
