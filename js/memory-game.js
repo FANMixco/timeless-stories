@@ -1,7 +1,7 @@
 import { createGameAudio } from "./memory-game/audio.mjs";
 import { createBackgroundMusic } from "./memory-game/background-music.mjs";
 import { createProgressStore } from "./memory-game/storage.mjs";
-import { createProgressView } from "./memory-game/progress.mjs";
+import { createProgressView, optionalAchievementDefinitions } from "./memory-game/progress.mjs";
 import { buildGameModes, createRoundClock, selectActivePairs, getDefeatReason, getModeStatus, normalizeElapsedSeconds, shuffleRemainingCards } from "./memory-game/rules.mjs";
 import { createModalNavigation } from "./memory-game/dialogs.mjs";
 import { createHomeScreen } from "./memory-game/home.mjs";
@@ -610,14 +610,30 @@ function closeAchievements() {
     : winPanel.classList.contains("is-visible") ? winRecordsButton : homeScreen.visible ? document.getElementById("homeRecords") : achievementsButton).focus({ preventScroll: true });
 }
 
+function queueOptionalAchievements(previousStats) {
+  const currentStats = readChallengeStats().matchStats;
+  for (const [category, definition] of optionalAchievementDefinitions.entries()) {
+    definition.thresholds.forEach((target, level) => {
+      if (previousStats[definition.field] < target && currentStats[definition.field] >= target) {
+        achievementQueue.push(`optional:${category}:${level}`);
+      }
+    });
+  }
+}
+
 function showNextAchievement() {
   if (currentAchievement || !achievementQueue.length || introRunning || previewPhase) return;
   if (!achievementReturnFocus) achievementReturnFocus = document.activeElement;
   currentAchievement = achievementQueue.shift();
   const unlockNotice = modeUnlockNotices.find(notice => notice.id === currentAchievement);
-  const definition = unlockNotice ? { icon: unlockNotice.icon, color: "#1484bd" } : achievementDefinitions.find(item => item.id === currentAchievement);
+  const [noticeKind, category, level] = currentAchievement.split(":");
+  const optionalDefinition = noticeKind === "optional" ? optionalAchievementDefinitions[Number(category)] : null;
+  const definition = optionalDefinition || (unlockNotice ? { icon: unlockNotice.icon, color: "#1484bd" } : achievementDefinitions.find(item => item.id === currentAchievement));
   const copy = memoryGame.achievements;
-  const rewardCopy = unlockNotice ? { name: memoryGame.modes[unlockNotice.mode].name, description: memoryGame.modes[unlockNotice.mode].unlocked } : copy.items[currentAchievement];
+  const rewardCopy = optionalDefinition ? {
+    name: memoryGame.optionalAchievements.names[Number(category)],
+    description: memoryGame.optionalAchievements.earned.replace("{level}", ["I", "II", "III", "IV"][Number(level)]),
+  } : unlockNotice ? { name: memoryGame.modes[unlockNotice.mode].name, description: memoryGame.modes[unlockNotice.mode].unlocked } : copy.items[currentAchievement];
   if (unlockNotice) { try { window.localStorage.setItem(unlockNotice.storageKey, "true"); } catch {} }
   const legendary = currentAchievement === "legendary";
   achievementPanel.style.setProperty("--achievement-color", definition.color);
@@ -1772,6 +1788,7 @@ function markMatch() {
   if (matches === getPairCount()) {
     stopTimer();
     gameCompleted = true;
+    const previousMatchStats = readChallengeStats().matchStats;
     progressStore.completeMatchStats(activePairs);
     updateStatus();
     finishChallenge(true);
@@ -1787,6 +1804,7 @@ function markMatch() {
       .replace("{pairs}", getPairCount());
     winPanel.classList.add("is-visible");
     evaluateAchievements(true);
+    queueOptionalAchievements(previousMatchStats);
     showNextAchievement();
     syncModalScrollLock();
   }
