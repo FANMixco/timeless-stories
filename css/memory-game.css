@@ -1638,6 +1638,12 @@ html[data-theme="dark"] .card.is-matched .card-front {
 .record-stat dt i { color: var(--found); }
 .record-stat .icon-target svg, .record-stat .icon-defeat svg { display: block; width: 1em; height: 1em; }
 .record-stat dd { margin: 4px 0 0; font-weight: 700; font-variant-numeric: tabular-nums; }
+@media (max-width: 819px) {
+  .personal-records p { font-size: 0.9rem; }
+  .record-stat dt { font-size: 0.9rem; line-height: 1.4; }
+  .record-stat dt i { flex-shrink: 0; font-size: 1.05rem; }
+  .record-stat dd { font-size: 1.1rem; }
+}
 .performance-metrics { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin: 0 0 12px; }
 .performance-metrics dt { color: var(--muted); font-size: 0.8rem; }
 .performance-metrics dd { margin: 3px 0 0; font-weight: 700; font-variant-numeric: tabular-nums; }
