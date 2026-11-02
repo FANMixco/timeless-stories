@@ -2406,7 +2406,7 @@ async function shareGame(button = shareButton) {
   const shareData = {
     title: memoryGame.title || document.title,
     text: memoryGame.shareText || memoryGame.subtitle || "",
-    url: getShareUrl(),
+    url: storeVersion === "play" ? ratingUrl : getShareUrl(),
   };
 
   if (navigator.share) {
