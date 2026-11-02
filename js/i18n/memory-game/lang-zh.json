@@ -214,6 +214,26 @@
         "spokenCountdown": "语音倒计时",
         "music": "背景音乐"
       },
+      "optionalAchievements": {
+        "title": "可选成就",
+        "policy": "仅统计成功完成的游戏中的配对。这些成就不会影响核心成就、收藏或模式解锁。",
+        "names": [
+          "原版镜像大师",
+          "导演剪辑版猎手",
+          "黄金镜像猎手"
+        ],
+        "categories": [
+          "原版镜像",
+          "导演剪辑版",
+          "黄金镜像"
+        ],
+        "current": "正在挑战第 {level} 级",
+        "earned": "已完成第 {level} 级",
+        "next": "在成功完成的游戏中累计找到 {target} 对{category}，即可完成第 {level} 级。",
+        "progress": "第 {level} 级进度：{count} / {target}",
+        "complete": "全部完成：已获得所有四个等级。",
+        "total": "累计成功配对：{count}"
+      },
       "achievements": {
         "title": "成就",
         "progress": "已解锁 {found} / {total} 项成就",

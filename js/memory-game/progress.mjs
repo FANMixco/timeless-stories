@@ -1,9 +1,29 @@
 import { validRecordNumber } from "./storage.mjs";
 
+// Optional definitions remain separate from the core list and all unlock calculations.
+const optionalAchievementDefinitions = [
+  { id: "originalMirrorMaster", kind: "optional", field: "originalMatches", icon: "book", color: "#a57a10", thresholds: [100, 500, 1000, 5000] },
+  { id: "directorsCutHunter", kind: "optional", field: "directorsCutMatches", icon: "movie-filter", color: "#9c64cf", thresholds: [25, 100, 250, 1000] },
+  { id: "goldenMirrorHunter", kind: "optional", field: "goldenMatches", icon: "gold", color: "#c49118", thresholds: [10, 25, 100, 250] }
+];
+const levels = ["I", "II", "III", "IV"];
+const text = (template, values) => template.replace(/\{(\w+)\}/g, (_, key) => values[key]);
+
 // Render records and unlocks without owning gameplay or persistence.
 export function createProgressView({ document, getState, readPersonalRecords, readChallengeStats,
   getPairCount, getRecordConfiguration, formatTime, setElementText, setElementHidden, achievementDefinitions, onTabChange, gameModes, isModeUnlocked = () => true }) {
   const achievementsPanel = document.getElementById("achievementsPanel");
+  const optionalSection = document.createElement("section");
+  optionalSection.id = "optionalAchievements";
+  optionalSection.setAttribute("aria-labelledby", "optionalAchievementsTitle");
+  optionalSection.hidden = true;
+  const optionalTitle = document.createElement("h3");
+  optionalTitle.id = "optionalAchievementsTitle";
+  const optionalPolicy = document.createElement("p");
+  const optionalList = document.createElement("div");
+  optionalList.className = "achievements-list";
+  optionalSection.append(optionalTitle, optionalPolicy, optionalList);
+  document.getElementById("progressAchievementsPanel").append(optionalSection);
   let progressTab = "records";
   let memoryGame, achievements, completedPerformance, currentLanguage, personalRecords;
   function refresh() { ({ memoryGame, achievements, completedPerformance, currentLanguage } = getState()); }
@@ -146,6 +166,54 @@ export function createProgressView({ document, getState, readPersonalRecords, re
     }
   }
 
+  function renderOptionalAchievements() {
+    const copy = memoryGame.optionalAchievements;
+    const stats = readChallengeStats().matchStats;
+    const number = value => value.toLocaleString(currentLanguage);
+    optionalTitle.textContent = copy.title;
+    optionalPolicy.textContent = copy.policy;
+    optionalList.replaceChildren(...optionalAchievementDefinitions.map((definition, index) => {
+      const count = stats[definition.field];
+      // Cumulative thresholds derive every earned level, including several
+      // crossed in one win. No separate level state can drift out of sync.
+      const earned = definition.thresholds.filter(target => count >= target).length;
+      const complete = earned === levels.length;
+      const target = definition.thresholds[Math.min(earned, levels.length - 1)];
+      const values = { level: levels[Math.min(earned, levels.length - 1)],
+        category: copy.categories[index], count: number(count), target: number(target) };
+      const row = document.createElement("article");
+      row.className = `achievement-row${earned ? " is-unlocked" : ""}`;
+      row.dataset.achievementKind = definition.kind;
+      row.dataset.completedLevels = String(earned);
+      row.style.setProperty("--achievement-color", definition.color);
+      const icon = document.createElement("i");
+      icon.className = `achievement-icon icon-${definition.icon}`;
+      icon.setAttribute("aria-hidden", "true");
+      const body = document.createElement("div");
+      const name = document.createElement("h3");
+      name.id = `optional-${definition.id}-name`;
+      name.textContent = copy.names[index];
+      const status = document.createElement("p");
+      status.className = "achievement-status";
+      status.textContent = earned ? text(copy.earned, { level: levels[earned - 1] }) : text(copy.current, values);
+      const description = document.createElement("p");
+      description.textContent = complete ? copy.complete : text(copy.next, values);
+      const progressLabel = document.createElement("p");
+      progressLabel.id = `optional-${definition.id}-progress`;
+      progressLabel.className = "achievement-status";
+      progressLabel.textContent = text(complete ? copy.total : copy.progress, values);
+      const meter = document.createElement("progress");
+      meter.max = target;
+      meter.value = Math.min(count, target);
+      meter.setAttribute("aria-labelledby", `${name.id} ${progressLabel.id}`);
+      body.append(name, status, description, progressLabel, meter);
+      row.append(icon, body);
+      return row;
+    }));
+    optionalSection.hidden = false;
+  }
+
+
   function renderAchievements() {
     renderPersonalRecords();
     const copy = memoryGame.achievements;
@@ -192,6 +260,7 @@ export function createProgressView({ document, getState, readPersonalRecords, re
       return row;
     });
     document.getElementById("achievementsList").replaceChildren(...rows);
+    renderOptionalAchievements();
   }
 
   function selectProgressTab(tab = "records", focus = false) {
@@ -210,7 +279,7 @@ export function createProgressView({ document, getState, readPersonalRecords, re
   return {
     get tab() { return progressTab; },
     renderRecords() { refresh(); renderPersonalRecords(); },
-    renderChallenges() { refresh(); renderChallengeStats(); },
+    renderChallenges() { refresh(); renderChallengeStats(); renderOptionalAchievements(); },
     renderCompleted() { refresh(); renderCompletedPerformance(); },
     render() { refresh(); renderAchievements(); },
     selectTab: selectProgressTab,

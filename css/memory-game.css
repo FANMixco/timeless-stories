@@ -1657,6 +1657,14 @@ html[data-theme="dark"] .card.is-matched .card-front {
   .win-records-link { min-height: 44px; }
 }
 .achievements-list { display: grid; gap: 12px; }
+
+/* Optional achievements share the core achievement card layout. */
+#optionalAchievements { margin-top: 24px; }
+#optionalAchievements .achievement-row > div { min-width: 0; flex: 1; overflow-wrap: anywhere; }
+#optionalAchievements progress { display: block; width: 100%; height: 5px; margin-top: 8px; appearance: none; border: 0; border-radius: 5px; overflow: hidden; background: var(--line); accent-color: var(--accent); }
+#optionalAchievements progress::-webkit-progress-bar { background: var(--line); }
+#optionalAchievements progress::-webkit-progress-value { background: var(--accent); border-radius: 5px; }
+#optionalAchievements progress::-moz-progress-bar { background: var(--accent); border-radius: 5px; }
 .achievement-row { display: flex; align-items: center; gap: 18px; padding: 16px; border: 1px solid var(--muted); border-radius: 8px; }
 .achievement-row h3 { margin: 0 0 6px; }
 .achievement-row p { margin: 4px 0; line-height: 1.5; }
