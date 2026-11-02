@@ -1755,7 +1755,9 @@ function hideOpenCards() {
 }
 
 function markMatch() {
-  if (gameCompleted || gameDefeated) return;
+  if (gameCompleted || gameDefeated || introRunning || !firstCard || !secondCard || firstCard === secondCard ||
+      firstCard.dataset.pairId !== secondCard.dataset.pairId ||
+      firstCard.classList.contains("is-matched") || secondCard.classList.contains("is-matched")) return;
   const specialDiscovery = firstCard.dataset.discoveryId && firstCard.dataset.rarity && !discoveries.has(firstCard.dataset.discoveryId);
   // The final pair gets immediate victory feedback instead of another effect.
   if (matches + 1 < getPairCount()) {
@@ -1770,6 +1772,7 @@ function markMatch() {
   if (matches === getPairCount()) {
     stopTimer();
     gameCompleted = true;
+    progressStore.completeMatchStats(activePairs);
     updateStatus();
     finishChallenge(true);
     saveCompletedPerformance();

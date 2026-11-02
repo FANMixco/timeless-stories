@@ -30,3 +30,4 @@ tests/memory-flash.test.mjs
 tests/spoken-countdown.test.mjs
 tests/dialogs.test.mjs
 .dialog-scroll-check.html
+tests/match-statistics.test.mjs

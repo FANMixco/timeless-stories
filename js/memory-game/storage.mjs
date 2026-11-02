@@ -62,7 +62,29 @@ export function createProgressStore({ getStorage, recordsStorageKey, challengeSt
         if (validRecordNumber(entry?.[field])) stats[mode][field] = entry[field];
       }
     }
-    return { version: 1, ...stats };
+    const matchStats = { originalMatches: 0, directorsCutMatches: 0, goldenMatches: 0 };
+    for (const field of Object.keys(matchStats)) {
+      if (saved?.version === 1 && validRecordNumber(saved.matchStats?.[field])) {
+        matchStats[field] = saved.matchStats[field];
+      }
+    }
+    return { version: 1, ...stats, matchStats };
+  }
+
+  function completeMatchStats(pairs) {
+    // Called once for a won board, using its selected catalogue pairs.
+    const fields = { "": "originalMatches", rare: "directorsCutMatches", "ultra-rare": "goldenMatches" };
+    const stats = readChallengeStats();
+    let changed = false;
+    for (const pair of pairs) {
+      const rarity = pair.rarity ?? "";
+      if (!Object.hasOwn(fields, rarity)) continue;
+      const field = fields[rarity];
+      if (stats.matchStats[field] === Number.MAX_SAFE_INTEGER) continue;
+      stats.matchStats[field] += 1;
+      changed = true;
+    }
+    if (changed) writeChallengeStats(stats);
   }
 
   function writeChallengeStats(stats) {
@@ -117,6 +139,6 @@ export function createProgressStore({ getStorage, recordsStorageKey, challengeSt
     stats[mode].attempts += 1;
     writeChallengeStats(stats);
   }
-  return { readPersonalRecords, readGameMode, readChallengeStats, completeClassic: completePersonalRecords, completePersonalRecords, completeChallenge, beginChallenge };
+  return { readPersonalRecords, readGameMode, readChallengeStats, completeMatchStats, completeClassic: completePersonalRecords, completePersonalRecords, completeChallenge, beginChallenge };
 }
 export function validRecordNumber(value) { return Number.isSafeInteger(value) && value >= 0; }
