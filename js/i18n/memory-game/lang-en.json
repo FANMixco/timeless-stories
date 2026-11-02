@@ -232,7 +232,21 @@
         "next": "Match {target} {category} pairs across successfully completed games to complete Level {level}.",
         "progress": "Progress toward Level {level}: {count} / {target}",
         "complete": "Fully completed — all four levels earned.",
-        "total": "Total successful matches: {count}"
+        "total": "Total successful matches: {count}",
+        "comboItems": {
+          "firstCombo": {
+            "name": "First Combo",
+            "description": "Achieve 2 consecutive successful matches in a game you win."
+          },
+          "superCombo": {
+            "name": "Super Combo",
+            "description": "Achieve 5 consecutive successful matches in a game you win."
+          },
+          "perfectCombo": {
+            "name": "Perfect Combo",
+            "description": "Achieve 10 consecutive successful matches without mistakes in a game you win."
+          }
+        }
       },
       "achievements": {
         "title": "Achievements",
@@ -312,6 +326,7 @@
       "statusLabel": "Game status",
       "moves": "Moves",
       "matches": "Matches",
+      "comboMultiplier": "Combo ×{count}",
       "time": "Time",
       "boardLabel": "Memory cards",
       "hiddenCard": "Hidden memory card",
@@ -748,6 +763,7 @@
         "websites": "Official websites",
         "storiesWebsite": "Timeless Stories",
         "soundCreditsTitle": "Sound effect credits",
+        "comboSoundCredit": "Combo sound effects by {author} from {source}.",
         "soundCredit": "Sound effect by {author} from Pixabay",
         "musicCredit": "Music by {author} from {source}",
         "backgroundMusicCredit": "“Over Ancient Waters” by Eric Matyas — "

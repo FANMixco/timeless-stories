@@ -232,7 +232,21 @@
         "next": "在成功完成的游戏中累计找到 {target} 对{category}，即可完成第 {level} 级。",
         "progress": "第 {level} 级进度：{count} / {target}",
         "complete": "全部完成：已获得所有四个等级。",
-        "total": "累计成功配对：{count}"
+        "total": "累计成功配对：{count}",
+        "comboItems": {
+          "firstCombo": {
+            "name": "首次连击",
+            "description": "在一局获胜的游戏中连续成功配对2次。"
+          },
+          "superCombo": {
+            "name": "超级连击",
+            "description": "在一局获胜的游戏中连续成功配对5次。"
+          },
+          "perfectCombo": {
+            "name": "完美连击",
+            "description": "在一局获胜的游戏中连续成功配对10次，期间不出错。"
+          }
+        }
       },
       "achievements": {
         "title": "成就",
@@ -312,6 +326,7 @@
       "statusLabel": "游戏状态",
       "moves": "步数",
       "matches": "配对",
+      "comboMultiplier": "连击 ×{count}",
       "time": "时间",
       "boardLabel": "记忆卡片",
       "hiddenCard": "隐藏的记忆卡片",
@@ -748,6 +763,7 @@
         "websites": "官方网站",
         "storiesWebsite": "永恒的故事",
         "soundCreditsTitle": "音效鸣谢",
+        "comboSoundCredit": "连击音效由 {author} 创作，来自 {source}。",
         "soundCredit": "音效由 {author} 提供，来自 Pixabay",
         "musicCredit": "音乐由 {author} 创作，来自 {source}",
         "backgroundMusicCredit": "《Over Ancient Waters》，Eric Matyas 作曲 — "
