@@ -1047,6 +1047,7 @@ function refreshModalScrollLock() {
   if (gameFooter) gameFooter.inert = backgroundCovered;
 
   if (hasOpenPanel) {
+    hideComboToast();
     spokenCountdown.stop();
     lockPageScroll();
     return;

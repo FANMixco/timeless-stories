@@ -478,7 +478,7 @@ html[data-theme="dark"] .status-value.is-running-low { color: #ff9d93; }
   position: absolute;
   top: 50%;
   left: 50%;
-  z-index: 30;
+  z-index: 10;
   transform: translate(-50%, -50%);
   padding: 5px 12px;
   border: 1px solid #85bce0;
@@ -1149,7 +1149,7 @@ html[data-theme="dark"] .card[data-rarity="tutorial"] .character-icon {
   position: fixed;
   top: calc(14px + env(safe-area-inset-top, 0px));
   left: 50%;
-  z-index: 30;
+  z-index: 10;
   display: grid;
   grid-template-columns: 1fr auto;
   gap: 12px;
@@ -1167,6 +1167,10 @@ html[data-theme="dark"] .card[data-rarity="tutorial"] .character-icon {
 
 .legend-toast[hidden] {
   display: none !important;
+}
+
+html.is-modal-open .legend-toast {
+  visibility: hidden;
 }
 
 .legend-toast[data-tutorial="true"] {
