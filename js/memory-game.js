@@ -180,6 +180,9 @@ const shareButton = document.getElementById("shareButton");
 const hintButton = document.getElementById("hintButton");
 const topViewLegendsButton = document.getElementById("topViewLegendsButton");
 const collectionButton = document.getElementById("collectionButton");
+const contributionPanel = document.getElementById("contributionPanel");
+const contributionFrame = document.getElementById("contributionFrame");
+const closeContributionButton = document.getElementById("closeContributionButton");
 const collectionPanel = document.getElementById("collectionPanel");
 const closeCollectionButton = document.getElementById("closeCollectionButton");
 const achievementsButton = document.getElementById("achievementsButton");
@@ -229,7 +232,7 @@ let pendingDataReset = false;
 let confirmedLanguageReload = false;
 let modalDetailPair = null;
 let modalRarity = null;
-const modalPanels = [winPanel, gameOverPanel, collectionPanel, legendsPanel, rarityPanel, aboutPanel, restartPanel, achievementsPanel, achievementPanel, settingsPanel];
+const modalPanels = [contributionPanel, winPanel, gameOverPanel, collectionPanel, legendsPanel, rarityPanel, aboutPanel, restartPanel, achievementsPanel, achievementPanel, settingsPanel];
 const openScrollPanels = new Set();
 
 // Move focus during screen navigation only after keyboard interaction. Dialogs
@@ -325,6 +328,7 @@ function restoreModalSnapshot(snapshot) {
   }));
   if (!visible.has("rarityPanel")) closeRarityPanel();
   if (!visible.has("legendsPanel")) closeLegendsPanel();
+  if (!visible.has("contributionPanel") && contributionPanel.classList.contains("is-visible")) closeContribution();
   if (!visible.has("collectionPanel") && collectionPanel.classList.contains("is-visible")) closeCollection();
   if (!visible.has("aboutPanel") && aboutPanel.classList.contains("is-visible")) closeAboutPanel();
   if (!visible.has("restartPanel") && restartPanel.classList.contains("is-visible")) closeRestartPanel();
@@ -354,11 +358,13 @@ function restoreModalSnapshot(snapshot) {
     renderRarityPreviewList(snapshot.rarity);
     if (visible.has("collectionPanel") && !collectionRarityTrigger) collectionRarityTrigger = collectionButton;
   }
-  const coveredCollection = visible.has("collectionPanel") && (visible.has("rarityPanel") || Boolean(snapshot.detail));
+  if (visible.has("contributionPanel")) loadContributionForm();
+  const coveredCollection = visible.has("collectionPanel") && (visible.has("contributionPanel") || visible.has("rarityPanel") || Boolean(snapshot.detail));
   collectionPanel.inert = coveredCollection;
   collectionPanel.setAttribute("aria-modal", String(!coveredCollection));
   // Move focus into the newly active layer (including after Forward).
   if (achievementPanel.classList.contains("is-visible")) closeAchievementButton.focus();
+  else if (visible.has("contributionPanel")) closeContributionButton.focus();
   else if (visible.has("restartPanel")) cancelRestartButton.focus();
   else if (visible.has("settingsPanel")) closeSettingsButton.focus();
   else if (visible.has("achievementsPanel")) closeAchievementsButton.focus();
@@ -820,6 +826,31 @@ function renderCollection() {
   const formKey = currentLanguage === "es" ? "spanishContactForm" : "englishContactForm";
   submit.href = linkRegistry?.shared?.contact?.[formKey] || "";
   setElementHidden(submit, !submit.getAttribute("href"));
+  contributionPanel.setAttribute("aria-label", submit.textContent);
+  contributionFrame.title = submit.textContent;
+  closeContributionButton.setAttribute("aria-label", memoryGame.close);
+}
+
+function loadContributionForm() {
+  const url = document.getElementById("collectionSubmit").getAttribute("href");
+  if (!url) return false;
+  // Load on demand and keep any typed form values when closing and reopening.
+  if (contributionFrame.getAttribute("src") !== url) contributionFrame.setAttribute("src", url);
+  return true;
+}
+
+function openContribution(event) {
+  event.preventDefault();
+  if (!loadContributionForm()) return;
+  contributionPanel.classList.add("is-visible");
+  closeContributionButton.focus();
+  syncModalScrollLock();
+}
+
+function closeContribution() {
+  contributionPanel.classList.remove("is-visible");
+  syncModalScrollLock();
+  document.getElementById("collectionSubmit").focus({ preventScroll: true });
 }
 
 function openCollection() {
@@ -831,6 +862,7 @@ function openCollection() {
 }
 
 function closeCollection() {
+  contributionPanel.classList.remove("is-visible");
   collectionPanel.classList.remove("is-visible");
   (homeScreen.visible ? document.getElementById("homeCollection") : collectionButton).focus({ preventScroll: true });
   syncModalScrollLock();
@@ -1062,13 +1094,17 @@ function refreshModalScrollLock() {
     if (panel !== achievementPanel && panel !== collectionPanel) panel.inert = achievementVisible;
   }
   winPanel.inert = achievementVisible || achievementsPanel.classList.contains("is-visible");
-  gameOverPanel.inert = achievementVisible || [settingsPanel, restartPanel, achievementsPanel, aboutPanel, collectionPanel, legendsPanel, rarityPanel]
+  gameOverPanel.inert = achievementVisible || [settingsPanel, restartPanel, achievementsPanel, aboutPanel, collectionPanel, legendsPanel, rarityPanel, contributionPanel]
     .some(panel => panel.classList.contains("is-visible"));
-  if (!collectionDetailTrigger && !collectionRarityTrigger) collectionPanel.inert = achievementVisible;
+  if (!collectionDetailTrigger && !collectionRarityTrigger) {
+    const contributionVisible = contributionPanel.classList.contains("is-visible");
+    collectionPanel.inert = achievementVisible || contributionVisible;
+    collectionPanel.setAttribute("aria-modal", String(!contributionVisible));
+  }
   const restartVisible = restartPanel.classList.contains("is-visible");
   settingsPanel.inert = achievementVisible || restartVisible;
   settingsPanel.setAttribute("aria-modal", String(!restartVisible));
-  const backgroundCovered = achievementVisible || gameOverPanel.classList.contains("is-visible") || settingsPanel.classList.contains("is-visible") || achievementsPanel.classList.contains("is-visible") || aboutPanel.classList.contains("is-visible") || restartPanel.classList.contains("is-visible");
+  const backgroundCovered = contributionPanel.classList.contains("is-visible") || achievementVisible || gameOverPanel.classList.contains("is-visible") || settingsPanel.classList.contains("is-visible") || achievementsPanel.classList.contains("is-visible") || aboutPanel.classList.contains("is-visible") || restartPanel.classList.contains("is-visible");
   if (gameLayout) gameLayout.inert = backgroundCovered;
   if (gameFooter) gameFooter.inert = backgroundCovered;
 
@@ -2554,15 +2590,16 @@ document.addEventListener("click", (event) => {
 document.addEventListener("keydown", (event) => {
   if (!["Shift", "Control", "Alt", "Meta"].includes(event.key)) keyboardNavigation = true;
   backgroundMusic.prepare();
-  if (event.key === "Tab" && (gameOverPanel.classList.contains("is-visible") || settingsPanel.classList.contains("is-visible") || achievementPanel.classList.contains("is-visible") || achievementsPanel.classList.contains("is-visible") || restartPanel.classList.contains("is-visible") || aboutPanel.classList.contains("is-visible") || collectionPanel.classList.contains("is-visible"))) {
+  if (event.key === "Tab" && (contributionPanel.classList.contains("is-visible") || gameOverPanel.classList.contains("is-visible") || settingsPanel.classList.contains("is-visible") || achievementPanel.classList.contains("is-visible") || achievementsPanel.classList.contains("is-visible") || restartPanel.classList.contains("is-visible") || aboutPanel.classList.contains("is-visible") || collectionPanel.classList.contains("is-visible"))) {
     const panel = achievementPanel.classList.contains("is-visible") ? achievementPanel
+      : contributionPanel.classList.contains("is-visible") ? contributionPanel
       : restartPanel.classList.contains("is-visible") ? restartPanel
       : settingsPanel.classList.contains("is-visible") ? settingsPanel
       : achievementsPanel.classList.contains("is-visible") ? achievementsPanel
       : aboutPanel.classList.contains("is-visible") ? aboutPanel
       : rarityPanel.classList.contains("is-visible") ? rarityPanel
       : collectionDetailTrigger ? legendsPanel : collectionPanel.classList.contains("is-visible") ? collectionPanel : gameOverPanel;
-    const controls = [...panel.querySelectorAll('button:not(:disabled), input:not(:disabled), a[href], .dialog-body[tabindex="0"]')]
+    const controls = [...panel.querySelectorAll('button:not(:disabled), input:not(:disabled), a[href], iframe, .dialog-body[tabindex="0"]')]
       .filter((element) => !element.hidden && element.getClientRects().length && (element.type !== "radio" || element.checked));
     const first = controls[0];
     const last = controls[controls.length - 1];
@@ -2583,6 +2620,8 @@ document.addEventListener("keydown", (event) => {
     closeLanguageMenu();
     if (achievementPanel.classList.contains("is-visible")) {
       closeAchievement();
+    } else if (contributionPanel.classList.contains("is-visible")) {
+      closeContribution();
     } else if (restartPanel.classList.contains("is-visible")) {
       closeRestartPanel();
     } else if (settingsPanel.classList.contains("is-visible")) {
@@ -2723,13 +2762,7 @@ settingsPanel.addEventListener("click", event => {
 soundToggle.addEventListener("change", () => setSoundEnabled(soundToggle.checked));
 spokenCountdownToggle.addEventListener("change", () => setSpokenCountdownEnabled(spokenCountdownToggle.checked));
 musicToggle.addEventListener("change", () => setMusicEnabled(musicToggle.checked));
-document.addEventListener("contextmenu", event => {
-  const target = event.target;
-  if (target?.closest?.("a[href]")) return;
-  if (target?.closest?.('button, input[type="checkbox"], input[type="radio"], .settings-row, .theme-option')) {
-    event.preventDefault();
-  }
-});
+document.addEventListener("contextmenu", event => event.preventDefault(), { capture: true });
 
 document.addEventListener("pointerdown", () => {
   keyboardNavigation = false;
@@ -2761,6 +2794,11 @@ achievementsPanel.addEventListener("click", event => {
 });
 achievementPanel.addEventListener("click", event => {
   if (event.target === achievementPanel) closeAchievement();
+});
+document.getElementById("collectionSubmit").addEventListener("click", openContribution);
+closeContributionButton.addEventListener("click", closeContribution);
+contributionPanel.addEventListener("click", event => {
+  if (event.target === contributionPanel) closeContribution();
 });
 closeCollectionButton.addEventListener("click", closeCollection);
 collectionPanel.addEventListener("click", (event) => {

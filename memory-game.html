@@ -56,8 +56,8 @@
         }
       }
     </script>
-    <link rel="stylesheet" href="css/icon-moon-memory.min.css?v=memory-f852dd493155" />
-    <link rel="stylesheet" href="css/memory-game.min.css?v=memory-f852dd493155" />
+    <link rel="stylesheet" href="css/icon-moon-memory.min.css?v=memory-cf2881c0ca7f" />
+    <link rel="stylesheet" href="css/memory-game.min.css?v=memory-cf2881c0ca7f" />
   </head>
   <body>
     <main class="game-shell is-home" aria-label="">
@@ -258,8 +258,18 @@
             <div id="collectionGroups"></div>
             <footer class="collection-contribution">
               <p id="collectionContribution"></p>
-              <a class="game-button" id="collectionSubmit" target="_blank" rel="noopener noreferrer"></a>
+              <a class="game-button" id="collectionSubmit" aria-haspopup="dialog"></a>
             </footer>
+          </div>
+        </div>
+      </aside>
+      <aside class="legends-panel contribution-panel" id="contributionPanel" aria-modal="true" role="dialog">
+        <div class="legends-card dialog-card contribution-card">
+          <header class="dialog-header contribution-header">
+            <button class="win-close" type="button" id="closeContributionButton"></button>
+          </header>
+          <div class="dialog-body contribution-body">
+            <iframe id="contributionFrame" class="contribution-frame"></iframe>
           </div>
         </div>
       </aside>
@@ -416,7 +426,7 @@
       <footer class="game-footer standalone-only" id="gameFooter"></footer>
     </main>
 
-    <script type="module" src="js/memory-game.min.js?v=memory-f852dd493155"></script>
+    <script type="module" src="js/memory-game.min.js?v=memory-cf2881c0ca7f"></script>
     <!-- Keep registration inline so PWA analyzers can discover it without running a browser. -->
     <script>
       if ("serviceWorker" in navigator) {
