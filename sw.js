@@ -1,5 +1,5 @@
 const CACHE_PREFIX = "memory-game-pwa-";
-const CACHE_VERSION = `${CACHE_PREFIX}memory-9d89fb83df94`;
+const CACHE_VERSION = `${CACHE_PREFIX}memory-f852dd493155`;
 const APP_SHELL = [
   "/memory-game.html",
   "/memory-game.webmanifest",
@@ -12,48 +12,48 @@ const APP_SHELL = [
   "/music/combo1.mp3",
   "/music/combo5.mp3",
   "/music/combo10.mp3",
-  "/css/icon-moon-memory.min.css?v=memory-9d89fb83df94",
-  "/css/memory-game.min.css?v=memory-9d89fb83df94",
-  "/js/memory-game.min.js?v=memory-9d89fb83df94",
-  "/js/pwa.min.js?v=20261021-pwa-registration",
-  "/js/data/memory-game-links.min.json?v=memory-9d89fb83df94",
-  "/js/data/memory-game.min.json?v=memory-9d89fb83df94",
-  "/js/i18n/memory-game/lang-en.min.json?v=memory-9d89fb83df94",
-  "/js/i18n/memory-game/lang-es.min.json?v=memory-9d89fb83df94",
-  "/js/i18n/memory-game/lang-fr.min.json?v=memory-9d89fb83df94",
-  "/js/i18n/memory-game/lang-zh.min.json?v=memory-9d89fb83df94",
+  "/css/icon-moon-memory.min.css?v=memory-f852dd493155",
+  "/css/memory-game.min.css?v=memory-f852dd493155",
+  "/js/memory-game.min.js?v=memory-f852dd493155",
+  "/js/data/memory-game-links.min.json?v=memory-f852dd493155",
+  "/js/data/memory-game.min.json?v=memory-f852dd493155",
+  "/js/i18n/memory-game/lang-en.min.json?v=memory-f852dd493155",
+  "/js/i18n/memory-game/lang-es.min.json?v=memory-f852dd493155",
+  "/js/i18n/memory-game/lang-fr.min.json?v=memory-f852dd493155",
+  "/js/i18n/memory-game/lang-zh.min.json?v=memory-f852dd493155",
   // BEGIN MEMORY MODULES
-  "/js/memory-game/audio.min.js?v=memory-9d89fb83df94",
-  "/js/memory-game/background-music.min.js?v=memory-9d89fb83df94",
-  "/js/memory-game/dialogs.min.js?v=memory-9d89fb83df94",
-  "/js/memory-game/home.min.js?v=memory-9d89fb83df94",
-  "/js/memory-game/modes/classic.min.js?v=memory-9d89fb83df94",
-  "/js/memory-game/modes/crazy-mirrors.min.js?v=memory-9d89fb83df94",
-  "/js/memory-game/modes/limited-moves.min.js?v=memory-9d89fb83df94",
-  "/js/memory-game/modes/memory-flash.min.js?v=memory-9d89fb83df94",
-  "/js/memory-game/modes/time-attack.min.js?v=memory-9d89fb83df94",
-  "/js/memory-game/preview.min.js?v=memory-9d89fb83df94",
-  "/js/memory-game/progress.min.js?v=memory-9d89fb83df94",
-  "/js/memory-game/rules.min.js?v=memory-9d89fb83df94",
-  "/js/memory-game/spoken-countdown.min.js?v=memory-9d89fb83df94",
-  "/js/memory-game/storage.min.js?v=memory-9d89fb83df94",
+  "/js/memory-game/analytics.min.js?v=memory-f852dd493155",
+  "/js/memory-game/audio.min.js?v=memory-f852dd493155",
+  "/js/memory-game/background-music.min.js?v=memory-f852dd493155",
+  "/js/memory-game/dialogs.min.js?v=memory-f852dd493155",
+  "/js/memory-game/home.min.js?v=memory-f852dd493155",
+  "/js/memory-game/modes/classic.min.js?v=memory-f852dd493155",
+  "/js/memory-game/modes/crazy-mirrors.min.js?v=memory-f852dd493155",
+  "/js/memory-game/modes/limited-moves.min.js?v=memory-f852dd493155",
+  "/js/memory-game/modes/memory-flash.min.js?v=memory-f852dd493155",
+  "/js/memory-game/modes/time-attack.min.js?v=memory-f852dd493155",
+  "/js/memory-game/preview.min.js?v=memory-f852dd493155",
+  "/js/memory-game/progress.min.js?v=memory-f852dd493155",
+  "/js/memory-game/rules.min.js?v=memory-f852dd493155",
+  "/js/memory-game/spoken-countdown.min.js?v=memory-f852dd493155",
+  "/js/memory-game/storage.min.js?v=memory-f852dd493155",
   // END MEMORY MODULES
-  "/img/previews/mirrors_medium.webp",
-  "/img/previews/mirrors_es_medium.webp",
-  "/img/previews/mirrors_fr_medium.webp",
+  "/img/memory-game/previews/mirrors_medium.webp",
+  "/img/memory-game/previews/mirrors_es_medium.webp",
+  "/img/memory-game/previews/mirrors_fr_medium.webp",
   "/img/background-mg-warm.svg",
   "/img/background-mg-dark.svg",
-  "/img/preview_memory.jpg",
-  "/img/favicons/maskable_icon_x192.png",
-  "/img/favicons/maskable_icon_x512.png",
-  "/img/favicons/android-chrome-192x192.png",
-  "/img/favicons/android-chrome-512x512.png",
-  "/img/favicons/shortcut-classic.png",
-  "/img/favicons/shortcut-time-attack.png",
-  "/img/favicons/shortcut-limited-moves.png",
-  "/img/favicons/apple-touch-icon.png",
-  "/img/favicons/favicon-32x32.png",
-  "/img/favicons/favicon-16x16.png",
+  "/img/memory-game/preview_memory.jpg",
+  "/img/memory-game/favicons/maskable_icon_x192.png",
+  "/img/memory-game/favicons/maskable_icon_x512.png",
+  "/img/memory-game/favicons/android-chrome-192x192.png",
+  "/img/memory-game/favicons/android-chrome-512x512.png",
+  "/img/memory-game/favicons/shortcut-classic.png",
+  "/img/memory-game/favicons/shortcut-time-attack.png",
+  "/img/memory-game/favicons/shortcut-limited-moves.png",
+  "/img/memory-game/favicons/apple-touch-icon.png",
+  "/img/memory-game/favicons/favicon-32x32.png",
+  "/img/memory-game/favicons/favicon-16x16.png",
   "/css/fonts/icon-moon-memory.woff?20261023-special-masters",
   "/css/fonts/icon-moon-memory.ttf?20261023-special-masters"
 ];
@@ -121,6 +121,11 @@ self.addEventListener("fetch", (event) => {
 
   // Keep navigation outside the game under normal browser/network handling.
   if (event.request.mode === "navigate" && url.pathname !== "/memory-game.html") {
+    return;
+  }
+
+  if (event.request.mode !== "navigate" && !APP_SHELL.some(asset =>
+    new URL(asset, self.location.origin).pathname === url.pathname)) {
     return;
   }
 

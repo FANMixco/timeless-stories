@@ -1,3 +1,4 @@
+import { initializeAnalytics } from "./memory-game/analytics.mjs";
 import { createGameAudio } from "./memory-game/audio.mjs";
 import { createBackgroundMusic } from "./memory-game/background-music.mjs";
 import { createProgressStore } from "./memory-game/storage.mjs";
@@ -9,8 +10,9 @@ import { createPreviewCountdown } from "./memory-game/preview.mjs";
 import { createSpokenCountdown } from "./memory-game/spoken-countdown.mjs";
 
 const supportedLanguages = ["en", "es", "fr", "zh"];
-const languageStorageKey = "timelessStoriesOfficialLanguage";
-const themeStorageKey = "timelessStoriesColorMode";
+const languageStorageKey = "timelessMemoryLanguage";
+const themeStorageKey = "timelessMemoryColorMode";
+const resetStorageKey = "timelessMemoryResetVersion";
 const introStorageKey = "timelessMemoryIntroSeen";
 const crazyIntroStorageKey = "timelessMemoryCrazyMirrorsIntroSeen";
 const flashIntroStorageKey = "timelessMemoryFlashIntroSeen";
@@ -43,6 +45,16 @@ const flashTestEnabled = searchParams.get("mode") === "ultimate";
 const requestedMode = flashTestEnabled ? "memoryFlash" : searchParams.get("mode");
 const isEmbedded = searchParams.get("embed") === "1";
 const storeVersion = searchParams.get("version");
+// URL preferences are launch hints; subsequent game settings remain independent.
+for (const [parameter, supported, key] of [
+  ["lang", supportedLanguages, languageStorageKey],
+  ["theme", ["system", "light", "dark"], themeStorageKey],
+]) {
+  const value = searchParams.get(parameter);
+  if (supported.includes(value)) {
+    try { window.localStorage.setItem(key, value); } catch {}
+  }
+}
 const ratingUrl = ["play", "android"].includes(storeVersion)
   ? "https://play.google.com/store/apps/details?id=com.federiconavarrete.tstories.twa"
   : ["microsoft", "windows"].includes(storeVersion) ? "https://apps.microsoft.com/detail/9PL6H4P9JHGX" : null;
@@ -375,6 +387,8 @@ const languageLabels = {
 };
 
 function getStoredTheme() {
+  const requestedTheme = searchParams.get("theme");
+  if (supportedThemes.includes(requestedTheme)) return requestedTheme;
   try {
     const storedTheme = window.localStorage.getItem(themeStorageKey);
     return supportedThemes.includes(storedTheme) ? storedTheme : "system";
@@ -856,7 +870,15 @@ function setTheme(theme) {
     window.localStorage.setItem(themeStorageKey, nextTheme);
   } catch (error) {}
 
+  searchParams.set("theme", nextTheme);
+  updatePreferenceUrl("theme", nextTheme);
   applyTheme(nextTheme);
+}
+
+function updatePreferenceUrl(parameter, value) {
+  const url = new URL(window.location.href);
+  url.searchParams.set(parameter, value);
+  window.history.replaceState(window.history.state, "", url.href);
 }
 
 function getShareUrl() {
@@ -888,6 +910,8 @@ function setIntroSeen() {
 }
 
 function getLanguage() {
+  const requestedLanguage = searchParams.get("lang");
+  if (supportedLanguages.includes(requestedLanguage)) return requestedLanguage;
   const storedLanguage = getStoredLanguage();
   const browserLanguage = (
     navigator.languages ? navigator.languages[0] : navigator.language || "en"
@@ -1270,8 +1294,12 @@ function openDataResetConfirmation() {
 function resetGameData() {
   if (!pendingDataReset || !restartPanel.classList.contains("is-visible")) return;
   try {
-    window.sessionStorage.clear();
-    window.localStorage.clear();
+    for (let index = window.localStorage.length - 1; index >= 0; index--) {
+      const key = window.localStorage.key(index);
+      if (key?.startsWith("timelessMemory")) window.localStorage.removeItem(key);
+    }
+    // Notify other game tabs without clearing any website or third-party data.
+    window.localStorage.setItem(resetStorageKey, String(Date.now()));
   } catch {
     closeRestartPanel();
     setElementText(document.getElementById("resetGameError"), memoryGame.settings.resetError);
@@ -1326,6 +1354,7 @@ function applyLanguageChange(language) {
     window.localStorage.setItem(languageStorageKey, language);
   } catch (error) {}
 
+  updatePreferenceUrl("lang", language);
   window.location.reload();
 }
 
@@ -1383,9 +1412,9 @@ function renderAbout() {
   });
   document.getElementById("aboutBiography").replaceChildren(...paragraphs);
   const previews = {
-    en: "img/previews/mirrors_medium.webp",
-    es: "img/previews/mirrors_es_medium.webp",
-    fr: "img/previews/mirrors_fr_medium.webp"
+    en: "img/memory-game/previews/mirrors_medium.webp",
+    es: "img/memory-game/previews/mirrors_es_medium.webp",
+    fr: "img/memory-game/previews/mirrors_fr_medium.webp"
   };
   const preview = document.getElementById("aboutBookImage");
   preview.src = previews[currentLanguage] || previews.en;
@@ -2578,19 +2607,8 @@ document.addEventListener("keydown", (event) => {
     }
   }
 });
-window.addEventListener("message", (event) => {
-  if (event.origin !== window.location.origin) {
-    return;
-  }
-
-  const data = event.data || {};
-  if (data.source === "timelessStories" && data.type === "themeChanged") {
-    applyTheme(data.theme);
-  }
-});
 window.addEventListener("storage", (event) => {
-  if (event.key === null && event.storageArea === window.localStorage) {
-    try { window.sessionStorage.clear(); } catch {}
+  if (event.key === resetStorageKey || (event.key === null && event.storageArea === window.localStorage)) {
     reloadAfterDataReset();
     return;
   }
@@ -2618,7 +2636,9 @@ window.addEventListener("storage", (event) => {
     applyShortNamesPreference();
   }
   if (event.key === themeStorageKey) {
+    searchParams.delete("theme");
     applyTheme();
+    updatePreferenceUrl("theme", getStoredTheme());
   }
   if (event.key === soundStorageKey) {
     soundEnabled = readSoundEnabled();
@@ -2792,3 +2812,5 @@ loadTranslations().then(() => {
 }).catch(error => {
   console.error("Unable to initialize the memory game:", error);
 });
+
+initializeAnalytics({ window, document });

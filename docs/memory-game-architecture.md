@@ -37,6 +37,26 @@ Keep shared gameplay code in `rules.mjs`, persistence changes in `storage.mjs`, 
 Progress presentation in `progress.mjs`. Board and collection presentation remain
 in the entrypoint so this refactor does not rewrite existing matching behavior.
 
+## Website boundary
+
+The website launches the game with `lang=en|es|fr|zh` and
+`theme=system|light|dark` query parameters. All website launch links include
+`embed=1`; the modal loads its iframe only when opened. Website theme changes update launch links rather
+than sending messages into a running game.
+
+The game stores language and theme under `timelessMemoryLanguage` and
+`timelessMemoryColorMode`. It does not read the website's preference keys.
+Other existing game progress keys are preserved. Reset removes only
+`timelessMemory*` data and notifies other game tabs through
+`timelessMemoryResetVersion`; website and third-party storage are untouched.
+
+Game translations, links, rules, styling, modules, analytics initialization and
+offline cache are independent of the website's application files. Book-preview
+artwork and favicons use game-owned copies under `img/memory-game/`.
+`js/memory-game/analytics.mjs` owns the game's deferred analytics loader while
+retaining the website's measurement ID. This separation does not create a
+different origin or analytics property.
+
 ## Build and offline delivery
 
 Run `npm run build` after changing game code, CSS, markup or translations.
