@@ -545,7 +545,7 @@ function renderHomeScreen() {
   const eligible = achievementDefinitions.filter(({ secret }) => !secret);
   homeScreen.render(memoryGame, { hardMode: hardModeEnabled, ratingUrl,
     digitalBookUrl: storeVersion === "play"
-      ? linkRegistry?.shared?.digitalBooks?.googlePlay || ""
+      ? resolveGameHref("digitalBooks.googlePlay")
       : resolveGameHref(memoryGame.getCopyHref),
     unlockProgress: {
       crazyMirrors: { earned: eligible.filter(({ id }) => earned[id]).length, required: Math.ceil(eligible.length * 0.75) },
