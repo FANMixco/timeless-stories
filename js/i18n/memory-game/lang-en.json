@@ -763,7 +763,7 @@
         "websites": "Official websites",
         "storiesWebsite": "Timeless Stories",
         "soundCreditsTitle": "Sound effect credits",
-        "comboSoundCredit": "Combo sound effects by {author} from {source}.",
+        "comboSoundCredit": "Sound effects by {author} from {source}",
         "soundCredit": "Sound effect by {author} from Pixabay",
         "musicCredit": "Music by {author} from {source}",
         "backgroundMusicCredit": "“Over Ancient Waters” by Eric Matyas — "
