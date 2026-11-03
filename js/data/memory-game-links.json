@@ -1,0 +1,28 @@
+{
+  "localized": {
+    "default": {
+      "carouselCards": {
+        "ebook": "https://a.co/d/0bhpR0IY"
+      }
+    },
+    "es": {
+      "carouselCards": {
+        "ebook": "https://a.co/d/05xm4whB"
+      }
+    },
+    "fr": {
+      "carouselCards": {
+        "ebook": "https://a.co/d/07pLdMts"
+      }
+    }
+  },
+  "shared": {
+    "digitalBooks": {
+      "googlePlay": "https://play.google.com/store/books/details/Federico_Navarrete_Timeless_Stories_of_El_Salvador?id=rFTMEQAAQBAJ"
+    },
+    "contact": {
+      "englishContactForm": "https://www.cognitoforms.com/federiconavarrete1/LetsGetInTouchTimelessStories",
+      "spanishContactForm": "https://www.cognitoforms.com/FedericoNavarrete1/EntremosEnContactoHistoriasEternas"
+    }
+  }
+}

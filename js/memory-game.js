@@ -544,7 +544,9 @@ function renderHomeScreen() {
   const earned = { ...achievements, ...readAchievements() };
   const eligible = achievementDefinitions.filter(({ secret }) => !secret);
   homeScreen.render(memoryGame, { hardMode: hardModeEnabled, ratingUrl,
-    digitalBookUrl: resolveGameHref(memoryGame.getCopyHref),
+    digitalBookUrl: storeVersion === "play"
+      ? linkRegistry?.shared?.digitalBooks?.googlePlay || ""
+      : resolveGameHref(memoryGame.getCopyHref),
     unlockProgress: {
       crazyMirrors: { earned: eligible.filter(({ id }) => earned[id]).length, required: Math.ceil(eligible.length * 0.75) },
       memoryFlash: { earned: achievementDefinitions.filter(({ id }) => earned[id]).length, required: achievementDefinitions.length },
@@ -959,7 +961,7 @@ async function loadTranslations() {
       if (language === "en") throw error;
       return loadGameLanguage("en");
     }),
-    fetch("js/data/links.min.json").then(response => response.json()).catch(() => null),
+    fetch(`js/data/memory-game-links.min.json?v=${i18nCacheVersion}`).then(response => response.json()).catch(() => null),
     loadSelectionRules(),
   ]);
   currentLanguage = gameData.language;
