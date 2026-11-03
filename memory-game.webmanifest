@@ -10,45 +10,45 @@
       "name": "Classic",
       "description": "Play without limits.",
       "url": "/memory-game.html?source=shortcut&mode=classic",
-      "icons": [{ "src": "img/favicons/shortcut-classic.png", "sizes": "192x192", "type": "image/png" }]
+      "icons": [{ "src": "img/memory-game/favicons/shortcut-classic.png", "sizes": "192x192", "type": "image/png" }]
     },
     {
       "name": "Time Attack",
       "description": "Race against the clock.",
       "url": "/memory-game.html?source=shortcut&mode=timeAttack",
-      "icons": [{ "src": "img/favicons/shortcut-time-attack.png", "sizes": "192x192", "type": "image/png" }]
+      "icons": [{ "src": "img/memory-game/favicons/shortcut-time-attack.png", "sizes": "192x192", "type": "image/png" }]
     },
     {
       "name": "25-Move Challenge",
       "short_name": "Move Challenge",
       "description": "Match every pair within the move limit.",
       "url": "/memory-game.html?source=shortcut&mode=limitedMoves",
-      "icons": [{ "src": "img/favicons/shortcut-limited-moves.png", "sizes": "192x192", "type": "image/png" }]
+      "icons": [{ "src": "img/memory-game/favicons/shortcut-limited-moves.png", "sizes": "192x192", "type": "image/png" }]
     }
   ],
   "lang": "en",
   "description": "Discover legendary characters from around the world in a cultural memory game. Match icons, collect rare mirrors, unlock hidden stories, and earn twelve awards.",
   "icons": [
     {
-      "src": "img/favicons/maskable_icon_x192.png",
+      "src": "img/memory-game/favicons/maskable_icon_x192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "maskable"
     },
     {
-      "src": "img/favicons/maskable_icon_x512.png",
+      "src": "img/memory-game/favicons/maskable_icon_x512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
     },
     {
-      "src": "img/favicons/android-chrome-192x192.png",
+      "src": "img/memory-game/favicons/android-chrome-192x192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "img/favicons/android-chrome-512x512.png",
+      "src": "img/memory-game/favicons/android-chrome-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any monochrome"

@@ -88,23 +88,38 @@ function applyTheme(theme = getStoredTheme()) {
 
   if (selectedTheme === "dark" || selectedTheme === "light") {
     document.documentElement.dataset.theme = selectedTheme;
-    syncMemoryGameTheme(selectedTheme);
+    updateMemoryGameLinks(selectedTheme);
     return;
   }
 
   document.documentElement.removeAttribute("data-theme");
-  syncMemoryGameTheme(selectedTheme);
+  updateMemoryGameLinks(selectedTheme);
 }
 
-function syncMemoryGameTheme(theme = getStoredTheme()) {
-  const frame = document.getElementById("memoryGameFrame");
-  if (!frame?.contentWindow) return;
+function getMemoryGameUrl({ theme = getStoredTheme() } = {}) {
+  const url = new URL("memory-game.html", window.location.href);
+  url.searchParams.set("lang", lang);
+  url.searchParams.set("theme", theme);
+  url.searchParams.set("embed", "1");
+  return url.href;
+}
 
-  frame.contentWindow.postMessage({
-    source: "timelessStories",
-    type: "themeChanged",
-    theme,
-  }, window.location.origin);
+function updateMemoryGameLinks(theme = getStoredTheme()) {
+  for (const link of document.querySelectorAll('[data-bs-target="#memoryGameModal"]')) {
+    link.href = getMemoryGameUrl({ theme });
+  }
+}
+
+function initMemoryGameLaunch() {
+  const modal = document.getElementById("memoryGameModal");
+  const frame = document.getElementById("memoryGameFrame");
+  if (!modal || !frame) return;
+  updateMemoryGameLinks();
+  modal.addEventListener("show.bs.modal", () => {
+    const url = getMemoryGameUrl();
+    // Preserve a running game when reopening with the same launch preferences.
+    if (frame.getAttribute("src") !== url) frame.setAttribute("src", url);
+  });
 }
 
 function initOfficialLanguageSelector() {
@@ -651,7 +666,7 @@ function renderBooksCarousel() {
           : "col-12 col-md-4";
     const isMemoryGameCard = card.type === "memoryGame";
     const linkAttributes = isMemoryGameCard
-      ? `href="memory-game.html" data-bs-toggle="modal" data-bs-target="#memoryGameModal"`
+      ? `href="${getMemoryGameUrl()}" data-bs-toggle="modal" data-bs-target="#memoryGameModal"`
       : `href="${getLinkValue(card.href)}" target="_blank" rel="noopener noreferrer"`;
     const iconClass = isMemoryGameCard ? "icon-gamepad" : "icon-download";
     const extraClass = isMemoryGameCard ? " book-card-memory" : "";
@@ -958,6 +973,7 @@ Promise.all([
     const contactModal = document.getElementById("mContactUs");
     renderCulturalCollaborations();
     renderMemoryGameModalTitle();
+    initMemoryGameLaunch();
     renderPriceCarousel();
     renderBooksCarousel();
     renderLegendsCarousel();

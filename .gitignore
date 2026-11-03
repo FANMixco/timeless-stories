@@ -31,3 +31,4 @@ tests/spoken-countdown.test.mjs
 tests/dialogs.test.mjs
 .dialog-scroll-check.html
 tests/match-statistics.test.mjs
+tests/site-game-isolation.test.mjs
