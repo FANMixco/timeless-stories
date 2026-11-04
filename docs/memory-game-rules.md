@@ -338,3 +338,31 @@ Progress opens on the Records tab, with separate cards for all three modes.
 The Achievements tab contains the unlock list and shows the unlocked count on
 its tab. Both tabs support arrow keys, Home and End. View Records after a win
 opens the Records tab directly. Preferences and mode selection stay in Settings.
+
+## Impostor Mode (book exclusive)
+
+Ten legitimate pairs share one randomly chosen muted palette and border color.
+Matched cards gently fade and shrink after the flip finishes, keeping their slots
+fixed. Reduced-motion settings use a brief fade without shrinking.
+After three matches, one of the fourteen remaining card identities becomes the
+impostor. Its first reveal shows a subtle border variation; completing that
+turn hides the open cards and shuffles unmatched nodes exactly once. Matched
+slots stay fixed and the impostor always moves.
+
+Its second reveal starts identification with a single selected card. Any other
+card selected earlier in that turn is hidden, giving an opportunity to accuse
+before committing a matching attempt, including with only two cards left.
+Chances are fixed at challenge entry: three with six or more cards, two with
+four, one with two. Failed matches spend a chance, add a move and reset the
+combo; wrong accusations and exhausted chances immediately lose. Successful
+normal matches do not spend chances. The impostor cannot match until correctly
+accused. Correct identification clears its border variation and restores its
+original pair; victory requires identification and all ten pairs.
+
+The first entry shows a localized tutorial dialog independently of the other
+modes, saved under `timelessMemoryImpostorIntroSeen`. The lightbulb reopens it; the board
+keeps its compact investigation status. On phones and short screens, the status
+and accusation action sit below the cards. On roomy screens (at least 641px
+wide and 600px tall), they sit beneath the counters: above the board on tablets
+and large portrait screens, or in the sidebar on desktop landscape. Book access
+uses the planned host entitlement seam documented in the architecture notes.

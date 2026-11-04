@@ -833,7 +833,33 @@
           "mistakesRemaining": "Mistakes remaining",
           "preview": "Memorize",
           "unlocked": "Flash Memory unlocked! You have completed every achievement. Memorize 10 pairs in 7 seconds, then find them before making a fourth mistake."
-        }
+        },
+        "impostor": {
+          "name": "Impostor Mode",
+          "description": "Find the altered border, accuse the impostor, then clear all 10 pairs.",
+          "tutorial": "Match three pairs to awaken an impostor. All cards share one palette; watch for a subtly different border. Its first reveal triggers one shuffle after your turn. Its second reveal starts identification: select a card, then Accuse Impostor. With 6+ / 4 / 2 cards left you get 3 / 2 / 1 chances. Failed matches spend chances, add moves and break your combo. A wrong accusation ends the round. Identify it before matching its original partner, then finish the board.",
+          "activated": "Impostor activated. Look for the subtle border change.",
+          "encounter": "Border anomaly encountered. Finish this turn to reshuffle.",
+          "reshuffle": "Remaining cards reshuffled once. The impostor has moved.",
+          "challenge": "Final identification: select a card and accuse.",
+          "attempts": "Chances remaining: {count}",
+          "accuse": "Accuse Impostor",
+          "identified": "Impostor identified. Its original pair can now match.",
+          "victory": "Impostor identified and all 10 pairs cleared!",
+          "defeat": "Investigation failed.",
+          "ready": "Match three pairs, then watch for a changed border.",
+          "rules": "How to play",
+          "steps": [
+            "Match 3 pairs. One remaining card becomes the impostor. Its original icon and partner stay the same.",
+            "Spot the border. Its first reveal shows a subtle border change. After that turn, unmatched cards shuffle once.",
+            "Accuse, then finish. Its second reveal starts identification. Select a card and use Accuse Impostor. Correct identification restores its original pair. Clear all 10 pairs to win."
+          ],
+          "remaining": "Cards remaining",
+          "chances": "Chances",
+          "caution": "Failed matches spend a chance, add a move and break your combo. A wrong accusation or no chances left ends the round. With two cards left, identify the impostor before matching."
+        },
+        "impostorWrong": "Wrong accusation. The impostor escaped.",
+        "impostorExhausted": "No chances remain. The impostor escaped."
       },
       "progress": {
         "title": "Progress",
@@ -842,10 +868,10 @@
       "home": {
         "sixthMirror": {
           "getBook": "Get the digital book ↗",
-          "title": "The Impostor",
-          "subtitle": "Digital book exclusive",
-          "description": "Unlock a secret challenge with a code from an eligible digital edition of Spanish Mirrors.",
-          "status": "Coming soon"
+          "title": "Impostor Mode",
+          "subtitle": "Book exclusive",
+          "description": "Find the altered border, accuse the impostor, then clear all 10 pairs.",
+          "status": "Unlock with your book entitlement."
         },
         "locked": "Locked",
         "crazyMirrorsRequirement": "Earn 75% of non-secret achievements",

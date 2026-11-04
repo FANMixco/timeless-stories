@@ -833,7 +833,33 @@
           "mistakesRemaining": "Errores restantes",
           "preview": "Memoriza",
           "unlocked": "¡Memoria relámpago desbloqueada! Has completado todos los logros. Memoriza 10 parejas en 7 segundos y encuéntralas antes de cometer un cuarto error."
-        }
+        },
+        "impostor": {
+          "name": "Modo impostor",
+          "description": "Encuentra el borde alterado, acusa al impostor y completa las 10 parejas.",
+          "tutorial": "Completa tres parejas para activar al impostor. Todas las cartas comparten una paleta; busca un borde ligeramente distinto. Su primera aparición provoca una única mezcla al terminar el turno. La segunda inicia la identificación: selecciona una carta y pulsa Acusar al impostor. Con 6 o más / 4 / 2 cartas quedan 3 / 2 / 1 oportunidades. Los fallos gastan oportunidades, suman movimientos y rompen el combo. Una acusación errónea termina la ronda. Identifícalo antes de emparejarlo con su pareja original y completa el tablero.",
+          "activated": "Impostor activado. Busca el cambio sutil del borde.",
+          "encounter": "Borde extraño detectado. Termina el turno para mezclar.",
+          "reshuffle": "Las cartas restantes se han mezclado una vez. El impostor se ha movido.",
+          "challenge": "Identificación final: selecciona una carta y acusa.",
+          "attempts": "Oportunidades restantes: {count}",
+          "accuse": "Acusar al impostor",
+          "identified": "Impostor identificado. Ya puedes formar su pareja original.",
+          "victory": "¡Impostor identificado y las 10 parejas completadas!",
+          "defeat": "Investigación fallida.",
+          "ready": "Completa tres parejas y busca un borde distinto.",
+          "rules": "Cómo jugar",
+          "steps": [
+            "Completa 3 parejas. Una carta restante se convierte en impostor. Conserva su icono y su pareja original.",
+            "Observa el borde. Su primera aparición revela un cambio sutil. Tras ese turno, las cartas restantes se mezclan una sola vez.",
+            "Acusa y termina. Su segunda aparición inicia la identificación. Selecciona una carta y pulsa Acusar al impostor. Si aciertas, podrás formar su pareja original. Completa las 10 parejas para ganar."
+          ],
+          "remaining": "Cartas restantes",
+          "chances": "Oportunidades",
+          "caution": "Los fallos gastan una oportunidad, suman un movimiento y rompen el combo. Una acusación errónea o agotar las oportunidades termina la ronda. Con dos cartas, identifica al impostor antes de emparejar."
+        },
+        "impostorWrong": "Acusación errónea. El impostor escapó.",
+        "impostorExhausted": "No quedan oportunidades. El impostor escapó."
       },
       "progress": {
         "title": "Progreso",
@@ -842,10 +868,10 @@
       "home": {
         "sixthMirror": {
           "getBook": "Consigue el libro digital ↗",
-          "title": "El impostor",
-          "subtitle": "Exclusivo del libro digital",
-          "description": "Desbloquea un desafío secreto con un código de una edición digital participante de Espejos españoles.",
-          "status": "Próximamente"
+          "title": "Modo impostor",
+          "subtitle": "Exclusivo del libro",
+          "description": "Encuentra el borde alterado, acusa al impostor y completa las 10 parejas.",
+          "status": "Desbloquea con el acceso de tu libro."
         },
         "locked": "Bloqueado",
         "crazyMirrorsRequirement": "Consigue el 75% de los logros no secretos",

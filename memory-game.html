@@ -56,9 +56,9 @@
         }
       }
     </script>
-    <link rel="preload" href="memory-game/css/fonts/memory-game.woff2?v=memory-e3475c93ff0e" as="font" type="font/woff2" crossorigin="anonymous" />
-    <link rel="stylesheet" href="memory-game/css/icon-moon-memory.min.css?v=memory-e3475c93ff0e" />
-    <link rel="stylesheet" href="memory-game/css/memory-game.min.css?v=memory-e3475c93ff0e" />
+    <link rel="preload" href="memory-game/css/fonts/memory-game.woff2?v=memory-e17e3202487e" as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="stylesheet" href="memory-game/css/icon-moon-memory.min.css?v=memory-e17e3202487e" />
+    <link rel="stylesheet" href="memory-game/css/memory-game.min.css?v=memory-e17e3202487e" />
   </head>
   <body>
     <main class="game-shell is-home" aria-label="">
@@ -93,7 +93,7 @@
               <span class="home-unlock-progress" id="home-memoryFlash-progress"></span>
               <span class="home-unlock-action" id="home-memoryFlash-awards"></span>
             </span></button>
-          <section class="home-coming-soon" aria-labelledby="homeSixthMirrorTitle">
+          <section id="impostorBookGate" class="home-coming-soon" aria-labelledby="homeSixthMirrorTitle">
 
             <i class="icon home-coming-soon-icon icon-impostor" aria-hidden="true"></i>
             <div class="home-coming-soon-heading">
@@ -105,6 +105,7 @@
             <span class="home-coming-soon-status" id="homeSixthMirrorStatus"></span>
             <a class="home-coming-soon-book" id="homeSixthMirrorBook" target="_blank" rel="noopener noreferrer" hidden></a>
           </section>
+          <button class="home-card" id="home-impostor" type="button" hidden><i class="icon icon-impostor" aria-hidden="true"></i><strong id="home-impostor-name"></strong><span id="home-impostor-description"></span></button>
         </div>
         <div class="home-tools">
           <button class="home-card home-tool" id="homeCollection" type="button" aria-haspopup="dialog">
@@ -172,6 +173,11 @@
             <h2 id="selectedStoryTitle"></h2>
             <p id="selectedStoryText"></p>
           </section>
+          <section id="impostorPanel" class="impostor-panel" hidden>
+          <p id="impostorNotice" role="status" aria-live="polite"></p>
+          <button id="accuseImpostor" class="game-button" type="button" hidden></button>
+          </section>
+
         </div>
 
         <div class="board-area">
@@ -290,7 +296,7 @@
             <div class="about-biography" id="aboutBiography"></div>
             <section class="about-book" aria-labelledby="aboutBookTitle">
               <div class="about-book-preview">
-                <img id="aboutBookImage" width="888" height="696" decoding="async" alt="" />
+                <img id="aboutBookImage" draggable="false" width="888" height="696" decoding="async" alt="" />
               </div>
               <div class="about-book-copy">
                 <p class="about-eyebrow" id="aboutEdition"></p>
@@ -430,10 +436,31 @@
           </div>
         </div>
       </aside>
+      <aside class="legends-panel impostor-rules-panel" id="impostorRulesPanel" aria-labelledby="impostorRulesTitle" aria-modal="true" role="dialog">
+        <div class="legends-card impostor-rules-card dialog-card">
+          <header class="dialog-header">
+            <button class="win-close" type="button" id="closeImpostorRulesButton"></button>
+            <h2 id="impostorRulesTitle"></h2>
+          </header>
+          <div class="dialog-body" role="region" aria-labelledby="impostorRulesTitle" tabindex="0">
+            <div class="impostor-rules-intro"><i class="icon icon-impostor" aria-hidden="true"></i><p id="impostorRulesIntro"></p></div>
+            <ol class="impostor-rules-steps">
+              <li id="impostorRulesStep1"></li>
+              <li id="impostorRulesStep2"></li>
+              <li id="impostorRulesStep3"></li>
+            </ol>
+            <table class="impostor-rules-attempts">
+              <thead><tr><th id="impostorRulesRemaining"></th><th id="impostorRulesChances"></th></tr></thead>
+              <tbody><tr><td>6+</td><td>3</td></tr><tr><td>4</td><td>2</td></tr><tr><td>2</td><td>1</td></tr></tbody>
+            </table>
+            <p class="impostor-rules-caution" id="impostorRulesCaution"></p>
+          </div>
+        </div>
+      </aside>
       <footer class="game-footer standalone-only" id="gameFooter"></footer>
     </main>
 
-    <script type="module" src="memory-game/js/memory-game.min.js?v=memory-e3475c93ff0e"></script>
+    <script type="module" src="memory-game/js/memory-game.min.js?v=memory-e17e3202487e"></script>
     <!-- Keep registration inline so PWA analyzers can discover it without running a browser. -->
     <script>
       if ("serviceWorker" in navigator) {
