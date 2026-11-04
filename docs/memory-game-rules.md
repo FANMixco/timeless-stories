@@ -382,3 +382,30 @@ label the card with a green localized Status heading. Ready guidance is muted,
 active investigation and defeat text is red, and identification is green. Pair
 descriptions stay hidden, and the accusation button is centered at every size. Book access
 uses the planned host entitlement seam documented in the architecture notes.
+
+### Compact accusation action
+
+On phones and short viewports, selecting an eligible affected card shows a fixed
+horizontal action bar: localized “Impostor suspected”, the current identification-chance
+count, and a 44px target-icon accusation button on the right. It disappears on an unrelated
+selection, turn reset, identification or defeat. Ordinary investigation messages
+stay hidden in these compact views; the arrival animation and tutorial remain.
+The victory card stays in the normal flow after a win.
+
+Only this mode uses a bounded scrolling game area on compact viewports. The
+measured action-bar height, including wrapped translations and bottom safe-area
+padding, is reserved outside that scroll area. The bar cannot cover cards or
+controls. A ResizeObserver updates the reservation after wrapping, resizing or
+safe-area changes, with resize/viewport callbacks as fallback. Wider/tablet views
+keep their existing status-card placement. Gameplay policies and counts are
+unchanged.
+
+The same target-icon button is right-aligned in the wider status cards as well;
+only compact viewports fix the bar to the bottom. The count is labeled “chances
+remaining”: it does not permit repeated wrong accusations. A wrong accusation
+still causes immediate defeat.
+
+The accusation button uses the existing target icon without a visible text
+label. Its localized accessible name and tooltip remain “Accuse Impostor”. The
+44 × 44 px target supports touch and keyboard activation. This changes only
+presentation; accusation eligibility and consequences are unchanged.

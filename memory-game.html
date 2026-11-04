@@ -56,9 +56,9 @@
         }
       }
     </script>
-    <link rel="preload" href="memory-game/css/fonts/memory-game.woff2?v=memory-32704267c8f9" as="font" type="font/woff2" crossorigin="anonymous" />
-    <link rel="stylesheet" href="memory-game/css/icon-moon-memory.min.css?v=memory-32704267c8f9" />
-    <link rel="stylesheet" href="memory-game/css/memory-game.min.css?v=memory-32704267c8f9" />
+    <link rel="preload" href="memory-game/css/fonts/memory-game.woff2?v=memory-ab5127b2b3c9" as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="stylesheet" href="memory-game/css/icon-moon-memory.min.css?v=memory-ab5127b2b3c9" />
+    <link rel="stylesheet" href="memory-game/css/memory-game.min.css?v=memory-ab5127b2b3c9" />
   </head>
   <body>
     <main class="game-shell is-home" aria-label="">
@@ -174,8 +174,11 @@
             <p id="selectedStoryText"></p>
           </section>
           <section id="impostorPanel" class="impostor-panel match-insight" hidden>
-          <h2 id="impostorStatusTitle" hidden></h2>
-          <p id="impostorNotice" role="status" aria-live="polite"></p>
+          <div class="impostor-status-copy">
+            <h2 id="impostorStatusTitle" hidden></h2>
+            <p id="impostorNotice" role="status" aria-live="polite"></p>
+            <p id="impostorAccusations" aria-live="polite" hidden></p>
+          </div>
           <button id="accuseImpostor" class="game-button" type="button" hidden></button>
           </section>
 
@@ -449,7 +452,7 @@
             <ol class="impostor-rules-steps">
               <li id="impostorRulesStep1"></li>
               <li id="impostorRulesStep2"></li>
-              <li id="impostorRulesStep3"></li>
+              <li><span class="impostor-rules-accuse-icon" aria-hidden="true"><i class="icon icon-zone-person-alert"></i></span> <span id="impostorRulesStep3"></span></li>
             </ol>
             <table class="impostor-rules-attempts">
               <thead><tr><th id="impostorRulesRemaining"></th><th id="impostorRulesChances"></th></tr></thead>
@@ -462,7 +465,7 @@
       <footer class="game-footer standalone-only" id="gameFooter"></footer>
     </main>
 
-    <script type="module" src="memory-game/js/memory-game.min.js?v=memory-32704267c8f9"></script>
+    <script type="module" src="memory-game/js/memory-game.min.js?v=memory-ab5127b2b3c9"></script>
     <!-- Keep registration inline so PWA analyzers can discover it without running a browser. -->
     <script>
       if ("serviceWorker" in navigator) {

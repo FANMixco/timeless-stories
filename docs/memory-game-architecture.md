@@ -10,10 +10,11 @@ and the worker stays at `/sw.js` to preserve existing links, installed-app ident
 scope, and worker updates. The manifest uses root-relative artwork paths.
 The shared translation editor routes game data and translations to this folder.
 
-The `memory-game` icon font has 40 glyphs. Its class/code-point mappings live in
+The `memory-game` icon font has 41 icon mappings. Its class/code-point mappings live in
 `memory-game/css/icon-moon-memory.css`; WOFF2, WOFF and TTF files live in `css/fonts/`.
 The outlined lock uses `f00b`, the filled alternative uses `f004`, and the
-centered settings glyph uses `f00c` (the old `f002` is no longer in the font).
+centered settings glyph uses `f00c` (`f002` remains an alias). The accusation
+button uses the Zone Person Alert glyph at `f00d`.
 The build versions the font URLs together with the preload and offline cache,
 including the font binary contents in the version. SVG originals remain in
 `img/icons/` as font-source artwork and are not downloaded by the game.

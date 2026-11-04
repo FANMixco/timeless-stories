@@ -1849,11 +1849,27 @@ function positionImpostorPanel() {
   updateImpostorPanel();
 }
 
+// Reserve the measured bar height outside the scrolling game area, including
+// wrapped translations and the device's bottom safe area.
+function updateImpostorActionSpace() {
+  const panel = document.getElementById("impostorPanel");
+  const height = panel.classList.contains("is-compact-action") ? Math.ceil(panel.getBoundingClientRect().height) : 0;
+  document.querySelector(".game-shell").style.setProperty("--impostor-action-height", `${height}px`);
+}
+const impostorActionObserver = typeof window.ResizeObserver === "function"
+  ? new window.ResizeObserver(updateImpostorActionSpace) : null;
+impostorActionObserver?.observe(document.getElementById("impostorPanel"));
+
 function updateImpostorPanel(key = impostorNoticeKey) {
   impostorNoticeKey = key;
   document.getElementById("impostorPanel").hidden = !impostorRound;
   document.getElementById("impostorPanel").classList.toggle("is-visible", Boolean(impostorRound));
-  if (!impostorRound) return;
+  if (!impostorRound) {
+    document.getElementById("impostorPanel").classList.remove("is-compact-action", "has-accusation");
+    document.querySelector(".game-shell").classList.remove("has-impostor-action");
+    updateImpostorActionSpace();
+    return;
+  }
   const copy = memoryGame.modes.impostor;
   const phase = gameCompleted ? "victory" : gameDefeated ? "defeat"
     : impostorRound.neutralized ? "identified" : impostorRound.suspect ? "danger" : "ready";
@@ -1868,12 +1884,25 @@ function updateImpostorPanel(key = impostorNoticeKey) {
   document.getElementById("impostorRulesCaution").textContent = copy.caution;
   document.getElementById("closeImpostorRulesButton").setAttribute("aria-label", memoryGame.close);
   document.getElementById("impostorNotice").classList.toggle("is-important", key === "activated" || key === "identified" || impostorRound.challenge);
-  document.getElementById("impostorNotice").textContent = (copy[key] || "") +
-    (impostorRound.challenge ? " " + copy.attempts.replace("{count}", impostorRound.attempts) : "");
   const action = document.getElementById("accuseImpostor");
-  action.textContent = copy.accuse;
   action.hidden = !impostorRound.canAccuse(impostorAccusationCard) || gameDefeated || gameCompleted;
   action.disabled = lockBoard && mismatchTimer === null;
+  const hasAction = !homeScreen.visible && !action.hidden && !action.disabled;
+  const compactAction = !impostorControlsAboveMedia?.matches && hasAction;
+  document.getElementById("impostorPanel").classList.toggle("has-accusation", hasAction);
+  document.getElementById("impostorPanel").classList.toggle("is-compact-action", compactAction);
+  document.querySelector(".game-shell").classList.toggle("has-impostor-action", compactAction);
+  const notice = document.getElementById("impostorNotice");
+  const message = hasAction ? copy.suspected : (copy[key] || "") +
+    (impostorRound.challenge ? " " + copy.attempts.replace("{count}", impostorRound.attempts) : "");
+  if (notice.textContent !== message) notice.textContent = message;
+  const remaining = document.getElementById("impostorAccusations");
+  const count = impostorRound.attempts;
+  const countText = count === 1 ? copy.oneChanceRemaining : copy.chancesRemaining.replace("{count}", count ?? 0);
+  if (remaining.textContent !== countText) remaining.textContent = countText;
+  setElementHidden(remaining, !hasAction);
+  if (action.dataset.label !== copy.accuse) setActionButtonContent(action, copy.accuse, "icon-zone-person-alert");
+  updateImpostorActionSpace();
 }
 function accuseImpostor() {
   if (!impostorRound || (lockBoard && mismatchTimer === null) || gameDefeated || gameCompleted) return;
@@ -2478,6 +2507,7 @@ function newGame({ startPreview = !homeScreen.visible } = {}) {
   renderLegendsList();
   board.replaceChildren(...deck.map(createCard));
   positionImpostorPanel();
+  if (impostorRound) gameLayout.scrollTop = 0;
   updateGameTitleVisibility();
   initializeMatchToastsPreference();
   applyMatchToastsPreference();
@@ -3007,7 +3037,9 @@ legendToastClose.addEventListener("click", () => {
 });
 impostorControlsAboveMedia?.addEventListener("change", positionImpostorPanel);
 window.addEventListener("resize", updateGameTitleVisibility);
+window.addEventListener("resize", updateImpostorActionSpace);
 window.visualViewport?.addEventListener("resize", updateGameTitleVisibility);
+window.visualViewport?.addEventListener("resize", updateImpostorActionSpace);
 playAgainButton.addEventListener("click", restartGame);
 applyTheme();
 document.documentElement.dataset.embed = String(isEmbedded);

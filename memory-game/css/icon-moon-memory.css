@@ -61,3 +61,5 @@
 .icon-defeat::before { content: "\f008"; }
 .icon-clock::before { content: "\f009"; }
 .icon-asteroid::before { content: "\f00a"; }
+
+.icon-zone-person-alert::before { content: "\f00d"; }

@@ -842,7 +842,7 @@
           "activated": "Un imposteur est arrivé. Continuez les associations pour trouver la paire affectée.",
           "encounter": "Paire affectée trouvée. Les deux cartes se retournent, puis les cartes restantes changent de place.",
           "reshuffle": "Les cartes ont changé de place une fois. Révélez l’une des deux cartes affectées pour accuser.",
-          "challenge": "Carte affectée sélectionnée. Accusez-la ou continuez les associations.",
+          "challenge": "Une carte affectée est sélectionnée.",
           "attempts": "Chances restantes : {count}",
           "accuse": "Accuser l’imposteur",
           "identified": "Imposteur identifié. Sa paire d’origine peut être réunie.",
@@ -853,12 +853,16 @@
           "steps": [
             "Trouvez 3 paires. Une ombre et le symbole de l’imposteur annoncent son arrivée. La paire affectée reste secrète.",
             "Trouvez la paire affectée en jouant normalement. Ses deux cartes se retournent au lieu de disparaître. Les cartes restantes changent de place une fois.",
-            "Choisissez votre accusation. Révélez l’une des deux cartes affectées pour l’accuser ou continuez à jouer. Une seule est l’imposteur. Identifiez-la, puis terminez toutes les paires."
+            "Utilisez cette icône pour accuser la carte sélectionnée. Révélez l’une des deux cartes affectées pour afficher le bouton. Une seule est l’imposteur. Une mauvaise accusation termine la partie. Identifiez-le, puis terminez toutes les paires."
           ],
           "remaining": "Cartes restantes",
           "chances": "Chances",
           "caution": "Une erreur consomme une chance, ajoute un coup et interrompt le combo. Une fausse accusation ou des chances épuisées termine la partie. Avec deux cartes, identifiez l’imposteur avant de les associer.",
-          "status": "État"
+          "status": "État",
+          "suspected": "Imposteur suspecté",
+          "accuseShort": "Accuser",
+          "chancesRemaining": "{count} chances restantes",
+          "oneChanceRemaining": "1 chance restante"
         },
         "impostorWrong": "Fausse accusation. L’imposteur s’est échappé.",
         "impostorExhausted": "Aucune chance restante. L’imposteur s’est échappé."
