@@ -835,7 +835,7 @@
           "unlocked": "¡Memoria relámpago desbloqueada! Has completado todos los logros. Memoriza 10 parejas en 7 segundos y encuéntralas antes de cometer un cuarto error."
         },
         "impostor": {
-          "name": "Modo impostor",
+          "name": "El impostor",
           "description": "Encuentra el borde alterado, acusa al impostor y completa las 10 parejas.",
           "tutorial": "Completa tres parejas para activar al impostor. Todas las cartas comparten una paleta; busca un borde ligeramente distinto. Su primera aparición provoca una única mezcla al terminar el turno. La segunda inicia la identificación: selecciona una carta y pulsa Acusar al impostor. Con 6 o más / 4 / 2 cartas quedan 3 / 2 / 1 oportunidades. Los fallos gastan oportunidades, suman movimientos y rompen el combo. Una acusación errónea termina la ronda. Identifícalo antes de emparejarlo con su pareja original y completa el tablero.",
           "activated": "Impostor activado. Busca el cambio sutil del borde.",
@@ -868,7 +868,7 @@
       "home": {
         "sixthMirror": {
           "getBook": "Consigue el libro digital ↗",
-          "title": "Modo impostor",
+          "title": "El impostor",
           "subtitle": "Exclusivo del libro",
           "description": "Encuentra el borde alterado, acusa al impostor y completa las 10 parejas.",
           "status": "Desbloquea con el acceso de tu libro."

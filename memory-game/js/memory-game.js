@@ -628,6 +628,7 @@ function endChallengeIfNeeded(attemptResolved) {
 function endGame(reason) {
   if (gameCompleted || gameDefeated || introRunning) return;
   gameDefeated = true;
+  if (impostorRound) matchInsight.classList.remove("is-visible");
   resetCombo();
   lockBoard = true;
   stopTimer();
@@ -1837,8 +1838,11 @@ function positionImpostorPanel() {
 function updateImpostorPanel(key = impostorNoticeKey) {
   impostorNoticeKey = key;
   document.getElementById("impostorPanel").hidden = !impostorRound;
+  document.getElementById("impostorPanel").classList.toggle("is-visible", Boolean(impostorRound));
   if (!impostorRound) return;
   const copy = memoryGame.modes.impostor;
+  document.getElementById("impostorStatusTitle").textContent = gameCompleted ? memoryGame.winTitle : "";
+  setElementHidden(document.getElementById("impostorStatusTitle"), !gameCompleted);
   document.getElementById("impostorRulesTitle").textContent = copy.rules;
   document.getElementById("impostorRulesIntro").textContent = copy.description;
   copy.steps.forEach((step, index) => { document.getElementById(`impostorRulesStep${index + 1}`).textContent = step; });
@@ -1846,6 +1850,7 @@ function updateImpostorPanel(key = impostorNoticeKey) {
   document.getElementById("impostorRulesChances").textContent = copy.chances;
   document.getElementById("impostorRulesCaution").textContent = copy.caution;
   document.getElementById("closeImpostorRulesButton").setAttribute("aria-label", memoryGame.close);
+  document.getElementById("impostorNotice").classList.toggle("is-important", key === "activated" || key === "identified");
   document.getElementById("impostorNotice").textContent = (copy[key] || "") +
     (impostorRound.challenge ? " " + copy.attempts.replace("{count}", impostorRound.attempts) : "");
   const action = document.getElementById("accuseImpostor");
@@ -2096,6 +2101,10 @@ function shuffleUnmatchedCards() {
 }
 
 function showMatchInsight(card, userSelected = false) {
+  if (impostorRound && (gameCompleted || gameDefeated)) {
+    matchInsight.classList.remove("is-visible");
+    return;
+  }
   const isMobile = window.matchMedia?.("(max-width: 640px)")?.matches;
   const showComparison = !isMobile || matchToastsEnabled || userSelected;
   matchInsight.classList.toggle("is-in-progress", !gameCompleted);

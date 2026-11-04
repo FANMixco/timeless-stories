@@ -56,9 +56,9 @@
         }
       }
     </script>
-    <link rel="preload" href="memory-game/css/fonts/memory-game.woff2?v=memory-e17e3202487e" as="font" type="font/woff2" crossorigin="anonymous" />
-    <link rel="stylesheet" href="memory-game/css/icon-moon-memory.min.css?v=memory-e17e3202487e" />
-    <link rel="stylesheet" href="memory-game/css/memory-game.min.css?v=memory-e17e3202487e" />
+    <link rel="preload" href="memory-game/css/fonts/memory-game.woff2?v=memory-70df0e3f70f7" as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="stylesheet" href="memory-game/css/icon-moon-memory.min.css?v=memory-70df0e3f70f7" />
+    <link rel="stylesheet" href="memory-game/css/memory-game.min.css?v=memory-70df0e3f70f7" />
   </head>
   <body>
     <main class="game-shell is-home" aria-label="">
@@ -173,7 +173,8 @@
             <h2 id="selectedStoryTitle"></h2>
             <p id="selectedStoryText"></p>
           </section>
-          <section id="impostorPanel" class="impostor-panel" hidden>
+          <section id="impostorPanel" class="impostor-panel match-insight" hidden>
+          <h2 id="impostorStatusTitle" hidden></h2>
           <p id="impostorNotice" role="status" aria-live="polite"></p>
           <button id="accuseImpostor" class="game-button" type="button" hidden></button>
           </section>
@@ -189,6 +190,7 @@
             <button type="button" id="legendToastClose"></button>
           </aside>
           <section class="board" id="board" aria-label=""></section>
+          <span class="impostor-victory icon icon-trophy" aria-hidden="true"></span>
         </div>
       </div>
       <aside class="win-panel" id="winPanel" role="dialog" aria-modal="true" aria-labelledby="winTitle" aria-describedby="winMessage">
@@ -460,7 +462,7 @@
       <footer class="game-footer standalone-only" id="gameFooter"></footer>
     </main>
 
-    <script type="module" src="memory-game/js/memory-game.min.js?v=memory-e17e3202487e"></script>
+    <script type="module" src="memory-game/js/memory-game.min.js?v=memory-70df0e3f70f7"></script>
     <!-- Keep registration inline so PWA analyzers can discover it without running a browser. -->
     <script>
       if ("serviceWorker" in navigator) {

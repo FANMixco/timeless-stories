@@ -123,12 +123,13 @@ uses the existing card nodes, Sattolo shuffle, match/combo effects, challenge
 records, discoveries and achievements. The round palette overrides every
 rarity/category style only inside `.board.is-impostor`.
 
-The repository does not yet contain a book verification service. Access fails
-closed unless the future trusted host provider supplies
+The repository does not yet contain a book verification service. Normal access
+fails closed unless the future trusted host provider supplies
 `window.timelessMemoryEntitlements = { book: true }` before the entrypoint loads.
 This is an integration seam, not purchase verification or a security boundary.
 Saved mode preferences, achievements and launch URLs cannot grant book access.
 Replace the host seam with verified entitlement results when the provider ships.
+The temporary About-image testing exception below must be removed at that point.
 
 ## Temporary Impostor playtest access
 

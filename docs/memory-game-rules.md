@@ -343,9 +343,12 @@ opens the Records tab directly. Preferences and mode selection stay in Settings.
 
 Ten legitimate pairs share one randomly chosen muted palette and border color.
 Matched cards gently fade and shrink after the flip finishes, keeping their slots
-fixed. Reduced-motion settings use a brief fade without shrinking.
+fixed. Reduced-motion settings use a brief fade without shrinking. After victory,
+the existing trophy icon appears in the cleared board area, sized for the screen.
+The final pair’s category panel is hidden when the round ends.
 After three matches, one of the fourteen remaining card identities becomes the
-impostor. Its first reveal shows a subtle border variation; completing that
+impostor. Its first reveal shows a lighter or darker border with a thin inner
+edge in the same shade; completing that
 turn hides the open cards and shuffles unmatched nodes exactly once. Matched
 slots stay fixed and the impostor always moves.
 

@@ -835,7 +835,7 @@
           "unlocked": "Flash Memory unlocked! You have completed every achievement. Memorize 10 pairs in 7 seconds, then find them before making a fourth mistake."
         },
         "impostor": {
-          "name": "Impostor Mode",
+          "name": "The Impostor",
           "description": "Find the altered border, accuse the impostor, then clear all 10 pairs.",
           "tutorial": "Match three pairs to awaken an impostor. All cards share one palette; watch for a subtly different border. Its first reveal triggers one shuffle after your turn. Its second reveal starts identification: select a card, then Accuse Impostor. With 6+ / 4 / 2 cards left you get 3 / 2 / 1 chances. Failed matches spend chances, add moves and break your combo. A wrong accusation ends the round. Identify it before matching its original partner, then finish the board.",
           "activated": "Impostor activated. Look for the subtle border change.",
@@ -868,7 +868,7 @@
       "home": {
         "sixthMirror": {
           "getBook": "Get the digital book ↗",
-          "title": "Impostor Mode",
+          "title": "The Impostor",
           "subtitle": "Book exclusive",
           "description": "Find the altered border, accuse the impostor, then clear all 10 pairs.",
           "status": "Unlock with your book entitlement."
