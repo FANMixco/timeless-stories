@@ -564,13 +564,17 @@ function queueModeUnlocks() {
   }
 }
 
+function getDigitalBookUrl() {
+  return storeVersion === "play"
+    ? resolveGameHref("digitalBooks.googlePlay")
+    : resolveGameHref(memoryGame.getCopyHref);
+}
+
 function renderHomeScreen() {
   const earned = { ...achievements, ...readAchievements() };
   const eligible = achievementDefinitions.filter(({ secret }) => !secret);
   homeScreen.render(memoryGame, { hardMode: hardModeEnabled, ratingUrl,
-    digitalBookUrl: storeVersion === "play"
-      ? resolveGameHref("digitalBooks.googlePlay")
-      : resolveGameHref(memoryGame.getCopyHref),
+    digitalBookUrl: getDigitalBookUrl(),
     unlockProgress: {
       crazyMirrors: { earned: eligible.filter(({ id }) => earned[id]).length, required: Math.ceil(eligible.length * 0.75) },
       memoryFlash: { earned: achievementDefinitions.filter(({ id }) => earned[id]).length, required: achievementDefinitions.length },
@@ -1595,7 +1599,8 @@ function applyUiCopy() {
   previewRewardButton.href =
     resolveGameHref(memoryGame.previewRewardHref) || "https://bit.ly/4dyjiZz";
   getCopyButton.textContent = memoryGame.getCopy || "Get a copy of the book";
-  getCopyButton.href = resolveGameHref(memoryGame.getCopyHref);
+  getCopyButton.href = getDigitalBookUrl();
+  setElementHidden(getCopyButton, !getCopyButton.getAttribute("href"));
   setElementText(legendsGetCopyButton, memoryGame.getCopy || "Get a copy of the book");
   setElementHref(legendsGetCopyButton, resolveGameHref(memoryGame.getCopyHref));
   winTitle.textContent = memoryGame.winTitle || "";
