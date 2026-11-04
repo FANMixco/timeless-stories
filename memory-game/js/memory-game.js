@@ -1455,9 +1455,13 @@ function renderAbout() {
   setElementText(document.getElementById("aboutEdition"), copy.edition || "English edition");
   setElementText(document.getElementById("aboutBookTitle"), copy.bookTitle || "Spanish Mirrors");
   setElementText(document.getElementById("aboutBookDescription"), copy.bookDescription || "");
-  const bookUrl = resolveGameHref(memoryGame.getCopyHref);
-  document.getElementById("aboutBookLink").href = bookUrl;
-  setElementText(document.getElementById("aboutBookLink"), copy.amazon || "View on Amazon");
+  const bookUrl = getDigitalBookUrl();
+  const bookLink = document.getElementById("aboutBookLink");
+  bookLink.href = bookUrl;
+  setElementHidden(bookLink, !bookUrl);
+  setElementText(bookLink, storeVersion === "play"
+    ? copy.googlePlay || "View on Google Play"
+    : copy.amazon || "View on Amazon");
   document.getElementById("aboutWebsites").setAttribute("aria-label", copy.websites || "Official websites");
   setElementText(document.getElementById("aboutStoriesWebsite"), copy.storiesWebsite || "Timeless Stories");
   setElementText(document.getElementById("aboutSoundCreditsTitle"), copy.soundCreditsTitle);
