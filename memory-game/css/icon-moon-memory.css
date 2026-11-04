@@ -1,7 +1,8 @@
 @font-face {
   font-family: "memory-game";
-  src: url("fonts/memory-game.woff?v=__MEMORY_ASSET_VERSION__") format("woff"),
-    url("fonts/memory-game.ttf?v=__MEMORY_ASSET_VERSION__") format("truetype");
+  src: url("fonts/memory-game.woff2?v=__MEMORY_ASSET_VERSION__") format("woff2"),
+    url("fonts/memory-game.ttf?v=__MEMORY_ASSET_VERSION__") format("truetype"),
+    url("fonts/memory-game.woff?v=__MEMORY_ASSET_VERSION__") format("woff");
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -50,9 +51,10 @@
 .icon-star-full::before { content: "\e9d9"; }
 .icon-time-attack::before { content: "\f000"; }
 .icon-target::before { content: "\f001"; }
-.icon-settings::before { content: "\f002"; }
+.icon-settings::before { content: "\f00c"; }
 .icon-new-game::before { content: "\f003"; }
-.icon-lock::before { content: "\f004"; }
+.icon-lock-filled::before { content: "\f004"; }
+.icon-lock::before { content: "\f00b"; }
 .icon-information-outline::before { content: "\f005"; }
 .icon-impostor::before { content: "\f006"; }
 .icon-home::before { content: "\f007"; }

@@ -256,7 +256,13 @@ html[data-embed="true"] .standalone-only {
 .game-actions #newGameButton { flex: 0 0 var(--action-icon-size); width: var(--action-icon-size); height: 44px; padding: 0; }
 .game-actions .game-button { display: inline-flex; align-items: center; justify-content: center; }
 .game-actions .game-button.secondary { flex: 0 0 var(--action-icon-size); width: var(--action-icon-size); min-width: var(--action-icon-size); height: 44px; padding: 0; }
-.new-game-icon { display: block; width: 1.35em; height: 1.35em; }
+.game-actions .action-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1em;
+  height: 1em;
+}
 #newGameLabel { display: none; }
 
 .large-screen-only {
@@ -298,6 +304,10 @@ html[data-embed="true"] .standalone-only {
   font-size: 1.18em;
   line-height: 1;
 }
+
+/* The restart/play glyph has more internal padding than the other actions. */
+.game-actions .icon-new-game { font-size: 1.5em; }
+.game-actions .icon-settings { font-size: 1.4em; }
 
 .game-button {
   min-height: 42px;
