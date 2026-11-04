@@ -835,7 +835,7 @@
           "unlocked": "Mémoire flash débloqué ! Vous avez obtenu tous les succès. Mémorisez 10 paires en 7 secondes, puis retrouvez-les avant de faire une quatrième erreur."
         },
         "impostor": {
-          "name": "Mode imposteur",
+          "name": "L’Imposteur",
           "description": "Repérez la bordure modifiée, accusez l’imposteur, puis trouvez les 10 paires.",
           "tutorial": "Trouvez trois paires pour activer l’imposteur. Toutes les cartes partagent une palette ; cherchez une bordure légèrement différente. Sa première apparition déclenche un seul mélange à la fin du tour. La deuxième lance l’identification : sélectionnez une carte, puis Accuser l’imposteur. Avec 6 cartes ou plus / 4 / 2, vous avez 3 / 2 / 1 chances. Les erreurs consomment des chances, ajoutent des coups et interrompent le combo. Une fausse accusation termine la partie. Identifiez-le avant de l’associer à son partenaire d’origine, puis terminez le plateau.",
           "activated": "Imposteur activé. Cherchez la légère variation de bordure.",
@@ -868,7 +868,7 @@
       "home": {
         "sixthMirror": {
           "getBook": "Obtenir le livre numérique ↗",
-          "title": "Mode imposteur",
+          "title": "L’Imposteur",
           "subtitle": "Exclusivité du livre",
           "description": "Repérez la bordure modifiée, accusez l’imposteur, puis trouvez les 10 paires.",
           "status": "Débloquez avec votre accès au livre."
