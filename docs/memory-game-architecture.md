@@ -129,3 +129,32 @@ closed unless the future trusted host provider supplies
 This is an integration seam, not purchase verification or a security boundary.
 Saved mode preferences, achievements and launch URLs cannot grant book access.
 Replace the host seam with verified entitlement results when the provider ships.
+
+## Temporary Impostor playtest access
+
+**MUST REMOVE before the book-entitlement release / end of user testing.**
+This is a temporary testing shortcut, not an unlock or purchase verification.
+
+In About, click or tap the book/device preview image three times, with no more
+than 600 ms between taps. This starts an Impostor round in the current page.
+An existing round uses the normal restart confirmation before being replaced.
+The shortcut does not grant book entitlement, change `isModeUnlocked`, write a
+saved mode preference, reveal the Impostor home card, or expose Impostor records.
+Results may be saved through the normal game systems; locked records remain
+hidden. Restart can repeat testing rounds; Home restores the saved unlocked
+mode, and reloading does not retain testing access.
+
+Removal checklist (search for `TEMPORARY IMPOSTOR PLAYTEST`):
+
+- Remove `pendingImpostorPlaytest`, the About-image tap counters,
+  `handleAboutBookPlaytestTap`, `startImpostorPlaytest`, and the image listener.
+- Remove the temporary pending action from modal snapshots, restart
+  confirmation/cancellation, `newGame`, and `confirmRestartAction`.
+- Remove the temporary `#aboutBookImage` touch/selection CSS and `draggable`
+  override if no other image interaction needs them.
+- Remove the playtest-specific integration cases and this section.
+- Verify that only the verified book entitlement can start Impostor and expose
+  its home card and records. Keep the normal entitlement check intact.
+
+The saved-mode fallback on Home can remain as defensive handling for a mode
+whose entitlement is no longer available.

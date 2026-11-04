@@ -69,6 +69,11 @@ let progressStore = createProgressStore({ getStorage: () => window.localStorage,
   recordsStorageKey, challengeStatsStorageKey, modeStorageKey, gameModes });
 let gameMode = readGameMode();
 let pendingHome = false;
+// TEMPORARY IMPOSTOR PLAYTEST — remove before book-entitlement release.
+// Removal checklist: docs/memory-game-architecture.md#temporary-impostor-playtest-access
+let pendingImpostorPlaytest = false;
+let aboutBookTapCount = 0;
+let aboutBookLastTap = 0;
 let gameDefeated = false;
 let attemptStarted = false;
 let attemptHardMode = false;
@@ -275,6 +280,12 @@ homeScreen.bind();
 
 function showHome() {
   pendingHome = false;
+  // A testing round never becomes the saved/default mode or a home unlock.
+  if (!isModeUnlocked(gameMode)) {
+    const savedMode = readGameMode();
+    gameMode = isModeUnlocked(savedMode) ? savedMode : "classic";
+    renderGameModes();
+  }
   newGame({ startPreview: false });
   renderHomeScreen();
   homeScreen.show(gameMode);
@@ -330,6 +341,7 @@ function getModalSnapshot() {
     language: pendingLanguage,
     reset: pendingDataReset,
     home: pendingHome,
+    impostorPlaytest: pendingImpostorPlaytest,
     progressTab: progressView.tab
   };
 }
@@ -360,6 +372,7 @@ function restoreModalSnapshot(snapshot) {
   pendingLanguage = visible.has("restartPanel") && supportedLanguages.includes(snapshot.language) ? snapshot.language : null;
   pendingDataReset = visible.has("restartPanel") && snapshot.reset === true;
   pendingHome = visible.has("restartPanel") && snapshot.home === true;
+  pendingImpostorPlaytest = visible.has("restartPanel") && snapshot.impostorPlaytest === true;
   renderRestartConfirmation();
   if (currentAchievement && !visible.has("achievementPanel")) {
     currentAchievement = null;
@@ -1525,6 +1538,7 @@ function renderAbout() {
 }
 
 function openAboutPanel() {
+  aboutBookTapCount = 0;
   aboutReturnFocus = document.getElementById("aboutAuthorButton");
   renderAbout();
   aboutPanel.classList.add("is-visible");
@@ -1534,10 +1548,39 @@ function openAboutPanel() {
 }
 
 function closeAboutPanel() {
+  aboutBookTapCount = 0;
   aboutPanel.classList.remove("is-visible");
   syncModalScrollLock();
   aboutReturnFocus?.focus({ preventScroll: true });
 }
+
+// TEMPORARY IMPOSTOR PLAYTEST: testing entry only; never grant entitlement,
+// change isModeUnlocked(), persist the mode, or expose locked record sections.
+function startImpostorPlaytest() {
+  pendingImpostorPlaytest = false;
+  gameMode = "impostor";
+  homeScreen.hide();
+  renderGameModes();
+  startGame();
+  focusNavigationControl(newGameButton);
+}
+function handleAboutBookPlaytestTap() {
+  if (!aboutPanel.classList.contains("is-visible") || modalLayers.active()?.panel !== aboutPanel) return;
+  const now = Date.now();
+  aboutBookTapCount = now - aboutBookLastTap <= 600 ? aboutBookTapCount + 1 : 1;
+  aboutBookLastTap = now;
+  if (aboutBookTapCount < 3) return;
+  aboutBookTapCount = 0;
+  if (!hasGameInProgress()) { startImpostorPlaytest(); return; }
+  pendingHome = false;
+  pendingLanguage = null;
+  pendingDataReset = false;
+  pendingImpostorPlaytest = true;
+  renderRestartConfirmation();
+  restartPanel.classList.add("is-visible");
+  syncModalScrollLock();
+}
+document.getElementById("aboutBookImage").addEventListener("click", handleAboutBookPlaytestTap);
 
 function applyUiCopy() {
   setElementHidden(document.getElementById("homeButton"), isEmbedded);
@@ -2317,6 +2360,7 @@ function flipCard(card) {
 }
 
 function newGame({ startPreview = !homeScreen.visible } = {}) {
+  pendingImpostorPlaytest = false;
   resetCombo();
   spokenCountdown.reset();
   previewCountdown.cancel();
@@ -2459,6 +2503,8 @@ function restartGame() {
 }
 
 function closeRestartPanel() {
+  const returnToPlaytestImage = pendingImpostorPlaytest;
+  pendingImpostorPlaytest = false;
   const returnToHomeButton = pendingHome;
   pendingHome = false;
   const returnToLanguage = pendingLanguage !== null && settingsPanel.classList.contains("is-visible");
@@ -2467,7 +2513,7 @@ function closeRestartPanel() {
   pendingDataReset = false;
   restartPanel.classList.remove("is-visible");
   syncModalScrollLock();
-  (returnToHomeButton ? document.getElementById("homeButton") : returnToReset ? document.getElementById("resetGameButton") : returnToLanguage ? languageButton : newGameButton).focus({ preventScroll: true });
+  (returnToPlaytestImage ? closeAboutButton : returnToHomeButton ? document.getElementById("homeButton") : returnToReset ? document.getElementById("resetGameButton") : returnToLanguage ? languageButton : newGameButton).focus({ preventScroll: true });
 }
 
 function renderRestartConfirmation() {
@@ -2497,6 +2543,7 @@ function confirmRestartAction() {
   if (pendingHome) showHome();
   else if (pendingDataReset) resetGameData();
   else if (pendingLanguage) applyLanguageChange(pendingLanguage);
+  else if (pendingImpostorPlaytest) startImpostorPlaytest();
   else startFreshGame();
 }
 

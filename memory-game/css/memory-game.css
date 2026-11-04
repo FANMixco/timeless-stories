@@ -2270,3 +2270,6 @@ html[data-theme] .game-shell .board.is-impostor .card .character-icon {
 }
 
 .board-area > .impostor-panel { margin-top: 14px; padding: 0 4px 10px; }
+
+/* TEMPORARY IMPOSTOR PLAYTEST: remove with the About image tap handler. */
+#aboutBookImage { touch-action: manipulation; user-select: none; }
