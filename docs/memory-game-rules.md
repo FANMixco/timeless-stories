@@ -114,7 +114,7 @@ The 65/20/15 figures apply to normal rounds, not all rounds combined.
 
 ### Which special pair is chosen
 
-The overall probabilities are stored once in `js/data/memory-game.json`, shared
+The overall probabilities are stored once in `memory-game/data/memory-game.json`, shared
 by all languages and editable in the i18n manager under **Data → memory-game.json**:
 
 ```json
@@ -193,13 +193,13 @@ The special chime marks a **new discovery**, not simply a match with rare cards.
 
 | Event | Sound |
 | --- | --- |
-| Match an Original Mirror pair | `music/match.mp3` |
-| Match an already collected special pair | `music/match.mp3` |
-| Match a Director’s Cut pair not yet saved in the collection | `music/shiny.mp3` at normal pitch |
-| Match a Golden Mirror pair not yet saved in the collection | `music/shiny.mp3` at 1.25× playback rate, producing a brighter pitch |
-| Match the final pair, regardless of rarity or discovery status | `music/complete.mp3`, replacing the pair’s usual sound |
-| Lose a Time Attack or 25-Move Challenge challenge | `music/gameover.mp3` by ejah_music from Pixabay |
-| Display a newly unlocked achievement | `music/award.mp3` |
+| Match an Original Mirror pair | `memory-game/music/match.mp3` |
+| Match an already collected special pair | `memory-game/music/match.mp3` |
+| Match a Director’s Cut pair not yet saved in the collection | `memory-game/music/shiny.mp3` at normal pitch |
+| Match a Golden Mirror pair not yet saved in the collection | `memory-game/music/shiny.mp3` at 1.25× playback rate, producing a brighter pitch |
+| Match the final pair, regardless of rarity or discovery status | `memory-game/music/complete.mp3`, replacing the pair’s usual sound |
+| Lose a Time Attack or 25-Move Challenge challenge | `memory-game/music/gameover.mp3` by ejah_music from Pixabay |
+| Display a newly unlocked achievement | `memory-game/music/award.mp3` |
 
 Consequences worth remembering:
 
@@ -316,14 +316,14 @@ remain cached so the installed PWA can still open offline.
 
 ## Where these rules live
 
-- `js/memory-game.js`: `chooseActivePairs`, `chooseWeightedVariant`,
+- `memory-game/js/memory-game.js`: `chooseActivePairs`, `chooseWeightedVariant`,
   `saveCompletedDiscoveries`, `evaluateAchievements`, `markMatch`,
   `playGameSound`, `setTipsEnabled`, and `showMatchInsight`.
-- `js/i18n/memory-game/lang-*.json`: localized names/descriptions, shared
+- `memory-game/i18n/lang-*.json`: localized names/descriptions, shared
   `comparisons`, original `pairs`, special `rarePairs`, and relative mirror weights.
-- `js/data/memory-game.json`: shared rarity probabilities, bonus-round settings,
+- `memory-game/data/memory-game.json`: shared rarity probabilities, bonus-round settings,
   and Director’s Cut completion upgrade probability.
-- `css/memory-game.css`: responsive message and modal presentation.
+- `memory-game/css/memory-game.css`: responsive message and modal presentation.
 - `sw.js` and versioned asset URLs in `memory-game.html`: offline assets and
   cache refreshes.
 

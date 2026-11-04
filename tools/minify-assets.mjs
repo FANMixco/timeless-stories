@@ -5,7 +5,7 @@ import CleanCSS from "clean-css";
 import { minify as minifyJs } from "terser";
 import { getMemoryAssetVersion, compileMemoryImports, updateMemoryAssetReferences } from "./memory-game-assets.mjs";
 
-const ROOTS = ["css", "js"];
+const ROOTS = ["css", "js", "memory-game/css", "memory-game/js", "memory-game/data", "memory-game/i18n"];
 const EXTENSIONS = new Set([".css", ".js", ".mjs", ".json"]);
 const CHECK_MODE = process.argv.includes("--check");
 
@@ -64,7 +64,8 @@ function minifyCss(source, filePath) {
 async function minifyFile(sourcePath, memoryVersion) {
   const extension = path.extname(sourcePath);
   let source = await fs.readFile(sourcePath, "utf8");
-  if (extension === ".mjs" || path.relative(process.cwd(), sourcePath).replaceAll("\\", "/") === "js/memory-game.js") {
+  source = source.replaceAll("__MEMORY_ASSET_VERSION__", memoryVersion);
+  if (extension === ".mjs" || path.relative(process.cwd(), sourcePath).replaceAll("\\", "/") === "memory-game/js/memory-game.js") {
     source = compileMemoryImports(source, memoryVersion);
   }
 
@@ -118,7 +119,7 @@ async function main() {
 
   const results = [];
   // Modules and data must exist before the entrypoint can reference their new version.
-  const entrypoint = path.join(process.cwd(), "js", "memory-game.js");
+  const entrypoint = path.join(process.cwd(), "memory-game", "js", "memory-game.js");
   const ordered = sourceFiles.sort().filter(file => file !== entrypoint);
   if (sourceFiles.includes(entrypoint)) ordered.push(entrypoint);
   for (const file of ordered) {

@@ -41,7 +41,7 @@ export function memoryGameErrors(json) {
     if (variant?.weight !== undefined && (typeof variant.weight !== "number" || !Number.isFinite(variant.weight) || variant.weight <= 0)) {
       errors.push(`${path}.weight must be a positive number (default: 1).`);
     }
-    if (variant && "chance" in variant) errors.push(`${path}: use relative weight instead of chance; category rates live in js/data/memory-game.json.`);
+    if (variant && "chance" in variant) errors.push(`${path}: use relative weight instead of chance; category rates live in memory-game/data/memory-game.json.`);
     if (variant?.replaceSource && (!Array.isArray(game.pairs) || !game.pairs.some(pair => pair?.source === variant.replaceSource))) {
       errors.push(`${path}.replaceSource: choose a source from the Original Mirrors.`);
     }

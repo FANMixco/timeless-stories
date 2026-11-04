@@ -3,24 +3,37 @@
 The game uses native ES modules and the existing Terser/CleanCSS build. There is
 no framework, runtime dependency or custom JavaScript bundler.
 
+Runtime assets live together under `memory-game/`: `js/` (entrypoint and
+`modules/`), `css/` (including the game icon fonts), `data/`, `i18n/`, `img/`,
+`music/`, and `manifest.webmanifest`. The public page stays at `/memory-game.html`
+and the worker stays at `/sw.js` to preserve existing links, installed-app identity,
+scope, and worker updates. The manifest uses root-relative artwork paths.
+The shared translation editor routes game data and translations to this folder.
+
+The `memory-game` icon font has 39 glyphs. Its class/code-point mappings live in
+`memory-game/css/icon-moon-memory.css`; WOFF and TTF files live in `css/fonts/`.
+The build versions the font URLs together with the preload and offline cache,
+including the font binary contents in the version. SVG originals remain in
+`img/icons/` as font-source artwork and are not downloaded by the game.
+
 ## Source ownership
 
 | File | Responsibility |
 | --- | --- |
-| `js/memory-game.js` | Page entrypoint: wires controllers to the board, settings, collection, tutorial and dialog actions. Owns the current round and existing DOM interactions. |
-| `js/memory-game/rules.mjs` | Mode registry, shared wall-clock scheduling and weighted pair selection. Randomness and scheduling can be injected for tests. |
-| `js/memory-game/modes/crazy-mirrors.mjs` | Unlimited Classic counters, shuffle-after-match policy and independent Classic-style personal records. |
-| `js/memory-game/modes/classic.mjs` | Unlimited counters and no defeat condition; preserves Classic record storage. |
-| `js/memory-game/modes/time-attack.mjs` | The time limit, countdown/warning presentation, deadline defeat and best-time metric. |
-| `js/memory-game/modes/limited-moves.mjs` | The move limit, move-counter/warning presentation, resolved-attempt defeat and fewest-moves metric. |
-| `js/memory-game/modes/memory-flash.mjs` | Seven-second preview, three-mistake allowance, untimed status and fourth-mistake defeat policy. |
-| `js/memory-game/preview.mjs` | Injected wall-clock preview countdown, cancellation tokens and page-hide/resume handling. |
-| `js/memory-game/storage.mjs` | Validates saved Classic/challenge statistics and records attempts/results. Preserves existing local-storage keys and reads fresh data before updates. |
-| `js/memory-game/audio.mjs` | Owns AudioContext, buffers, playback channels, fades, priorities and cancellation of pending sounds. |
-| `js/memory-game/background-music.mjs` | Streams the looping soundtrack after interaction, independently of effects, and pauses it when disabled or hidden. |
-| `js/memory-game/progress.mjs` | Renders records, completion comparisons and achievements; owns Records/Achievements tab state and keyboard navigation. Reads application state through a supplied snapshot. |
-| `js/memory-game/home.mjs` | Renders the mode selection screen and binds its five cards. Receives callbacks for starting a mode, Settings, Records and returning home; the entrypoint owns round cleanup and confirmation. |
-| `js/memory-game/dialogs.mjs` | Owns browser-history synchronization, pending traversal and restoration suppression. The entrypoint supplies the game-specific dialog snapshot and restore behavior. |
+| `memory-game/js/memory-game.js` | Page entrypoint: wires controllers to the board, settings, collection, tutorial and dialog actions. Owns the current round and existing DOM interactions. |
+| `memory-game/js/modules/rules.mjs` | Mode registry, shared wall-clock scheduling and weighted pair selection. Randomness and scheduling can be injected for tests. |
+| `memory-game/js/modules/modes/crazy-mirrors.mjs` | Unlimited Classic counters, shuffle-after-match policy and independent Classic-style personal records. |
+| `memory-game/js/modules/modes/classic.mjs` | Unlimited counters and no defeat condition; preserves Classic record storage. |
+| `memory-game/js/modules/modes/time-attack.mjs` | The time limit, countdown/warning presentation, deadline defeat and best-time metric. |
+| `memory-game/js/modules/modes/limited-moves.mjs` | The move limit, move-counter/warning presentation, resolved-attempt defeat and fewest-moves metric. |
+| `memory-game/js/modules/modes/memory-flash.mjs` | Seven-second preview, three-mistake allowance, untimed status and fourth-mistake defeat policy. |
+| `memory-game/js/modules/preview.mjs` | Injected wall-clock preview countdown, cancellation tokens and page-hide/resume handling. |
+| `memory-game/js/modules/storage.mjs` | Validates saved Classic/challenge statistics and records attempts/results. Preserves existing local-storage keys and reads fresh data before updates. |
+| `memory-game/js/modules/audio.mjs` | Owns AudioContext, buffers, playback channels, fades, priorities and cancellation of pending sounds. |
+| `memory-game/js/modules/background-music.mjs` | Streams the looping soundtrack after interaction, independently of effects, and pauses it when disabled or hidden. |
+| `memory-game/js/modules/progress.mjs` | Renders records, completion comparisons and achievements; owns Records/Achievements tab state and keyboard navigation. Reads application state through a supplied snapshot. |
+| `memory-game/js/modules/home.mjs` | Renders the mode selection screen and binds its five cards. Receives callbacks for starting a mode, Settings, Records and returning home; the entrypoint owns round cleanup and confirmation. |
+| `memory-game/js/modules/dialogs.mjs` | Owns browser-history synchronization and modal priority, focus, dismissal and inert layers. The entrypoint supplies the game-specific callbacks, snapshot and restore behavior. |
 
 Controllers receive the browser services and application callbacks they use.
 They do not reach into entrypoint globals. Audio and timer resources are private
@@ -52,8 +65,8 @@ Other existing game progress keys are preserved. Reset removes only
 
 Game translations, links, rules, styling, modules, analytics initialization and
 offline cache are independent of the website's application files. Book-preview
-artwork and favicons use game-owned copies under `img/memory-game/`.
-`js/memory-game/analytics.mjs` owns the game's deferred analytics loader while
+artwork and favicons use game-owned copies under `memory-game/img/`.
+`memory-game/js/modules/analytics.mjs` owns the game's deferred analytics loader while
 retaining the website's measurement ID. This separation does not create a
 different origin or analytics property.
 
@@ -93,7 +106,7 @@ both Progress tabs, Settings scrolling, restart confirmation, and return from
 records to the victory/defeat result. Behavior is documented separately in
 `docs/memory-game-rules.md`.
 
-All ten dialog cards share `.dialog-card`, `.dialog-header`, and `.dialog-body`.
+All eleven dialog cards share `.dialog-card`, `.dialog-header`, and `.dialog-body`.
 The header owns the title and close control; only the focusable body scrolls.
 Card widths, mobile full-screen variants, theme colors, and bottom padding remain
 with their existing variants. Progress-tab scroll resets target `.dialog-body`.
