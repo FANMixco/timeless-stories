@@ -2212,7 +2212,8 @@ html[data-theme="dark"] .game-shell [data-category] .character-icon {
 
 
 /* Round palette overrides every rarity/category in both themes. Identity stays intact. */
-.impostor-panel { width: 100%; text-align: start; padding: 12px 14px; }
+.impostor-panel { width: 100%; max-width: none; text-align: start; padding: 12px 14px; }
+.impostor-panel { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
 .impostor-panel p { margin: 0; font-size: .88rem; font-weight: 400; line-height: 1.45; }
 .impostor-panel #accuseImpostor { display: block; margin: 10px auto 0; }
 .impostor-panel #accuseImpostor[hidden] { display: none; }
@@ -2261,6 +2262,7 @@ html[data-theme] .game-shell .board.is-impostor .card .character-name { opacity:
 .impostor-rules-attempts { width: 100%; border-collapse: collapse; margin: 20px 0; text-align: center; font-variant-numeric: tabular-nums; }
 .impostor-rules-attempts th, .impostor-rules-attempts td { padding: 6px; border-bottom: 1px solid var(--line); }
 .impostor-rules-caution { font-size: .88rem; line-height: 1.5; }
+.impostor-rules-accuse-icon { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; margin-right: 4px; border-radius: 8px; background: var(--accent); color: #fff; font-size: 1.25rem; vertical-align: middle; }
 
 /* Without a circular badge, the symbol carries more of the card's identity. */
 html[data-theme] .game-shell .board.is-impostor .card .character-mark {
@@ -2359,3 +2361,103 @@ html[data-theme="dark"] .impostor-panel[data-phase="defeat"] #impostorNotice { c
 .settings-row.is-unavailable { color: var(--muted); }
 #settingsMatchToastsUnavailable { display: block; margin-top: 4px; font-size: .8rem; line-height: 1.4; }
 #settingsMatchToastsUnavailable[hidden] { display: none; }
+
+/* Compact Impostor controls occupy their own viewport row, never the board's
+   scrolling/clipped area. Other modes retain normal document scrolling. */
+@media (max-width: 640px), (max-height: 599px) {
+  .game-shell:not(.is-home):has(.board.is-impostor) {
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
+    min-height: 0;
+    overflow: hidden;
+    padding-bottom: calc(clamp(12px, 2.4vw, 22px) + max(env(safe-area-inset-bottom, 0px), var(--impostor-action-height, 0px)));
+  }
+  .game-shell:not(.is-home):has(.board.is-impostor) > .game-layout {
+    flex: 1 1 0;
+    min-height: 0;
+    min-width: 0;
+    width: 100%;
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+    align-content: start;
+  }
+  #impostorPanel:not(.is-compact-action) { display: none; }
+  #impostorPanel[data-phase="victory"]:not([hidden]) { display: block; }
+  #impostorPanel.is-compact-action {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 12px;
+    position: fixed;
+    z-index: 15;
+    inset: auto 0 0;
+    width: auto;
+    max-width: none;
+    margin: 0;
+    padding: 8px max(12px, env(safe-area-inset-right, 0px)) calc(8px + env(safe-area-inset-bottom, 0px)) max(12px, env(safe-area-inset-left, 0px));
+    border: 1px solid var(--line);
+    border-bottom: 0;
+    border-radius: 10px 10px 0 0;
+    background: var(--panel);
+    box-shadow: 0 -4px 16px rgba(0, 0, 0, .12);
+    animation: none;
+    text-align: start;
+  }
+  #impostorPanel.is-compact-action .impostor-status-copy { min-width: 0; overflow-wrap: anywhere; }
+  #impostorPanel.is-compact-action #impostorStatusTitle { display: none; }
+  #impostorPanel.is-compact-action #impostorNotice { font-size: .9rem; line-height: 1.3; font-weight: 700; }
+  #impostorPanel.is-compact-action #impostorAccusations { margin-top: 2px; color: var(--muted); font-size: .78rem; line-height: 1.3; font-weight: 400; }
+  #impostorPanel.is-compact-action #accuseImpostor {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    margin: 0;
+    padding: 8px 12px;
+    font-size: .9rem;
+    line-height: 1.2;
+  }
+}
+@media (max-width: 280px) {
+  #impostorPanel.is-compact-action { gap: 8px; padding-left: 8px; padding-right: 8px; }
+  #impostorPanel.is-compact-action #impostorNotice { font-size: .8rem; }
+  #impostorPanel.is-compact-action #accuseImpostor { font-size: .8rem; padding-inline: 8px; }
+}
+
+/* Keep the same short, right-aligned action in roomy status cards too. */
+#impostorPanel.has-accusation {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+}
+#impostorPanel.has-accusation .impostor-status-copy { min-width: 0; overflow-wrap: anywhere; }
+#impostorPanel.has-accusation #impostorNotice { font-size: .9rem; line-height: 1.3; }
+#impostorPanel.has-accusation #impostorAccusations { margin-top: 2px; color: var(--muted); font-size: .78rem; line-height: 1.3; font-weight: 400; }
+#impostorPanel.has-accusation #accuseImpostor {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  margin: 0;
+  padding: 8px 12px;
+  font-size: .9rem;
+  line-height: 1.2;
+}
+
+@media (max-width: 280px) {
+  #impostorPanel.has-accusation { gap: 8px; }
+  #impostorPanel.has-accusation #impostorNotice { font-size: .8rem; }
+  #impostorPanel.has-accusation #accuseImpostor { font-size: .8rem; padding-inline: 8px; }
+}
+
+/* Accusation glyph, with a full accessible name and a touch-sized hit area. */
+#impostorPanel.has-accusation #accuseImpostor {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  padding: 0;
+  flex-shrink: 0;
+}
+#accuseImpostor .icon { font-size: 1.25rem; line-height: 1; }

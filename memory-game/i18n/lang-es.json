@@ -842,7 +842,7 @@
           "activated": "Ha llegado un impostor. Sigue formando parejas para encontrar la afectada.",
           "encounter": "Pareja afectada encontrada. Ambas cartas se ocultan y las restantes se reorganizan.",
           "reshuffle": "Las cartas se han reorganizado una vez. Gira cualquiera de las dos cartas afectadas para acusar.",
-          "challenge": "Carta afectada seleccionada. Acúsala o sigue formando parejas.",
+          "challenge": "Has seleccionado una carta afectada.",
           "attempts": "Oportunidades restantes: {count}",
           "accuse": "Acusar al impostor",
           "identified": "Impostor identificado. Ya puedes formar su pareja original.",
@@ -853,12 +853,16 @@
           "steps": [
             "Completa 3 parejas. Una sombra y el icono del impostor anuncian su llegada. La pareja afectada sigue en secreto.",
             "Encuentra la pareja afectada jugando normalmente. Sus dos cartas se ocultan en lugar de desaparecer. Las cartas restantes se reorganizan una vez.",
-            "Decide tu acusación. Gira cualquiera de las dos cartas afectadas para acusarla o sigue jugando. Solo una es el impostor. Identifícalo y completa todas las parejas."
+            "Usa este icono para acusar a la carta seleccionada. Gira cualquiera de las dos cartas afectadas para que aparezca el botón. Solo una es el impostor. Una acusación incorrecta termina la partida. Identifícalo y completa todas las parejas."
           ],
           "remaining": "Cartas restantes",
           "chances": "Oportunidades",
           "caution": "Los fallos gastan una oportunidad, suman un movimiento y rompen el combo. Una acusación errónea o agotar las oportunidades termina la ronda. Con dos cartas, identifica al impostor antes de emparejar.",
-          "status": "Estado"
+          "status": "Estado",
+          "suspected": "Posible impostor",
+          "accuseShort": "Acusar",
+          "chancesRemaining": "{count} oportunidades restantes",
+          "oneChanceRemaining": "1 oportunidad restante"
         },
         "impostorWrong": "Acusación errónea. El impostor escapó.",
         "impostorExhausted": "No quedan oportunidades. El impostor escapó."
