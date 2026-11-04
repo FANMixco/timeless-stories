@@ -63,6 +63,8 @@ export function createHomeScreen({ document, modes, onChoose, onSettings, onReco
     },
     render(copy, options = {}) {
       const hardMode = Boolean(options.hardMode);
+      document.getElementById("home-impostor").hidden = !options.impostorUnlocked;
+      document.getElementById("impostorBookGate").hidden = Boolean(options.impostorUnlocked);
       lockedModes = new Set();
       for (const mode of ["crazyMirrors", "memoryFlash"]) {
         const card = document.getElementById(`home-${mode}`);

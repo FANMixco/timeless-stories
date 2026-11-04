@@ -2210,3 +2210,63 @@ html[data-theme="dark"] .game-shell [data-category] .character-icon {
 .contribution-body { flex: 1; overflow: hidden; }
 .contribution-frame { display: block; width: 100%; height: 100%; border: 0; background: #fff; }
 
+
+/* Round palette overrides every rarity/category in both themes. Identity stays intact. */
+.impostor-panel { width: 100%; text-align: center; padding: 0 12px 10px; }
+.impostor-panel p { margin: 0 0 8px; font-size: .88rem; }
+.impostor-panel[hidden], #impostorBookGate[hidden], #home-impostor[hidden] { display: none; }
+html[data-theme] .game-shell .board.is-impostor .card .card-face {
+  background: var(--impostor-bg); color: var(--impostor-ink);
+  border: 3px solid var(--impostor-border);
+}
+html[data-theme] .game-shell .board.is-impostor .card .character-mark {
+  background: transparent; border-color: transparent; box-shadow: none;
+}
+html[data-theme] .game-shell .board.is-impostor .card .character-icon,
+html[data-theme] .game-shell .board.is-impostor .card .character-name,
+html[data-theme] .game-shell .board.is-impostor .card .character-origin { color: var(--impostor-ink); }
+html[data-theme] .game-shell .board.is-impostor .card.is-impostor-revealed .card-front {
+  border-color: var(--impostor-suspect-border);
+}
+html[data-theme] .game-shell .board.is-impostor .card .card-front::after { content: none; }
+/* Let the second flip finish before the pair gently vanishes from its slots. */
+.board.is-impostor .card {
+  transition: opacity 320ms ease 200ms, transform 320ms ease 200ms, visibility 0s linear 520ms;
+}
+.board.is-impostor .card.is-matched {
+  opacity: 0;
+  transform: scale(.9);
+  visibility: hidden;
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .board.is-impostor .card {
+    transition: opacity 120ms ease 180ms, visibility 0s linear 300ms;
+  }
+  .board.is-impostor .card.is-matched { transform: none; }
+}
+
+html[data-theme] .game-shell .board.is-impostor .card .character-name { opacity: 1; }
+
+.impostor-rules-card { max-width: 480px; }
+.impostor-rules-intro { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
+.impostor-rules-intro > .icon { font-size: 2.6rem; color: var(--gold); flex-shrink: 0; }
+.impostor-rules-intro p { margin: 0; font-weight: 600; }
+.impostor-rules-steps { list-style: none; counter-reset: investigation; padding: 0; display: grid; gap: 16px; }
+.impostor-rules-steps li { counter-increment: investigation; position: relative; padding-left: 38px; line-height: 1.5; }
+.impostor-rules-steps li::before { content: counter(investigation); position: absolute; left: 0; top: 0; width: 26px; height: 26px; display: grid; place-items: center; border: 1px solid currentColor; border-radius: 50%; font-weight: 700; }
+.impostor-rules-attempts { width: 100%; border-collapse: collapse; margin: 20px 0; text-align: center; font-variant-numeric: tabular-nums; }
+.impostor-rules-attempts th, .impostor-rules-attempts td { padding: 6px; border-bottom: 1px solid var(--line); }
+.impostor-rules-caution { font-size: .88rem; line-height: 1.5; }
+
+/* Without a circular badge, the symbol carries more of the card's identity. */
+html[data-theme] .game-shell .board.is-impostor .card .character-mark {
+  width: clamp(42px, 15vw, 64px);
+  height: clamp(42px, 15vw, 64px);
+}
+html[data-theme] .game-shell .board.is-impostor .card .character-icon {
+  font-size: clamp(2rem, 11vw, 2.8rem);
+  line-height: 1;
+}
+
+.board-area > .impostor-panel { margin-top: 14px; padding: 0 4px 10px; }

@@ -1,3 +1,4 @@
+import { impostorMode } from "./modes/impostor.mjs";
 import { classicMode } from "./modes/classic.mjs";
 import { crazyMirrorsMode } from "./modes/crazy-mirrors.mjs";
 import { createTimeAttackMode } from "./modes/time-attack.mjs";
@@ -11,6 +12,7 @@ export function buildGameModes(hard = false) {
     limitedMoves: createLimitedMovesMode({ hard }),
     crazyMirrors: crazyMirrorsMode,
     memoryFlash: memoryFlashMode,
+    impostor: impostorMode,
   });
 }
 

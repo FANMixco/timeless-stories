@@ -34,7 +34,7 @@ including the font binary contents in the version. SVG originals remain in
 | `memory-game/js/modules/audio.mjs` | Owns AudioContext, buffers, playback channels, fades, priorities and cancellation of pending sounds. |
 | `memory-game/js/modules/background-music.mjs` | Streams the looping soundtrack after interaction, independently of effects, and pauses it when disabled or hidden. |
 | `memory-game/js/modules/progress.mjs` | Renders records, completion comparisons and achievements; owns Records/Achievements tab state and keyboard navigation. Reads application state through a supplied snapshot. |
-| `memory-game/js/modules/home.mjs` | Renders the mode selection screen and binds its five cards. Receives callbacks for starting a mode, Settings, Records and returning home; the entrypoint owns round cleanup and confirmation. |
+| `memory-game/js/modules/home.mjs` | Renders the mode selection screen and binds its six mode cards. Receives callbacks for starting a mode, Settings, Records and returning home; the entrypoint owns round cleanup and confirmation. |
 | `memory-game/js/modules/dialogs.mjs` | Owns browser-history synchronization and modal priority, focus, dismissal and inert layers. The entrypoint supplies the game-specific callbacks, snapshot and restore behavior. |
 
 Controllers receive the browser services and application callbacks they use.
@@ -108,9 +108,24 @@ both Progress tabs, Settings scrolling, restart confirmation, and return from
 records to the victory/defeat result. Behavior is documented separately in
 `docs/memory-game-rules.md`.
 
-All eleven dialog cards share `.dialog-card`, `.dialog-header`, and `.dialog-body`.
+All twelve dialog cards share `.dialog-card`, `.dialog-header`, and `.dialog-body`.
 The header owns the title and close control; only the focusable body scrolls.
 Card widths, mobile full-screen variants, theme colors, and bottom padding remain
 with their existing variants. Progress-tab scroll resets target `.dialog-body`.
 When adding a modal, use this structure so its header stays visible on short
 screens and its bottom actions remain reachable without a second scrollbar.
+
+## Impostor Mode and planned book access
+
+`modes/impostor.mjs` owns round-local suspect identity, encounters, one-shot
+shuffle requests, identification chances and neutralization. The entrypoint
+uses the existing card nodes, Sattolo shuffle, match/combo effects, challenge
+records, discoveries and achievements. The round palette overrides every
+rarity/category style only inside `.board.is-impostor`.
+
+The repository does not yet contain a book verification service. Access fails
+closed unless the future trusted host provider supplies
+`window.timelessMemoryEntitlements = { book: true }` before the entrypoint loads.
+This is an integration seam, not purchase verification or a security boundary.
+Saved mode preferences, achievements and launch URLs cannot grant book access.
+Replace the host seam with verified entitlement results when the provider ships.

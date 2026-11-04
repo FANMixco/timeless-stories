@@ -1,3 +1,4 @@
+import { createImpostorRound } from "./modules/modes/impostor.mjs";
 import { initializeAnalytics } from "./modules/analytics.mjs";
 import { createGameAudio } from "./modules/audio.mjs";
 import { createBackgroundMusic } from "./modules/background-music.mjs";
@@ -15,6 +16,7 @@ const themeStorageKey = "timelessMemoryColorMode";
 const resetStorageKey = "timelessMemoryResetVersion";
 const introStorageKey = "timelessMemoryIntroSeen";
 const crazyIntroStorageKey = "timelessMemoryCrazyMirrorsIntroSeen";
+const impostorIntroStorageKey = "timelessMemoryImpostorIntroSeen";
 const flashIntroStorageKey = "timelessMemoryFlashIntroSeen";
 const flashUnlockStorageKey = "timelessMemoryFlashUnlockNotified";
 const modeUnlockNotices = [
@@ -26,6 +28,8 @@ let previewRemaining = null;
 let previewFlipTimer = null;
 let turnSettleTimer = null;
 let mistakes = 0;
+let impostorRound = null;
+let impostorNoticeKey = "ready";
 const queuedModeUnlocks = new Set();
 let shuffleTimer = null;
 let shuffleAnimations = [];
@@ -122,6 +126,7 @@ let linkRegistry = null;
 let localizedLinks = null;
 let selectionRules = null;
 const board = document.getElementById("board");
+const impostorControlsAboveMedia = window.matchMedia?.("(min-width: 641px) and (min-height: 600px)");
 const comboToast = document.createElement("div");
 comboToast.id = "comboToast";
 comboToast.className = "combo-toast";
@@ -232,9 +237,11 @@ let pendingDataReset = false;
 let confirmedLanguageReload = false;
 let modalDetailPair = null;
 let modalRarity = null;
-const modalPanels = [contributionPanel, winPanel, gameOverPanel, collectionPanel, legendsPanel, rarityPanel, aboutPanel, restartPanel, achievementsPanel, achievementPanel, settingsPanel];
+const impostorRulesPanel = document.getElementById("impostorRulesPanel");
+const modalPanels = [impostorRulesPanel, contributionPanel, winPanel, gameOverPanel, collectionPanel, legendsPanel, rarityPanel, aboutPanel, restartPanel, achievementsPanel, achievementPanel, settingsPanel];
 const openScrollPanels = new Set();
 const modalLayers = createModalLayers([
+  { panel: impostorRulesPanel, close: closeImpostorRules, focus: () => document.getElementById("closeImpostorRulesButton").focus() },
   { panel: achievementPanel, close: closeAchievement, focus: () => closeAchievementButton.focus() },
   { panel: contributionPanel, close: closeContribution, focus: () => closeContributionButton.focus() },
   { panel: restartPanel, close: closeRestartPanel, focus: () => cancelRestartButton.focus() },
@@ -340,6 +347,7 @@ function restoreModalSnapshot(snapshot) {
     if (id === "achievementPanel") return Boolean(currentAchievement && snapshot.achievement === currentAchievement);
     return true;
   }));
+  if (!visible.has("impostorRulesPanel") && impostorRulesPanel.classList.contains("is-visible")) closeImpostorRules();
   if (!visible.has("rarityPanel")) closeRarityPanel();
   if (!visible.has("legendsPanel")) closeLegendsPanel();
   if (!visible.has("contributionPanel") && contributionPanel.classList.contains("is-visible")) closeContribution();
@@ -549,7 +557,12 @@ function isMemoryFlashUnlocked() {
   return achievementDefinitions.every(({ id }) => earned[id]);
 }
 
+// The future book provider establishes this host entitlement before loading.
+// Deliberately no URL, achievement or local-storage bypass.
+function hasBookEntitlement() { return window.timelessMemoryEntitlements?.book === true; }
+
 function isModeUnlocked(mode) {
+  if (mode === "impostor") return hasBookEntitlement();
   if (mode === "crazyMirrors") return isCrazyMirrorsUnlocked();
   if (mode === "memoryFlash") return flashTestEnabled || isMemoryFlashUnlocked();
   return true;
@@ -574,7 +587,7 @@ function renderHomeScreen() {
   const earned = { ...achievements, ...readAchievements() };
   const eligible = achievementDefinitions.filter(({ secret }) => !secret);
   homeScreen.render(memoryGame, { hardMode: hardModeEnabled, ratingUrl,
-    digitalBookUrl: getDigitalBookUrl(),
+    digitalBookUrl: getDigitalBookUrl(), impostorUnlocked: isModeUnlocked("impostor"),
     unlockProgress: {
       crazyMirrors: { earned: eligible.filter(({ id }) => earned[id]).length, required: Math.ceil(eligible.length * 0.75) },
       memoryFlash: { earned: achievementDefinitions.filter(({ id }) => earned[id]).length, required: achievementDefinitions.length },
@@ -1770,6 +1783,44 @@ function formatTime(totalSeconds) {
   return `${minutes}:${seconds}`;
 }
 
+// Move the same controls so visual order and keyboard order stay aligned.
+function positionImpostorPanel() {
+  if (!impostorRound) return;
+  const panel = document.getElementById("impostorPanel");
+  const parent = document.querySelector(impostorControlsAboveMedia?.matches ? ".game-sidebar" : ".board-area");
+  if (panel.parentElement !== parent) parent.append(panel);
+}
+
+function updateImpostorPanel(key = impostorNoticeKey) {
+  impostorNoticeKey = key;
+  document.getElementById("impostorPanel").hidden = !impostorRound;
+  if (!impostorRound) return;
+  const copy = memoryGame.modes.impostor;
+  document.getElementById("impostorRulesTitle").textContent = copy.rules;
+  document.getElementById("impostorRulesIntro").textContent = copy.description;
+  copy.steps.forEach((step, index) => { document.getElementById(`impostorRulesStep${index + 1}`).textContent = step; });
+  document.getElementById("impostorRulesRemaining").textContent = copy.remaining;
+  document.getElementById("impostorRulesChances").textContent = copy.chances;
+  document.getElementById("impostorRulesCaution").textContent = copy.caution;
+  document.getElementById("closeImpostorRulesButton").setAttribute("aria-label", memoryGame.close);
+  document.getElementById("impostorNotice").textContent = (copy[key] || "") +
+    (impostorRound.challenge ? " " + copy.attempts.replace("{count}", impostorRound.attempts) : "");
+  const action = document.getElementById("accuseImpostor");
+  action.textContent = copy.accuse;
+  action.hidden = !impostorRound.challenge || gameDefeated || gameCompleted;
+  action.disabled = !firstCard || lockBoard;
+}
+function accuseImpostor() {
+  if (!impostorRound || lockBoard || gameDefeated || gameCompleted || !firstCard) return;
+  const result = impostorRound.accuse(firstCard);
+  if (result === null) return;
+  if (!result) { endGame("impostorWrong"); updateImpostorPanel("defeat"); return; }
+  impostorRound.suspect.classList.remove("is-impostor-revealed");
+  playGameSound("match");
+  updateImpostorPanel("identified");
+}
+document.getElementById("accuseImpostor").addEventListener("click", accuseImpostor);
+
 function updateStatus() {
   const config = gameModes[gameMode];
   document.getElementById("timeStatus").classList.toggle("is-priority", gameMode === "timeAttack");
@@ -1784,6 +1835,7 @@ function updateStatus() {
   movesValue.textContent = status.moves;
   matchesValue.textContent = `${matches}/${getPairCount()}`;
   timeValue.textContent = formatTime(status.seconds);
+  updateImpostorPanel();
   timeValue.classList.toggle("is-running-low", status.timeLow);
   movesValue.classList.toggle("is-running-low", status.movesLow);
 }
@@ -1898,6 +1950,9 @@ function hideOpenCards() {
   firstCard.setAttribute("aria-label", memoryGame.hiddenCard || "");
   secondCard.setAttribute("aria-label", memoryGame.hiddenCard || "");
   resetTurn();
+  if (impostorRound?.takeShuffle()) {
+    shuffleUnmatchedCards(); updateImpostorPanel("reshuffle");
+  } else updateImpostorPanel();
   endChallengeIfNeeded(true);
   updateSpokenCountdown();
 }
@@ -1915,6 +1970,8 @@ function markMatch() {
   firstCard.classList.add("is-matched");
   secondCard.classList.add("is-matched");
   matches += 1;
+  const impostorActivated = impostorRound?.activate(matches,
+    [...board.children].filter(card => !card.classList.contains("is-matched")));
   activeCombo += 1;
   bestCombo = Math.max(bestCombo, activeCombo);
   if (activeCombo >= 2) showComboToast();
@@ -1935,6 +1992,7 @@ function markMatch() {
     board.classList.add("is-complete");
     setTopLegendActionVisibility(true);
     setPreviewRewardVisibility(gameModes[gameMode].tracksTime !== false && elapsedSeconds < previewRewardThresholdSeconds);
+    if (impostorRound) updateImpostorPanel("victory");
     winMessage.textContent = (memoryGame.win || "")
       .replace("{pairs}", getPairCount());
     winPanel.classList.add("is-visible");
@@ -1949,6 +2007,7 @@ function markMatch() {
 
   showMatchInsight(firstCard);
   resetTurn();
+  updateImpostorPanel(impostorActivated ? "activated" : impostorNoticeKey);
   endChallengeIfNeeded(true);
   updateSpokenCountdown();
   if (!gameCompleted && gameModes[gameMode].shuffleAfterMatch) shuffleUnmatchedCards();
@@ -2213,8 +2272,22 @@ function flipCard(card) {
   card.classList.add("is-flipped");
   card.setAttribute("aria-label", card.dataset.revealedLabel);
 
+  const encounter = impostorRound?.reveal(card,
+    [...board.children].filter(item => !item.classList.contains("is-matched")).length);
+  if (encounter) { card.classList.add("is-impostor-revealed"); updateImpostorPanel(encounter); }
+  if (encounter === "challenge") {
+    // Give even the final two-card challenge a selection before committing a pair.
+    if (firstCard) {
+      firstCard.classList.remove("is-flipped");
+      firstCard.setAttribute("aria-label", memoryGame.hiddenCard);
+    }
+    firstCard = card;
+    updateImpostorPanel("challenge");
+    return;
+  }
   if (!firstCard) {
     firstCard = card;
+    updateImpostorPanel(encounter || impostorNoticeKey);
     return;
   }
 
@@ -2223,13 +2296,17 @@ function flipCard(card) {
   moves += 1;
   updateStatus();
 
-  if (firstCard.dataset.pairId === secondCard.dataset.pairId) {
+  if (firstCard.dataset.pairId === secondCard.dataset.pairId && !impostorRound?.blocksMatch(firstCard, secondCard)) {
     markMatch();
     return;
   }
 
   activeCombo = 0;
   hideComboToast();
+  if (impostorRound?.miss()) {
+    endGame("impostorExhausted"); updateImpostorPanel("defeat"); return;
+  }
+  updateImpostorPanel();
   if (gameModes[gameMode].maxMistakes != null) {
     mistakes += 1;
     updateStatus();
@@ -2274,6 +2351,15 @@ function newGame({ startPreview = !homeScreen.visible } = {}) {
   gameCompleted = false;
   completedPerformance = null;
   renderCompletedPerformance();
+  impostorRound = gameMode === "impostor" ? createImpostorRound() : null;
+  impostorNoticeKey = "ready";
+  board.classList.toggle("is-impostor", Boolean(impostorRound));
+  if (impostorRound) {
+    board.style.setProperty("--impostor-bg", impostorRound.palette[0]);
+    board.style.setProperty("--impostor-ink", impostorRound.palette[1]);
+    board.style.setProperty("--impostor-border", impostorRound.border);
+    board.style.setProperty("--impostor-suspect-border", impostorRound.suspectBorder);
+  }
   activePairs = chooseActivePairs();
   board.classList.remove("is-complete", "is-intro", "is-flash-preview");
   matchInsight.classList.remove("is-visible");
@@ -2296,6 +2382,7 @@ function newGame({ startPreview = !homeScreen.visible } = {}) {
   deck = shuffle(buildDeck());
   renderLegendsList();
   board.replaceChildren(...deck.map(createCard));
+  positionImpostorPanel();
   updateGameTitleVisibility();
   initializeMatchToastsPreference();
   if (startPreview && gameModes[gameMode].previewSeconds) startMemoryPreview();
@@ -2506,7 +2593,27 @@ async function runIntroTutorial() {
   newGame();
 }
 
+function closeImpostorRules() {
+  if (impostorRulesPanel.classList.contains("is-visible")) {
+    try { window.localStorage.setItem(impostorIntroStorageKey, "true"); } catch {}
+  }
+  impostorRulesPanel.classList.remove("is-visible");
+  syncModalScrollLock();
+  hintButton.focus({ preventScroll: true });
+}
+document.getElementById("closeImpostorRulesButton").addEventListener("click", closeImpostorRules);
+impostorRulesPanel.addEventListener("click", event => { if (event.target === impostorRulesPanel) closeImpostorRules(); });
+
+function showImpostorTutorial() {
+  impostorRulesPanel.classList.add("is-visible");
+  syncModalScrollLock();
+}
+
 function handleHint() {
+  if (impostorRound) {
+    showImpostorTutorial();
+    return;
+  }
   if (introRunning || previewPhase || !tipsEnabled) return;
   // The first flip starts play before either the move count or timer ticks.
   const canReplayTutorial = !gameCompleted && !firstCard &&
@@ -2522,6 +2629,13 @@ function handleHint() {
 }
 
 function startGame() {
+  if (gameMode === "impostor") {
+    newGame();
+    let seen = false;
+    try { seen = Boolean(window.localStorage.getItem(impostorIntroStorageKey)); } catch {}
+    if (!seen) showImpostorTutorial();
+    return;
+  }
   if (gameModes[gameMode].previewSeconds) { newGame(); return; }
   let needsCrazyIntro = false;
   try { needsCrazyIntro = gameMode === "crazyMirrors" && !window.localStorage.getItem(crazyIntroStorageKey); } catch {}
@@ -2788,6 +2902,7 @@ rarityPanel?.addEventListener("click", (event) => {
 legendToastClose.addEventListener("click", () => {
   if (!introRunning) hideLegendToast();
 });
+impostorControlsAboveMedia?.addEventListener("change", positionImpostorPanel);
 window.addEventListener("resize", updateGameTitleVisibility);
 window.visualViewport?.addEventListener("resize", updateGameTitleVisibility);
 playAgainButton.addEventListener("click", restartGame);
