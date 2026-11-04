@@ -1602,7 +1602,8 @@ function applyUiCopy() {
   getCopyButton.href = getDigitalBookUrl();
   setElementHidden(getCopyButton, !getCopyButton.getAttribute("href"));
   setElementText(legendsGetCopyButton, memoryGame.getCopy || "Get a copy of the book");
-  setElementHref(legendsGetCopyButton, resolveGameHref(memoryGame.getCopyHref));
+  setElementHref(legendsGetCopyButton, getDigitalBookUrl());
+  setElementHidden(legendsGetCopyButton, !legendsGetCopyButton.getAttribute("href"));
   winTitle.textContent = memoryGame.winTitle || "";
   setElementText(legendsPanelTitle, memoryGame.legendsTitle || "");
   setElementText(legendsRarityNote, memoryGame.legendsRarityNote || "");
