@@ -857,7 +857,7 @@
           ],
           "remaining": "Cartas restantes",
           "chances": "Oportunidades",
-          "caution": "Los fallos gastan una oportunidad, suman un movimiento y rompen el combo. Una acusación errónea o agotar las oportunidades termina la ronda. Con dos cartas, identifica al impostor antes de emparejar.",
+          "caution": "Los fallos gastan una oportunidad, suman un movimiento y rompen el combo. Una acusación errónea o agotar las oportunidades termina la ronda. Con dos cartas, identifica al impostor antes de emparejar. Con dos cartas restantes, puedes girar cualquiera y alternar entre ellas sin gastar oportunidades. Acusa a la carta seleccionada cuando estés listo; una acusación incorrecta termina la partida.",
           "status": "Estado",
           "suspected": "Posible impostor",
           "accuseShort": "Acusar",

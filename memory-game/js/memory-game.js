@@ -2384,13 +2384,14 @@ function flipCard(card) {
   card.classList.add("is-flipped");
   card.setAttribute("aria-label", card.dataset.revealedLabel);
 
-  const encounter = impostorRound?.reveal(card,
-    [...board.children].filter(item => !item.classList.contains("is-matched")).length);
+  const remainingCount = [...board.children].filter(item => !item.classList.contains("is-matched")).length;
+  const encounter = impostorRound?.reveal(card, remainingCount);
   impostorAccusationCard = card;
   // The pair stays anonymous until rearrangement; only the impostor gets the clue.
   if (impostorRound?.canAccuse(card) && card === impostorRound.suspect) card.classList.add("is-impostor-revealed");
-  if (encounter === "challenge") {
-    // Give even the final two-card challenge a selection before committing a pair.
+  if (encounter === "challenge" || (remainingCount === 2 && impostorRound?.canAccuse(card))) {
+    // With only the affected pair left, flipping switches the accusation target.
+    // Inspection is not a failed match; the accusation commits the final decision.
     if (firstCard) {
       firstCard.classList.remove("is-flipped");
       firstCard.setAttribute("aria-label", memoryGame.hiddenCard);

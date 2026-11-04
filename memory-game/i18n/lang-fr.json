@@ -857,7 +857,7 @@
           ],
           "remaining": "Cartes restantes",
           "chances": "Chances",
-          "caution": "Une erreur consomme une chance, ajoute un coup et interrompt le combo. Une fausse accusation ou des chances épuisées termine la partie. Avec deux cartes, identifiez l’imposteur avant de les associer.",
+          "caution": "Une erreur consomme une chance, ajoute un coup et interrompt le combo. Une fausse accusation ou des chances épuisées termine la partie. Avec deux cartes, identifiez l’imposteur avant de les associer. Avec deux cartes restantes, vous pouvez révéler l’une ou l’autre sans dépenser de chance. Accusez la carte sélectionnée quand vous êtes prêt ; une mauvaise accusation termine la partie.",
           "status": "État",
           "suspected": "Imposteur suspecté",
           "accuseShort": "Accuser",

@@ -372,6 +372,11 @@ combo; wrong accusations and exhausted chances immediately lose. Successful
 normal matches do not spend chances. The impostor cannot match until correctly
 accused. Correct identification clears its border variation and restores its
 original pair; victory requires identification and all ten pairs.
+When only the affected pair remains, flipping the other card switches the
+accusation selection and turns the previous card face down. Inspection does not
+spend a chance or add a failed move. The player can inspect either card in either
+order; only the accusation commits the decision. A wrong accusation still loses
+immediately, and correct identification enables the final match.
 
 The first entry shows a localized tutorial dialog independently of the other
 modes, saved under `timelessMemoryImpostorIntroSeen`. The lightbulb reopens it; the board

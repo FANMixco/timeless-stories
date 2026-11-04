@@ -857,7 +857,7 @@
           ],
           "remaining": "Cards remaining",
           "chances": "Chances",
-          "caution": "Failed matches spend a chance, add a move and break your combo. A wrong accusation or no chances left ends the round. With two cards left, identify the impostor before matching.",
+          "caution": "Failed matches spend a chance, add a move and break your combo. A wrong accusation or no chances left ends the round. With two cards left, identify the impostor before matching. With two cards left, you can reveal either card and switch between them without spending a chance. Accuse the selected card when ready; a wrong accusation ends the round.",
           "status": "Status",
           "suspected": "Impostor suspected",
           "accuseShort": "Accuse",
