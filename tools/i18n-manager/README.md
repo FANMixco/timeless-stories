@@ -1,6 +1,6 @@
 # i18n Manager
 
-Local JSON editor for the source files in `js/i18n`, `js/i18n/memory-game`, and `js/data`.
+Local JSON editor for the source files in `js/i18n`, `js/data`, `memory-game/i18n`, and `memory-game/data`.
 
 Run it from the repository root:
 
@@ -23,7 +23,7 @@ node tools/i18n-manager/server.mjs 4185
 The manager can:
 
 - edit `js/i18n/lang-*.json`
-- edit `js/i18n/memory-game/lang-*.json`
+- edit `memory-game/i18n/lang-*.json`
 - edit `js/data/*.json`
 - add a new language file from an existing language template
 - validate JSON

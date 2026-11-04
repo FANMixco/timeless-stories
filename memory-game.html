@@ -14,19 +14,19 @@
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Timeless Stories: Mirrors 🪞 | Timeless Stories" />
     <meta property="og:description" content="Play a free memory game matching Salvadoran legends with their Spanish counterparts. Discover folklore in English, Spanish, French, and Chinese." />
-    <meta property="og:image" content="https://tstories.federiconavarrete.com/img/memory-game/preview_memory.jpg" />
+    <meta property="og:image" content="https://tstories.federiconavarrete.com/memory-game/img/preview_memory.jpg" />
     <meta property="og:url" content="https://tstories.federiconavarrete.com/memory-game.html" />
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:title" content="Timeless Stories: Mirrors 🪞 | Timeless Stories" />
     <meta property="twitter:description" content="Play a free memory game matching Salvadoran legends with their Spanish counterparts. Discover folklore in English, Spanish, French, and Chinese." />
-    <meta property="twitter:image" content="https://tstories.federiconavarrete.com/img/memory-game/preview_memory.jpg" />
+    <meta property="twitter:image" content="https://tstories.federiconavarrete.com/memory-game/img/preview_memory.jpg" />
     <link rel="canonical" href="https://tstories.federiconavarrete.com/memory-game.html" />
     <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
-    <link rel="apple-touch-icon" sizes="180x180" href="img/memory-game/favicons/apple-touch-icon.png" />
-    <link rel="icon" type="image/png" sizes="192x192" href="img/memory-game/favicons/maskable_icon_x192.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="img/memory-game/favicons/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="img/memory-game/favicons/favicon-16x16.png" />
-    <link rel="manifest" href="memory-game.webmanifest" />
+    <link rel="apple-touch-icon" sizes="180x180" href="memory-game/img/favicons/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="memory-game/img/favicons/maskable_icon_x192.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="memory-game/img/favicons/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="memory-game/img/favicons/favicon-16x16.png" />
+    <link rel="manifest" href="memory-game/manifest.webmanifest" />
     <script type="application/ld+json" id="memoryGameSchema">
       {
         "@context": "https://schema.org",
@@ -34,7 +34,7 @@
         "name": "Timeless Stories: Mirrors",
         "description": "Match Salvadoran legends with their Spanish mirror legends in this multilingual memory game.",
         "url": "https://tstories.federiconavarrete.com/memory-game.html",
-        "image": "https://tstories.federiconavarrete.com/img/memory-game/preview_memory.jpg",
+        "image": "https://tstories.federiconavarrete.com/memory-game/img/preview_memory.jpg",
         "inLanguage": ["en", "es", "fr", "zh"],
         "isAccessibleForFree": true,
         "genre": "Memory game",
@@ -56,8 +56,9 @@
         }
       }
     </script>
-    <link rel="stylesheet" href="css/icon-moon-memory.min.css?v=memory-cf2881c0ca7f" />
-    <link rel="stylesheet" href="css/memory-game.min.css?v=memory-cf2881c0ca7f" />
+    <link rel="preload" href="memory-game/css/fonts/memory-game.woff2?v=memory-85497330eb98" as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="stylesheet" href="memory-game/css/icon-moon-memory.min.css?v=memory-85497330eb98" />
+    <link rel="stylesheet" href="memory-game/css/memory-game.min.css?v=memory-85497330eb98" />
   </head>
   <body>
     <main class="game-shell is-home" aria-label="">
@@ -67,53 +68,55 @@
           <p id="homeSubtitle">Find each mirror pair from Spanish Mirrors.</p>
         </header>
         <div class="home-modes">
-          <button class="home-card" id="home-classic" type="button"><i class="icon-book" aria-hidden="true"></i><strong id="home-classic-name"></strong><span id="home-classic-description"></span></button>
-          <button class="home-card" id="home-timeAttack" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6M12 2v3"/></svg><strong id="home-timeAttack-name"></strong><span id="home-timeAttack-description"></span></button>
-          <button class="home-card" id="home-limitedMoves" type="button"><span class="home-move-icon" id="home-limitedMoves-icon" aria-hidden="true">25</span><strong id="home-limitedMoves-name"></strong><span id="home-limitedMoves-description"></span></button>
-          <button class="home-card" id="home-crazyMirrors" type="button" hidden><i class="icon-mirror" aria-hidden="true"></i><strong id="home-crazyMirrors-name"></strong><span id="home-crazyMirrors-description"></span>
+          <button class="home-card" id="home-classic" type="button">
+            <i class="icon icon-book" aria-hidden="true"></i><strong id="home-classic-name"></strong><span id="home-classic-description"></span>
+          </button>
+          <button class="home-card" id="home-timeAttack" type="button">
+            <i class="icon icon-time-attack" aria-hidden="true"></i><strong id="home-timeAttack-name"></strong><span id="home-timeAttack-description"></span>
+          </button>
+          <button class="home-card" id="home-limitedMoves" type="button">
+            <span class="home-move-icon" id="home-limitedMoves-icon" aria-hidden="true">25</span><strong id="home-limitedMoves-name"></strong><span id="home-limitedMoves-description"></span>
+          </button>
+          <button class="home-card" id="home-crazyMirrors" type="button" hidden><i class="icon icon-mirror" aria-hidden="true"></i><strong id="home-crazyMirrors-name"></strong><span id="home-crazyMirrors-description"></span>
             <span class="home-unlock" id="home-crazyMirrors-unlock" hidden>
-              <span class="home-lock-badge"><svg class="home-lock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v3"/></svg> <span id="home-crazyMirrors-locked"></span></span>
+              <span class="home-lock-badge"><i class="icon home-lock-icon icon-lock" aria-hidden="true"></i> <span id="home-crazyMirrors-locked"></span></span>
               <span class="home-unlock-requirement" id="home-crazyMirrors-requirement"></span>
               <progress id="home-crazyMirrors-meter" max="1" value="0"></progress>
               <span class="home-unlock-progress" id="home-crazyMirrors-progress"></span>
               <span class="home-unlock-action" id="home-crazyMirrors-awards"></span>
             </span></button>
-          <button class="home-card" id="home-memoryFlash" type="button" hidden><i class="icon-power" aria-hidden="true"></i><strong id="home-memoryFlash-name"></strong><span id="home-memoryFlash-description"></span>
+          <button class="home-card" id="home-memoryFlash" type="button" hidden><i class="icon icon-power" aria-hidden="true"></i><strong id="home-memoryFlash-name"></strong><span id="home-memoryFlash-description"></span>
             <span class="home-unlock" id="home-memoryFlash-unlock" hidden>
-              <span class="home-lock-badge"><svg class="home-lock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v3"/></svg> <span id="home-memoryFlash-locked"></span></span>
+              <span class="home-lock-badge"><i class="icon home-lock-icon icon-lock" aria-hidden="true"></i> <span id="home-memoryFlash-locked"></span></span>
               <span class="home-unlock-requirement" id="home-memoryFlash-requirement"></span>
               <progress id="home-memoryFlash-meter" max="1" value="0"></progress>
               <span class="home-unlock-progress" id="home-memoryFlash-progress"></span>
               <span class="home-unlock-action" id="home-memoryFlash-awards"></span>
             </span></button>
-        <section class="home-coming-soon" aria-labelledby="homeSixthMirrorTitle">
-          <!-- Venetian Mask icon: ISC License, Copyright (c) 2026 Lucide Icons and Contributors.
-            Permission to use, copy, modify, and/or distribute this software for any
-            purpose with or without fee is hereby granted, provided that the above
-            copyright notice and this permission notice appear in all copies.
-            THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-            WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-            MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-            ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-            WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-            ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-            OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE. -->
-          <svg class="home-coming-soon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 11c-1.5 0-2.5.5-3 2"/><path d="M4 6a2 2 0 0 0-2 2v4a5 5 0 0 0 5 5 8 8 0 0 1 5 2 8 8 0 0 1 5-2 5 5 0 0 0 5-5V8a2 2 0 0 0-2-2h-3a8 8 0 0 0-5 2 8 8 0 0 0-5-2z"/><path d="M6 11c1.5 0 2.5.5 3 2"/></svg>
-          <div class="home-coming-soon-heading">
-            <h2 id="homeSixthMirrorTitle"></h2>
-            <p id="homeSixthMirrorSubtitle"></p>
-          </div>
-          <svg class="home-lock-icon home-coming-soon-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v3"/></svg>
-          <p class="home-coming-soon-description" id="homeSixthMirrorDescription"></p>
-          <span class="home-coming-soon-status" id="homeSixthMirrorStatus"></span>
-          <a class="home-coming-soon-book" id="homeSixthMirrorBook" target="_blank" rel="noopener noreferrer" hidden></a>
-        </section>
+          <section class="home-coming-soon" aria-labelledby="homeSixthMirrorTitle">
+
+            <i class="icon home-coming-soon-icon icon-impostor" aria-hidden="true"></i>
+            <div class="home-coming-soon-heading">
+              <h2 id="homeSixthMirrorTitle"></h2>
+              <p id="homeSixthMirrorSubtitle"></p>
+            </div>
+            <i class="icon home-lock-icon home-coming-soon-lock icon-lock" aria-hidden="true"></i>
+            <p class="home-coming-soon-description" id="homeSixthMirrorDescription"></p>
+            <span class="home-coming-soon-status" id="homeSixthMirrorStatus"></span>
+            <a class="home-coming-soon-book" id="homeSixthMirrorBook" target="_blank" rel="noopener noreferrer" hidden></a>
+          </section>
         </div>
         <div class="home-tools">
-          <button class="home-card home-tool" id="homeCollection" type="button" aria-haspopup="dialog"><i class="icon-book-open" aria-hidden="true"></i><strong id="homeCollectionLabel"></strong></button>
-          <button class="home-card home-tool" id="homeRecords" type="button" aria-haspopup="dialog"><i class="icon-trophy" aria-hidden="true"></i><strong id="homeRecordsLabel"></strong></button>
-          <button class="home-card home-tool" id="homeSettings" type="button" aria-haspopup="dialog"><svg class="settings-gear" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m9 3-.5 2-2 1.2-2-.6L2 10l1.5 1.4v2L2 15l2.5 4.3 2-.6L8.5 20 9 22h5l.5-2 2-1.3 2 .6L21 15l-1.5-1.6v-2L21 10l-2.5-4.4-2 .6-2-1.2-.5-2Z"/><circle cx="11.5" cy="12.5" r="3.5"/></svg><strong id="homeSettingsLabel"></strong></button>
-          <a class="home-card home-tool" id="homeRateApp" target="_blank" rel="noopener noreferrer" hidden><i class="icon-star-full" aria-hidden="true"></i><strong id="homeRateAppLabel"></strong></a>
+          <button class="home-card home-tool" id="homeCollection" type="button" aria-haspopup="dialog">
+            <i class="icon icon-book-open" aria-hidden="true"></i><strong id="homeCollectionLabel"></strong>
+          </button>
+          <button class="home-card home-tool" id="homeRecords" type="button" aria-haspopup="dialog">
+            <i class="icon icon-trophy" aria-hidden="true"></i><strong id="homeRecordsLabel"></strong>
+          </button>
+          <button class="home-card home-tool" id="homeSettings" type="button" aria-haspopup="dialog">
+            <i class="icon settings-gear icon-settings" aria-hidden="true"></i><strong id="homeSettingsLabel"></strong>
+          </button>
+          <a class="home-card home-tool" id="homeRateApp" target="_blank" rel="noopener noreferrer" hidden><i class="icon icon-star-full" aria-hidden="true"></i><strong id="homeRateAppLabel"></strong></a>
         </div>
       </section>
       <div class="game-layout">
@@ -126,8 +129,12 @@
             </div>
             <div class="game-actions">
               <div class="game-primary-actions">
-              <button class="game-button secondary" type="button" id="homeButton"><svg class="action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m10 5-7 7 7 7M3 12h12a6 6 0 0 1 6 6v2"/></svg></button>
-              <button class="game-button" type="button" id="newGameButton"><svg class="new-game-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-2.64-6.36L21 8M21 3v5h-5"/><path d="m10 8 6 4-6 4Z"/></svg><span id="newGameLabel"></span></button>
+              <button class="game-button secondary" type="button" id="homeButton">
+                <i class="icon action-icon icon-home" aria-hidden="true"></i>
+              </button>
+              <button class="game-button" type="button" id="newGameButton">
+                <i class="icon action-icon icon-new-game" aria-hidden="true"></i><span id="newGameLabel"></span>
+              </button>
               </div>
               <div class="game-secondary-actions">
               <button class="game-button secondary" type="button" id="topViewLegendsButton" hidden></button>
@@ -135,7 +142,7 @@
               <button class="game-button secondary" type="button" id="achievementsButton" aria-haspopup="dialog" hidden></button>
               <button class="game-button secondary" type="button" id="hintButton"></button>
               <button class="game-button secondary" type="button" id="settingsButton" aria-haspopup="dialog">
-                <svg class="action-icon settings-gear" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m9 3-.5 2-2 1.2-2-.6L2 10l1.5 1.4v2L2 15l2.5 4.3 2-.6L8.5 20 9 22h5l.5-2 2-1.3 2 .6L21 15l-1.5-1.6v-2L21 10l-2.5-4.4-2 .6-2-1.2-.5-2Z"/><circle cx="11.5" cy="12.5" r="3.5"/></svg>
+                <i class="icon action-icon settings-gear icon-settings" aria-hidden="true"></i>
               </button>
               <button class="game-button secondary" type="button" id="shareButton"></button>
               </div>
@@ -178,7 +185,7 @@
           <section class="board" id="board" aria-label=""></section>
         </div>
       </div>
-      <aside class="win-panel" id="winPanel" role="status" aria-live="polite">
+      <aside class="win-panel" id="winPanel" role="dialog" aria-modal="true" aria-labelledby="winTitle" aria-describedby="winMessage">
         <span class="firework" aria-hidden="true"></span>
         <span class="firework" aria-hidden="true"></span>
         <span class="firework" aria-hidden="true"></span>
@@ -192,7 +199,7 @@
             <p id="winMessage"></p>
             <div class="win-performance" id="winPerformance"></div>
             <button class="win-records-link" id="winRecordsButton" type="button" aria-haspopup="dialog" aria-controls="achievementsPanel">
-              <i class="icon-trophy" aria-hidden="true"></i><span id="winRecordsLabel"></span>
+              <i class="icon icon-trophy" aria-hidden="true"></i><span id="winRecordsLabel"></span>
             </button>
             <div class="win-actions">
               <a class="game-button reward" id="previewRewardButton" target="_blank" rel="noopener noreferrer" hidden></a>
@@ -329,21 +336,21 @@
               <button type="button" id="progressAchievementsTab" role="tab" aria-selected="false" aria-controls="progressAchievementsPanel" tabindex="-1"></button>
             </div>
             <div id="progressRecordsPanel" role="tabpanel" aria-labelledby="progressRecordsTab">
-            <section class="personal-records" aria-labelledby="personalRecordsTitle">
-              <h3 id="personalRecordsTitle"></h3>
-              <section class="mode-records" aria-labelledby="personalRecordsMode">
-              <h4 id="personalRecordsMode"></h4>
-              <p id="personalRecordsConfiguration"></p>
-              <p id="personalRecordsEmpty"></p>
-              <dl class="records-grid" id="personalRecordsStats"></dl>
+              <section class="personal-records" aria-labelledby="personalRecordsTitle">
+                <h3 id="personalRecordsTitle"></h3>
+                <section class="mode-records" aria-labelledby="personalRecordsMode">
+                  <h4 id="personalRecordsMode"></h4>
+                  <p id="personalRecordsConfiguration"></p>
+                  <p id="personalRecordsEmpty"></p>
+                  <dl class="records-grid" id="personalRecordsStats"></dl>
+                </section>
+                <div id="challengeRecordsStats"></div>
+                <p id="challengeAttemptPolicy"></p>
               </section>
-              <div id="challengeRecordsStats"></div>
-              <p id="challengeAttemptPolicy"></p>
-            </section>
             </div>
             <div id="progressAchievementsPanel" role="tabpanel" aria-labelledby="progressAchievementsTab" hidden>
-            <p id="achievementsProgress"></p>
-            <div class="achievements-list" id="achievementsList"></div>
+              <p id="achievementsProgress"></p>
+              <div class="achievements-list" id="achievementsList"></div>
             </div>
           </div>
         </div>
@@ -355,7 +362,7 @@
             <h2 id="achievementTitle"></h2>
           </header>
           <div class="dialog-body" role="region" aria-labelledby="achievementTitle" tabindex="0">
-            <i class="achievement-icon" id="achievementIcon" aria-hidden="true"></i>
+            <i class="icon achievement-icon" id="achievementIcon" aria-hidden="true"></i>
             <h3 id="achievementName"></h3>
             <p id="achievementDescription"></p>
             <p id="achievementCelebration"></p>
@@ -426,7 +433,7 @@
       <footer class="game-footer standalone-only" id="gameFooter"></footer>
     </main>
 
-    <script type="module" src="js/memory-game.min.js?v=memory-cf2881c0ca7f"></script>
+    <script type="module" src="memory-game/js/memory-game.min.js?v=memory-85497330eb98"></script>
     <!-- Keep registration inline so PWA analyzers can discover it without running a browser. -->
     <script>
       if ("serviceWorker" in navigator) {

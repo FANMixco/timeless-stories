@@ -8,8 +8,10 @@ const __dirname = fileURLToPath(new URL(".", import.meta.url));
 const rootDir = resolve(__dirname, "../..");
 const managerDir = resolve(__dirname, "public");
 const i18nDir = resolve(rootDir, "js/i18n");
-const memoryI18nDir = resolve(rootDir, "js/i18n/memory-game");
+const memoryI18nDir = resolve(rootDir, "memory-game/i18n");
 const dataDir = resolve(rootDir, "js/data");
+const memoryDataDir = resolve(rootDir, "memory-game/data");
+const dataDirectoryFor = file => file === "memory-game.json" || file === "memory-game-links.json" ? memoryDataDir : dataDir;
 const requestedPort = process.env.PORT || process.argv[2];
 const defaultPort = 4173;
 const port = requestedPort ? Number(requestedPort) : defaultPort;
@@ -64,7 +66,7 @@ function sourceFileFor(target) {
 
   if (target.type === "data") {
     const file = ensureDataFile(target.file);
-    return resolve(dataDir, file);
+    return resolve(dataDirectoryFor(file), file);
   }
 
   throw new Error("Unknown file type.");
@@ -134,7 +136,7 @@ async function cloneField({ type, lang, path, value }) {
 async function minifyFile(file) {
   const json = await readJsonFile(file);
   if (isInside(memoryI18nDir, file)) assertMemoryGame(json);
-  if (file === resolve(dataDir, "memory-game.json")) assertSelectionRules(json);
+  if (file === resolve(memoryDataDir, "memory-game.json")) assertSelectionRules(json);
   const minFile = minFileFor(file);
   await writeFile(minFile, JSON.stringify(json), "utf8");
   return {
@@ -153,7 +155,7 @@ async function listJsonFiles(dir) {
 async function listFiles() {
   const i18nFiles = await listJsonFiles(i18nDir);
   const memoryFiles = await listJsonFiles(memoryI18nDir);
-  const dataFiles = await listJsonFiles(dataDir);
+  const dataFiles = [...await listJsonFiles(dataDir), ...await listJsonFiles(memoryDataDir)].sort();
   const buildLanguages = async (dir, files) => Promise.all(
     files.map(async (file) => {
       const lang = file.replace(/^lang-/, "").replace(/\.json$/, "");
@@ -169,7 +171,7 @@ async function listFiles() {
 
   const data = await Promise.all(
     dataFiles.map(async (file) => {
-      const json = await readJsonFile(resolve(dataDir, file));
+      const json = await readJsonFile(resolve(dataDirectoryFor(file), file));
       const count = json && typeof json === "object" ? Object.keys(json).length : 0;
       return { file, count };
     }),
@@ -266,7 +268,7 @@ async function searchFiles(query, target = {}) {
   }
 
   for (const dataFile of availableFiles.data) {
-    const file = resolve(dataDir, dataFile.file);
+    const file = resolve(dataDirectoryFor(dataFile.file), dataFile.file);
     const json = await readJsonFile(file);
     matches.push(
       ...searchJson(json, trimmed).map((match) => ({
@@ -334,6 +336,7 @@ async function handleApi(request, response, url) {
         for (const file of await listJsonFiles(i18nDir)) files.push(resolve(i18nDir, file));
         for (const file of await listJsonFiles(memoryI18nDir)) files.push(resolve(memoryI18nDir, file));
         for (const file of await listJsonFiles(dataDir)) files.push(resolve(dataDir, file));
+        for (const file of await listJsonFiles(memoryDataDir)) files.push(resolve(memoryDataDir, file));
       } else {
         files.push(sourceFileFor(body));
       }
