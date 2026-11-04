@@ -56,9 +56,9 @@
         }
       }
     </script>
-    <link rel="preload" href="memory-game/css/fonts/memory-game.woff2?v=memory-c5e71142c271" as="font" type="font/woff2" crossorigin="anonymous" />
-    <link rel="stylesheet" href="memory-game/css/icon-moon-memory.min.css?v=memory-c5e71142c271" />
-    <link rel="stylesheet" href="memory-game/css/memory-game.min.css?v=memory-c5e71142c271" />
+    <link rel="preload" href="memory-game/css/fonts/memory-game.woff2?v=memory-32704267c8f9" as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="stylesheet" href="memory-game/css/icon-moon-memory.min.css?v=memory-32704267c8f9" />
+    <link rel="stylesheet" href="memory-game/css/memory-game.min.css?v=memory-32704267c8f9" />
   </head>
   <body>
     <main class="game-shell is-home" aria-label="">
@@ -411,8 +411,8 @@
               <input type="checkbox" id="tipsToggle" role="switch" />
             </label>
             <label class="settings-row settings-match-toasts" for="matchToastsToggle">
-              <span id="settingsMatchToastsLabel"></span>
-              <input type="checkbox" id="matchToastsToggle" role="switch" />
+              <span><span id="settingsMatchToastsLabel"></span><small id="settingsMatchToastsUnavailable" hidden></small></span>
+              <input type="checkbox" id="matchToastsToggle" role="switch" aria-describedby="settingsMatchToastsUnavailable" />
             </label>
             <label class="settings-row settings-short-names" for="shortNamesToggle">
               <span id="settingsShortNamesLabel"></span>
@@ -462,7 +462,7 @@
       <footer class="game-footer standalone-only" id="gameFooter"></footer>
     </main>
 
-    <script type="module" src="memory-game/js/memory-game.min.js?v=memory-c5e71142c271"></script>
+    <script type="module" src="memory-game/js/memory-game.min.js?v=memory-32704267c8f9"></script>
     <!-- Keep registration inline so PWA analyzers can discover it without running a browser. -->
     <script>
       if ("serviceWorker" in navigator) {

@@ -212,7 +212,8 @@
         "hardMode": "Hard mode",
         "hardModeUnlocked": "Hard Mode has been unlocked! Enjoy a new experience.",
         "spokenCountdown": "Spoken countdown",
-        "music": "Background music"
+        "music": "Background music",
+        "matchToastsUnavailable": "Unavailable while playing The Impostor."
       },
       "optionalAchievements": {
         "title": "Optional Achievements",
@@ -837,26 +838,27 @@
         "impostor": {
           "name": "The Impostor",
           "description": "Find the altered border, accuse the impostor, then clear all 10 pairs.",
-          "tutorial": "Match three pairs to awaken an impostor. All cards share one palette; watch for a subtly different border. Its first reveal triggers one shuffle after your turn. Its second reveal starts identification: select a card, then Accuse Impostor. With 6+ / 4 / 2 cards left you get 3 / 2 / 1 chances. Failed matches spend chances, add moves and break your combo. A wrong accusation ends the round. Identify it before matching its original partner, then finish the board.",
-          "activated": "Impostor activated. Look for the subtle border change.",
-          "encounter": "Border anomaly encountered. Finish this turn to reshuffle.",
-          "reshuffle": "Remaining cards reshuffled once. The impostor has moved.",
-          "challenge": "Final identification: select a card and accuse.",
+          "tutorial": "After three matches, a shadow announces the impostor. Keep matching normally. Only matching its legitimate pair makes both cards turn face down and rearranges the remaining cards once. Afterward, revealing either member of that pair offers Accuse Impostor. Both look alike: only one is the impostor. A wrong accusation ends the round. Failed matches spend identification chances: 3 with 6+ cards, 2 with 4, 1 with 2. Correctly accuse the impostor, then clear all 10 pairs.",
+          "activated": "An impostor has entered. Keep matching to find the affected pair.",
+          "encounter": "Affected pair found. Both cards turn face down, then the remaining cards rearrange.",
+          "reshuffle": "Cards rearranged once. Reveal either card from the affected pair to accuse.",
+          "challenge": "Affected card selected. Accuse it or continue matching.",
           "attempts": "Chances remaining: {count}",
           "accuse": "Accuse Impostor",
           "identified": "Impostor identified. Its original pair can now match.",
           "victory": "Impostor identified and all 10 pairs cleared!",
           "defeat": "Investigation failed.",
-          "ready": "Match three pairs, then watch for a changed border.",
+          "ready": "Match three pairs to summon the impostor.",
           "rules": "How to play",
           "steps": [
-            "Match 3 pairs. One remaining card becomes the impostor. Its original icon and partner stay the same.",
-            "Spot the border. Its first reveal shows a subtle border change. After that turn, unmatched cards shuffle once.",
-            "Accuse, then finish. Its second reveal starts identification. Select a card and use Accuse Impostor. Correct identification restores its original pair. Clear all 10 pairs to win."
+            "Match 3 pairs. A shadow and the impostor icon announce its arrival. The affected pair stays secret.",
+            "Find the affected pair by matching normally. Its two cards turn face down instead of disappearing. All unmatched cards rearrange once.",
+            "Choose your accusation. Reveal either affected card to accuse it or keep matching. Only one is the impostor. Identify it correctly, then complete its original pair and clear the board."
           ],
           "remaining": "Cards remaining",
           "chances": "Chances",
-          "caution": "Failed matches spend a chance, add a move and break your combo. A wrong accusation or no chances left ends the round. With two cards left, identify the impostor before matching."
+          "caution": "Failed matches spend a chance, add a move and break your combo. A wrong accusation or no chances left ends the round. With two cards left, identify the impostor before matching.",
+          "status": "Status"
         },
         "impostorWrong": "Wrong accusation. The impostor escaped.",
         "impostorExhausted": "No chances remain. The impostor escaped."

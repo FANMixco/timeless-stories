@@ -2214,7 +2214,8 @@ html[data-theme="dark"] .game-shell [data-category] .character-icon {
 /* Round palette overrides every rarity/category in both themes. Identity stays intact. */
 .impostor-panel { width: 100%; text-align: start; padding: 12px 14px; }
 .impostor-panel p { margin: 0; font-size: .88rem; font-weight: 400; line-height: 1.45; }
-.impostor-panel #accuseImpostor { margin-top: 10px; }
+.impostor-panel #accuseImpostor { display: block; margin: 10px auto 0; }
+.impostor-panel #accuseImpostor[hidden] { display: none; }
 .impostor-panel[hidden], #impostorBookGate[hidden], #home-impostor[hidden] { display: none; }
 html[data-theme] .game-shell .board.is-impostor .card .card-face {
   background: var(--impostor-bg); color: var(--impostor-ink);
@@ -2305,3 +2306,56 @@ html[data-theme] .game-shell .board.is-impostor .card .character-icon {
 }
 
 .impostor-panel .is-important { font-weight: 800; }
+
+/* Arrival is a board-wide cue, never a clue to a particular pair or card. */
+.board.is-impostor { position: relative; }
+.board.is-impostor-arriving::before,
+.board.is-impostor-arriving::after { position: absolute; pointer-events: none; z-index: 12; }
+.board.is-impostor-arriving::before {
+  content: "";
+  inset: 0;
+  border-radius: 18px;
+  background: radial-gradient(ellipse at center, rgba(9, 13, 23, .86) 0%, rgba(18, 25, 37, .6) 35%, transparent 74%);
+  animation: impostor-smoke 1100ms ease-in-out both;
+}
+.board.is-impostor-arriving::after {
+  content: "\f006" / "";
+  font-family: "memory-game";
+  font-size: clamp(5rem, 20vw, 9rem);
+  color: #f2f6f9;
+  left: 50%;
+  top: 50%;
+  line-height: 1;
+  text-shadow: 0 8px 24px #090d17;
+  animation: impostor-arrival 1100ms ease-in-out both;
+}
+@keyframes impostor-smoke {
+  0%, 100% { opacity: 0; transform: scale(.95); }
+  25%, 65% { opacity: 1; transform: scale(1); }
+}
+@keyframes impostor-arrival {
+  0%, 100% { opacity: 0; transform: translate(-50%, -50%) scale(.85); }
+  25%, 65% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .board.is-impostor-arriving::before { animation-name: impostor-arrival-fade; }
+  .board.is-impostor-arriving::after { transform: translate(-50%, -50%); animation-name: impostor-arrival-fade; }
+}
+@keyframes impostor-arrival-fade {
+  0%, 100% { opacity: 0; }
+  25%, 65% { opacity: 1; }
+}
+
+/* Investigation status carries urgency; familiar pair descriptions stay hidden. */
+.impostor-panel[data-phase="ready"] #impostorNotice,
+#matchesValue.is-impostor-pending { color: var(--muted); }
+.impostor-panel[data-phase="danger"] #impostorNotice,
+.impostor-panel[data-phase="defeat"] #impostorNotice { color: #a12632; }
+html[data-theme="dark"] .impostor-panel[data-phase="danger"] #impostorNotice,
+html[data-theme="dark"] .impostor-panel[data-phase="defeat"] #impostorNotice { color: #ffb4b4; }
+.impostor-panel[data-phase="identified"] #impostorNotice { color: var(--found); }
+.game-shell:has(.board.is-impostor) #matchInsight { display: none; }
+
+.settings-row.is-unavailable { color: var(--muted); }
+#settingsMatchToastsUnavailable { display: block; margin-top: 4px; font-size: .8rem; line-height: 1.4; }
+#settingsMatchToastsUnavailable[hidden] { display: none; }

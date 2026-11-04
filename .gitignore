@@ -34,3 +34,5 @@ tests/match-statistics.test.mjs
 tests/site-game-isolation.test.mjs
 tests/icon-font.test.mjs
 tests/icon-font.test.mjs
+tests/impostor.test.mjs
+tests/impostor.test.mjs
