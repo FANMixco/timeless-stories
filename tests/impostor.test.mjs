@@ -10,6 +10,8 @@ test('seven muted palettes and independently randomized border shades', () => {
     const round = createImpostorRound(() => (index + .1) / 7);
     assert.equal(round.palette, impostorPalettes[index]);
     assert.notEqual(round.border, round.suspectBorder);
+    const lightness = color => Number(color.match(/([\d.]+)%\)$/)[1]);
+    assert.equal(Math.abs(lightness(round.border) - lightness(round.suspectBorder)), 28);
     borders.add(round.border);
   }
   assert.equal(borders.size, 7);

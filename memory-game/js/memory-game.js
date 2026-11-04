@@ -2387,8 +2387,8 @@ function flipCard(card) {
   const encounter = impostorRound?.reveal(card,
     [...board.children].filter(item => !item.classList.contains("is-matched")).length);
   impostorAccusationCard = card;
-  // Both members get the same clue after the pair's rearrangement.
-  if (impostorRound?.canAccuse(card)) card.classList.add("is-impostor-revealed");
+  // The pair stays anonymous until rearrangement; only the impostor gets the clue.
+  if (impostorRound?.canAccuse(card) && card === impostorRound.suspect) card.classList.add("is-impostor-revealed");
   if (encounter === "challenge") {
     // Give even the final two-card challenge a selection before committing a pair.
     if (firstCard) {

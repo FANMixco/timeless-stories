@@ -358,10 +358,11 @@ affected pair: both cards flip face down, then unmatched cards rearrange exactly
 once. Matched slots stay fixed and every remaining card moves.
 
 After rearrangement, revealing either affected card starts identification and
-offers the accusation action for that selected card. Both affected cards have
-the same revealed border treatment, so it cannot identify the individual
-impostor. Unrelated cards never offer the action. Correct identification clears
-both cards’ border treatment and restores their normal pair. Wrongly accusing
+offers the accusation action for that selected card. Only the actual impostor
+gets a visibly lighter or darker revealed border, identifying it against the
+round's normal border. No individual clue appears before rearrangement.
+Unrelated cards never offer the action. Correct identification clears
+the impostor's border treatment and restores their normal pair. Wrongly accusing
 the legitimate partner loses immediately. Selecting another card continues the
 normal matching and mistake rules.
 

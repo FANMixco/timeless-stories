@@ -13,7 +13,7 @@ export function createImpostorRound(random = Math.random) {
   const hue = Math.floor(random() * 360);
   const lightness = 34 + Math.floor(random() * 12);
   const border = `hsl(${hue} 18% ${lightness}%)`;
-  const suspectBorder = `hsl(${hue} 18% ${lightness + (random() < .5 ? -16 : 16)}%)`;
+  const suspectBorder = `hsl(${hue} 18% ${lightness + (random() < .5 ? -28 : 28)}%)`;
   let suspect = null, encounters = 0, pendingShuffle = false, shuffled = false;
   let challenge = false, attempts = null, neutralized = false;
   const isAffected = card => Boolean(card && suspect && card.dataset.pairId === suspect.dataset.pairId);
