@@ -2213,7 +2213,7 @@ html[data-theme="dark"] .game-shell [data-category] .character-icon {
 
 /* Round palette overrides every rarity/category in both themes. Identity stays intact. */
 .impostor-panel { width: 100%; text-align: start; padding: 12px 14px; }
-.impostor-panel p { margin: 0; font-size: .88rem; line-height: 1.45; }
+.impostor-panel p { margin: 0; font-size: .88rem; font-weight: 400; line-height: 1.45; }
 .impostor-panel #accuseImpostor { margin-top: 10px; }
 .impostor-panel[hidden], #impostorBookGate[hidden], #home-impostor[hidden] { display: none; }
 html[data-theme] .game-shell .board.is-impostor .card .card-face {
@@ -2304,4 +2304,4 @@ html[data-theme] .game-shell .board.is-impostor .card .character-icon {
   .board.is-impostor.is-complete + .impostor-victory { animation: none; }
 }
 
-.impostor-panel .is-important { font-weight: 700; }
+.impostor-panel .is-important { font-weight: 800; }
