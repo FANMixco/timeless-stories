@@ -345,16 +345,26 @@ Ten legitimate pairs share one randomly chosen muted palette and border color.
 Matched cards gently fade and shrink after the flip finishes, keeping their slots
 fixed. Reduced-motion settings use a brief fade without shrinking. After victory,
 the existing trophy icon appears in the cleared board area, sized for the screen.
-The final pair’s category panel is hidden when the round ends.
-After three matches, one of the fourteen remaining card identities becomes the
-impostor. Its first reveal shows a lighter or darker border with a thin inner
-edge in the same shade; completing that
-turn hides the open cards and shuffles unmatched nodes exactly once. Matched
-slots stay fixed and the impostor always moves.
+Pair category/description panels are hidden throughout this mode. The match-message
+setting is unchecked and disabled while playing, with a localized explanation.
+Its saved preference is preserved for other modes; automatic overlap detection
+and attempted changes do not write a preference during Impostor rounds.
+After three matches, a brief board-wide shadow and the existing impostor icon
+announce arrival without identifying any card. One remaining card is secretly
+selected; its legitimate partner and all internal identities stay unchanged.
+Revealing that card, or mismatching it with an unrelated card, does not trigger
+any special flip or shuffle. Only attempting its legitimate pair reveals the
+affected pair: both cards flip face down, then unmatched cards rearrange exactly
+once. Matched slots stay fixed and every remaining card moves.
 
-Its second reveal starts identification with a single selected card. Any other
-card selected earlier in that turn is hidden, giving an opportunity to accuse
-before committing a matching attempt, including with only two cards left.
+After rearrangement, revealing either affected card starts identification and
+offers the accusation action for that selected card. Both affected cards have
+the same revealed border treatment, so it cannot identify the individual
+impostor. Unrelated cards never offer the action. Correct identification clears
+both cards’ border treatment and restores their normal pair. Wrongly accusing
+the legitimate partner loses immediately. Selecting another card continues the
+normal matching and mistake rules.
+
 Chances are fixed at challenge entry: three with six or more cards, two with
 four, one with two. Failed matches spend a chance, add a move and reset the
 combo; wrong accusations and exhausted chances immediately lose. Successful
@@ -367,5 +377,8 @@ modes, saved under `timelessMemoryImpostorIntroSeen`. The lightbulb reopens it; 
 keeps its compact investigation status. On phones and short screens, the status
 and accusation action sit below the cards. On roomy screens (at least 641px
 wide and 600px tall), they sit beneath the counters: above the board on tablets
-and large portrait screens, or in the sidebar on desktop landscape. Book access
+and large portrait screens, or in the sidebar on desktop landscape. Roomy views
+label the card with a green localized Status heading. Ready guidance is muted,
+active investigation and defeat text is red, and identification is green. Pair
+descriptions stay hidden, and the accusation button is centered at every size. Book access
 uses the planned host entitlement seam documented in the architecture notes.

@@ -29,6 +29,7 @@ let previewFlipTimer = null;
 let turnSettleTimer = null;
 let mistakes = 0;
 let impostorRound = null;
+let impostorAccusationCard = null;
 let impostorNoticeKey = "ready";
 const queuedModeUnlocks = new Set();
 let shuffleTimer = null;
@@ -1202,7 +1203,18 @@ function readMatchToastsEnabled() {
 }
 
 function applyMatchToastsPreference() {
-  matchToastsToggle.checked = matchToastsEnabled;
+  const unavailable = gameMode === "impostor" && !homeScreen.visible;
+  matchToastsToggle.disabled = unavailable;
+  matchToastsToggle.checked = !unavailable && matchToastsEnabled;
+  matchToastsToggle.closest(".settings-row").classList.toggle("is-unavailable", unavailable);
+  const note = document.getElementById("settingsMatchToastsUnavailable");
+  note.textContent = memoryGame.settings?.matchToastsUnavailable || "";
+  setElementHidden(note, !unavailable);
+  if (unavailable) {
+    matchInsight.classList.remove("is-visible");
+    if (legendToast.dataset.comparison === "true") hideLegendToast();
+    return;
+  }
   if (!matchToastsEnabled && !gameCompleted &&
       window.matchMedia?.("(max-width: 640px)")?.matches &&
       legendToast.dataset.comparison === "true") {
@@ -1211,13 +1223,14 @@ function applyMatchToastsPreference() {
 }
 
 function setMatchToastsEnabled(enabled) {
+  if (gameMode === "impostor" && !homeScreen.visible) { applyMatchToastsPreference(); return; }
   matchToastsEnabled = enabled;
   applyMatchToastsPreference();
   try { window.localStorage.setItem(matchToastsStorageKey, String(enabled)); } catch {}
 }
 
 function initializeMatchToastsPreference() {
-  if (homeScreen.visible || introRunning ||
+  if (gameMode === "impostor" || homeScreen.visible || introRunning ||
       !window.matchMedia?.("(max-width: 640px)")?.matches) return;
   try {
     if (window.localStorage.getItem(matchToastsStorageKey) !== null) return;
@@ -1833,6 +1846,7 @@ function positionImpostorPanel() {
   const panel = document.getElementById("impostorPanel");
   const parent = document.querySelector(impostorControlsAboveMedia?.matches ? ".game-sidebar" : ".board-area");
   if (panel.parentElement !== parent) parent.append(panel);
+  updateImpostorPanel();
 }
 
 function updateImpostorPanel(key = impostorNoticeKey) {
@@ -1841,8 +1855,11 @@ function updateImpostorPanel(key = impostorNoticeKey) {
   document.getElementById("impostorPanel").classList.toggle("is-visible", Boolean(impostorRound));
   if (!impostorRound) return;
   const copy = memoryGame.modes.impostor;
-  document.getElementById("impostorStatusTitle").textContent = gameCompleted ? memoryGame.winTitle : "";
-  setElementHidden(document.getElementById("impostorStatusTitle"), !gameCompleted);
+  const phase = gameCompleted ? "victory" : gameDefeated ? "defeat"
+    : impostorRound.neutralized ? "identified" : impostorRound.suspect ? "danger" : "ready";
+  document.getElementById("impostorPanel").dataset.phase = phase;
+  document.getElementById("impostorStatusTitle").textContent = gameCompleted ? memoryGame.winTitle : copy.status;
+  setElementHidden(document.getElementById("impostorStatusTitle"), !gameCompleted && !impostorControlsAboveMedia?.matches);
   document.getElementById("impostorRulesTitle").textContent = copy.rules;
   document.getElementById("impostorRulesIntro").textContent = copy.description;
   copy.steps.forEach((step, index) => { document.getElementById(`impostorRulesStep${index + 1}`).textContent = step; });
@@ -1850,20 +1867,31 @@ function updateImpostorPanel(key = impostorNoticeKey) {
   document.getElementById("impostorRulesChances").textContent = copy.chances;
   document.getElementById("impostorRulesCaution").textContent = copy.caution;
   document.getElementById("closeImpostorRulesButton").setAttribute("aria-label", memoryGame.close);
-  document.getElementById("impostorNotice").classList.toggle("is-important", key === "activated" || key === "identified");
+  document.getElementById("impostorNotice").classList.toggle("is-important", key === "activated" || key === "identified" || impostorRound.challenge);
   document.getElementById("impostorNotice").textContent = (copy[key] || "") +
     (impostorRound.challenge ? " " + copy.attempts.replace("{count}", impostorRound.attempts) : "");
   const action = document.getElementById("accuseImpostor");
   action.textContent = copy.accuse;
-  action.hidden = !impostorRound.challenge || gameDefeated || gameCompleted;
-  action.disabled = !firstCard || lockBoard;
+  action.hidden = !impostorRound.canAccuse(impostorAccusationCard) || gameDefeated || gameCompleted;
+  action.disabled = lockBoard && mismatchTimer === null;
 }
 function accuseImpostor() {
-  if (!impostorRound || lockBoard || gameDefeated || gameCompleted || !firstCard) return;
-  const result = impostorRound.accuse(firstCard);
+  if (!impostorRound || (lockBoard && mismatchTimer === null) || gameDefeated || gameCompleted) return;
+  const selected = impostorAccusationCard;
+  const result = impostorRound.accuse(selected);
   if (result === null) return;
   if (!result) { endGame("impostorWrong"); updateImpostorPanel("defeat"); return; }
-  impostorRound.suspect.classList.remove("is-impostor-revealed");
+  window.clearTimeout(mismatchTimer);
+  mismatchTimer = null;
+  for (const card of board.children) {
+    card.classList.remove("is-impostor-revealed");
+    if (card !== selected && card.classList.contains("is-flipped") && !card.classList.contains("is-matched")) {
+      card.classList.remove("is-flipped");
+      card.setAttribute("aria-label", memoryGame.hiddenCard);
+    }
+  }
+  resetTurn();
+  firstCard = selected;
   playGameSound("match");
   updateImpostorPanel("identified");
 }
@@ -1882,6 +1910,7 @@ function updateStatus() {
   timeValue.setAttribute("aria-live", config.previewSeconds ? "polite" : "off");
   movesValue.textContent = status.moves;
   matchesValue.textContent = `${matches}/${getPairCount()}`;
+  matchesValue.classList.toggle("is-impostor-pending", Boolean(impostorRound && !impostorRound.suspect));
   timeValue.textContent = formatTime(status.seconds);
   updateImpostorPanel();
   timeValue.classList.toggle("is-running-low", status.timeLow);
@@ -1983,6 +2012,7 @@ function showComboToast() {
 }
 
 function resetTurn() {
+  impostorAccusationCard = null;
   firstCard = null;
   secondCard = null;
   lockBoard = false;
@@ -2020,6 +2050,7 @@ function markMatch() {
   matches += 1;
   const impostorActivated = impostorRound?.activate(matches,
     [...board.children].filter(card => !card.classList.contains("is-matched")));
+  if (impostorActivated) board.classList.add("is-impostor-arriving");
   activeCombo += 1;
   bestCombo = Math.max(bestCombo, activeCombo);
   if (activeCombo >= 2) showComboToast();
@@ -2101,7 +2132,7 @@ function shuffleUnmatchedCards() {
 }
 
 function showMatchInsight(card, userSelected = false) {
-  if (impostorRound && (gameCompleted || gameDefeated)) {
+  if (impostorRound) {
     matchInsight.classList.remove("is-visible");
     return;
   }
@@ -2326,7 +2357,9 @@ function flipCard(card) {
 
   const encounter = impostorRound?.reveal(card,
     [...board.children].filter(item => !item.classList.contains("is-matched")).length);
-  if (encounter) { card.classList.add("is-impostor-revealed"); updateImpostorPanel(encounter); }
+  impostorAccusationCard = card;
+  // Both members get the same clue after the pair's rearrangement.
+  if (impostorRound?.canAccuse(card)) card.classList.add("is-impostor-revealed");
   if (encounter === "challenge") {
     // Give even the final two-card challenge a selection before committing a pair.
     if (firstCard) {
@@ -2348,6 +2381,13 @@ function flipCard(card) {
   moves += 1;
   updateStatus();
 
+  if (impostorRound?.encounterPair(firstCard, secondCard)) {
+    activeCombo = 0;
+    hideComboToast();
+    updateImpostorPanel("encounter");
+    mismatchTimer = window.setTimeout(hideOpenCards, mismatchFlipBackDelayMs);
+    return;
+  }
   if (firstCard.dataset.pairId === secondCard.dataset.pairId && !impostorRound?.blocksMatch(firstCard, secondCard)) {
     markMatch();
     return;
@@ -2366,9 +2406,11 @@ function flipCard(card) {
     if (gameDefeated) return;
   }
   mismatchTimer = window.setTimeout(hideOpenCards, mismatchFlipBackDelayMs);
+  updateImpostorPanel();
 }
 
 function newGame({ startPreview = !homeScreen.visible } = {}) {
+  impostorAccusationCard = null;
   pendingImpostorPlaytest = false;
   resetCombo();
   spokenCountdown.reset();
@@ -2414,7 +2456,7 @@ function newGame({ startPreview = !homeScreen.visible } = {}) {
     board.style.setProperty("--impostor-suspect-border", impostorRound.suspectBorder);
   }
   activePairs = chooseActivePairs();
-  board.classList.remove("is-complete", "is-intro", "is-flash-preview");
+  board.classList.remove("is-complete", "is-intro", "is-flash-preview", "is-impostor-arriving");
   matchInsight.classList.remove("is-visible");
   matchInsightTitle.textContent = "";
   matchInsightText.textContent = "";
@@ -2438,6 +2480,7 @@ function newGame({ startPreview = !homeScreen.visible } = {}) {
   positionImpostorPanel();
   updateGameTitleVisibility();
   initializeMatchToastsPreference();
+  applyMatchToastsPreference();
   if (startPreview && gameModes[gameMode].previewSeconds) startMemoryPreview();
   showNextAchievement();
 }
@@ -2567,6 +2610,10 @@ function startFreshGame() {
 }
 
 async function runIntroTutorial() {
+  impostorRound = null;
+  impostorAccusationCard = null;
+  board.classList.remove("is-impostor", "is-impostor-arriving");
+  updateImpostorPanel();
   const crazy = Boolean(gameModes[gameMode].shuffleAfterMatch);
   if (introRunning) return;
   const runId = ++tutorialRunId;

@@ -212,7 +212,8 @@
         "hardMode": "Mode difficile",
         "hardModeUnlocked": "Le Mode difficile a été débloqué ! Profitez d'une nouvelle expérience.",
         "spokenCountdown": "Compte à rebours vocal",
-        "music": "Musique de fond"
+        "music": "Musique de fond",
+        "matchToastsUnavailable": "Indisponible pendant une partie de L’Imposteur."
       },
       "optionalAchievements": {
         "title": "Succès facultatifs",
@@ -837,26 +838,27 @@
         "impostor": {
           "name": "L’Imposteur",
           "description": "Repérez la bordure modifiée, accusez l’imposteur, puis trouvez les 10 paires.",
-          "tutorial": "Trouvez trois paires pour activer l’imposteur. Toutes les cartes partagent une palette ; cherchez une bordure légèrement différente. Sa première apparition déclenche un seul mélange à la fin du tour. La deuxième lance l’identification : sélectionnez une carte, puis Accuser l’imposteur. Avec 6 cartes ou plus / 4 / 2, vous avez 3 / 2 / 1 chances. Les erreurs consomment des chances, ajoutent des coups et interrompent le combo. Une fausse accusation termine la partie. Identifiez-le avant de l’associer à son partenaire d’origine, puis terminez le plateau.",
-          "activated": "Imposteur activé. Cherchez la légère variation de bordure.",
-          "encounter": "Bordure suspecte repérée. Terminez le tour pour mélanger.",
-          "reshuffle": "Les cartes restantes ont été mélangées une fois. L’imposteur a changé de place.",
-          "challenge": "Identification finale : sélectionnez une carte et accusez.",
+          "tutorial": "Après trois paires, une ombre annonce l’imposteur. Continuez normalement. Seule l’association de sa paire d’origine retourne les deux cartes et mélange les cartes restantes une fois. Ensuite, révéler l’une des deux permet d’accuser. Elles se ressemblent : une seule est l’imposteur. Une fausse accusation termine la partie. Les erreurs consomment des chances : 3 avec 6 cartes ou plus, 2 avec 4 et 1 avec 2. Identifiez l’imposteur, puis trouvez les 10 paires.",
+          "activated": "Un imposteur est arrivé. Continuez les associations pour trouver la paire affectée.",
+          "encounter": "Paire affectée trouvée. Les deux cartes se retournent, puis les cartes restantes changent de place.",
+          "reshuffle": "Les cartes ont changé de place une fois. Révélez l’une des deux cartes affectées pour accuser.",
+          "challenge": "Carte affectée sélectionnée. Accusez-la ou continuez les associations.",
           "attempts": "Chances restantes : {count}",
           "accuse": "Accuser l’imposteur",
           "identified": "Imposteur identifié. Sa paire d’origine peut être réunie.",
           "victory": "Imposteur identifié et les 10 paires réunies !",
           "defeat": "Enquête échouée.",
-          "ready": "Trouvez trois paires, puis cherchez une bordure différente.",
+          "ready": "Trouvez trois paires pour faire apparaître l’imposteur.",
           "rules": "Comment jouer",
           "steps": [
-            "Trouvez 3 paires. Une carte restante devient l’imposteur. Son symbole et son partenaire d’origine restent les mêmes.",
-            "Observez la bordure. Sa première apparition révèle une légère variation. Après ce tour, les cartes restantes sont mélangées une seule fois.",
-            "Accusez, puis terminez. Sa deuxième apparition lance l’identification. Sélectionnez une carte et utilisez Accuser l’imposteur. Une identification correcte restaure sa paire d’origine. Trouvez les 10 paires pour gagner."
+            "Trouvez 3 paires. Une ombre et le symbole de l’imposteur annoncent son arrivée. La paire affectée reste secrète.",
+            "Trouvez la paire affectée en jouant normalement. Ses deux cartes se retournent au lieu de disparaître. Les cartes restantes changent de place une fois.",
+            "Choisissez votre accusation. Révélez l’une des deux cartes affectées pour l’accuser ou continuez à jouer. Une seule est l’imposteur. Identifiez-la, puis terminez toutes les paires."
           ],
           "remaining": "Cartes restantes",
           "chances": "Chances",
-          "caution": "Une erreur consomme une chance, ajoute un coup et interrompt le combo. Une fausse accusation ou des chances épuisées termine la partie. Avec deux cartes, identifiez l’imposteur avant de les associer."
+          "caution": "Une erreur consomme une chance, ajoute un coup et interrompt le combo. Une fausse accusation ou des chances épuisées termine la partie. Avec deux cartes, identifiez l’imposteur avant de les associer.",
+          "status": "État"
         },
         "impostorWrong": "Fausse accusation. L’imposteur s’est échappé.",
         "impostorExhausted": "Aucune chance restante. L’imposteur s’est échappé."

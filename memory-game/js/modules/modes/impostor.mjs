@@ -16,6 +16,7 @@ export function createImpostorRound(random = Math.random) {
   const suspectBorder = `hsl(${hue} 18% ${lightness + (random() < .5 ? -16 : 16)}%)`;
   let suspect = null, encounters = 0, pendingShuffle = false, shuffled = false;
   let challenge = false, attempts = null, neutralized = false;
+  const isAffected = card => Boolean(card && suspect && card.dataset.pairId === suspect.dataset.pairId);
   return {
     palette, border, suspectBorder,
     get suspect() { return suspect; }, get encounters() { return encounters; },
@@ -25,11 +26,18 @@ export function createImpostorRound(random = Math.random) {
       if (matches !== 3 || suspect) return false;
       suspect = remaining[Math.floor(random() * remaining.length)]; return true;
     },
+    isAffected,
+    canAccuse(card) { return shuffled && challenge && !neutralized && isAffected(card); },
+    encounterPair(a, b) {
+      // Only the two legitimate partners can reveal the affected pair.
+      if (neutralized || shuffled || pendingShuffle || a === b || !isAffected(a) || !isAffected(b)) return false;
+      pendingShuffle = true;
+      return true;
+    },
     reveal(card, remainingCount) {
-      if (card !== suspect || neutralized) return null;
+      if (!shuffled || neutralized || !isAffected(card)) return null;
       encounters++;
-      if (encounters === 1) { pendingShuffle = true; return "encounter"; }
-      if (encounters === 2) {
+      if (!challenge) {
         challenge = true; attempts = remainingCount >= 6 ? 3 : remainingCount === 4 ? 2 : 1;
         return "challenge";
       }
@@ -46,7 +54,7 @@ export function createImpostorRound(random = Math.random) {
       return attempts <= 0;
     },
     accuse(card) {
-      if (!challenge || neutralized || !card) return null;
+      if (!shuffled || !challenge || neutralized || !isAffected(card)) return null;
       if (card !== suspect) return false;
       neutralized = true; challenge = false; return true;
     },
