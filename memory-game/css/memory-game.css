@@ -2507,9 +2507,18 @@ html[data-theme="dark"] .impostor-panel[data-phase="defeat"] #impostorNotice { c
     justify-content: center;
     text-align: center;
   }
-  .home-modes > .home-card > i, .home-modes .home-move-icon, .home-modes .home-coming-soon-icon {
+  .home-modes > .home-card > i, .home-modes .home-move-icon, .home-modes > .home-coming-soon > .home-coming-soon-icon {
     align-self: center;
+    width: 56px;
+    height: 56px;
+    font-size: 44px;
+    transform: none;
   }
+  .home-modes .icon-time-attack::before { transform: scale(1.18); }
+  .home-modes .icon-mirror::before { transform: scale(1.22); }
+  .home-modes .icon-impostor::before { transform: scale(1.4); }
+  .home-modes .home-move-icon { font-size: 28px; }
+  .home-modes > .home-card > span[id$="-description"] { display: none; }
   .home-modes .home-unlock { align-items: center; margin-top: 0; }
 }
 
@@ -2540,6 +2549,7 @@ html[data-theme="dark"] .impostor-panel[data-phase="defeat"] #impostorNotice { c
 .mode-details-card .home-unlock { display: flex; flex-direction: column; gap: 8px; }
 .mode-details-card [hidden] { display: none; }
 .mode-details-card .game-button { min-height: 44px; justify-content: center; text-align: center; }
+#homeSixthMirrorBook { text-decoration: none; }
 @media (max-width: 640px) {
   .mode-details-panel { align-items: end; padding: 12px 12px calc(12px + env(safe-area-inset-bottom, 0px)); }
   .mode-details-panel .mode-details-card { margin: 0 auto; border-radius: 16px; }
