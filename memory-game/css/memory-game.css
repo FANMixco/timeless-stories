@@ -2493,15 +2493,16 @@ html[data-theme="dark"] .impostor-panel[data-phase="defeat"] #impostorNotice { c
 .home-book-lock-badge { display: none; }
 @media (max-width: 600px) {
   .home-coming-soon-lock { display: none; }
-  .home-book-lock-badge { display: inline-flex; margin-top: auto; }
+  .home-book-lock-badge { display: inline-flex; margin-top: 0; }
   .home-modes > .home-card, .home-modes > .home-coming-soon {
     align-items: center;
+    justify-content: center;
     text-align: center;
   }
   .home-modes > .home-card > i, .home-modes .home-move-icon, .home-modes .home-coming-soon-icon {
     align-self: center;
   }
-  .home-modes .home-unlock { align-items: center; }
+  .home-modes .home-unlock { align-items: center; margin-top: 0; }
 }
 
 #home-timeAttack { --mode-color: var(--gold); }
