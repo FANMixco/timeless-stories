@@ -801,11 +801,15 @@
         },
         "timeAttack": {
           "name": "Time Attack",
-          "description": "Match all pairs in 45 seconds."
+          "description": "Match all pairs in 45 seconds.",
+          "tutorial": "Match cards with the same icon, even when their names or flags differ. Find every pair within {seconds} seconds. The clock starts with your first card, after this demonstration. There is no move limit.",
+          "hint": "Find every pair before the clock reaches zero! Remember revealed positions and match identical icons. The time limit is {seconds} seconds; there is no move limit."
         },
         "limitedMoves": {
           "name": "25-Move Challenge",
-          "description": "Match all pairs within 25 moves."
+          "description": "Match all pairs within 25 moves.",
+          "tutorial": "Match cards with the same icon, even when their names or flags differ. Find every pair within {moves} moves. Revealing two cards counts as one move, whether they match or not. There is no time limit.",
+          "hint": "Take your time and remember revealed positions. Each two-card attempt uses one of your {moves} moves, so use what you have seen before guessing. Match identical icons."
         },
         "statistics": "Challenge statistics",
         "attempts": "Total Attempts",

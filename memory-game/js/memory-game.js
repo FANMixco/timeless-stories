@@ -15,6 +15,10 @@ const languageStorageKey = "timelessMemoryLanguage";
 const themeStorageKey = "timelessMemoryColorMode";
 const resetStorageKey = "timelessMemoryResetVersion";
 const introStorageKey = "timelessMemoryIntroSeen";
+const challengeIntroStorageKeys = {
+  timeAttack: "timelessMemoryTimeAttackIntroSeen",
+  limitedMoves: "timelessMemoryLimitedMovesIntroSeen"
+};
 const crazyIntroStorageKey = "timelessMemoryCrazyMirrorsIntroSeen";
 const impostorIntroStorageKey = "timelessMemoryImpostorIntroSeen";
 const flashIntroStorageKey = "timelessMemoryFlashIntroSeen";
@@ -2700,6 +2704,7 @@ async function runIntroTutorial() {
   board.classList.remove("is-impostor", "is-impostor-arriving");
   updateImpostorPanel();
   const crazy = Boolean(gameModes[gameMode].shuffleAfterMatch);
+  const challengeIntroKey = challengeIntroStorageKeys[gameMode];
   if (introRunning) return;
   const runId = ++tutorialRunId;
   hintPressCount = 0;
@@ -2756,6 +2761,7 @@ async function runIntroTutorial() {
   board.replaceChildren(...tutorialCards.map(createCard));
   const cards = [...board.querySelectorAll(".card")];
   if (crazy) showToast(memoryGame.modes.crazyMirrors.name, memoryGame.modes.crazyMirrors.tutorial);
+  else if (challengeIntroKey) showModeHelp(true);
   else showToast(memoryGame.hint || "Hint", memoryGame.hintText || "Pay attention to the icons.", memoryGame.hintEmphasis, memoryGame.hintUnderline);
 
   await wait(1000);
@@ -2771,10 +2777,11 @@ async function runIntroTutorial() {
   cards.slice(0, 2).forEach((card) => card.classList.add("is-matched"));
   if (crazy) shuffleUnmatchedCards();
   // Leave the matched cards visible while the player finishes reading.
-  await wait(crazy ? 6000 : 3500);
+  await wait(crazy || challengeIntroKey ? 6000 : 3500);
   if (runId !== tutorialRunId) return;
 
   setIntroSeen();
+  if (challengeIntroKey) { try { window.localStorage.setItem(challengeIntroKey, "true"); } catch {} }
   if (crazy) { try { window.localStorage.setItem(crazyIntroStorageKey, "true"); } catch {} }
   introRunning = false;
   lockBoard = false;
@@ -2797,6 +2804,18 @@ function showImpostorTutorial() {
   syncModalScrollLock();
 }
 
+function showModeHelp(tutorial = false) {
+  const modeCopy = memoryGame.modes[gameMode];
+  const text = modeCopy[tutorial ? "tutorial" : "hint"];
+  if (text) {
+    const mode = gameModes[gameMode];
+    showToast(tutorial ? document.getElementById(`home-${gameMode}-name`).textContent : memoryGame.hint,
+      text.replaceAll("{seconds}", mode.seconds).replaceAll("{moves}", mode.moves));
+  } else {
+    showToast(memoryGame.hint || "Hint", memoryGame.hintText || "Pay attention to the icons.", memoryGame.hintEmphasis, memoryGame.hintUnderline);
+  }
+}
+
 function handleHint() {
   if (impostorRound) {
     showImpostorTutorial();
@@ -2813,7 +2832,7 @@ function handleHint() {
     if (!isEmbedded) window.scrollTo({ top: 0, left: 0, behavior: "auto" });
     return;
   }
-  showToast(memoryGame.hint || "Hint", memoryGame.hintText || "Pay attention to the icons.", memoryGame.hintEmphasis, memoryGame.hintUnderline);
+  showModeHelp();
 }
 
 function startGame() {
@@ -2826,8 +2845,10 @@ function startGame() {
   }
   if (gameModes[gameMode].previewSeconds) { newGame(); return; }
   let needsCrazyIntro = false;
+  let needsChallengeIntro = false;
   try { needsCrazyIntro = gameMode === "crazyMirrors" && !window.localStorage.getItem(crazyIntroStorageKey); } catch {}
-  if (hasSeenIntro() && !needsCrazyIntro) {
+  try { needsChallengeIntro = Boolean(challengeIntroStorageKeys[gameMode]) && !window.localStorage.getItem(challengeIntroStorageKeys[gameMode]); } catch {}
+  if (hasSeenIntro() && !needsCrazyIntro && !needsChallengeIntro) {
     newGame();
     return;
   }

@@ -801,11 +801,15 @@
         },
         "timeAttack": {
           "name": "Contre-la-montre",
-          "description": "Trouvez toutes les paires en 45 secondes."
+          "description": "Trouvez toutes les paires en 45 secondes.",
+          "tutorial": "Associez les cartes portant la même icône, même si leurs noms ou drapeaux diffèrent. Trouvez toutes les paires en {seconds} secondes. Le chronomètre démarre à votre première carte, après cette démonstration. Les coups sont illimités.",
+          "hint": "Trouvez toutes les paires avant la fin du compte à rebours ! Retenez les positions et associez les icônes identiques. Vous avez {seconds} secondes et un nombre de coups illimité."
         },
         "limitedMoves": {
           "name": "Défi en 25 coups",
-          "description": "Trouvez toutes les paires en 25 coups maximum."
+          "description": "Trouvez toutes les paires en 25 coups maximum.",
+          "tutorial": "Associez les cartes portant la même icône, même si leurs noms ou drapeaux diffèrent. Trouvez toutes les paires en {moves} coups. Retourner deux cartes compte pour un coup, même sans paire. Il n’y a pas de limite de temps.",
+          "hint": "Prenez votre temps et retenez les positions. Chaque essai de deux cartes utilise un de vos {moves} coups. Servez-vous des cartes déjà vues avant de deviner. Associez les icônes identiques."
         },
         "statistics": "Statistiques des défis",
         "attempts": "Nombre de tentatives",
