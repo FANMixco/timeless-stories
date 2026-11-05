@@ -2309,6 +2309,11 @@ html[data-theme] .game-shell .board.is-impostor .card .character-icon {
 
 .impostor-panel .is-important { font-weight: 800; }
 
+/* Center the completed-round message on phones and portrait tablets. */
+@media (max-width: 640px), (orientation: portrait) {
+  #impostorPanel[data-phase="victory"] { text-align: center; }
+}
+
 /* Arrival is a board-wide cue, never a clue to a particular pair or card. */
 .board.is-impostor { position: relative; }
 .board.is-impostor-arriving::before,
