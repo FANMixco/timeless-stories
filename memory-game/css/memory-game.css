@@ -926,6 +926,15 @@ html[data-theme="dark"] .card[data-rarity="tutorial"] .character-icon {
    do not need a visible divider when all content fits. */
 .win-card .dialog-header { border-bottom: 0; padding-bottom: 10px; }
 .win-card .dialog-header h2 { text-align: center; }
+:is(#winPanel, #gameOverPanel) .dialog-header {
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr) 36px;
+}
+:is(#winPanel, #gameOverPanel) .dialog-header h2 { grid-column: 2; grid-row: 1; }
+:is(#winPanel, #gameOverPanel) .dialog-header .win-close { grid-column: 3; grid-row: 1; }
+@media (max-width: 360px) {
+  :is(#winPanel, #gameOverPanel) .dialog-header h2 { grid-column: 1 / -1; grid-row: 2; }
+}
 .restart-card .dialog-header { padding-top: 28px; }
 
 .dialog-body {
