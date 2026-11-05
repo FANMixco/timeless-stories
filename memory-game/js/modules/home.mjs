@@ -97,6 +97,7 @@ export function createHomeScreen({ document, modes, onChoose, onSettings, onReco
       text("homeSixthMirrorSubtitle", copy.home.sixthMirror.subtitle);
       text("homeSixthMirrorDescription", copy.home.sixthMirror.description);
       text("homeSixthMirrorStatus", copy.home.sixthMirror.status);
+      text("home-impostor-locked", copy.home.locked);
       const digitalBookLink = document.getElementById("homeSixthMirrorBook");
       digitalBookLink.hidden = !options.digitalBookUrl;
       if (options.digitalBookUrl) digitalBookLink.setAttribute("href", options.digitalBookUrl);

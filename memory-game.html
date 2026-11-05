@@ -56,9 +56,9 @@
         }
       }
     </script>
-    <link rel="preload" href="memory-game/css/fonts/memory-game.woff2?v=memory-916159451c39" as="font" type="font/woff2" crossorigin="anonymous" />
-    <link rel="stylesheet" href="memory-game/css/icon-moon-memory.min.css?v=memory-916159451c39" />
-    <link rel="stylesheet" href="memory-game/css/memory-game.min.css?v=memory-916159451c39" />
+    <link rel="preload" href="memory-game/css/fonts/memory-game.woff2?v=memory-124ad3e3cc2f" as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="stylesheet" href="memory-game/css/icon-moon-memory.min.css?v=memory-124ad3e3cc2f" />
+    <link rel="stylesheet" href="memory-game/css/memory-game.min.css?v=memory-124ad3e3cc2f" />
   </head>
   <body>
     <main class="game-shell is-home" aria-label="">
@@ -103,6 +103,7 @@
             <i class="icon home-lock-icon home-coming-soon-lock icon-lock" aria-hidden="true"></i>
             <span class="home-coming-soon-description" id="homeSixthMirrorDescription"></span>
             <span class="home-coming-soon-status" id="homeSixthMirrorStatus"></span>
+            <span class="home-lock-badge home-book-lock-badge"><i class="icon home-lock-icon icon-lock" aria-hidden="true"></i> <span id="home-impostor-locked"></span></span>
           </button>
           <button class="home-card" id="home-impostor" type="button" hidden><i class="icon icon-impostor" aria-hidden="true"></i><strong id="home-impostor-name"></strong><span id="home-impostor-description"></span></button>
         </div>
@@ -204,6 +205,7 @@
           <div class="dialog-body" role="region" aria-labelledby="modeDetailsTitle" tabindex="0">
             <p id="modeDetailsDescription"></p>
             <p id="modeDetailsRequirement"></p>
+            <span class="home-coming-soon-status" id="modeDetailsStatus" hidden></span>
             <div class="home-unlock" id="modeDetailsProgress">
               <progress id="modeDetailsMeter" max="1" value="0"></progress>
               <span class="home-unlock-progress" id="modeDetailsProgressLabel"></span>
@@ -482,7 +484,7 @@
       <footer class="game-footer standalone-only" id="gameFooter"></footer>
     </main>
 
-    <script type="module" src="memory-game/js/memory-game.min.js?v=memory-916159451c39"></script>
+    <script type="module" src="memory-game/js/memory-game.min.js?v=memory-124ad3e3cc2f"></script>
     <!-- Keep registration inline so PWA analyzers can discover it without running a browser. -->
     <script>
       if ("serviceWorker" in navigator) {

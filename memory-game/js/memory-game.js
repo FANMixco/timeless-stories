@@ -289,6 +289,8 @@ function renderModeDetails() {
   copyText("modeDetailsTitle", `home-${modeDetailsMode}-name`);
   copyText("modeDetailsDescription", book ? "homeSixthMirrorDescription" : `home-${modeDetailsMode}-description`);
   copyText("modeDetailsRequirement", book ? "homeSixthMirrorSubtitle" : `home-${modeDetailsMode}-requirement`);
+  document.getElementById("modeDetailsStatus").hidden = !book;
+  if (book) copyText("modeDetailsStatus", "homeSixthMirrorStatus");
   document.getElementById("modeDetailsProgress").hidden = book;
   document.getElementById("modeDetailsAwards").hidden = book;
   document.getElementById("homeSixthMirrorBook").hidden = !book || !getDigitalBookUrl();

@@ -2490,6 +2490,20 @@ html[data-theme="dark"] .impostor-panel[data-phase="defeat"] #impostorNotice { c
 #accuseImpostor .icon { font-size: 1.25rem; line-height: 1; }
 
 /* Mode identities are shared across compact and three-column layouts. */
+.home-book-lock-badge { display: none; }
+@media (max-width: 600px) {
+  .home-coming-soon-lock { display: none; }
+  .home-book-lock-badge { display: inline-flex; margin-top: auto; }
+  .home-modes > .home-card, .home-modes > .home-coming-soon {
+    align-items: center;
+    text-align: center;
+  }
+  .home-modes > .home-card > i, .home-modes .home-move-icon, .home-modes .home-coming-soon-icon {
+    align-self: center;
+  }
+  .home-modes .home-unlock { align-items: center; }
+}
+
 #home-timeAttack { --mode-color: var(--gold); }
 #home-limitedMoves { --mode-color: var(--found); }
 #home-crazyMirrors { --mode-color: #ad8be8; }
@@ -2513,6 +2527,7 @@ html[data-theme="dark"] .impostor-panel[data-phase="defeat"] #impostorNotice { c
 .mode-details-panel .mode-details-card { width: min(100%, 420px); }
 .mode-details-card .dialog-body { display: flex; flex-direction: column; gap: 14px; }
 .mode-details-card p { margin: 0; line-height: 1.55; }
+.mode-details-card .home-coming-soon-status { display: block; align-self: flex-start; margin-top: 0; }
 .mode-details-card .home-unlock { display: flex; flex-direction: column; gap: 8px; }
 .mode-details-card [hidden] { display: none; }
 .mode-details-card .game-button { min-height: 44px; justify-content: center; text-align: center; }
