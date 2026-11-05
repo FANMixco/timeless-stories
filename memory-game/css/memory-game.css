@@ -143,12 +143,13 @@ html.is-modal-open body {
 .home-card:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
 .home-card > i, .home-move-icon, .home-coming-soon-icon { color: var(--accent-dark); font-size: 32px; width: 38px; height: 38px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; line-height: 1; }
 /* Compensate for intrinsic glyph whitespace so each icon reads at the same
-   perceived size as its neighbors rather than the same font size. */
-.home-card > .icon-impostor { transform: scale(1.24); }
-.home-card > .icon-mirror { transform: scale(1.16); }
-.home-card > .icon-time-attack { transform: scale(1.14); }
+   perceived size as its neighbors rather than the same font size. These target
+   the visual height of the 25-move-challenge badge in the same row. */
+.home-card > .icon-impostor { transform: scale(1.4); }
+.home-card > .icon-mirror { transform: scale(1.22); }
+.home-card > .icon-time-attack { transform: scale(1.18); }
 /* Match on the coming-soon (book-gate) impostor icon for consistency. */
-.home-coming-soon .home-coming-soon-icon.icon-impostor { transform: scale(1.24); }
+.home-coming-soon .home-coming-soon-icon.icon-impostor { transform: scale(1.4); }
 .home-move-icon { font-size: 21px; font-weight: 700; border: 2px solid currentColor; border-radius: 8px; }
 .home-card strong { font-size: 1.15rem; line-height: 1.35; }
 .home-card > span:not(.home-move-icon) { color: var(--muted); line-height: 1.55; font-size: 0.95rem; }
