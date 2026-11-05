@@ -1,5 +1,5 @@
 const CACHE_PREFIX = "memory-game-pwa-";
-const CACHE_VERSION = `${CACHE_PREFIX}memory-c904343ab2ce`;
+const CACHE_VERSION = `${CACHE_PREFIX}memory-c904343ab2cd`;
 const APP_SHELL = [
   "/memory-game.html",
   "/memory-game/manifest.webmanifest",
