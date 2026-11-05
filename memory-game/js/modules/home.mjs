@@ -77,7 +77,7 @@ export function createHomeScreen({ document, modes, onChoose, onSettings, onReco
         if (!locked) continue;
         lockedModes.add(mode);
         const progress = options.unlockProgress?.[mode] || { earned: 0, required: 0 };
-        text(`home-${mode}-locked`, copy.home.locked);
+        text(`home-${mode}-locked`, copy.locked);
         text(`home-${mode}-requirement`, copy.home[mode === "crazyMirrors" ? "crazyMirrorsRequirement" : "memoryFlashRequirement"]);
         text(`home-${mode}-progress`, copy.home.awardsProgress.replace("{earned}", progress.earned).replace("{required}", progress.required));
         text(`home-${mode}-awards`, copy.home.viewAwards);
@@ -93,11 +93,11 @@ export function createHomeScreen({ document, modes, onChoose, onSettings, onReco
       text("homeSettingsLabel", copy.settings.title);
       text("homeRecordsLabel", copy.progress.records);
       text("homeCollectionLabel", copy.collection.title);
-      text("homeSixthMirrorTitle", copy.home.sixthMirror.title);
+      text("homeSixthMirrorTitle", copy.modes.impostor.name);
       text("homeSixthMirrorSubtitle", copy.home.sixthMirror.subtitle);
-      text("homeSixthMirrorDescription", copy.home.sixthMirror.description);
+      text("homeSixthMirrorDescription", copy.modes.impostor.description);
       text("homeSixthMirrorStatus", copy.home.sixthMirror.status);
-      text("home-impostor-locked", copy.home.locked);
+      text("home-impostor-locked", copy.locked);
       const digitalBookLink = document.getElementById("homeSixthMirrorBook");
       digitalBookLink.hidden = !options.digitalBookUrl;
       if (options.digitalBookUrl) digitalBookLink.setAttribute("href", options.digitalBookUrl);

@@ -291,7 +291,7 @@ function renderModeDetails() {
   const book = modeDetailsMode === "impostor";
   const copyText = (target, source) => { document.getElementById(target).textContent = document.getElementById(source).textContent; };
   copyText("modeDetailsTitle", `home-${modeDetailsMode}-name`);
-  copyText("modeDetailsDescription", book ? "homeSixthMirrorDescription" : `home-${modeDetailsMode}-description`);
+  copyText("modeDetailsDescription", `home-${modeDetailsMode}-description`);
   copyText("modeDetailsRequirement", book ? "homeSixthMirrorSubtitle" : `home-${modeDetailsMode}-requirement`);
   document.getElementById("modeDetailsStatus").hidden = !book;
   if (book) copyText("modeDetailsStatus", "homeSixthMirrorStatus");
@@ -1093,7 +1093,7 @@ async function loadGameLanguage(language) {
   if (response.ok === false) throw new Error(`Unable to load game language: ${language}`);
   const data = await response.json();
   const game = data.translations?.memoryGame;
-  if (!game?.settings?.title || !game.settings.sounds || !game.settings.spokenCountdown || !game.settings.resetConfirmation || !game.home?.chooseMode || !game.home.confirmReturn || !game.records?.title || !game.modes?.title || !game.progress?.title || !game.progress.records || !game.about?.musicCredit || !achievementDefinitions.every(({ id }) => game.achievements?.items?.[id])) {
+  if (!game?.settings?.title || !game.settings.sounds || !game.settings.spokenCountdown || !game.settings.resetConfirmation || !game.home?.chooseMode || !game.confirmRestart || !game.moves || !game.time || !game.locked || !game.records?.title || !game.modes?.title || !game.progress?.title || !game.progress.records || !game.about?.musicCredit || !achievementDefinitions.every(({ id }) => game.achievements?.items?.[id])) {
     throw new Error(`Incomplete game language: ${language}`);
   }
   if (!Object.keys(gameModes).every(mode => game.modes[mode]?.name && game.modes[mode]?.description) ||
@@ -2660,7 +2660,7 @@ function closeRestartPanel() {
 function renderRestartConfirmation() {
   if (pendingHome) {
     setElementText(document.getElementById("restartTitle"), memoryGame.home.leaveRound);
-    setElementText(document.getElementById("restartMessage"), memoryGame.home.confirmReturn);
+    setElementText(document.getElementById("restartMessage"), memoryGame.confirmRestart);
     setElementText(cancelRestartButton, memoryGame.keepPlaying);
     setElementText(document.getElementById("confirmRestartButton"), memoryGame.home.returnToModes);
     return;

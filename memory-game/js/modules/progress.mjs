@@ -132,7 +132,7 @@ export function createProgressView({ document, getState, readPersonalRecords, re
     const copy = memoryGame.records;
     const metrics = document.createElement("dl");
     metrics.className = "performance-metrics";
-    for (const [metric, label, value] of [["time", copy.time, formatTime(result.time)], ["moves", copy.moves, result.moves.toLocaleString(currentLanguage)]]) {
+    for (const [metric, label, value] of [["time", memoryGame.time, formatTime(result.time)], ["moves", memoryGame.moves, result.moves.toLocaleString(currentLanguage)]]) {
       if (metric === "time" && result.hideTime) continue;
       const row = document.createElement("div");
       const name = document.createElement("dt");
@@ -224,7 +224,7 @@ export function createProgressView({ document, getState, readPersonalRecords, re
       description.textContent = copy.comboItems[id].description;
       const status = document.createElement("p");
       status.className = "achievement-status";
-      status.textContent = achievements[id] ? memoryGame.achievements.unlocked : memoryGame.achievements.locked;
+      status.textContent = achievements[id] ? memoryGame.achievements.unlocked : memoryGame.locked;
       body.append(name, description, status);
       row.append(mark, body);
       return row;
@@ -267,7 +267,7 @@ export function createProgressView({ document, getState, readPersonalRecords, re
       description.textContent = hidden ? copy.secret : copy.items[id].description;
       const status = document.createElement("p");
       status.className = "achievement-status";
-      status.textContent = achievements[id] ? copy.unlocked : copy.locked;
+      status.textContent = achievements[id] ? copy.unlocked : memoryGame.locked;
       if (achievements[id]) {
         const date = document.createElement("time");
         date.setAttribute("datetime", achievements[id]);

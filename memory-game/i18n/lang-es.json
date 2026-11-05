@@ -253,7 +253,6 @@
         "title": "Logros",
         "progress": "{found} / {total} logros desbloqueados",
         "unlocked": "Desbloqueado",
-        "locked": "Bloqueado",
         "secret": "Logro secreto.",
         "notification": "¡Logro desbloqueado!",
         "legendaryTitle": "¡Coleccionista legendario!",
@@ -437,6 +436,7 @@
       "getCopy": "Descubre las leyendas completas",
       "getCopyHref": "carouselCards.ebook",
       "share": "Compartir",
+      "locked": "Bloqueado",
       "hint": "Pista",
       "hintText": "¡Presta atención a los iconos! Empareja las cartas que tengan el mismo símbolo, como 🐺 🐺. Ignora los nombres y las banderas, ya que pueden ser diferentes.",
       "hintEmphasis": "¡Presta atención a los iconos!",
@@ -778,8 +778,6 @@
         "fewestMoves": "Menos movimientos",
         "gamesCompleted": "Partidas completadas",
         "totalPairsMatched": "Total de espejos encontrados",
-        "time": "Tiempo",
-        "moves": "Movimientos",
         "same": "Has igualado tu récord personal",
         "faster": "{count} segundos más rápido",
         "slower": "{count} segundos más lento",
@@ -841,7 +839,7 @@
         },
         "impostor": {
           "name": "El impostor",
-          "description": "Encuentra el borde alterado, acusa al impostor y completa las 10 parejas.",
+          "description": "Detecta la carta sospechosa, identifica al impostor y completa las 10 parejas.",
           "tutorial": "Tras tres parejas, una sombra anuncia al impostor. Sigue jugando normalmente. Solo al formar su pareja original, ambas cartas se ocultan y las restantes se reorganizan una vez. Después, girar cualquiera de las dos permite Acusar al impostor. Tras la reorganización, busca el borde más claro u oscuro: esa carta es el impostor. Una acusación errónea termina la ronda. Los fallos gastan oportunidades: 3 con 6 o más cartas, 2 con 4 y 1 con 2. Identifica al impostor y completa las 10 parejas.",
           "activated": "Ha llegado un impostor. Sigue formando parejas para encontrar la afectada.",
           "encounter": "Pareja afectada encontrada. Ambas cartas se ocultan y las restantes se reorganizan.",
@@ -878,12 +876,9 @@
       "home": {
         "sixthMirror": {
           "getBook": "Consigue el libro digital ↗",
-          "title": "El impostor",
           "subtitle": "Exclusivo del libro",
-          "description": "Encuentra el borde alterado, acusa al impostor y completa las 10 parejas.",
           "status": "Próximamente"
         },
-        "locked": "Bloqueado",
         "crazyMirrorsRequirement": "Consigue el 75% de los logros no secretos",
         "memoryFlashRequirement": "Completa todos los logros",
         "awardsProgress": "{earned} / {required} logros conseguidos",
@@ -891,8 +886,7 @@
         "chooseMode": "Modos de juego",
         "rateApp": "Valora el juego",
         "leaveRound": "¿Salir de esta partida?",
-        "returnToModes": "Volver a los modos",
-        "confirmReturn": "Perderás el progreso de esta partida."
+        "returnToModes": "Volver a los modos"
       }
     },
     "country3": "Marruecos 🇲🇦",

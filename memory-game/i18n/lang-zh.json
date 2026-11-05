@@ -253,7 +253,6 @@
         "title": "成就",
         "progress": "已解锁 {found} / {total} 项成就",
         "unlocked": "已解锁",
-        "locked": "未解锁",
         "secret": "隐藏成就。",
         "notification": "成就已解锁！",
         "legendaryTitle": "传奇收藏家！",
@@ -437,6 +436,7 @@
       "getCopy": "探索完整传说",
       "getCopyHref": "carouselCards.ebook",
       "share": "分享",
+      "locked": "未解锁",
       "hint": "提示",
       "hintText": "注意图标！将具有相同符号的卡牌配对，例如 🐺 🐺。不用在意名称和旗帜，因为它们可能不同。",
       "hintEmphasis": "注意图标！",
@@ -778,8 +778,6 @@
         "fewestMoves": "最少步数",
         "gamesCompleted": "完成局数",
         "totalPairsMatched": "找到的镜子总数",
-        "time": "用时",
-        "moves": "步数",
         "same": "追平个人最佳",
         "faster": "快了 {count} 秒",
         "slower": "慢了 {count} 秒",
@@ -841,7 +839,7 @@
         },
         "impostor": {
           "name": "伪装者",
-          "description": "找出边框异常的卡牌，指认伪装者，再完成全部10对。",
+          "description": "找出可疑的卡牌，识别伪装者，并完成全部10对。",
           "tutorial": "完成三对后，阴影会宣告伪装者进入。继续正常配对。只有配对到它的原始伙伴时，两张卡牌才会翻回背面，剩余卡牌只重新排列一次。之后，翻开这对卡牌中的任意一张都可指认。重排后，找出边框更亮或更暗的卡牌：它就是伪装者。指认错误立即失败。配对失败会消耗机会：剩余6张及以上有3次、4张有2次、2张有1次。正确指认后，完成全部10对。",
           "activated": "伪装者已进入。继续配对，找出受影响的一对。",
           "encounter": "已找到受影响的一对。两张卡牌将翻回背面，随后剩余卡牌重新排列。",
@@ -878,12 +876,9 @@
       "home": {
         "sixthMirror": {
           "getBook": "购买数字版图书 ↗",
-          "title": "伪装者",
           "subtitle": "图书专属",
-          "description": "找出边框异常的卡牌，指认冒名者，再完成全部10对。",
           "status": "即将推出"
         },
-        "locked": "尚未解锁",
         "crazyMirrorsRequirement": "获得 75% 的非隐藏奖项",
         "memoryFlashRequirement": "获得全部奖项",
         "awardsProgress": "已获得 {earned} / {required} 个奖项",
@@ -891,8 +886,7 @@
         "chooseMode": "游戏模式",
         "rateApp": "为游戏评分",
         "leaveRound": "离开本局游戏？",
-        "returnToModes": "返回模式选择",
-        "confirmReturn": "本局游戏进度将会丢失。"
+        "returnToModes": "返回模式选择"
       }
     },
     "country3": "摩洛哥 🇲🇦",

@@ -253,7 +253,6 @@
         "title": "Succès",
         "progress": "{found} / {total} succès débloqués",
         "unlocked": "Débloqué",
-        "locked": "Verrouillé",
         "secret": "Succès secret.",
         "notification": "Succès débloqué !",
         "legendaryTitle": "Collectionneur légendaire !",
@@ -437,6 +436,7 @@
       "getCopy": "Découvrez les légendes complètes",
       "getCopyHref": "carouselCards.ebook",
       "share": "Partager",
+      "locked": "Verrouillé",
       "hint": "Indice",
       "hintText": "Faites attention aux icônes ! Associez les cartes portant le même symbole, comme 🐺 🐺. Ne tenez pas compte des noms et des drapeaux, car ils peuvent être différents.",
       "hintEmphasis": "Faites attention aux icônes !",
@@ -778,8 +778,6 @@
         "fewestMoves": "Moins de coups",
         "gamesCompleted": "Parties terminées",
         "totalPairsMatched": "Total de miroirs trouvés",
-        "time": "Temps",
-        "moves": "Coups",
         "same": "Record personnel égalé",
         "faster": "{count} secondes de moins",
         "slower": "{count} secondes de plus",
@@ -841,7 +839,7 @@
         },
         "impostor": {
           "name": "L’Imposteur",
-          "description": "Repérez la bordure modifiée, accusez l’imposteur, puis trouvez les 10 paires.",
+          "description": "Repérez la carte suspecte, identifiez l’imposteur et trouvez les 10 paires.",
           "tutorial": "Après trois paires, une ombre annonce l’imposteur. Continuez normalement. Seule l’association de sa paire d’origine retourne les deux cartes et mélange les cartes restantes une fois. Ensuite, révéler l’une des deux permet d’accuser. Après le mélange, cherchez la bordure plus claire ou plus sombre : cette carte est l’imposteur. Une fausse accusation termine la partie. Les erreurs consomment des chances : 3 avec 6 cartes ou plus, 2 avec 4 et 1 avec 2. Identifiez l’imposteur, puis trouvez les 10 paires.",
           "activated": "Un imposteur est arrivé. Continuez les associations pour trouver la paire affectée.",
           "encounter": "Paire affectée trouvée. Les deux cartes se retournent, puis les cartes restantes changent de place.",
@@ -878,12 +876,9 @@
       "home": {
         "sixthMirror": {
           "getBook": "Obtenir le livre numérique ↗",
-          "title": "L’Imposteur",
           "subtitle": "Exclusivité du livre",
-          "description": "Repérez la bordure modifiée, accusez l’imposteur, puis trouvez les 10 paires.",
           "status": "Bientôt disponible"
         },
-        "locked": "Verrouillé",
         "crazyMirrorsRequirement": "Obtenez 75 % des succès non secrètes",
         "memoryFlashRequirement": "Obtenez tous les succès",
         "awardsProgress": "{earned} / {required} succès obtenus",
@@ -891,8 +886,7 @@
         "chooseMode": "Modes de jeu",
         "rateApp": "Évaluer le jeu",
         "leaveRound": "Quitter cette partie ?",
-        "returnToModes": "Revenir aux modes",
-        "confirmReturn": "Votre progression dans cette partie sera perdue."
+        "returnToModes": "Revenir aux modes"
       }
     },
     "country3": "Maroc 🇲🇦",

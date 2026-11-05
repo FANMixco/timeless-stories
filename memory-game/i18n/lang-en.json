@@ -253,7 +253,6 @@
         "title": "Achievements",
         "progress": "{found} / {total} Achievements Unlocked",
         "unlocked": "Unlocked",
-        "locked": "Locked",
         "secret": "Secret achievement.",
         "notification": "Achievement Unlocked!",
         "legendaryTitle": "Legendary Collector!",
@@ -437,6 +436,7 @@
       "getCopy": "Discover the Full Legends",
       "getCopyHref": "carouselCards.ebook",
       "share": "Share",
+      "locked": "Locked",
       "hint": "Hint",
       "hintText": "Pay attention to the icons! Match cards with the same symbol, like 🐺 🐺. Ignore the names and flags, as they may be different.",
       "hintEmphasis": "Pay attention to the icons!",
@@ -778,8 +778,6 @@
         "fewestMoves": "Fewest Moves",
         "gamesCompleted": "Games Completed",
         "totalPairsMatched": "Total Mirrors Matched",
-        "time": "Time",
-        "moves": "Moves",
         "same": "Matched your personal best",
         "faster": "{count} seconds faster",
         "slower": "{count} seconds slower",
@@ -841,7 +839,7 @@
         },
         "impostor": {
           "name": "The Impostor",
-          "description": "Find the altered border, accuse the impostor, then clear all 10 pairs.",
+          "description": "Spot the suspicious card, identify the impostor, and match all 10 pairs.",
           "tutorial": "After three matches, a shadow announces the impostor. Keep matching normally. Only matching its legitimate pair makes both cards turn face down and rearranges the remaining cards once. Afterward, revealing either member of that pair offers Accuse Impostor. After rearrangement, look for the lighter or darker border: that card is the impostor. A wrong accusation ends the round. Failed matches spend identification chances: 3 with 6+ cards, 2 with 4, 1 with 2. Correctly accuse the impostor, then clear all 10 pairs.",
           "activated": "An impostor has entered. Keep matching to find the affected pair.",
           "encounter": "Affected pair found. Both cards turn face down, then the remaining cards rearrange.",
@@ -878,12 +876,9 @@
       "home": {
         "sixthMirror": {
           "getBook": "Get the digital book ↗",
-          "title": "The Impostor",
           "subtitle": "Book exclusive",
-          "description": "Find the altered border, accuse the impostor, then clear all 10 pairs.",
           "status": "Coming soon"
         },
-        "locked": "Locked",
         "crazyMirrorsRequirement": "Earn 75% of non-secret achievements",
         "memoryFlashRequirement": "Complete every achievement",
         "awardsProgress": "{earned} / {required} achievements earned",
@@ -891,8 +886,7 @@
         "chooseMode": "Game modes",
         "rateApp": "Rate the game",
         "leaveRound": "Leave this round?",
-        "returnToModes": "Return to modes",
-        "confirmReturn": "Your progress in this round will be lost."
+        "returnToModes": "Return to modes"
       }
     },
     "country3": "Morocco 🇲🇦",
