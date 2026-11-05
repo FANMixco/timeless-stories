@@ -86,6 +86,8 @@ export function createHomeScreen({ document, modes, onChoose, onSettings, onReco
         meter.value = Math.min(progress.earned, progress.required);
         meter.setAttribute("aria-label", copy.home.awardsProgress.replace("{earned}", progress.earned).replace("{required}", progress.required));
       }
+      document.getElementById("closeModeDetailsButton").setAttribute("aria-label", copy.close || "Close");
+      text("modeDetailsAwards", copy.home.viewAwards);
       document.getElementById("homeTitle").innerHTML = copy.title.replace(": ", ": <br>");
       text("homeSubtitle", hardMode ? copy.settings.hardMode : copy.subtitle);
       text("homeSettingsLabel", copy.settings.title);
@@ -124,6 +126,7 @@ export function createHomeScreen({ document, modes, onChoose, onSettings, onReco
       }
     },
     bind() {
+      document.getElementById("impostorBookGate").addEventListener("click", () => onLocked("impostor"));
       for (const mode of Object.keys(modes)) {
         document.getElementById(`home-${mode}`).addEventListener("click", () => choose(mode));
       }

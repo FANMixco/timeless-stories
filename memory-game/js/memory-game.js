@@ -244,9 +244,12 @@ let confirmedLanguageReload = false;
 let modalDetailPair = null;
 let modalRarity = null;
 const impostorRulesPanel = document.getElementById("impostorRulesPanel");
-const modalPanels = [impostorRulesPanel, contributionPanel, winPanel, gameOverPanel, collectionPanel, legendsPanel, rarityPanel, aboutPanel, restartPanel, achievementsPanel, achievementPanel, settingsPanel];
+const modeDetailsPanel = document.getElementById("modeDetailsPanel");
+let modeDetailsMode = null;
+const modalPanels = [modeDetailsPanel, impostorRulesPanel, contributionPanel, winPanel, gameOverPanel, collectionPanel, legendsPanel, rarityPanel, aboutPanel, restartPanel, achievementsPanel, achievementPanel, settingsPanel];
 const openScrollPanels = new Set();
 const modalLayers = createModalLayers([
+  { panel: modeDetailsPanel, close: closeModeDetails, focus: () => document.getElementById("closeModeDetailsButton").focus() },
   { panel: impostorRulesPanel, close: closeImpostorRules, focus: () => document.getElementById("closeImpostorRulesButton").focus() },
   { panel: achievementPanel, close: closeAchievement, focus: () => closeAchievementButton.focus() },
   { panel: contributionPanel, close: closeContribution, focus: () => closeContributionButton.focus() },
@@ -274,10 +277,52 @@ const homeScreen = createHomeScreen({ document, modes: gameModes,
   focusNavigationControl,
   reduceMotion: () => Boolean(window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches),
   onChoose: applyGameMode,
-  onLocked() { openAchievements(); selectProgressTab("achievements"); },
+  onLocked: openModeDetails,
   onSettings: openSettings, onRecords: openAchievements, onCollection: openCollection, onReturn: requestHome
 });
 homeScreen.bind();
+
+function renderModeDetails() {
+  if (!modeDetailsMode) return;
+  const book = modeDetailsMode === "impostor";
+  const copyText = (target, source) => { document.getElementById(target).textContent = document.getElementById(source).textContent; };
+  copyText("modeDetailsTitle", `home-${modeDetailsMode}-name`);
+  copyText("modeDetailsDescription", book ? "homeSixthMirrorDescription" : `home-${modeDetailsMode}-description`);
+  copyText("modeDetailsRequirement", book ? "homeSixthMirrorSubtitle" : `home-${modeDetailsMode}-requirement`);
+  document.getElementById("modeDetailsProgress").hidden = book;
+  document.getElementById("modeDetailsAwards").hidden = book;
+  document.getElementById("homeSixthMirrorBook").hidden = !book || !getDigitalBookUrl();
+  if (!book) {
+    copyText("modeDetailsProgressLabel", `home-${modeDetailsMode}-progress`);
+    const source = document.getElementById(`home-${modeDetailsMode}-meter`);
+    const meter = document.getElementById("modeDetailsMeter");
+    meter.max = source.max;
+    meter.value = source.value;
+    meter.setAttribute("aria-label", document.getElementById("modeDetailsProgressLabel").textContent);
+  }
+}
+
+function openModeDetails(mode) {
+  modeDetailsMode = mode;
+  renderModeDetails();
+  modeDetailsPanel.classList.add("is-visible");
+  syncModalScrollLock();
+}
+
+function closeModeDetails() {
+  modeDetailsPanel.classList.remove("is-visible");
+  syncModalScrollLock();
+  document.getElementById(modeDetailsMode === "impostor" ? "impostorBookGate" : `home-${modeDetailsMode}`).focus({ preventScroll: true });
+}
+
+document.getElementById("closeModeDetailsButton").addEventListener("click", closeModeDetails);
+modeDetailsPanel.addEventListener("click", event => { if (event.target === modeDetailsPanel) closeModeDetails(); });
+document.getElementById("modeDetailsAwards").addEventListener("click", () => {
+  openAchievements();
+  selectProgressTab("achievements");
+  closeModeDetails();
+  modalLayers.focusActive();
+});
 
 function showHome() {
   pendingHome = false;
@@ -343,7 +388,8 @@ function getModalSnapshot() {
     reset: pendingDataReset,
     home: pendingHome,
     impostorPlaytest: pendingImpostorPlaytest,
-    progressTab: progressView.tab
+    progressTab: progressView.tab,
+    modeDetails: modeDetailsMode
   };
 }
 
@@ -360,6 +406,11 @@ function restoreModalSnapshot(snapshot) {
     if (id === "achievementPanel") return Boolean(currentAchievement && snapshot.achievement === currentAchievement);
     return true;
   }));
+  if (!visible.has("modeDetailsPanel") && modeDetailsPanel.classList.contains("is-visible")) closeModeDetails();
+  if (visible.has("modeDetailsPanel")) {
+    modeDetailsMode = snapshot.modeDetails;
+    renderModeDetails();
+  }
   if (!visible.has("impostorRulesPanel") && impostorRulesPanel.classList.contains("is-visible")) closeImpostorRules();
   if (!visible.has("rarityPanel")) closeRarityPanel();
   if (!visible.has("legendsPanel")) closeLegendsPanel();
@@ -607,6 +658,7 @@ function renderHomeScreen() {
       memoryFlash: { earned: achievementDefinitions.filter(({ id }) => earned[id]).length, required: achievementDefinitions.length },
     },
     crazyMirrorsUnlocked: isCrazyMirrorsUnlocked(), memoryFlashUnlocked: isModeUnlocked("memoryFlash") });
+  renderModeDetails();
 }
 
 function applyGameMode(mode) {
