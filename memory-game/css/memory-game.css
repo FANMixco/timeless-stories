@@ -141,7 +141,14 @@ html.is-modal-open body {
 .home-card { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; padding: 26px 22px; min-width: 0; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); color: var(--ink); cursor: pointer; text-align: start; transition: border-color 150ms, transform 150ms; }
 .home-card:hover { border-color: var(--accent); transform: translateY(-2px); }
 .home-card:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
-.home-card > i, .home-move-icon { color: var(--accent-dark); font-size: 32px; width: 38px; height: 38px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.home-card > i, .home-move-icon, .home-coming-soon-icon { color: var(--accent-dark); font-size: 32px; width: 38px; height: 38px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; line-height: 1; }
+/* Compensate for intrinsic glyph whitespace so each icon reads at the same
+   perceived size as its neighbors rather than the same font size. */
+.home-card > .icon-impostor { transform: scale(1.24); }
+.home-card > .icon-mirror { transform: scale(1.16); }
+.home-card > .icon-time-attack { transform: scale(1.14); }
+/* Match on the coming-soon (book-gate) impostor icon for consistency. */
+.home-coming-soon .home-coming-soon-icon.icon-impostor { transform: scale(1.24); }
 .home-move-icon { font-size: 21px; font-weight: 700; border: 2px solid currentColor; border-radius: 8px; }
 .home-card strong { font-size: 1.15rem; line-height: 1.35; }
 .home-card > span:not(.home-move-icon) { color: var(--muted); line-height: 1.55; font-size: 0.95rem; }
