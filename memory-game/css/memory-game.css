@@ -160,8 +160,8 @@ html.is-modal-open body {
 .home-unlock-action { margin-top: 2px; color: var(--accent-dark); font-size: 0.85rem; font-weight: 700; }
 .home-coming-soon { position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 14px; min-width: 0; padding: 26px 22px; border: 1px dashed var(--line); border-radius: 12px; background: var(--panel); color: var(--muted); }
 .home-coming-soon-icon { display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 38px; font-size: 32px; flex-shrink: 0; }
-.home-coming-soon-heading h2 { margin: 0; color: var(--ink); font-size: 1.15rem; line-height: 1.4; }
-.home-coming-soon-heading p { margin: 6px 0 0; font-size: 0.9rem; line-height: 1.5; }
+.home-coming-soon-heading strong { margin: 0; color: var(--ink); font-size: 1.15rem; line-height: 1.4; }
+.home-coming-soon-heading > span { display: block; margin: 6px 0 0; font-size: 0.9rem; line-height: 1.5; }
 .home-coming-soon-lock { position: absolute; top: 22px; right: 18px; width: 20px; height: 20px; }
 .home-coming-soon-description { grid-column: 1 / -1; margin: 0; font-size: 0.95rem; line-height: 1.6; }
 .home-coming-soon-status { margin-top: auto; justify-self: start; padding: 4px 12px; border-radius: 20px; background: var(--line); color: var(--ink); font-size: 0.8rem; font-weight: 700; line-height: 1.5; }
@@ -186,14 +186,36 @@ html.is-modal-open body {
 .game-top .game-subtitle, .game-shell:not(.is-home) .game-footer { display: none; }
 .game-top { align-items: start; }
 @media (max-width: 640px) {
-  .game-home { padding-top: 20px; }
-  .home-modes { grid-template-columns: 1fr; gap: 12px; }
-  #home-crazyMirrors, #home-memoryFlash { grid-column: 1; }
-  .home-card:not(.home-tool) { display: grid; grid-template-columns: 38px 1fr; column-gap: 18px; row-gap: 6px; padding: 18px; }
-  .home-card:not(.home-tool) > i, .home-move-icon { grid-row: 1 / 3; align-self: center; }
-  .home-card:not(.home-tool) > span:not(.home-move-icon) { grid-column: 2; }
-  .home-card.is-locked strong { padding-right: 90px; }
-  .home-lock-badge { top: 18px; }
+  .game-home { padding: 8px 0 12px; }
+  .home-heading { margin-bottom: 18px; }
+  .home-heading h1 { font-size: clamp(1.6rem, 6.5vw, 2.25rem); }
+  .home-heading p { margin-top: 8px; font-size: 0.85rem; line-height: 1.4; }
+  .home-modes { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .home-modes > .home-card, .home-coming-soon {
+    display: flex; flex-direction: column; align-items: flex-start;
+    padding: 14px 12px; gap: 8px; min-height: 158px;
+    text-align: start; overflow-wrap: anywhere;
+  }
+  .home-modes > .home-card > i, .home-modes .home-move-icon, .home-coming-soon-icon {
+    color: var(--mode-color, var(--accent-dark)); width: 40px; height: 40px;
+    font-size: 30px; align-self: flex-start;
+  }
+  .home-modes .home-move-icon { font-size: 20px; }
+  .home-modes strong, .home-coming-soon-heading strong { font-size: 0.95rem; line-height: 1.3; }
+  .home-modes > .home-card > span:not(.home-move-icon), .home-coming-soon-heading > span {
+    font-size: 0.75rem; line-height: 1.4;
+  }
+  .home-modes > .home-card > span[id$="-description"] {
+    display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;
+  }
+  .home-modes > .home-card.is-locked > span[id$="-description"] { display: none; }
+  .home-card > .home-unlock { padding: 0; border: 0; gap: 0; }
+  .home-lock-badge { position: static; font-size: 0.72rem; gap: 4px; }
+  .home-lock-badge .home-lock-icon { width: 14px; height: 14px; font-size: 14px; }
+  .home-coming-soon-heading { padding: 0; }
+  .home-coming-soon-heading > span { margin-top: 8px; }
+  .home-coming-soon-description, .home-coming-soon-status { display: none; }
+  .home-coming-soon-lock { top: 14px; right: 12px; font-size: 16px; }
   .home-tools { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 16px; }
   .home-tools #homeSettings { grid-column: 1 / -1; }
   .home-tools:has(#homeRateApp:not([hidden])) #homeSettings { grid-column: 1; }
@@ -2466,3 +2488,35 @@ html[data-theme="dark"] .impostor-panel[data-phase="defeat"] #impostorNotice { c
   flex-shrink: 0;
 }
 #accuseImpostor .icon { font-size: 1.25rem; line-height: 1; }
+
+/* Mode identities are shared across compact and three-column layouts. */
+#home-timeAttack { --mode-color: var(--gold); }
+#home-limitedMoves { --mode-color: var(--found); }
+#home-crazyMirrors { --mode-color: #ad8be8; }
+#home-memoryFlash { --mode-color: var(--accent-dark); }
+#home-impostor, #impostorBookGate { --mode-color: var(--gold); border-color: color-mix(in srgb, var(--gold) 45%, var(--line)); }
+.home-modes > .home-card, .home-coming-soon {
+  background: linear-gradient(145deg, color-mix(in srgb, var(--mode-color, var(--accent)) 8%, transparent), transparent 70%), var(--panel);
+}
+.home-modes > .home-card > i, .home-modes .home-move-icon, .home-coming-soon-icon {
+  color: var(--mode-color, var(--accent-dark));
+}
+
+/* Lock details share the existing dialog stack, scrolling and focus handling. */
+.home-card > .home-unlock { border: 0; padding-top: 0; }
+.home-card .home-unlock > :not(.home-lock-badge) { display: none; }
+.home-coming-soon { cursor: pointer; text-align: start; }
+.home-coming-soon:hover { border-color: var(--gold); }
+.home-coming-soon:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
+.home-modes > [hidden] { display: none; }
+.mode-details-panel { z-index: 25; }
+.mode-details-panel .mode-details-card { width: min(100%, 420px); }
+.mode-details-card .dialog-body { display: flex; flex-direction: column; gap: 14px; }
+.mode-details-card p { margin: 0; line-height: 1.55; }
+.mode-details-card .home-unlock { display: flex; flex-direction: column; gap: 8px; }
+.mode-details-card [hidden] { display: none; }
+.mode-details-card .game-button { min-height: 44px; justify-content: center; text-align: center; }
+@media (max-width: 640px) {
+  .mode-details-panel { align-items: end; padding: 12px 12px calc(12px + env(safe-area-inset-bottom, 0px)); }
+  .mode-details-panel .mode-details-card { margin: 0 auto; border-radius: 16px; }
+}

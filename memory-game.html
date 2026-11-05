@@ -56,9 +56,9 @@
         }
       }
     </script>
-    <link rel="preload" href="memory-game/css/fonts/memory-game.woff2?v=memory-dd4614ee58c9" as="font" type="font/woff2" crossorigin="anonymous" />
-    <link rel="stylesheet" href="memory-game/css/icon-moon-memory.min.css?v=memory-dd4614ee58c9" />
-    <link rel="stylesheet" href="memory-game/css/memory-game.min.css?v=memory-dd4614ee58c9" />
+    <link rel="preload" href="memory-game/css/fonts/memory-game.woff2?v=memory-916159451c39" as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="stylesheet" href="memory-game/css/icon-moon-memory.min.css?v=memory-916159451c39" />
+    <link rel="stylesheet" href="memory-game/css/memory-game.min.css?v=memory-916159451c39" />
   </head>
   <body>
     <main class="game-shell is-home" aria-label="">
@@ -93,18 +93,17 @@
               <span class="home-unlock-progress" id="home-memoryFlash-progress"></span>
               <span class="home-unlock-action" id="home-memoryFlash-awards"></span>
             </span></button>
-          <section id="impostorBookGate" class="home-coming-soon" aria-labelledby="homeSixthMirrorTitle">
+          <button type="button" id="impostorBookGate" class="home-coming-soon" aria-labelledby="homeSixthMirrorTitle" aria-haspopup="dialog">
 
             <i class="icon home-coming-soon-icon icon-impostor" aria-hidden="true"></i>
-            <div class="home-coming-soon-heading">
-              <h2 id="homeSixthMirrorTitle"></h2>
-              <p id="homeSixthMirrorSubtitle"></p>
-            </div>
+            <span class="home-coming-soon-heading">
+              <strong id="homeSixthMirrorTitle"></strong>
+              <span id="homeSixthMirrorSubtitle"></span>
+            </span>
             <i class="icon home-lock-icon home-coming-soon-lock icon-lock" aria-hidden="true"></i>
-            <p class="home-coming-soon-description" id="homeSixthMirrorDescription"></p>
+            <span class="home-coming-soon-description" id="homeSixthMirrorDescription"></span>
             <span class="home-coming-soon-status" id="homeSixthMirrorStatus"></span>
-            <a class="home-coming-soon-book" id="homeSixthMirrorBook" target="_blank" rel="noopener noreferrer" hidden></a>
-          </section>
+          </button>
           <button class="home-card" id="home-impostor" type="button" hidden><i class="icon icon-impostor" aria-hidden="true"></i><strong id="home-impostor-name"></strong><span id="home-impostor-description"></span></button>
         </div>
         <div class="home-tools">
@@ -196,6 +195,24 @@
           <span class="impostor-victory icon icon-trophy" aria-hidden="true"></span>
         </div>
       </div>
+      <aside class="legends-panel mode-details-panel" id="modeDetailsPanel" role="dialog" aria-modal="true" aria-labelledby="modeDetailsTitle" aria-describedby="modeDetailsDescription">
+        <div class="legends-card dialog-card mode-details-card">
+          <header class="dialog-header">
+            <button class="win-close" id="closeModeDetailsButton" type="button"></button>
+            <h2 id="modeDetailsTitle"></h2>
+          </header>
+          <div class="dialog-body" role="region" aria-labelledby="modeDetailsTitle" tabindex="0">
+            <p id="modeDetailsDescription"></p>
+            <p id="modeDetailsRequirement"></p>
+            <div class="home-unlock" id="modeDetailsProgress">
+              <progress id="modeDetailsMeter" max="1" value="0"></progress>
+              <span class="home-unlock-progress" id="modeDetailsProgressLabel"></span>
+            </div>
+            <button class="game-button" id="modeDetailsAwards" type="button"></button>
+            <a class="game-button" id="homeSixthMirrorBook" target="_blank" rel="noopener noreferrer" hidden></a>
+          </div>
+        </div>
+      </aside>
       <aside class="win-panel" id="winPanel" role="dialog" aria-modal="true" aria-labelledby="winTitle" aria-describedby="winMessage">
         <span class="firework" aria-hidden="true"></span>
         <span class="firework" aria-hidden="true"></span>
@@ -465,7 +482,7 @@
       <footer class="game-footer standalone-only" id="gameFooter"></footer>
     </main>
 
-    <script type="module" src="memory-game/js/memory-game.min.js?v=memory-dd4614ee58c9"></script>
+    <script type="module" src="memory-game/js/memory-game.min.js?v=memory-916159451c39"></script>
     <!-- Keep registration inline so PWA analyzers can discover it without running a browser. -->
     <script>
       if ("serviceWorker" in navigator) {
