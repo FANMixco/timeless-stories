@@ -2359,8 +2359,8 @@ function updateGameTitleVisibility() {
 function hideLegendToast() {
   selectedStory.classList.remove("is-visible");
   legendToast.hidden = true;
-  legendToast.dataset.tutorial = "false";
-  legendToastClose.hidden = false;
+  legendToast.inert = true;
+  // Preserve the toast's layout and typography until its exit fade completes.
   if (toastTimer) {
     window.clearTimeout(toastTimer);
     toastTimer = null;
@@ -2392,6 +2392,7 @@ function showToast(title, text, emphasis = "", underline = "") {
     content.push(document.createTextNode(remaining));
   }
   legendToastText.replaceChildren(...content);
+  legendToast.inert = false;
   legendToast.hidden = false;
   legendToast.dataset.tutorial = String(introRunning);
   legendToastClose.hidden = introRunning;

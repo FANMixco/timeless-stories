@@ -505,6 +505,7 @@ html[data-theme="dark"] .status-value.is-running-low { color: #ff9d93; }
 }
 
 .combo-toast {
+  display: block;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -520,6 +521,7 @@ html[data-theme="dark"] .status-value.is-running-low { color: #ff9d93; }
   line-height: 1.2;
   pointer-events: none;
   user-select: none;
+  animation: toast-fade-in 140ms ease;
 }
 .combo-toast[hidden] { display: none; }
 .combo-toast[data-tier="super"] { background: #fff0df; color: #965017; border-color: #e4b07d; }
@@ -1192,6 +1194,24 @@ html[data-theme="dark"] .card[data-rarity="tutorial"] .character-icon {
   display: none !important;
 }
 
+/* Fade independently of the entry animation's opacity and delay display removal.
+   Longhand properties preserve allow-discrete through the CSS minifier. */
+.legend-toast, .combo-toast {
+  filter: opacity(1);
+  transition-property: filter, display;
+  transition-duration: 140ms;
+  transition-timing-function: ease;
+  transition-behavior: allow-discrete;
+}
+.legend-toast[hidden], .combo-toast[hidden] {
+  filter: opacity(0);
+  pointer-events: none;
+}
+@keyframes toast-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
 html.is-modal-open .legend-toast {
   visibility: hidden;
 }
@@ -1719,6 +1739,10 @@ html[data-theme="dark"] .card.is-matched .card-front {
   .home-card, .home-coming-soon { transition: none; }
   .win-panel, .legends-panel, .rarity-panel { transition: none; }
   .dialog-card { animation: none; }
+  .legend-toast, .combo-toast {
+    transition: none;
+    animation: none !important;
+  }
   .achievement-panel .achievement-card, .achievement-panel .achievement-card::before { animation: none; }
   .achievement-panel .achievement-card::before { display: none; }
 }
