@@ -139,7 +139,8 @@ html.is-modal-open body {
 .home-heading p { margin: 12px 0 0; color: var(--muted); line-height: 1.6; }
 .home-modes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
 .home-card { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; padding: 26px 22px; min-width: 0; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); color: var(--ink); cursor: pointer; text-align: start; transition: border-color 150ms, transform 150ms; }
-.home-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+.home-card:hover, .home-coming-soon:hover { border-color: var(--accent); transform: translateY(-2px); }
+.home-coming-soon { transition: border-color 150ms, transform 150ms; }
 .home-card:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
 .home-card > i, .home-move-icon, .home-coming-soon-icon { color: var(--accent-dark); font-size: 32px; width: 38px; height: 38px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; line-height: 1; }
 /* Compensate for intrinsic glyph whitespace so each icon reads at the same
@@ -1786,8 +1787,8 @@ html[data-theme="dark"] .card.is-matched .card-front {
   to { opacity: 0; transform: scale(1.04); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .home-card { transition: none; }
-  .home-card:hover { transform: none; }
+  .home-card, .home-coming-soon { transition: none; }
+  .home-card:hover, .home-coming-soon:hover { transform: none; }
   .achievement-panel .achievement-card, .achievement-panel .achievement-card::before { animation: none; }
   .achievement-panel .achievement-card::before { display: none; }
 }
@@ -2554,7 +2555,7 @@ html[data-theme="dark"] .impostor-panel[data-phase="defeat"] #impostorNotice { c
 .home-card > .home-unlock { border: 0; padding-top: 0; }
 .home-card .home-unlock > :not(.home-lock-badge) { display: none; }
 .home-coming-soon { cursor: pointer; text-align: start; }
-.home-coming-soon:hover { border-color: var(--gold); }
+#impostorBookGate:hover, #home-impostor:hover { border-color: var(--gold); }
 .home-coming-soon:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
 .home-modes > [hidden] { display: none; }
 .mode-details-panel { z-index: 25; }
