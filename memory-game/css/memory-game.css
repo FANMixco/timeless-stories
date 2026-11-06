@@ -2524,6 +2524,10 @@ html[data-theme="dark"] .impostor-panel[data-phase="defeat"] #impostorNotice { c
 }
 
 /* Interaction states: keyboard focus remains available on every device. */
+.win-close, #legendToastClose { -webkit-tap-highlight-color: transparent; }
+
+.win-close:focus:not(:focus-visible), #legendToastClose:focus:not(:focus-visible) { outline: none; }
+
 .home-card:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
 
 .home-coming-soon-book:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; border-radius: 2px; }
@@ -2565,13 +2569,13 @@ html[data-theme="dark"] .language-option:focus-visible {
 }
 
 .win-close:focus-visible {
-  background: rgba(0, 119, 182, 0.1);
-  color: var(--ink);
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 .legend-toast button:focus-visible {
-  background: rgba(0, 119, 182, 0.1);
-  color: var(--ink);
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 .game-footer button:focus-visible,
@@ -2646,13 +2650,18 @@ html[data-theme="dark"] .legends-rarity-note:focus-visible {
     /*text-underline-offset: 3px;*/
   }
 
-  .win-close:hover {
+  .win-close:hover, .win-close:focus-visible {
     background: rgba(0, 119, 182, 0.1);
     color: var(--ink);
   }
 
-  .legend-toast button:hover {
+  .legend-toast button:hover, .legend-toast button:focus-visible {
     background: rgba(0, 119, 182, 0.1);
+    color: var(--ink);
+  }
+
+  .win-close:active, #legendToastClose:active {
+    background: color-mix(in srgb, var(--accent) 18%, transparent);
     color: var(--ink);
   }
 
