@@ -810,6 +810,12 @@ html[data-theme="dark"] .card[data-rarity="tutorial"] .character-icon {
   inset: 0;
   z-index: 20;
   display: none;
+  opacity: 0;
+  pointer-events: none;
+  transition-property: opacity, display;
+  transition-duration: 160ms;
+  transition-timing-function: ease;
+  transition-behavior: allow-discrete;
   place-items: center;
   padding: calc(18px + env(safe-area-inset-top, 0px)) 18px calc(18px + env(safe-area-inset-bottom, 0px));
   background: rgba(17, 24, 32, 0.54);
@@ -821,6 +827,8 @@ html[data-theme="dark"] .card[data-rarity="tutorial"] .character-icon {
 .legends-panel.is-visible,
 .rarity-panel.is-visible {
   display: grid;
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .win-card,
@@ -1709,6 +1717,8 @@ html[data-theme="dark"] .card.is-matched .card-front {
 }
 @media (prefers-reduced-motion: reduce) {
   .home-card, .home-coming-soon { transition: none; }
+  .win-panel, .legends-panel, .rarity-panel { transition: none; }
+  .dialog-card { animation: none; }
   .achievement-panel .achievement-card, .achievement-panel .achievement-card::before { animation: none; }
   .achievement-panel .achievement-card::before { display: none; }
 }

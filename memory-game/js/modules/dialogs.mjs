@@ -11,7 +11,8 @@ export function createModalLayers(layers) {
     sync() {
       const current = active();
       for (const { panel } of layers) {
-        panel.inert = isVisible(panel) && panel !== current?.panel;
+        // A closed panel can still be fading out, but must stop accepting input.
+        panel.inert = panel !== current?.panel;
         panel.setAttribute("aria-modal", String(panel === current?.panel));
       }
       // Opening/closing callbacks may focus before a covered layer becomes usable.
