@@ -442,7 +442,12 @@
       "hintEmphasis": "注意图标！",
       "hintUnderline": "不用在意名称和旗帜，因为它们可能不同。",
       "shareCopied": "链接已复制",
-      "shareText": "我刚刚配对了萨尔瓦多与西班牙的镜像传说。你能找出全部10组吗？",
+      "shareText": "将萨尔瓦多传说与西班牙镜像传说配对。你能找出所有配对吗？",
+      "shareResults": {
+        "win": "我在《{title}》的{mode}{difficulty}中获胜了！{stats}。你能超越我的成绩吗？",
+        "loss": "我在《{title}》的{mode}{difficulty}中失败了。{reason} {stats}。你能做得更好吗？",
+        "copied": "成绩已复制"
+      },
       "close": "关闭",
       "previewReward": "🏆 你赢得了图书预览",
       "previewRewardHref": "https://bit.ly/4dyjiZz",

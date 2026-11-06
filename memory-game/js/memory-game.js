@@ -114,6 +114,7 @@ const spokenCountdown = createSpokenCountdown({
 });
 const achievementsStorageKey = "timelessMemoryAchievements";
 let completedPerformance = null;
+let shareResult = null;
 const achievementDefinitions = [
   { id: "legendary", icon: "trophy", color: "#c49118" },
   { id: "victory", icon: "star-full", color: "#a57a10" },
@@ -701,6 +702,7 @@ function endGame(reason) {
   const copy = memoryGame.modes;
   setElementText(document.getElementById("gameOverTitle"), copy.gameOver);
   setElementText(document.getElementById("gameOverReason"), copy[reason]);
+  captureShareResult("loss", reason);
   setElementText(document.getElementById("gameOverSummary"), copy.summary
     .replace("{matches}", matches).replace("{pairs}", getPairCount()).replace("{moves}", moves));
   gameOverPanel.classList.add("is-visible");
@@ -1099,6 +1101,9 @@ async function loadGameLanguage(language) {
   if (!Object.keys(gameModes).every(mode => game.modes[mode]?.name && game.modes[mode]?.description) ||
     !["tutorial", "mistakesRemaining", "preview", "unlocked"].every(key => game.modes.memoryFlash?.[key]) || !game.modes.mistakeLimit) {
     throw new Error(`Incomplete game mode translations: ${language}`);
+  }
+  if (!game.shareText || !["win", "loss", "copied"].every(key => game.shareResults?.[key])) {
+    throw new Error(`Incomplete share translations: ${language}`);
   }
   const pairs = [...(game.pairs || []), ...(game.rarePairs || []).map(variant => variant.pair)];
   if (!pairs.every(pair => game.comparisons?.[pair.comparison]?.title && game.comparisons[pair.comparison].description)) {
@@ -1660,6 +1665,7 @@ function applyUiCopy() {
   renderGameModes();
   setElementText(document.getElementById("tryAgainButton"), memoryGame.modes.tryAgain);
   setElementText(document.getElementById("gameOverRecordsButton"), memoryGame.records.viewRecords);
+  setElementText(document.getElementById("gameOverShareButton"), memoryGame.share);
   document.getElementById("closeGameOverButton").setAttribute("aria-label", memoryGame.close);
   applyShortNamesPreference();
   setElementText(document.getElementById("winRecordsLabel"), memoryGame.records.viewRecords);
@@ -2146,6 +2152,7 @@ function markMatch() {
   if (matches === getPairCount()) {
     stopTimer();
     gameCompleted = true;
+    captureShareResult("win");
     const previousMatchStats = readChallengeStats().matchStats;
     progressStore.completeMatchStats(activePairs);
     updateStatus();
@@ -2533,6 +2540,7 @@ function newGame({ startPreview = !homeScreen.visible } = {}) {
   elapsedSeconds = 0;
   gameCompleted = false;
   completedPerformance = null;
+  shareResult = null;
   renderCompletedPerformance();
   impostorRound = gameMode === "impostor" ? createImpostorRound() : null;
   impostorNoticeKey = "ready";
@@ -2760,8 +2768,7 @@ async function runIntroTutorial() {
   );
   board.replaceChildren(...tutorialCards.map(createCard));
   const cards = [...board.querySelectorAll(".card")];
-  if (crazy) showToast(memoryGame.modes.crazyMirrors.name, memoryGame.modes.crazyMirrors.tutorial);
-  else if (challengeIntroKey) showModeHelp(true);
+  if (crazy || challengeIntroKey) showModeHelp(true);
   else showToast(memoryGame.hint || "Hint", memoryGame.hintText || "Pay attention to the icons.", memoryGame.hintEmphasis, memoryGame.hintUnderline);
 
   await wait(1000);
@@ -2806,7 +2813,7 @@ function showImpostorTutorial() {
 
 function showModeHelp(tutorial = false) {
   const modeCopy = memoryGame.modes[gameMode];
-  const text = modeCopy[tutorial ? "tutorial" : "hint"];
+  const text = modeCopy[tutorial || gameMode === "crazyMirrors" ? "tutorial" : "hint"];
   if (text) {
     const mode = gameModes[gameMode];
     showToast(tutorial ? document.getElementById(`home-${gameMode}-name`).textContent : memoryGame.hint,
@@ -2866,10 +2873,31 @@ function openLegendsPanel() {
   syncModalScrollLock();
 }
 
-async function shareGame(button = shareButton) {
+function captureShareResult(outcome, reason = "") {
+  shareResult = { outcome, reason, mode: gameMode, hard: hardModeEnabled,
+    pairs: getPairCount(), matches, moves, seconds: elapsedSeconds,
+    moveLimit: gameModes[gameMode].moves, tracksTime: gameModes[gameMode].tracksTime !== false };
+}
+
+function getResultShareText(outcome) {
+  if (!shareResult || shareResult.outcome !== outcome) return memoryGame.shareText;
+  const result = shareResult;
+  let mode = memoryGame.modes[result.mode].name;
+  if (result.mode === "limitedMoves") mode = mode.replace(/\d+/, result.moveLimit);
+  const stats = [`${memoryGame.matches}: ${result.matches}/${result.pairs}`];
+  if (result.tracksTime) stats.push(`${memoryGame.time}: ${formatTime(result.seconds)}`);
+  stats.push(`${memoryGame.moves}: ${result.moves.toLocaleString(currentLanguage)}`);
+  const values = { title: memoryGame.title, mode,
+    difficulty: result.hard ? ` (${memoryGame.settings.hardMode})` : "",
+    reason: memoryGame.modes[result.reason] || "", stats: stats.join(" · ") };
+  return memoryGame.shareResults[outcome].replace(/\{(\w+)\}/g, (_, key) => values[key]);
+}
+
+async function shareGame(button = shareButton, outcome = null) {
+  const isResult = Boolean(outcome && shareResult?.outcome === outcome);
   const shareData = {
     title: memoryGame.title || document.title,
-    text: memoryGame.shareText || memoryGame.subtitle || "",
+    text: isResult ? getResultShareText(outcome) : memoryGame.shareText || memoryGame.subtitle || "",
     url: ratingUrl || getShareUrl(),
   };
 
@@ -2878,9 +2906,10 @@ async function shareGame(button = shareButton) {
     return;
   }
 
-  await navigator.clipboard?.writeText(shareData.url);
+  if (!navigator.clipboard?.writeText) return;
+  await navigator.clipboard.writeText(isResult ? `${shareData.text}\n${shareData.url}` : shareData.url);
   const originalLabel = button.textContent || memoryGame.share || "";
-  button.textContent = memoryGame.shareCopied || originalLabel;
+  button.textContent = (isResult ? memoryGame.shareResults.copied : memoryGame.shareCopied) || originalLabel;
   window.setTimeout(() => {
     if (button === shareButton) {
       setActionButtonContent(button, button.dataset.label || originalLabel, getShareIconClass());
@@ -3021,7 +3050,10 @@ shareButton.addEventListener("click", () => {
 });
 hintButton.addEventListener("click", handleHint);
 winShareButton.addEventListener("click", () => {
-  shareGame(winShareButton).catch(() => {});
+  shareGame(winShareButton, "win").catch(() => {});
+});
+document.getElementById("gameOverShareButton").addEventListener("click", () => {
+  shareGame(document.getElementById("gameOverShareButton"), "loss").catch(() => {});
 });
 function closeWinPanel() {
   winPanel.classList.remove("is-visible");
