@@ -139,9 +139,9 @@ html.is-modal-open body {
 .home-heading p { margin: 12px 0 0; color: var(--muted); line-height: 1.6; }
 .home-modes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
 .home-card { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; padding: 26px 22px; min-width: 0; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); color: var(--ink); cursor: pointer; text-align: start; transition: border-color 150ms, transform 150ms; }
-.home-card:hover, .home-coming-soon:hover { border-color: var(--accent); transform: translateY(-2px); }
+
 .home-coming-soon { transition: border-color 150ms, transform 150ms; }
-.home-card:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
+
 .home-card > i, .home-move-icon, .home-coming-soon-icon { color: var(--accent-dark); font-size: 32px; width: 38px; height: 38px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; line-height: 1; }
 /* Compensate for intrinsic glyph whitespace so each icon reads at the same
    perceived size as its neighbors rather than the same font size. These target
@@ -176,7 +176,7 @@ html.is-modal-open body {
 .home-coming-soon-status { margin-top: auto; justify-self: start; padding: 4px 12px; border-radius: 20px; background: var(--line); color: var(--ink); font-size: 0.8rem; font-weight: 700; line-height: 1.5; }
 .home-coming-soon-book { color: var(--accent-dark); font-size: 0.9rem; font-weight: 700; line-height: 1.5; text-underline-offset: 3px; }
 .home-coming-soon-book[hidden] { display: none; }
-.home-coming-soon-book:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; border-radius: 2px; }
+
 @media (max-width: 640px) {
   .home-coming-soon { display: grid; padding: 18px; gap: 6px 18px; grid-template-columns: 38px minmax(0, 1fr); }
   .home-coming-soon-icon { grid-column: 1; grid-row: 1 / 3; align-self: center; }
@@ -315,7 +315,7 @@ html[data-embed="true"] .standalone-only {
 .settings-row .language-menu { max-height: min(240px, 40dvh); overflow-y: auto; }
 .settings-row #languageButton { display: inline-flex; align-items: center; gap: 10px; }
 .settings-row input[type="checkbox"] { flex-shrink: 0; width: 24px; height: 24px; accent-color: var(--found); cursor: pointer; }
-.settings-row input[type="checkbox"]:focus-visible { outline: 2px solid var(--found); outline-offset: 4px; }
+
 .settings-theme { margin: 24px 0 0; padding: 0; min-width: 0; border: 0; }
 .settings-theme legend { margin-bottom: 10px; padding: 0; line-height: 1.5; }
 .active-game-mode { margin: 6px 0 0; font-size: 0.8rem; font-weight: 700; color: var(--accent); }
@@ -328,7 +328,6 @@ html[data-embed="true"] .standalone-only {
 .theme-option input { position: absolute; opacity: 0; width: 1px; height: 1px; }
 .theme-option span { display: block; padding: 10px 4px; border-radius: 5px; text-align: center; overflow-wrap: anywhere; }
 .theme-option input:checked + span { background: var(--accent); color: #fff; }
-.theme-option input:focus-visible + span { outline: 2px solid var(--found); outline-offset: 2px; }
 
 .action-icon {
   flex: 0 0 auto;
@@ -370,12 +369,6 @@ html[data-theme="dark"] .game-button.secondary {
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.03);
 }
 
-html[data-theme="dark"] .game-button.secondary:hover,
-html[data-theme="dark"] .game-button.secondary:focus-visible {
-  background: rgba(74, 168, 255, 0.22);
-  border-color: rgba(142, 196, 255, 0.7);
-}
-
 .language-menu {
   position: absolute;
   top: calc(100% + 6px);
@@ -406,8 +399,6 @@ html[data-theme="dark"] .game-button.secondary:focus-visible {
   cursor: pointer;
 }
 
-.language-option:hover,
-.language-option:focus-visible,
 .language-option[aria-checked="true"] {
   background: rgba(0, 119, 182, 0.12);
   color: var(--accent-dark);
@@ -418,8 +409,6 @@ html[data-theme="dark"] .language-menu {
   background: var(--panel);
 }
 
-html[data-theme="dark"] .language-option:hover,
-html[data-theme="dark"] .language-option:focus-visible,
 html[data-theme="dark"] .language-option[aria-checked="true"] {
   background: rgba(74, 168, 255, 0.18);
   color: #d8ebff;
@@ -563,11 +552,6 @@ html[data-theme="dark"] .status-value.is-running-low { color: #ff9d93; }
   perspective: 800px;
 }
 
-.card:focus-visible {
-  outline: 3px solid var(--gold);
-  outline-offset: 3px;
-}
-
 .card-inner {
   position: absolute;
   inset: 0;
@@ -661,11 +645,6 @@ html[data-theme="dark"] .card[data-rarity="rare"] { --match-glow-color: #8be0c5;
 
 .board.is-complete .card.is-matched {
   cursor: pointer;
-}
-
-.board.is-complete .card.is-matched:hover .card-inner,
-.board.is-complete .card.is-matched:focus-visible .card-inner {
-  box-shadow: 0 0 0 3px rgba(18, 113, 91, 0.24);
 }
 
 .character-mark {
@@ -950,7 +929,6 @@ html[data-theme="dark"] .card[data-rarity="tutorial"] .character-icon {
 .dialog-body > :first-child { margin-top: 0; }
 .win-card .dialog-body { padding-top: 0; }
 .settings-card .dialog-body > .settings-row:first-child { margin-top: 0; }
-.dialog-body:focus-visible { outline: 2px solid var(--accent); outline-offset: -3px; }
 
 .legends-card h2 {
   margin: 0 44px 18px 0;
@@ -986,13 +964,6 @@ html[data-theme="dark"] .card[data-rarity="tutorial"] .character-icon {
   line-height: 1.35;
   text-align: center;
   cursor: pointer;
-}
-
-.legends-rarity-note:hover,
-.legends-rarity-note:focus-visible {
-  color: var(--accent-dark);
-  text-decoration: underline;
-  /*text-underline-offset: 3px;*/
 }
 
 .legends-footer .game-button {
@@ -1189,12 +1160,6 @@ html[data-theme="dark"] .card[data-rarity="tutorial"] .character-icon {
   line-height: 1;
 }
 
-.win-close:hover,
-.win-close:focus-visible {
-  background: rgba(0, 119, 182, 0.1);
-  color: var(--ink);
-}
-
 .legend-toast {
   position: fixed;
   top: calc(14px + env(safe-area-inset-top, 0px));
@@ -1274,12 +1239,6 @@ html.is-modal-open .legend-toast {
 .legend-toast button::before,
 .win-close::before {
   content: "✖";
-}
-
-.legend-toast button:hover,
-.legend-toast button:focus-visible {
-  background: rgba(0, 119, 182, 0.1);
-  color: var(--ink);
 }
 
 .win-card h2 {
@@ -1363,13 +1322,6 @@ html.is-modal-open .legend-toast {
   transform: translateY(-50%);
 }
 
-.game-footer button:focus-visible,
-.about-websites a:focus-visible,
-.about-book a:focus-visible {
-  outline: 3px solid var(--accent-dark);
-  outline-offset: 4px;
-}
-
 .about-panel { z-index: 26; }
 .restart-panel { z-index: 31; }
 .about-card { line-height: 1.6; }
@@ -1412,11 +1364,6 @@ html.is-modal-open .legend-toast {
   .about-websites { flex-direction: column; gap: 4px; }
 }
 
-.game-footer a:hover,
-.game-footer a:focus-visible {
-  color: var(--accent);
-}
-
 #getCopyButton,
 #topGetCopyButton,
 #legendsGetCopyButton {
@@ -1432,11 +1379,6 @@ html.is-modal-open .legend-toast {
   box-shadow: none;
 }
 
-#previewRewardButton:hover,
-#previewRewardButton:focus-visible {
-  background: #0f604d;
-}
-
 html[data-theme="light"] #getCopyButton,
 html[data-theme="light"] #topGetCopyButton,
 html[data-theme="light"] #legendsGetCopyButton {
@@ -1444,25 +1386,9 @@ html[data-theme="light"] #legendsGetCopyButton {
   box-shadow: none;
 }
 
-html[data-theme="light"] #getCopyButton:hover,
-html[data-theme="light"] #getCopyButton:focus-visible,
-html[data-theme="light"] #topGetCopyButton:hover,
-html[data-theme="light"] #topGetCopyButton:focus-visible,
-html[data-theme="light"] #legendsGetCopyButton:hover,
-html[data-theme="light"] #legendsGetCopyButton:focus-visible {
-  background: #d9ab30;
-}
-
 html[data-theme="dark"] .legend-toast {
   background: rgba(23, 33, 43, 0.98);
   border-color: var(--line);
-}
-
-#getCopyButton:focus-visible,
-#topGetCopyButton:focus-visible,
-#legendsGetCopyButton:focus-visible {
-  outline: 3px solid var(--accent-dark);
-  outline-offset: 3px;
 }
 
 .firework {
@@ -1522,11 +1448,6 @@ html[data-theme="dark"] .rarity-card {
 html[data-theme="dark"] .legend-row {
   background: rgba(255, 255, 255, 0.03);
   border-color: var(--line);
-}
-
-html[data-theme="dark"] .legends-rarity-note:hover,
-html[data-theme="dark"] .legends-rarity-note:focus-visible {
-  color: #d8ebff;
 }
 
 html[data-theme="dark"] .card-front {
@@ -1701,7 +1622,7 @@ html[data-theme="dark"] .card.is-matched .card-front {
 .progress-tabs { display: flex; gap: 4px; margin: 18px 0 24px; padding: 4px; border: 1px solid var(--line); border-radius: 8px; }
 .progress-tabs [role="tab"] { flex: 1; min-width: 0; min-height: 44px; padding: 10px 6px; border: 0; border-radius: 5px; background: transparent; color: var(--muted); font: inherit; font-weight: 700; cursor: pointer; }
 .progress-tabs [aria-selected="true"] { background: var(--accent); color: #fff; }
-.progress-tabs [role="tab"]:focus-visible { outline: 2px solid var(--found); outline-offset: 2px; }
+
 .progress-tab-count { display: inline-block; margin-left: 6px; padding: 2px 6px; border-radius: 12px; background: var(--panel); color: var(--ink); font-size: 0.75em; white-space: nowrap; }
 .mode-records { margin: 24px 0; }
 .mode-records h4 { margin: 0 0 8px; color: var(--ink); font-size: 1.05rem; }
@@ -1728,7 +1649,7 @@ html[data-theme="dark"] .card.is-matched .card-front {
 .win-card .performance-notification { margin: 0 0 12px; color: var(--found); font-size: 0.85rem; }
 .win-records-link { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 36px; margin: 0 0 12px; padding: 4px 8px; border: 0; background: transparent; color: var(--found); font: inherit; font-size: 0.85rem; cursor: pointer; }
 .win-records-link span { text-decoration: underline; text-underline-offset: 3px; }
-.win-records-link:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+
 @media (pointer: coarse) {
   .win-records-link { min-height: 44px; }
 }
@@ -1788,7 +1709,6 @@ html[data-theme="dark"] .card.is-matched .card-front {
 }
 @media (prefers-reduced-motion: reduce) {
   .home-card, .home-coming-soon { transition: none; }
-  .home-card:hover, .home-coming-soon:hover { transform: none; }
   .achievement-panel .achievement-card, .achievement-panel .achievement-card::before { animation: none; }
   .achievement-panel .achievement-card::before { display: none; }
 }
@@ -1799,8 +1719,7 @@ html[data-theme="dark"] .card.is-matched .card-front {
 .collection-group h3 { display: flex; align-items: center; gap: 8px; color: var(--accent-dark); }
 .collection-info { display: inline-flex; flex: 0 0 32px; align-items: center; justify-content: center; width: 32px; height: 32px; padding: 6px; border: 0; border-radius: 50%; background: transparent; color: inherit; cursor: pointer; }
 .collection-info-icon { display: block; font-size: 20px; width: 20px; height: 20px; }
-.collection-info:hover { background: rgba(0, 119, 182, 0.1); }
-.collection-info:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+
 .collection-group[data-rarity="rare"] h3 { color: #0b6f8f; }
 .collection-group[data-rarity="ultra-rare"] h3 { color: #9a5b00; }
 html[data-theme="dark"] .collection-group[data-rarity="rare"] h3 { color: #8be0c5; }
@@ -1813,7 +1732,7 @@ html[data-theme="dark"] .collection-mirror:not(:disabled) strong { color: #fffff
 .collection-mirror > span:last-child { color: var(--muted); font-size: 1.25rem; font-weight: 550; line-height: 1.4; }
 .collection-mirror:disabled { cursor: default; }
 .collection-mirror:disabled .character-mark { font-size: 2.2rem; font-weight: 800; }
-.collection-mirror:focus-visible { outline: 3px solid var(--accent-dark); outline-offset: 2px; }
+
 .collection-contribution { margin-top: 24px; text-align: center; line-height: 1.5; }
 .collection-contribution .game-button { display: inline-block; text-decoration: none; }
 
@@ -2250,7 +2169,6 @@ html[data-theme="dark"] .game-shell [data-category] .character-icon {
 .contribution-body { flex: 1; overflow: hidden; }
 .contribution-frame { display: block; width: 100%; height: 100%; border: 0; background: #fff; }
 
-
 /* Round palette overrides every rarity/category in both themes. Identity stays intact. */
 .impostor-panel { width: 100%; max-width: none; text-align: start; padding: 12px 14px; }
 .impostor-panel { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
@@ -2555,8 +2473,7 @@ html[data-theme="dark"] .impostor-panel[data-phase="defeat"] #impostorNotice { c
 .home-card > .home-unlock { border: 0; padding-top: 0; }
 .home-card .home-unlock > :not(.home-lock-badge) { display: none; }
 .home-coming-soon { cursor: pointer; text-align: start; }
-#impostorBookGate:hover, #home-impostor:hover { border-color: var(--gold); }
-.home-coming-soon:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
+
 .home-modes > [hidden] { display: none; }
 .mode-details-panel { z-index: 25; }
 .mode-details-panel .mode-details-card { width: min(100%, 420px); }
@@ -2570,4 +2487,165 @@ html[data-theme="dark"] .impostor-panel[data-phase="defeat"] #impostorNotice { c
 @media (max-width: 640px) {
   .mode-details-panel { align-items: end; padding: 12px 12px calc(12px + env(safe-area-inset-bottom, 0px)); }
   .mode-details-panel .mode-details-card { margin: 0 auto; border-radius: 16px; }
+}
+
+/* Interaction states: keyboard focus remains available on every device. */
+.home-card:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
+
+.home-coming-soon-book:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; border-radius: 2px; }
+
+.settings-row input[type="checkbox"]:focus-visible { outline: 2px solid var(--found); outline-offset: 4px; }
+
+.theme-option input:focus-visible + span { outline: 2px solid var(--found); outline-offset: 2px; }
+
+html[data-theme="dark"] .game-button.secondary:focus-visible {
+  background: rgba(74, 168, 255, 0.22);
+  border-color: rgba(142, 196, 255, 0.7);
+}
+
+.language-option:focus-visible {
+  background: rgba(0, 119, 182, 0.12);
+  color: var(--accent-dark);
+}
+
+html[data-theme="dark"] .language-option:focus-visible {
+  background: rgba(74, 168, 255, 0.18);
+  color: #d8ebff;
+}
+
+.card:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 3px;
+}
+
+.board.is-complete .card.is-matched:focus-visible .card-inner {
+  box-shadow: 0 0 0 3px rgba(18, 113, 91, 0.24);
+}
+
+.dialog-body:focus-visible { outline: 2px solid var(--accent); outline-offset: -3px; }
+
+.legends-rarity-note:focus-visible {
+  color: var(--accent-dark);
+  text-decoration: underline;
+  /*text-underline-offset: 3px;*/
+}
+
+.win-close:focus-visible {
+  background: rgba(0, 119, 182, 0.1);
+  color: var(--ink);
+}
+
+.legend-toast button:focus-visible {
+  background: rgba(0, 119, 182, 0.1);
+  color: var(--ink);
+}
+
+.game-footer button:focus-visible,
+.about-websites a:focus-visible,
+.about-book a:focus-visible {
+  outline: 3px solid var(--accent-dark);
+  outline-offset: 4px;
+}
+
+.game-footer a:focus-visible {
+  color: var(--accent);
+}
+
+#previewRewardButton:focus-visible {
+  background: #0f604d;
+}
+
+html[data-theme="light"] #getCopyButton:focus-visible,
+html[data-theme="light"] #topGetCopyButton:focus-visible,
+html[data-theme="light"] #legendsGetCopyButton:focus-visible {
+  background: #d9ab30;
+}
+
+#getCopyButton:focus-visible,
+#topGetCopyButton:focus-visible,
+#legendsGetCopyButton:focus-visible {
+  outline: 3px solid var(--accent-dark);
+  outline-offset: 3px;
+}
+
+html[data-theme="dark"] .legends-rarity-note:focus-visible {
+  color: #d8ebff;
+}
+
+.progress-tabs [role="tab"]:focus-visible { outline: 2px solid var(--found); outline-offset: 2px; }
+
+.win-records-link:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+
+.collection-info:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+
+.collection-mirror:focus-visible { outline: 3px solid var(--accent-dark); outline-offset: 2px; }
+
+.home-coming-soon:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
+
+/* Hover feedback is reserved for a precise pointer that supports hovering. */
+@media (hover: hover) and (pointer: fine) {
+  .home-card:hover,
+  .home-coming-soon:hover { border-color: var(--accent); transform: translateY(-2px); }
+
+  html[data-theme="dark"] .game-button.secondary:hover {
+    background: rgba(74, 168, 255, 0.22);
+    border-color: rgba(142, 196, 255, 0.7);
+  }
+
+  .language-option:hover {
+    background: rgba(0, 119, 182, 0.12);
+    color: var(--accent-dark);
+  }
+
+  html[data-theme="dark"] .language-option:hover {
+    background: rgba(74, 168, 255, 0.18);
+    color: #d8ebff;
+  }
+
+  .board.is-complete .card.is-matched:hover .card-inner {
+    box-shadow: 0 0 0 3px rgba(18, 113, 91, 0.24);
+  }
+
+  .legends-rarity-note:hover {
+    color: var(--accent-dark);
+    text-decoration: underline;
+    /*text-underline-offset: 3px;*/
+  }
+
+  .win-close:hover {
+    background: rgba(0, 119, 182, 0.1);
+    color: var(--ink);
+  }
+
+  .legend-toast button:hover {
+    background: rgba(0, 119, 182, 0.1);
+    color: var(--ink);
+  }
+
+  .game-footer a:hover {
+    color: var(--accent);
+  }
+
+  #previewRewardButton:hover {
+    background: #0f604d;
+  }
+
+  html[data-theme="light"] #getCopyButton:hover,
+  html[data-theme="light"] #topGetCopyButton:hover,
+  html[data-theme="light"] #legendsGetCopyButton:hover {
+    background: #d9ab30;
+  }
+
+  html[data-theme="dark"] .legends-rarity-note:hover {
+    color: #d8ebff;
+  }
+
+  .collection-info:hover { background: rgba(0, 119, 182, 0.1); }
+
+  #impostorBookGate:hover,
+  #home-impostor:hover { border-color: var(--gold); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .home-card:hover, .home-coming-soon:hover { transform: none; }
+  }
 }
