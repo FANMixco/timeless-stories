@@ -1,9 +1,11 @@
 const CACHE_PREFIX = "memory-game-pwa-";
-const CACHE_VERSION = `${CACHE_PREFIX}memory-daa06b0277d6`;
+const CACHE_VERSION = `${CACHE_PREFIX}memory-6751e2065069`;
 const APP_SHELL = [
   "/memory-game.html",
+  "/memory-game/js/theme.min.js?v=memory-6751e2065069",
+  "/memory-game/js/startup.min.js?v=memory-6751e2065069",
+  "/memory-game/js/pwa.min.js?v=memory-6751e2065069",
   "/memory-game/manifest.webmanifest",
-  "/memory-game/music/default.ogg",
   "/memory-game/music/match.mp3",
   "/memory-game/music/shiny.mp3",
   "/memory-game/music/award.mp3",
@@ -12,32 +14,35 @@ const APP_SHELL = [
   "/memory-game/music/combo1.mp3",
   "/memory-game/music/combo5.mp3",
   "/memory-game/music/combo10.mp3",
-  "/memory-game/css/icon-moon-memory.min.css?v=memory-daa06b0277d6",
-  "/memory-game/css/memory-game.min.css?v=memory-daa06b0277d6",
-  "/memory-game/js/memory-game.min.js?v=memory-daa06b0277d6",
-  "/memory-game/data/memory-game-links.min.json?v=memory-daa06b0277d6",
-  "/memory-game/data/memory-game.min.json?v=memory-daa06b0277d6",
-  "/memory-game/i18n/lang-en.min.json?v=memory-daa06b0277d6",
-  "/memory-game/i18n/lang-es.min.json?v=memory-daa06b0277d6",
-  "/memory-game/i18n/lang-fr.min.json?v=memory-daa06b0277d6",
-  "/memory-game/i18n/lang-zh.min.json?v=memory-daa06b0277d6",
+  "/memory-game/css/icon-moon-memory.min.css?v=memory-6751e2065069",
+  "/memory-game/css/memory-game.min.css?v=memory-6751e2065069",
+  "/memory-game/js/memory-game.min.js?v=memory-6751e2065069",
+  "/memory-game/data/memory-game-links.min.json?v=memory-6751e2065069",
+  "/memory-game/data/memory-game.min.json?v=memory-6751e2065069",
+  "/memory-game/i18n/lang-en.min.json?v=memory-6751e2065069",
+  "/memory-game/i18n/lang-es.min.json?v=memory-6751e2065069",
+  "/memory-game/i18n/lang-fr.min.json?v=memory-6751e2065069",
+  "/memory-game/i18n/lang-zh.min.json?v=memory-6751e2065069",
   // BEGIN MEMORY MODULES
-  "/memory-game/js/modules/analytics.min.js?v=memory-daa06b0277d6",
-  "/memory-game/js/modules/audio.min.js?v=memory-daa06b0277d6",
-  "/memory-game/js/modules/background-music.min.js?v=memory-daa06b0277d6",
-  "/memory-game/js/modules/dialogs.min.js?v=memory-daa06b0277d6",
-  "/memory-game/js/modules/home.min.js?v=memory-daa06b0277d6",
-  "/memory-game/js/modules/modes/classic.min.js?v=memory-daa06b0277d6",
-  "/memory-game/js/modules/modes/crazy-mirrors.min.js?v=memory-daa06b0277d6",
-  "/memory-game/js/modules/modes/impostor.min.js?v=memory-daa06b0277d6",
-  "/memory-game/js/modules/modes/limited-moves.min.js?v=memory-daa06b0277d6",
-  "/memory-game/js/modules/modes/memory-flash.min.js?v=memory-daa06b0277d6",
-  "/memory-game/js/modules/modes/time-attack.min.js?v=memory-daa06b0277d6",
-  "/memory-game/js/modules/preview.min.js?v=memory-daa06b0277d6",
-  "/memory-game/js/modules/progress.min.js?v=memory-daa06b0277d6",
-  "/memory-game/js/modules/rules.min.js?v=memory-daa06b0277d6",
-  "/memory-game/js/modules/spoken-countdown.min.js?v=memory-daa06b0277d6",
-  "/memory-game/js/modules/storage.min.js?v=memory-daa06b0277d6",
+  "/memory-game/js/modules/analytics.min.js?v=memory-6751e2065069",
+  "/memory-game/js/modules/audio.min.js?v=memory-6751e2065069",
+  "/memory-game/js/modules/background-music.min.js?v=memory-6751e2065069",
+  "/memory-game/js/modules/collection.min.js?v=memory-6751e2065069",
+  "/memory-game/js/modules/dialogs.min.js?v=memory-6751e2065069",
+  "/memory-game/js/modules/home.min.js?v=memory-6751e2065069",
+  "/memory-game/js/modules/modes/classic.min.js?v=memory-6751e2065069",
+  "/memory-game/js/modules/modes/crazy-mirrors.min.js?v=memory-6751e2065069",
+  "/memory-game/js/modules/modes/impostor.min.js?v=memory-6751e2065069",
+  "/memory-game/js/modules/modes/limited-moves.min.js?v=memory-6751e2065069",
+  "/memory-game/js/modules/modes/memory-flash.min.js?v=memory-6751e2065069",
+  "/memory-game/js/modules/modes/time-attack.min.js?v=memory-6751e2065069",
+  "/memory-game/js/modules/preview.min.js?v=memory-6751e2065069",
+  "/memory-game/js/modules/progress.min.js?v=memory-6751e2065069",
+  "/memory-game/js/modules/rules.min.js?v=memory-6751e2065069",
+  "/memory-game/js/modules/sharing.min.js?v=memory-6751e2065069",
+  "/memory-game/js/modules/spoken-countdown.min.js?v=memory-6751e2065069",
+  "/memory-game/js/modules/status.min.js?v=memory-6751e2065069",
+  "/memory-game/js/modules/storage.min.js?v=memory-6751e2065069",
   // END MEMORY MODULES
   "/memory-game/img/previews/mirrors_medium.webp",
   "/memory-game/img/previews/mirrors_es_medium.webp",
@@ -55,10 +60,45 @@ const APP_SHELL = [
   "/memory-game/img/favicons/apple-touch-icon.png",
   "/memory-game/img/favicons/favicon-32x32.png",
   "/memory-game/img/favicons/favicon-16x16.png",
-  "/memory-game/css/fonts/memory-game.woff2?v=memory-daa06b0277d6",
-  "/memory-game/css/fonts/memory-game.woff?v=memory-daa06b0277d6",
-  "/memory-game/css/fonts/memory-game.ttf?v=memory-daa06b0277d6"
+  "/memory-game/css/fonts/memory-game.woff2?v=memory-6751e2065069",
+  "/memory-game/css/fonts/memory-game.woff?v=memory-6751e2065069",
+  "/memory-game/css/fonts/memory-game.ttf?v=memory-6751e2065069"
 ];
+
+// The optional soundtrack is cached on first playback, outside installation.
+const SOUNDTRACK = "/memory-game/music/default.ogg";
+
+async function soundtrackResponse(event) {
+  const cache = await caches.open(CACHE_VERSION);
+  const cached = await cache.match(SOUNDTRACK);
+  if (!cached) {
+    // Fetch a complete streaming response even if the media element requested a
+    // range. A 200 response may ignore Range, and only complete files are cached.
+    const response = await fetch(SOUNDTRACK);
+    if (response.status === 200) {
+      event.waitUntil(cache.put(SOUNDTRACK, response.clone()).catch(() => {}));
+    }
+    return response;
+  }
+  const range = event.request.headers.get("Range");
+  if (!range) return cached;
+  const match = /^bytes=(\d*)-(\d*)$/.exec(range);
+  if (!match || (!match[1] && !match[2])) return cached;
+  const body = await cached.arrayBuffer();
+  const size = body.byteLength;
+  const start = match[1] ? Number(match[1]) : Math.max(0, size - Number(match[2]));
+  const end = match[1] && match[2] ? Math.min(Number(match[2]), size - 1) : size - 1;
+  const headers = new Headers(cached.headers);
+  headers.set("Accept-Ranges", "bytes");
+  if (start > end || start >= size) {
+    headers.set("Content-Range", `bytes */${size}`);
+    headers.delete("Content-Length");
+    return new Response(null, { status: 416, headers });
+  }
+  headers.set("Content-Range", `bytes ${start}-${end}/${size}`);
+  headers.set("Content-Length", String(end - start + 1));
+  return new Response(body.slice(start, end + 1), { status: 206, headers });
+}
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
@@ -118,6 +158,11 @@ self.addEventListener("fetch", (event) => {
   const url = new URL(event.request.url);
 
   if (url.origin !== self.location.origin || event.request.method !== "GET") {
+    return;
+  }
+
+  if (url.pathname === SOUNDTRACK) {
+    event.respondWith(soundtrackResponse(event));
     return;
   }
 

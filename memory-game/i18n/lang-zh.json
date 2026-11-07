@@ -195,6 +195,11 @@
     "country1": "萨尔瓦多 🇸🇻",
     "country2": "西班牙 🇪🇸",
     "memoryGame": {
+      "startup": {
+        "loading": "游戏加载中…",
+        "error": "游戏无法加载。请检查网络连接后重试。",
+        "retry": "重试"
+      },
       "settings": {
         "title": "设置",
         "sounds": "音效",
@@ -804,12 +809,15 @@
         },
         "timeAttack": {
           "name": "限时挑战",
+          "descriptionTemplate": "在{seconds}秒内找出所有配对。",
           "description": "在45秒内找出所有配对。",
           "tutorial": "配对图标相同的卡牌，即使名称或旗帜不同。请在{seconds}秒内找出所有配对。演示结束后，翻开第一张牌时才开始计时。翻牌次数不限。",
           "hint": "在倒计时结束前找出所有配对！记住翻开过的卡牌位置，配对相同图标。限时{seconds}秒，翻牌次数不限。"
         },
         "limitedMoves": {
+          "nameTemplate": "{moves}步挑战",
           "name": "25步挑战",
+          "descriptionTemplate": "在{moves}步内找出所有配对。",
           "description": "在25步内找出所有配对。",
           "tutorial": "配对图标相同的卡牌，即使名称或旗帜不同。请在{moves}步内找出所有配对。每翻开两张牌算一步，无论是否配对成功。没有时间限制。",
           "hint": "不用着急，记住翻开过的卡牌位置。每次翻开两张牌都会消耗{moves}步中的一步。先利用已知位置，再尝试猜测。配对相同图标。"

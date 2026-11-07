@@ -36,3 +36,5 @@ tests/icon-font.test.mjs
 tests/icon-font.test.mjs
 tests/impostor.test.mjs
 tests/impostor.test.mjs
+tests/startup-status.test.mjs
+tests/soundtrack-cache.test.mjs
