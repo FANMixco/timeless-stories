@@ -36,6 +36,9 @@ including the font binary contents in the version. SVG originals remain in
 | `memory-game/js/modules/background-music.mjs` | Streams the looping soundtrack after interaction, independently of effects, and pauses it when disabled or hidden. |
 | `memory-game/js/modules/progress.mjs` | Renders records, completion comparisons and achievements; owns Records/Achievements tab state and keyboard navigation. Reads application state through a supplied snapshot. |
 | `memory-game/js/modules/home.mjs` | Renders the mode selection screen and binds its six mode cards. Receives callbacks for starting a mode, Settings, Records and returning home; the entrypoint owns round cleanup and confirmation. |
+| `memory-game/js/modules/collection.mjs` | Renders collection groups and contribution links from a current snapshot. Calls the entrypoint to open pair details and rarity dialogs. |
+| `memory-game/js/modules/sharing.mjs` | Formats frozen round results and handles native sharing, clipboard fallback and button feedback. |
+| `memory-game/js/modules/status.mjs` | Owns cached status nodes and updates text, classes and live-region attributes only when their values change. |
 | `memory-game/js/modules/dialogs.mjs` | Owns browser-history synchronization and modal priority, focus, dismissal and inert layers. The entrypoint supplies the game-specific callbacks, snapshot and restore behavior. |
 
 Controllers receive the browser services and application callbacks they use.
@@ -50,8 +53,33 @@ and its localized mode description. Changing limits may require a deliberate
 statistics migration because old results were earned under the previous rules.
 
 Keep shared gameplay code in `rules.mjs`, persistence changes in `storage.mjs`, and
-Progress presentation in `progress.mjs`. Board and collection presentation remain
-in the entrypoint so this refactor does not rewrite existing matching behavior.
+Progress presentation in `progress.mjs`. Board interactions and round/dialog
+transitions remain in the entrypoint; collection presentation is independent.
+
+The home controller reads current mode policies through `getModes` on each
+render. Challenge names/descriptions use localized `{moves}` / `{seconds}`
+templates, including when Hard Mode is toggled back off. The home card layout,
+unlock-detail dialogs and disabled game zoom are intentional design choices.
+
+`memory-game/js/startup.js` works independently of the module graph. It shows
+localized loading copy and a reload-based Retry action
+for module failures, initialization errors or a 30-second startup timeout. A
+late successful initialization can still reveal the game. Required translations
+and rules must load before the shell becomes interactive.
+Its loading/error card is centered in the viewport. `memory-game/js/theme.js` resolves
+the theme before first paint using the same launch URL, saved preference and
+system fallback as the game, so failed module downloads still respect the theme.
+`memory-game/js/pwa.js` owns immediate service-worker registration. The HTML
+references these external scripts; only the non-executable JSON-LD remains inline.
+Startup messages live under `memoryGame.startup` in the existing translation
+files. The build packages just those messages into the standalone startup asset,
+without a runtime translation fetch or dependency on the game modules. Maintain
+the source scripts and translations, then run the normal build.
+Retry is a native reload link, so it still works if the startup asset fails.
+If that asset fails but the game loads, the entrypoint reveals the game directly.
+
+The round clock retains 100 ms deadline checks, but refreshes status only when
+the displayed second changes. Gameplay actions still render status immediately.
 
 ## Website boundary
 
@@ -89,6 +117,12 @@ are published last. Do not hand-edit generated asset versions or `.min.*` files.
 The precache module list is generated from the source module directory. The
 version includes runtime sources, markup, translations and build configuration;
 generated URLs do not change the hash on subsequent builds.
+
+The optional soundtrack is excluded from installation. Once the service worker
+controls the page, first playback streams a complete response and caches it in
+the background; later playback and byte-range requests can use the cached file
+offline. Before that first successful download, offline play has no soundtrack.
+Cache-write failures never prevent music playback or installation.
 
 ## Verification
 

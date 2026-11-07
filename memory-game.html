@@ -56,12 +56,21 @@
         }
       }
     </script>
-    <link rel="preload" href="memory-game/css/fonts/memory-game.woff2?v=memory-daa06b0277d6" as="font" type="font/woff2" crossorigin="anonymous" />
-    <link rel="stylesheet" href="memory-game/css/icon-moon-memory.min.css?v=memory-daa06b0277d6" />
-    <link rel="stylesheet" href="memory-game/css/memory-game.min.css?v=memory-daa06b0277d6" />
+    <!-- Resolve the launch theme before styles or the game module can paint. -->
+    <script id="memoryGameTheme" src="memory-game/js/theme.min.js?v=memory-6751e2065069"></script>
+    <link rel="preload" href="memory-game/css/fonts/memory-game.woff2?v=memory-6751e2065069" as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="stylesheet" href="memory-game/css/icon-moon-memory.min.css?v=memory-6751e2065069" />
+    <link rel="stylesheet" href="memory-game/css/memory-game.min.css?v=memory-6751e2065069" />
   </head>
   <body>
-    <main class="game-shell is-home" aria-label="">
+    <section class="game-startup" id="gameStartup" aria-label="Memory game">
+      <div class="game-startup-card">
+        <p id="gameStartupMessage" role="status">Loading game…</p>
+        <a class="game-button" id="gameStartupRetry" href="">Retry</a>
+        <noscript><p>Enable JavaScript to play the memory game.</p></noscript>
+      </div>
+    </section>
+    <main class="game-shell is-home" aria-label="" hidden inert aria-busy="true">
       <section class="game-home" id="gameHome" aria-labelledby="homeTitle">
         <header class="home-heading">
           <h1 id="homeTitle">Memory game</h1>
@@ -485,18 +494,8 @@
       <footer class="game-footer standalone-only" id="gameFooter"></footer>
     </main>
 
-    <script type="module" src="memory-game/js/memory-game.min.js?v=memory-daa06b0277d6"></script>
-    <!-- Keep registration inline so PWA analyzers can discover it without running a browser. -->
-    <script>
-      if ("serviceWorker" in navigator) {
-        // Register without waiting for images, analytics, or other resources.
-        navigator.serviceWorker.register("/sw.js", {
-          scope: "/memory-game.html",
-          updateViaCache: "none"
-        }).catch((error) => {
-          console.error("Memory Game service worker registration failed:", error);
-        });
-      }
-    </script>
+    <script src="memory-game/js/startup.min.js?v=memory-6751e2065069"></script>
+    <script type="module" id="memoryGameEntry" src="memory-game/js/memory-game.min.js?v=memory-6751e2065069"></script>
+    <script src="memory-game/js/pwa.min.js?v=memory-6751e2065069"></script>
   </body>
 </html>

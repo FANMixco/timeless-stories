@@ -3,7 +3,7 @@ import path from "node:path";
 import process from "node:process";
 import CleanCSS from "clean-css";
 import { minify as minifyJs } from "terser";
-import { getMemoryAssetVersion, compileMemoryImports, updateMemoryAssetReferences } from "./memory-game-assets.mjs";
+import { getMemoryAssetVersion, compileMemoryImports, compileStartupCopy, updateMemoryAssetReferences } from "./memory-game-assets.mjs";
 
 const ROOTS = ["css", "js", "memory-game/css", "memory-game/js", "memory-game/data", "memory-game/i18n"];
 const EXTENSIONS = new Set([".css", ".js", ".mjs", ".json"]);
@@ -65,6 +65,9 @@ async function minifyFile(sourcePath, memoryVersion) {
   const extension = path.extname(sourcePath);
   let source = await fs.readFile(sourcePath, "utf8");
   source = source.replaceAll("__MEMORY_ASSET_VERSION__", memoryVersion);
+  if (path.relative(process.cwd(), sourcePath).replaceAll("\\", "/") === "memory-game/js/startup.js") {
+    source = await compileStartupCopy(source);
+  }
   if (extension === ".mjs" || path.relative(process.cwd(), sourcePath).replaceAll("\\", "/") === "memory-game/js/memory-game.js") {
     source = compileMemoryImports(source, memoryVersion);
   }

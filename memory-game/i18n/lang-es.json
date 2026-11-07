@@ -195,6 +195,11 @@
     "country1": "El Salvador 🇸🇻",
     "country2": "España 🇪🇸",
     "memoryGame": {
+      "startup": {
+        "loading": "Cargando el juego…",
+        "error": "No se pudo cargar el juego. Revisa tu conexión e inténtalo de nuevo.",
+        "retry": "Reintentar"
+      },
       "settings": {
         "title": "Ajustes",
         "sounds": "Efectos de sonido",
@@ -804,12 +809,15 @@
         },
         "timeAttack": {
           "name": "Contrarreloj",
+          "descriptionTemplate": "Encuentra todas las parejas en {seconds} segundos.",
           "description": "Encuentra todas las parejas en 45 segundos.",
           "tutorial": "Empareja cartas con el mismo icono, aunque sus nombres o banderas sean distintos. Encuentra todas las parejas en {seconds} segundos. El reloj empieza con tu primera carta, después de esta demostración. No hay límite de movimientos.",
           "hint": "¡Encuentra todas las parejas antes de que el reloj llegue a cero! Recuerda las posiciones y empareja iconos idénticos. Tienes {seconds} segundos y no hay límite de movimientos."
         },
         "limitedMoves": {
+          "nameTemplate": "Desafío de {moves} movimientos",
           "name": "Desafío de 25 movimientos",
+          "descriptionTemplate": "Encuentra todas las parejas en un máximo de {moves} movimientos.",
           "description": "Encuentra todas las parejas en un máximo de 25 movimientos.",
           "tutorial": "Empareja cartas con el mismo icono, aunque sus nombres o banderas sean distintos. Encuentra todas las parejas en {moves} movimientos. Revelar dos cartas cuenta como un movimiento, coincidan o no. No hay límite de tiempo.",
           "hint": "Tómate tu tiempo y recuerda las posiciones. Cada intento de dos cartas usa uno de tus {moves} movimientos. Aprovecha lo que ya has visto antes de adivinar. Empareja iconos idénticos."

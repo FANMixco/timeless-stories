@@ -195,6 +195,11 @@
     "country1": "El Salvador 🇸🇻",
     "country2": "Spain 🇪🇸",
     "memoryGame": {
+      "startup": {
+        "loading": "Loading game…",
+        "error": "The game could not load. Check your connection and try again.",
+        "retry": "Retry"
+      },
       "settings": {
         "title": "Settings",
         "sounds": "Sound effects",
@@ -804,12 +809,15 @@
         },
         "timeAttack": {
           "name": "Time Attack",
+          "descriptionTemplate": "Match all pairs in {seconds} seconds.",
           "description": "Match all pairs in 45 seconds.",
           "tutorial": "Match cards with the same icon, even when their names or flags differ. Find every pair within {seconds} seconds. The clock starts with your first card, after this demonstration. There is no move limit.",
           "hint": "Find every pair before the clock reaches zero! Remember revealed positions and match identical icons. The time limit is {seconds} seconds; there is no move limit."
         },
         "limitedMoves": {
+          "nameTemplate": "{moves}-Move Challenge",
           "name": "25-Move Challenge",
+          "descriptionTemplate": "Match all pairs within {moves} moves.",
           "description": "Match all pairs within 25 moves.",
           "tutorial": "Match cards with the same icon, even when their names or flags differ. Find every pair within {moves} moves. Revealing two cards counts as one move, whether they match or not. There is no time limit.",
           "hint": "Take your time and remember revealed positions. Each two-card attempt uses one of your {moves} moves, so use what you have seen before guessing. Match identical icons."

@@ -1,3 +1,6 @@
+import { createStatusView } from "./modules/status.mjs";
+import { createSharing } from "./modules/sharing.mjs";
+import { createCollectionView } from "./modules/collection.mjs";
 import { createImpostorRound } from "./modules/modes/impostor.mjs";
 import { initializeAnalytics } from "./modules/analytics.mjs";
 import { createGameAudio } from "./modules/audio.mjs";
@@ -278,7 +281,7 @@ function focusNavigationControl(element) {
   else if (document.activeElement === element) element.blur();
 }
 
-const homeScreen = createHomeScreen({ document, modes: gameModes,
+const homeScreen = createHomeScreen({ document, modes: gameModes, getModes: () => gameModes,
   focusNavigationControl,
   reduceMotion: () => Boolean(window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches),
   onChoose: applyGameMode,
@@ -363,12 +366,34 @@ const progressView = createProgressView({ document,
   readPersonalRecords, readChallengeStats, getPairCount, getRecordConfiguration, formatTime,
   setElementText, setElementHidden, achievementDefinitions, onTabChange: syncModalHistory, gameModes,
   isModeUnlocked });
+const collectionView = createCollectionView({ document,
+  getState: () => ({ memoryGame, discoveries, currentLanguage, linkRegistry }),
+  getMirrorCatalogue, getMirrorId, getPairComparison, getPairIcon, getOriginFlag,
+  setElementText, setElementHidden, openRarityPanel,
+  onOpenPair(pair, card) {
+    collectionDetailTrigger = card;
+    modalDetailPair = pair;
+    renderLegendsList([pair], pair);
+    legendsPanel.classList.add("is-visible", "is-collection-detail");
+    collectionPanel.inert = true;
+    collectionPanel.setAttribute("aria-modal", "false");
+    closeLegendsButton.focus();
+    syncModalScrollLock();
+  },
+});
+const sharing = createSharing({ window, document, getNavigator: () => navigator,
+  getState: () => ({ memoryGame, shareResult, currentLanguage, ratingUrl }),
+  shareButton, formatTime, getShareUrl, setActionButtonContent, getShareIconClass });
+const statusView = createStatusView({ document, formatTime });
 const roundClock = createRoundClock({ now: () => Date.now(),
   schedule: (callback, delay) => window.setInterval(callback, delay),
   cancel: id => window.clearInterval(id),
   onTick(seconds) {
-    elapsedSeconds = normalizeElapsedSeconds(gameModes, gameMode, seconds);
-    updateStatus();
+    const nextSeconds = normalizeElapsedSeconds(gameModes, gameMode, seconds);
+    if (nextSeconds !== elapsedSeconds) {
+      elapsedSeconds = nextSeconds;
+      updateStatus();
+    }
     endChallengeIfNeeded(false);
     updateSpokenCountdown();
   },
@@ -602,10 +627,8 @@ function updateAchievementsVisibility() {
 function renderChallengeStats() { progressView.renderChallenges(); }
 function renderGameModes() {
   const modeConfig = gameModes[gameMode];
-  let modeName = memoryGame.modes[gameMode].name;
-  if (hardModeEnabled && gameMode === "limitedMoves") {
-    modeName = `${modeConfig.moves}-Move Challenge`;
-  }
+  const modeName = (memoryGame.modes[gameMode].nameTemplate || memoryGame.modes[gameMode].name)
+    .replaceAll("{moves}", modeConfig.moves);
   setElementText(document.getElementById("activeGameMode"), modeName);
   setElementHidden(document.getElementById("activeGameMode"), true);
   document.getElementById("gameTitle").textContent = modeName;
@@ -839,96 +862,7 @@ function saveCompletedDiscoveries() {
   setElementHidden(collectionButton, discoveries.size === 0);
 }
 
-function renderCollection() {
-  const copy = memoryGame.collection || {};
-  const catalogue = getMirrorCatalogue();
-  const found = catalogue.filter((pair) => discoveries.has(getMirrorId(pair))).length;
-  setElementText(document.getElementById("collectionTitle"), copy.title || "My Collection");
-  setElementText(document.getElementById("collectionProgressText"), (copy.progress || "Discovered mirrors: {found} / {total}")
-    .replace("{found}", found).replace("{total}", catalogue.length));
-  const progress = document.getElementById("collectionProgress");
-  progress.max = catalogue.length || 1;
-  progress.value = found;
-  const groups = [
-    { rarity: "", title: copy.original || "Original Mirrors" },
-    { rarity: "rare", title: copy.directorsCut || "Director's Cut" },
-    { rarity: "ultra-rare", title: copy.other || "Online Exclusive Mirrors" },
-  ].map(({ rarity, title }) => {
-    const section = document.createElement("section");
-    section.className = "collection-group";
-    section.dataset.rarity = rarity;
-    const heading = document.createElement("h3");
-    heading.textContent = title;
-    const info = document.createElement("button");
-    info.type = "button";
-    info.className = "collection-info";
-    const rarityInfo = memoryGame.rarityInfoCards?.find((item) => (item.rarity || "") === rarity);
-    const infoLabel = `${title}: ${rarityInfo?.title || memoryGame.rarityInfoTitle || "Hidden Rarities"}`;
-    info.setAttribute("aria-label", infoLabel);
-    info.setAttribute("aria-haspopup", "dialog");
-    info.title = infoLabel;
-    const icon = document.createElement("i");
-    icon.className = "icon collection-info-icon icon-information-outline";
-    icon.setAttribute("aria-hidden", "true");
-    info.replaceChildren(icon);
-    info.addEventListener("click", () => openRarityPanel(rarity, info));
-    heading.append(info);
-    const grid = document.createElement("div");
-    grid.className = "collection-grid";
-    catalogue.filter((pair) => (pair.rarity || "") === rarity).forEach((pair) => {
-      const discovered = discoveries.has(getMirrorId(pair));
-      const card = document.createElement("button");
-      card.type = "button";
-      card.className = "collection-mirror rarity-preview-card";
-      card.dataset.rarity = rarity;
-      if (discovered) card.dataset.category = pair.comparison;
-      card.disabled = !discovered;
-      const mark = document.createElement("span");
-      mark.className = "character-mark";
-      mark.setAttribute("aria-hidden", "true");
-      if (discovered) {
-        const icon = document.createElement("i");
-        icon.className = `icon character-icon icon-${pair.icon || getPairIcon(pair.source, pair.mirror)}`;
-        mark.append(icon);
-      } else {
-        mark.textContent = "?";
-      }
-      const name = document.createElement("strong");
-      name.textContent = discovered ? getPairComparison(pair).title || "" : "???";
-      const flags = document.createElement("span");
-      flags.textContent = discovered
-        ? `${getOriginFlag(pair.sourceOrigin || "source")} · ${getOriginFlag(pair.mirrorOrigin || "mirror")}`
-        : rarity === "" ? "🇸🇻 · 🇪🇸" : "🇸🇻 · ❓";
-      card.append(mark, name, flags);
-      if (discovered) {
-        card.addEventListener("click", () => {
-          collectionDetailTrigger = card;
-          modalDetailPair = pair;
-          renderLegendsList([pair], pair);
-          legendsPanel.classList.add("is-visible", "is-collection-detail");
-
-          collectionPanel.inert = true;
-          collectionPanel.setAttribute("aria-modal", "false");
-          closeLegendsButton.focus();
-          syncModalScrollLock();
-        });
-      }
-      grid.append(card);
-    });
-    section.append(heading, grid);
-    return section;
-  });
-  document.getElementById("collectionGroups").replaceChildren(...groups);
-  setElementText(document.getElementById("collectionContribution"), copy.contribute || "Know another mirror? Share a new comparison through our contact form.");
-  const submit = document.getElementById("collectionSubmit");
-  submit.textContent = copy.submit || "Submit a Mirror";
-  const formKey = currentLanguage === "es" ? "spanishContactForm" : "englishContactForm";
-  submit.href = linkRegistry?.shared?.contact?.[formKey] || "";
-  setElementHidden(submit, !submit.getAttribute("href"));
-  contributionPanel.setAttribute("aria-label", submit.textContent);
-  contributionFrame.title = submit.textContent;
-  closeContributionButton.setAttribute("aria-label", memoryGame.close);
-}
+function renderCollection() { collectionView.render(); }
 
 function loadContributionForm() {
   const url = document.getElementById("collectionSubmit").getAttribute("href");
@@ -1099,6 +1033,7 @@ async function loadGameLanguage(language) {
     throw new Error(`Incomplete game language: ${language}`);
   }
   if (!Object.keys(gameModes).every(mode => game.modes[mode]?.name && game.modes[mode]?.description) ||
+    !game.modes.timeAttack.descriptionTemplate || !game.modes.limitedMoves.nameTemplate || !game.modes.limitedMoves.descriptionTemplate ||
     !["tutorial", "mistakesRemaining", "preview", "unlocked"].every(key => game.modes.memoryFlash?.[key]) || !game.modes.mistakeLimit) {
     throw new Error(`Incomplete game mode translations: ${language}`);
   }
@@ -1992,22 +1927,10 @@ document.getElementById("accuseImpostor").addEventListener("click", accuseImpost
 
 function updateStatus() {
   const config = gameModes[gameMode];
-  document.getElementById("timeStatus").classList.toggle("is-priority", gameMode === "timeAttack");
-  document.getElementById("movesStatus").classList.toggle("is-priority", gameMode === "limitedMoves" || gameMode === "memoryFlash");
   const status = getModeStatus(gameModes, gameMode, { seconds: elapsedSeconds, moves, mistakes, previewRemaining, completed: gameCompleted });
-  setText('[data-ui-label="moves"]', config.maxMistakes != null ? memoryGame.modes.memoryFlash.mistakesRemaining : memoryGame.moves);
-  setText('[data-ui-label="time"]', config.previewSeconds ? memoryGame.modes.memoryFlash.preview : memoryGame.time);
-  setElementHidden(document.getElementById("timeStatus"), Boolean(status.hideTime));
-  document.querySelector(".status-grid").classList.toggle("is-untimed", Boolean(status.hideTime));
-  movesValue.setAttribute("aria-live", config.maxMistakes != null ? "polite" : "off");
-  timeValue.setAttribute("aria-live", config.previewSeconds ? "polite" : "off");
-  movesValue.textContent = status.moves;
-  matchesValue.textContent = `${matches}/${getPairCount()}`;
-  matchesValue.classList.toggle("is-impostor-pending", Boolean(impostorRound && !impostorRound.suspect));
-  timeValue.textContent = formatTime(status.seconds);
+  statusView.render({ mode: gameMode, config, status, copy: memoryGame, matches,
+    pairCount: getPairCount(), impostorPending: Boolean(impostorRound && !impostorRound.suspect) });
   updateImpostorPanel();
-  timeValue.classList.toggle("is-running-low", status.timeLow);
-  movesValue.classList.toggle("is-running-low", status.movesLow);
 }
 
 function refreshGameTime() {
@@ -2880,46 +2803,8 @@ function captureShareResult(outcome, reason = "") {
     moveLimit: gameModes[gameMode].moves, tracksTime: gameModes[gameMode].tracksTime !== false };
 }
 
-function getResultShareText(outcome) {
-  if (!shareResult || shareResult.outcome !== outcome) return memoryGame.shareText;
-  const result = shareResult;
-  let mode = memoryGame.modes[result.mode].name;
-  if (result.mode === "limitedMoves") mode = mode.replace(/\d+/, result.moveLimit);
-  const stats = [`${memoryGame.matches}: ${result.matches}/${result.pairs}`];
-  if (result.tracksTime) stats.push(`${memoryGame.time}: ${formatTime(result.seconds)}`);
-  stats.push(`${memoryGame.moves}: ${result.moves.toLocaleString(currentLanguage)}`);
-  const values = { title: memoryGame.title, mode,
-    difficulty: result.hard ? ` (${memoryGame.settings.hardMode})` : "",
-    reason: memoryGame.modes[result.reason] || "", stats: stats.join(" · ") };
-  return memoryGame.shareResults[outcome].replace(/\{(\w+)\}/g, (_, key) => values[key]);
-}
-
-async function shareGame(button = shareButton, outcome = null) {
-  const isResult = Boolean(outcome && shareResult?.outcome === outcome);
-  const shareData = {
-    title: memoryGame.title || document.title,
-    text: isResult ? getResultShareText(outcome) : memoryGame.shareText || memoryGame.subtitle || "",
-    url: ratingUrl || getShareUrl(),
-  };
-
-  if (navigator.share) {
-    await navigator.share(shareData);
-    return;
-  }
-
-  if (!navigator.clipboard?.writeText) return;
-  await navigator.clipboard.writeText(isResult ? `${shareData.text}\n${shareData.url}` : shareData.url);
-  const originalLabel = button.textContent || memoryGame.share || "";
-  button.textContent = (isResult ? memoryGame.shareResults.copied : memoryGame.shareCopied) || originalLabel;
-  window.setTimeout(() => {
-    if (button === shareButton) {
-      setActionButtonContent(button, button.dataset.label || originalLabel, getShareIconClass());
-      return;
-    }
-
-    button.textContent = originalLabel;
-  }, 1600);
-}
+function getResultShareText(outcome) { return sharing.getResultShareText(outcome); }
+function shareGame(button = shareButton, outcome = null) { return sharing.shareGame(button, outcome); }
 
 newGameButton.addEventListener("click", restartGame);
 languageButton.addEventListener("click", (event) => {
@@ -3155,6 +3040,15 @@ document.documentElement.dataset.embed = String(isEmbedded);
 window.matchMedia?.("(prefers-color-scheme: dark)")?.addEventListener("change", () => applyTheme());
 loadTranslations().then(() => {
   applyUiCopy();
+  if (window.timelessMemoryStartup) window.timelessMemoryStartup.ready();
+  else {
+    // The game can still start if the optional loading UI script failed.
+    document.getElementById("gameStartup").hidden = true;
+    const shell = document.querySelector(".game-shell");
+    shell.hidden = false;
+    shell.inert = false;
+    shell.setAttribute("aria-busy", "false");
+  }
   evaluateAchievements();
   if (!isModeUnlocked(gameMode)) gameMode = "classic";
   if (isEmbedded) {
@@ -3182,6 +3076,7 @@ loadTranslations().then(() => {
     if (target.href !== current.href) window.location.assign(target.href);
   });
 }).catch(error => {
+  window.timelessMemoryStartup?.fail();
   console.error("Unable to initialize the memory game:", error);
 });
 

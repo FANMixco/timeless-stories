@@ -1,5 +1,5 @@
 // The start screen owns presentation; the application owns round transitions.
-export function createHomeScreen({ document, modes, onChoose, onSettings, onRecords, onLocked = onRecords, onCollection, onReturn, reduceMotion = () => false, focusNavigationControl = element => element.focus({ preventScroll: true }) }) {
+export function createHomeScreen({ document, modes, getModes = () => modes, onChoose, onSettings, onRecords, onLocked = onRecords, onCollection, onReturn, reduceMotion = () => false, focusNavigationControl = element => element.focus({ preventScroll: true }) }) {
   const shell = document.querySelector(".game-shell");
   const home = document.getElementById("gameHome");
   let visible = true;
@@ -108,22 +108,17 @@ export function createHomeScreen({ document, modes, onChoose, onSettings, onReco
       text("homeRateAppLabel", copy.home.rateApp);
       document.getElementById("homeButton").setAttribute("aria-label", copy.home.chooseMode);
       document.getElementById("homeButton").title = copy.home.chooseMode;
-      for (const mode of Object.keys(modes)) {
-        const modeConfig = modes[mode];
-        let name = copy.modes[mode].name;
-        let description = copy.modes[mode].description;
-        if (hardMode) {
-          if (mode === "timeAttack") description = `Match all pairs in ${modeConfig.seconds} seconds.`;
-          else if (mode === "limitedMoves") {
-            name = `${modeConfig.moves}-Move Challenge`;
-            description = `Match all pairs within ${modeConfig.moves} moves.`;
-          }
-        }
+      const currentModes = getModes();
+      for (const mode of Object.keys(currentModes)) {
+        const modeConfig = currentModes[mode];
+        const format = value => value.replaceAll("{seconds}", modeConfig.seconds).replaceAll("{moves}", modeConfig.moves);
+        const name = format(copy.modes[mode].nameTemplate || copy.modes[mode].name);
+        const description = format(copy.modes[mode].descriptionTemplate || copy.modes[mode].description);
         text(`home-${mode}-name`, name);
         text(`home-${mode}-description`, description);
       }
-      if (hardMode && modes.limitedMoves) {
-        document.getElementById("home-limitedMoves-icon").textContent = modes.limitedMoves.moves;
+      if (currentModes.limitedMoves) {
+        document.getElementById("home-limitedMoves-icon").textContent = currentModes.limitedMoves.moves;
       }
     },
     bind() {
