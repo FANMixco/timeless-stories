@@ -684,6 +684,8 @@ function getBookstore() {
   if (["play", "android"].includes(storeVersion)) return "googlePlay";
   // An explicit distribution (including Amazon and Microsoft) overrides the OS.
   if (storeVersion) return "amazon";
+  // Best effort: Silk and known Fire tablet identifiers, not Android alone.
+  if (/\bSilk\/|\bKindle Fire\b|\bKF[A-Z0-9]+\b/i.test(navigator.userAgent || "")) return "amazon";
   if (isIos()) return "appleBooks";
   return /Android/i.test(navigator.userAgent || "") ? "googlePlay" : "amazon";
 }
