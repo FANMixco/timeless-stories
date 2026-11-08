@@ -1248,6 +1248,10 @@ html.is-modal-open .legend-toast {
   line-height: 1.2;
 }
 
+.legend-toast[data-install="true"] [role="button"] {
+  cursor: pointer;
+}
+
 .legend-toast p {
   margin: 0;
   color: var(--ink);

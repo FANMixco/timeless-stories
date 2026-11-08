@@ -129,6 +129,11 @@
       "platform": "windows",
       "url": "https://apps.microsoft.com/detail/9pl6h4p9jhgx",
       "id": "9pl6h4p9jhgx"
+    },
+    {
+      "platform": "amazon",
+      "id": "B0HPXLSCPW",
+      "url": "https://www.amazon.com/dp/B0HPXLSCPW/"
     }
   ],
   "display_override": [

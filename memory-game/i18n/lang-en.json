@@ -195,6 +195,11 @@
     "country1": "El Salvador 🇸🇻",
     "country2": "Spain 🇪🇸",
     "memoryGame": {
+      "iosInstall": {
+        "title": "Add to Home Screen",
+        "suggestion": "Install the game for quick access. Tap for instructions.",
+        "instructions": "Open this page in Safari, tap Share {shareIcon}, then Add to Home Screen and Add."
+      },
       "startup": {
         "loading": "Loading game…",
         "error": "The game could not load. Check your connection and try again.",
@@ -772,6 +777,7 @@
         "previewAlt": "Spanish Mirrors in English, shown as a printed book and on digital readers",
         "amazon": "View on Amazon",
         "googlePlay": "View on Google Play",
+        "appleBooks": "View on Apple Books",
         "websites": "Official websites",
         "storiesWebsite": "Timeless Stories",
         "soundCreditsTitle": "Sound effect credits",

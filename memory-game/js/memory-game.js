@@ -160,6 +160,8 @@ const selectedStory = document.getElementById("selectedStory");
 const selectedStoryTitle = document.getElementById("selectedStoryTitle");
 const selectedStoryText = document.getElementById("selectedStoryText");
 const legendToast = document.getElementById("legendToast");
+const legendToastContainer = legendToast.parentElement;
+const legendToastContent = document.getElementById("legendToastContent");
 const legendToastTitle = document.getElementById("legendToastTitle");
 const legendToastText = document.getElementById("legendToastText");
 const legendToastClose = document.getElementById("legendToastClose");
@@ -237,6 +239,7 @@ let moves = 0;
 let matches = 0;
 let elapsedSeconds = 0;
 let toastTimer = null;
+let iosInstallSuggested = false;
 let gameCompleted = false;
 let introRunning = false;
 let hintPressCount = 0;
@@ -672,10 +675,22 @@ function queueModeUnlocks() {
   }
 }
 
+function isIos() {
+  return /iPad|iPhone|iPod/i.test(navigator.userAgent || "") ||
+    (/Macintosh|MacIntel/i.test(`${navigator.userAgent || ""} ${navigator.platform || ""}`) && navigator.maxTouchPoints > 1);
+}
+
+function getBookstore() {
+  if (["play", "android"].includes(storeVersion)) return "googlePlay";
+  // An explicit distribution (including Amazon and Microsoft) overrides the OS.
+  if (storeVersion) return "amazon";
+  if (isIos()) return "appleBooks";
+  return /Android/i.test(navigator.userAgent || "") ? "googlePlay" : "amazon";
+}
+
 function getDigitalBookUrl() {
-  return storeVersion === "play"
-    ? resolveGameHref("digitalBooks.googlePlay")
-    : resolveGameHref(memoryGame.getCopyHref);
+  const store = getBookstore();
+  return resolveGameHref(store === "amazon" ? memoryGame.getCopyHref : `digitalBooks.${store}`);
 }
 
 function renderHomeScreen() {
@@ -1287,6 +1302,7 @@ function setTipsEnabled(enabled) {
   hintPressCount = 0;
   try { window.localStorage.setItem(tipsStorageKey, String(enabled)); } catch {}
   setElementHidden(hintButton, gameCompleted || !enabled);
+  if (!enabled && legendToast.dataset.install === "true") hideLegendToast();
 }
 
 function readShortNamesEnabled() {
@@ -1497,9 +1513,7 @@ function renderAbout() {
   const bookLink = document.getElementById("aboutBookLink");
   bookLink.href = bookUrl;
   setElementHidden(bookLink, !bookUrl);
-  setElementText(bookLink, storeVersion === "play"
-    ? copy.googlePlay || "View on Google Play"
-    : copy.amazon || "View on Amazon");
+  setElementText(bookLink, copy[getBookstore()] || "View on Amazon");
   document.getElementById("aboutWebsites").setAttribute("aria-label", copy.websites || "Official websites");
   setElementText(document.getElementById("aboutStoriesWebsite"), copy.storiesWebsite || "Timeless Stories");
   setElementText(document.getElementById("aboutSoundCreditsTitle"), copy.soundCreditsTitle);
@@ -2291,6 +2305,10 @@ function hideLegendToast() {
 }
 
 function showToast(title, text, emphasis = "", underline = "") {
+  if (legendToastContainer && legendToast.parentElement !== legendToastContainer) legendToastContainer.append(legendToast);
+  legendToast.dataset.install = "false";
+  legendToastContent.toggleAttribute("role", false);
+  legendToastContent.toggleAttribute("tabindex", false);
   if (!text) {
     hideLegendToast();
     return;
@@ -2326,6 +2344,28 @@ function showToast(title, text, emphasis = "", underline = "") {
 
   // The tutorial owns its hint until the demonstration finishes or is reset.
   toastTimer = introRunning ? null : window.setTimeout(hideLegendToast, 5200);
+}
+
+function showIosInstallToast(instructions = false) {
+  if ((!instructions && iosInstallSuggested) || !isIos() || isEmbedded || introRunning || !tipsEnabled || navigator.standalone ||
+      window.matchMedia?.("(display-mode: standalone)")?.matches) return;
+  const copy = memoryGame.iosInstall;
+  showToast(copy.title, instructions ? copy.instructions : copy.suggestion);
+  if (instructions) {
+    const [before, after] = copy.instructions.split("{shareIcon}");
+    const icon = document.createElement("i");
+    icon.className = "icon icon-share-apple";
+    icon.setAttribute("aria-hidden", "true");
+    legendToastText.replaceChildren(document.createTextNode(before), icon, document.createTextNode(after));
+  }
+  // The normal toast lives in the board, which is hidden on the Home screen.
+  document.querySelector(".game-shell").append(legendToast);
+  legendToast.dataset.install = "true";
+  iosInstallSuggested = true;
+  if (!instructions) {
+    legendToastContent.setAttribute("role", "button");
+    legendToastContent.setAttribute("tabindex", "0");
+  }
 }
 
 function showLegendToast(card) {
@@ -2717,6 +2757,7 @@ async function runIntroTutorial() {
   introRunning = false;
   lockBoard = false;
   newGame();
+  showIosInstallToast();
 }
 
 function closeImpostorRules() {
@@ -2908,6 +2949,7 @@ window.addEventListener("storage", (event) => {
   if (event.key === tipsStorageKey) {
     tipsEnabled = readTipsEnabled();
     tipsToggle.checked = tipsEnabled;
+    if (!tipsEnabled && legendToast.dataset.install === "true") hideLegendToast();
     hintPressCount = 0;
     setElementHidden(hintButton, gameCompleted || !tipsEnabled);
   }
@@ -3029,6 +3071,15 @@ rarityPanel?.addEventListener("click", (event) => {
 legendToastClose.addEventListener("click", () => {
   if (!introRunning) hideLegendToast();
 });
+legendToast.addEventListener("click", event => {
+  if (legendToast.dataset.install === "true" && !legendToastClose.contains(event.target)) showIosInstallToast(true);
+});
+legendToastContent.addEventListener("keydown", event => {
+  if (legendToast.dataset.install === "true" && ["Enter", " "].includes(event.key)) {
+    event.preventDefault();
+    showIosInstallToast(true);
+  }
+});
 impostorControlsAboveMedia?.addEventListener("change", positionImpostorPanel);
 window.addEventListener("resize", updateGameTitleVisibility);
 window.addEventListener("resize", updateImpostorActionSpace);
@@ -3059,6 +3110,7 @@ loadTranslations().then(() => {
     syncModalHistory();
     applyGameMode(requestedMode);
   } else showHome();
+  showIosInstallToast();
 
   // focus-existing keeps normal app launches from resetting a round. Shortcut
   // launches must still navigate to their target; beforeunload protects an
