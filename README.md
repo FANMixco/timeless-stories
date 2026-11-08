@@ -2,9 +2,15 @@
 
 [![Spanish Mirrors](https://raw.githubusercontent.com/FANMixco/federiconavarrete/refs/heads/master/img/mybook/mirrors_small.png)](https://a.co/d/0euSZ7mF)
 
-### Presented at [SIEL 2026](https://siel.ma) in Rabat, [UNESCO World Book Capital](https://www.unesco.org/en/articles/unesco-names-rabat-world-book-capital-2026), Spanish Mirrors is the 1st book of its kind: 10 mirrored legends revealing how distant cultures reflect the same symbols and fears. The release was supported by the Embassy of El Salvador in Morocco and the Instituto Cervantes centers in Rabat and Marrakesh.
+### Presented at [SIEL 2026](https://siel.ma) in Rabat, [UNESCO World Book Capital](https://www.unesco.org/en/articles/unesco-names-rabat-world-book-capital-2026), Spanish Mirrors is the 1st book of its kind: 10 mirrored legends revealing how distant cultures reflect the same symbols and fears. The Embassy of El Salvador in Morocco and the Instituto Cervantes centers in Rabat and Marrakesh supported the release.
 
 ***
+
+## Available at
+
+|Amazon Kindle|Play Books|Apple Books|
+|:------------:|:------------:|:------------:|
+|[![Mirrors](https://raw.githubusercontent.com/FANMixco/federiconavarrete/refs/heads/master/img/badges/button-amazon-kindle.svg)](https://a.co/d/0bhpR0IY)|[![Mirrors](https://raw.githubusercontent.com/FANMixco/federiconavarrete/refs/heads/master/img/badges/button-google-play-books.svg)](https://play.google.com/store/books/details?id=o2TMEQAAQBAJ)|[![ts-mirrors](https://raw.githubusercontent.com/FANMixco/federiconavarrete/refs/heads/master/img/badges/button-apple-books.svg)](https://books.apple.com/ar/book/timeless-stories-of-el-salvador/id6761293171)|
 
 ### Download the Official Mirrors game
 
