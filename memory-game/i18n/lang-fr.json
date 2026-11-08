@@ -195,6 +195,11 @@
     "country1": "El Salvador 🇸🇻",
     "country2": "Espagne 🇪🇸",
     "memoryGame": {
+      "iosInstall": {
+        "title": "Ajouter à l’écran d’accueil",
+        "suggestion": "Installez le jeu pour y accéder rapidement. Touchez pour savoir comment faire.",
+        "instructions": "Ouvrez cette page dans Safari, touchez Partager {shareIcon}, puis Sur l’écran d’accueil et Ajouter."
+      },
       "startup": {
         "loading": "Chargement du jeu…",
         "error": "Le jeu n’a pas pu se charger. Vérifiez votre connexion et réessayez.",
@@ -772,6 +777,7 @@
         "previewAlt": "Légendes Éternelles : Miroirs Espagnols, en livre imprimé et sur des liseuses",
         "amazon": "Voir sur Amazon",
         "googlePlay": "Voir sur Google Play",
+        "appleBooks": "Voir sur Apple Books",
         "websites": "Sites officiels",
         "storiesWebsite": "Légendes Éternelles",
         "soundCreditsTitle": "Crédits des effets sonores",

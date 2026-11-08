@@ -195,6 +195,11 @@
     "country1": "El Salvador 🇸🇻",
     "country2": "España 🇪🇸",
     "memoryGame": {
+      "iosInstall": {
+        "title": "Añadir a la pantalla de inicio",
+        "suggestion": "Instala el juego para acceder rápidamente. Toca para ver cómo.",
+        "instructions": "Abre esta página en Safari, toca Compartir {shareIcon}, luego Añadir a la pantalla de inicio y Añadir."
+      },
       "startup": {
         "loading": "Cargando el juego…",
         "error": "No se pudo cargar el juego. Revisa tu conexión e inténtalo de nuevo.",
@@ -772,6 +777,7 @@
         "previewAlt": "Historias Eternas: Espejos Españoles, en libro impreso y lectores digitales",
         "amazon": "Ver en Amazon",
         "googlePlay": "Ver en Google Play",
+        "appleBooks": "Ver en Apple Books",
         "websites": "Sitios web oficiales",
         "storiesWebsite": "Historias Eternas",
         "soundCreditsTitle": "Créditos de los efectos de sonido",

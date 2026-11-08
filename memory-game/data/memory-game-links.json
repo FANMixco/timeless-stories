@@ -2,6 +2,7 @@
   "localized": {
     "default": {
       "digitalBooks": {
+        "appleBooks": "https://books.apple.com/ar/book/timeless-stories-of-el-salvador/id6761293171",
         "googlePlay": "https://play.google.com/store/books/details/Federico_Navarrete_Timeless_Stories_of_El_Salvador?id=rFTMEQAAQBAJ"
       },
       "carouselCards": {
@@ -10,6 +11,7 @@
     },
     "es": {
       "digitalBooks": {
+        "appleBooks": "https://books.apple.com/ar/book/timeless-stories-of-el-salvador/id6761293171",
         "googlePlay": "https://play.google.com/store/books/details?id=o2TMEQAAQBAJ"
       },
       "carouselCards": {

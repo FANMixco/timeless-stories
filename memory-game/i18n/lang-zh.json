@@ -195,6 +195,11 @@
     "country1": "萨尔瓦多 🇸🇻",
     "country2": "西班牙 🇪🇸",
     "memoryGame": {
+      "iosInstall": {
+        "title": "添加到主屏幕",
+        "suggestion": "安装游戏，方便快速打开。轻点查看安装方法。",
+        "instructions": "在 Safari 中打开此页面，轻点“分享”{shareIcon}，然后选择“添加到主屏幕”并轻点“添加”。"
+      },
       "startup": {
         "loading": "游戏加载中…",
         "error": "游戏无法加载。请检查网络连接后重试。",
@@ -772,6 +777,7 @@
         "previewAlt": "英文版 Spanish Mirrors 的纸质书与电子阅读器预览",
         "amazon": "在 Amazon 查看",
         "googlePlay": "在 Google Play 查看",
+        "appleBooks": "在 Apple Books 查看",
         "websites": "官方网站",
         "storiesWebsite": "永恒的故事",
         "soundCreditsTitle": "音效鸣谢",
