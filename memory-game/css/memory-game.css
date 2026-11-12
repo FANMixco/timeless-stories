@@ -2513,6 +2513,156 @@ html[data-theme="dark"] .impostor-panel[data-phase="defeat"] #impostorNotice { c
   color: var(--mode-color, var(--accent-dark));
 }
 
+/* Enchanted collection: quiet surfaces, short performances, tactile selection.
+   Each edition has a four-second slot in a 24s cycle; the two sixth-edition
+   variants share a slot. These layers never intercept input or cover the text. */
+.home-modes > :is(.home-card, .home-coming-soon) {
+  --edition-order: 0;
+  --edition-delay: 0s;
+  --edition-light: 0;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  transition: border-color 200ms ease, box-shadow 200ms ease,
+    transform 200ms ease, scale 120ms ease;
+}
+#home-timeAttack { --edition-order: 1; --edition-delay: -20s; }
+#home-limitedMoves { --edition-order: 2; --edition-delay: -16s; }
+#home-crazyMirrors { --edition-order: 3; --edition-delay: -12s; }
+#home-memoryFlash { --edition-order: 4; --edition-delay: -8s; }
+#home-impostor, #impostorBookGate { --edition-order: 5; --edition-delay: -4s; }
+.is-home .home-modes > :is(.home-card, .home-coming-soon) {
+  animation: edition-awaken 440ms cubic-bezier(0.22, 1, 0.36, 1)
+    calc(var(--edition-order) * 65ms) backwards;
+}
+.home-modes > :is(.home-card, .home-coming-soon)::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+}
+.home-modes > :is(.home-card, .home-coming-soon)::before {
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg,
+    color-mix(in srgb, var(--gold) 12%, transparent), transparent 48%);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--gold) 45%, transparent);
+  opacity: var(--edition-light);
+  transition: opacity 200ms ease;
+}
+@keyframes edition-awaken {
+  from { opacity: 0; translate: 0 12px; }
+  to { opacity: 1; translate: 0 0; }
+}
+.home-modes > :is(.is-locked, .home-coming-soon) {
+  background:
+    repeating-linear-gradient(120deg, transparent 0 3px,
+      color-mix(in srgb, var(--ink) 2%, transparent) 3px 4px),
+    linear-gradient(145deg, color-mix(in srgb, var(--panel) 55%, transparent),
+      color-mix(in srgb, var(--mode-color, var(--accent)) 6%, transparent)),
+    var(--panel);
+}
+.home-modes > :is(.home-card, .home-coming-soon):focus-visible {
+  --edition-light: 1;
+  border-color: var(--gold);
+  box-shadow: 0 5px 14px color-mix(in srgb, var(--ink) 9%, transparent);
+  transform: translateY(-3px);
+}
+@media (hover: hover) and (pointer: fine) {
+  .home-modes > :is(.home-card, .home-coming-soon):hover {
+    --edition-light: 1;
+    border-color: var(--gold);
+    box-shadow: 0 5px 14px color-mix(in srgb, var(--ink) 9%, transparent);
+    transform: translateY(-3px);
+  }
+}
+.home-modes > :is(.home-card, .home-coming-soon):active {
+  scale: 0.975;
+  transform: translateY(0);
+  --edition-light: 1;
+}
+
+/* Individual rotate/scale preserve the existing responsive glyph transforms.
+   All six icons rest for most of the cycle, with one brief moment per edition. */
+.home-modes > :is(.home-card, .home-coming-soon) > :is(.icon, .home-move-icon) {
+  --icon-light: color-mix(in srgb, var(--gold) 50%, transparent);
+  animation-duration: 24s;
+  animation-delay: var(--edition-delay);
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+#home-classic > .icon-book { animation-name: edition-book-open; }
+#home-timeAttack > .icon-time-attack { animation-name: edition-watch-ticks; }
+#home-limitedMoves > .home-move-icon { animation-name: edition-number-enchant; }
+#home-crazyMirrors > .icon-mirror { animation-name: edition-mirror-catch; }
+#home-memoryFlash > .icon-power { animation-name: edition-lightning; }
+#home-impostor > .icon-impostor, #impostorBookGate > .icon-impostor {
+  position: relative;
+  animation-name: edition-mask-reveal;
+}
+/* A tiny eye reflection, confined to the mask, rather than a whole-card flash. */
+#home-impostor > .icon-impostor::after, #impostorBookGate > .icon-impostor::after {
+  content: "";
+  position: absolute;
+  width: 5px;
+  height: 2px;
+  left: 34%;
+  top: 45%;
+  border-radius: 50%;
+  background: #fff2c5;
+  box-shadow: 0 0 4px var(--gold);
+  opacity: 0;
+  pointer-events: none;
+  animation: edition-mask-eye 24s ease-in-out var(--edition-delay) infinite;
+}
+@keyframes edition-book-open {
+  0%, 12%, 100% { scale: 1; rotate: 0deg; text-shadow: 0 0 0 transparent; }
+  4% { scale: 1.08; rotate: -3deg; text-shadow: 0 0 9px var(--icon-light); }
+  7% { scale: 1.08; rotate: 2deg; text-shadow: 0 0 9px var(--icon-light); }
+}
+@keyframes edition-watch-ticks {
+  0%, 3%, 7%, 12%, 100% { rotate: 0deg; }
+  2%, 6% { rotate: -7deg; }
+  4%, 8% { rotate: 5deg; }
+}
+@keyframes edition-number-enchant {
+  0%, 12%, 100% { scale: 1; text-shadow: 0 0 0 transparent; }
+  5% { scale: 1.1; text-shadow: 0 0 8px var(--icon-light); }
+  8% { scale: 1.04; text-shadow: 0 0 4px var(--icon-light); }
+}
+@keyframes edition-mirror-catch {
+  0%, 12%, 100% { rotate: 0deg; scale: 1; text-shadow: 0 0 0 transparent; }
+  3% { rotate: -9deg; scale: 1.04; }
+  7% { rotate: 7deg; scale: 1.04; text-shadow: 2px 0 7px var(--icon-light); }
+}
+@keyframes edition-lightning {
+  0%, 3%, 6%, 12%, 100% { scale: 1; text-shadow: 0 0 0 transparent; }
+  2%, 5% { scale: 1.12; text-shadow: 0 0 8px var(--icon-light); }
+  8% { scale: 1.03; text-shadow: 0 0 3px var(--icon-light); }
+}
+@keyframes edition-mask-reveal {
+  0%, 12%, 100% { rotate: 0deg; text-shadow: 0 0 0 transparent; }
+  4% { rotate: -4deg; }
+  7% { rotate: 3deg; text-shadow: 2px -1px 6px var(--icon-light); }
+}
+@keyframes edition-mask-eye {
+  0%, 4%, 9%, 100% { opacity: 0; scale: 0.5; }
+  6% { opacity: 0.8; scale: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .is-home .home-modes > :is(.home-card, .home-coming-soon),
+  .home-modes > :is(.home-card, .home-coming-soon)::before,
+  #gameHome .home-modes > :is(.home-card, .home-coming-soon) > :is(.icon, .home-move-icon),
+  #gameHome .home-modes > :is(.home-card, .home-coming-soon) > .icon-impostor::after {
+    animation: none;
+    transition: none;
+  }
+  .home-modes > :is(.home-card, .home-coming-soon):is(:hover, :focus-visible, :active) {
+    transform: none;
+    scale: none;
+  }
+}
+
 /* Lock details share the existing dialog stack, scrolling and focus handling. */
 .home-card > .home-unlock { border: 0; padding-top: 0; }
 .home-card .home-unlock > :not(.home-lock-badge) { display: none; }
