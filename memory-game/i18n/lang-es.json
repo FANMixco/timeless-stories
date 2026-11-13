@@ -859,9 +859,9 @@
         "impostor": {
           "name": "El impostor",
           "description": "Detecta la carta sospechosa, identifica al impostor y completa las 10 parejas.",
-          "tutorial": "Tras tres parejas, una sombra anuncia al impostor. Sigue jugando normalmente. Solo al formar su pareja original, ambas cartas se ocultan y las restantes se reorganizan una vez. Después, girar cualquiera de las dos permite Acusar al impostor. Busca los detalles modificados del icono: esa carta es el impostor. Una acusación errónea termina la ronda. Los fallos gastan oportunidades: 3 con 6 o más cartas, 2 con 4 y 1 con 2. Identifica al impostor y completa las 10 parejas.",
+          "tutorial": "Tras tres parejas, una sombra anuncia al impostor. Sigue jugando normalmente. Solo al formar su pareja original, ambas cartas se ocultan y las restantes se reorganizan una vez. Después, girar cualquiera de las dos permite Acusar al impostor. Busca los detalles modificados del icono: esa carta es el impostor. Una acusación errónea termina la ronda. Los fallos gastan oportunidades: 3 con 6 o más cartas, 2 con 4 y 1 con 2. Identifica al impostor y completa las 10 parejas. Al encontrar la pareja afectada, tienes 30 segundos para identificar al impostor y completar el tablero. La cuenta atrás continúa tras una acusación correcta.",
           "activated": "Ha llegado un impostor. Sigue formando parejas para encontrar la afectada.",
-          "encounter": "Pareja afectada encontrada. Ambas cartas se ocultan y las restantes se reorganizan.",
+          "encounter": "Pareja afectada encontrada. Tienes 30 segundos para identificar al impostor y completar el tablero.",
           "reshuffle": "Las cartas se han reorganizado una vez. Gira cualquiera de las dos cartas afectadas para acusar.",
           "challenge": "Has seleccionado una carta afectada.",
           "attempts": "Oportunidades restantes: {count}",
@@ -873,7 +873,7 @@
           "rules": "Cómo jugar",
           "steps": [
             "Completa 3 parejas. Una sombra y el icono del impostor anuncian su llegada. La pareja afectada sigue en secreto.",
-            "Encuentra la pareja afectada jugando normalmente. Sus dos cartas se ocultan en lugar de desaparecer. Las cartas restantes se reorganizan una vez.",
+            "Encuentra la pareja afectada jugando normalmente. Sus dos cartas se ocultan en lugar de desaparecer. Las cartas restantes se reorganizan una vez. Al encontrar la pareja afectada, tienes 30 segundos para identificar al impostor y completar el tablero. La cuenta atrás continúa tras una acusación correcta.",
             "El impostor tiene un icono ligeramente modificado. Compara sus detalles. Usa este icono para acusar a la carta seleccionada. Gira cualquiera de las dos cartas afectadas para que aparezca el botón. Solo una es el impostor. Una acusación incorrecta termina la partida. Identifícalo y completa todas las parejas."
           ],
           "remaining": "Cartas restantes",
@@ -883,7 +883,8 @@
           "suspected": "Posible impostor",
           "accuseShort": "Acusar",
           "chancesRemaining": "{count} oportunidades restantes",
-          "oneChanceRemaining": "1 oportunidad restante"
+          "oneChanceRemaining": "1 oportunidad restante",
+          "timeLeft": "Tiempo restante"
         },
         "impostorWrong": "Acusación errónea. El impostor escapó.",
         "impostorExhausted": "No quedan oportunidades. El impostor escapó."
