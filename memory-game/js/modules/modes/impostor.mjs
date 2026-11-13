@@ -1,3 +1,5 @@
+import { chooseImpostorGlyph } from "./impostor-glyphs.mjs";
+
 // Round-local identities are card objects, never positions or pair IDs.
 export const impostorMode = Object.freeze({
   id: "impostor", record: Object.freeze({ key: "fewestMoves", field: "moves" }),
@@ -8,23 +10,27 @@ export const impostorPalettes = Object.freeze([
   ["#cfaaaa", "#542c2c"], ["#bfaecc", "#493058"], ["#aabdd0", "#293f58"],
   ["#afc4ac", "#304a2d"], ["#d0c79e", "#514820"], ["#cfb59e", "#563a23"], ["#a5c6c2", "#244b46"],
 ]);
-export function createImpostorRound(random = Math.random) {
+export function createImpostorRound(random = Math.random, previousVariationIndex = null) {
   const palette = impostorPalettes[Math.floor(random() * impostorPalettes.length)];
   const hue = Math.floor(random() * 360);
   const lightness = 34 + Math.floor(random() * 12);
   const border = `hsl(${hue} 18% ${lightness}%)`;
-  const suspectBorder = `hsl(${hue} 18% ${lightness + (random() < .5 ? -28 : 28)}%)`;
+  let variation = null;
   let suspect = null, encounters = 0, pendingShuffle = false, shuffled = false;
   let challenge = false, attempts = null, neutralized = false;
   const isAffected = card => Boolean(card && suspect && card.dataset.pairId === suspect.dataset.pairId);
   return {
-    palette, border, suspectBorder,
+    palette, border,
+    get variation() { return variation; },
     get suspect() { return suspect; }, get encounters() { return encounters; },
     get challenge() { return challenge; }, get attempts() { return attempts; },
     get neutralized() { return neutralized; },
     activate(matches, remaining) {
       if (matches !== 3 || suspect) return false;
-      suspect = remaining[Math.floor(random() * remaining.length)]; return true;
+      const selected = remaining[Math.floor(random() * remaining.length)];
+      variation = chooseImpostorGlyph(selected?.dataset.icon, random, previousVariationIndex);
+      if (!variation) return false;
+      suspect = selected; return true;
     },
     isAffected,
     canAccuse(card) { return shuffled && challenge && !neutralized && isAffected(card); },

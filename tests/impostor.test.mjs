@@ -2,6 +2,23 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { createImpostorRound, impostorPalettes } from '../memory-game/js/modules/modes/impostor.mjs';
 import { shuffleRemainingCards } from '../memory-game/js/modules/rules.mjs';
+import { impostorGlyphs, chooseImpostorGlyph } from '../memory-game/js/modules/modes/impostor-glyphs.mjs';
+
+test('every original has three alternatives and consecutive rounds exclude the previous variation', () => {
+  for (const [icon, glyphs] of Object.entries(impostorGlyphs)) {
+    for (const previous of [null, 0, 1, 2]) {
+      const seen = new Set();
+      for (const random of [0, .49, .99]) {
+        const selected = chooseImpostorGlyph(icon, () => random, previous);
+        assert.equal(glyphs[selected.index], selected.glyph);
+        assert.notEqual(selected.index, previous);
+        seen.add(selected.index);
+      }
+      assert.equal(seen.size, previous === null ? 3 : 2);
+    }
+  }
+  assert.equal(chooseImpostorGlyph('unknown'), null);
+});
 
 test('seven muted palettes and independently randomized border shades', () => {
   assert.equal(impostorPalettes.length, 7);
@@ -9,15 +26,13 @@ test('seven muted palettes and independently randomized border shades', () => {
   for (let index = 0; index < 7; index++) {
     const round = createImpostorRound(() => (index + .1) / 7);
     assert.equal(round.palette, impostorPalettes[index]);
-    assert.notEqual(round.border, round.suspectBorder);
-    const lightness = color => Number(color.match(/([\d.]+)%\)$/)[1]);
-    assert.equal(Math.abs(lightness(round.border) - lightness(round.suspectBorder)), 28);
+    assert.equal("suspectBorder" in round, false);
     borders.add(round.border);
   }
   assert.equal(borders.size, 7);
 });
 test('activation, persistent identity, a single derangement and neutralization', () => {
-  const cards = Array.from({ length: 20 }, (_, id) => ({ id, dataset: { pairId: Math.floor(id / 2) }, rarity: id > 15 ? 'ultra-rare' : 'rare' }));
+  const cards = Array.from({ length: 20 }, (_, id) => ({ id, dataset: { icon: "masks", pairId: Math.floor(id / 2) }, rarity: id > 15 ? 'ultra-rare' : 'rare' }));
   const round = createImpostorRound(() => .4);
   assert.equal(round.activate(2, cards.slice(4)), false);
   assert.equal(round.activate(3, cards.slice(6)), true);
@@ -42,7 +57,7 @@ test('activation, persistent identity, a single derangement and neutralization',
 });
 for (const [remaining, chances] of [[14, 3], [6, 3], [4, 2], [2, 1]]) {
   test(`${remaining} remaining cards allow exactly ${chances} unsuccessful attempts`, () => {
-    const cards = Array.from({ length: remaining }, (_, id) => ({ dataset: { pairId: Math.floor(id / 2) } }));
+    const cards = Array.from({ length: remaining }, (_, id) => ({ dataset: { icon: "masks", pairId: Math.floor(id / 2) } }));
     const round = createImpostorRound(() => 0);
     round.activate(3, cards);
     round.encounterPair(cards[0], cards[1]); round.takeShuffle();
@@ -54,7 +69,7 @@ for (const [remaining, chances] of [[14, 3], [6, 3], [4, 2], [2, 1]]) {
 
 test('both affected cards can accuse after the pair is matched; unrelated cards never can', () => {
   for (const selected of [0, 1]) {
-    const cards = Array.from({ length: 14 }, (_, id) => ({ dataset: { pairId: Math.floor(id / 2) } }));
+    const cards = Array.from({ length: 14 }, (_, id) => ({ dataset: { icon: "masks", pairId: Math.floor(id / 2) } }));
     const round = createImpostorRound(() => 0);
     round.activate(3, cards);
     assert.equal(round.reveal(cards[0], 14), null);

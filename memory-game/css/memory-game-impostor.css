@@ -1,0 +1,25 @@
+@font-face {
+    font-family: "memory-game-impostor";
+    src: url("fonts/memory-game-impostor.woff2?v=__MEMORY_ASSET_VERSION__") format("woff2"),
+        url("fonts/memory-game-impostor.woff?v=__MEMORY_ASSET_VERSION__") format("woff"),
+        url("fonts/memory-game-impostor.ttf?v=__MEMORY_ASSET_VERSION__") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
+}
+.board.is-impostor .character-icon[data-impostor-glyph] {
+    /* Use !important to prevent extensions from overriding this font. */
+    font-family: "memory-game-impostor" !important;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.board.is-impostor .character-icon[data-impostor-glyph]::before {
+    content: attr(data-impostor-glyph);
+}

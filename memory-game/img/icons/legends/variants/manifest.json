@@ -1,0 +1,257 @@
+{
+  "schemaVersion": 1,
+  "icons": {
+    "candle": {
+      "original": "candle.svg",
+      "originalSha256": "0b6289e0a87a1dea44429bd065844eded9e9684f5b28ad39cb483b75fc0b3897",
+      "variants": [
+        {
+          "id": "candle-v1",
+          "file": "variants/candle-v1.svg",
+          "detail": "Diamond-shaped opening in the flame"
+        },
+        {
+          "id": "candle-v2",
+          "file": "variants/candle-v2.svg",
+          "detail": "Narrow rectangular opening in the flame"
+        },
+        {
+          "id": "candle-v3",
+          "file": "variants/candle-v3.svg",
+          "detail": "Teardrop-shaped opening in the flame"
+        }
+      ]
+    },
+    "cross": {
+      "original": "cross.svg",
+      "originalSha256": "05696b9ae968e59e541a15b265a83d8984b823b02279972abeaf8297adae820c",
+      "variants": [
+        {
+          "id": "cross-v1",
+          "file": "variants/cross-v1.svg",
+          "detail": "Centered notch in the upper cross terminal"
+        },
+        {
+          "id": "cross-v2",
+          "file": "variants/cross-v2.svg",
+          "detail": "Centered notch in the right cross terminal"
+        },
+        {
+          "id": "cross-v3",
+          "file": "variants/cross-v3.svg",
+          "detail": "Beveled corners on the upper cross terminal"
+        }
+      ]
+    },
+    "crown": {
+      "original": "crown.svg",
+      "originalSha256": "7c926e6bcb954e52348300e5f7d562bb382fcd9e9c36962e42fe9438dffd497d",
+      "variants": [
+        {
+          "id": "crown-v1",
+          "file": "variants/crown-v1.svg",
+          "detail": "Diamond jewel cutout in the crown"
+        },
+        {
+          "id": "crown-v2",
+          "file": "variants/crown-v2.svg",
+          "detail": "Round jewel cutout in the crown"
+        },
+        {
+          "id": "crown-v3",
+          "file": "variants/crown-v3.svg",
+          "detail": "Tall rectangular jewel cutout in the crown"
+        }
+      ]
+    },
+    "cry": {
+      "original": "cry.svg",
+      "originalSha256": "c707e4aa1a91e8f81013bc17a1816adc553c09f020edd348136d9d0a715aae18",
+      "variants": [
+        {
+          "id": "cry-v1",
+          "file": "variants/cry-v1.svg",
+          "detail": "Diamond-shaped right eye"
+        },
+        {
+          "id": "cry-v2",
+          "file": "variants/cry-v2.svg",
+          "detail": "Narrow rectangular right eye"
+        },
+        {
+          "id": "cry-v3",
+          "file": "variants/cry-v3.svg",
+          "detail": "Teardrop-shaped right eye"
+        }
+      ]
+    },
+    "devil": {
+      "original": "devil.svg",
+      "originalSha256": "c8533144b6d993d9e16a6982fe750eda492eec1cb2b27954b5cfac1da7448f15",
+      "variants": [
+        {
+          "id": "devil-v1",
+          "file": "variants/devil-v1.svg",
+          "detail": "Deeper curved grin"
+        },
+        {
+          "id": "devil-v2",
+          "file": "variants/devil-v2.svg",
+          "detail": "Single central fang in the grin"
+        },
+        {
+          "id": "devil-v3",
+          "file": "variants/devil-v3.svg",
+          "detail": "Flat upper edge on the grin"
+        }
+      ]
+    },
+    "masks": {
+      "original": "masks.svg",
+      "originalSha256": "35b15e45c6e9813a89946b4797d1f1ba320bf38d5a9acd8b462b10fe1df4773f",
+      "variants": [
+        {
+          "id": "masks-v1",
+          "file": "variants/masks-v1.svg",
+          "detail": "Deeper curved mouth on the front mask"
+        },
+        {
+          "id": "masks-v2",
+          "file": "variants/masks-v2.svg",
+          "detail": "Downturned mouth on the front mask"
+        },
+        {
+          "id": "masks-v3",
+          "file": "variants/masks-v3.svg",
+          "detail": "Straight open mouth on the front mask"
+        }
+      ]
+    },
+    "music": {
+      "original": "music.svg",
+      "originalSha256": "30e46a716097e417db37956aa96fbc4855f943193b15e59ac138d60ee114bc83",
+      "variants": [
+        {
+          "id": "music-v1",
+          "file": "variants/music-v1.svg",
+          "detail": "Square notch in the lower edge of the connecting beam"
+        },
+        {
+          "id": "music-v2",
+          "file": "variants/music-v2.svg",
+          "detail": "V-shaped notch in the lower edge of the connecting beam"
+        },
+        {
+          "id": "music-v3",
+          "file": "variants/music-v3.svg",
+          "detail": "Rounded notch in the lower edge of the connecting beam"
+        }
+      ]
+    },
+    "night": {
+      "original": "night.svg",
+      "originalSha256": "7628883ae4e16f8bf9510f26eebbcee0317b7109e1cb60e33ee0f837fd09c3e4",
+      "variants": [
+        {
+          "id": "night-v1",
+          "file": "variants/night-v1.svg",
+          "detail": "Small companion star becomes a diamond"
+        },
+        {
+          "id": "night-v2",
+          "file": "variants/night-v2.svg",
+          "detail": "Small companion star has four points"
+        },
+        {
+          "id": "night-v3",
+          "file": "variants/night-v3.svg",
+          "detail": "Small companion star has six points"
+        }
+      ]
+    },
+    "paw": {
+      "original": "paw.svg",
+      "originalSha256": "759c1ea3cdb933d5b11c78048278f29a53925a4abec21e11970d88d79b294763",
+      "variants": [
+        {
+          "id": "paw-v1",
+          "file": "variants/paw-v1.svg",
+          "detail": "Diamond-shaped opening in the central paw pad"
+        },
+        {
+          "id": "paw-v2",
+          "file": "variants/paw-v2.svg",
+          "detail": "Round opening in the central paw pad"
+        },
+        {
+          "id": "paw-v3",
+          "file": "variants/paw-v3.svg",
+          "detail": "Teardrop-shaped opening in the central paw pad"
+        }
+      ]
+    },
+    "routes": {
+      "original": "routes.svg",
+      "originalSha256": "a2147f200781679ada4522aab18f3e72ee8f66ad3d6c52854974472e1b63c34b",
+      "variants": [
+        {
+          "id": "routes-v1",
+          "file": "variants/routes-v1.svg",
+          "detail": "Forked tip on the lower right sign"
+        },
+        {
+          "id": "routes-v2",
+          "file": "variants/routes-v2.svg",
+          "detail": "Stepped tip on the lower right sign"
+        },
+        {
+          "id": "routes-v3",
+          "file": "variants/routes-v3.svg",
+          "detail": "Rounded tip on the lower right sign"
+        }
+      ]
+    },
+    "tomb": {
+      "original": "tomb.svg",
+      "originalSha256": "7dcc79049aa407cc126fbb9bfbb146958e93d8a218ad9bfeb601dd39653dea41",
+      "variants": [
+        {
+          "id": "tomb-v1",
+          "file": "variants/tomb-v1.svg",
+          "detail": "Cross-shaped upper inscription"
+        },
+        {
+          "id": "tomb-v2",
+          "file": "variants/tomb-v2.svg",
+          "detail": "Chevron-shaped upper inscription"
+        },
+        {
+          "id": "tomb-v3",
+          "file": "variants/tomb-v3.svg",
+          "detail": "Three dashes in the upper inscription"
+        }
+      ]
+    },
+    "wizard": {
+      "original": "wizard.svg",
+      "originalSha256": "21b19333996733219c3f9356345dd9315bbcf541c77db3d69219e2ed1a154eb9",
+      "variants": [
+        {
+          "id": "wizard-v1",
+          "file": "variants/wizard-v1.svg",
+          "detail": "Large hat ornament becomes a diamond"
+        },
+        {
+          "id": "wizard-v2",
+          "file": "variants/wizard-v2.svg",
+          "detail": "Large hat ornament becomes a circle"
+        },
+        {
+          "id": "wizard-v3",
+          "file": "variants/wizard-v3.svg",
+          "detail": "Large hat ornament becomes a five-point star"
+        }
+      ]
+    }
+  }
+}

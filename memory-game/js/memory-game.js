@@ -36,6 +36,7 @@ let previewFlipTimer = null;
 let turnSettleTimer = null;
 let mistakes = 0;
 let impostorRound = null;
+let lastImpostorVariationIndex = null;
 let impostorAccusationCard = null;
 let impostorNoticeKey = "ready";
 const queuedModeUnlocks = new Set();
@@ -1928,7 +1929,7 @@ function accuseImpostor() {
   window.clearTimeout(mismatchTimer);
   mismatchTimer = null;
   for (const card of board.children) {
-    card.classList.remove("is-impostor-revealed");
+    delete card.querySelector(".character-icon").dataset.impostorGlyph;
     if (card !== selected && card.classList.contains("is-flipped") && !card.classList.contains("is-matched")) {
       card.classList.remove("is-flipped");
       card.setAttribute("aria-label", memoryGame.hiddenCard);
@@ -1987,6 +1988,7 @@ function createCard(character, index) {
   card.className = "card";
   card.type = "button";
   card.dataset.pairId = character.pairId;
+  card.dataset.icon = character.icon;
   card.dataset.discoveryId = character.discoveryId || "";
   card.dataset.character = character.name;
   card.dataset.revealedLabel = [character.name, getOriginLabel(character.side)].filter(Boolean).join(". ");
@@ -2082,7 +2084,11 @@ function markMatch() {
   matches += 1;
   const impostorActivated = impostorRound?.activate(matches,
     [...board.children].filter(card => !card.classList.contains("is-matched")));
-  if (impostorActivated) board.classList.add("is-impostor-arriving");
+  if (impostorActivated) {
+    lastImpostorVariationIndex = impostorRound.variation.index;
+    impostorRound.suspect.querySelector(".character-icon").dataset.impostorGlyph = impostorRound.variation.glyph;
+    board.classList.add("is-impostor-arriving");
+  }
   activeCombo += 1;
   bestCombo = Math.max(bestCombo, activeCombo);
   if (activeCombo >= 2) showComboToast();
@@ -2418,8 +2424,6 @@ function flipCard(card) {
   const remainingCount = [...board.children].filter(item => !item.classList.contains("is-matched")).length;
   const encounter = impostorRound?.reveal(card, remainingCount);
   impostorAccusationCard = card;
-  // The pair stays anonymous until rearrangement; only the impostor gets the clue.
-  if (impostorRound?.canAccuse(card) && card === impostorRound.suspect) card.classList.add("is-impostor-revealed");
   if (encounter === "challenge" || (remainingCount === 2 && impostorRound?.canAccuse(card))) {
     // With only the affected pair left, flipping switches the accusation target.
     // Inspection is not a failed match; the accusation commits the final decision.
@@ -2508,14 +2512,13 @@ function newGame({ startPreview = !homeScreen.visible } = {}) {
   completedPerformance = null;
   shareResult = null;
   renderCompletedPerformance();
-  impostorRound = gameMode === "impostor" ? createImpostorRound() : null;
+  impostorRound = gameMode === "impostor" ? createImpostorRound(Math.random, lastImpostorVariationIndex) : null;
   impostorNoticeKey = "ready";
   board.classList.toggle("is-impostor", Boolean(impostorRound));
   if (impostorRound) {
     board.style.setProperty("--impostor-bg", impostorRound.palette[0]);
     board.style.setProperty("--impostor-ink", impostorRound.palette[1]);
     board.style.setProperty("--impostor-border", impostorRound.border);
-    board.style.setProperty("--impostor-suspect-border", impostorRound.suspectBorder);
   }
   activePairs = chooseActivePairs();
   board.classList.remove("is-complete", "is-intro", "is-flash-preview", "is-impostor-arriving");
