@@ -859,7 +859,7 @@
         "impostor": {
           "name": "El impostor",
           "description": "Detecta la carta sospechosa, identifica al impostor y completa las 10 parejas.",
-          "tutorial": "Tras tres parejas, una sombra anuncia al impostor. Sigue jugando normalmente. Solo al formar su pareja original, ambas cartas se ocultan y las restantes se reorganizan una vez. Después, girar cualquiera de las dos permite Acusar al impostor. Tras la reorganización, busca el borde más claro u oscuro: esa carta es el impostor. Una acusación errónea termina la ronda. Los fallos gastan oportunidades: 3 con 6 o más cartas, 2 con 4 y 1 con 2. Identifica al impostor y completa las 10 parejas.",
+          "tutorial": "Tras tres parejas, una sombra anuncia al impostor. Sigue jugando normalmente. Solo al formar su pareja original, ambas cartas se ocultan y las restantes se reorganizan una vez. Después, girar cualquiera de las dos permite Acusar al impostor. Busca los detalles modificados del icono: esa carta es el impostor. Una acusación errónea termina la ronda. Los fallos gastan oportunidades: 3 con 6 o más cartas, 2 con 4 y 1 con 2. Identifica al impostor y completa las 10 parejas.",
           "activated": "Ha llegado un impostor. Sigue formando parejas para encontrar la afectada.",
           "encounter": "Pareja afectada encontrada. Ambas cartas se ocultan y las restantes se reorganizan.",
           "reshuffle": "Las cartas se han reorganizado una vez. Gira cualquiera de las dos cartas afectadas para acusar.",
@@ -874,7 +874,7 @@
           "steps": [
             "Completa 3 parejas. Una sombra y el icono del impostor anuncian su llegada. La pareja afectada sigue en secreto.",
             "Encuentra la pareja afectada jugando normalmente. Sus dos cartas se ocultan en lugar de desaparecer. Las cartas restantes se reorganizan una vez.",
-            "Tras la reorganización, el impostor tiene un borde más claro u oscuro. Usa este icono para acusar a la carta seleccionada. Gira cualquiera de las dos cartas afectadas para que aparezca el botón. Solo una es el impostor. Una acusación incorrecta termina la partida. Identifícalo y completa todas las parejas."
+            "El impostor tiene un icono ligeramente modificado. Compara sus detalles. Usa este icono para acusar a la carta seleccionada. Gira cualquiera de las dos cartas afectadas para que aparezca el botón. Solo una es el impostor. Una acusación incorrecta termina la partida. Identifícalo y completa todas las parejas."
           ],
           "remaining": "Cartas restantes",
           "chances": "Oportunidades",

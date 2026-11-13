@@ -2230,10 +2230,6 @@ html[data-theme] .game-shell .board.is-impostor .card .character-mark {
 html[data-theme] .game-shell .board.is-impostor .card .character-icon,
 html[data-theme] .game-shell .board.is-impostor .card .character-name,
 html[data-theme] .game-shell .board.is-impostor .card .character-origin { color: var(--impostor-ink); }
-html[data-theme] .game-shell .board.is-impostor .card.is-impostor-revealed .card-front {
-  border-color: var(--impostor-suspect-border);
-  box-shadow: inset 0 0 0 1px var(--impostor-suspect-border);
-}
 html[data-theme] .game-shell .board.is-impostor .card .card-front::after { content: none; }
 /* Let the second flip finish before the pair gently vanishes from its slots. */
 .board.is-impostor .card {

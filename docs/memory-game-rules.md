@@ -358,11 +358,14 @@ affected pair: both cards flip face down, then unmatched cards rearrange exactly
 once. Matched slots stay fixed and every remaining card moves.
 
 After rearrangement, revealing either affected card starts identification and
-offers the accusation action for that selected card. Only the actual impostor
-gets a visibly lighter or darker revealed border, identifying it against the
-round's normal border. No individual clue appears before rearrangement.
-Unrelated cards never offer the action. Correct identification clears
-the impostor's border treatment and restores their normal pair. Wrongly accusing
+offers the accusation action for that selected card. At activation, only the
+actual impostor's existing icon element receives one of three corresponding
+`memory-game-impostor` glyphs. Its legitimate partner keeps the original glyph.
+The glyph survives the single rearrangement; all cards retain the same round
+palette and border, with no individual tint, highlight or glow. The previous
+round's variation index is excluded from the next selection (page lifetime).
+Unrelated cards never offer the action. Correct identification removes the
+font override and restores the original glyph and legitimate pair. Wrongly accusing
 the legitimate partner loses immediately. Selecting another card continues the
 normal matching and mistake rules.
 
@@ -370,7 +373,7 @@ Chances are fixed at challenge entry: three with six or more cards, two with
 four, one with two. Failed matches spend a chance, add a move and reset the
 combo; wrong accusations and exhausted chances immediately lose. Successful
 normal matches do not spend chances. The impostor cannot match until correctly
-accused. Correct identification clears its border variation and restores its
+accused. Correct identification clears its glyph variation and restores its
 original pair; victory requires identification and all ten pairs.
 When only the affected pair remains, flipping the other card switches the
 accusation selection and turns the previous card face down. Inspection does not
