@@ -859,9 +859,9 @@
         "impostor": {
           "name": "L’Imposteur",
           "description": "Repérez la carte suspecte, identifiez l’imposteur et trouvez les 10 paires.",
-          "tutorial": "Après trois paires, une ombre annonce l’imposteur. Continuez normalement. Seule l’association de sa paire d’origine retourne les deux cartes et mélange les cartes restantes une fois. Ensuite, révéler l’une des deux permet d’accuser. Cherchez les détails modifiés de l’icône : cette carte est l’imposteur. Une fausse accusation termine la partie. Les erreurs consomment des chances : 3 avec 6 cartes ou plus, 2 avec 4 et 1 avec 2. Identifiez l’imposteur, puis trouvez les 10 paires.",
+          "tutorial": "Après trois paires, une ombre annonce l’imposteur. Continuez normalement. Seule l’association de sa paire d’origine retourne les deux cartes et mélange les cartes restantes une fois. Ensuite, révéler l’une des deux permet d’accuser. Cherchez les détails modifiés de l’icône : cette carte est l’imposteur. Une fausse accusation termine la partie. Les erreurs consomment des chances : 3 avec 6 cartes ou plus, 2 avec 4 et 1 avec 2. Identifiez l’imposteur, puis trouvez les 10 paires. Dès que la paire affectée est trouvée, vous avez 30 secondes pour identifier l’imposteur et terminer le plateau. Le compte à rebours continue après une accusation correcte.",
           "activated": "Un imposteur est arrivé. Continuez les associations pour trouver la paire affectée.",
-          "encounter": "Paire affectée trouvée. Les deux cartes se retournent, puis les cartes restantes changent de place.",
+          "encounter": "Paire affectée trouvée. Vous avez 30 secondes pour identifier l’imposteur et terminer le plateau.",
           "reshuffle": "Les cartes ont changé de place une fois. Révélez l’une des deux cartes affectées pour accuser.",
           "challenge": "Une carte affectée est sélectionnée.",
           "attempts": "Chances restantes : {count}",
@@ -873,7 +873,7 @@
           "rules": "Comment jouer",
           "steps": [
             "Trouvez 3 paires. Une ombre et le symbole de l’imposteur annoncent son arrivée. La paire affectée reste secrète.",
-            "Trouvez la paire affectée en jouant normalement. Ses deux cartes se retournent au lieu de disparaître. Les cartes restantes changent de place une fois.",
+            "Trouvez la paire affectée en jouant normalement. Ses deux cartes se retournent au lieu de disparaître. Les cartes restantes changent de place une fois. Dès que la paire affectée est trouvée, vous avez 30 secondes pour identifier l’imposteur et terminer le plateau. Le compte à rebours continue après une accusation correcte.",
             "L’imposteur a une icône légèrement modifiée. Comparez ses détails. Utilisez cette icône pour accuser la carte sélectionnée. Révélez l’une des deux cartes affectées pour afficher le bouton. Une seule est l’imposteur. Une mauvaise accusation termine la partie. Identifiez-le, puis terminez toutes les paires."
           ],
           "remaining": "Cartes restantes",
@@ -883,7 +883,8 @@
           "suspected": "Imposteur suspecté",
           "accuseShort": "Accuser",
           "chancesRemaining": "{count} chances restantes",
-          "oneChanceRemaining": "1 chance restante"
+          "oneChanceRemaining": "1 chance restante",
+          "timeLeft": "Temps restant"
         },
         "impostorWrong": "Fausse accusation. L’imposteur s’est échappé.",
         "impostorExhausted": "Aucune chance restante. L’imposteur s’est échappé."

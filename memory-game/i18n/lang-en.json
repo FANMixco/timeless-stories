@@ -859,9 +859,9 @@
         "impostor": {
           "name": "The Impostor",
           "description": "Spot the suspicious card, identify the impostor, and match all 10 pairs.",
-          "tutorial": "After three matches, a shadow announces the impostor. Keep matching normally. Only matching its legitimate pair makes both cards turn face down and rearranges the remaining cards once. Afterward, revealing either member of that pair offers Accuse Impostor. Look for the modified icon details: that card is the impostor. A wrong accusation ends the round. Failed matches spend identification chances: 3 with 6+ cards, 2 with 4, 1 with 2. Correctly accuse the impostor, then clear all 10 pairs.",
+          "tutorial": "After three matches, a shadow announces the impostor. Keep matching normally. Only matching its legitimate pair makes both cards turn face down and rearranges the remaining cards once. Afterward, revealing either member of that pair offers Accuse Impostor. Look for the modified icon details: that card is the impostor. A wrong accusation ends the round. Failed matches spend identification chances: 3 with 6+ cards, 2 with 4, 1 with 2. Correctly accuse the impostor, then clear all 10 pairs. Once the affected pair is found, you have 30 seconds to identify the impostor and clear the board. The countdown continues after a correct accusation.",
           "activated": "An impostor has entered. Keep matching to find the affected pair.",
-          "encounter": "Affected pair found. Both cards turn face down, then the remaining cards rearrange.",
+          "encounter": "Affected pair found. 30 seconds to identify the impostor and clear the board.",
           "reshuffle": "Cards rearranged once. Reveal either card from the affected pair to accuse.",
           "challenge": "An affected card is selected.",
           "attempts": "Chances remaining: {count}",
@@ -873,7 +873,7 @@
           "rules": "How to play",
           "steps": [
             "Match 3 pairs. A shadow and the impostor icon announce its arrival. The affected pair stays secret.",
-            "Find the affected pair by matching normally. Its two cards turn face down instead of disappearing. All unmatched cards rearrange once.",
+            "Find the affected pair by matching normally. Its two cards turn face down instead of disappearing. All unmatched cards rearrange once. Once the affected pair is found, you have 30 seconds to identify the impostor and clear the board. The countdown continues after a correct accusation.",
             "The impostor has a slightly modified icon. Compare the icon details. Use this icon to accuse the selected card. Reveal either affected card to make the button appear. Only one is the impostor. A wrong accusation ends the round. Identify it correctly, then complete its original pair and clear the board."
           ],
           "remaining": "Cards remaining",
@@ -883,7 +883,8 @@
           "suspected": "Impostor suspected",
           "accuseShort": "Accuse",
           "chancesRemaining": "{count} chances remaining",
-          "oneChanceRemaining": "1 chance remaining"
+          "oneChanceRemaining": "1 chance remaining",
+          "timeLeft": "Time left"
         },
         "impostorWrong": "Wrong accusation. The impostor escaped.",
         "impostorExhausted": "No chances remain. The impostor escaped."

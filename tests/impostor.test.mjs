@@ -4,6 +4,29 @@ import { createImpostorRound, impostorPalettes } from '../memory-game/js/modules
 import { shuffleRemainingCards } from '../memory-game/js/modules/rules.mjs';
 import { impostorGlyphs, chooseImpostorGlyph } from '../memory-game/js/modules/modes/impostor-glyphs.mjs';
 
+test('30-second deadline starts only on the broken pair and continues after identification', () => {
+  let now = 1000;
+  const round = createImpostorRound(() => 0, null, () => now);
+  const cards = Array.from({ length: 4 }, (_, i) => ({ dataset: { icon: 'masks', pairId: Math.floor(i / 2) } }));
+  round.activate(3, cards);
+  now += 60000;
+  assert.equal(round.remainingSeconds, null);
+  assert.equal(round.expired, false);
+  assert.equal(round.encounterPair(cards[0], cards[2]), false);
+  assert.equal(round.remainingSeconds, null);
+  assert.equal(round.encounterPair(cards[0], cards[1]), true);
+  assert.equal(round.remainingSeconds, 30);
+  round.takeShuffle(); round.reveal(cards[0], 4); round.accuse(cards[0]);
+  now += 29999;
+  assert.equal(round.remainingSeconds, 1);
+  assert.equal(round.expired, false);
+  assert.equal(round.encounterPair(cards[0], cards[1]), false);
+  now++;
+  assert.equal(round.remainingSeconds, 0);
+  assert.equal(round.expired, true);
+  assert.equal(createImpostorRound(() => 0).remainingSeconds, null);
+});
+
 test('every original has three alternatives and consecutive rounds exclude the previous variation', () => {
   for (const [icon, glyphs] of Object.entries(impostorGlyphs)) {
     for (const previous of [null, 0, 1, 2]) {

@@ -22,10 +22,10 @@ export function createStatusView({ document, formatTime }) {
   }
   return {
     render({ mode, config, status, copy, matches, pairCount, impostorPending }) {
-      toggle(timeStatus, "is-priority", mode === "timeAttack");
+      toggle(timeStatus, "is-priority", mode === "timeAttack" || status.countdown);
       toggle(movesStatus, "is-priority", mode === "limitedMoves" || mode === "memoryFlash");
       text(movesLabel, config.maxMistakes != null ? copy.modes.memoryFlash.mistakesRemaining : copy.moves);
-      text(timeLabel, config.previewSeconds ? copy.modes.memoryFlash.preview : copy.time);
+      text(timeLabel, status.timeLabel ?? (config.previewSeconds ? copy.modes.memoryFlash.preview : copy.time));
       if (timeStatus.hidden !== Boolean(status.hideTime)) timeStatus.hidden = Boolean(status.hideTime);
       toggle(grid, "is-untimed", status.hideTime);
       attribute(movesValue, "aria-live", config.maxMistakes != null ? "polite" : "off");

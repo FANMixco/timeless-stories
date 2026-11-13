@@ -356,6 +356,12 @@ Revealing that card, or mismatching it with an unrelated card, does not trigger
 any special flip or shuffle. Only attempting its legitimate pair reveals the
 affected pair: both cards flip face down, then unmatched cards rearrange exactly
 once. Matched slots stay fixed and every remaining card moves.
+Finding the affected pair starts a 30-second wall-clock deadline, including the
+flip/rearrangement animation. The player must identify the impostor and clear
+all ten pairs before it expires. Correct accusation does not stop the countdown.
+Backgrounding, dialogs and final-pair inspection do not pause it. Expiry uses
+the existing timed-defeat flow; the existing time counter shows Time left, with
+the existing final-five-second warning and optional spoken countdown.
 
 After rearrangement, revealing either affected card starts identification and
 offers the accusation action for that selected card. At activation, only the

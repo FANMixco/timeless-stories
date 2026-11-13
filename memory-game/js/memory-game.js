@@ -394,7 +394,7 @@ const roundClock = createRoundClock({ now: () => Date.now(),
   cancel: id => window.clearInterval(id),
   onTick(seconds) {
     const nextSeconds = normalizeElapsedSeconds(gameModes, gameMode, seconds);
-    if (nextSeconds !== elapsedSeconds) {
+    if (nextSeconds !== elapsedSeconds || (impostorRound?.remainingSeconds != null && formatTime(impostorRound.remainingSeconds) !== timeValue.textContent)) {
       elapsedSeconds = nextSeconds;
       updateStatus();
     }
@@ -721,6 +721,11 @@ function applyGameMode(mode) {
 
 function endChallengeIfNeeded(attemptResolved) {
   if (gameCompleted || gameDefeated) return;
+  if (impostorRound?.expired) {
+    endGame("timeExpired");
+    updateImpostorPanel("defeat");
+    return;
+  }
   const reason = getDefeatReason(gameModes, { mode: gameMode, seconds: elapsedSeconds, moves, matches, mistakes,
     pairCount: getPairCount(), attemptResolved });
   if (reason) endGame(reason);
@@ -1921,6 +1926,7 @@ function updateImpostorPanel(key = impostorNoticeKey) {
   updateImpostorActionSpace();
 }
 function accuseImpostor() {
+  refreshGameTime();
   if (!impostorRound || (lockBoard && mismatchTimer === null) || gameDefeated || gameCompleted) return;
   const selected = impostorAccusationCard;
   const result = impostorRound.accuse(selected);
@@ -1945,6 +1951,12 @@ document.getElementById("accuseImpostor").addEventListener("click", accuseImpost
 function updateStatus() {
   const config = gameModes[gameMode];
   const status = getModeStatus(gameModes, gameMode, { seconds: elapsedSeconds, moves, mistakes, previewRemaining, completed: gameCompleted });
+  if (impostorRound?.remainingSeconds != null) {
+    status.seconds = impostorRound.remainingSeconds;
+    status.timeLow = !gameCompleted && status.seconds <= 5;
+    status.countdown = true;
+    status.timeLabel = memoryGame.modes.impostor.timeLeft;
+  }
   statusView.render({ mode: gameMode, config, status, copy: memoryGame, matches,
     pairCount: getPairCount(), impostorPending: Boolean(impostorRound && !impostorRound.suspect) });
   updateImpostorPanel();
@@ -1966,7 +1978,7 @@ function updateSpokenCountdown() {
   const config = gameModes[gameMode];
   const remaining = previewPhase === "study" ? previewRemaining
     : gameMode === "timeAttack" ? config.seconds - elapsedSeconds
-    : gameMode === "limitedMoves" ? config.moves - moves : null;
+    : gameMode === "limitedMoves" ? config.moves - moves : impostorRound?.remainingSeconds ?? null;
   spokenCountdown.update({ key: previewPhase === "study" ? "preview" : gameMode, remaining,
     playing: !homeScreen.visible && !introRunning && !gameCompleted && !gameDefeated && matches < getPairCount() });
 }
@@ -2450,6 +2462,7 @@ function flipCard(card) {
     activeCombo = 0;
     hideComboToast();
     updateImpostorPanel("encounter");
+    updateStatus();
     mismatchTimer = window.setTimeout(hideOpenCards, mismatchFlipBackDelayMs);
     return;
   }
@@ -2512,7 +2525,7 @@ function newGame({ startPreview = !homeScreen.visible } = {}) {
   completedPerformance = null;
   shareResult = null;
   renderCompletedPerformance();
-  impostorRound = gameMode === "impostor" ? createImpostorRound(Math.random, lastImpostorVariationIndex) : null;
+  impostorRound = gameMode === "impostor" ? createImpostorRound(Math.random, lastImpostorVariationIndex, () => Date.now()) : null;
   impostorNoticeKey = "ready";
   board.classList.toggle("is-impostor", Boolean(impostorRound));
   if (impostorRound) {
