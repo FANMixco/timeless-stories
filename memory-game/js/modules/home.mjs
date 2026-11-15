@@ -1,5 +1,5 @@
 // The start screen owns presentation; the application owns round transitions.
-export function createHomeScreen({ document, modes, getModes = () => modes, onChoose, onSettings, onRecords, onLocked = onRecords, onCollection, onReturn, reduceMotion = () => false, focusNavigationControl = element => element.focus({ preventScroll: true }) }) {
+export function createHomeScreen({ document, modes, getModes = () => modes, onChoose, onSettings, onRecords, onLocked = onRecords, onImpostorTrial = () => {}, onCollection, onReturn, reduceMotion = () => false, focusNavigationControl = element => element.focus({ preventScroll: true }) }) {
   const shell = document.querySelector(".game-shell");
   const home = document.getElementById("gameHome");
   let visible = true;
@@ -97,6 +97,16 @@ export function createHomeScreen({ document, modes, getModes = () => modes, onCh
       text("homeSixthMirrorSubtitle", copy.home.sixthMirror.subtitle);
       text("homeSixthMirrorDescription", copy.modes.impostor.description);
       text("homeSixthMirrorStatus", copy.home.sixthMirror.status);
+      const trials = options.impostorTrialsRemaining;
+      const trialCopy = copy.home.sixthMirror;
+      const trialButton = document.getElementById("impostorTrialButton");
+      text("impostorTrialButton", trialCopy.tryIt);
+      trialButton.disabled = !(trials > 0);
+      const trialText = trials === null ? trialCopy.trialUnavailable
+        : trials === 0 ? trialCopy.trialFinished
+        : trials === 1 ? trialCopy.oneTrialLeft : trialCopy.trialsLeft.replace("{count}", trials ?? 0);
+      text("impostorTrialRemaining", trialText);
+      trialButton.setAttribute("aria-describedby", "impostorTrialRemaining");
       text("home-impostor-locked", copy.locked);
       const digitalBookLink = document.getElementById("homeSixthMirrorBook");
       digitalBookLink.hidden = !options.digitalBookUrl;
@@ -123,6 +133,11 @@ export function createHomeScreen({ document, modes, getModes = () => modes, onCh
     },
     bind() {
       document.getElementById("impostorBookGate").addEventListener("click", () => onLocked("impostor"));
+      document.getElementById("impostorTrialControls").addEventListener("click", event => event.stopPropagation());
+      document.getElementById("impostorTrialButton").addEventListener("click", event => {
+        event?.stopPropagation();
+        onImpostorTrial();
+      });
       for (const mode of Object.keys(modes)) {
         document.getElementById(`home-${mode}`).addEventListener("click", () => choose(mode));
       }

@@ -897,7 +897,12 @@
         "sixthMirror": {
           "getBook": "购买数字版图书 ↗",
           "subtitle": "图书专属",
-          "status": "即将推出"
+          "status": "即将推出",
+          "tryIt": "试玩",
+          "trialsLeft": "剩余 {count} 次试玩",
+          "oneTrialLeft": "剩余 1 次试玩",
+          "trialFinished": "试玩已结束",
+          "trialUnavailable": "试玩需要浏览器存储功能"
         },
         "crazyMirrorsRequirement": "获得 75% 的非隐藏奖项",
         "memoryFlashRequirement": "获得全部奖项",

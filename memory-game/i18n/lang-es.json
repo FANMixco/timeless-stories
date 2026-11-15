@@ -897,7 +897,12 @@
         "sixthMirror": {
           "getBook": "Consigue el libro digital ↗",
           "subtitle": "Exclusivo del libro",
-          "status": "Próximamente"
+          "status": "Próximamente",
+          "tryIt": "Probar",
+          "trialsLeft": "Quedan {count} partidas de prueba",
+          "oneTrialLeft": "Queda 1 partida de prueba",
+          "trialFinished": "Prueba finalizada",
+          "trialUnavailable": "La prueba necesita almacenamiento del navegador"
         },
         "crazyMirrorsRequirement": "Consigue el 75% de los logros no secretos",
         "memoryFlashRequirement": "Completa todos los logros",
