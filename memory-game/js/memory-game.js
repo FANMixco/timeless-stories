@@ -10,6 +10,7 @@ import { createProgressView, optionalAchievementDefinitions, optionalComboAchiev
 import { buildGameModes, createRoundClock, selectActivePairs, getDefeatReason, getModeStatus, normalizeElapsedSeconds, shuffleRemainingCards } from "./modules/rules.mjs";
 import { createModalNavigation, createModalLayers } from "./modules/dialogs.mjs";
 import { createHomeScreen } from "./modules/home.mjs";
+import { createImpostorTrial, impostorTrialStorageKey } from "./modules/impostor-trial.mjs";
 import { createPreviewCountdown } from "./modules/preview.mjs";
 import { createSpokenCountdown } from "./modules/spoken-countdown.mjs";
 
@@ -24,6 +25,8 @@ const challengeIntroStorageKeys = {
 };
 const crazyIntroStorageKey = "timelessMemoryCrazyMirrorsIntroSeen";
 const impostorIntroStorageKey = "timelessMemoryImpostorIntroSeen";
+const impostorTrial = createImpostorTrial({ getStorage: () => window.localStorage });
+let impostorTrialActive = false;
 const flashIntroStorageKey = "timelessMemoryFlashIntroSeen";
 const flashUnlockStorageKey = "timelessMemoryFlashUnlockNotified";
 const modeUnlockNotices = [
@@ -289,6 +292,7 @@ const homeScreen = createHomeScreen({ document, modes: gameModes, getModes: () =
   focusNavigationControl,
   reduceMotion: () => Boolean(window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches),
   onChoose: applyGameMode,
+  onImpostorTrial: startImpostorTrial,
   onLocked: openModeDetails,
   onSettings: openSettings, onRecords: openAchievements, onCollection: openCollection, onReturn: requestHome
 });
@@ -302,6 +306,7 @@ function renderModeDetails() {
   copyText("modeDetailsDescription", `home-${modeDetailsMode}-description`);
   copyText("modeDetailsRequirement", book ? "homeSixthMirrorSubtitle" : `home-${modeDetailsMode}-requirement`);
   document.getElementById("modeDetailsStatus").hidden = !book;
+  document.getElementById("impostorTrialControls").hidden = !book || hasBookEntitlement();
   if (book) copyText("modeDetailsStatus", "homeSixthMirrorStatus");
   document.getElementById("modeDetailsProgress").hidden = book;
   document.getElementById("modeDetailsAwards").hidden = book;
@@ -339,6 +344,7 @@ document.getElementById("modeDetailsAwards").addEventListener("click", () => {
 });
 
 function showHome() {
+  impostorTrialActive = false;
   pendingHome = false;
   // A testing round never becomes the saved/default mode or a home unlock.
   if (!isModeUnlocked(gameMode)) {
@@ -701,6 +707,7 @@ function renderHomeScreen() {
   const eligible = achievementDefinitions.filter(({ secret }) => !secret);
   homeScreen.render(memoryGame, { hardMode: hardModeEnabled, ratingUrl,
     digitalBookUrl: getDigitalBookUrl(), impostorUnlocked: isModeUnlocked("impostor"),
+    impostorTrialsRemaining: impostorTrial.remaining(),
     unlockProgress: {
       crazyMirrors: { earned: eligible.filter(({ id }) => earned[id]).length, required: Math.ceil(eligible.length * 0.75) },
       memoryFlash: { earned: achievementDefinitions.filter(({ id }) => earned[id]).length, required: achievementDefinitions.length },
@@ -711,6 +718,7 @@ function renderHomeScreen() {
 
 function applyGameMode(mode) {
   if (!Object.hasOwn(gameModes, mode) || !isModeUnlocked(mode)) return;
+  impostorTrialActive = false;
   gameMode = mode;
   try { window.localStorage.setItem(modeStorageKey, mode); } catch {}
   homeScreen.hide();
@@ -1391,7 +1399,7 @@ function resetGameData() {
   try {
     for (let index = window.localStorage.length - 1; index >= 0; index--) {
       const key = window.localStorage.key(index);
-      if (key?.startsWith("timelessMemory")) window.localStorage.removeItem(key);
+      if (key?.startsWith("timelessMemory") && key !== impostorTrialStorageKey) window.localStorage.removeItem(key);
     }
     // Notify other game tabs without clearing any website or third-party data.
     window.localStorage.setItem(resetStorageKey, String(Date.now()));
@@ -1591,7 +1599,19 @@ function closeAboutPanel() {
 // TEMPORARY IMPOSTOR PLAYTEST: testing entry only; never grant entitlement,
 // change isModeUnlocked(), persist the mode, or expose locked record sections.
 function startImpostorPlaytest() {
+  // Hidden testing access stays independent of the public two-play trial.
+  impostorTrialActive = false;
   pendingImpostorPlaytest = false;
+  gameMode = "impostor";
+  homeScreen.hide();
+  renderGameModes();
+  startGame();
+  focusNavigationControl(newGameButton);
+}
+function startImpostorTrial() {
+  if (hasBookEntitlement()) { applyGameMode("impostor"); return; }
+  if (!(impostorTrial.remaining() > 0)) { renderHomeScreen(); return; }
+  impostorTrialActive = true;
   gameMode = "impostor";
   homeScreen.hide();
   renderGameModes();
@@ -2488,6 +2508,10 @@ function flipCard(card) {
 }
 
 function newGame({ startPreview = !homeScreen.visible } = {}) {
+  if (gameMode === "impostor" && impostorTrialActive && !hasBookEntitlement() && !impostorTrial.consume()) {
+    showHome();
+    return false;
+  }
   impostorAccusationCard = null;
   pendingImpostorPlaytest = false;
   resetCombo();
@@ -2681,7 +2705,7 @@ function confirmRestartAction() {
 function startFreshGame() {
   homeScreen.hide();
   pendingLanguage = null;
-  newGame();
+  if (newGame() === false) return;
   // Reset an already-scrolled board after its previous match description and
   // dialogs disappear. Preserve the user's scroll position on ordinary resume.
   focusNavigationControl(newGameButton);
@@ -2827,7 +2851,7 @@ function handleHint() {
 
 function startGame() {
   if (gameMode === "impostor") {
-    newGame();
+    if (newGame() === false) return;
     let seen = false;
     try { seen = Boolean(window.localStorage.getItem(impostorIntroStorageKey)); } catch {}
     if (!seen) showImpostorTutorial();
@@ -2917,6 +2941,7 @@ document.addEventListener("keydown", (event) => {
   }
 });
 window.addEventListener("storage", (event) => {
+  if (event.key === impostorTrialStorageKey) renderHomeScreen();
   if (event.key === resetStorageKey || (event.key === null && event.storageArea === window.localStorage)) {
     reloadAfterDataReset();
     return;

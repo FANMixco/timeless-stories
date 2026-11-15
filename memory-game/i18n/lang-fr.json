@@ -897,7 +897,12 @@
         "sixthMirror": {
           "getBook": "Obtenir le livre numérique ↗",
           "subtitle": "Exclusivité du livre",
-          "status": "Bientôt disponible"
+          "status": "Bientôt disponible",
+          "tryIt": "Essayer",
+          "trialsLeft": "{count} parties d’essai restantes",
+          "oneTrialLeft": "1 partie d’essai restante",
+          "trialFinished": "Essai terminé",
+          "trialUnavailable": "L’essai nécessite le stockage du navigateur"
         },
         "crazyMirrorsRequirement": "Obtenez 75 % des succès non secrètes",
         "memoryFlashRequirement": "Obtenez tous les succès",

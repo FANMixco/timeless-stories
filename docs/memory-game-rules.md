@@ -424,3 +424,22 @@ The accusation button uses the existing target icon without a visible text
 label. Its localized accessible name and tooltip remain “Accuse Impostor”. The
 44 × 44 px target supports touch and keyboard activation. This changes only
 presentation; accusation eligibility and consequences are unchanged.
+
+### Impostor public trial
+
+The locked home card keeps its original Coming soon presentation. Its details
+dialog adds a compact Try it row above the digital-book link, showing two, one
+or no trial plays remaining. Other mode-detail dialogs hide this trial row. A trial is consumed when a new round
+is created, including a restart; canceling a restart consumes nothing. Opening
+mode details or replaying How to play does not consume a play. Usage is stored
+under `timelessMemoryImpostorTrials:v1`, survives reload and game-progress reset,
+and is read again before every trial round. Other tabs refresh the home counter
+on a storage event. Unavailable storage disables the trial rather than granting
+unlimited rounds. This is a device/browser-local allowance, not account-wide
+redemption; clearing site storage or changing devices starts a separate allowance.
+
+Trials never set the book entitlement, save Impostor as the default mode, or
+expose its locked record section. Book-entitled players remain unlimited. The
+temporary, hidden About-image triple-tap remains unchanged and unlimited for
+user testing, independent of public trial usage; remove it using the existing
+TEMPORARY IMPOSTOR PLAYTEST removal checklist when that testing phase ends.

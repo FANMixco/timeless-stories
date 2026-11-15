@@ -897,7 +897,12 @@
         "sixthMirror": {
           "getBook": "Get the digital book ↗",
           "subtitle": "Book exclusive",
-          "status": "Coming soon"
+          "status": "Coming soon",
+          "tryIt": "Try it",
+          "trialsLeft": "{count} trial plays left",
+          "oneTrialLeft": "1 trial play left",
+          "trialFinished": "Trial finished",
+          "trialUnavailable": "Trial needs browser storage"
         },
         "crazyMirrorsRequirement": "Earn 75% of non-secret achievements",
         "memoryFlashRequirement": "Complete every achievement",
