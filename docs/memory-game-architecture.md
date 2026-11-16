@@ -200,8 +200,8 @@ whose entitlement is no longer available.
 `memory-game/css/memory-game-impostor.css` scopes the additional font to a
 board icon with `data-impostor-glyph`; it never replaces the shared `.icon` font.
 `modules/modes/impostor-glyphs.mjs` maps the 12 original icon identifiers to
-36 code points. Export order is wizard, tomb, routes, paw, night, music, masks,
-devil, cry, crown, cross, candle, with three glyphs each from `f000` to `f023`.
+72 code points. Export order is wizard, tomb, routes, paw, night, music, masks,
+devil, cry, crown, cross, candle, with six glyphs each from `f000` to `f047`.
 The supplied font has the original 1024-unit em, 960/-64 line metrics and glyph
 advances (including the narrower music symbol). WOFF2 and WOFF are generated from the
 supplied TTF; WOFF and TTF remain fallbacks. The supplied WOFF used CFF2 outlines,
@@ -215,7 +215,7 @@ Changed source files for the glyph integration:
 
 | Files | Change |
 | --- | --- |
-| `memory-game/js/modules/modes/impostor-glyphs.mjs` | New 12-to-36 glyph mapping and non-repeating selection. |
+| `memory-game/js/modules/modes/impostor-glyphs.mjs` | New 12-to-72 glyph mapping and non-repeating selection. |
 | `memory-game/js/modules/modes/impostor.mjs`, `memory-game/js/memory-game.js` | Assign, retain and restore the glyph through the existing round lifecycle. |
 | `memory-game/css/memory-game-impostor.css`, `memory-game/css/memory-game.css` | Scope the new font and remove individual border/glow clues. |
 | `memory-game/css/fonts/memory-game-impostor.{ttf,woff,woff2,otf}` | Supplied TTF plus validated compatible derivatives. |
@@ -229,7 +229,7 @@ existing build. The repository already ignores `tools/memory-game-assets.mjs`,
 `tests/icon-font.test.mjs` and `tests/memory-game.integration.mjs`; their updates
 remain local under those existing ignore rules.
 
-Validation: `npm test`, `npm run test:built`, `npm run check:minified`; all 36
+Validation: `npm test`, `npm run test:built`, `npm run check:minified`; all 72
 glyphs decoded from all four formats. Browser inspection at desktop and mobile
 sizes confirmed font isolation, equal card styling in light/dark themes, single
 shuffle persistence, final-pair selection, original-glyph restoration and victory.

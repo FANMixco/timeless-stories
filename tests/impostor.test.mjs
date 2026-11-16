@@ -27,17 +27,17 @@ test('30-second deadline starts only on the broken pair and continues after iden
   assert.equal(createImpostorRound(() => 0).remainingSeconds, null);
 });
 
-test('every original has three alternatives and consecutive rounds exclude the previous variation', () => {
+test('every original has six alternatives and consecutive rounds exclude the previous variation', () => {
   for (const [icon, glyphs] of Object.entries(impostorGlyphs)) {
-    for (const previous of [null, 0, 1, 2]) {
+    for (const previous of [null, 0, 1, 2, 3, 4, 5]) {
       const seen = new Set();
-      for (const random of [0, .49, .99]) {
+      for (const random of Array.from({ length: 30 }, (_, i) => i / 30)) {
         const selected = chooseImpostorGlyph(icon, () => random, previous);
         assert.equal(glyphs[selected.index], selected.glyph);
         assert.notEqual(selected.index, previous);
         seen.add(selected.index);
       }
-      assert.equal(seen.size, previous === null ? 3 : 2);
+      assert.equal(seen.size, previous === null ? 6 : 5);
     }
   }
   assert.equal(chooseImpostorGlyph('unknown'), null);

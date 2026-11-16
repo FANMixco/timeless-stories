@@ -19,6 +19,24 @@
           "id": "candle-v3",
           "file": "variants/candle-v3.svg",
           "detail": "Teardrop-shaped opening in the flame"
+        },
+        {
+          "id": "candle-v4",
+          "file": "variants/candle-v4.svg",
+          "detail": "Flame opening is slightly narrower",
+          "difficulty": "subtle"
+        },
+        {
+          "id": "candle-v5",
+          "file": "variants/candle-v5.svg",
+          "detail": "Flame opening is slightly taller",
+          "difficulty": "subtle"
+        },
+        {
+          "id": "candle-v6",
+          "file": "variants/candle-v6.svg",
+          "detail": "Flame opening is slightly wider",
+          "difficulty": "subtle"
         }
       ]
     },
@@ -40,6 +58,24 @@
           "id": "cross-v3",
           "file": "variants/cross-v3.svg",
           "detail": "Beveled corners on the upper cross terminal"
+        },
+        {
+          "id": "cross-v4",
+          "file": "variants/cross-v4.svg",
+          "detail": "Upper cross terminal is slightly shorter",
+          "difficulty": "subtle"
+        },
+        {
+          "id": "cross-v5",
+          "file": "variants/cross-v5.svg",
+          "detail": "Left cross terminal is slightly shorter",
+          "difficulty": "subtle"
+        },
+        {
+          "id": "cross-v6",
+          "file": "variants/cross-v6.svg",
+          "detail": "Right cross terminal is slightly shorter",
+          "difficulty": "subtle"
         }
       ]
     },
@@ -61,6 +97,24 @@
           "id": "crown-v3",
           "file": "variants/crown-v3.svg",
           "detail": "Tall rectangular jewel cutout in the crown"
+        },
+        {
+          "id": "crown-v4",
+          "file": "variants/crown-v4.svg",
+          "detail": "Central crown point is slightly lower",
+          "difficulty": "subtle"
+        },
+        {
+          "id": "crown-v5",
+          "file": "variants/crown-v5.svg",
+          "detail": "Left crown point is slightly lower",
+          "difficulty": "subtle"
+        },
+        {
+          "id": "crown-v6",
+          "file": "variants/crown-v6.svg",
+          "detail": "Right crown point is slightly lower",
+          "difficulty": "subtle"
         }
       ]
     },
@@ -82,6 +136,24 @@
           "id": "cry-v3",
           "file": "variants/cry-v3.svg",
           "detail": "Teardrop-shaped right eye"
+        },
+        {
+          "id": "cry-v4",
+          "file": "variants/cry-v4.svg",
+          "detail": "Right eye is slightly narrower",
+          "difficulty": "subtle"
+        },
+        {
+          "id": "cry-v5",
+          "file": "variants/cry-v5.svg",
+          "detail": "Right eye is slightly flatter",
+          "difficulty": "subtle"
+        },
+        {
+          "id": "cry-v6",
+          "file": "variants/cry-v6.svg",
+          "detail": "Left eye is slightly flatter",
+          "difficulty": "subtle"
         }
       ]
     },
@@ -103,6 +175,24 @@
           "id": "devil-v3",
           "file": "variants/devil-v3.svg",
           "detail": "Flat upper edge on the grin"
+        },
+        {
+          "id": "devil-v4",
+          "file": "variants/devil-v4.svg",
+          "detail": "Left eye is slightly shallower",
+          "difficulty": "subtle"
+        },
+        {
+          "id": "devil-v5",
+          "file": "variants/devil-v5.svg",
+          "detail": "Right eye is slightly shallower",
+          "difficulty": "subtle"
+        },
+        {
+          "id": "devil-v6",
+          "file": "variants/devil-v6.svg",
+          "detail": "Grin is slightly narrower",
+          "difficulty": "subtle"
         }
       ]
     },
@@ -124,6 +214,24 @@
           "id": "masks-v3",
           "file": "variants/masks-v3.svg",
           "detail": "Straight open mouth on the front mask"
+        },
+        {
+          "id": "masks-v4",
+          "file": "variants/masks-v4.svg",
+          "detail": "Front mask right eye is slightly narrower",
+          "difficulty": "subtle"
+        },
+        {
+          "id": "masks-v5",
+          "file": "variants/masks-v5.svg",
+          "detail": "Front mask left eye is slightly narrower",
+          "difficulty": "subtle"
+        },
+        {
+          "id": "masks-v6",
+          "file": "variants/masks-v6.svg",
+          "detail": "Front mask smile is slightly narrower",
+          "difficulty": "subtle"
         }
       ]
     },
@@ -145,6 +253,24 @@
           "id": "music-v3",
           "file": "variants/music-v3.svg",
           "detail": "Rounded notch in the lower edge of the connecting beam"
+        },
+        {
+          "id": "music-v4",
+          "file": "variants/music-v4.svg",
+          "detail": "Right note head has a slightly flatter lower bowl",
+          "difficulty": "subtle"
+        },
+        {
+          "id": "music-v5",
+          "file": "variants/music-v5.svg",
+          "detail": "Left note head has a slightly flatter lower bowl",
+          "difficulty": "subtle"
+        },
+        {
+          "id": "music-v6",
+          "file": "variants/music-v6.svg",
+          "detail": "Shallow V-shaped nick in the lower beam edge",
+          "difficulty": "subtle"
         }
       ]
     },
@@ -166,6 +292,24 @@
           "id": "night-v3",
           "file": "variants/night-v3.svg",
           "detail": "Small companion star has six points"
+        },
+        {
+          "id": "night-v4",
+          "file": "variants/night-v4.svg",
+          "detail": "Small five-point star is slightly narrower",
+          "difficulty": "subtle"
+        },
+        {
+          "id": "night-v5",
+          "file": "variants/night-v5.svg",
+          "detail": "Small five-point star is slightly shorter",
+          "difficulty": "subtle"
+        },
+        {
+          "id": "night-v6",
+          "file": "variants/night-v6.svg",
+          "detail": "Small five-point star is slightly taller",
+          "difficulty": "subtle"
         }
       ]
     },
@@ -187,6 +331,24 @@
           "id": "paw-v3",
           "file": "variants/paw-v3.svg",
           "detail": "Teardrop-shaped opening in the central paw pad"
+        },
+        {
+          "id": "paw-v4",
+          "file": "variants/paw-v4.svg",
+          "detail": "Upper left toe pad is slightly shorter",
+          "difficulty": "subtle"
+        },
+        {
+          "id": "paw-v5",
+          "file": "variants/paw-v5.svg",
+          "detail": "Upper right toe pad is slightly shorter",
+          "difficulty": "subtle"
+        },
+        {
+          "id": "paw-v6",
+          "file": "variants/paw-v6.svg",
+          "detail": "Outer right toe pad is slightly narrower",
+          "difficulty": "subtle"
         }
       ]
     },
@@ -208,6 +370,24 @@
           "id": "routes-v3",
           "file": "variants/routes-v3.svg",
           "detail": "Rounded tip on the lower right sign"
+        },
+        {
+          "id": "routes-v4",
+          "file": "variants/routes-v4.svg",
+          "detail": "Left sign arrowhead is slightly shallower",
+          "difficulty": "subtle"
+        },
+        {
+          "id": "routes-v5",
+          "file": "variants/routes-v5.svg",
+          "detail": "Upper right sign arrowhead is slightly shallower",
+          "difficulty": "subtle"
+        },
+        {
+          "id": "routes-v6",
+          "file": "variants/routes-v6.svg",
+          "detail": "Lower right sign arrowhead is slightly shallower",
+          "difficulty": "subtle"
         }
       ]
     },
@@ -229,6 +409,24 @@
           "id": "tomb-v3",
           "file": "variants/tomb-v3.svg",
           "detail": "Three dashes in the upper inscription"
+        },
+        {
+          "id": "tomb-v4",
+          "file": "variants/tomb-v4.svg",
+          "detail": "Upper inscription is slightly shorter",
+          "difficulty": "subtle"
+        },
+        {
+          "id": "tomb-v5",
+          "file": "variants/tomb-v5.svg",
+          "detail": "Lower inscription is slightly shorter",
+          "difficulty": "subtle"
+        },
+        {
+          "id": "tomb-v6",
+          "file": "variants/tomb-v6.svg",
+          "detail": "Upper inscription has a gentle upward slope",
+          "difficulty": "subtle"
         }
       ]
     },
@@ -250,6 +448,24 @@
           "id": "wizard-v3",
           "file": "variants/wizard-v3.svg",
           "detail": "Large hat ornament becomes a five-point star"
+        },
+        {
+          "id": "wizard-v4",
+          "file": "variants/wizard-v4.svg",
+          "detail": "Large four-point ornament is slightly narrower",
+          "difficulty": "subtle"
+        },
+        {
+          "id": "wizard-v5",
+          "file": "variants/wizard-v5.svg",
+          "detail": "Large four-point ornament is slightly shorter",
+          "difficulty": "subtle"
+        },
+        {
+          "id": "wizard-v6",
+          "file": "variants/wizard-v6.svg",
+          "detail": "Upper four-point ornament is slightly shorter",
+          "difficulty": "subtle"
         }
       ]
     }

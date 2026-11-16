@@ -365,7 +365,7 @@ the existing final-five-second warning and optional spoken countdown.
 
 After rearrangement, revealing either affected card starts identification and
 offers the accusation action for that selected card. At activation, only the
-actual impostor's existing icon element receives one of three corresponding
+actual impostor's existing icon element receives one of six corresponding
 `memory-game-impostor` glyphs. Its legitimate partner keeps the original glyph.
 The glyph survives the single rearrangement; all cards retain the same round
 palette and border, with no individual tint, highlight or glow. The previous
