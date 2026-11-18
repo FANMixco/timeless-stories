@@ -4,6 +4,27 @@ import { createImpostorRound, impostorPalettes } from '../memory-game/js/modules
 import { shuffleRemainingCards } from '../memory-game/js/modules/rules.mjs';
 import { impostorGlyphs, chooseImpostorGlyph } from '../memory-game/js/modules/modes/impostor-glyphs.mjs';
 
+for (const [remaining, limit] of [[14, 30], [6, 30], [4, 15], [2, 8]]) {
+  test(`${remaining} cards set a fixed ${limit}-second deadline`, () => {
+    let now = 1000;
+    const round = createImpostorRound(() => 0, null, () => now);
+    const cards = Array.from({ length: remaining }, (_, i) => ({ dataset: { icon: 'masks', pairId: Math.floor(i / 2) } }));
+    round.activate(3, cards);
+    round.encounterPair(cards[0], cards[1], remaining);
+    assert.equal(round.timeLimitSeconds, limit);
+    assert.equal(round.remainingSeconds, limit);
+    round.takeShuffle(); round.reveal(cards[0], 2); round.accuse(cards[0]);
+    now += limit * 1000 - 1;
+    assert.equal(round.remainingSeconds, 1);
+    assert.equal(round.expired, false);
+    assert.equal(round.encounterPair(cards[0], cards[1], 2), false);
+    assert.equal(round.timeLimitSeconds, limit, 'later matches/reveals cannot shorten or reset the limit');
+    now++;
+    assert.equal(round.expired, true);
+    assert.equal(round.remainingSeconds, 0);
+  });
+}
+
 test('30-second deadline starts only on the broken pair and continues after identification', () => {
   let now = 1000;
   const round = createImpostorRound(() => 0, null, () => now);
@@ -14,7 +35,7 @@ test('30-second deadline starts only on the broken pair and continues after iden
   assert.equal(round.expired, false);
   assert.equal(round.encounterPair(cards[0], cards[2]), false);
   assert.equal(round.remainingSeconds, null);
-  assert.equal(round.encounterPair(cards[0], cards[1]), true);
+  assert.equal(round.encounterPair(cards[0], cards[1], 14), true);
   assert.equal(round.remainingSeconds, 30);
   round.takeShuffle(); round.reveal(cards[0], 4); round.accuse(cards[0]);
   now += 29999;

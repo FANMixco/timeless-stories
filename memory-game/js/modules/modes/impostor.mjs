@@ -19,6 +19,7 @@ export function createImpostorRound(random = Math.random, previousVariationIndex
   let suspect = null, encounters = 0, pendingShuffle = false, shuffled = false;
   let challenge = false, attempts = null, neutralized = false;
   let deadline = null;
+  let timeLimitSeconds = null;
   const isAffected = card => Boolean(card && suspect && card.dataset.pairId === suspect.dataset.pairId);
   return {
     palette, border,
@@ -26,6 +27,7 @@ export function createImpostorRound(random = Math.random, previousVariationIndex
     get suspect() { return suspect; }, get encounters() { return encounters; },
     get challenge() { return challenge; }, get attempts() { return attempts; },
     get neutralized() { return neutralized; },
+    get timeLimitSeconds() { return timeLimitSeconds; },
     get remainingSeconds() { return deadline === null ? null : Math.ceil(Math.max(0, deadline - now()) / 1000); },
     get expired() { return deadline !== null && now() >= deadline; },
     activate(matches, remaining) {
@@ -37,11 +39,12 @@ export function createImpostorRound(random = Math.random, previousVariationIndex
     },
     isAffected,
     canAccuse(card) { return shuffled && challenge && !neutralized && isAffected(card); },
-    encounterPair(a, b) {
+    encounterPair(a, b, remainingCount = 6) {
       // Only the two legitimate partners can reveal the affected pair.
       if (neutralized || shuffled || pendingShuffle || a === b || !isAffected(a) || !isAffected(b)) return false;
       pendingShuffle = true;
-      deadline = now() + 30000;
+      timeLimitSeconds = remainingCount >= 6 ? 30 : remainingCount === 4 ? 15 : 8;
+      deadline = now() + timeLimitSeconds * 1000;
       return true;
     },
     reveal(card, remainingCount) {
