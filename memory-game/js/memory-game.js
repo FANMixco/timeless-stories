@@ -1922,6 +1922,7 @@ function updateImpostorPanel(key = impostorNoticeKey) {
   copy.steps.forEach((step, index) => { document.getElementById(`impostorRulesStep${index + 1}`).textContent = step; });
   document.getElementById("impostorRulesRemaining").textContent = copy.remaining;
   document.getElementById("impostorRulesChances").textContent = copy.chances;
+  document.getElementById("impostorRulesTime").textContent = memoryGame.time;
   document.getElementById("impostorRulesCaution").textContent = copy.caution;
   document.getElementById("closeImpostorRulesButton").setAttribute("aria-label", memoryGame.close);
   document.getElementById("impostorNotice").classList.toggle("is-important", key === "activated" || key === "identified" || impostorRound.challenge);
@@ -1934,7 +1935,7 @@ function updateImpostorPanel(key = impostorNoticeKey) {
   document.getElementById("impostorPanel").classList.toggle("is-compact-action", compactAction);
   document.querySelector(".game-shell").classList.toggle("has-impostor-action", compactAction);
   const notice = document.getElementById("impostorNotice");
-  const message = hasAction ? copy.suspected : (copy[key] || "") +
+  const message = hasAction ? copy.suspected : (copy[key] || "").replace("{seconds}", impostorRound.timeLimitSeconds ?? "") +
     (impostorRound.challenge ? " " + copy.attempts.replace("{count}", impostorRound.attempts) : "");
   if (notice.textContent !== message) notice.textContent = message;
   const remaining = document.getElementById("impostorAccusations");
@@ -2478,7 +2479,7 @@ function flipCard(card) {
   moves += 1;
   updateStatus();
 
-  if (impostorRound?.encounterPair(firstCard, secondCard)) {
+  if (impostorRound?.encounterPair(firstCard, secondCard, remainingCount)) {
     activeCombo = 0;
     hideComboToast();
     updateImpostorPanel("encounter");
