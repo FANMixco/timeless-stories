@@ -352,6 +352,14 @@ and attempted changes do not write a preference during Impostor rounds.
 After three matches, a brief board-wide shadow and the existing impostor icon
 announce arrival without identifying any card. One remaining card is secretly
 selected; its legitimate partner and all internal identities stay unchanged.
+After the finite entrance animation and associated transitions finish, a
+45-second discovery countdown starts in the existing time counter (Find pair).
+Ordinary matches and unrelated mismatches never reset it. Finding the affected
+pair replaces that deadline with the identification deadline below, so only one
+countdown is active. Discovery expiry loses through the existing timed-defeat
+flow. Reduced-motion entrances use the same completion handling; stale animation
+callbacks are invalidated on restart, exit, win and defeat. The existing round
+clock drives both phases, including background time after discovery has started.
 Revealing that card, or mismatching it with an unrelated card, does not trigger
 any special flip or shuffle. Only attempting its legitimate pair reveals the
 affected pair: both cards flip face down, then unmatched cards rearrange exactly

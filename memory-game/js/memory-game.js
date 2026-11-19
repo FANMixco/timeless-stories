@@ -44,6 +44,8 @@ let impostorAccusationCard = null;
 let impostorNoticeKey = "ready";
 const queuedModeUnlocks = new Set();
 let shuffleTimer = null;
+let impostorArrivalTimer = null;
+let impostorArrivalRun = 0;
 let shuffleAnimations = [];
 const collectionStorageKey = "timelessMemoryCollection";
 const soundStorageKey = "timelessMemorySoundEnabled";
@@ -1925,7 +1927,7 @@ function updateImpostorPanel(key = impostorNoticeKey) {
   document.getElementById("impostorRulesTime").textContent = memoryGame.time;
   document.getElementById("impostorRulesCaution").textContent = copy.caution;
   document.getElementById("closeImpostorRulesButton").setAttribute("aria-label", memoryGame.close);
-  document.getElementById("impostorNotice").classList.toggle("is-important", key === "activated" || key === "identified" || impostorRound.challenge);
+  document.getElementById("impostorNotice").classList.toggle("is-important", key === "activated" || key === "discovery" || key === "identified" || impostorRound.challenge);
   const action = document.getElementById("accuseImpostor");
   action.hidden = !impostorRound.canAccuse(impostorAccusationCard) || gameDefeated || gameCompleted;
   action.disabled = lockBoard && mismatchTimer === null;
@@ -1976,7 +1978,7 @@ function updateStatus() {
     status.seconds = impostorRound.remainingSeconds;
     status.timeLow = !gameCompleted && status.seconds <= 5;
     status.countdown = true;
-    status.timeLabel = memoryGame.modes.impostor.timeLeft;
+    status.timeLabel = impostorRound.discovering ? memoryGame.modes.impostor.discoveryTimeLeft : memoryGame.modes.impostor.timeLeft;
   }
   statusView.render({ mode: gameMode, config, status, copy: memoryGame, matches,
     pairCount: getPairCount(), impostorPending: Boolean(impostorRound && !impostorRound.suspect) });
@@ -1993,7 +1995,7 @@ function startTimer() {
   if (gameModes[gameMode].tracksTime === false) return;
   roundClock.start();
 }
-function stopTimer() { roundClock.stop(); spokenCountdown.stop(); }
+function stopTimer() { roundClock.stop(); spokenCountdown.stop(); cancelImpostorArrival(); }
 function updateSpokenCountdown() {
   if (gameMode === "limitedMoves" && lockBoard && !gameDefeated) return;
   const config = gameModes[gameMode];
@@ -2102,6 +2104,39 @@ function hideOpenCards() {
   updateSpokenCountdown();
 }
 
+function cancelImpostorArrival() {
+  impostorArrivalRun++;
+  window.clearTimeout(impostorArrivalTimer);
+  impostorArrivalTimer = null;
+  board.classList.remove("is-impostor-arriving");
+}
+
+function startImpostorArrival() {
+  cancelImpostorArrival();
+  const run = impostorArrivalRun;
+  const round = impostorRound;
+  board.classList.add("is-impostor-arriving");
+  const complete = () => {
+    if (run !== impostorArrivalRun || round !== impostorRound || gameCompleted || gameDefeated) return;
+    impostorArrivalTimer = null;
+    board.classList.remove("is-impostor-arriving");
+    if (round.startDiscovery()) {
+      updateStatus();
+      updateImpostorPanel("discovery");
+      updateSpokenCountdown();
+    }
+  };
+  if (typeof board.getAnimations === "function") {
+    // Wait for finite entrance/flip transitions; ignore ordinary infinite icon loops.
+    const animations = board.getAnimations({ subtree: true }).filter(animation =>
+      Number.isFinite(animation.effect?.getComputedTiming().endTime));
+    Promise.allSettled(animations.map(animation => animation.finished)).then(complete);
+  } else {
+    // Older engines: the existing entrance lasts 1100ms, including reduced motion.
+    impostorArrivalTimer = window.setTimeout(complete, 1100);
+  }
+}
+
 function markMatch() {
   if (gameCompleted || gameDefeated || introRunning || !firstCard || !secondCard || firstCard === secondCard ||
       firstCard.dataset.pairId !== secondCard.dataset.pairId ||
@@ -2120,7 +2155,7 @@ function markMatch() {
   if (impostorActivated) {
     lastImpostorVariationIndex = impostorRound.variation.index;
     impostorRound.suspect.querySelector(".character-icon").dataset.impostorGlyph = impostorRound.variation.glyph;
-    board.classList.add("is-impostor-arriving");
+    startImpostorArrival();
   }
   activeCombo += 1;
   bestCombo = Math.max(bestCombo, activeCombo);
@@ -2513,6 +2548,7 @@ function newGame({ startPreview = !homeScreen.visible } = {}) {
     showHome();
     return false;
   }
+  cancelImpostorArrival();
   impostorAccusationCard = null;
   pendingImpostorPlaytest = false;
   resetCombo();
@@ -2714,6 +2750,7 @@ function startFreshGame() {
 }
 
 async function runIntroTutorial() {
+  cancelImpostorArrival();
   impostorRound = null;
   impostorAccusationCard = null;
   board.classList.remove("is-impostor", "is-impostor-arriving");

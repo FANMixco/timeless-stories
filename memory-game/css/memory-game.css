@@ -2274,7 +2274,6 @@ html[data-theme] .game-shell .board.is-impostor .card .card-front::after { conte
 
 html[data-theme] .game-shell .board.is-impostor .card .character-name { opacity: 1; }
 
-.impostor-rules-card { max-width: 480px; }
 .impostor-rules-intro { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
 .impostor-rules-intro > .icon { font-size: 2.6rem; color: var(--gold); flex-shrink: 0; }
 .impostor-rules-intro p { margin: 0; font-weight: 600; }
