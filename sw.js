@@ -1,10 +1,10 @@
 const CACHE_PREFIX = "memory-game-pwa-";
-const CACHE_VERSION = `${CACHE_PREFIX}memory-381da2becf26`;
+const CACHE_VERSION = `${CACHE_PREFIX}memory-381da2becf27`;
 const APP_SHELL = [
   "/memory-game.html",
-  "/memory-game/js/theme.min.js?v=memory-381da2becf26",
-  "/memory-game/js/startup.min.js?v=memory-381da2becf26",
-  "/memory-game/js/pwa.min.js?v=memory-381da2becf26",
+  "/memory-game/js/theme.min.js?v=memory-381da2becf27",
+  "/memory-game/js/startup.min.js?v=memory-381da2becf27",
+  "/memory-game/js/pwa.min.js?v=memory-381da2becf27",
   "/memory-game/manifest.webmanifest",
   "/memory-game/music/match.mp3",
   "/memory-game/music/shiny.mp3",
@@ -14,41 +14,41 @@ const APP_SHELL = [
   "/memory-game/music/combo1.mp3",
   "/memory-game/music/combo5.mp3",
   "/memory-game/music/combo10.mp3",
-  "/memory-game/css/icon-moon-memory.min.css?v=memory-381da2becf26",
-  "/memory-game/css/memory-game-impostor.min.css?v=memory-381da2becf26",
-  "/memory-game/css/fonts/memory-game-impostor.woff2?v=memory-381da2becf26",
-  "/memory-game/css/fonts/memory-game-impostor.woff?v=memory-381da2becf26",
-  "/memory-game/css/fonts/memory-game-impostor.ttf?v=memory-381da2becf26",
-  "/memory-game/css/memory-game.min.css?v=memory-381da2becf26",
-  "/memory-game/js/memory-game.min.js?v=memory-381da2becf26",
-  "/memory-game/data/memory-game-links.min.json?v=memory-381da2becf26",
-  "/memory-game/data/memory-game.min.json?v=memory-381da2becf26",
-  "/memory-game/i18n/lang-en.min.json?v=memory-381da2becf26",
-  "/memory-game/i18n/lang-es.min.json?v=memory-381da2becf26",
-  "/memory-game/i18n/lang-fr.min.json?v=memory-381da2becf26",
-  "/memory-game/i18n/lang-zh.min.json?v=memory-381da2becf26",
+  "/memory-game/css/icon-moon-memory.min.css?v=memory-381da2becf27",
+  "/memory-game/css/memory-game-impostor.min.css?v=memory-381da2becf27",
+  "/memory-game/css/fonts/memory-game-impostor.woff2?v=memory-381da2becf27",
+  "/memory-game/css/fonts/memory-game-impostor.woff?v=memory-381da2becf27",
+  "/memory-game/css/fonts/memory-game-impostor.ttf?v=memory-381da2becf27",
+  "/memory-game/css/memory-game.min.css?v=memory-381da2becf27",
+  "/memory-game/js/memory-game.min.js?v=memory-381da2becf27",
+  "/memory-game/data/memory-game-links.min.json?v=memory-381da2becf27",
+  "/memory-game/data/memory-game.min.json?v=memory-381da2becf27",
+  "/memory-game/i18n/lang-en.min.json?v=memory-381da2becf27",
+  "/memory-game/i18n/lang-es.min.json?v=memory-381da2becf27",
+  "/memory-game/i18n/lang-fr.min.json?v=memory-381da2becf27",
+  "/memory-game/i18n/lang-zh.min.json?v=memory-381da2becf27",
   // BEGIN MEMORY MODULES
-  "/memory-game/js/modules/analytics.min.js?v=memory-381da2becf26",
-  "/memory-game/js/modules/audio.min.js?v=memory-381da2becf26",
-  "/memory-game/js/modules/background-music.min.js?v=memory-381da2becf26",
-  "/memory-game/js/modules/collection.min.js?v=memory-381da2becf26",
-  "/memory-game/js/modules/dialogs.min.js?v=memory-381da2becf26",
-  "/memory-game/js/modules/home.min.js?v=memory-381da2becf26",
-  "/memory-game/js/modules/impostor-trial.min.js?v=memory-381da2becf26",
-  "/memory-game/js/modules/modes/classic.min.js?v=memory-381da2becf26",
-  "/memory-game/js/modules/modes/crazy-mirrors.min.js?v=memory-381da2becf26",
-  "/memory-game/js/modules/modes/impostor-glyphs.min.js?v=memory-381da2becf26",
-  "/memory-game/js/modules/modes/impostor.min.js?v=memory-381da2becf26",
-  "/memory-game/js/modules/modes/limited-moves.min.js?v=memory-381da2becf26",
-  "/memory-game/js/modules/modes/memory-flash.min.js?v=memory-381da2becf26",
-  "/memory-game/js/modules/modes/time-attack.min.js?v=memory-381da2becf26",
-  "/memory-game/js/modules/preview.min.js?v=memory-381da2becf26",
-  "/memory-game/js/modules/progress.min.js?v=memory-381da2becf26",
-  "/memory-game/js/modules/rules.min.js?v=memory-381da2becf26",
-  "/memory-game/js/modules/sharing.min.js?v=memory-381da2becf26",
-  "/memory-game/js/modules/spoken-countdown.min.js?v=memory-381da2becf26",
-  "/memory-game/js/modules/status.min.js?v=memory-381da2becf26",
-  "/memory-game/js/modules/storage.min.js?v=memory-381da2becf26",
+  "/memory-game/js/modules/analytics.min.js?v=memory-381da2becf27",
+  "/memory-game/js/modules/audio.min.js?v=memory-381da2becf27",
+  "/memory-game/js/modules/background-music.min.js?v=memory-381da2becf27",
+  "/memory-game/js/modules/collection.min.js?v=memory-381da2becf27",
+  "/memory-game/js/modules/dialogs.min.js?v=memory-381da2becf27",
+  "/memory-game/js/modules/home.min.js?v=memory-381da2becf27",
+  "/memory-game/js/modules/impostor-trial.min.js?v=memory-381da2becf27",
+  "/memory-game/js/modules/modes/classic.min.js?v=memory-381da2becf27",
+  "/memory-game/js/modules/modes/crazy-mirrors.min.js?v=memory-381da2becf27",
+  "/memory-game/js/modules/modes/impostor-glyphs.min.js?v=memory-381da2becf27",
+  "/memory-game/js/modules/modes/impostor.min.js?v=memory-381da2becf27",
+  "/memory-game/js/modules/modes/limited-moves.min.js?v=memory-381da2becf27",
+  "/memory-game/js/modules/modes/memory-flash.min.js?v=memory-381da2becf27",
+  "/memory-game/js/modules/modes/time-attack.min.js?v=memory-381da2becf27",
+  "/memory-game/js/modules/preview.min.js?v=memory-381da2becf27",
+  "/memory-game/js/modules/progress.min.js?v=memory-381da2becf27",
+  "/memory-game/js/modules/rules.min.js?v=memory-381da2becf27",
+  "/memory-game/js/modules/sharing.min.js?v=memory-381da2becf27",
+  "/memory-game/js/modules/spoken-countdown.min.js?v=memory-381da2becf27",
+  "/memory-game/js/modules/status.min.js?v=memory-381da2becf27",
+  "/memory-game/js/modules/storage.min.js?v=memory-381da2becf27",
   // END MEMORY MODULES
   "/memory-game/img/previews/mirrors_medium.webp",
   "/memory-game/img/previews/mirrors_es_medium.webp",
@@ -68,9 +68,9 @@ const APP_SHELL = [
   "/memory-game/img/favicons/favicon-16x16.png",
   "/memory-game/css/fonts/BerkshireSwash-Regular.ttf",
   "/memory-game/css/fonts/Spectral-Regular.ttf",
-  "/memory-game/css/fonts/memory-game.woff2?v=memory-381da2becf26",
-  "/memory-game/css/fonts/memory-game.woff?v=memory-381da2becf26",
-  "/memory-game/css/fonts/memory-game.ttf?v=memory-381da2becf26"
+  "/memory-game/css/fonts/memory-game.woff2?v=memory-381da2becf27",
+  "/memory-game/css/fonts/memory-game.woff?v=memory-381da2becf27",
+  "/memory-game/css/fonts/memory-game.ttf?v=memory-381da2becf27",
 ];
 
 // The optional soundtrack is cached on first playback, outside installation.
@@ -94,8 +94,11 @@ async function soundtrackResponse(event) {
   if (!match || (!match[1] && !match[2])) return cached;
   const body = await cached.arrayBuffer();
   const size = body.byteLength;
-  const start = match[1] ? Number(match[1]) : Math.max(0, size - Number(match[2]));
-  const end = match[1] && match[2] ? Math.min(Number(match[2]), size - 1) : size - 1;
+  const start = match[1]
+    ? Number(match[1])
+    : Math.max(0, size - Number(match[2]));
+  const end =
+    match[1] && match[2] ? Math.min(Number(match[2]), size - 1) : size - 1;
   const headers = new Headers(cached.headers);
   headers.set("Accept-Ranges", "bytes");
   if (start > end || start >= size) {
@@ -110,7 +113,10 @@ async function soundtrackResponse(event) {
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
-    caches.open(CACHE_VERSION).then((cache) => cache.addAll(APP_SHELL)).then(() => self.skipWaiting())
+    caches
+      .open(CACHE_VERSION)
+      .then((cache) => cache.addAll(APP_SHELL))
+      .then(() => self.skipWaiting()),
   );
 });
 
@@ -119,9 +125,15 @@ self.addEventListener("activate", (event) => {
     caches
       .keys()
       .then((keys) =>
-        Promise.all(keys.filter((key) => key.startsWith(CACHE_PREFIX) && key !== CACHE_VERSION).map((key) => caches.delete(key)))
+        Promise.all(
+          keys
+            .filter(
+              (key) => key.startsWith(CACHE_PREFIX) && key !== CACHE_VERSION,
+            )
+            .map((key) => caches.delete(key)),
+        ),
       )
-      .then(() => self.clients.claim())
+      .then(() => self.clients.claim()),
   );
 });
 
@@ -140,7 +152,10 @@ async function networkFirst(request) {
       return cached;
     }
 
-    if (request.mode === "navigate" && new URL(request.url).pathname === "/memory-game.html") {
+    if (
+      request.mode === "navigate" &&
+      new URL(request.url).pathname === "/memory-game.html"
+    ) {
       return cache.match("/memory-game.html");
     }
 
@@ -175,12 +190,19 @@ self.addEventListener("fetch", (event) => {
   }
 
   // Keep navigation outside the game under normal browser/network handling.
-  if (event.request.mode === "navigate" && url.pathname !== "/memory-game.html") {
+  if (
+    event.request.mode === "navigate" &&
+    url.pathname !== "/memory-game.html"
+  ) {
     return;
   }
 
-  if (event.request.mode !== "navigate" && !APP_SHELL.some(asset =>
-    new URL(asset, self.location.origin).pathname === url.pathname)) {
+  if (
+    event.request.mode !== "navigate" &&
+    !APP_SHELL.some(
+      (asset) => new URL(asset, self.location.origin).pathname === url.pathname,
+    )
+  ) {
     return;
   }
 

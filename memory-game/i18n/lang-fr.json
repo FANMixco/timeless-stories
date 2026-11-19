@@ -81,7 +81,7 @@
       },
       "ghostOfSanGines": {
         "name": "Le fantôme de San Ginés",
-        "desc": "Un fantôme décapité qui apparaît dans l'église de San Ginés.",
+        "desc": "Un fantôme décapité qui apparaît dans l’église de San Ginés.",
         "shortName": "San Ginés"
       },
       "girlOnTheCurve": {
@@ -220,7 +220,7 @@
         "matchToasts": "Afficher les messages quand les cartes correspondent",
         "shortNames": "Utiliser les noms courts sur les cartes",
         "hardMode": "Mode difficile",
-        "hardModeUnlocked": "Le Mode difficile a été débloqué ! Profitez d'une nouvelle expérience.",
+        "hardModeUnlocked": "Le Mode difficile a été débloqué ! Profitez d’une nouvelle expérience.",
         "spokenCountdown": "Compte à rebours vocal",
         "music": "Musique de fond",
         "matchToastsUnavailable": "Indisponible pendant une partie de L’Imposteur."

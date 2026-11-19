@@ -230,12 +230,12 @@
         "policy": "Only pairs from successfully completed games count. These achievements do not affect core achievements, collections or mode unlocks.",
         "names": [
           "Original Mirror Master",
-          "Director's Cut Hunter",
+          "Director’s Cut Hunter",
           "Golden Mirror Hunter"
         ],
         "categories": [
           "Original",
-          "Director's Cut",
+          "Director’s Cut",
           "Golden Mirror"
         ],
         "current": "Level {level} in progress",
@@ -266,7 +266,7 @@
         "secret": "Secret achievement.",
         "notification": "Achievement Unlocked!",
         "legendaryTitle": "Legendary Collector!",
-        "legendaryDescription": "You've discovered all Original Mirrors!",
+        "legendaryDescription": "You’ve discovered all Original Mirrors!",
         "celebration": "From forgotten myths to extraordinary mysteries, your Original Mirrors collection is complete... for now.",
         "completion": "Original Mirrors 100%",
         "motto": "Every legend has a story beyond the cards.",
@@ -319,7 +319,7 @@
           },
           "master": {
             "name": "Master Collector",
-            "description": "Discovered all currently available Original, Director's Cut, and Online Exclusive Mirrors."
+            "description": "Discovered all currently available Original, Director’s Cut, and Online Exclusive Mirrors."
           }
         }
       },
@@ -742,8 +742,8 @@
         },
         {
           "title": "Rare Mirror",
-          "label": "Director's Cut",
-          "description": "Special legends from the Director's Cut edition.",
+          "label": "Director’s Cut",
+          "description": "Special legends from the Director’s Cut edition.",
           "rarity": "rare",
           "icon": "book"
         },
