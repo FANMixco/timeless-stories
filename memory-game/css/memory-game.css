@@ -148,8 +148,18 @@ html.is-modal-open body {
 /* The home screen is a separate view, using the game's existing palette. */
 .game-shell.is-home { width: min(100%, 980px); }
 .game-shell[hidden], .game-startup[hidden] { display: none; }
-.game-startup { min-height: 100vh; min-height: 100dvh; display: grid; place-items: center; padding: 24px max(16px, env(safe-area-inset-left), env(safe-area-inset-right)); }
-.game-startup-card { width: min(100%, 480px); padding: 24px; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); color: var(--ink); text-align: center; box-shadow: var(--shadow); }
+.game-startup {
+  min-height: 100vh;
+  width: var(--startup-pane-width, auto);
+  margin: var(--startup-pane-top, 0px) 0 0 var(--startup-pane-left, 0px);
+  display: grid;
+  place-items: center;
+  padding: var(--startup-pane-padding, 24px) max(16px, env(safe-area-inset-left), env(safe-area-inset-right));
+}
+@supports (height: 100dvh) {
+  .game-startup { min-height: var(--startup-pane-height, 100dvh); }
+}
+.game-startup-card { width: min(100%, 480px); padding: var(--startup-pane-padding, 24px); border: 1px solid var(--line); border-radius: 12px; background: var(--panel); color: var(--ink); text-align: center; box-shadow: var(--shadow); }
 .game-startup-card p { margin: 0; line-height: 1.6; }
 .game-startup .game-button { display: inline-flex; align-items: center; justify-content: center; margin: 16px auto 0; text-decoration: none; }
 .is-home .game-layout, .game-home[hidden], .game-layout[hidden] { display: none; }
@@ -2886,6 +2896,16 @@ html[data-theme="dark"] .legends-rarity-note:focus-visible {
     --foldable-segment-0: env(viewport-segment-left 0 0) env(viewport-segment-top 0 0)
       env(viewport-segment-right 0 0) env(viewport-segment-bottom 0 0);
   }
+
+  /* The first loading paint precedes the game module and retry must work
+     even if that module never loads. */
+  .game-startup {
+    --startup-pane-top: env(viewport-segment-top 0 0, 0px);
+    --startup-pane-left: env(viewport-segment-left 0 0, 0px);
+    --startup-pane-width: env(viewport-segment-width 0 0, 100%);
+    --startup-pane-height: min(100dvh, env(viewport-segment-height 0 0, 100dvh));
+    --startup-pane-padding: max(12px, env(safe-area-inset-top, 0px), env(safe-area-inset-bottom, 0px));
+  }
 }
 @media (horizontal-viewport-segments: 2) {
   :root {
@@ -2906,6 +2926,14 @@ html[data-theme="dark"] .legends-rarity-note:focus-visible {
   --foldable-pad-bottom: max(10px, env(safe-area-inset-bottom, 0px));
   --foldable-pad-left: max(10px, env(safe-area-inset-left, 0px));
   --foldable-height: calc(100dvh - var(--foldable-top) - var(--foldable-bottom));
+}
+
+.is-foldable .game-startup {
+  --startup-pane-top: var(--foldable-dialog-top);
+  --startup-pane-left: var(--foldable-dialog-left);
+  --startup-pane-width: calc(100% - var(--foldable-dialog-left) - var(--foldable-dialog-right));
+  --startup-pane-height: calc(100dvh - var(--foldable-dialog-top) - var(--foldable-dialog-bottom));
+  --startup-pane-padding: max(12px, env(safe-area-inset-top, 0px), env(safe-area-inset-bottom, 0px));
 }
 
 .is-foldable .game-shell:not([hidden]),
@@ -3031,6 +3059,14 @@ html[data-theme="dark"] .legends-rarity-note:focus-visible {
 .is-side-by-side .game-primary-actions { grid-column: 1; }
 .is-side-by-side .game-secondary-actions { grid-column: 2; }
 .is-side-by-side .status-grid { grid-column: 1; align-self: start; }
+.foldable-match-slot { display: none; }
+.is-foldable.is-side-by-side .foldable-match-slot {
+  display: block;
+  position: relative;
+  grid-area: 2 / 2;
+  min-width: 0;
+  min-height: 68px;
+}
 .is-side-by-side .game-sidebar > :is(.match-insight, #impostorPanel) { grid-column: 2; }
 .is-side-by-side .game-sidebar > :is(#matchInsight, #impostorPanel) { grid-row: 2; }
 .is-foldable.is-side-by-side .board-area .board {
@@ -3045,23 +3081,22 @@ html[data-theme="dark"] .legends-rarity-note:focus-visible {
   pointer-events: none;
 }
 .is-foldable.is-side-by-side .game-shell .board-area .legend-toast {
-  width: min(34rem, 100% - var(--foldable-left-track) - var(--foldable-pane-gap));
-  margin-inline: auto 0;
+  width: min(34rem, var(--foldable-left-track));
+  margin-inline: 0 auto;
 }
-.is-foldable.is-side-by-side .game-shell .board-area .legend-toast[data-comparison="true"] { margin-inline: auto 0; }
 .is-foldable.is-side-by-side .game-shell > .legend-toast { width: min(100%, var(--foldable-left-track)); margin-inline: 0; }
 
 .is-foldable .game-layout,
 .is-foldable .game-shell:not(.is-home):has(.board.is-impostor) > .game-layout {
   grid-template-columns: minmax(0, 1fr);
-  gap: 6px;
+  gap: 12px;
   overflow: visible;
 }
 .is-foldable .game-top {
   grid-template-columns: minmax(0, 1fr) minmax(0, auto);
   align-items: center;
-  gap: 4px 8px;
-  margin-bottom: 6px;
+  gap: 6px 8px;
+  margin-bottom: 10px;
 }
 .is-foldable .game-top > div:first-child { text-align: start; }
 .is-foldable .game-title { font-size: clamp(1.25rem, 3vw, 1.85rem); }
@@ -3103,26 +3138,28 @@ html[data-theme="dark"] .legends-rarity-note:focus-visible {
 .is-foldable .board:not(.is-intro) .card .character-name { font-size: .6875rem; line-height: 1.1; }
 .is-foldable .board:not(.is-intro) .card .character-mark,
 html.is-foldable[data-theme] .game-shell .board.is-impostor .card .character-mark {
-  width: max(20px, var(--foldable-card-width, 96px) * .42);
-  height: max(20px, var(--foldable-card-width, 96px) * .42);
+  --foldable-mark-size: max(20px, var(--foldable-card-width, 96px) * .62 - 8px);
+  width: var(--foldable-mark-size);
+  height: var(--foldable-mark-size);
 }
 .is-foldable .board:not(.is-intro) .card .character-icon,
 html.is-foldable[data-theme] .game-shell .board.is-impostor .card .character-icon {
-  font-size: max(1rem, var(--foldable-card-width, 96px) * .34);
+  font-size: max(1rem, var(--foldable-card-width, 96px) * .43 - 3px);
 }
 .is-foldable .board .card-back span { width: 30px; height: 30px; }
 .is-foldable .board-area:has(> .board.is-impostor.is-complete) { display: grid; }
 .is-foldable .board-area > .board.is-impostor.is-complete { height: clamp(96px, var(--foldable-height) - 180px, 320px); }
 .is-foldable .board.is-impostor.is-complete + .impostor-victory { font-size: clamp(4rem, var(--foldable-height) - 190px, 14rem); }
 
-/* Hints take a compact, in-flow row. Comparisons only use spare space
-   below the board and never change its dimensions. */
+/* Hints take a compact, in-flow row. Comparisons use the right pane's
+   score row, or spare space below the board in a one-pane layout. */
 .is-foldable .game-shell .board-area .legend-toast,
-.is-foldable .game-shell > .legend-toast {
+.is-foldable .game-shell > .legend-toast,
+.is-foldable .foldable-match-slot .legend-toast {
   position: relative;
   inset: auto;
   width: min(100%, 34rem);
-  margin: 0 auto 6px;
+  margin: 0 auto 12px;
   padding: 4px 8px;
   align-items: center;
   gap: 6px;
@@ -3135,6 +3172,23 @@ html.is-foldable[data-theme] .game-shell .board.is-impostor .card .character-ico
   position: absolute;
   inset: calc(100% + 6px) 0 auto;
   margin: 0 auto;
+  animation-name: toast-fade-in;
+}
+.is-foldable .foldable-match-slot .legend-toast {
+  position: absolute;
+  inset: 0;
+  width: min(100%, 34rem);
+  height: 100%;
+  margin: 0;
+  grid-template-rows: minmax(0, 1fr);
+  box-shadow: none;
+  animation-name: toast-fade-in;
+}
+.is-foldable .foldable-match-slot #legendToastContent {
+  min-height: 0;
+  max-height: 100%;
+  overflow: auto;
+  overscroll-behavior: contain;
 }
 .is-foldable .game-shell .legend-toast[data-space-suppressed="true"] { display: none; }
 .is-foldable .legend-toast strong { font-size: .9rem; }
@@ -3172,6 +3226,29 @@ html.is-foldable[data-theme] .game-shell .board.is-impostor .card .character-ico
 .is-foldable .dialog-body { padding-top: 10px; }
 .is-foldable .contribution-body { padding: 0; }
 .is-foldable .dialog-body .game-button { min-height: 44px; max-width: 100%; }
+
+.is-foldable .rarity-card .rarity-preview-list {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 8px;
+}
+.is-foldable .rarity-card .rarity-preview-card {
+  display: grid;
+  grid-template-columns: 2.75rem minmax(0, 1fr);
+  justify-content: stretch;
+  min-height: 0;
+  gap: 2px 10px;
+  padding: 8px 10px;
+  text-align: start;
+}
+.is-foldable .rarity-card .character-mark {
+  grid-area: 1 / 1 / 3 / 2;
+  width: 2.75rem;
+  height: 2.75rem;
+}
+.is-foldable .rarity-card .rarity-preview-card :is(h3, strong) { grid-column: 2; }
+.is-foldable .rarity-card .rarity-preview-card h3 { align-self: end; margin: 0; }
+.is-foldable .rarity-card .rarity-preview-card strong { align-self: start; font-size: .875rem; }
+.is-foldable .rarity-card .rarity-preview-card p { grid-column: 1 / -1; margin-top: 4px; line-height: 1.4; }
 
 .is-foldable .progress-tabs { margin-bottom: 10px; }
 .is-foldable .mode-records { margin: 10px 0; }

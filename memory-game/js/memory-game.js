@@ -168,6 +168,7 @@ const selectedStoryTitle = document.getElementById("selectedStoryTitle");
 const selectedStoryText = document.getElementById("selectedStoryText");
 const legendToast = document.getElementById("legendToast");
 const legendToastContainer = legendToast.parentElement;
+const foldableMatchSlot = document.getElementById("foldableMatchSlot");
 const legendToastContent = document.getElementById("legendToastContent");
 const legendToastTitle = document.getElementById("legendToastTitle");
 const legendToastText = document.getElementById("legendToastText");
@@ -1364,6 +1365,13 @@ function foldableViewportBottom() {
 
 function updateFoldableMatchToast() {
   if (!foldablePane || legendToast.hidden || legendToast.dataset.comparison !== "true") return;
+  if (foldableSplit) {
+    placeLegendToast(foldableMatchSlot);
+    legendToastContent.setAttribute("tabindex", "0");
+  } else if (legendToast.parentElement !== legendToastContainer) {
+    placeLegendToast();
+    legendToastContent.toggleAttribute("tabindex", false);
+  }
   const previousVisibility = legendToast.style.visibility;
   legendToast.style.visibility = "hidden";
   delete legendToast.dataset.spaceSuppressed;
@@ -1371,10 +1379,11 @@ function updateFoldableMatchToast() {
   const boardRect = board.getBoundingClientRect();
   const bottom = Math.min(foldablePane.bottom, foldableViewportBottom()) -
     parseFloat(window.getComputedStyle(gameShell).paddingBottom);
+  const messagePane = foldableSplit?.[1] ?? foldablePane;
   const suppressed = !matchToastsEnabled || !toast.height || !boardRect.height ||
     rectanglesOverlap(toast, boardRect) || toast.bottom > bottom ||
     toast.top < Math.max(foldablePane.top, window.visualViewport?.offsetTop ?? 0) ||
-    toast.left < foldablePane.left || toast.right > foldablePane.right;
+    toast.left < messagePane.left || toast.right > messagePane.right;
   legendToast.dataset.spaceSuppressed = String(suppressed);
   legendToast.inert = suppressed;
   legendToast.style.visibility = previousVisibility;
@@ -1414,6 +1423,10 @@ function applyFoldableViewport(pane, width, height, split) {
     } else {
       foldableLayoutObserver?.disconnect();
       if (legendToast.dataset.comparison === "true") hideLegendToast();
+      if (legendToast.parentElement === foldableMatchSlot) {
+        placeLegendToast();
+        legendToastContent.toggleAttribute("tabindex", false);
+      }
     }
   }
   updateGameTitleVisibility();
@@ -2356,8 +2369,8 @@ function showMatchInsight(card, userSelected = false) {
   const isMobile = window.matchMedia?.("(max-width: 640px)")?.matches;
   if (foldablePane && !gameCompleted) {
     matchInsight.classList.remove("is-visible");
-    // A player-requested hint takes priority over automatic comparison copy.
-    if (matchToastsEnabled && (legendToast.hidden || legendToast.dataset.comparison === "true")) {
+    if (matchToastsEnabled && card.dataset.insight &&
+        (foldableSplit || legendToast.hidden || legendToast.dataset.comparison === "true")) {
       showToast(card.dataset.insightTitle || "", card.dataset.insight || "");
       legendToast.dataset.comparison = "true";
       fitFoldableRound();
@@ -2504,8 +2517,14 @@ function hideLegendToast() {
   }
 }
 
+function placeLegendToast(container = legendToastContainer) {
+  if (container && legendToast.parentElement !== container) {
+    container.insertBefore(legendToast, container.firstElementChild);
+  }
+}
+
 function showToast(title, text, emphasis = "", underline = "") {
-  if (legendToastContainer && legendToast.parentElement !== legendToastContainer) legendToastContainer.append(legendToast);
+  placeLegendToast();
   legendToast.dataset.install = "false";
   legendToastContent.toggleAttribute("role", false);
   legendToastContent.toggleAttribute("tabindex", false);
@@ -2534,6 +2553,7 @@ function showToast(title, text, emphasis = "", underline = "") {
     content.push(document.createTextNode(remaining));
   }
   legendToastText.replaceChildren(...content);
+  legendToastContent.scrollTop = 0;
   legendToast.inert = false;
   legendToast.hidden = false;
   legendToast.dataset.tutorial = String(introRunning);
