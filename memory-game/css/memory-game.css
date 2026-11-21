@@ -3491,7 +3491,7 @@ html.is-foldable[data-theme] .game-shell .board.is-impostor .card .character-ico
   --dialog-region-left: var(--foldable-left);
   --dialog-region-width: 100%;
 }
-.has-dual-pane-dialogs .game-shell > #achievementPanel,
+.has-dual-pane-dialogs .game-shell > :is(#achievementPanel, #modeDetailsPanel),
 .has-dual-pane-dialogs .game-shell:has(> #collectionPanel.is-visible)
   > #rarityPanel:has(.rarity-preview-list.is-single) {
   /* Compact overlays share a pane while their fixed backdrops cover both. */
