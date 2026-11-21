@@ -3273,6 +3273,17 @@ html.is-foldable[data-theme] .game-shell .board.is-impostor .card .character-ico
 }
 .is-foldable :is(.mode-details-panel, #winPanel) { --foldable-dialog-width: 32.5rem; }
 .is-foldable :is(.restart-panel, .achievement-panel) { --foldable-dialog-width: 27rem; }
+/* Match modal focus priority when an award is active over a confirmation. */
+.is-foldable .achievement-panel[aria-modal="true"] { z-index: 32; }
+.has-dual-pane-dialogs #winPanel:has(~ #achievementPanel.is-visible[aria-modal="true"]) {
+  visibility: hidden;
+}
+.has-dual-pane-dialogs #winPanel.is-visible ~ #achievementPanel:not(.is-visible) {
+  transition-duration: 0s;
+}
+.is-foldable .game-shell > #achievementPanel > .achievement-card {
+  border-color: var(--achievement-color, var(--line));
+}
 .is-foldable #gameOverPanel { --foldable-dialog-width: 30rem; }
 .is-foldable .settings-panel { --foldable-dialog-width: 34rem; }
 .is-foldable .rarity-panel { --foldable-dialog-width: 38rem; }
@@ -3480,16 +3491,19 @@ html.is-foldable[data-theme] .game-shell .board.is-impostor .card .character-ico
   --dialog-region-left: var(--foldable-left);
   --dialog-region-width: 100%;
 }
+.has-dual-pane-dialogs .game-shell > #achievementPanel,
 .has-dual-pane-dialogs .game-shell:has(> #collectionPanel.is-visible)
   > #rarityPanel:has(.rarity-preview-list.is-single) {
-  /* Center the compact card in the opposite pane while the fixed backdrop
-     continues to cover both panes and stays independent of Collection scroll. */
+  /* Compact overlays share a pane while their fixed backdrops cover both. */
   --dialog-region-top: var(--foldable-right-pane-top);
   --dialog-region-right: var(--foldable-right);
   --dialog-region-bottom: var(--foldable-right-pane-bottom);
   --dialog-region-left: calc(var(--foldable-left) + var(--foldable-left-pane) + var(--foldable-hinge));
-  --dialog-region-width: 22rem;
   grid-template: minmax(0, 1fr) / minmax(0, 1fr);
+}
+.has-dual-pane-dialogs .game-shell:has(> #collectionPanel.is-visible)
+  > #rarityPanel:has(.rarity-preview-list.is-single) {
+  --dialog-region-width: 22rem;
 }
 .has-dual-pane-dialogs .game-shell:has(> #collectionPanel.is-visible)
   > #rarityPanel:has(.rarity-preview-list.is-single) > .dialog-card {

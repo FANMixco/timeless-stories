@@ -40,3 +40,7 @@ tests/startup-status.test.mjs
 tests/soundtrack-cache.test.mjs
 tests/platform-guidance.test.mjs
 tests/impostor.test.mjs
+foldable-congratulations-preview.png
+foldable-award-preview.png
+phone-congratulations-preview.png
+phone-award-preview.png
