@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 240 240">
+  <defs>
+    <radialGradient id="disk" cx="36%" cy="30%" r="72%">
+      <stop stop-color="#aebdca"/>
+      <stop offset="1" stop-color="#6d8197"/>
+    </radialGradient>
+  </defs>
+  <g opacity=".30">
+    <circle cx="120" cy="120" r="86" fill="url(#disk)"/>
+    <g fill="#556a80" opacity=".55">
+      <path d="M70 92c8-13 21-21 31-17 8 3 6 12 13 17 8 6 12 13 6 19-7 7-16 2-23 8-9 8-24 7-30-2-5-7-3-16 3-25z"/>
+      <path d="M139 73c11-5 22 1 25 9 4 8-4 11 1 17 6 6 7 14 1 20-9 7-28 1-30-9-1-6 4-11 0-17-4-7-6-16 3-20z"/>
+      <path d="M113 140c9-7 20-1 23 6 3 8 12 9 14 17 2 10-9 15-19 12-7-3-13-2-19 2-9 5-21-1-20-10 1-7 10-10 13-16 2-4 5-9 8-11z"/>
+      <circle cx="74" cy="141" r="6"/>
+      <circle cx="162" cy="145" r="8"/>
+      <circle cx="123" cy="60" r="5"/>
+      <circle cx="164" cy="172" r="4"/>
+    </g>
+  </g>
+</svg>

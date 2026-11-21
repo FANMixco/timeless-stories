@@ -62,22 +62,34 @@ html {
 }
 
 body {
+  --skyline: url("../img/background-mg-warm.svg");
   margin: 0;
   background:
     linear-gradient(135deg, rgba(0, 119, 182, 0.12), transparent 38%),
     linear-gradient(315deg, rgba(216, 155, 33, 0.14), transparent 42%),
-    url("../img/background-mg-warm.svg") bottom center / 100% auto fixed no-repeat,
+    var(--celestial-background, none),
+    var(--skyline) bottom center / 100% auto fixed no-repeat,
     var(--paper);
   color: var(--ink);
   font-family: var(--game-text-font);
 }
 
 html[data-theme="dark"] body {
-  background:
-    linear-gradient(135deg, rgba(0, 119, 182, 0.12), transparent 38%),
-    linear-gradient(315deg, rgba(216, 155, 33, 0.14), transparent 42%),
-    url("../img/background-mg-dark.svg") bottom center / 100% auto fixed no-repeat,
-    var(--paper);
+  --skyline: url("../img/background-mg-dark.svg");
+}
+
+@media (min-width: 1024px) and (min-height: 600px) and (orientation: landscape) {
+  body {
+    --celestial-inset: clamp(16px, 3vw, 56px);
+    --celestial-size: clamp(112px, 12vw, 240px);
+    --celestial-background: url("../img/background-mg-sun.svg")
+      left var(--celestial-inset) top var(--celestial-inset) / var(--celestial-size) auto fixed no-repeat;
+  }
+
+  html[data-theme="dark"] body {
+    --celestial-background: url("../img/background-mg-moon.svg")
+      right var(--celestial-inset) top var(--celestial-inset) / var(--celestial-size) auto fixed no-repeat;
+  }
 }
 
 button {
