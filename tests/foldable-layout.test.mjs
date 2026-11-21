@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { fitFoldableBoard, fitSplitFoldableBoard, watchFoldableViewport } from "../memory-game/js/modules/foldable-layout.mjs";
+import { fitFoldableBoard, fitSplitFoldableBoard, foldableDialogColumns, watchFoldableViewport } from "../memory-game/js/modules/foldable-layout.mjs";
 
 const rect = (left, top, right, bottom) => ({ left, top, right, bottom });
 
@@ -56,6 +56,30 @@ test("a device preview only uses foldable layouts while the current viewport is 
   }
   window.navigator.devicePosture.type = "folded";
   assert.equal(resize().pane, null, "posture alone supplies no usable hinge geometry");
+});
+
+test("the reported fold determines the compact pane and the available dual-pane columns", () => {
+  const { window, documentElement, resize } = preview();
+  Object.assign(documentElement, { clientWidth: 836, clientHeight: 842 });
+  window.viewport.segments = [rect(396, 0, 836, 842), rect(0, 0, 396, 842)];
+  let layout = resize();
+  assert.deepEqual(layout.pane, rect(396, 0, 836, 842));
+  assert.deepEqual(layout.split, [rect(0, 0, 396, 842), rect(396, 0, 836, 842)]);
+  assert.equal(foldableDialogColumns(layout.split), 4);
+
+  window.viewport.segments = [rect(0, 0, 320, 842), rect(348, 0, 836, 842)];
+  layout = resize();
+  assert.deepEqual(layout.pane, rect(348, 0, 836, 842));
+  assert.equal(foldableDialogColumns(layout.split), 2);
+
+  window.viewport.segments = [rect(0, 0, 240, 842), rect(268, 0, 836, 842)];
+  assert.equal(foldableDialogColumns(resize().split), 0);
+
+  Object.assign(documentElement, { clientWidth: 842, clientHeight: 836 });
+  window.viewport.segments = [rect(0, 418, 842, 836), rect(0, 0, 842, 418)];
+  layout = resize();
+  assert.deepEqual(layout.pane, rect(0, 0, 842, 418));
+  assert.equal(foldableDialogColumns(layout.split), 0);
 });
 
 test("CSS segment geometry works without the JavaScript segment API", () => {

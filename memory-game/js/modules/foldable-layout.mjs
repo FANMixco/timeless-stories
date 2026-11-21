@@ -4,6 +4,14 @@ const segmentQueries = [
   "(device-posture: folded)",
 ];
 
+export function foldableDialogColumns(split) {
+  if (!split) return 0;
+  const narrowest = Math.min(...split.map(pane => pane.right - pane.left));
+  if (narrowest >= 370) return 4;
+  if (narrowest >= 280) return 2;
+  return 0;
+}
+
 export function watchFoldableViewport(window, document, update) {
   const root = document.documentElement;
   const queries = segmentQueries.map(query => window.matchMedia?.(query));
@@ -32,7 +40,7 @@ export function watchFoldableViewport(window, document, update) {
       bottom: Math.min(height, segment.bottom),
     })).filter(pane => pane.right > pane.left && pane.bottom > pane.top) : [];
 
-    // Dialogs need a continuous reading area even when the game uses two panes.
+    // Compact dialogs use the largest pane, even when the reported crease has no gap.
     const area = pane => (pane.right - pane.left) * (pane.bottom - pane.top);
     panes.sort((a, b) => area(b) - area(a) || a.top - b.top || a.left - b.left);
     const pane = panes.length > 1 ? panes[0] : null;

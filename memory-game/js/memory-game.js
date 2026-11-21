@@ -13,7 +13,7 @@ import { createHomeScreen } from "./modules/home.mjs";
 import { createImpostorTrial, impostorTrialStorageKey } from "./modules/impostor-trial.mjs";
 import { createPreviewCountdown } from "./modules/preview.mjs";
 import { createSpokenCountdown } from "./modules/spoken-countdown.mjs";
-import { fitFoldableBoard, fitSplitFoldableBoard, watchFoldableViewport } from "./modules/foldable-layout.mjs";
+import { fitFoldableBoard, fitSplitFoldableBoard, foldableDialogColumns, watchFoldableViewport } from "./modules/foldable-layout.mjs";
 
 const supportedLanguages = ["en", "es", "fr", "zh"];
 const languageStorageKey = "timelessMemoryLanguage";
@@ -283,9 +283,9 @@ const modalLayers = createModalLayers([
   { panel: settingsPanel, close: closeSettings, focus: () => closeSettingsButton.focus() },
   { panel: achievementsPanel, close: closeAchievements, focus: () => closeAchievementsButton.focus() },
   { panel: aboutPanel, close: closeAboutPanel, focus: () => closeAboutButton.focus() },
-  { panel: rarityPanel, close: closeRarityPanel, focus: () => closeRarityButton.focus() },
+  { panel: rarityPanel, close: closeRarityPanel, focus: () => closeRarityButton.focus({ preventScroll: true }) },
   { panel: legendsPanel, close: closeLegendsPanel, focus: () => closeLegendsButton.focus() },
-  { panel: collectionPanel, close: closeCollection, focus: () => closeCollectionButton.focus() },
+  { panel: collectionPanel, close: closeCollection, focus: () => closeCollectionButton.focus({ preventScroll: true }) },
   { panel: gameOverPanel, close: closeGameOver, focus: () => document.getElementById("tryAgainButton").focus() },
   { panel: winPanel, close: closeWinPanel, focus: () => closeWinButton.focus() }
 ]);
@@ -459,6 +459,7 @@ function restoreModalSnapshot(snapshot) {
     if (id === "achievementPanel") return Boolean(currentAchievement && snapshot.achievement === currentAchievement);
     return true;
   }));
+  const rarityReturnFocus = visible.has("rarityPanel") ? null : collectionRarityTrigger;
   if (!visible.has("modeDetailsPanel") && modeDetailsPanel.classList.contains("is-visible")) closeModeDetails();
   if (visible.has("modeDetailsPanel")) {
     modeDetailsMode = snapshot.modeDetails;
@@ -496,7 +497,11 @@ function restoreModalSnapshot(snapshot) {
   }
   if (visible.has("rarityPanel")) {
     renderRarityPreviewList(snapshot.rarity);
-    if (visible.has("collectionPanel") && !collectionRarityTrigger) collectionRarityTrigger = collectionButton;
+    if (visible.has("collectionPanel") && !collectionRarityTrigger) {
+      const group = [...document.getElementById("collectionGroups").children]
+        .find(item => item.dataset.rarity === snapshot.rarity);
+      collectionRarityTrigger = group?.querySelector(".collection-info") ?? closeCollectionButton;
+    }
   }
   if (visible.has("contributionPanel")) loadContributionForm();
   const coveredCollection = visible.has("collectionPanel") && (visible.has("contributionPanel") || visible.has("rarityPanel") || Boolean(snapshot.detail));
@@ -507,6 +512,7 @@ function restoreModalSnapshot(snapshot) {
   syncModalScrollLock();
   // Back can advance the notification queue; record the newly active award.
   syncModalScrollLock();
+  restoreCollectionRarityFocus(rarityReturnFocus);
   if (!currentAchievement && achievementReturnFocus) {
     if (!modalPanels.some(panel => panel.classList.contains("is-visible"))) achievementReturnFocus.focus?.({ preventScroll: true });
     achievementReturnFocus = null;
@@ -1405,6 +1411,9 @@ function applyFoldableViewport(pane, width, height, split) {
   const root = document.documentElement;
   root.classList.toggle("is-foldable", Boolean(pane));
   root.classList.toggle("is-side-by-side", Boolean(split));
+  const dialogColumns = foldableDialogColumns(split);
+  root.classList.toggle("has-dual-pane-dialogs", dialogColumns > 0);
+  root.classList.toggle("has-wide-dialog-panes", dialogColumns === 4);
   if (pane) {
     for (const [prefix, bounds] of [["foldable", foldablePane], ["foldable-dialog", pane]]) {
       root.style.setProperty(`--${prefix}-top`, `${bounds.top}px`);
@@ -1415,6 +1424,8 @@ function applyFoldableViewport(pane, width, height, split) {
     if (split) {
       root.style.setProperty("--foldable-left-pane", `${left.right - left.left}px`);
       root.style.setProperty("--foldable-hinge", `${right.left - left.right}px`);
+      root.style.setProperty("--foldable-right-pane-top", `${right.top}px`);
+      root.style.setProperty("--foldable-right-pane-bottom", `${height - right.bottom}px`);
     }
   }
   if (Boolean(pane) !== wasFoldable) {
@@ -2478,20 +2489,22 @@ function openRarityPanel(rarity = null, trigger = null) {
     collectionPanel.setAttribute("aria-modal", "false");
   }
   rarityPanel?.classList.add("is-visible");
-  closeRarityButton?.focus();
   syncModalScrollLock();
 }
 
 function closeRarityPanel() {
+  const trigger = collectionRarityTrigger;
+  collectionRarityTrigger = null;
   modalRarity = null;
   rarityPanel?.classList.remove("is-visible");
-  if (collectionRarityTrigger) {
-    collectionPanel.inert = false;
-    collectionPanel.setAttribute("aria-modal", "true");
-    collectionRarityTrigger.focus({ preventScroll: true });
-    collectionRarityTrigger = null;
-  }
   syncModalScrollLock();
+  restoreCollectionRarityFocus(trigger);
+}
+
+function restoreCollectionRarityFocus(trigger) {
+  if (trigger && modalLayers.active()?.panel === collectionPanel) {
+    (trigger.isConnected === false ? closeCollectionButton : trigger).focus({ preventScroll: true });
+  }
 }
 
 function updateGameTitleVisibility() {

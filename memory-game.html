@@ -57,12 +57,12 @@
       }
     </script>
     <!-- Resolve the launch theme before styles or the game module can paint. -->
-    <script id="memoryGameTheme" src="memory-game/js/theme.min.js?v=memory-6fdab2c2f282"></script>
-    <link rel="preload" href="memory-game/css/fonts/memory-game.woff2?v=memory-6fdab2c2f282" as="font" type="font/woff2" crossorigin="anonymous" />
-    <link rel="preload" href="memory-game/css/fonts/memory-game-impostor.woff2?v=memory-6fdab2c2f282" as="font" type="font/woff2" crossorigin="anonymous" />
-    <link rel="stylesheet" href="memory-game/css/icon-moon-memory.min.css?v=memory-6fdab2c2f282" />
-    <link rel="stylesheet" href="memory-game/css/memory-game-impostor.min.css?v=memory-6fdab2c2f282" />
-    <link rel="stylesheet" href="memory-game/css/memory-game.min.css?v=memory-6fdab2c2f282" />
+    <script id="memoryGameTheme" src="memory-game/js/theme.min.js?v=memory-fe1d7bd2c096"></script>
+    <link rel="preload" href="memory-game/css/fonts/memory-game.woff2?v=memory-fe1d7bd2c096" as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href="memory-game/css/fonts/memory-game-impostor.woff2?v=memory-fe1d7bd2c096" as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="stylesheet" href="memory-game/css/icon-moon-memory.min.css?v=memory-fe1d7bd2c096" />
+    <link rel="stylesheet" href="memory-game/css/memory-game-impostor.min.css?v=memory-fe1d7bd2c096" />
+    <link rel="stylesheet" href="memory-game/css/memory-game.min.css?v=memory-fe1d7bd2c096" />
   </head>
   <body>
     <section class="game-startup" id="gameStartup" aria-label="Memory game">
@@ -208,6 +208,7 @@
           </aside>
           <section class="board" id="board" aria-label=""></section>
           <span class="impostor-victory icon icon-trophy" aria-hidden="true"></span>
+          <span class="foldable-impostor-arrival" aria-hidden="true"></span>
         </div>
       </div>
       <aside class="legends-panel mode-details-panel" id="modeDetailsPanel" role="dialog" aria-modal="true" aria-labelledby="modeDetailsTitle" aria-describedby="modeDetailsDescription">
@@ -233,7 +234,7 @@
           </div>
         </div>
       </aside>
-      <aside class="win-panel" id="winPanel" role="dialog" aria-modal="true" aria-labelledby="winTitle" aria-describedby="winMessage">
+      <aside class="win-panel" id="winPanel" data-foldable-modal="dual" role="dialog" aria-modal="true" aria-labelledby="winTitle" aria-describedby="winMessage">
         <span class="firework" aria-hidden="true"></span>
         <span class="firework" aria-hidden="true"></span>
         <span class="firework" aria-hidden="true"></span>
@@ -244,11 +245,13 @@
             <h2 id="winTitle"></h2>
           </header>
           <div class="dialog-body" role="region" aria-labelledby="winTitle" tabindex="0">
-            <p id="winMessage"></p>
-            <div class="win-performance" id="winPerformance"></div>
-            <button class="win-records-link" id="winRecordsButton" type="button" aria-haspopup="dialog" aria-controls="achievementsPanel">
-              <i class="icon icon-trophy" aria-hidden="true"></i><span id="winRecordsLabel"></span>
-            </button>
+            <div class="round-dialog-copy">
+              <p id="winMessage"></p>
+              <div class="win-performance" id="winPerformance"></div>
+              <button class="win-records-link" id="winRecordsButton" type="button" aria-haspopup="dialog" aria-controls="achievementsPanel">
+                <i class="icon icon-trophy" aria-hidden="true"></i><span id="winRecordsLabel"></span>
+              </button>
+            </div>
             <div class="win-actions">
               <a class="game-button reward" id="previewRewardButton" target="_blank" rel="noopener noreferrer" hidden></a>
               <button class="game-button" type="button" id="playAgainButton"></button>
@@ -259,15 +262,17 @@
           </div>
         </div>
       </aside>
-      <aside class="win-panel" id="gameOverPanel" aria-labelledby="gameOverTitle" aria-describedby="gameOverReason gameOverSummary" aria-modal="true" role="dialog">
+      <aside class="win-panel" id="gameOverPanel" data-foldable-modal="dual" aria-labelledby="gameOverTitle" aria-describedby="gameOverReason gameOverSummary" aria-modal="true" role="dialog">
         <div class="win-card dialog-card">
           <header class="dialog-header">
             <button class="win-close" type="button" id="closeGameOverButton"></button>
             <h2 id="gameOverTitle"></h2>
           </header>
           <div class="dialog-body" role="region" aria-labelledby="gameOverTitle" tabindex="0">
-            <p id="gameOverReason"></p>
-            <p id="gameOverSummary"></p>
+            <div class="round-dialog-copy">
+              <p id="gameOverReason"></p>
+              <p id="gameOverSummary"></p>
+            </div>
             <div class="win-actions">
               <button class="game-button" type="button" id="tryAgainButton"></button>
               <button class="game-button secondary" type="button" id="gameOverRecordsButton" aria-haspopup="dialog" aria-controls="achievementsPanel"></button>
@@ -276,7 +281,7 @@
           </div>
         </div>
       </aside>
-      <aside class="legends-panel" id="legendsPanel" aria-labelledby="legendsPanelTitle" aria-modal="true" role="dialog">
+      <aside class="legends-panel" id="legendsPanel" data-foldable-modal="dual" aria-labelledby="legendsPanelTitle" aria-modal="true" role="dialog">
         <div class="legends-card dialog-card">
           <header class="dialog-header">
             <button class="win-close" type="button" id="closeLegendsButton"></button>
@@ -291,7 +296,7 @@
           </div>
         </div>
       </aside>
-      <aside class="rarity-panel" id="rarityPanel" aria-labelledby="rarityPanelTitle" aria-modal="true" role="dialog">
+      <aside class="rarity-panel" id="rarityPanel" data-foldable-modal="dual" aria-labelledby="rarityPanelTitle" aria-modal="true" role="dialog">
         <div class="rarity-card dialog-card">
           <header class="dialog-header">
             <button class="win-close" type="button" id="closeRarityButton"></button>
@@ -302,7 +307,7 @@
           </div>
         </div>
       </aside>
-      <aside class="legends-panel collection-panel" id="collectionPanel" aria-labelledby="collectionTitle" aria-modal="true" role="dialog">
+      <aside class="legends-panel collection-panel" id="collectionPanel" data-foldable-modal="dual" aria-labelledby="collectionTitle" aria-modal="true" role="dialog">
         <div class="legends-card dialog-card">
           <header class="dialog-header">
             <button class="win-close" type="button" id="closeCollectionButton"></button>
@@ -331,7 +336,7 @@
           </div>
         </div>
       </aside>
-      <aside class="legends-panel about-panel" id="aboutPanel" aria-labelledby="aboutTitle" aria-modal="true" role="dialog">
+      <aside class="legends-panel about-panel" id="aboutPanel" data-foldable-modal="dual" aria-labelledby="aboutTitle" aria-modal="true" role="dialog">
         <div class="legends-card about-card dialog-card">
           <header class="dialog-header">
             <button class="win-close" type="button" id="closeAboutButton"></button>
@@ -361,7 +366,7 @@
           </div>
         </div>
       </aside>
-      <aside class="win-panel restart-panel" id="restartPanel" role="dialog" aria-modal="true" aria-labelledby="restartTitle" aria-describedby="restartMessage">
+      <aside class="win-panel restart-panel" id="restartPanel" data-foldable-modal="dual" role="dialog" aria-modal="true" aria-labelledby="restartTitle" aria-describedby="restartMessage">
         <div class="win-card restart-card dialog-card">
           <header class="dialog-header">
             <h2 id="restartTitle"></h2>
@@ -375,7 +380,7 @@
           </div>
         </div>
       </aside>
-      <aside class="legends-panel" id="achievementsPanel" aria-labelledby="achievementsTitle" aria-modal="true" role="dialog">
+      <aside class="legends-panel" id="achievementsPanel" data-foldable-modal="dual" aria-labelledby="achievementsTitle" aria-modal="true" role="dialog">
         <div class="legends-card dialog-card">
           <header class="dialog-header">
             <button class="win-close" type="button" id="closeAchievementsButton"></button>
@@ -423,7 +428,7 @@
           </div>
         </div>
       </aside>
-      <aside class="legends-panel settings-panel" id="settingsPanel" aria-labelledby="settingsTitle" aria-modal="true" role="dialog">
+      <aside class="legends-panel settings-panel" id="settingsPanel" data-foldable-modal="dual" aria-labelledby="settingsTitle" aria-modal="true" role="dialog">
         <div class="legends-card settings-card dialog-card">
           <header class="dialog-header">
             <button class="win-close" type="button" id="closeSettingsButton"></button>
@@ -481,32 +486,36 @@
           </div>
         </div>
       </aside>
-      <aside class="legends-panel impostor-rules-panel" id="impostorRulesPanel" aria-labelledby="impostorRulesTitle" aria-modal="true" role="dialog">
+      <aside class="legends-panel impostor-rules-panel" id="impostorRulesPanel" data-foldable-modal="dual" aria-labelledby="impostorRulesTitle" aria-modal="true" role="dialog">
         <div class="legends-card impostor-rules-card dialog-card">
           <header class="dialog-header">
             <button class="win-close" type="button" id="closeImpostorRulesButton"></button>
             <h2 id="impostorRulesTitle"></h2>
           </header>
           <div class="dialog-body" role="region" aria-labelledby="impostorRulesTitle" tabindex="0">
-            <div class="impostor-rules-intro"><i class="icon icon-impostor" aria-hidden="true"></i><p id="impostorRulesIntro"></p></div>
-            <ol class="impostor-rules-steps">
-              <li id="impostorRulesStep1"></li>
-              <li id="impostorRulesStep2"></li>
-              <li><span class="impostor-rules-accuse-icon" aria-hidden="true"><i class="icon icon-zone-person-alert"></i></span> <span id="impostorRulesStep3"></span></li>
-            </ol>
-            <table class="impostor-rules-attempts">
-              <thead><tr><th id="impostorRulesRemaining"></th><th id="impostorRulesChances"></th><th id="impostorRulesTime"></th></tr></thead>
-              <tbody><tr><td>6+</td><td>3</td><td>0:30</td></tr><tr><td>4</td><td>2</td><td>0:15</td></tr><tr><td>2</td><td>1</td><td>0:08</td></tr></tbody>
-            </table>
-            <p class="impostor-rules-caution" id="impostorRulesCaution"></p>
+            <div class="impostor-rules-group">
+              <div class="impostor-rules-intro"><i class="icon icon-impostor" aria-hidden="true"></i><p id="impostorRulesIntro"></p></div>
+              <ol class="impostor-rules-steps">
+                <li id="impostorRulesStep1"></li>
+                <li id="impostorRulesStep2"></li>
+                <li><span class="impostor-rules-accuse-icon" aria-hidden="true"><i class="icon icon-zone-person-alert"></i></span> <span id="impostorRulesStep3"></span></li>
+              </ol>
+            </div>
+            <div class="impostor-rules-group">
+              <table class="impostor-rules-attempts">
+                <thead><tr><th id="impostorRulesRemaining"></th><th id="impostorRulesChances"></th><th id="impostorRulesTime"></th></tr></thead>
+                <tbody><tr><td>6+</td><td>3</td><td>0:30</td></tr><tr><td>4</td><td>2</td><td>0:15</td></tr><tr><td>2</td><td>1</td><td>0:08</td></tr></tbody>
+              </table>
+              <p class="impostor-rules-caution" id="impostorRulesCaution"></p>
+            </div>
           </div>
         </div>
       </aside>
       <footer class="game-footer standalone-only" id="gameFooter"></footer>
     </main>
 
-    <script src="memory-game/js/startup.min.js?v=memory-6fdab2c2f282"></script>
-    <script type="module" id="memoryGameEntry" src="memory-game/js/memory-game.min.js?v=memory-6fdab2c2f282"></script>
-    <script src="memory-game/js/pwa.min.js?v=memory-6fdab2c2f282"></script>
+    <script src="memory-game/js/startup.min.js?v=memory-fe1d7bd2c096"></script>
+    <script type="module" id="memoryGameEntry" src="memory-game/js/memory-game.min.js?v=memory-fe1d7bd2c096"></script>
+    <script src="memory-game/js/pwa.min.js?v=memory-fe1d7bd2c096"></script>
   </body>
 </html>

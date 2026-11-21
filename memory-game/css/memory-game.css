@@ -2306,6 +2306,7 @@ html[data-theme] .game-shell .board.is-impostor .card .character-name { opacity:
 .impostor-rules-attempts { width: 100%; border-collapse: collapse; margin: 20px 0; text-align: center; font-variant-numeric: tabular-nums; }
 .impostor-rules-attempts th, .impostor-rules-attempts td { padding: 6px; border-bottom: 1px solid var(--line); }
 .impostor-rules-caution { font-size: .88rem; line-height: 1.5; }
+.impostor-rules-group { display: contents; }
 .impostor-rules-accuse-icon { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; margin-right: 4px; border-radius: 8px; background: var(--accent); color: #fff; font-size: 1.25rem; vertical-align: middle; }
 
 /* Without a circular badge, the symbol carries more of the card's identity. */
@@ -3092,6 +3093,45 @@ html[data-theme="dark"] .legends-rarity-note:focus-visible {
   grid-area: 1 / var(--foldable-gutter-column, 2) / span var(--foldable-board-rows, 1) / span 1;
   pointer-events: none;
 }
+.foldable-impostor-arrival { display: none; }
+.is-side-by-side .board-area:has(> .board.is-impostor-arriving) {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
+}
+.is-side-by-side .board.is-impostor-arriving,
+.is-side-by-side .board.is-impostor-arriving ~ .foldable-impostor-arrival { grid-area: 2 / 1; }
+.is-side-by-side .board.is-impostor-arriving::before { content: none; }
+.is-side-by-side .board.is-impostor-arriving::after {
+  /* Preserve the empty hinge track while the separate arrival cue is visible. */
+  content: "";
+  position: static;
+  animation: none;
+  transform: none;
+}
+.is-side-by-side .board.is-impostor-arriving ~ .foldable-impostor-arrival {
+  display: grid;
+  grid-template-columns: var(--foldable-pane-tracks);
+  column-gap: var(--foldable-pane-gap);
+  z-index: 12;
+  pointer-events: none;
+}
+.foldable-impostor-arrival::before,
+.foldable-impostor-arrival::after {
+  content: "\f006" / "";
+  display: grid;
+  place-items: center;
+  border-radius: 18px;
+  font: clamp(2.75rem, 10vw, 5rem) / 1 "memory-game";
+  color: #f2f6f9;
+  text-shadow: 0 8px 24px #090d17;
+  background: radial-gradient(ellipse at center, rgba(9, 13, 23, .86) 0%, rgba(18, 25, 37, .6) 35%, transparent 74%);
+  animation: impostor-smoke 1100ms ease-in-out both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .foldable-impostor-arrival::before,
+  .foldable-impostor-arrival::after { animation-name: impostor-arrival-fade; }
+}
 .is-foldable.is-side-by-side .game-shell .board-area .legend-toast {
   width: min(34rem, var(--foldable-left-track));
   margin-inline: 0 auto;
@@ -3131,7 +3171,8 @@ html[data-theme="dark"] .legends-rarity-note:focus-visible {
 .is-foldable .match-insight { margin: 6px 0 0; padding: 5px 8px; }
 .is-foldable #matchInsight.is-in-progress { display: none; }
 .is-foldable #impostorPanel.is-visible:not([hidden]) { display: block; }
-.is-foldable #impostorPanel.has-accusation { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.is-foldable #impostorPanel.has-accusation:not([hidden]) { display: grid; gap: 6px; }
+.is-side-by-side .game-sidebar > #impostorPanel { align-self: start; margin: 0; }
 .is-foldable #impostorPanel #accuseImpostor { min-height: 44px; max-width: 100%; white-space: normal; }
 
 .is-foldable .board-area,
@@ -3209,26 +3250,34 @@ html.is-foldable[data-theme] .game-shell .board.is-impostor .card .character-ico
 
 .is-foldable .game-shell > :is(.win-panel, .rarity-panel, .legends-panel, #collectionPanel) {
   place-items: center;
-  padding: calc(var(--foldable-dialog-top) + var(--foldable-pad-top))
-    calc(var(--foldable-dialog-right) + var(--foldable-pad-right))
-    calc(var(--foldable-dialog-bottom) + var(--foldable-pad-bottom))
-    calc(var(--foldable-dialog-left) + var(--foldable-pad-left));
+  --dialog-padding-top: calc(var(--dialog-region-top, var(--foldable-dialog-top)) + var(--foldable-pad-top));
+  --dialog-padding-right: calc(var(--dialog-region-right, var(--foldable-dialog-right)) + var(--foldable-pad-right));
+  --dialog-padding-bottom: calc(var(--dialog-region-bottom, var(--foldable-dialog-bottom)) + var(--foldable-pad-bottom));
+  --dialog-padding-left: calc(var(--dialog-region-left, var(--foldable-dialog-left)) + var(--foldable-pad-left));
+  padding: var(--dialog-padding-top) var(--dialog-padding-right) var(--dialog-padding-bottom) var(--dialog-padding-left);
 }
 .is-foldable .game-shell > :is(.win-panel, .rarity-panel, .legends-panel, #collectionPanel) > .dialog-card {
   --dialog-safe-top: 0px;
   --dialog-side: clamp(8px, 2vw, 16px);
   --dialog-bottom: 12px;
-  width: min(100%, var(--foldable-dialog-width, 40rem));
+  width: min(100%, var(--dialog-region-width, var(--foldable-dialog-width, 40rem)));
   height: auto;
-  max-height: min(90dvh, 100dvh - var(--foldable-dialog-top) - var(--foldable-dialog-bottom)
-    - var(--foldable-pad-top) - var(--foldable-pad-bottom));
+  max-height: min(90dvh, 100dvh - var(--dialog-padding-top) - var(--dialog-padding-bottom));
   margin: 0;
   border: 1px solid var(--line);
   border-radius: 8px;
 }
-.is-foldable .settings-panel { --foldable-dialog-width: 29rem; }
-.is-foldable :is(.win-panel, .rarity-panel) { --foldable-dialog-width: 32rem; }
-.is-foldable :is(#collectionPanel, #contributionPanel) { --foldable-dialog-width: 48rem; }
+.is-foldable :is(.mode-details-panel, #winPanel) { --foldable-dialog-width: 32.5rem; }
+.is-foldable :is(.restart-panel, .achievement-panel) { --foldable-dialog-width: 27rem; }
+.is-foldable #gameOverPanel { --foldable-dialog-width: 30rem; }
+.is-foldable .settings-panel { --foldable-dialog-width: 34rem; }
+.is-foldable .rarity-panel { --foldable-dialog-width: 38rem; }
+.is-foldable .rarity-panel:has(.rarity-preview-list.is-single) { --foldable-dialog-width: 32rem; }
+.is-foldable .about-panel { --foldable-dialog-width: 42rem; }
+.is-foldable #impostorRulesPanel { --foldable-dialog-width: 43rem; }
+.is-foldable #achievementsPanel { --foldable-dialog-width: 44rem; }
+.is-foldable :is(#collectionPanel, #contributionPanel, #legendsPanel) { --foldable-dialog-width: 46rem; }
+.is-foldable #legendsPanel.is-collection-detail { --foldable-dialog-width: 36rem; }
 .is-foldable .game-shell > #contributionPanel > .contribution-card { height: 44rem; }
 .is-foldable .dialog-card { container-type: inline-size; }
 .is-foldable .dialog-card .dialog-header { padding: 4px var(--dialog-side); gap: 6px; }
@@ -3238,6 +3287,22 @@ html.is-foldable[data-theme] .game-shell .board.is-impostor .card .character-ico
 .is-foldable .dialog-body { padding-top: 10px; }
 .is-foldable .contribution-body { padding: 0; }
 .is-foldable .dialog-body .game-button { min-height: 44px; max-width: 100%; }
+
+.is-foldable .mode-details-card .dialog-body { gap: 8px; }
+.is-foldable .mode-details-card p { line-height: 1.45; }
+.is-foldable .mode-details-card .home-unlock { gap: 5px; }
+.is-foldable .mode-details-card .impostor-trial-offer { flex-wrap: wrap; gap: 8px; padding: 6px 0; }
+.is-foldable #impostorTrialRemaining { flex: 1 1 12ch; }
+.is-foldable #impostorTrialButton {
+  background: var(--panel);
+  color: var(--accent-dark);
+  border: 1px solid var(--line);
+}
+.is-foldable .mode-details-card :is(#modeDetailsAwards, #homeSixthMirrorBook):not([hidden]) {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
 
 .is-foldable .rarity-card .rarity-preview-list {
   grid-template-columns: minmax(0, 1fr);
@@ -3261,9 +3326,22 @@ html.is-foldable[data-theme] .game-shell .board.is-impostor .card .character-ico
 .is-foldable .rarity-card .rarity-preview-card h3 { align-self: end; margin: 0; }
 .is-foldable .rarity-card .rarity-preview-card strong { align-self: start; font-size: .875rem; }
 .is-foldable .rarity-card .rarity-preview-card p { grid-column: 1 / -1; margin-top: 4px; line-height: 1.4; }
+@container (min-width: 35rem) {
+  .is-foldable:not(.has-dual-pane-dialogs) .rarity-card .rarity-preview-list:not(.is-single) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .is-foldable:not(.has-dual-pane-dialogs) .rarity-card .rarity-preview-list:not(.is-single) .rarity-preview-card {
+    display: flex;
+    justify-content: flex-start;
+    gap: 6px;
+    text-align: center;
+  }
+  .is-foldable:not(.has-dual-pane-dialogs) .rarity-card .rarity-preview-list:not(.is-single) :is(h3, strong) { align-self: auto; }
+}
 
 .is-foldable .progress-tabs { margin-bottom: 10px; }
 .is-foldable .mode-records { margin: 10px 0; }
+.is-foldable .records-grid .record-stat { padding: 7px 8px; min-width: 0; }
 .is-foldable .achievements-list { gap: 6px; }
 .is-foldable .achievement-row { gap: 8px; padding: 7px; }
 .is-foldable .achievement-row > div { min-width: 0; }
@@ -3279,7 +3357,6 @@ html.is-foldable[data-theme] .game-shell .board.is-impostor .card .character-ico
 .is-foldable .settings-theme legend { margin-bottom: 4px; }
 .is-foldable .theme-option span { min-height: 44px; }
 .is-foldable .settings-reset { padding-top: 10px; }
-.is-foldable .settings-reset p { margin-bottom: 8px; }
 
 .is-foldable .about-biography, .is-foldable .about-sound-credits { max-width: 65ch; margin-inline: auto; }
 .is-foldable .about-biography p { margin-bottom: 10px; }
@@ -3295,6 +3372,10 @@ html.is-foldable[data-theme] .game-shell .board.is-impostor .card .character-ico
 .is-foldable .impostor-rules-intro { gap: 8px; margin-bottom: 8px; }
 .is-foldable .impostor-rules-steps { gap: 8px; margin: 8px 0; }
 .is-foldable .impostor-rules-steps li { padding-left: 32px; }
+.is-foldable .impostor-rules-card :is(.impostor-rules-intro, .impostor-rules-steps, .impostor-rules-caution) {
+  max-width: 68ch;
+  margin-inline: auto;
+}
 .is-foldable .impostor-rules-attempts { table-layout: fixed; margin: 8px 0; }
 .is-foldable .impostor-rules-attempts :is(th, td) { padding: 4px; overflow-wrap: anywhere; }
 
@@ -3308,7 +3389,51 @@ html.is-foldable[data-theme] .game-shell .board.is-impostor .card .character-ico
 }
 .is-foldable .collection-progress-summary > p { margin-bottom: 3px; }
 .is-foldable #collectionProgress { display: block; height: 8px; }
-.is-foldable .collection-group, .is-foldable .collection-contribution { margin-top: 10px; }
+.is-foldable .collection-group { margin-top: 10px; }
+.is-foldable :is(.collection-contribution, .legends-footer):not([hidden]),
+.is-foldable .settings-reset {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px 16px;
+  text-align: start;
+}
+.is-foldable :is(.collection-contribution, .legends-footer) {
+  justify-content: flex-start;
+  margin-top: 14px;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+}
+.is-foldable :is(#collectionContribution, #legendsRarityNote, #resetGameWarning) {
+  max-width: 42ch;
+  margin: 0;
+}
+.is-foldable :is(#collectionContribution, #legendsRarityNote) {
+  width: auto;
+  padding: 4px 0;
+  color: var(--muted);
+  font-size: 1rem;
+  font-weight: 650;
+  line-height: 1.4;
+  text-align: start;
+}
+.is-foldable :is(#collectionSubmit, #legendsGetCopyButton, #resetGameButton) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  width: auto;
+}
+.is-foldable .settings-reset #resetGameError { flex-basis: 100%; margin: 0; }
+@container (min-width: 31rem) {
+  .is-foldable :is(.collection-contribution, .legends-footer):not([hidden]),
+  .is-foldable .settings-reset {
+    flex-flow: row wrap;
+    align-items: center;
+  }
+  .is-foldable :is(#collectionContribution, #legendsRarityNote, #resetGameWarning) { flex: 1 1 18rem; }
+  .is-foldable :is(#collectionSubmit, #legendsGetCopyButton, #resetGameButton) { margin-inline-start: auto; }
+}
 .is-foldable .collection-group h3 { margin: 0 0 4px; }
 .is-foldable .collection-info { flex-basis: 44px; width: 44px; height: 44px; }
 .is-foldable .collection-grid {
@@ -3318,19 +3443,148 @@ html.is-foldable[data-theme] .game-shell .board.is-impostor .card .character-ico
 @container (min-width: 27rem) {
   .is-foldable .collection-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
-@container (min-width: 41rem) {
+@container (min-width: 44rem) {
   .is-foldable .collection-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 }
 .is-foldable .collection-mirror.rarity-preview-card { min-height: 0; padding: 7px 4px; gap: 4px; }
 .is-foldable .collection-mirror strong { font-size: .875rem; line-height: 1.3; }
 .is-foldable .collection-mirror > span:last-child { font-size: 1rem; }
 
-.is-foldable #winPanel .dialog-header h2 { font-size: clamp(1.25rem, 4vw, 1.9rem); }
+.is-foldable #legendsPanel .legend-row { grid-template-columns: minmax(0, 1fr); gap: 8px; padding: 8px; }
+.is-foldable #legendsPanel .legend-category { padding-block: 3px 6px; }
+.is-foldable #legendsPanel .legend-category .legend-mark { margin-bottom: 6px; }
+@container (min-width: 30rem) {
+  .is-foldable #legendsPanel .legend-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+.round-dialog-copy { display: contents; }
+.is-foldable #winPanel .dialog-header h2 { font-size: clamp(1.25rem, 3.25vw, 1.75rem); }
 .is-foldable #winMessage, .is-foldable .performance-metrics,
 .is-foldable .win-card .performance-notification, .is-foldable .win-records-link { margin-bottom: 6px; }
 .is-foldable .win-records-link { min-height: 44px; }
 .is-foldable .win-actions { gap: 6px; }
 @container (min-width: 23rem) {
   .is-foldable #winPanel .win-actions { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .is-foldable #winPanel .win-actions > :is(#playAgainButton, #previewRewardButton) { grid-column: 1 / -1; }
+  .is-foldable #winPanel .win-actions > :is(#playAgainButton, #previewRewardButton, #winShareButton) { grid-column: 1 / -1; }
+}
+
+/* Use one backdrop, header and scroll container for both panes. The tracks
+   follow the reported segments and reserve clearance even at a zero-width fold. */
+.has-dual-pane-dialogs [data-foldable-modal="dual"]:not(:has(.rarity-preview-list.is-single)) {
+  --dialog-region-top: var(--foldable-top);
+  --dialog-region-right: var(--foldable-right);
+  --dialog-region-bottom: var(--foldable-bottom);
+  --dialog-region-left: var(--foldable-left);
+  --dialog-region-width: 100%;
+}
+.has-dual-pane-dialogs .game-shell:has(> #collectionPanel.is-visible)
+  > #rarityPanel:has(.rarity-preview-list.is-single) {
+  /* Center the compact card in the opposite pane while the fixed backdrop
+     continues to cover both panes and stays independent of Collection scroll. */
+  --dialog-region-top: var(--foldable-right-pane-top);
+  --dialog-region-right: var(--foldable-right);
+  --dialog-region-bottom: var(--foldable-right-pane-bottom);
+  --dialog-region-left: calc(var(--foldable-left) + var(--foldable-left-pane) + var(--foldable-hinge));
+  --dialog-region-width: 22rem;
+  grid-template: minmax(0, 1fr) / minmax(0, 1fr);
+}
+.has-dual-pane-dialogs .game-shell:has(> #collectionPanel.is-visible)
+  > #rarityPanel:has(.rarity-preview-list.is-single) > .dialog-card {
+  animation-name: toast-fade-in;
+}
+.has-dual-pane-dialogs [data-foldable-modal="dual"] > .dialog-card {
+  --dialog-hinge-clearance: 12px;
+  /* Subtract outer padding, the dialog border and inner padding from the first pane. */
+  --dialog-left-track: calc(var(--foldable-left-pane) - var(--foldable-pad-left)
+    - 1px - var(--dialog-side) - var(--dialog-hinge-clearance));
+  --dialog-pane-gap: calc(var(--foldable-hinge) + 2 * var(--dialog-hinge-clearance));
+  --dialog-pane-tracks: minmax(0, var(--dialog-left-track)) minmax(0, 1fr);
+}
+.has-dual-pane-dialogs [data-foldable-modal="dual"]:not(:has(.rarity-preview-list.is-single)) .dialog-header,
+.has-dual-pane-dialogs :is(.settings-card, .about-card, .impostor-rules-card) .dialog-body,
+.has-dual-pane-dialogs :is(.win-card, .restart-card):not(.achievement-card) .dialog-body,
+.has-dual-pane-dialogs :is(.records-grid, .achievements-list, .rarity-preview-list:not(.is-single),
+  .collection-grid, .progress-tabs),
+.has-dual-pane-dialogs.is-foldable :is(.collection-contribution, .legends-footer):not([hidden]),
+.has-dual-pane-dialogs #legendsPanel .legend-row {
+  display: grid;
+  grid-template-columns: var(--dialog-pane-tracks);
+  column-gap: var(--dialog-pane-gap);
+}
+.has-dual-pane-dialogs :is(#winPanel, #gameOverPanel) .dialog-header { grid-template-columns: var(--dialog-pane-tracks); }
+.has-dual-pane-dialogs #restartPanel .dialog-header { padding-block-start: 14px; }
+.has-dual-pane-dialogs :is(#winPanel, #gameOverPanel, #restartPanel) .dialog-header h2 { grid-column: 1; text-align: start; }
+.has-dual-pane-dialogs :is(#winPanel, #gameOverPanel) .dialog-header .win-close { grid-column: 2; }
+.has-dual-pane-dialogs :is(#winPanel, #gameOverPanel, #restartPanel) .dialog-body { align-items: center; text-align: start; }
+.has-dual-pane-dialogs .round-dialog-copy { display: block; min-width: 0; }
+.has-dual-pane-dialogs :is(#winPanel, #gameOverPanel, #restartPanel) .win-actions { grid-column: 2; }
+.has-dual-pane-dialogs :is(#winPanel, #restartPanel) .win-actions { grid-template-columns: minmax(0, 1fr); }
+.has-dual-pane-dialogs #gameOverPanel .win-actions { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.has-dual-pane-dialogs #tryAgainButton { grid-column: 1 / -1; }
+.has-dual-pane-dialogs [data-foldable-modal="dual"]:not(:has(.rarity-preview-list.is-single)) .dialog-header h2 {
+  grid-column: 1;
+  grid-row: 1;
+}
+.has-dual-pane-dialogs [data-foldable-modal="dual"]:not(:has(.rarity-preview-list.is-single)) .dialog-header .win-close {
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: end;
+}
+.has-dual-pane-dialogs .progress-tabs { padding: 0; border: 0; }
+.has-dual-pane-dialogs .progress-tabs [role="tab"] { min-height: 48px; border: 1px solid var(--line); font-size: 1.05rem; }
+.has-dual-pane-dialogs :is(.personal-records h3, .mode-records h4,
+  .personal-records p, #achievementsProgress, #optionalAchievements > :is(h3, p),
+  .collection-progress-summary, .collection-group h3) {
+  width: min(100%, var(--dialog-left-track));
+  overflow-wrap: anywhere;
+}
+.has-dual-pane-dialogs .records-grid .record-stat:last-child:nth-child(odd) { grid-column: auto; }
+.has-dual-pane-dialogs .achievement-row { align-items: start; }
+.has-dual-pane-dialogs :is(.settings-card, .about-card, .impostor-rules-card) .dialog-body {
+  align-items: start;
+  align-content: start;
+  row-gap: 8px;
+}
+.has-dual-pane-dialogs .settings-row,
+.has-dual-pane-dialogs :is(.settings-theme, .settings-reset, .about-book, .about-websites, .about-sound-credits) {
+  min-width: 0;
+  margin-top: 0;
+}
+.has-dual-pane-dialogs .settings-reset { flex-direction: column; align-items: start; }
+.has-dual-pane-dialogs #resetGameWarning { flex-basis: auto; }
+.has-dual-pane-dialogs #resetGameButton { margin-inline-start: 0; }
+.has-dual-pane-dialogs .about-card .dialog-body { grid-template-rows: min-content min-content 1fr; }
+.has-dual-pane-dialogs .about-book { grid-area: 1 / 2 / span 3; grid-template-columns: minmax(0, 1fr); }
+.has-dual-pane-dialogs .about-biography { grid-area: 1 / 1; }
+.has-dual-pane-dialogs .about-websites { grid-area: 2 / 1; }
+.has-dual-pane-dialogs .about-sound-credits { grid-area: 3 / 1; }
+.has-dual-pane-dialogs .impostor-rules-group { display: block; min-width: 0; }
+.has-dual-pane-dialogs :is(.collection-contribution, .legends-footer) { align-items: center; }
+.has-dual-pane-dialogs :is(#collectionContribution, #legendsRarityNote) { grid-column: 1; max-width: none; }
+.has-dual-pane-dialogs :is(#collectionSubmit, #legendsGetCopyButton) { grid-column: 2; justify-self: end; }
+.has-wide-dialog-panes.has-dual-pane-dialogs .collection-grid {
+  grid-template-columns: repeat(2, minmax(0, calc((var(--dialog-left-track) - 6px) / 2)))
+    calc(var(--dialog-pane-gap) - 12px) repeat(2, minmax(0, 1fr));
+  column-gap: 6px;
+}
+.has-wide-dialog-panes .collection-grid > :nth-child(4n + 1) { grid-column: 1; }
+.has-wide-dialog-panes .collection-grid > :nth-child(4n + 2) { grid-column: 2; }
+.has-wide-dialog-panes .collection-grid > :nth-child(4n + 3) { grid-column: 4; }
+.has-wide-dialog-panes .collection-grid > :nth-child(4n + 4) { grid-column: 5; }
+.has-dual-pane-dialogs #legendsPanel .legend-row {
+  padding: 0;
+  border-inline: 0;
+  border-top: 0;
+  border-radius: 0;
+}
+.has-dual-pane-dialogs #legendsPanel .legend-category { grid-column: 1; grid-row: 1; }
+.has-dual-pane-dialogs #legendsPanel .legend-cell { grid-row: 2; padding-bottom: 6px; }
+.is-foldable .rarity-card .rarity-preview-list.is-single .rarity-preview-card {
+  padding: 4px 0;
+  border: 0;
+  background: none;
+}
+@container (min-width: 18rem) {
+  .is-foldable .rarity-card .rarity-preview-list.is-single .character-mark { grid-row: 1 / span 3; align-self: start; }
+  .is-foldable .rarity-card .rarity-preview-list.is-single p { grid-column: 2; }
 }
