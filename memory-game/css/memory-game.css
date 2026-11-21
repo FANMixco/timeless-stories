@@ -203,6 +203,7 @@ html.is-modal-open body {
 .home-coming-soon-lock { position: absolute; top: 22px; right: 18px; width: 20px; height: 20px; }
 .home-coming-soon-description { grid-column: 1 / -1; margin: 0; font-size: 0.95rem; line-height: 1.6; }
 .home-coming-soon-status { margin-top: auto; justify-self: start; padding: 4px 12px; border-radius: 20px; background: var(--line); color: var(--ink); font-size: 0.8rem; font-weight: 700; line-height: 1.5; }
+.home-coming-soon-meta { display: contents; }
 .home-coming-soon-book { color: var(--accent-dark); font-size: 0.9rem; font-weight: 700; line-height: 1.5; text-underline-offset: 3px; }
 .home-coming-soon-book[hidden] { display: none; }
 
@@ -2874,4 +2875,373 @@ html[data-theme="dark"] .legends-rarity-note:focus-visible {
   @media (prefers-reduced-motion: reduce) {
     .home-card:hover, .home-coming-soon:hover { transform: none; }
   }
+}
+
+.collection-progress-summary { display: contents; }
+.collection-progress-summary > p { margin-top: 0; }
+
+/* CSS-only segment geometry for browsers without window.viewport.segments. */
+@media (horizontal-viewport-segments: 2), (vertical-viewport-segments: 2) {
+  :root {
+    --foldable-segment-0: env(viewport-segment-left 0 0) env(viewport-segment-top 0 0)
+      env(viewport-segment-right 0 0) env(viewport-segment-bottom 0 0);
+  }
+}
+@media (horizontal-viewport-segments: 2) {
+  :root {
+    --foldable-segment-1: env(viewport-segment-left 1 0) env(viewport-segment-top 1 0)
+      env(viewport-segment-right 1 0) env(viewport-segment-bottom 1 0);
+  }
+}
+@media (vertical-viewport-segments: 2) {
+  :root {
+    --foldable-segment-1: env(viewport-segment-left 0 1) env(viewport-segment-top 0 1)
+      env(viewport-segment-right 0 1) env(viewport-segment-bottom 0 1);
+  }
+}
+
+.is-foldable {
+  --foldable-pad-top: max(10px, env(safe-area-inset-top, 0px));
+  --foldable-pad-right: max(10px, env(safe-area-inset-right, 0px));
+  --foldable-pad-bottom: max(10px, env(safe-area-inset-bottom, 0px));
+  --foldable-pad-left: max(10px, env(safe-area-inset-left, 0px));
+  --foldable-height: calc(100dvh - var(--foldable-top) - var(--foldable-bottom));
+}
+
+.is-foldable .game-shell:not([hidden]),
+.is-foldable .game-shell:not(.is-home):has(.board.is-impostor):not([hidden]) {
+  position: relative;
+  left: calc((var(--foldable-left) - var(--foldable-right)) / 2);
+  display: block;
+  width: min(64rem, 100% - var(--foldable-left) - var(--foldable-right));
+  height: var(--foldable-height);
+  min-height: 0;
+  margin-top: var(--foldable-top);
+  padding: var(--foldable-pad-top) var(--foldable-pad-right) var(--foldable-pad-bottom) var(--foldable-pad-left);
+  overflow: auto;
+  overscroll-behavior: contain;
+  overflow-wrap: anywhere;
+}
+
+.is-foldable .game-home { padding: 4px 0 8px; container-type: inline-size; }
+.is-foldable .home-heading { margin-bottom: 12px; }
+.is-foldable .home-heading h1 { font-size: clamp(1.5rem, 6cqi, 2.5rem); }
+.is-foldable #homeTitle br { display: none; }
+.is-foldable .home-heading p { margin-top: 4px; line-height: 1.35; }
+.is-foldable .home-modes { gap: 8px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.is-foldable .home-tools { gap: 8px; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@container (min-width: 27rem) {
+  .is-foldable .home-modes { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+.is-foldable .home-modes > :is(.home-card, .home-coming-soon):not([hidden]) {
+  display: grid;
+  grid-template-columns: 1.5rem minmax(0, 1fr);
+  grid-template-rows: auto 1fr auto auto;
+  align-items: center;
+  min-height: 0;
+  padding: 9px 10px;
+  gap: 6px;
+  text-align: start;
+}
+.is-foldable .home-modes > :is(.home-card, .home-coming-soon) > :is(.icon, .home-move-icon):not(.home-lock-icon) {
+  align-self: flex-start;
+  grid-area: 1 / 1;
+  width: 1.5rem;
+  height: 1.5rem;
+  font-size: 1.2rem;
+}
+.is-foldable .home-modes .home-move-icon::before { inset: 0; }
+.is-foldable .home-modes :is(strong, .home-coming-soon-heading strong) { font-size: 1rem; line-height: 1.2; }
+.is-foldable .home-modes > .home-card > strong,
+.is-foldable .home-coming-soon-heading { grid-area: 1 / 2; }
+.is-foldable .home-modes > .home-card > span[id$="-description"],
+.is-foldable .home-modes > .home-card.is-locked > span[id$="-description"],
+.is-foldable .home-coming-soon-description {
+  display: block;
+  grid-column: 1 / -1;
+  grid-row: 2;
+  align-self: start;
+  font-size: .85rem;
+  line-height: 1.35;
+}
+.is-foldable .home-coming-soon-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 2px 8px;
+  padding: 0;
+}
+.is-foldable .home-coming-soon-heading > span { margin: 0; font-size: .75rem; line-height: 1.25; }
+.is-foldable .home-modes .home-unlock { grid-area: 4 / 1 / 5 / -1; align-items: flex-start; }
+.is-foldable .home-lock-badge { position: static; font-size: .75rem; }
+.is-foldable .home-coming-soon-lock { display: none; }
+.is-foldable .home-coming-soon-meta {
+  display: flex;
+  grid-area: 4 / 1 / 5 / -1;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px 8px;
+}
+.is-foldable .home-book-lock-badge { display: inline-flex; }
+.is-foldable .home-modes .home-coming-soon-status {
+  max-width: 100%;
+  margin: 0;
+  padding: 1px 6px;
+  font-size: .75rem;
+}
+.is-foldable .home-tools { margin-top: 10px; }
+.is-foldable .home-tools #homeSettings, .is-foldable .home-tools:has(#homeRateApp:not([hidden])) #homeSettings { grid-column: auto; }
+.is-foldable #homeRateApp { grid-column: 2; }
+.is-foldable .home-tool { min-height: 44px; padding: 5px; gap: 4px; flex-wrap: wrap; }
+.is-foldable .home-tool i { flex-shrink: 0; width: 1em; height: 1em; font-size: 1rem; }
+.is-foldable .home-tool strong { min-width: 0; font-size: .875rem; }
+.is-foldable .is-home .game-footer { margin-top: 8px; }
+.is-foldable .game-footer .footer-author { white-space: normal; }
+
+/* Side-by-side panes share the menu and board. Each track ends before
+   the hinge, including when it is a zero-width fold rather than a gap. */
+.is-side-by-side {
+  --foldable-hinge-padding: 8px;
+  --foldable-left-track: calc(var(--foldable-left-pane) - var(--foldable-pad-left) - var(--foldable-hinge-padding));
+  --foldable-pane-gap: calc(var(--foldable-hinge) + var(--foldable-hinge-padding) * 2);
+  --foldable-pane-tracks: minmax(0, var(--foldable-left-track)) minmax(0, 1fr);
+}
+.is-foldable.is-side-by-side .game-shell { max-width: none; width: calc(100% - var(--foldable-left) - var(--foldable-right)); }
+.is-foldable.is-side-by-side :is(.home-modes, .game-sidebar, .game-top, .game-actions) {
+  display: grid;
+  grid-template-columns: var(--foldable-pane-tracks);
+  column-gap: var(--foldable-pane-gap);
+}
+.is-side-by-side .home-heading { max-width: var(--foldable-left-track); text-align: start; }
+.is-side-by-side .home-heading h1 { font-size: clamp(1.5rem, var(--foldable-left-track) * .067, 2.125rem); }
+.is-side-by-side .home-heading p { max-width: 36ch; font-size: .875rem; }
+.is-side-by-side .home-tools {
+  grid-template-columns: minmax(0, var(--foldable-left-track)) var(--foldable-pane-gap) repeat(2, minmax(0, 1fr));
+  column-gap: 0;
+}
+.is-side-by-side #homeCollection { grid-column: 1; }
+.is-side-by-side #homeRecords { grid-column: 3; margin-inline-end: 4px; }
+.is-side-by-side .home-tools #homeSettings,
+.is-side-by-side .home-tools:has(#homeRateApp:not([hidden])) #homeSettings { grid-column: 4; margin-inline-start: 4px; }
+.is-side-by-side #homeRateApp { grid-column: 1; justify-self: center; }
+.is-side-by-side .is-home .game-footer { width: var(--foldable-left-track); margin-inline: 0; text-align: start; }
+.is-side-by-side .game-top { grid-column: 1 / -1; }
+.is-side-by-side .game-actions { justify-content: normal; }
+.is-side-by-side .game-primary-actions { grid-column: 1; }
+.is-side-by-side .game-secondary-actions { grid-column: 2; }
+.is-side-by-side .status-grid { grid-column: 1; align-self: start; }
+.is-side-by-side .game-sidebar > :is(.match-insight, #impostorPanel) { grid-column: 2; }
+.is-side-by-side .game-sidebar > :is(#matchInsight, #impostorPanel) { grid-row: 2; }
+.is-foldable.is-side-by-side .board-area .board {
+  grid-template-columns: var(--foldable-board-tracks, var(--foldable-pane-tracks));
+  justify-content: start;
+  padding-left: var(--foldable-board-start, 0px);
+  max-width: none;
+}
+.is-side-by-side .board::after {
+  content: "";
+  grid-area: 1 / var(--foldable-gutter-column, 2) / span var(--foldable-board-rows, 1) / span 1;
+  pointer-events: none;
+}
+.is-foldable.is-side-by-side .game-shell .board-area .legend-toast {
+  width: min(34rem, 100% - var(--foldable-left-track) - var(--foldable-pane-gap));
+  margin-inline: auto 0;
+}
+.is-foldable.is-side-by-side .game-shell .board-area .legend-toast[data-comparison="true"] { margin-inline: auto 0; }
+.is-foldable.is-side-by-side .game-shell > .legend-toast { width: min(100%, var(--foldable-left-track)); margin-inline: 0; }
+
+.is-foldable .game-layout,
+.is-foldable .game-shell:not(.is-home):has(.board.is-impostor) > .game-layout {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 6px;
+  overflow: visible;
+}
+.is-foldable .game-top {
+  grid-template-columns: minmax(0, 1fr) minmax(0, auto);
+  align-items: center;
+  gap: 4px 8px;
+  margin-bottom: 6px;
+}
+.is-foldable .game-top > div:first-child { text-align: start; }
+.is-foldable .game-title { font-size: clamp(1.25rem, 3vw, 1.85rem); }
+.is-foldable .active-game-mode { margin-top: 2px; }
+.is-foldable .game-actions { grid-column: 1 / -1; grid-row: 2; }
+.is-foldable .game-secondary-actions { flex: 0 1 auto; margin-inline-start: auto; }
+.is-foldable .combo-toast {
+  position: static;
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: end;
+  max-width: 100%;
+  transform: none;
+  font-size: .95rem;
+}
+.is-foldable .status-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; margin: 0; }
+.is-foldable .status-grid.is-untimed { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.is-foldable .status-item { padding: 4px 7px; }
+.is-foldable .status-value { margin-top: 1px; }
+.is-foldable .match-insight { margin: 6px 0 0; padding: 5px 8px; }
+.is-foldable #matchInsight.is-in-progress { display: none; }
+.is-foldable #impostorPanel.is-visible:not([hidden]) { display: block; }
+.is-foldable #impostorPanel.has-accusation { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.is-foldable #impostorPanel #accuseImpostor { min-height: 44px; max-width: 100%; white-space: normal; }
+
+.is-foldable .board-area,
+.is-foldable .board-area:has(.board.is-intro) { display: block; min-height: 0; }
+.is-foldable .board {
+  gap: 6px;
+  width: 100%;
+  max-width: none;
+  justify-content: center;
+}
+.is-foldable .board:not(.is-intro) {
+  grid-template-columns: repeat(var(--foldable-board-columns, 5), minmax(0, var(--foldable-card-width, 96px)));
+}
+.is-foldable .board.is-intro { max-width: 18rem; }
+.is-foldable .board:not(.is-intro) .card .card-front { gap: 2px; padding: 3px; }
+.is-foldable .board:not(.is-intro) .card .character-name { font-size: .6875rem; line-height: 1.1; }
+.is-foldable .board:not(.is-intro) .card .character-mark,
+html.is-foldable[data-theme] .game-shell .board.is-impostor .card .character-mark {
+  width: max(20px, var(--foldable-card-width, 96px) * .42);
+  height: max(20px, var(--foldable-card-width, 96px) * .42);
+}
+.is-foldable .board:not(.is-intro) .card .character-icon,
+html.is-foldable[data-theme] .game-shell .board.is-impostor .card .character-icon {
+  font-size: max(1rem, var(--foldable-card-width, 96px) * .34);
+}
+.is-foldable .board .card-back span { width: 30px; height: 30px; }
+.is-foldable .board-area:has(> .board.is-impostor.is-complete) { display: grid; }
+.is-foldable .board-area > .board.is-impostor.is-complete { height: clamp(96px, var(--foldable-height) - 180px, 320px); }
+.is-foldable .board.is-impostor.is-complete + .impostor-victory { font-size: clamp(4rem, var(--foldable-height) - 190px, 14rem); }
+
+/* Hints take a compact, in-flow row. Comparisons only use spare space
+   below the board and never change its dimensions. */
+.is-foldable .game-shell .board-area .legend-toast,
+.is-foldable .game-shell > .legend-toast {
+  position: relative;
+  inset: auto;
+  width: min(100%, 34rem);
+  margin: 0 auto 6px;
+  padding: 4px 8px;
+  align-items: center;
+  gap: 6px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  transform: none;
+  animation-name: board-toast-in;
+}
+.is-foldable .game-shell .board-area .legend-toast[data-tutorial="true"] { grid-template-columns: minmax(0, 1fr); }
+.is-foldable .game-shell .board-area .legend-toast[data-comparison="true"] {
+  position: absolute;
+  inset: calc(100% + 6px) 0 auto;
+  margin: 0 auto;
+}
+.is-foldable .game-shell .legend-toast[data-space-suppressed="true"] { display: none; }
+.is-foldable .legend-toast strong { font-size: .9rem; }
+.is-foldable .legend-toast button { width: 44px; height: 44px; }
+.is-foldable :is(.game-button, .home-tool) { white-space: normal; overflow-wrap: anywhere; }
+
+.is-foldable .game-shell > :is(.win-panel, .rarity-panel, .legends-panel, #collectionPanel) {
+  place-items: center;
+  padding: calc(var(--foldable-dialog-top) + var(--foldable-pad-top))
+    calc(var(--foldable-dialog-right) + var(--foldable-pad-right))
+    calc(var(--foldable-dialog-bottom) + var(--foldable-pad-bottom))
+    calc(var(--foldable-dialog-left) + var(--foldable-pad-left));
+}
+.is-foldable .game-shell > :is(.win-panel, .rarity-panel, .legends-panel, #collectionPanel) > .dialog-card {
+  --dialog-safe-top: 0px;
+  --dialog-side: clamp(8px, 2vw, 16px);
+  --dialog-bottom: 12px;
+  width: min(100%, var(--foldable-dialog-width, 40rem));
+  height: auto;
+  max-height: min(90dvh, 100dvh - var(--foldable-dialog-top) - var(--foldable-dialog-bottom)
+    - var(--foldable-pad-top) - var(--foldable-pad-bottom));
+  margin: 0;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+.is-foldable .settings-panel { --foldable-dialog-width: 29rem; }
+.is-foldable :is(.win-panel, .rarity-panel) { --foldable-dialog-width: 32rem; }
+.is-foldable :is(#collectionPanel, #contributionPanel) { --foldable-dialog-width: 48rem; }
+.is-foldable .game-shell > #contributionPanel > .contribution-card { height: 44rem; }
+.is-foldable .dialog-card { container-type: inline-size; }
+.is-foldable .dialog-card .dialog-header { padding: 4px var(--dialog-side); gap: 6px; }
+.is-foldable .dialog-card .dialog-header .win-close { flex-basis: 44px; width: 44px; height: 44px; }
+.is-foldable :is(#winPanel, #gameOverPanel) .dialog-header { grid-template-columns: 44px minmax(0, 1fr) 44px; }
+.is-foldable :is(#winPanel, #gameOverPanel) .dialog-header h2 { text-align: center; }
+.is-foldable .dialog-body { padding-top: 10px; }
+.is-foldable .contribution-body { padding: 0; }
+.is-foldable .dialog-body .game-button { min-height: 44px; max-width: 100%; }
+
+.is-foldable .progress-tabs { margin-bottom: 10px; }
+.is-foldable .mode-records { margin: 10px 0; }
+.is-foldable .achievements-list { gap: 6px; }
+.is-foldable .achievement-row { gap: 8px; padding: 7px; }
+.is-foldable .achievement-row > div { min-width: 0; }
+.is-foldable .achievement-row .achievement-icon { flex-basis: 32px; font-size: 1.8rem; }
+.is-foldable .achievement-row h3, .is-foldable .achievement-row p { margin: 0 0 3px; line-height: 1.3; }
+.is-foldable #optionalAchievements { margin-top: 12px; }
+
+.is-foldable .settings-row { margin-top: 2px; gap: 8px; }
+.is-foldable .settings-match-toasts { display: flex; }
+.is-foldable .settings-row .language-control { flex-shrink: 1; min-width: 0; }
+.is-foldable .settings-row #languageButton { padding-inline: 7px; }
+.is-foldable .settings-theme, .is-foldable .settings-reset { margin-top: 10px; }
+.is-foldable .settings-theme legend { margin-bottom: 4px; }
+.is-foldable .theme-option span { min-height: 44px; }
+.is-foldable .settings-reset { padding-top: 10px; }
+.is-foldable .settings-reset p { margin-bottom: 8px; }
+
+.is-foldable .about-biography, .is-foldable .about-sound-credits { max-width: 65ch; margin-inline: auto; }
+.is-foldable .about-biography p { margin-bottom: 10px; }
+.is-foldable .about-book { grid-template-columns: minmax(0, 1fr); gap: 10px; margin-top: 12px; padding: 10px; }
+.is-foldable .about-book-preview { width: min(100%, 240px); margin-inline: auto; }
+.is-foldable .about-eyebrow, .is-foldable .about-book-copy > p:not(.about-eyebrow) { margin: 0 0 8px; }
+.is-foldable .about-websites, .is-foldable .about-sound-credits { margin-top: 10px; }
+.is-foldable .about-sound-credits { padding-top: 8px; }
+@container (min-width: 28rem) {
+  .is-foldable .about-book { grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); }
+}
+
+.is-foldable .impostor-rules-intro { gap: 8px; margin-bottom: 8px; }
+.is-foldable .impostor-rules-steps { gap: 8px; margin: 8px 0; }
+.is-foldable .impostor-rules-steps li { padding-left: 32px; }
+.is-foldable .impostor-rules-attempts { table-layout: fixed; margin: 8px 0; }
+.is-foldable .impostor-rules-attempts :is(th, td) { padding: 4px; overflow-wrap: anywhere; }
+
+.is-foldable .collection-progress-summary {
+  display: block;
+  position: sticky;
+  top: -10px;
+  z-index: 1;
+  background: var(--panel);
+  padding: 4px 0;
+}
+.is-foldable .collection-progress-summary > p { margin-bottom: 3px; }
+.is-foldable #collectionProgress { display: block; height: 8px; }
+.is-foldable .collection-group, .is-foldable .collection-contribution { margin-top: 10px; }
+.is-foldable .collection-group h3 { margin: 0 0 4px; }
+.is-foldable .collection-info { flex-basis: 44px; width: 44px; height: 44px; }
+.is-foldable .collection-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+}
+@container (min-width: 27rem) {
+  .is-foldable .collection-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@container (min-width: 41rem) {
+  .is-foldable .collection-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+.is-foldable .collection-mirror.rarity-preview-card { min-height: 0; padding: 7px 4px; gap: 4px; }
+.is-foldable .collection-mirror strong { font-size: .875rem; line-height: 1.3; }
+.is-foldable .collection-mirror > span:last-child { font-size: 1rem; }
+
+.is-foldable #winPanel .dialog-header h2 { font-size: clamp(1.25rem, 4vw, 1.9rem); }
+.is-foldable #winMessage, .is-foldable .performance-metrics,
+.is-foldable .win-card .performance-notification, .is-foldable .win-records-link { margin-bottom: 6px; }
+.is-foldable .win-records-link { min-height: 44px; }
+.is-foldable .win-actions { gap: 6px; }
+@container (min-width: 23rem) {
+  .is-foldable #winPanel .win-actions { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .is-foldable #winPanel .win-actions > :is(#playAgainButton, #previewRewardButton) { grid-column: 1 / -1; }
 }

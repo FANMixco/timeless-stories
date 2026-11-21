@@ -13,6 +13,7 @@ import { createHomeScreen } from "./modules/home.mjs";
 import { createImpostorTrial, impostorTrialStorageKey } from "./modules/impostor-trial.mjs";
 import { createPreviewCountdown } from "./modules/preview.mjs";
 import { createSpokenCountdown } from "./modules/spoken-countdown.mjs";
+import { fitFoldableBoard, fitSplitFoldableBoard, watchFoldableViewport } from "./modules/foldable-layout.mjs";
 
 const supportedLanguages = ["en", "es", "fr", "zh"];
 const languageStorageKey = "timelessMemoryLanguage";
@@ -184,6 +185,11 @@ const rarityPanelTitle = document.getElementById("rarityPanelTitle");
 const rarityPreviewList = document.getElementById("rarityPreviewList");
 const gameFooter = document.getElementById("gameFooter");
 const gameLayout = document.querySelector(".game-layout");
+const gameShell = document.querySelector(".game-shell");
+const gameHeader = document.querySelector(".game-top");
+const gameSidebar = document.querySelector(".game-sidebar");
+let foldablePane = null;
+let foldableSplit = null;
 const aboutPanel = document.getElementById("aboutPanel");
 const closeAboutButton = document.getElementById("closeAboutButton");
 const restartPanel = document.getElementById("restartPanel");
@@ -1246,8 +1252,8 @@ function applyMatchToastsPreference() {
     if (legendToast.dataset.comparison === "true") hideLegendToast();
     return;
   }
-  if (!matchToastsEnabled && !gameCompleted &&
-      window.matchMedia?.("(max-width: 640px)")?.matches &&
+  if (!matchToastsEnabled && (foldablePane || (!gameCompleted &&
+      window.matchMedia?.("(max-width: 640px)")?.matches)) &&
       legendToast.dataset.comparison === "true") {
     hideLegendToast();
   }
@@ -1261,7 +1267,7 @@ function setMatchToastsEnabled(enabled) {
 }
 
 function initializeMatchToastsPreference() {
-  if (gameMode === "impostor" || homeScreen.visible || introRunning ||
+  if (foldablePane || gameMode === "impostor" || homeScreen.visible || introRunning ||
       !window.matchMedia?.("(max-width: 640px)")?.matches) return;
   try {
     if (window.localStorage.getItem(matchToastsStorageKey) !== null) return;
@@ -1295,8 +1301,7 @@ function matchToastOverlapsCards() {
       legendToastTitle.textContent = card.insightTitle || "";
       legendToastText.textContent = card.insight;
       const toastRect = legendToast.getBoundingClientRect();
-      return cards.some(rect => toastRect.left < rect.right && toastRect.right > rect.left &&
-        toastRect.top < rect.bottom && toastRect.bottom > rect.top);
+      return cards.some(rect => rectanglesOverlap(toastRect, rect));
     });
   } finally {
     legendToast.hidden = hidden;
@@ -1307,6 +1312,111 @@ function matchToastOverlapsCards() {
     else legendToastText.textContent = text;
   }
   return overlaps;
+}
+
+function rectanglesOverlap(a, b) {
+  return a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top;
+}
+
+function fitFoldableRound() {
+  if (!foldablePane || homeScreen.visible || !legendToastContainer.clientWidth) return;
+  const { top } = gameShell.getBoundingClientRect();
+  const boardOffset = board.getBoundingClientRect().top - top + gameShell.scrollTop;
+  const shellStyle = window.getComputedStyle(gameShell);
+  const padding = parseFloat(shellStyle.paddingBottom);
+  const visibleHeight = Math.min(foldablePane.bottom, foldableViewportBottom()) - foldablePane.top;
+  const availableHeight = visibleHeight - boardOffset - padding;
+  const gap = parseFloat(window.getComputedStyle(board).columnGap);
+  const count = board.children.length;
+  if (!count) return;
+  const fit = foldableSplit
+    ? fitSplitBoardTracks(count, availableHeight, gap, shellStyle)
+    : fitFoldableBoard(count, legendToastContainer.clientWidth, availableHeight, gap);
+  if (fit) {
+    board.style.setProperty("--foldable-card-width", `${fit.size}px`);
+    board.style.setProperty("--foldable-board-columns", fit.columns);
+  }
+  updateFoldableMatchToast();
+}
+
+function fitSplitBoardTracks(count, height, gap, shellStyle) {
+  const [left, right] = foldableSplit;
+  const edge = parseFloat(shellStyle.getPropertyValue("--foldable-hinge-padding"));
+  const leftWidth = left.right - left.left - parseFloat(shellStyle.paddingLeft) - edge;
+  const rightWidth = right.right - right.left - parseFloat(shellStyle.paddingRight) - edge;
+  const fit = fitSplitFoldableBoard(count, leftWidth, rightWidth, height, gap);
+  const groupWidth = columns => columns * fit.size + (columns - 1) * gap;
+  const leftInset = (leftWidth - groupWidth(fit.leftColumns)) / 2;
+  const rightInset = (rightWidth - groupWidth(fit.rightColumns)) / 2;
+  const divider = leftInset + rightInset + right.left - left.right + edge * 2 - gap * 2;
+  board.style.setProperty("--foldable-board-start", `${leftInset}px`);
+  board.style.setProperty("--foldable-board-tracks",
+    `repeat(${fit.leftColumns}, ${fit.size}px) ${Math.max(0, divider)}px repeat(${fit.rightColumns}, ${fit.size}px)`);
+  board.style.setProperty("--foldable-gutter-column", fit.leftColumns + 1);
+  board.style.setProperty("--foldable-board-rows", fit.rows);
+  return fit;
+}
+
+function foldableViewportBottom() {
+  const viewport = window.visualViewport;
+  return viewport ? viewport.offsetTop + viewport.height : document.documentElement.clientHeight;
+}
+
+function updateFoldableMatchToast() {
+  if (!foldablePane || legendToast.hidden || legendToast.dataset.comparison !== "true") return;
+  const previousVisibility = legendToast.style.visibility;
+  legendToast.style.visibility = "hidden";
+  delete legendToast.dataset.spaceSuppressed;
+  const toast = legendToast.getBoundingClientRect();
+  const boardRect = board.getBoundingClientRect();
+  const bottom = Math.min(foldablePane.bottom, foldableViewportBottom()) -
+    parseFloat(window.getComputedStyle(gameShell).paddingBottom);
+  const suppressed = !matchToastsEnabled || !toast.height || !boardRect.height ||
+    rectanglesOverlap(toast, boardRect) || toast.bottom > bottom ||
+    toast.top < Math.max(foldablePane.top, window.visualViewport?.offsetTop ?? 0) ||
+    toast.left < foldablePane.left || toast.right > foldablePane.right;
+  legendToast.dataset.spaceSuppressed = String(suppressed);
+  legendToast.inert = suppressed;
+  legendToast.style.visibility = previousVisibility;
+}
+
+const foldableLayoutObserver = typeof window.ResizeObserver === "function" ?
+  new window.ResizeObserver(fitFoldableRound) : null;
+
+function applyFoldableViewport(pane, width, height, split) {
+  const wasFoldable = Boolean(foldablePane);
+  if (!pane && !wasFoldable) return;
+  foldableSplit = split;
+  const [left, right] = split || [];
+  foldablePane = split ? {
+    left: left.left, right: right.right, top: Math.max(left.top, right.top), bottom: Math.min(left.bottom, right.bottom),
+  } : pane;
+  const root = document.documentElement;
+  root.classList.toggle("is-foldable", Boolean(pane));
+  root.classList.toggle("is-side-by-side", Boolean(split));
+  if (pane) {
+    for (const [prefix, bounds] of [["foldable", foldablePane], ["foldable-dialog", pane]]) {
+      root.style.setProperty(`--${prefix}-top`, `${bounds.top}px`);
+      root.style.setProperty(`--${prefix}-right`, `${width - bounds.right}px`);
+      root.style.setProperty(`--${prefix}-bottom`, `${height - bounds.bottom}px`);
+      root.style.setProperty(`--${prefix}-left`, `${bounds.left}px`);
+    }
+    if (split) {
+      root.style.setProperty("--foldable-left-pane", `${left.right - left.left}px`);
+      root.style.setProperty("--foldable-hinge", `${right.left - left.right}px`);
+    }
+  }
+  if (Boolean(pane) !== wasFoldable) {
+    (pane ? gameHeader : legendToastContainer).append(comboToast);
+    positionImpostorPanel();
+    if (pane) {
+      for (const target of [gameSidebar, legendToastContainer]) foldableLayoutObserver?.observe(target);
+    } else {
+      foldableLayoutObserver?.disconnect();
+      if (legendToast.dataset.comparison === "true") hideLegendToast();
+    }
+  }
+  updateGameTitleVisibility();
 }
 
 function readTipsEnabled() {
@@ -1887,7 +1997,7 @@ function formatTime(totalSeconds) {
 function positionImpostorPanel() {
   if (!impostorRound) return;
   const panel = document.getElementById("impostorPanel");
-  const parent = document.querySelector(impostorControlsAboveMedia?.matches ? ".game-sidebar" : ".board-area");
+  const parent = foldablePane || impostorControlsAboveMedia?.matches ? gameSidebar : legendToastContainer;
   if (panel.parentElement !== parent) parent.append(panel);
   updateImpostorPanel();
 }
@@ -1918,7 +2028,7 @@ function updateImpostorPanel(key = impostorNoticeKey) {
     : impostorRound.neutralized ? "identified" : impostorRound.suspect ? "danger" : "ready";
   document.getElementById("impostorPanel").dataset.phase = phase;
   document.getElementById("impostorStatusTitle").textContent = gameCompleted ? memoryGame.winTitle : copy.status;
-  setElementHidden(document.getElementById("impostorStatusTitle"), !gameCompleted && !impostorControlsAboveMedia?.matches);
+  setElementHidden(document.getElementById("impostorStatusTitle"), !gameCompleted && !foldablePane && !impostorControlsAboveMedia?.matches);
   document.getElementById("impostorRulesTitle").textContent = copy.rules;
   document.getElementById("impostorRulesIntro").textContent = copy.description;
   copy.steps.forEach((step, index) => { document.getElementById(`impostorRulesStep${index + 1}`).textContent = step; });
@@ -1932,7 +2042,7 @@ function updateImpostorPanel(key = impostorNoticeKey) {
   action.hidden = !impostorRound.canAccuse(impostorAccusationCard) || gameDefeated || gameCompleted;
   action.disabled = lockBoard && mismatchTimer === null;
   const hasAction = !homeScreen.visible && !action.hidden && !action.disabled;
-  const compactAction = !impostorControlsAboveMedia?.matches && hasAction;
+  const compactAction = !foldablePane && !impostorControlsAboveMedia?.matches && hasAction;
   document.getElementById("impostorPanel").classList.toggle("has-accusation", hasAction);
   document.getElementById("impostorPanel").classList.toggle("is-compact-action", compactAction);
   document.querySelector(".game-shell").classList.toggle("has-impostor-action", compactAction);
@@ -2244,6 +2354,16 @@ function showMatchInsight(card, userSelected = false) {
     return;
   }
   const isMobile = window.matchMedia?.("(max-width: 640px)")?.matches;
+  if (foldablePane && !gameCompleted) {
+    matchInsight.classList.remove("is-visible");
+    // A player-requested hint takes priority over automatic comparison copy.
+    if (matchToastsEnabled && (legendToast.hidden || legendToast.dataset.comparison === "true")) {
+      showToast(card.dataset.insightTitle || "", card.dataset.insight || "");
+      legendToast.dataset.comparison = "true";
+      fitFoldableRound();
+    }
+    return;
+  }
   const showComparison = !isMobile || matchToastsEnabled || userSelected;
   matchInsight.classList.toggle("is-in-progress", !gameCompleted);
   matchInsightTitle.textContent = card.dataset.insightTitle || "";
@@ -2361,18 +2481,22 @@ function closeRarityPanel() {
 
 function updateGameTitleVisibility() {
   if (homeScreen.visible) return;
-  const header = document.querySelector(".game-top");
   // Measure with the title present, so resize checks remain stable.
-  header.classList.remove("is-title-hidden");
+  gameHeader.classList.remove("is-title-hidden");
+  if (foldablePane) {
+    fitFoldableRound();
+    return;
+  }
   if (introRunning) return;
   const overlaps = window.matchMedia?.("(max-width: 640px)")?.matches && matchToastOverlapsCards();
-  header.classList.toggle("is-title-hidden", Boolean(overlaps));
+  gameHeader.classList.toggle("is-title-hidden", Boolean(overlaps));
 }
 
 function hideLegendToast() {
   selectedStory.classList.remove("is-visible");
   legendToast.hidden = true;
   legendToast.inert = true;
+  delete legendToast.dataset.spaceSuppressed;
   // Preserve the toast's layout and typography until its exit fade completes.
   if (toastTimer) {
     window.clearTimeout(toastTimer);
@@ -2392,6 +2516,7 @@ function showToast(title, text, emphasis = "", underline = "") {
 
   legendToastTitle.textContent = title || "";
   legendToast.dataset.comparison = "false";
+  delete legendToast.dataset.spaceSuppressed;
   const content = [];
   let remaining = text;
   if (emphasis && remaining.startsWith(emphasis)) {
@@ -2463,6 +2588,7 @@ function setPreviewRewardVisibility(shouldShow) {
 function setTopLegendActionVisibility(shouldShow) {
   setElementHidden(hintButton, shouldShow || !tipsEnabled);
   setElementHidden(topViewLegendsButton, !shouldShow);
+  if (shouldShow && foldablePane) hideLegendToast();
 }
 
 function flipCard(card) {
@@ -3166,6 +3292,11 @@ window.addEventListener("resize", updateGameTitleVisibility);
 window.addEventListener("resize", updateImpostorActionSpace);
 window.visualViewport?.addEventListener("resize", updateGameTitleVisibility);
 window.visualViewport?.addEventListener("resize", updateImpostorActionSpace);
+if (!isEmbedded && window.requestAnimationFrame) {
+  watchFoldableViewport(window, document, applyFoldableViewport);
+  window.addEventListener("scroll", updateFoldableMatchToast, { passive: true });
+  gameShell.addEventListener("scroll", updateFoldableMatchToast, { passive: true });
+}
 playAgainButton.addEventListener("click", restartGame);
 applyTheme();
 document.documentElement.dataset.embed = String(isEmbedded);
