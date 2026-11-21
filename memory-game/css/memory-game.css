@@ -1739,15 +1739,19 @@ html[data-theme="dark"] .card.is-matched .card-front {
   .win-records-link { min-height: 44px; }
 }
 .achievements-list { display: grid; gap: 12px; }
+html:not(.is-foldable) .achievements-list {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+}
 
 /* Optional achievements share the core achievement card layout. */
 #optionalAchievements { margin-top: 24px; }
-#optionalAchievements .achievement-row > div { min-width: 0; flex: 1; overflow-wrap: anywhere; }
+#optionalAchievements .achievement-row > div { flex: 1; }
 #optionalAchievements progress { display: block; width: 100%; height: 5px; margin-top: 8px; appearance: none; border: 0; border-radius: 5px; overflow: hidden; background: var(--line); accent-color: var(--accent); }
 #optionalAchievements progress::-webkit-progress-bar { background: var(--line); }
 #optionalAchievements progress::-webkit-progress-value { background: var(--accent); border-radius: 5px; }
 #optionalAchievements progress::-moz-progress-bar { background: var(--accent); border-radius: 5px; }
 .achievement-row { display: flex; align-items: center; gap: 18px; padding: 16px; border: 1px solid var(--muted); border-radius: 8px; }
+.achievement-row > div { min-width: 0; overflow-wrap: anywhere; }
 .achievement-row h3 { margin: 0 0 6px; }
 .achievement-row p { margin: 4px 0; line-height: 1.5; }
 .achievement-icon { display: block; flex: 0 0 48px; font-size: 2.5rem; color: var(--achievement-color); }
@@ -3344,7 +3348,6 @@ html.is-foldable[data-theme] .game-shell .board.is-impostor .card .character-ico
 .is-foldable .records-grid .record-stat { padding: 7px 8px; min-width: 0; }
 .is-foldable .achievements-list { gap: 6px; }
 .is-foldable .achievement-row { gap: 8px; padding: 7px; }
-.is-foldable .achievement-row > div { min-width: 0; }
 .is-foldable .achievement-row .achievement-icon { flex-basis: 32px; font-size: 1.8rem; }
 .is-foldable .achievement-row h3, .is-foldable .achievement-row p { margin: 0 0 3px; line-height: 1.3; }
 .is-foldable #optionalAchievements { margin-top: 12px; }
