@@ -57,12 +57,12 @@
       }
     </script>
     <!-- Resolve the launch theme before styles or the game module can paint. -->
-    <script id="memoryGameTheme" src="memory-game/js/theme.min.js?v=memory-ea03d7056a9d"></script>
-    <link rel="preload" href="memory-game/css/fonts/memory-game.woff2?v=memory-ea03d7056a9d" as="font" type="font/woff2" crossorigin="anonymous" />
-    <link rel="preload" href="memory-game/css/fonts/memory-game-impostor.woff2?v=memory-ea03d7056a9d" as="font" type="font/woff2" crossorigin="anonymous" />
-    <link rel="stylesheet" href="memory-game/css/icon-moon-memory.min.css?v=memory-ea03d7056a9d" />
-    <link rel="stylesheet" href="memory-game/css/memory-game-impostor.min.css?v=memory-ea03d7056a9d" />
-    <link rel="stylesheet" href="memory-game/css/memory-game.min.css?v=memory-ea03d7056a9d" />
+    <script id="memoryGameTheme" src="memory-game/js/theme.min.js?v=memory-919d8175ec5d"></script>
+    <link rel="preload" href="memory-game/css/fonts/memory-game.woff2?v=memory-919d8175ec5d" as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href="memory-game/css/fonts/memory-game-impostor.woff2?v=memory-919d8175ec5d" as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="stylesheet" href="memory-game/css/icon-moon-memory.min.css?v=memory-919d8175ec5d" />
+    <link rel="stylesheet" href="memory-game/css/memory-game-impostor.min.css?v=memory-919d8175ec5d" />
+    <link rel="stylesheet" href="memory-game/css/memory-game.min.css?v=memory-919d8175ec5d" />
   </head>
   <body>
     <section class="game-startup" id="gameStartup" aria-label="Memory game">
@@ -113,8 +113,10 @@
             </span>
             <i class="icon home-lock-icon home-coming-soon-lock icon-lock" aria-hidden="true"></i>
             <span class="home-coming-soon-description" id="homeSixthMirrorDescription"></span>
-            <span class="home-coming-soon-status" id="homeSixthMirrorStatus"></span>
-            <span class="home-lock-badge home-book-lock-badge"><i class="icon home-lock-icon icon-lock" aria-hidden="true"></i> <span id="home-impostor-locked"></span></span>
+            <span class="home-coming-soon-meta">
+              <span class="home-coming-soon-status" id="homeSixthMirrorStatus"></span>
+              <span class="home-lock-badge home-book-lock-badge"><i class="icon home-lock-icon icon-lock" aria-hidden="true"></i> <span id="home-impostor-locked"></span></span>
+            </span>
           </button>
           <button class="home-card" id="home-impostor" type="button" hidden><i class="icon icon-impostor" aria-hidden="true"></i><strong id="home-impostor-name"></strong><span id="home-impostor-description"></span></button>
         </div>
@@ -306,8 +308,10 @@
             <h2 id="collectionTitle"></h2>
           </header>
           <div class="dialog-body" role="region" aria-labelledby="collectionTitle" tabindex="0">
-            <p id="collectionProgressText"></p>
-            <progress id="collectionProgress" max="1" value="0" aria-labelledby="collectionProgressText"></progress>
+            <div class="collection-progress-summary">
+              <p id="collectionProgressText"></p>
+              <progress id="collectionProgress" max="1" value="0" aria-labelledby="collectionProgressText"></progress>
+            </div>
             <div id="collectionGroups"></div>
             <footer class="collection-contribution">
               <p id="collectionContribution"></p>
@@ -500,8 +504,8 @@
       <footer class="game-footer standalone-only" id="gameFooter"></footer>
     </main>
 
-    <script src="memory-game/js/startup.min.js?v=memory-ea03d7056a9d"></script>
-    <script type="module" id="memoryGameEntry" src="memory-game/js/memory-game.min.js?v=memory-ea03d7056a9d"></script>
-    <script src="memory-game/js/pwa.min.js?v=memory-ea03d7056a9d"></script>
+    <script src="memory-game/js/startup.min.js?v=memory-919d8175ec5d"></script>
+    <script type="module" id="memoryGameEntry" src="memory-game/js/memory-game.min.js?v=memory-919d8175ec5d"></script>
+    <script src="memory-game/js/pwa.min.js?v=memory-919d8175ec5d"></script>
   </body>
 </html>
