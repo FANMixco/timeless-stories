@@ -76,7 +76,9 @@ for (const [parameter, supported, key] of [
 }
 const ratingUrl = ["play", "android"].includes(storeVersion)
   ? "https://play.google.com/store/apps/details?id=com.federiconavarrete.tstories.twa"
-  : ["microsoft", "windows"].includes(storeVersion) ? "https://apps.microsoft.com/detail/9PL6H4P9JHGX" : null;
+  : ["microsoft", "windows"].includes(storeVersion)
+    ? "https://apps.microsoft.com/detail/9PL6H4P9JHGX"
+    : storeVersion === "amazon" ? "https://www.amazon.com/dp/B0HPXLSCPW/" : null;
 let hardModeEnabled = readHardModeEnabled();
 if (searchParams.get("hard") === "true") hardModeEnabled = true;
 let gameModes = buildGameModes(hardModeEnabled);
