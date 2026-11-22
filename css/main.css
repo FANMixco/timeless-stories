@@ -6039,6 +6039,22 @@ html[data-theme="dark"] #mContactUs .btn-close {
         color: light-dark(#222, #f2f6f9);
     }
 
+    #booksCarousel .book-card:not(.book-card-memory) .card {
+        background-color: light-dark(#fff, #17212b);
+        border: 1px solid !important;
+        border-color: light-dark(#ddd, #2a3846) !important;
+        border-radius: 8px;
+        box-shadow: none !important;
+    }
+
+    #booksCarousel .book-card:not(.book-card-memory) i {
+        color: light-dark(#2f5da8, #8ec4ff);
+    }
+
+    #booksCarousel .book-card:not(.book-card-memory) p {
+        color: light-dark(#111, #f2f6f9);
+    }
+
     #priceCarousel,
     #booksCarousel,
     #reviewsCarousel,
