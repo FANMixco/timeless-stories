@@ -4051,6 +4051,10 @@ body.mobile-nav-active #mobile-nav-toggle {
     border: 1px solid #eeeeee;
 }
 
+.previous-volumes-title {
+    color: #fff;
+}
+
 .single-price .price-top {
     background-color: #F5F5F5;
     border-bottom: 1px solid #eeeeee;
@@ -6011,6 +6015,28 @@ html[data-theme="dark"] #mContactUs .btn-close {
     .reviews-grid,
     .volume-map-layout {
         grid-template-columns: 1fr;
+    }
+
+    .book-editions {
+        color-scheme: light dark;
+        background-color: light-dark(#fff, #111820);
+    }
+
+    html[data-theme="light"] .book-editions {
+        color-scheme: light;
+    }
+
+    html[data-theme="dark"] .book-editions {
+        color-scheme: dark;
+    }
+
+    .book-editions > #getcopy,
+    .book-editions > .call-to-action-area {
+        background: transparent;
+    }
+
+    .book-editions .previous-volumes-title {
+        color: light-dark(#222, #f2f6f9);
     }
 
     #priceCarousel,
