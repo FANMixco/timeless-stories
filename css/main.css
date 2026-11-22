@@ -3242,7 +3242,7 @@ h6,
     }
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 1200px) and (not (horizontal-viewport-segments: 2)) {
     #navbarMenu.navbar-collapse {
         display: flex !important;
         flex-basis: auto;
@@ -3261,7 +3261,7 @@ h6,
 
 }
 
-@media (max-width: 1199.98px) {
+@media (max-width: 1199.98px), (horizontal-viewport-segments: 2) {
     .header-topbar {
         grid-template-columns: 56px minmax(0, 1fr) 56px;
         min-height: 70px;
@@ -4765,7 +4765,7 @@ h6 {
     max-width: 100%;
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 1200px) and (not (horizontal-viewport-segments: 2)) {
     #header .navbar > .container {
         flex-wrap: nowrap;
     }
@@ -5720,5 +5720,362 @@ html[data-theme="dark"] #mContactUs .btn-close {
 
     #cookiebanner #c-right {
         text-align: left !important;
+    }
+}
+
+/* Keep fixed overlays within a single usable pane in either posture. */
+@media (horizontal-viewport-segments: 2), (vertical-viewport-segments: 2) {
+    :root {
+        --pane-width: env(viewport-segment-width 0 0);
+        --pane-height: min(100dvh, env(viewport-segment-height 0 0));
+        --overlay-end-inset: calc(100% - var(--pane-width));
+        --overlay-bottom-inset: calc(100% - var(--pane-height));
+    }
+
+    body > .modal {
+        width: var(--pane-width);
+        height: var(--pane-height);
+    }
+
+    body > .modal .modal-dialog {
+        max-width: 100%;
+    }
+
+    #memoryGameModal .modal-dialog,
+    #memoryGameModal .modal-content {
+        height: 100% !important;
+    }
+
+    #cookiebanner,
+    #CybotCookiebotDialog {
+        max-height: calc(var(--pane-height) - 32px) !important;
+        overflow-y: auto !important;
+    }
+}
+
+@media (vertical-viewport-segments: 2) {
+    #navbarMenu.show,
+    #navbarMenu.collapsing,
+    #navbarMenu.drawer-opening,
+    #navbarMenu.drawer-closing {
+        height: calc(var(--pane-height) - var(--navbar-drawer-top, 70px)) !important;
+    }
+}
+
+@media (horizontal-viewport-segments: 2) {
+    :root {
+        --pane-gutter: clamp(12px, 4vw, 24px);
+        --second-pane-width: env(viewport-segment-width 1 0);
+        --hinge-width: calc(env(viewport-segment-left 1 0) - env(viewport-segment-right 0 0));
+        --pane-columns: minmax(0, var(--pane-width)) minmax(0, var(--second-pane-width));
+        --pane-section-padding: clamp(48px, 8vw, 80px);
+        --pane-heading-gap: 24px;
+    }
+
+    body > section > .container,
+    body > footer > .container {
+        box-sizing: border-box;
+        width: var(--pane-width);
+        max-width: none;
+        margin-left: 0;
+        padding-inline: var(--pane-gutter);
+    }
+
+    .section-gap {
+        padding-block: var(--pane-section-padding);
+    }
+
+    #header .navbar > .container {
+        max-width: none;
+        padding: 0 !important;
+    }
+
+    #header .header-topbar {
+        grid-template-columns: 44px minmax(0, 1fr) var(--hinge-width) var(--second-pane-width);
+        padding-inline: 0;
+    }
+
+    #header .navbar-toggler {
+        display: block;
+        margin-left: 8px;
+    }
+
+    #header #logo {
+        grid-column: 2;
+        margin-inline: 12px;
+        max-width: calc(100% - 24px);
+        white-space: normal;
+    }
+
+    #header #logo .logo-mark {
+        width: clamp(28px, calc(var(--pane-width) * .1), 42px);
+        height: auto;
+    }
+
+    #header #logo .logo-title {
+        font-size: clamp(20px, calc(var(--pane-width) * .075), 36px);
+        overflow-wrap: anywhere;
+    }
+
+    #header .header-actions {
+        grid-column: 4;
+        margin-right: var(--pane-gutter);
+    }
+
+    #navbarMenu.navbar-collapse {
+        width: min(440px, var(--pane-width));
+        flex-basis: auto;
+    }
+
+    #navbarMenu.navbar-collapse.collapse:not(.show) {
+        display: none !important;
+    }
+
+    #navbarMenu .navbar-nav {
+        flex-direction: column;
+        align-items: flex-start;
+        padding-inline: var(--pane-gutter);
+    }
+
+    .header-menu-social {
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-inline: var(--pane-gutter);
+    }
+
+    #home > .container,
+    #about > .container,
+    #preview > .container,
+    .footer-area > .container,
+    body > section > .container.split-panes {
+        width: 100%;
+        padding-inline: 0;
+    }
+
+    #home .fullscreen,
+    #about .single-info,
+    .split-panes {
+        display: grid !important;
+        grid-template-columns: var(--pane-columns);
+        column-gap: var(--hinge-width);
+        margin-inline: 0;
+    }
+
+    #home .fullscreen > *,
+    #about .single-info > *,
+    .split-panes > *,
+    #preview-heading-row,
+    #preview-book-row {
+        width: 100%;
+        min-width: 0;
+        max-width: none;
+        margin-inline: 0;
+        padding-inline: var(--pane-gutter);
+        overflow-wrap: anywhere;
+    }
+
+    .split-panes > section > .container {
+        max-width: none;
+        padding-inline: 0;
+    }
+
+    .split-panes .menu-content,
+    #preview-heading-row .menu-content {
+        width: 100%;
+        padding-bottom: var(--pane-heading-gap);
+    }
+
+    #home .fullscreen {
+        height: auto !important;
+        min-height: min(720px, var(--pane-height));
+        padding-block: 7rem 3rem;
+        align-content: center;
+    }
+
+    #home .banner-content h1 {
+        font-size: clamp(23px, calc(var(--pane-width) * .082), 54px);
+        line-height: 1.12;
+    }
+
+    #home .banner-content h5 {
+        font-size: clamp(11px, calc(var(--pane-width) * .036), 16px);
+    }
+
+    #home .banner-content .primary-btn {
+        max-width: 100%;
+        padding-inline: clamp(12px, calc(var(--pane-width) * .07), 40px);
+    }
+
+    #div-book {
+        display: flex;
+        justify-content: center;
+        padding-top: 0;
+    }
+
+    #about .single-info {
+        align-items: start !important;
+        margin-top: 0 !important;
+    }
+
+    #about .info-thumb picture {
+        display: flex !important;
+    }
+
+    #about #tiktok-container {
+        display: none !important;
+    }
+
+    #about .info-content {
+        margin: 0;
+        padding: clamp(12px, calc(var(--second-pane-width) * .065), 42px);
+    }
+
+    #about .info-content::after {
+        display: none;
+    }
+
+    #preview-heading-row,
+    #preview-book-row {
+        width: var(--pane-width);
+    }
+
+    #preview-book-row .col-auto {
+        width: 100%;
+        min-width: 0;
+    }
+
+    #preview-maps-row > * {
+        display: grid;
+        grid-row: span 3;
+        grid-template-rows: subgrid;
+    }
+
+    #preview-maps-row .mapPreview {
+        width: 100%;
+    }
+
+    #preview-maps-row .multi-column-list {
+        column-width: 140px;
+    }
+
+    #specialGreetingsCards {
+        flex-direction: column !important;
+        gap: 16px;
+    }
+
+    #specialGreetingsCards .buttons {
+        margin: 0;
+        padding: 18px;
+    }
+
+    #specialGreetingsCards .buttons p {
+        margin-bottom: 0;
+    }
+
+    .cultural-collaborations,
+    .institutional-records {
+        margin-top: 0;
+    }
+
+    #culturalCollaborationCards > * {
+        width: 100%;
+    }
+
+    #culturalCollaborationCards .cultural-card {
+        flex-wrap: wrap;
+    }
+
+    .institutional-records-heading {
+        margin-bottom: var(--pane-heading-gap);
+    }
+
+    #reviewsCarousel {
+        align-self: center;
+    }
+
+    #reviewsCarousel .carousel-control-prev {
+        left: 4px;
+    }
+
+    #reviewsCarousel .carousel-control-next {
+        right: 4px;
+    }
+
+    .reviews-summary {
+        align-items: flex-start;
+        flex-direction: column;
+        margin-bottom: 0;
+        padding: clamp(14px, 2.5vw, 28px);
+    }
+
+    .reviews-grid,
+    .volume-map-layout {
+        grid-template-columns: 1fr;
+    }
+
+    #priceCarousel,
+    #booksCarousel,
+    #reviewsCarousel,
+    #institutionalRecordsCarousel,
+    #legendsCarousel {
+        padding-inline: clamp(26px, 5vw, 44px);
+    }
+
+    #legendsCarousel .mMedia-container {
+        width: 100%;
+    }
+
+    #legendsCarousel .card {
+        margin-inline: 0 !important;
+    }
+
+    .single-price .price-bottom {
+        padding-inline: 8px;
+    }
+
+    .price-bottom .h1 {
+        color: #222;
+    }
+
+    .single-price .price-bottom .h1 {
+        font-size: clamp(32px, calc(var(--pane-width) * .13), 54px);
+    }
+
+    .single-price .price-bottom .primary-btn {
+        padding-inline: 12px;
+        max-width: 100%;
+        white-space: normal;
+    }
+
+    .book-card-actions .book-card-primary,
+    .book-card-actions .book-card-map-button {
+        min-width: 0;
+        max-width: 100%;
+        padding-inline: 12px;
+        white-space: normal;
+    }
+
+    .footer-area .split-panes {
+        row-gap: 24px;
+        grid-template-areas: "about preferences" "social preferences";
+        grid-template-rows: auto 1fr;
+        align-items: start;
+    }
+
+    .footer-area .split-panes > :first-child {
+        grid-area: about;
+    }
+
+    .footer-preferences {
+        grid-area: preferences;
+    }
+
+    .footer-area .social-widget {
+        grid-area: social;
+        margin-top: 0;
+    }
+
+    .footer-area .single-footer-widget {
+        margin-bottom: 0;
     }
 }

@@ -141,8 +141,8 @@ https://goo.gl/forms/JArck4uzbGGmTuG72
       <link rel="stylesheet" href="css/animate.min.css" />
     </noscript-->
 
-    <link rel="stylesheet" href="css/main.min.css?v=20261017-css-header-sequence" />
-    <link rel="stylesheet" href="css/book.min.css?v=20261011-book-landscape-reader" />
+    <link rel="stylesheet" href="css/main.min.css?v=20261122-foldable-signature" />
+    <link rel="stylesheet" href="css/book.min.css?v=20261122-foldable-home" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
@@ -577,7 +577,7 @@ https://goo.gl/forms/JArck4uzbGGmTuG72
     <!-- Start course Area -->
     <section class="course-area section-gap" id="preview">
       <div class="container">
-        <div class="row d-flex justify-content-center">
+        <div class="row d-flex justify-content-center" id="preview-heading-row">
           <div class="menu-content pb-60 col-lg-9">
             <div class="title text-center">
               <span
@@ -589,7 +589,7 @@ https://goo.gl/forms/JArck4uzbGGmTuG72
           </div>
         </div>
 
-        <div class="row justify-content-center">
+        <div class="row justify-content-center" id="preview-book-row">
           <div class="col-auto">
             <article class="book-preview-card" aria-labelledby="lookInsideTitle">
               <a
@@ -697,7 +697,7 @@ https://goo.gl/forms/JArck4uzbGGmTuG72
           </div>
         </div>
 
-        <div class="row mt-5">
+        <div class="row mt-5 split-panes" id="preview-maps-row">
           <div class="col-12 col-lg-6 mb-4">
             <div class="mb-3 text-center">
               <span class="h2" data-translation="country1"></span>
@@ -720,17 +720,19 @@ https://goo.gl/forms/JArck4uzbGGmTuG72
 
     <!-- Start call-to-action Area -->
     <section class="call-to-action-area section-gap">
-      <div class="container">
-        <div class="row justify-content-center top">
-          <div class="col-lg-12 text-center">
-            <span class="h1 text-white" data-translation="sGreetings"></span>
+      <div class="container split-panes">
+        <div>
+          <div class="row justify-content-center top">
+            <div class="col-lg-12 text-center">
+              <span class="h1 text-white" data-translation="sGreetings"></span>
+            </div>
           </div>
-        </div>
-        <div class="row justify-content-center d-flex">
-          <div
-            id="specialGreetingsCards"
-            class="download-button d-flex flex-row justify-content-center mt-30"
-          ></div>
+          <div class="row justify-content-center d-flex">
+            <div
+              id="specialGreetingsCards"
+              class="download-button d-flex flex-row justify-content-center mt-30"
+            ></div>
+          </div>
         </div>
         <div class="cultural-collaborations text-center">
           <div class="row justify-content-center">
@@ -756,19 +758,19 @@ https://goo.gl/forms/JArck4uzbGGmTuG72
 
     <!-- Start testomial Area -->
     <section class="testomial-area section-gap" id="reviews">
-      <div class="container">
-        <div class="row d-flex justify-content-center">
-          <div class="menu-content pb-60 col-lg-8">
-            <div class="title text-center">
-              <h2 class="h1 mb-10" data-translation="reviews.heading">
-                What the readers say
-              </h2>
-              <p data-translation="reviews.subheading">About the series</p>
+      <div class="container reviews-widget split-panes" aria-labelledby="reviewsHeading">
+        <div>
+          <div class="row d-flex justify-content-center">
+            <div class="menu-content pb-60 col-lg-8">
+              <div class="title text-center">
+                <h2 class="h1 mb-10" data-translation="reviews.heading">
+                  What the readers say
+                </h2>
+                <p data-translation="reviews.subheading">About the series</p>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="reviews-widget" aria-labelledby="reviewsHeading">
           <div class="reviews-summary">
             <div>
               <p class="reviews-source" id="reviewsHeading">
@@ -808,138 +810,19 @@ https://goo.gl/forms/JArck4uzbGGmTuG72
               <span data-translation="reviews.reviewCta">Review the series</span>
             </a>
           </div>
-
-          <div
-            id="reviewsCarousel"
-            class="carousel slide reviews-carousel"
-            data-bs-interval="false"
-          >
-            <div class="carousel-inner" id="reviewsCarouselInner"></div>
-
-            <button
-              class="carousel-control-prev"
-              type="button"
-              data-bs-target="#reviewsCarousel"
-              data-bs-slide="prev"
-              aria-label="back"
-            >
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            </button>
-            <button
-              class="carousel-control-next"
-              type="button"
-              data-bs-target="#reviewsCarousel"
-              data-bs-slide="next"
-              aria-label="next"
-            >
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            </button>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- End testomial Area -->
-
-    <!-- Start price Area -->
-    <section class="price-area section-gap" id="getcopy">
-      <div class="container">
-        <div class="row d-flex justify-content-center">
-          <div class="menu-content pb-60 col-lg-8">
-            <div class="title text-center">
-              <h2 class="h1 mb-10" data-translation="chooseEditionTitle">Choose Your Edition</h2>
-            </div>
-          </div>
-        </div>
-        <div id="priceCarousel" class="carousel slide" data-bs-interval="false">
-          <div class="carousel-inner" id="priceCarouselInner"></div>
-
-          <button
-            class="carousel-control-prev"
-            type="button"
-            data-bs-target="#priceCarousel"
-            data-bs-slide="prev"
-            aria-label="previous"
-          >
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          </button>
-
-          <button
-            class="carousel-control-next"
-            type="button"
-            data-bs-target="#priceCarousel"
-            data-bs-slide="next"
-            aria-label="next"
-          >
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          </button>
-        </div>
-      </div>
-    </section>
-    <!-- End price Area -->
-
-    <section class="call-to-action-area section-gap">
-      <div class="container">
-        <div class="row d-flex justify-content-center">
-          <div class="menu-content pb-60 col-lg-8">
-            <div class="title text-center">
-              <h2 class="h1 mb-10 text-white" data-translation="old0"></h2>
-            </div>
-          </div>
         </div>
 
         <div
-          id="booksCarousel"
-          class="carousel slide"
+          id="reviewsCarousel"
+          class="carousel slide reviews-carousel"
           data-bs-interval="false"
         >
-          <div class="carousel-inner" id="booksCarouselInner"></div>
+          <div class="carousel-inner" id="reviewsCarouselInner"></div>
 
           <button
             class="carousel-control-prev"
             type="button"
-            data-bs-target="#booksCarousel"
-            aria-label="prev"
-            data-bs-slide="prev"
-          >
-            <span class="carousel-control-prev-icon"></span>
-          </button>
-
-          <button
-            class="carousel-control-next"
-            type="button"
-            data-bs-target="#booksCarousel"
-            aria-label="next"
-            data-bs-slide="next"
-          >
-            <span class="carousel-control-next-icon"></span>
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <section class="testomial-area section-gap" id="mass-media">
-      <div class="container">
-        <div class="row d-flex justify-content-center">
-          <div class="menu-content pb-60 col-lg-8">
-            <div class="title text-center">
-              <a
-                href="#mass-media"
-                class="h1 mb-10 content-modal-title-link text-primary"
-                data-bs-toggle="modal"
-                data-bs-target="#contentModal"
-                data-content-modal-target="international-presence"
-                data-translation="menu5"
-              ></a>
-            </div>
-          </div>
-        </div>
-        <div id="mMediaCarousel" class="carousel slide" data-bs-interval="false">
-          <div class="carousel-inner" id="mMediaCarouselInner"></div>
-
-          <button
-            class="carousel-control-prev"
-            type="button"
-            data-bs-target="#mMediaCarousel"
+            data-bs-target="#reviewsCarousel"
             data-bs-slide="prev"
             aria-label="back"
           >
@@ -948,12 +831,135 @@ https://goo.gl/forms/JArck4uzbGGmTuG72
           <button
             class="carousel-control-next"
             type="button"
-            data-bs-target="#mMediaCarousel"
+            data-bs-target="#reviewsCarousel"
             data-bs-slide="next"
             aria-label="next"
           >
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
           </button>
+        </div>
+      </div>
+    </section>
+    <!-- End testomial Area -->
+
+    <!-- Start price Area -->
+    <div class="split-panes">
+      <section class="price-area section-gap" id="getcopy">
+        <div class="container">
+          <div class="row d-flex justify-content-center">
+            <div class="menu-content pb-60 col-lg-8">
+              <div class="title text-center">
+                <h2 class="h1 mb-10" data-translation="chooseEditionTitle">Choose Your Edition</h2>
+              </div>
+            </div>
+          </div>
+          <div id="priceCarousel" class="carousel slide" data-bs-interval="false">
+            <div class="carousel-inner" id="priceCarouselInner"></div>
+
+            <button
+              class="carousel-control-prev"
+              type="button"
+              data-bs-target="#priceCarousel"
+              data-bs-slide="prev"
+              aria-label="previous"
+            >
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            </button>
+
+            <button
+              class="carousel-control-next"
+              type="button"
+              data-bs-target="#priceCarousel"
+              data-bs-slide="next"
+              aria-label="next"
+            >
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            </button>
+          </div>
+        </div>
+      </section>
+      <!-- End price Area -->
+
+      <section class="call-to-action-area section-gap">
+        <div class="container">
+          <div class="row d-flex justify-content-center">
+            <div class="menu-content pb-60 col-lg-8">
+              <div class="title text-center">
+                <h2 class="h1 mb-10 text-white" data-translation="old0"></h2>
+              </div>
+            </div>
+          </div>
+
+          <div
+            id="booksCarousel"
+            class="carousel slide"
+            data-bs-interval="false"
+          >
+            <div class="carousel-inner" id="booksCarouselInner"></div>
+
+            <button
+              class="carousel-control-prev"
+              type="button"
+              data-bs-target="#booksCarousel"
+              aria-label="prev"
+              data-bs-slide="prev"
+            >
+              <span class="carousel-control-prev-icon"></span>
+            </button>
+
+            <button
+              class="carousel-control-next"
+              type="button"
+              data-bs-target="#booksCarousel"
+              aria-label="next"
+              data-bs-slide="next"
+            >
+              <span class="carousel-control-next-icon"></span>
+            </button>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <section class="testomial-area section-gap" id="mass-media">
+      <div class="container split-panes">
+        <div>
+          <div class="row d-flex justify-content-center">
+            <div class="menu-content pb-60 col-lg-8">
+              <div class="title text-center">
+                <a
+                  href="#mass-media"
+                  class="h1 mb-10 content-modal-title-link text-primary"
+                  data-bs-toggle="modal"
+                  data-bs-target="#contentModal"
+                  data-content-modal-target="international-presence"
+                  data-translation="menu5"
+                ></a>
+              </div>
+            </div>
+          </div>
+          <div id="mMediaCarousel" class="carousel slide" data-bs-interval="false">
+            <div class="carousel-inner" id="mMediaCarouselInner"></div>
+
+            <button
+              class="carousel-control-prev"
+              type="button"
+              data-bs-target="#mMediaCarousel"
+              data-bs-slide="prev"
+              aria-label="back"
+            >
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            </button>
+            <button
+              class="carousel-control-next"
+              type="button"
+              data-bs-target="#mMediaCarousel"
+              data-bs-slide="next"
+              aria-label="next"
+            >
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            </button>
+          </div>
         </div>
 
         <div class="institutional-records">
@@ -999,66 +1005,68 @@ https://goo.gl/forms/JArck4uzbGGmTuG72
       </div>
     </section>
 
-    <section class="testomial-area section-gap">
-      <div class="container">
-        <div class="row d-flex justify-content-center">
-          <div class="menu-content pb-60 col-lg-8">
-            <div class="title text-center">
-              <span class="h1 mb-10" data-translation="prezi1"></span>
-              <p class="pt-3" data-translation="prezi2"></p>
-              <p data-translation="prezi3"></p>
+    <div class="split-panes">
+      <section class="testomial-area section-gap">
+        <div class="container">
+          <div class="row d-flex justify-content-center">
+            <div class="menu-content pb-60 col-lg-8">
+              <div class="title text-center">
+                <span class="h1 mb-10" data-translation="prezi1"></span>
+                <p class="pt-3" data-translation="prezi2"></p>
+                <p data-translation="prezi3"></p>
+              </div>
             </div>
           </div>
+          <div class="row">
+            <iframe
+              title="prezi"
+              id="preziPreviewFrame"
+              class="preziPreview"
+              allow="autoplay; fullscreen"
+              allowfullscreen=""
+              frameborder="0"
+              height="432"
+              id="iframe_container"
+              mozallowfullscreen=""
+              webkitallowfullscreen=""
+              width="768"
+              loading="lazy"
+            ></iframe>
+          </div>
         </div>
-        <div class="row">
-          <iframe
-            title="prezi"
-            id="preziPreviewFrame"
-            class="preziPreview"
-            allow="autoplay; fullscreen"
-            allowfullscreen=""
-            frameborder="0"
-            height="432"
-            id="iframe_container"
-            mozallowfullscreen=""
-            webkitallowfullscreen=""
-            width="768"
-            loading="lazy"
-          ></iframe>
-        </div>
-      </div>
-    </section>
+      </section>
 
-    <section class="testomial-area section-gap legends-area" id="legends" aria-labelledby="legendsTitle">
-      <div class="container">
-        <div class="row d-flex justify-content-center">
-          <div class="menu-content pb-60 col-lg-8">
-            <div class="title text-center">
-              <h2 class="h1 mb-10" id="legendsTitle" data-translation="legendsTitle">Explore All Original Legends</h2>
-              <p data-translation="legendsDescription">Discover the original versions of the Salvadoran legends, before they were revised and expanded for the books.</p>
+      <section class="testomial-area section-gap legends-area" id="legends" aria-labelledby="legendsTitle">
+        <div class="container">
+          <div class="row d-flex justify-content-center">
+            <div class="menu-content pb-60 col-lg-8">
+              <div class="title text-center">
+                <h2 class="h1 mb-10" id="legendsTitle" data-translation="legendsTitle">Explore All Original Legends</h2>
+                <p data-translation="legendsDescription">Discover the original versions of the Salvadoran legends, before they were revised and expanded for the books.</p>
+              </div>
+            </div>
+          </div>
+          <div id="legendsCarousel" class="carousel slide" data-bs-interval="false" role="region" aria-roledescription="carousel" aria-labelledby="legendsTitle">
+            <div class="carousel-inner" id="legendsCarouselInner"></div>
+            <div class="legends-controls">
+              <button class="carousel-control-prev" type="button" data-bs-target="#legendsCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden" data-translation="legendsPrevious">Previous legends</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#legendsCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden" data-translation="legendsNext">Next legends</span>
+              </button>
             </div>
           </div>
         </div>
-        <div id="legendsCarousel" class="carousel slide" data-bs-interval="false" role="region" aria-roledescription="carousel" aria-labelledby="legendsTitle">
-          <div class="carousel-inner" id="legendsCarouselInner"></div>
-          <div class="legends-controls">
-            <button class="carousel-control-prev" type="button" data-bs-target="#legendsCarousel" data-bs-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="visually-hidden" data-translation="legendsPrevious">Previous legends</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#legendsCarousel" data-bs-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="visually-hidden" data-translation="legendsNext">Next legends</span>
-            </button>
-          </div>
-        </div>
-      </div>
-    </section>
+      </section>
+    </div>
 
     <!-- start footer Area -->
     <footer class="footer-area section-gap">
       <div class="container">
-        <div class="row">
+        <div class="row split-panes">
           <div class="col-lg-5 col-md-6 col-sm-6">
             <div class="single-footer-widget">
               <h6 data-translation="footer1"></h6>
@@ -1077,7 +1085,7 @@ https://goo.gl/forms/JArck4uzbGGmTuG72
               </p>
             </div>
           </div>
-          <div class="col-lg-5 col-md-6 col-sm-6 text-center">
+          <div class="col-lg-5 col-md-6 col-sm-6 text-center footer-preferences">
             <div class="official-language-switcher">
               <label
                 class="form-label footer-language-label"
@@ -1488,8 +1496,8 @@ https://goo.gl/forms/JArck4uzbGGmTuG72
         this.src = this.dataset.fallbackSrc;
       "
     ></script>
-    <script src="js/translations.min.js?v=20261103-game-launch"></script>
-    <script src="js/main.min.js?v=20261018-biography-collapse"></script>
+    <script src="js/translations.min.js?v=20261122-foldable-home"></script>
+    <script src="js/main.min.js?v=20261122-foldable-home"></script>
     <script src="js/book-hover.min.js?v=20261007-book-preview-layout-guard"></script>
 
     <script src="js/map-data.min.js?v=20261001-italic-map-legends"></script>

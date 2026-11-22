@@ -526,7 +526,10 @@ function initAvailabilityCountdown() {
   );
 }
 
+const splitHomepageQuery = window.matchMedia?.("(horizontal-viewport-segments: 2)");
+
 function getItemsPerSlide() {
+  if (splitHomepageQuery?.matches) return 1;
   if (window.innerWidth < 768) return 1;
   if (window.innerWidth < 992) return 2;
   return 3;
@@ -933,7 +936,7 @@ function renderLegendsCarousel() {
 
 let currentCarouselMode = getItemsPerSlide();
 
-window.addEventListener("resize", () => {
+function updateCarouselMode() {
   const newMode = getItemsPerSlide();
 
   if (newMode !== currentCarouselMode) {
@@ -944,7 +947,10 @@ window.addEventListener("resize", () => {
     renderMassMediaCarousel();
     renderInstitutionalRecords();
   }
-});
+}
+
+window.addEventListener("resize", updateCarouselMode);
+splitHomepageQuery?.addEventListener("change", updateCarouselMode);
 
 Promise.all([
   fetchTranslationData(`js/i18n/lang-${lang}.min.json?v=${i18nCacheVersion}`),

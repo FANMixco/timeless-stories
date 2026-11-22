@@ -441,7 +441,9 @@ function initNavbarToggleState() {
     backdrop.setAttribute("aria-hidden", "true");
     document.body.appendChild(backdrop);
 
-    const mobileMenuQuery = window.matchMedia("(max-width: 1199.98px)");
+    const mobileMenuQuery = window.matchMedia(
+        "(max-width: 1199.98px), (horizontal-viewport-segments: 2)"
+    );
     const syncBackdrop = () => {
         backdrop.hidden = !mobileMenuQuery.matches || ![
             "show", "collapsing", "drawer-opening", "drawer-closing"
@@ -894,7 +896,7 @@ function initReviewsWidget() {
             console.error("Error loading reviews:", error);
         });
 
-    window.addEventListener("resize", () => {
+    const updateReviewsCarouselMode = () => {
         const nextMode = getReviewItemsPerSlide();
 
         if (nextMode === currentReviewsCarouselMode) {
@@ -903,7 +905,10 @@ function initReviewsWidget() {
 
         currentReviewsCarouselMode = nextMode;
         renderReviewsCarousel();
-    });
+    };
+    window.addEventListener("resize", updateReviewsCarouselMode);
+    window.matchMedia("(horizontal-viewport-segments: 2)")
+        .addEventListener("change", updateReviewsCarouselMode);
 
     window.addEventListener("translationsLoaded", () => {
         renderReviewsSummary();
@@ -1216,8 +1221,8 @@ function applyFloatingCookieBannerLayout() {
 
     banner.style.setProperty("position", "fixed", "important");
     banner.style.setProperty("left", edgeInset, "important");
-    banner.style.setProperty("right", edgeInset, "important");
-    banner.style.setProperty("bottom", edgeInset, "important");
+    banner.style.setProperty("right", `calc(${edgeInset} + var(--overlay-end-inset, 0px))`, "important");
+    banner.style.setProperty("bottom", `calc(${edgeInset} + var(--overlay-bottom-inset, 0px))`, "important");
     banner.style.setProperty("top", "auto", "important");
     banner.style.setProperty("width", "auto", "important");
     banner.style.setProperty("max-width", "1120px", "important");
