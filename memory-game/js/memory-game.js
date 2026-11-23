@@ -1355,9 +1355,9 @@ function fitSplitBoardTracks(count, height, gap, shellStyle) {
   const rightWidth = right.right - right.left - parseFloat(shellStyle.paddingRight) - edge;
   const fit = fitSplitFoldableBoard(count, leftWidth, rightWidth, height, gap);
   const groupWidth = columns => columns * fit.size + (columns - 1) * gap;
-  const leftInset = (leftWidth - groupWidth(fit.leftColumns)) / 2;
+  const leftInset = leftWidth - groupWidth(fit.leftColumns);
   const rightInset = (rightWidth - groupWidth(fit.rightColumns)) / 2;
-  const divider = leftInset + rightInset + right.left - left.right + edge * 2 - gap * 2;
+  const divider = rightInset + right.left - left.right + edge * 2 - gap * 2;
   board.style.setProperty("--foldable-board-start", `${leftInset}px`);
   board.style.setProperty("--foldable-board-tracks",
     `repeat(${fit.leftColumns}, ${fit.size}px) ${Math.max(0, divider)}px repeat(${fit.rightColumns}, ${fit.size}px)`);
@@ -3327,7 +3327,7 @@ window.addEventListener("resize", updateGameTitleVisibility);
 window.addEventListener("resize", updateImpostorActionSpace);
 window.visualViewport?.addEventListener("resize", updateGameTitleVisibility);
 window.visualViewport?.addEventListener("resize", updateImpostorActionSpace);
-if (!isEmbedded && window.requestAnimationFrame) {
+if (window.requestAnimationFrame) {
   watchFoldableViewport(window, document, applyFoldableViewport);
   window.addEventListener("scroll", updateFoldableMatchToast, { passive: true });
   gameShell.addEventListener("scroll", updateFoldableMatchToast, { passive: true });

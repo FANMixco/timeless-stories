@@ -96,6 +96,21 @@ test("CSS segment geometry works without the JavaScript segment API", () => {
   assert.equal(resize().pane, null);
 });
 
+test("embedded CSS segments account for the space taken by the parent toolbar", () => {
+  const { window, documentElement, queries, resize } = preview();
+  Object.assign(documentElement, { clientWidth: 880, clientHeight: 838 });
+  queries.get("(vertical-viewport-segments: 2)").matches = true;
+  window.frameElement = { getBoundingClientRect: () => ({ left: 0, top: 62 }) };
+  window.getComputedStyle = () => ({ getPropertyValue: key => ({
+    "--foldable-segment-0": "0px 0px 880px 436px",
+    "--foldable-segment-1": "0px 464px 880px 900px",
+  }[key]) });
+
+  const { pane, split } = resize();
+  assert.deepEqual(pane, rect(0, 402, 880, 838));
+  assert.equal(split, null);
+});
+
 test("board fitting considers height and keeps usable touch targets", () => {
   assert.deepEqual(fitFoldableBoard(20, 360, 700, 6), { columns: 4, size: 85 });
   assert.deepEqual(fitFoldableBoard(20, 600, 380, 6), { columns: 5, size: 72 });

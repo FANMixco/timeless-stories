@@ -1195,6 +1195,7 @@ function initContentModal() {
             return;
         }
 
+        content.style.setProperty("--list-rows", Math.ceil(content.children.length / 2));
         modalBody.replaceChildren(content);
         modalTitle.textContent = trigger.textContent.trim();
     });

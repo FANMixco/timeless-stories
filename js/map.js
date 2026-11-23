@@ -981,6 +981,15 @@ function initVolumeMapModal() {
   modal.addEventListener("hidden.bs.modal", () => {
     modalMapState?.map.closePopup();
   });
+
+    const mapElement = document.getElementById("volumeMap");
+    if (mapElement && "ResizeObserver" in window) {
+        new ResizeObserver(([entry]) => {
+            if (entry.contentRect.width && entry.contentRect.height) {
+                refreshLeafletMap(modalMapState?.map, { force: true });
+            }
+        }).observe(mapElement);
+    }
 }
 
 function initMapsWhenVisible() {

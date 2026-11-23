@@ -735,11 +735,52 @@ html[data-theme="dark"] .book-preview-card-share {
   }
 }
 
+@media (horizontal-viewport-segments: 2) {
+  #bookPreviewModal .modal-header {
+    grid-template-columns: var(--pane-columns);
+    column-gap: var(--hinge-width);
+    padding-inline: 0;
+  }
+
+  #bookPreviewModal .modal-title {
+    grid-column: 1;
+    justify-self: start;
+    max-width: calc(100% - 2 * var(--pane-gutter));
+    margin-inline: var(--pane-gutter);
+    text-align: start;
+  }
+
+  #bookPreviewModal .book-preview-actions {
+    display: flex;
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: end;
+    margin-inline: var(--pane-gutter);
+  }
+
+  #bookPreviewModal .book-preview-amazon-icon-link {
+    display: inline-grid !important;
+  }
+
+  #bookPreviewModal .book-preview-actions :is(.book-preview-amazon-icon-link, .btn-close) {
+    flex: 0 0 44px;
+    opacity: .85;
+  }
+
+  #bookPreviewModal .book-preview-amazon-link {
+    display: none !important;
+  }
+}
+
 @media (horizontal-viewport-segments: 2), (vertical-viewport-segments: 2) {
-  .book-preview-modal .modal-dialog {
-    height: calc(var(--pane-height) - 20px);
-    width: calc(100% - 20px);
-    margin: 10px;
+  #bookPreviewModal .modal-body {
+    padding: 0;
+  }
+
+  #bookPreviewModal .book-preview-reader {
+    width: 100% !important;
+    max-width: 100%;
+    border-radius: 0;
   }
 }
 

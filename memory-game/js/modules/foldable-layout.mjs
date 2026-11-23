@@ -27,10 +27,14 @@ export function watchFoldableViewport(window, document, update) {
     if (!(segments?.length > 1) && (queries[0]?.matches || queries[1]?.matches)) {
       // Some browsers expose segment geometry only in CSS.
       const style = window.getComputedStyle(root);
+      // In an iframe the CSS coordinates describe the outer viewport.
+      const frameRect = window.frameElement?.getBoundingClientRect();
+      const offsetX = frameRect?.left ?? 0;
+      const offsetY = frameRect?.top ?? 0;
       segments = [0, 1].map(index => {
         const values = style.getPropertyValue(`--foldable-segment-${index}`).trim().split(/\s+/).map(parseFloat);
         const [left, top, right, bottom] = values;
-        return { left, top, right, bottom };
+        return { left: left - offsetX, top: top - offsetY, right: right - offsetX, bottom: bottom - offsetY };
       });
     }
     const panes = segments?.length > 1 ? segments.map(segment => ({

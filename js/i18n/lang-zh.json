@@ -70,7 +70,7 @@
     "intro3": "这是同类书籍中的首部作品：它将十则萨尔瓦多传说与十则西班牙传说并列比较，揭示了相距遥远的文化如何映射出相同的象征与恐惧。",
     "launchHeroBefore": "5月1日，<i>Spanish Mirrors</i> 将在拉巴特 SIEL 2026 首发。拉巴特是联合国教科文组织世界图书之都。一起踏上这段旅程。",
     "launchHeroAfter": "<i>Spanish Mirrors</i> 曾在拉巴特 <a href='https://siel.ma' class='text-warning fw-bolder' target='_blank'>SIEL 2026</a> 展出。拉巴特是联合国教科文组织世界图书之都。本书以十组镜像传说揭示遥远文化如何映照相同的象征与恐惧。",
-    "price0": "以4.99美元获得副本",
+    "price0": "以2.99美元获得副本",
     "author1": "一位西班牙-萨尔瓦多裔技术战略家与文化研究者，致力于通过民间传说这一永恒的力量搭建国家间的桥梁。",
     "author2": "尽管费德里科的专业背景是全球IT战略，但作为故事讲述者的道路源于他在波兰、西班牙和卢森堡作为移民的生活经历。游历二十多个国家时，他遭遇了对祖国的简化认知，却发现萨尔瓦多传说蕴含着普世的深刻共鸣。发现这些故事完全缺乏英文资源后，他创作了首套专为国际舞台设计的萨尔瓦多民间故事系列书籍。",
     "author3": "最初的文化保护演变成了“西班牙之镜”，这是一项比较研究，将萨尔瓦多、西班牙和最近的北非传说进行了直接对话。通过将像Siguanaba这样的人物与Midnight Washerwomen或摩洛哥的Aisha Qandisha配对，Federico研究了“人类密码”：当社会为未知赋予形式时出现的共享原型和道德功能。",
@@ -221,7 +221,7 @@
       {
         "title": "电子书📱<br><small>推荐</small>",
         "description": "适合所有享受<br>环保和全彩体验的人。",
-        "price": "<span>美元</span>4.99",
+        "price": "<span>美元</span>2.99",
         "href": "carouselCards.ebook",
         "cta": "获取副本",
         "desktopBottomClass": "",
