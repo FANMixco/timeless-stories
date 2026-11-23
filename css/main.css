@@ -1870,16 +1870,25 @@ h6,
         text-decoration: underline;
     }
 
-    .single-price .price-bottom {
+    .single-price:hover .price-bottom {
+        background-image: -moz-linear-gradient(90deg, #29b6f6 0%, #01579b 100%);
+        background-image: -webkit-linear-gradient(90deg, #29b6f6 0%, #01579b 100%);
+        background-image: -ms-linear-gradient(90deg, #29b6f6 0%, #01579b 100%);
         background-image: linear-gradient(90deg, #29b6f6 0%, #01579b 100%);
     }
 
-    .single-price .price-bottom:is(.price-bottom-r, .eBPriceR) {
-        background-image: linear-gradient(90deg, #ffc107 0%, #6E5415 100%);
+    .single-price:hover .price-bottom-r {
+        background: -moz-linear-gradient(90deg, #ffc107 0%, #6E5415 100%)!important;
+        background: -webkit-linear-gradient(90deg, #ffc107 0%, #6E5415 100%)!important;
+        background: -ms-linear-gradient(90deg, #ffc107 0%, #6E5415 100%)!important;
+        background: linear-gradient(90deg, #ffc107 0%, #6E5415 100%)!important;
     }
 
-    .single-price .price-bottom:is(.price-bottom-x, .eBPriceX) {
-        background-image: linear-gradient(90deg, #EF5350 0%, #990000 100%);
+    .single-price:hover .price-bottom-x {
+        background: -moz-linear-gradient(90deg, #EF5350 0%, #990000 100%)!important;
+        background: -webkit-linear-gradient(90deg, #EF5350 0%, #990000 100%)!important;
+        background: -ms-linear-gradient(90deg, #EF5350 0%, #990000 100%)!important;
+        background: linear-gradient(90deg, #EF5350 0%, #990000 100%)!important;
     }
 
     .footer-social a:hover i {
@@ -1919,7 +1928,7 @@ h6,
         cursor: pointer;
     }
 
-    .single-price .price-bottom .h1 {
+    .single-price:hover .price-bottom .h1 {
         color: #fff;
     }
 
