@@ -85,12 +85,17 @@ iframe {
 }
 
 #tiktok-container {
-    min-height: 0;
+    display: none;
+    width: 325px;
+    max-width: 100%;
+    margin: 28px auto 0;
 }
 
-#tiktok-container .tiktok-embed,
 #tiktok-container iframe {
-    max-width: 100% !important;
+    display: block;
+    width: 100%;
+    aspect-ratio: 325 / 578;
+    margin-bottom: 8px;
 }
 
 a,
@@ -3088,7 +3093,9 @@ h6,
 
 @media (prefers-reduced-motion: no-preference) {
     .header-game-link .icon-gamepad::before {
-        animation: header-card-cycle 300s ease-in-out 0.3s infinite;
+        animation:
+            header-card-cycle 300s ease-in-out 0.3s infinite,
+            header-card-gold 1.2s ease-in-out 0.3s 1;
     }
 }
 
@@ -3115,6 +3122,10 @@ h6,
     0.16% { transform: rotate(4deg); }
     0.24% { transform: rotate(-2deg); }
     0.32% { transform: rotate(2deg); }
+}
+
+@keyframes header-card-gold {
+    25%, 60% { color: #ffd166; }
 }
 
 .header-social a:hover,
@@ -3991,11 +4002,12 @@ body.mobile-nav-active #mobile-nav-toggle {
         padding-left: 15px !important;
     }
 
+    .info-area .info-thumb {
+        max-width: 100%;
+    }
+
     #tiktok-container {
-        min-height: min(760px, calc(100vw + 160px));
-        display: flex !important;
-        justify-content: center;
-        margin-top: 28px;
+        display: block;
     }
 }
 

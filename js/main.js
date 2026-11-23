@@ -984,40 +984,14 @@ function setCurrentYear() {
 }
 
 function initTikTokEmbed() {
-    const tiktokContainer = document.getElementById("tiktok-container");
-    if (!tiktokContainer) {
+    const player = document.querySelector("#tiktok-container iframe[data-src]");
+    if (!player) {
         return;
     }
 
-    const embedHTML = `
-    <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@federicostories/video/7152795728778185990" data-video-id="7152795728778185990" style="max-width: 605px;min-width: 325px;">
-      <section>
-        <a target="_blank" title="@federicostories" href="https://www.tiktok.com/@federicostories?refer=embed">@federicostories</a>
-        Many years ago, the <a title="blackknight" target="_blank" href="https://www.tiktok.com/tag/blackknight?refer=embed">#blackknight</a> returned to <a title="elsalvador" target="_blank" href="https://www.tiktok.com/tag/elsalvador?refer=embed">#ElSalvador</a>. He wanted to test the Salvadorans' greed. He gave them all their wishes, but the cost was their <a title="souls" target="_blank" href="https://www.tiktok.com/tag/souls?refer=embed">#souls</a>.
-      </section>
-    </blockquote>`;
-
-    const loadTikTokEmbed = () => {
-        runWhenVisible(tiktokContainer, () => {
-            tiktokContainer.innerHTML = embedHTML;
-            injectScriptOnce({
-                id: "tiktok_embed",
-                src: "https://www.tiktok.com/embed.js"
-            });
-        }, { rootMargin: "0px" });
-    };
-
-    const onFirstScroll = () => {
-        window.removeEventListener("scroll", onFirstScroll);
-        loadTikTokEmbed();
-    };
-
-    if (window.scrollY > 0) {
-        loadTikTokEmbed();
-        return;
-    }
-
-    window.addEventListener("scroll", onFirstScroll, { passive: true, once: true });
+    runWhenVisible(player, () => {
+        player.src = player.dataset.src;
+    }, { rootMargin: "160px 0px" });
 }
 
 function initDeferredCookiebot() {
