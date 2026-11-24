@@ -44,3 +44,5 @@ foldable-congratulations-preview.png
 foldable-award-preview.png
 phone-congratulations-preview.png
 phone-award-preview.png
+.vscode/settings.json
+tests/foldable-layout.test.mjs

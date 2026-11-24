@@ -52,7 +52,11 @@ export function watchFoldableViewport(window, document, update) {
     const split = panes.length === 2 && left.right <= right.left &&
       left.right - left.left >= 180 && right.right - right.left >= 180 &&
       Math.min(left.bottom, right.bottom) - Math.max(left.top, right.top) >= 200 ? [left, right] : null;
-    update(pane, width, height, split);
+    const [upper, lower] = [...panes].sort((a, b) => a.top - b.top);
+    const stacked = panes.length === 2 && upper.bottom <= lower.top &&
+      Math.min(upper.right, lower.right) - Math.max(upper.left, lower.left) >= 180
+      ? [upper, lower] : null;
+    update(pane, width, height, split, stacked);
   }
 
   function schedule() {
@@ -100,4 +104,24 @@ export function fitSplitFoldableBoard(count, leftWidth, rightWidth, height, gap)
   if (options.length === 1) return balanced;
   const compact = fit(options[1]);
   return compact.size > balanced.size * 1.05 ? compact : balanced;
+}
+
+export function fitStackedFoldableBoard(count, width, upperHeight, lowerHeight, gap) {
+  let best = null;
+  const maxColumns = Math.min(10, count - 1);
+  for (let columns = Math.min(4, maxColumns); columns >= 1 && columns <= maxColumns; columns++) {
+    const rows = Math.ceil(count / columns);
+    const widthLimit = (width - (columns - 1) * gap) / columns;
+    for (let upperRows = 1; upperRows < rows; upperRows++) {
+      const lowerRows = rows - upperRows;
+      const upperLimit = (upperHeight - (upperRows - 1) * gap) / upperRows * 4 / 5;
+      const lowerLimit = (lowerHeight - (lowerRows - 1) * gap) / lowerRows * 4 / 5;
+      const size = Math.floor(Math.min(132, widthLimit, upperLimit, lowerLimit));
+      if (size < 64) continue;
+      if (!best || size > best.size || (size === best.size && rows * columns < best.rows * best.columns)) {
+        best = { columns, rows, upperRows, size };
+      }
+    }
+  }
+  return best;
 }

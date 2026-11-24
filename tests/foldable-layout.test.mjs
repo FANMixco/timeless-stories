@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { fitFoldableBoard, fitSplitFoldableBoard, foldableDialogColumns, watchFoldableViewport } from "../memory-game/js/modules/foldable-layout.mjs";
+import { fitFoldableBoard, fitSplitFoldableBoard, fitStackedFoldableBoard, foldableDialogColumns, watchFoldableViewport } from "../memory-game/js/modules/foldable-layout.mjs";
 
 const rect = (left, top, right, bottom) => ({ left, top, right, bottom });
 
@@ -21,8 +21,8 @@ function preview() {
     return media;
   };
   window.requestAnimationFrame = callback => frames.push(callback);
-  watchFoldableViewport(window, { documentElement }, (pane, width, height, split) => {
-    states.push({ pane, width, height, split });
+  watchFoldableViewport(window, { documentElement }, (pane, width, height, split, stacked) => {
+    states.push({ pane, width, height, split, stacked });
   });
   return { documentElement, window, queries, states, resize() {
     window.dispatchEvent(new Event("resize"));
@@ -45,14 +45,16 @@ test("a device preview only uses foldable layouts while the current viewport is 
   const top = rect(0, 0, 880, 360);
   const bottom = rect(0, 380, 880, 740);
   Object.assign(documentElement, { clientWidth: 880, clientHeight: 740 });
-  window.viewport.segments = [top, bottom];
+  window.viewport.segments = [bottom, top];
   assert.deepEqual(resize().pane, top);
   assert.equal(states.at(-1).split, null);
+  assert.deepEqual(states.at(-1).stacked, [top, bottom]);
 
   for (const [width, height] of [[390, 844], [768, 1024], [1280, 800]]) {
     Object.assign(documentElement, { clientWidth: width, clientHeight: height });
     window.viewport.segments = [rect(0, 0, width, height)];
     assert.equal(resize().pane, null);
+    assert.equal(states.at(-1).stacked, null);
   }
   window.navigator.devicePosture.type = "folded";
   assert.equal(resize().pane, null, "posture alone supplies no usable hinge geometry");
@@ -106,9 +108,25 @@ test("embedded CSS segments account for the space taken by the parent toolbar", 
     "--foldable-segment-1": "0px 464px 880px 900px",
   }[key]) });
 
-  const { pane, split } = resize();
+  const { pane, split, stacked } = resize();
   assert.deepEqual(pane, rect(0, 402, 880, 838));
   assert.equal(split, null);
+  assert.deepEqual(stacked, [rect(0, 0, 880, 374), pane]);
+});
+
+test("rotated folds fit whole rows above and below the hinge", () => {
+  const gap = 6;
+  for (const [count, width, upperHeight, lowerHeight] of [[20, 816, 190, 350], [20, 680, 102, 320], [2, 600, 130, 210]]) {
+    const { size, columns, rows, upperRows } = fitStackedFoldableBoard(count, width, upperHeight, lowerHeight, gap);
+    const lowerRows = rows - upperRows;
+    const occupiedHeight = rowCount => rowCount * size * 1.25 + (rowCount - 1) * gap;
+    assert.ok(upperRows > 0 && lowerRows > 0);
+    assert.ok(upperRows * columns < count && rows * columns >= count);
+    assert.ok(columns * size + (columns - 1) * gap <= width);
+    assert.ok(occupiedHeight(upperRows) <= upperHeight);
+    assert.ok(occupiedHeight(lowerRows) <= lowerHeight);
+  }
+  assert.equal(fitStackedFoldableBoard(20, 816, 70, 350, gap), null);
 });
 
 test("board fitting considers height and keeps usable touch targets", () => {

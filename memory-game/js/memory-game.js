@@ -13,7 +13,7 @@ import { createHomeScreen } from "./modules/home.mjs";
 import { createImpostorTrial, impostorTrialStorageKey } from "./modules/impostor-trial.mjs";
 import { createPreviewCountdown } from "./modules/preview.mjs";
 import { createSpokenCountdown } from "./modules/spoken-countdown.mjs";
-import { fitFoldableBoard, fitSplitFoldableBoard, foldableDialogColumns, watchFoldableViewport } from "./modules/foldable-layout.mjs";
+import { fitFoldableBoard, fitSplitFoldableBoard, fitStackedFoldableBoard, foldableDialogColumns, watchFoldableViewport } from "./modules/foldable-layout.mjs";
 
 const supportedLanguages = ["en", "es", "fr", "zh"];
 const languageStorageKey = "timelessMemoryLanguage";
@@ -189,10 +189,13 @@ const rarityPreviewList = document.getElementById("rarityPreviewList");
 const gameFooter = document.getElementById("gameFooter");
 const gameLayout = document.querySelector(".game-layout");
 const gameShell = document.querySelector(".game-shell");
+const gameHome = document.getElementById("gameHome");
+const homeModes = document.querySelector(".home-modes");
 const gameHeader = document.querySelector(".game-top");
 const gameSidebar = document.querySelector(".game-sidebar");
 let foldablePane = null;
 let foldableSplit = null;
+let foldableStack = null;
 const aboutPanel = document.getElementById("aboutPanel");
 const closeAboutButton = document.getElementById("closeAboutButton");
 const restartPanel = document.getElementById("restartPanel");
@@ -1327,25 +1330,88 @@ function rectanglesOverlap(a, b) {
   return a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top;
 }
 
+const horizontalFoldClearance = 12;
+
+function fitStackedHome() {
+  if (!foldableStack || !homeModes.clientWidth) return;
+  const [upper, lower] = foldableStack;
+  const firstMode = document.getElementById("home-classic");
+  const thirdMode = document.getElementById("home-limitedMoves");
+  const fourthMode = document.getElementById("home-crazyMirrors");
+  const homeStyle = window.getComputedStyle(gameHome);
+  // Measure the layout positions so entrance and hover motion do not shift the rows.
+  const modesTop = gameHome.offsetTop + homeModes.offsetTop;
+  const firstRowBottom = modesTop + firstMode.offsetTop + firstMode.offsetHeight;
+  const topPadding = Math.floor(upper.bottom - upper.top - horizontalFoldClearance -
+    firstRowBottom + parseFloat(homeStyle.paddingTop));
+  const footerBottom = gameFooter ? gameFooter.offsetTop + gameFooter.offsetHeight : 0;
+  const homeBottom = Math.max(gameHome.offsetTop + gameHome.offsetHeight, footerBottom);
+  const lowerContentHeight = homeBottom - (modesTop + fourthMode.offsetTop);
+  const lowerBottom = Math.min(lower.bottom, foldableViewportBottom()) -
+    parseFloat(window.getComputedStyle(gameShell).paddingBottom);
+  const fits = firstMode.offsetHeight > 0 && firstMode.offsetTop === thirdMode.offsetTop &&
+    fourthMode.offsetTop > firstMode.offsetTop &&
+    topPadding >= 4 && lower.top + horizontalFoldClearance + lowerContentHeight <= lowerBottom;
+  gameHome.classList.toggle("uses-stacked-modes", fits);
+  if (fits) {
+    gameHome.style.setProperty("--foldable-home-start", `${topPadding}px`);
+    if (gameShell.scrollTop) gameShell.scrollTop = 0;
+  }
+}
+
 function fitFoldableRound() {
   if (!foldablePane || homeScreen.visible || !legendToastContainer.clientWidth) return;
-  const { top } = gameShell.getBoundingClientRect();
-  const boardOffset = board.getBoundingClientRect().top - top + gameShell.scrollTop;
+  const boardTop = board.getBoundingClientRect().top;
+  const boardOffset = foldableStack
+    ? boardTop - gameLayout.getBoundingClientRect().top + gameLayout.offsetTop
+    : boardTop - gameShell.getBoundingClientRect().top + gameShell.scrollTop;
   const shellStyle = window.getComputedStyle(gameShell);
   const padding = parseFloat(shellStyle.paddingBottom);
-  const visibleHeight = Math.min(foldablePane.bottom, foldableViewportBottom()) - foldablePane.top;
+  const upperPane = foldableStack?.[0] ?? foldablePane;
+  const visibleHeight = Math.min(upperPane.bottom, foldableViewportBottom()) - upperPane.top;
   const availableHeight = visibleHeight - boardOffset - padding;
   const gap = parseFloat(window.getComputedStyle(board).columnGap);
   const count = board.children.length;
   if (!count) return;
-  const fit = foldableSplit
+  const clearedImpostorBoard = board.classList.contains("is-impostor") && board.classList.contains("is-complete");
+  const stackedFit = foldableStack && !clearedImpostorBoard
+    ? fitStackedBoardTracks(count, boardOffset, gap, padding)
+    : null;
+  board.classList.toggle("uses-stacked-rows", Boolean(stackedFit));
+  if (stackedFit && gameShell.scrollTop) gameShell.scrollTop = 0;
+  const fit = stackedFit ?? (foldableSplit
     ? fitSplitBoardTracks(count, availableHeight, gap, shellStyle)
-    : fitFoldableBoard(count, legendToastContainer.clientWidth, availableHeight, gap);
+    : fitFoldableBoard(count, legendToastContainer.clientWidth, availableHeight, gap));
   if (fit) {
     board.style.setProperty("--foldable-card-width", `${fit.size}px`);
     board.style.setProperty("--foldable-board-columns", fit.columns);
   }
   updateFoldableMatchToast();
+}
+
+function fitStackedBoardTracks(count, boardOffset, gap, padding) {
+  const [upper, lower] = foldableStack;
+  const edge = horizontalFoldClearance;
+  const boardTop = upper.top + boardOffset;
+  const upperSpace = upper.bottom - boardTop - edge;
+  const lowerSpace = Math.min(lower.bottom, foldableViewportBottom()) - lower.top - edge - padding;
+  const fit = fitStackedFoldableBoard(count, legendToastContainer.clientWidth, upperSpace, lowerSpace, gap);
+  if (!fit) return null;
+
+  const { columns, rows, upperRows, size } = fit;
+  const cardHeight = size * 5 / 4;
+  const upperHeight = upperRows * cardHeight + (upperRows - 1) * gap;
+  const boardStart = upperSpace - upperHeight;
+  const divider = lower.top - upper.bottom + 2 * (edge - gap);
+  board.style.setProperty("--foldable-board-top-space", `${boardStart}px`);
+  board.style.setProperty("--foldable-stacked-rows",
+    `repeat(${upperRows}, ${cardHeight}px) ${divider}px repeat(${rows - upperRows}, ${cardHeight}px)`);
+  board.style.setProperty("--foldable-upper-board-height", `${upperHeight}px`);
+  for (const [index, card] of Array.from(board.children).entries()) {
+    const row = Math.floor(index / columns) + 1;
+    card.style.setProperty("--foldable-card-row", row > upperRows ? row + 1 : row);
+  }
+  return fit;
 }
 
 function fitSplitBoardTracks(count, height, gap, shellStyle) {
@@ -1385,12 +1451,13 @@ function updateFoldableMatchToast() {
   delete legendToast.dataset.spaceSuppressed;
   const toast = legendToast.getBoundingClientRect();
   const boardRect = board.getBoundingClientRect();
-  const bottom = Math.min(foldablePane.bottom, foldableViewportBottom()) -
+  const verticalPane = foldableStack?.[board.classList.contains("uses-stacked-rows") ? 1 : 0] ?? foldablePane;
+  const bottom = Math.min(verticalPane.bottom, foldableViewportBottom()) -
     parseFloat(window.getComputedStyle(gameShell).paddingBottom);
-  const messagePane = foldableSplit?.[1] ?? foldablePane;
+  const messagePane = foldableSplit?.[1] ?? verticalPane;
   const suppressed = !matchToastsEnabled || !toast.height || !boardRect.height ||
     rectanglesOverlap(toast, boardRect) || toast.bottom > bottom ||
-    toast.top < Math.max(foldablePane.top, window.visualViewport?.offsetTop ?? 0) ||
+    toast.top < Math.max(verticalPane.top, window.visualViewport?.offsetTop ?? 0) ||
     toast.left < messagePane.left || toast.right > messagePane.right;
   legendToast.dataset.spaceSuppressed = String(suppressed);
   legendToast.inert = suppressed;
@@ -1398,12 +1465,16 @@ function updateFoldableMatchToast() {
 }
 
 const foldableLayoutObserver = typeof window.ResizeObserver === "function" ?
-  new window.ResizeObserver(fitFoldableRound) : null;
+  new window.ResizeObserver(() => {
+    if (homeScreen.visible) fitStackedHome();
+    else fitFoldableRound();
+  }) : null;
 
-function applyFoldableViewport(pane, width, height, split) {
+function applyFoldableViewport(pane, width, height, split, stacked = null) {
   const wasFoldable = Boolean(foldablePane);
   if (!pane && !wasFoldable) return;
   foldableSplit = split;
+  foldableStack = stacked;
   const [left, right] = split || [];
   foldablePane = split ? {
     left: left.left, right: right.right, top: Math.max(left.top, right.top), bottom: Math.min(left.bottom, right.bottom),
@@ -1411,6 +1482,20 @@ function applyFoldableViewport(pane, width, height, split) {
   const root = document.documentElement;
   root.classList.toggle("is-foldable", Boolean(pane));
   root.classList.toggle("is-side-by-side", Boolean(split));
+  root.classList.toggle("is-top-and-bottom", Boolean(stacked));
+  if (stacked) {
+    const [upper, lower] = stacked;
+    root.style.setProperty("--foldable-stack-top", `${upper.top}px`);
+    root.style.setProperty("--foldable-stack-left", `${Math.max(upper.left, lower.left)}px`);
+    root.style.setProperty("--foldable-stack-right", `${width - Math.min(upper.right, lower.right)}px`);
+    root.style.setProperty("--foldable-stack-bottom", `${height - lower.bottom}px`);
+    root.style.setProperty("--foldable-upper-height", `${upper.bottom - upper.top}px`);
+    root.style.setProperty("--foldable-stack-clearance", `${horizontalFoldClearance}px`);
+    root.style.setProperty("--foldable-stack-gap", `${lower.top - upper.bottom}px`);
+  } else {
+    board.classList.remove("uses-stacked-rows");
+    gameHome.classList.remove("uses-stacked-modes");
+  }
   const dialogColumns = foldableDialogColumns(split);
   root.classList.toggle("has-dual-pane-dialogs", dialogColumns > 0);
   root.classList.toggle("has-wide-dialog-panes", dialogColumns === 4);
@@ -1432,7 +1517,9 @@ function applyFoldableViewport(pane, width, height, split) {
     (pane ? gameHeader : legendToastContainer).append(comboToast);
     positionImpostorPanel();
     if (pane) {
-      for (const target of [gameSidebar, legendToastContainer]) foldableLayoutObserver?.observe(target);
+      for (const target of [gameSidebar, legendToastContainer, gameHome, homeModes, gameFooter]) {
+        if (target) foldableLayoutObserver?.observe(target);
+      }
     } else {
       foldableLayoutObserver?.disconnect();
       if (legendToast.dataset.comparison === "true") hideLegendToast();
@@ -2354,6 +2441,7 @@ function shuffleUnmatchedCards() {
   lockBoard = true;
   board.replaceChildren(...shuffleRemainingCards(cards, card => card.classList.contains("is-matched")));
   [...board.children].forEach((card, index) => { card.dataset.index = index; });
+  if (foldableStack) fitFoldableRound();
   if (cards.includes(focused)) focused.focus({ preventScroll: true });
   for (const card of unmatched) {
     card.classList.add("is-shuffling");
@@ -2508,7 +2596,10 @@ function restoreCollectionRarityFocus(trigger) {
 }
 
 function updateGameTitleVisibility() {
-  if (homeScreen.visible) return;
+  if (homeScreen.visible) {
+    fitStackedHome();
+    return;
+  }
   // Measure with the title present, so resize checks remain stable.
   gameHeader.classList.remove("is-title-hidden");
   if (foldablePane) {

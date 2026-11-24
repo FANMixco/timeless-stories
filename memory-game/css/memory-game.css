@@ -2956,14 +2956,14 @@ html[data-theme="dark"] .legends-rarity-note:focus-visible {
 .is-foldable .game-shell:not([hidden]),
 .is-foldable .game-shell:not(.is-home):has(.board.is-impostor):not([hidden]) {
   position: relative;
-  left: calc((var(--foldable-left) - var(--foldable-right)) / 2);
+  left: var(--stacked-game-left, calc((var(--foldable-left) - var(--foldable-right)) / 2));
   display: block;
-  width: min(64rem, 100% - var(--foldable-left) - var(--foldable-right));
-  height: var(--foldable-height);
+  width: var(--stacked-game-width, min(64rem, 100% - var(--foldable-left) - var(--foldable-right)));
+  height: var(--stacked-game-height, var(--foldable-height));
   min-height: 0;
-  margin-top: var(--foldable-top);
+  margin-top: var(--stacked-game-top, var(--foldable-top));
   padding: var(--foldable-pad-top) var(--foldable-pad-right) var(--foldable-pad-bottom) var(--foldable-pad-left);
-  overflow: auto;
+  overflow: var(--stacked-game-overflow, auto);
   overscroll-behavior: contain;
   overflow-wrap: anywhere;
 }
@@ -3043,6 +3043,18 @@ html[data-theme="dark"] .legends-rarity-note:focus-visible {
 .is-foldable .home-tool strong { min-width: 0; font-size: .875rem; }
 .is-foldable .is-home .game-footer { margin-top: 8px; }
 .is-foldable .game-footer .footer-author { white-space: normal; }
+.is-top-and-bottom .game-home {
+  position: relative;
+  max-width: 54rem;
+  margin-inline: auto;
+}
+.is-top-and-bottom .home-modes { position: relative; }
+.is-top-and-bottom .game-home.uses-stacked-modes {
+  padding-block-start: var(--foldable-home-start);
+}
+.is-top-and-bottom .game-home.uses-stacked-modes .home-modes {
+  row-gap: calc(var(--foldable-stack-gap) + 2 * var(--foldable-stack-clearance));
+}
 
 /* Side-by-side panes share the menu and board. Each track ends before
    the hinge, including when it is a zero-width fold rather than a gap. */
@@ -3191,6 +3203,36 @@ html[data-theme="dark"] .legends-rarity-note:focus-visible {
   grid-template-columns: repeat(var(--foldable-board-columns, 5), minmax(0, var(--foldable-card-width, 96px)));
 }
 .is-foldable .board.is-intro { max-width: 18rem; }
+.is-top-and-bottom .game-shell {
+  --stacked-game-left: calc((var(--foldable-stack-left) - var(--foldable-stack-right)) / 2);
+  --stacked-game-width: min(64rem, 100% - var(--foldable-stack-left) - var(--foldable-stack-right));
+  --stacked-game-top: var(--foldable-stack-top);
+  --stacked-game-height: var(--foldable-upper-height);
+}
+.is-top-and-bottom .game-shell:not(.is-home):has(.board.uses-stacked-rows),
+.is-top-and-bottom .game-shell.is-home:has(.game-home.uses-stacked-modes) {
+  --stacked-game-height: calc(100dvh - var(--foldable-stack-top) - var(--foldable-stack-bottom));
+  --stacked-game-overflow: hidden;
+}
+.is-top-and-bottom .board-area .board.uses-stacked-rows {
+  max-width: none;
+  padding-block-start: var(--foldable-board-top-space);
+  grid-template-columns: repeat(var(--foldable-board-columns), var(--foldable-card-width));
+  grid-template-rows: var(--foldable-stacked-rows);
+}
+.is-top-and-bottom .board.uses-stacked-rows > .card {
+  grid-row: var(--foldable-card-row);
+  aspect-ratio: 4 / 5;
+}
+.is-top-and-bottom .board.uses-stacked-rows.is-impostor-arriving::before {
+  top: var(--foldable-board-top-space);
+  bottom: auto;
+  height: var(--foldable-upper-board-height);
+}
+.is-top-and-bottom .board.uses-stacked-rows.is-impostor-arriving::after {
+  top: calc(var(--foldable-board-top-space) + var(--foldable-upper-board-height) / 2);
+  font-size: min(5rem, var(--foldable-upper-board-height) * .65);
+}
 .is-foldable .board:not(.is-intro) .card .card-front { gap: 2px; padding: 3px; }
 .is-foldable .board:not(.is-intro) .card .character-name { font-size: .6875rem; line-height: 1.1; }
 .is-foldable .board:not(.is-intro) .card .character-mark,
